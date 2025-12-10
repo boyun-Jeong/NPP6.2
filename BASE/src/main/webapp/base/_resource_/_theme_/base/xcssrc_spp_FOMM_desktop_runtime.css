@@ -1,140 +1,139 @@
-﻿.Static.sta_TOAST_normal
-{
-	background : #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastInfo.png') no-repeat 10px center;
-	border : 1px solid #7db1f1;
-	font : 14px '돋움';
-	box-shadow : 0px 2px 4px #808080;
+﻿.Static.sta_TOAST_normal {
+	background: #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastInfo.png') no-repeat 10px center;
+	border: 1px solid #7db1f1;
+	font: 14px '돋움';
+	box-shadow: 0px 2px 4px #808080;
 }
-.Static.sta_TOAST_success
-{
-	background : #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastSuccess.png') no-repeat 10px center;
-	border : 1px solid #7ef2a1;
-	font : 14px '돋움';
-	box-shadow : 0px 2px 4px #808080;
+
+.Static.sta_TOAST_success {
+	background: #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastSuccess.png') no-repeat 10px center;
+	border: 1px solid #7ef2a1;
+	font: 14px '돋움';
+	box-shadow: 0px 2px 4px #808080;
 }
-.Static.sta_TOAST_error
-{
-	background : #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastError.png') no-repeat 10px center;
-	border : 1px solid #ff8587;
-	font : 14px '돋움';
-	box-shadow : 0px 2px 4px #808080;
+
+.Static.sta_TOAST_error {
+	background: #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastError.png') no-repeat 10px center;
+	border: 1px solid #ff8587;
+	font: 14px '돋움';
+	box-shadow: 0px 2px 4px #808080;
 }
-.Static.sta_TOAST_warning
-{
-	background : #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastWarning.png') no-repeat 10px center;
-	border : 1px solid #ffed74;
-	font : 14px '돋움';
-	box-shadow : 0px 2px 4px #808080;
+
+.Static.sta_TOAST_warning {
+	background: #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastWarning.png') no-repeat 10px center;
+	border: 1px solid #ffed74;
+	font: 14px '돋움';
+	box-shadow: 0px 2px 4px #808080;
 }
-.Static.sta_POP_title
-{
-	background : #ffffff;
-	border : 0px;
-	font : bold 18px '돋움';
-	color : #3556ba;
+
+.Static.sta_POP_title {
+	background: #ffffff;
+	border: 0px;
+	font: bold 18px '돋움';
+	color: #3556ba;
 }
-.Static.sta_POP_msg_title
-{
-	background : #ffffff;
-	border : 0px;
-	font : bold 18px '돋움';
-	color : #3556ba;
+
+.Static.sta_POP_msg_title {
+	background: #ffffff;
+	border: 0px;
+	font: bold 18px '돋움';
+	color: #3556ba;
 }
-.Static.sta_POP_msg_info
-{
-	background : #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_popMsgInfo.png') no-repeat 20px center;
-	border : 0px;
-	font : bold 18px '돋움';
-	color : #3556ba;
+
+.Static.sta_POP_msg_info {
+	background: #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_popMsgInfo.png') no-repeat 20px center;
+	border: 0px;
+	font: bold 18px '돋움';
+	color: #3556ba;
 }
-.Static.sta_POP_msg_success
-{
-	background : #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_popMsgSuccess.png') no-repeat 20px center;
-	border : 0px;
-	font : bold 18px '돋움';
-	color : #3556ba;
+
+.Static.sta_POP_msg_success {
+	background: #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_popMsgSuccess.png') no-repeat 20px center;
+	border: 0px;
+	font: bold 18px '돋움';
+	color: #3556ba;
 }
-.Static.sta_POP_msg_warning
-{
-	background : #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_popMsgWarning.png') no-repeat 20px center;
-	border : 0px;
-	font : bold 18px '돋움';
-	color : #3556ba;
+
+.Static.sta_POP_msg_warning {
+	background: #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_popMsgWarning.png') no-repeat 20px center;
+	border: 0px;
+	font: bold 18px '돋움';
+	color: #3556ba;
 }
-.Static.sta_POP_msg_error
-{
-	background : #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_popMsgError.png') no-repeat 20px center;
-	border : 0px;
-	font : bold 18px '돋움';
-	color : #3556ba;
+
+.Static.sta_POP_msg_error {
+	background: #ffffff URL('./SPP_IMAGE_SET/FOMM/bg_FOMM_popMsgError.png') no-repeat 20px center;
+	border: 0px;
+	font: bold 18px '돋움';
+	color: #3556ba;
 }
-.Static.sta_POP_msg_btnbg
-{
-	background : #ffffff;
-	border : 0px;
+
+.Static.sta_POP_msg_btnbg {
+	background: #ffffff;
+	border: 0px;
 }
-.Static.sta_POP_msg_conts
-{
-	background : transparent;
-	font : bold 14px '돋움';
-	color : #637195;
+
+.Static.sta_POP_msg_conts {
+	background: transparent;
+	font: bold 14px '돋움';
+	color: #637195;
 }
-.TextArea.txa_POP_msg_conts
-{
-	background : transparent;
-	border : 0px;
-	padding : 0px;
-	font : bold 14px '돋움';
-	color : #637195;
+
+.TextArea.txa_POP_msg_conts {
+	background: transparent;
+	border: 0px;
+	padding: 0px;
+	font: bold 14px '돋움';
+	color: #637195;
 }
-.TextArea.txa_POP_msg_conts .nexatextarea
-{
-	text-align : left;
+
+.TextArea.txa_POP_msg_conts .nexatextarea {
+	text-align: left;
 }
-.TextArea.txa_POP_msg_conts .nexacontentsbox
-{
-	text-align : left;
+
+.TextArea.txa_POP_msg_conts .nexacontentsbox {
+	text-align: left;
 }
-.Div.div_POP_msg_btnbg
-{
-	background : #ffffff;
-	border : 1px solid #d0d1d6, 0px, 0px, 0px;
+
+.Div.div_POP_msg_btnbg {
+	background: #ffffff;
+	border: 1px solid #d0d1d6, 0px, 0px, 0px;
 }
-.ChildFrame.cf_FOMM_normal .titlebarChildFramecf_FOMM_normal
-{
-	font : bold 14px '돋움';
-	color : #ffffff;
-	background : #3697F8;
+
+.ChildFrame.cf_FOMM_normal .titlebarChildFramecf_FOMM_normal {
+	font: bold 14px '돋움';
+	color: #ffffff;
+	background: #3697F8;
 }
-.ChildFrame.cf_FOMM_normal .titlebarChildFramecf_FOMM_normal .normalbutton
-{
-	cursor : pointer;
+
+.ChildFrame.cf_FOMM_normal .titlebarChildFramecf_FOMM_normal .normalbutton {
+	cursor: pointer;
 }
-.ChildFrame.cf_FOMM_normal .titlebarChildFramecf_FOMM_normal .minbutton
-{
-	cursor : pointer;
+
+.ChildFrame.cf_FOMM_normal .titlebarChildFramecf_FOMM_normal .minbutton {
+	cursor: pointer;
 }
-.ChildFrame.cf_FOMM_normal .titlebarChildFramecf_FOMM_normal .maxbutton
-{
-	cursor : pointer;
+
+.ChildFrame.cf_FOMM_normal .titlebarChildFramecf_FOMM_normal .maxbutton {
+	cursor: pointer;
 }
-.ChildFrame.cf_FOMM_normal .titlebarChildFramecf_FOMM_normal .closebutton
-{
-	cursor : pointer;
+
+.ChildFrame.cf_FOMM_normal .titlebarChildFramecf_FOMM_normal .closebutton {
+	cursor: pointer;
 }
-.TextArea.txa_POP_msg_conts[status=readonly]
-{
-	background : transparent;
-	border : 0px;
-	padding : 0px;
-	font : bold 14px '돋움';
-	color : #637195;
+
+.TextArea.txa_POP_msg_conts[status=readonly] {
+	background: transparent;
+	border: 0px;
+	padding: 0px;
+	font: bold 14px '돋움';
+	color: #637195;
 }
-.TextArea.txa_POP_msg_conts[status=readonly] .nexatextarea
-{
-	text-align : left;
+
+.TextArea.txa_POP_msg_conts[status=readonly] .nexatextarea {
+	text-align: left;
 }
-.TextArea.txa_POP_msg_conts[status=readonly] .nexacontentsbox
-{
-	text-align : left;
+
+.TextArea.txa_POP_msg_conts[status=readonly] .nexacontentsbox {
+	text-align: left;
 }

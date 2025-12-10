@@ -36,9 +36,9 @@ const { getArgumentValue } = FormulaProcessor;
  * Result value of the process.
  */
 function IF(args, table) {
-    return (getArgumentValue(args[0], table) ?
-        getArgumentValue(args[1], table) :
-        getArgumentValue(args[2], table));
+	return (getArgumentValue(args[0], table) ?
+		getArgumentValue(args[1], table) :
+		getArgumentValue(args[2], table));
 }
 /* *
  *

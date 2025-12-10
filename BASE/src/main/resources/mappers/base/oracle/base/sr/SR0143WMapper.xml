@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.base.sr.dao.SR0143WDAO">
 
@@ -31,7 +30,7 @@
 			  WF_PROC_HIST A
 			, SR_BASE_INFO B
 			, WF_REQ_TMPLAT_HT C
-			<!-- , WF_REQ_TMPLAT_PROC_HT D -->
+		<!-- , WF_REQ_TMPLAT_PROC_HT D -->
 		WHERE 1=1
 		AND B.REQ_ID			= A.PROC_NUMBER
         AND B.REQ_TMPLAT_ID 	= C.REQ_TMPLAT_ID
