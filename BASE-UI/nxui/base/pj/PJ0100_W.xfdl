@@ -1,0 +1,1156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PJ0100_W" left="0" top="0" width="1840" height="720" titletext="WBS 관리" onload="form_onload" ontimer="formOnTimer">
+    <Layouts>
+      <Layout width="1840" height="720">
+        <Static id="Static00_00_00_00" taborder="16" left="0" top="128" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Grid id="grdMainList" taborder="17" binddataset="dsPjWbs" cellsizingtype="col" autofittype="col" left="0" top="Static00_00_00_00:0" right="0" bottom="40" treeinitstatus="expand,all" treeusecheckbox="false" cssclass="grd_WF_normal" ondragmove="grdOnDragMove" ondrop="grdOnDrop" ondragleave="grdOnDragLeave" ondrag="grdOnDrag" onkeyup="grdOnKeyUp" useFilter="false" useSort="false">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="38"/>
+                <Column size="60"/>
+                <Column size="180"/>
+                <Column size="250"/>
+                <Column size="40"/>
+                <Column size="118"/>
+                <Column size="118"/>
+                <Column size="51"/>
+                <Column size="57"/>
+                <Column size="57"/>
+                <Column size="57"/>
+                <Column size="90"/>
+                <Column size="90"/>
+                <Column size="180"/>
+                <Column size="57"/>
+                <Column size="57"/>
+                <Column size="57"/>
+                <Column size="57"/>
+              </Columns>
+              <Rows>
+                <Row size="40" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" style="background:#96b7dcff;color: ;" text="NO"/>
+                <Cell col="2" text="행상태"/>
+                <Cell col="3" style="background:#96b7dcff;color: ;" text="WBS"/>
+                <Cell col="4" text="작업"/>
+                <Cell col="5" text="상태"/>
+                <Cell col="6" style="color: ;" text="계획&#13;&#10;시작일"/>
+                <Cell col="7" style="color: ;" text="계획&#13;&#10;종료일"/>
+                <Cell col="8" style="background:#96b7dcff;" text="Days"/>
+                <Cell col="9" style="background:#96b7dcff;" text="총&#13;&#10;작업량"/>
+                <Cell col="10" style="background:#96b7dcff;" text="계획&#13;&#10;작업량"/>
+                <Cell col="11" style="color: ;" text="가중치"/>
+                <Cell col="12" style="color: ;" text="위엠비&#13;&#10;담당"/>
+                <Cell col="13" text="수행사&#13;&#10;담당"/>
+                <Cell col="14" style="color: ;" text="산출물명"/>
+                <Cell col="15" style="background:#96b7dcff;" text="계획"/>
+                <Cell col="16" text="조정&#13;&#10;계획"/>
+                <Cell col="17" style="color: ;" text="실적"/>
+                <Cell col="18" style="background:#96b7dcff;" text="달성율"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                <Cell col="1" style="selectbackground: ;" expr="expr:currow+1"/>
+                <Cell col="2" text="bind:ROWFLAG"/>
+                <Cell col="3" displaytype="treeitemcontrol" edittype="tree" style="align:right;selectbackground: ;" text="bind:WBS_CODE" treelevel="bind:LVL" textAlign="left"/>
+                <Cell col="4" displaytype="text" edittype="expr:LVL == 0 ? 'none' : 'text'" style="align:left;selectbackground: ;" text="bind:WBS_NAME" textAlign="left"/>
+                <Cell col="5" displaytype="imagecontrol" style="selectbackground: ;" expr="ACTL_CMPL_RATE==100 ? &quot;theme://SPP_IMAGE_SET/WF/ico_WF_legend12.png&quot; : ( Ex.isEmpty(ACTL_CMPL_RATE) || ACTL_CMPL_RATE==0 ? (Ex.isEmpty(PLAN_CMPL_RATE) || PLAN_CMPL_RATE==0 ? &quot;theme://SPP_IMAGE_SET/WF/ico_WF_legend14.png&quot; : &quot;theme://SPP_IMAGE_SET/WF/ico_WF_legend13.png&quot;) : (ACTL_CMPL_RATE&gt;=PLAN_CMPL_RATE ? &quot;theme://SPP_IMAGE_SET/WF/ico_WF_legend11.png&quot; : &quot;theme://SPP_IMAGE_SET/WF/ico_WF_legend13.png&quot;) )"/>
+                <Cell col="6" displaytype="date" edittype="expr:IS_LAST_LVL=='Y' ? 'date' : 'none'" style="selectbackground: ;" text="bind:PLAN_SDATE" calendardisplaynulltype="none" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="7" displaytype="date" edittype="expr:IS_LAST_LVL=='Y' ? 'date' : 'none'" style="selectbackground: ;" text="bind:PLAN_EDATE" calendardisplaynulltype="nulltext" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="8" style="selectbackground: ;" text="bind:PLAN_DAYS"/>
+                <Cell col="9" style="selectbackground: ;" text="bind:PLAN_TOT_WORK"/>
+                <Cell col="10" edittype="none" style="selectbackground: ;" text="bind:PLAN_WORK"/>
+                <Cell col="11" edittype="normal" style="selectbackground: ;" text="bind:WEIGHT"/>
+                <Cell col="12" edittype="normal" style="align:left;selectbackground: ;" text="bind:CHG_USER_NM" textAlign="left"/>
+                <Cell col="13" edittype="normal" style="align:left middle;" text="bind:EXE_USER_NM" textAlign="left"/>
+                <Cell col="14" edittype="normal" style="align:left;selectbackground: ;" text="bind:WBS_DESC" tooltiptext="bind:WBS_DESC" textAlign="left"/>
+                <Cell col="15" style="selectbackground: ;" text="bind:PLAN_CMPL_RATE"/>
+                <Cell col="16" edittype="expr:IS_LAST_LVL=='Y' ? 'normal' : 'none'" style="selectbackground: ;" text="bind:PLAN_CMPL_MRATE" editautoselect="true"/>
+                <Cell col="17" edittype="expr:IS_LAST_LVL=='Y' ? 'normal' : 'none'" style="selectbackground: ;" text="bind:ACTL_CMPL_RATE" editautoselect="true"/>
+                <Cell col="18" edittype="none" style="selectbackground: ;" text="bind:ACTL_PLAN_RATE"/>
+              </Band>
+            </Format>
+            <Format id="default_excel">
+              <Columns>
+                <Column size="180"/>
+                <Column size="250"/>
+                <Column size="118"/>
+                <Column size="118"/>
+                <Column size="90"/>
+                <Column size="90"/>
+                <Column size="180"/>
+                <Column size="57"/>
+                <Column size="57"/>
+              </Columns>
+              <Rows>
+                <Row size="40" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell style="background:#96b7dcff;color: ;" text="WBS"/>
+                <Cell col="1" text="작업"/>
+                <Cell col="2" style="color: ;" text="계획&#13;&#10;시작일"/>
+                <Cell col="3" style="color: ;" text="계획&#13;&#10;종료일"/>
+                <Cell col="4" style="color: ;" text="위엠비&#13;&#10;담당"/>
+                <Cell col="5" text="수행사&#13;&#10;담당"/>
+                <Cell col="6" style="color: ;" text="산출물명"/>
+                <Cell col="7" style="color: ;" text="가중치"/>
+                <Cell col="8" style="color: ;" text="실적"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="normal" style="align:right;selectbackground: ;" text="bind:WBS_CODE" treelevel="bind:LVL" textAlign="left"/>
+                <Cell col="1" style="align:left;selectbackground: ;" text="bind:WBS_NAME" textAlign="left"/>
+                <Cell col="2" style="selectbackground: ;" text="bind:PLAN_SDATE" calendardisplaynulltype="none" calendardateformat="yyyy-MM-dd" displaytype="date"/>
+                <Cell col="3" displaytype="date" style="selectbackground: ;" text="bind:PLAN_EDATE" calendardisplaynulltype="nulltext" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="4" style="align:left;selectbackground: ;" text="bind:CHG_USER_NM" textAlign="left"/>
+                <Cell col="5" style="align:left middle;" text="bind:EXE_USER_NM" textAlign="left"/>
+                <Cell col="6" style="align:left;selectbackground: ;" text="bind:WBS_DESC" tooltiptext="bind:WBS_DESC" textAlign="left"/>
+                <Cell col="7" style="selectbackground: ;" text="bind:WEIGHT"/>
+                <Cell col="8" edittype="expr:IS_LAST_LVL=='Y' ? 'normal' : 'none'" style="selectbackground: ;" text="bind:ACTL_CMPL_RATE" editautoselect="true"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcPjtSchePlan" taborder="3" text="프로젝트 일정계획" cssclass="sta_WF_gridTitle" left="0" top="70" width="131" height="24"/>
+        <Div id="divSearch" taborder="0" left="0" top="0" right="0" height="50" scrollbars="none" cssclass="div_WF_divSearchArea">
+          <Layouts>
+            <Layout>
+              <Static id="stcPjtNm" taborder="1" text="프로젝트명" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="20" top="13" width="81" height="24"/>
+              <Static id="Static00_00_00_00" taborder="7" left="604" top="13" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="Static03" taborder="8" text="WBS레벨" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_00_00:0" top="13" width="72" height="24"/>
+              <Combo id="cboWbsLvl" taborder="9" left="Static03:0" top="12" height="24" datacolumn="NAME" codecolumn="LVL" width="135" cssclass="cbo_WF_normal"/>
+              <Static id="Static00_00_00" taborder="4" left="339" top="13" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="Static09" taborder="5" text="서브프로젝트" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_00:0" top="13" width="100" height="24"/>
+              <Static id="Static00_00" taborder="0" left="0" top="13" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+              <Edit id="edtPjtNm" taborder="2" left="stcPjtNm:0" top="13" width="215" height="24" cssclass="edt_WF_normal" enable="true" readonly="true"/>
+              <Button id="btnSearchPjtPop" taborder="3" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommOnclick" top="13" width="24" left="edtPjtNm:-1"/>
+              <Combo id="cboSubPjt" taborder="6" left="Static09:0" top="12" height="24" width="135" codecolumn="PJT_ID" datacolumn="PJT_NAME" cssclass="cbo_WF_normal">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows/>
+                </Dataset>
+              </Combo>
+              <Button id="btnSearch" taborder="11" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Button id="btnSearchReset" taborder="10" top="13" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+          <InitValue/>
+        </Div>
+        <Static id="stcCalcDate" taborder="5" text="기준일자" left="0" top="104" height="24" width="63" style="font:bold antialias 10 Malgun Gothic, 맑은 고딕;" cssclass="sta_WF_schTitle"/>
+        <Calendar id="calCalcDate" taborder="6" left="66" top="104" height="24" width="105" cssclass="cal_WF_normal"/>
+        <Static id="stc_calcDate00" taborder="7" text="계획 :" left="calCalcDate:20" top="104" width="41" height="24" style="font:bold antialias 10 Malgun Gothic, 맑은 고딕;" cssclass="sta_WF_schTitle"/>
+        <Edit id="edtPlanCmplRate" taborder="8" left="stc_calcDate00:5" top="104" height="24" width="60" enable="false" style=":disabled {background:#ffffffff;border:0 solid #808080ff ;color:#2367b5ff;align:right middle;}" cssclass="edt_WF_normal" textAlign="right"/>
+        <Static id="stcMonthDiffUnit" taborder="9" text="%" cssclass="mm" left="edtPlanCmplRate:5" top="104" width="16" height="24" style="align:left middle;"/>
+        <Static id="stc_calcDate01" taborder="10" text="실적 :" left="stcMonthDiffUnit:10" top="104" width="43" height="24" style="font:bold antialias 10 Malgun Gothic, 맑은 고딕;" cssclass="sta_WF_schTitle"/>
+        <Edit id="edtActlCmplRate" taborder="11" left="stc_calcDate01:5" top="104" height="24" width="60" enable="false" style=":disabled {background:#ffffffff;border:0 solid #808080ff ;color:#2367b5ff;align:right middle;}" cssclass="edt_WF_normal" textAlign="right"/>
+        <Static id="stcMonthDiffUnit00" taborder="12" text="%" cssclass="mm" left="edtActlCmplRate:5" top="104" width="16" height="24" style="align:left middle;"/>
+        <Static id="stc_calcDate02" taborder="13" text="달성율 :" left="stcMonthDiffUnit00:10" top="104" width="55" height="24" style="font:bold antialias 10 Malgun Gothic, 맑은 고딕;" cssclass="sta_WF_schTitle"/>
+        <Edit id="edt_actlPlanRate" taborder="14" left="stc_calcDate02:5" top="104" height="24" width="60" enable="false" style=":disabled {background:#ffffffff;border:0 solid #808080ff ;color:#f73a00ff;align:right middle;}" cssclass="edt_WF_normal" textAlign="right"/>
+        <Static id="Static28" taborder="18" text="범례 : " cssclass="sta_WF_schTitle" left="0" width="49" height="24" style="background:URL('img::sta_WF_SchTitle.png') left middle;" top="grdMainList:5"/>
+        <Static id="txt_total10" taborder="19" cssclass="stc_WF_legend11" left="Static28:0" bottom="15" width="16" height="16" style="color:green;font:11 돋움;"/>
+        <Static id="txt_total11" taborder="20" text="정상" left="txt_total10:5" width="50" height="24" top="grdMainList:5"/>
+        <Static id="txt_total13" taborder="21" cssclass="stc_WF_legend12" left="txt_total11:0" bottom="15" width="16" height="16" style="color:blue;font:11 돋움;"/>
+        <Static id="txt_total12" taborder="22" text="완료" left="txt_total13:5" width="50" height="24" top="grdMainList:5"/>
+        <Static id="txt_total14" taborder="23" left="txt_total12:0" bottom="15" width="16" height="16" style="color:blue;font:11 돋움;" cssclass="stc_WF_legend13"/>
+        <Static id="txt_total15" taborder="24" text="미진" left="txt_total14:5" width="50" height="24" top="grdMainList:5"/>
+        <Static id="txt_total16" taborder="25" cssclass="stc_WF_legend14" left="txt_total15:0" bottom="15" width="16" height="16" style="color:blue;font:11 돋움;"/>
+        <Static id="txt_total17" taborder="26" text="미대상" left="txt_total16:5" width="50" height="24" top="grdMainList:5"/>
+        <Static id="Static00_01" taborder="2" left="0" top="50" height="20" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_00_00" taborder="4" left="0" top="94" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divGrdTopBtn" taborder="27" top="104" width="605" height="24" right="0" visible="false">
+          <Layouts>
+            <Layout>
+              <Button id="btnDownSort" taborder="7" top="0" width="28" height="24" onclick="fnCommOnclick" style="background:URL('img::arrow_down.png') center middle;" right="65" text="↓" cursor="pointer"/>
+              <Button id="btnUpSort" taborder="6" top="0" width="28" height="24" onclick="fnCommOnclick" style="background:URL('img::arrow_up.png') center middle;" right="btnDownSort:5" text="↑" cursor="pointer"/>
+              <Button id="btnUpLvl" taborder="5" top="0" height="24" width="28" style="background:URL('img::arrow_left.png') center middle;" right="btnUpSort:5" text="←" onclick="fnCommOnclick" cursor="pointer"/>
+              <Button id="btnDelWbs" taborder="3" text="삭제" onclick="fnCommOnclick" cssclass="btn_WF_del" top="0" right="btnUpLvl:5" width="70" height="24" cursor="pointer"/>
+              <Button id="btnAddWbs" taborder="2" text="추가" onclick="fnCommOnclick" top="0" right="btnDelWbs:5" width="70" height="24" cssclass="btn_WF_add" enable="true" cursor="pointer"/>
+              <Button id="btn_ExcelUpload" taborder="1" text="일괄등록" cssclass="btn_WF_Excel" top="0" right="btnAddWbs:5" width="85" height="24" onclick="btn_ExcelUpload_onclick" visible="false" cursor="pointer"/>
+              <Button id="btnWbsDay" taborder="4" text="예외일정 관리" top="0" height="24" onclick="fnCommOnclick" cursor="pointer" right="btnAddWbs:5" width="95"/>
+              <Button id="btnExcelTemplate" taborder="0" text="엑셀 템플릿" onclick="fnCommOnclick" cssclass="btn_WF_Download" top="0" right="btnWbsDay:5" width="95" height="24" visible="false" cursor="pointer"/>
+              <Button id="btnExcelDown" taborder="8" text="엑셀" top="0" width="60" right="0" cssclass="btn_WF_excelDown" onclick="fnCommOnclick" height="24" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divGrdBotBtn" taborder="28" width="385" right="0" bottom="0" height="32">
+          <Layouts>
+            <Layout>
+              <Button id="btnSaveWbs" taborder="0" text="계획기준저장" cssclass="btn_WF_Popup" right="151" bottom="0" width="120" height="32" onclick="fnCommOnclick"/>
+              <Button id="btnSaveWbs2" taborder="1" text="조정계획기준저장" right="0" width="146" height="32" cssclass="btn_WF_Popup" bottom="0" onclick="fnCommOnclick"/>
+              <Button id="btnBatchAddRep" taborder="2" text="일괄등록" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="btnSaveWbs:5" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="stcMonthDiffUnit00_00" taborder="15" text="%" cssclass="mm" left="edt_actlPlanRate:5" top="104" width="16" height="24" style="align:left middle;"/>
+        <Button id="btnChart" taborder="29" text="차트" top="105" right="-75" width="70" height="24" onclick="fnCommOnclick" visible="false" cssclass="btn_WF_chart"/>
+        <Static id="stcSelectInfo" taborder="1" left="0" top="722" width="114" height="24" border="2px dashed crimson, 2px dashed crimson, 2px none crimson" padding="0px 0px 0px 5px" visible="false" background="beige" font="bold 14px/normal &quot;NanumSquareR&quot;" usedecorate="true"/>
+        <Static id="stcDropInfo" taborder="30" left="0" top="744" width="114" height="24" border="2px none crimson, 2px dashed crimson, 2px dashed crimson" padding="0px 0px 0px 5px" visible="false" background="beige" font="bold 14px/normal &quot;NanumSquareR&quot;" usedecorate="true"/>
+        <Static id="sta_listCnt" taborder="33" left="stcPjtSchePlan:0" top="70" width="70" height="24" style="align:left middle;" countDataset="dsPjWbs"/>
+        <Button id="btnTreeExpand" taborder="31" text="+" top="70" width="24" height="24" onclick="fnCommOnclick" left="sta_listCnt:5"/>
+        <Button id="btnTreeCollapse" taborder="32" text="-" top="70" height="24" onclick="fnCommOnclick" width="24" left="btnTreeExpand:2"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsPjWbs" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="12"/>
+          <Column id="ROWFLAG" type="STRING" size="20"/>
+          <Column id="WBS_ID" type="STRING" size="12"/>
+          <Column id="WBS_CODE" type="STRING" size="20"/>
+          <Column id="WBS_NAME" type="STRING" size="200"/>
+          <Column id="PJT_ID" type="STRING" size="12"/>
+          <Column id="LVL" type="INT" size="10"/>
+          <Column id="PARENT_ID" type="STRING" size="12"/>
+          <Column id="LEAF_YN" type="STRING" size="1"/>
+          <Column id="PLAN_SDATE" type="STRING" size="14"/>
+          <Column id="PLAN_EDATE" type="STRING" size="14"/>
+          <Column id="PLAN_TOT_WORK" type="FLOAT" size="10"/>
+          <Column id="PLAN_WORK" type="FLOAT" size="10"/>
+          <Column id="PLAN_CMPL_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="WEIGHT" type="BIGDECIMAL" size="255"/>
+          <Column id="ACTL_SDATE" type="STRING" size="14"/>
+          <Column id="ACTL_EDATE" type="STRING" size="14"/>
+          <Column id="ACTL_WORK" type="INT" size="10"/>
+          <Column id="ACTL_CMPL_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="WORK_CMPL_YN" type="STRING" size="1"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="REG_USER_ID" type="STRING" size="10"/>
+          <Column id="REG_USER_NM" type="STRING" size="100"/>
+          <Column id="REG_USER_DEPT" type="STRING" size="100"/>
+          <Column id="LMOD_SDATE" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="10"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="STRING" size="100"/>
+          <Column id="WBS_DESC" type="STRING" size="4000"/>
+          <Column id="ACTL_PLAN_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="CHG_USER_NM" type="STRING" size="100"/>
+          <Column id="OUT_DOCS" type="STRING" size="256"/>
+          <Column id="IS_LAST_LVL" type="STRING" size="256"/>
+          <Column id="CALC_DATE" type="STRING" size="14"/>
+          <Column id="OUTPRNT_ORD" type="INT" size="256"/>
+          <Column id="PLAN_DAYS" type="INT" size="256"/>
+          <Column id="EXE_USER_NM" type="STRING" size="200"/>
+          <Column id="PLAN_CMPL_MRATE" type="BIGDECIMAL" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPjWbsTot" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="PJT_ID" type="STRING" size="16"/>
+          <Column id="CALC_DATE" type="STRING" size="14"/>
+          <Column id="ACTL_PLAN_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="PLAN_CMPL_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="ACTL_CMPL_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="STAGE_CD" type="STRING" size="30"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="REG_USER_ID" type="STRING" size="10"/>
+          <Column id="REG_USER_NM" type="STRING" size="100"/>
+          <Column id="REG_USER_DEPT" type="STRING" size="100"/>
+          <Column id="LMOD_SDATE" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="10"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="STRING" size="100"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="dsPjWbsTmp">
+        <ColumnInfo>
+          <Column id="WBS_ID" type="STRING" size="12"/>
+          <Column id="WBS_CODE" type="STRING" size="20"/>
+          <Column id="WBS_NAME" type="STRING" size="200"/>
+          <Column id="PJT_ID" type="STRING" size="12"/>
+          <Column id="LVL" type="INT" size="10"/>
+          <Column id="PARENT_ID" type="STRING" size="12"/>
+          <Column id="LEAF_YN" type="STRING" size="1"/>
+          <Column id="PLAN_SDATE" type="STRING" size="14"/>
+          <Column id="PLAN_EDATE" type="STRING" size="14"/>
+          <Column id="PLAN_TOT_WORK" type="FLOAT" size="10"/>
+          <Column id="PLAN_WORK" type="FLOAT" size="10"/>
+          <Column id="PLAN_CMPL_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="WEIGHT" type="BIGDECIMAL" size="255"/>
+          <Column id="ACTL_SDATE" type="STRING" size="14"/>
+          <Column id="ACTL_EDATE" type="STRING" size="14"/>
+          <Column id="ACTL_WORK" type="INT" size="10"/>
+          <Column id="ACTL_CMPL_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="WORK_CMPL_YN" type="STRING" size="1"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="REG_USER_ID" type="STRING" size="10"/>
+          <Column id="REG_USER_NM" type="STRING" size="100"/>
+          <Column id="REG_USER_DEPT" type="STRING" size="100"/>
+          <Column id="LMOD_SDATE" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="10"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="STRING" size="100"/>
+          <Column id="WBS_DESC" type="STRING" size="4000"/>
+          <Column id="ACTL_PLAN_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="CHG_USER_NM" type="STRING" size="100"/>
+          <Column id="OUT_DOCS" type="STRING" size="256"/>
+          <Column id="IS_LAST_LVL" type="STRING" size="256"/>
+          <Column id="IS_CALCU" type="STRING" size="256"/>
+          <Column id="CALC_DATE" type="STRING" size="14"/>
+          <Column id="OUTPRNT_ORD" type="INT" size="256"/>
+          <Column id="CAN_SAVE" type="STRING" size="1"/>
+          <Column id="PLAN_DAYS" type="INT" size="256"/>
+          <Column id="EXE_USER_NM" type="STRING" size="200"/>
+          <Column id="PLAN_CMPL_MRATE" type="BIGDECIMAL" size="256"/>
+          <Column id="IS_AUTOCALCU" type="STRING" size="10"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="PJT_NM" type="STRING" size="256"/>
+          <Column id="SUB_PJT_ID" type="STRING" size="256"/>
+          <Column id="LVL" type="STRING" size="256"/>
+          <Column id="SEL_PJT_ID" type="STRING" size="256"/>
+          <Column id="SEL_SUB_PJT_ID" type="STRING" size="256"/>
+          <Column id="SEL_LVL" type="STRING" size="256"/>
+          <Column id="GUBUN" type="STRING" size="256"/>
+          <Column id="CALC_DATE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="GUBUN"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPopRtn"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item2" compid="edtPlanCmplRate" propid="value" datasetid="dsPjWbsTot" columnid="PLAN_CMPL_RATE"/>
+      <BindItem id="item3" compid="edtActlCmplRate" propid="value" datasetid="dsPjWbsTot" columnid="ACTL_CMPL_RATE"/>
+      <BindItem id="item4" compid="edt_actlPlanRate" propid="value" datasetid="dsPjWbsTot" columnid="ACTL_PLAN_RATE"/>
+      <BindItem id="item0" compid="divSearch.form.edtPjtNm" propid="value" datasetid="dsCond" columnid="PJT_NM"/>
+      <BindItem id="item5" compid="divSearch.form.cboSubPjt" propid="value" datasetid="dsCond" columnid="SUB_PJT_ID"/>
+      <BindItem id="item6" compid="divSearch.form.cboWbsLvl" propid="value" datasetid="dsCond" columnid="LVL"/>
+      <BindItem id="item1" compid="calCalcDate" propid="value" datasetid="dsPjWbsTot" columnid="CALC_DATE"/>
+    </Bind>
+    <InitValue/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ PJ0100_W
+* 화면(명)		︰ 프로젝트일정계획
+* 메뉴(경로)	︰ 프로젝트관리 > 범위 및 일정 >  프로젝트일정계획(WBS 관리)
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.09.22
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.09.22	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_PjComm.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.isSetSubPjtCbo = false;
+this.isSetPjtWBSLvlCbo	= false;
+
+this.chkMsg;
+this.dragRow;
+this.dropRow;
+this.isEscKeyDropCancel = false;	//ESC키를 통해 Drag Drop을 취소 시켰는지 여부값을 설정하는 변수
+
+this.dateChkRow;					//저장시 계획시작일/종료일 validation 체크 후 row Focus를 처리하기 위한 row 변수
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();	// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	//this.dsCond.setColumn(0, "PJT_ID", "");
+	//this.dsCond.setColumn(0, "PJT_NM", "");
+	this.dsCond.setColumn(0, "SUB_PJT_ID", undefined);
+	this.dsCond.setColumn(0, "LVL", undefined);
+}
+
+// 조회
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "select01";								// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ0100W/select01";						// 서비스명
+    var sInDs = "dsCond=dsCond";							// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsPjWbs=dsPjWbs dsPjWbsTot=dsPjWbsTot dsCond=dsCond";	// 서버에서 수신할 데이타셋
+    var sArg = "";											// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/*저장 : 최하위 레벨 계획시작일, 계획종료일, 총작업량, 계획작업량 자동 계산 저장*/
+this.fnSave = function()
+{
+	trace("this.calCalcDate.value ::: " + this.calCalcDate.value);
+	this.dsCond.setColumn(0, "CALC_DATE", this.calCalcDate.value);
+	this.dsPjWbs.set_enableevent(false);
+	this.dsPjWbs.set_updatecontrol(false);
+
+	for(var i=0; i<this.dsPjWbs.rowcount; i++)
+	{
+		if(this.dsPjWbs.getColumn(i, "CREATE_YN") == "Y")
+		{
+			this.dsPjWbs.setRowType(i, Dataset.ROWTYPE_INSERT);
+			this.dsPjWbs.setColumn(i, "ROWFLAG", "I");
+		}
+	}
+
+	this.dsPjWbs.set_enableevent(true);
+	this.dsPjWbs.set_updatecontrol(true);
+	
+	// transaction
+	var sTranId = "save01";													// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ0100W/save01";										// 서비스명
+    var sInDs = "dsCond=dsCond dsPjWbs=dsPjWbs:U";							// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨	dsPjWbsTot=dsPjWbsTot:U
+    var sOutDs = "dsPjWbs=dsPjWbs dsPjWbsTot=dsPjWbsTot dsCond=dsCond";		// 서버에서 수신할 데이타셋
+    var sArg = "";															// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::" + nErrorCode+"::" + sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			this.grdMainList.set_treeinitstatus("expand,all");
+			this.fnSetButtonControl();
+			
+			if(this.dsPjWbsTot.rowcount == 0)
+			{
+				this.dsPjWbsTot.setInsertRow(0);
+				this.dsPjWbsTot.setColumn(0, "CALC_DATE", Ex.util.today());
+			}
+			break;
+
+		case "save01" :
+			Ex.core.toast(this, "10004");
+			this.grdMainList.set_treeinitstatus("expand,all");
+			this.fnSetButtonControl();
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "PJ0100_P01" :
+			trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)	this.dsPopRtn.loadXML(varValue);
+			this.dsCond.setColumn(0, "PJT_ID", this.dsPopRtn.getColumn(0, "PJT_ID"));
+			this.dsCond.setColumn(0, "PJT_NM", this.dsPopRtn.getColumn(0, "PJT_NAME"));
+			this.fnSetCombo();
+			break;
+
+		case "PJ0100_P05" :
+			if(varValue == "Y")
+			{
+				this.fnSearch();
+			}
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "alertCalcDateI" :
+			this.calCalcDate.setFocus();
+			break;
+
+		case "alertPlanDateI" :		
+			this.grdMainList.getBindDataset().set_rowposition(this.dateChkRow);		// 데이터셋 ROW 포커스 이동
+			this.grdMainList.showEditor(true);										// 그리드 편집모드로 변경
+			var cellIdx = this.grdMainList.getBindCellIndex("Body", "PLAN_STIME");
+			this.grdMainList.setCellPos(cellIdx, this.dateChkRow);					// 그리드 셀 포커스 이동
+			break;
+
+		case "moveConfirm" :
+			var pRow = this.grdMainList.getTreeParentRow(this.grdMainList.getTreeRow(this.dsPjWbs.rowposition), false);
+				pRow = this.grdMainList.getTreeParentRow(pRow, true);
+
+			trace("btnUpLvl pRow : " + pRow);
+			
+			if(pRow > -1)
+			{
+				var pLvl = this.dsPjWbs.getColumn(pRow, "LVL");
+
+				trace("btnUpLvl pRow : " + pRow + " pLvl : " + pLvl + " pWBS_CODE : " + this.dsPjWbs.getColumn(pRow, "WBS_CODE"));
+				
+				if(pLvl >= 0)
+				{
+					trace("btnUpLvl dragRow : " + this.grdMainList.getTreeRow(this.dsPjWbs.rowposition) + " dropRow : " + pRow);
+					this.fnSetTempDragDataList(this.grdMainList, this.dsPjWbsTmp, this.grdMainList.getTreeRow(this.dsPjWbs.rowposition), pRow);
+				}
+			}
+			break;
+
+		case "saveConfirm" :
+			this.dsCond.setColumn(0, "GUBUN", "1");
+			this.fnSave();
+			break;
+
+		case "saveConfirm2" :
+			this.dsCond.setColumn(0, "GUBUN", "2");
+			this.fnSave();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.grdMainList.displayRowType();
+	
+	this.divSearch.form.cboSubPjt.set_displaynulltext(Ex.core.word("- 전체 - "));	
+	
+	this.fv_today = Ex.util.today();
+
+	// 공통코드 조회
+	this.fnGetCmmCd();
+	
+ 	var arrBtn = [this.divGrdTopBtn.form.btnExcelTemplate];	// 엑셀템플릿
+ 	Ex.util.setBtnVisible(this, 'write', arrBtn);
+	arrBtn = [this.divGrdTopBtn.form.btnWbsDay];	// 예외일정 관리
+	Ex.util.setBtnVisible(this, 'write', arrBtn);
+	arrBtn = [this.divGrdTopBtn.form.btnAddWbs];	// 추가
+	Ex.util.setBtnVisible(this, 'write', arrBtn);
+	arrBtn = [this.divGrdTopBtn.form.btnDelWbs];	// 삭제
+	Ex.util.setBtnVisible(this, 'delete', arrBtn);
+	arrBtn = [this.divGrdTopBtn.form.btnExcelDown];	//엑셀
+	Ex.util.setBtnVisible(this, 'exclDown', arrBtn);
+
+	// 버튼&권한 mapping && visible 처리
+	arrBtn = [this.divGrdBotBtn.form.btnBatchAddRep];	// 일괄등록
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+	arrBtn = [this.divGrdBotBtn.form.btnSaveWbs];		// 계획기준저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+	arrBtn = [this.divGrdBotBtn.form.btnSaveWbs2];		// 조정계획기준저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+ 
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divGrdTopBtn, 'right', true);
+	Ex.util.setBtnAlign(this.divGrdBotBtn, 'right', true);
+}
+
+this.fnSetButtonControl = function()
+{
+	this.divGrdTopBtn.set_visible( !Ex.isEmpty(this.dsCond.getColumn(0, "SEL_SUB_PJT_ID")) ? true : false);
+	//this.divGrdBotBtn.set_visible( !Ex.isEmpty(this.dsCond.getColumn(0, "SEL_SUB_PJT_ID")) ? true : false);
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		 upCmmCd : ['PROC_STS_CD', 'BUSI_KIND_CD', 'DEV_GRADE_CD']			// 조회할 상위코드
+		,codeDiv: ['PJT_MNG_CD', 'PJT_MNG_CD', 'PJT_MNG_CD']				// 조회할 코드의 업무구분
+		,optStr	: ['ALL', 'ALL', 'ALL']										// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y', 'Y', 'Y']											// 사용여부
+		,filter	: ['', '', '']												// filterStr
+		,objDs	: [this.dsProcStsCd, this.dsBusiKindCd, this.dsDevGradeCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+//Sub Project Combo 조회
+this.fnSetCombo = function()
+{
+	this.setSubPjtList(this, this.dsCond.getColumn(0, "PJT_ID"), this.divSearch.form.cboSubPjt, this.searchSubPjtInfoCallBack);
+	this.setPjtWBSLvlList(this, this.dsCond.getColumn(0, "PJT_ID"), this.divSearch.form.cboWbsLvl, this.searchPjtWBSLvlInfoCallBack);
+}
+
+//Sub Project Combo 조회 CallBack
+this.searchSubPjtInfoCallBack = function(rtnDs)
+{
+	//trace("[MS0000_D02] this.searchSubPjtInfoCallBack() rtnObj.ROWCOUNT : " + rtnObj.ROWCOUNT);
+	//this.dsSubPjt.assign(rtnDs);
+	var aRow = this.divSearch.form.cboSubPjt.getInnerDataset().insertRow(0);
+	this.divSearch.form.cboSubPjt.getInnerDataset().setColumn(0, "PJT_NAME", Ex.core.word("- 전체 -"));
+
+	this.divSearch.form.cboSubPjt.set_displaynulltext("");
+	
+	this.divSearch.form.cboSubPjt.set_text(Ex.core.word("- 전체 -"));
+	
+	if( !Ex.isEmpty(this.PJT_ID) )	this.divSearch.form.cboSubPjt.set_value(this.PJT_ID);
+	else							this.divSearch.form.cboSubPjt.set_index(0);
+
+	this.isSetSubPjtCbo = true;
+	
+	this.isComboSetCompleted();
+}
+
+this.searchPjtWBSLvlInfoCallBack = function(rtnDs)
+{
+	//trace("[MS0000_D02] this.searchPjtWBSLvlInfoCallBack() rtnObj.ROWCOUNT : " + rtnObj.ROWCOUNT);
+	//this.dsSubPjt.assign(rtnDs);
+	trace(this.divSearch.form.cboWbsLvl.getInnerDataset().saveXML());
+	var aRow = this.divSearch.form.cboWbsLvl.getInnerDataset().insertRow(0);
+	this.divSearch.form.cboWbsLvl.getInnerDataset().setColumn(0, "NAME", Ex.core.word("- 전체 -"));
+
+	if( !Ex.isEmpty(this.LVL) )	this.divSearch.form.cboWbsLvl.set_value(this.LVL);
+	else							this.divSearch.form.cboWbsLvl.set_index(0);
+	
+	this.isSetPjtWBSLvlCbo	= true;
+
+	this.isComboSetCompleted();
+}
+
+this.isComboSetCompleted = function()
+{
+	if(this.isSetSubPjtCbo && this.isSetPjtWBSLvlCbo) this.fnSearch();	// 조회
+}
+
+this.fnSaveChk = function()
+{
+	this.chkMsg = "";
+	for(var i=0; i<this.dsPjWbs.rowcount; i++)
+	{
+		var wbsCode = this.dsPjWbs.getColumn(i, "WBS_CODE");
+		var wbsName = this.dsPjWbs.getColumn(i, "WBS_NAME");
+					
+		if( !Ex.isEmpty(this.dsPjWbs.getColumn(i, "PARENT_ID")) )
+		{
+			if(this.dsPjWbs.getColumn(0, "PLAN_SDATE") > this.dsPjWbs.getColumn(0, "PLAN_EDATE"))
+			{
+				this.dateChkRow = i;
+				var oParam = {id : "alertPlanDateI", msg : "계획종료일은 계획시작일보다 커야 합니다.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return false;
+			}
+
+			if(this.grdMainList.getTreeChildCount(i) > 0)
+			{
+				//trace("i=" + i + " childCount : " + this.grdMainList.getTreeChildCount(i));
+				var grpTot = 0;
+				for(var j=0; j<this.grdMainList.getTreeChildCount(i); j++)
+				{
+					var cRow = this.grdMainList.getTreeChildRow(i, j);
+					//var wbsCode = this.dsPjWbs.getColumn(cRow, "WBS_CODE");
+					//var wbsName = this.dsPjWbs.getColumn(cRow, "WBS_NAME");
+					var weight	= nexacro.toNumber(this.dsPjWbs.getColumn(cRow, "WEIGHT"), 0);
+					//trace("cRow : " + cRow + " wbsCode : " + wbsCode + " wbsName : " + wbsName + " weight : " + weight);
+					grpTot = grpTot + weight;					
+				}
+				
+				if(grpTot != 100)
+				{
+					this.chkMsg += ((Ex.isEmpty(this.chkMsg) ? "" : "\n") + "[" + wbsCode + "] " + wbsName);
+
+					if(grpTot > 100)
+					{
+						 this.chkMsg += " - 하위의 가중치 합이 100을 초과하였습니다.";
+					}
+					else
+					{
+						this.chkMsg += " - 하위의 가중치 합은 100이 되도록 입력해야 합니다.";
+					}
+				}
+			}
+		}
+	}
+	trace("this.chkMsg:\n" + this.chkMsg);
+	return Ex.isEmpty(this.chkMsg) ? true : false;
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnTreeExpand" :			//트리 전체 펼치기
+			this.grdMainList.set_treeinitstatus("expand,all");
+			break;
+
+		case "btnTreeCollapse" :		//트리 전체 접기
+			this.grdMainList.set_treeinitstatus("collapse,all");
+			
+			var minLvl = this.grdMainList.getBindDataset().getMin("LVL");
+	
+			for(var i=0; i<this.grdMainList.getBindDataset().rowcount; i++)
+			{
+				if(this.grdMainList.getBindDataset().getColumn(i, "LVL") < 1)
+				{
+					trace("i=" + i);
+					this.grdMainList.setTreeStatus(i, true);
+				}
+			}
+			break;
+
+		case "btnSearchPjtPop" :
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ0100_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ0100_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : "프로젝트 검색"
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				//"width=920,height=650"	// <--- width/height/modeless(프레임 처리 옵션)							
+				"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+			);
+			break;
+
+		case "btnSearch" :			// 검색
+			this.fnSearch();
+			break;
+		
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;
+
+		case "btnExcelTemplate" :
+			Ex.util.downloadTemplateFiles(this, null, "WBS_UPLOAD");
+			break;
+
+		case "btnWbsDay" :
+			if( Ex.isEmpty(this.dsCond.getColumn(0, "SEL_SUB_PJT_ID")) )
+			{
+				var oParam = {id : "alertNoSelectSubProjectI", msg : "예외일정 관리는 서브프로젝트 조회시에서만 가능합니다.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return;
+			}
+
+			var fRow = this.divSearch.form.cboSubPjt.getInnerDataset().findRow("PJT_ID", this.dsCond.getColumn(0, "SEL_SUB_PJT_ID"));
+			
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ0100_P04",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ0100_P04.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : "WBS 예외 일정 관리 ",
+					pPjtId	: this.dsCond.getColumn(0, "SEL_SUB_PJT_ID"),
+					pPjtNm	: this.divSearch.form.cboSubPjt.getInnerDataset().getColumn(fRow, "PJT_NAME")
+					
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+			);
+			break;
+
+		case "btnUpLvl" :		//←
+			var strMsg = "[" + this.dsPjWbs.getColumn(this.dsPjWbs.rowposition, "WBS_CODE") + "] - " +
+						 this.dsPjWbs.getColumn(this.dsPjWbs.rowposition, "WBS_NAME") +
+						 "\n를 상위로 이동하시겠습니까?";
+
+			var param = {
+						id : "moveConfirm"
+					  , msg : strMsg
+					  , arrparam : ['']
+					  , msgtype : "I"
+			};
+			Ex.core.confirm(this, param);
+			break;
+
+		case "btnUpSort" :		//↑
+			this.fnSetRowMove("UP", this.grdMainList, this.dsPjWbsTmp);
+			break;
+
+		case "btnDownSort" :	//↓
+			this.fnSetRowMove("DOWN", this.grdMainList, this.dsPjWbsTmp);
+			break;
+
+		case "btnExcelDown" :	// 엑셀다운
+			var oInfo = {
+   				Grid	: [this.grdMainList],
+   				Sheet	: [this.getOwnerFrame().info.menuNm],
+   				//FileNm	: ["WBS_" + this.divSearch.form.edtPjtNm.text + (!Ex.isEmpty(this.divSearch.form.cboSubPjt.text) ? "_" + this.divSearch.form.cboSubPjt.text : "")],
+				FileNm : ["WBS"],
+   				ExportType : "XLSX",
+   				ExportId : "excel01"
+   			};
+			this.gfnExportExcel(this, oInfo);
+			break;
+
+		case "btnChart" :
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ0100_P02",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ0100_P02.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : "WBS CHART"
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+			);
+			break;
+
+		case "btnAddWbs" :			// 추가
+			if( Ex.isEmpty(this.dsCond.getColumn(0, "SEL_PJT_ID")) )
+			{
+				var oParam = {id : "alertNoSelectProjectI", msg : "선택된 프로젝트가 없습니다.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return;
+			}
+			
+			if( Ex.isEmpty(this.dsCond.getColumn(0, "SEL_SUB_PJT_ID")) )
+			{
+				var oParam = {id : "alertNoSelectSubProjectI", msg : "일정 추가/삭제 및 WBS레벨 변경은 서브프로젝트 조회시에서만 가능합니다.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return;
+			}
+			
+			if(this.dsPjWbs.getColumn(this.dsPjWbs.rowposition, "LVL") == 0)
+			{
+				var oParam = {id : "alertProjectlVLI", msg : "프로젝트 레벨에는 추가할 수 없습니다.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return;
+			}
+
+			var strPrWbsCode = this.dsPjWbs.getColumn(this.dsPjWbs.rowposition, "WBS_CODE");
+			var nCuLvl       = this.dsPjWbs.getColumn(this.dsPjWbs.rowposition, "LVL");
+
+			var aRow = this.fnGetLastChildRow(this.grdMainList, this.grdMainList.getTreeParentRow(this.dsPjWbs.rowposition));			
+			var nRow = this.dsPjWbs.setInsertRow(aRow + 1);
+
+			var nPntIdx = strPrWbsCode.lastIndexOf(".");
+
+			var strCuWbsCode = "";
+			var nNxtCd;
+			var strTmpCode = "";
+
+			if( Ex.isEmpty(nPntIdx) )
+			{
+				strCuWbsCode = new Number(strPrWbsCode).valueOf() + 1;
+			}
+			else
+			{
+				nNxtCd  = new Number(strPrWbsCode.substr(nPntIdx + 1)) + 1;
+				strTmpCode = strPrWbsCode.substr(0, nPntIdx + 1);
+				strCuWbsCode = strTmpCode + nNxtCd;
+			}
+
+			this.dsPjWbs.setColumn(nRow, "WBS_CODE", strCuWbsCode);
+
+			if (this.dsPjWbsTot.rowcount == 0)
+			{
+				this.dsPjWbsTot.setInsertRow();
+				this.dsPjWbsTot.setColumn(0, "PJT_ID", this.dsCond.getColumn(0, "SEL_SUB_PJT_ID"));
+			}
+
+			this.dsPjWbs.setColumn(nRow, "PJT_ID",      this.dsCond.getColumn(0, "SEL_SUB_PJT_ID"));
+			
+			this.dsPjWbs.setColumn(nRow, "PARENT_ID",   this.dsCond.getColumn(0, "SEL_PJT_ID"));
+			this.dsPjWbs.setColumn(nRow, "PLAN_SDATE",  Ex.util.today());
+			this.dsPjWbs.setColumn(nRow, "PLAN_EDATE",  Ex.util.today());
+			this.dsPjWbs.setColumn(nRow, "LVL",         0);
+			this.dsPjWbs.setColumn(nRow, "IS_LAST_LVL", "Y");
+			this.dsPjWbs.setColumn(nRow, "IS_CALCU",    "N");
+
+			this.dsPjWbs.setColumn(nRow, "LVL", nCuLvl);
+
+			this.fnSetWbsCodeRow(this.grdMainList, this.dsPjWbsTmp);
+			break;
+
+		case "btnDelWbs" :			// 삭제
+			break;
+
+		case "btnBatchAddRep" :
+			if(Ex.isEmpty(this.dsCond.getColumn(0, "PJT_ID")))
+			{
+				var oParam = {id : "alertNoSelPjtI", msg : "프로젝트를 선택하세요.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return;
+			}
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ0100_P05",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ0100_P05.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title		: "WBS 일괄등록",
+					pPjtId		: this.dsCond.getColumn(0, "PJT_ID"),
+					pPjtNm		: this.dsCond.getColumn(0, "PJT_NM"),
+					pSubPjtId	: this.dsCond.getColumn(0, "SUB_PJT_ID")					
+				},							// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"autosize"					// <--- width/height/modeless(프레임 처리 옵션)							
+			);
+			break;
+
+		case "btnSaveWbs" :			// 계획기준저장
+		case "btnSaveWbs2" :		// 조정계획기준저장
+			if (this.dsPjWbs.rowcount < 1) return;
+			
+			if( this.fnSaveChk() )
+			{
+				var param = {
+						id : (obj.id == "btnSaveWbs" ? "saveConfirm" : "saveConfirm2")
+					  , msg : "10003"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+			else
+			{
+				Ex.core.popup(
+					this,								// <--- 팝업 실행 스코프
+					"comTextareaPop",				// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+					"comm::comTextareaPop.xfdl",	// <--- 팝업창 오픈 Url
+					{
+						title		: "WBS 입력 체크",
+						subTitle	: "[계획 기준 저장]입력 체크",
+						pMsg		: this.chkMsg
+					},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+					"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+				);
+			}
+			break;
+	}
+}
+
+this.grdOnDrag = function(obj:nexacro.Grid, e:nexacro.GridDragEventInfo)
+{
+	if(e.row <= 0 || Ex.isEmpty(this.dsCond.getColumn(0, "SEL_SUB_PJT_ID")) )
+	{
+		this.stcSelectInfo.set_visible(false);
+		this.stcDropInfo.set_visible(false);
+		return false;
+	}
+	
+	this.dragRow = e.row;
+	trace("this.grdOnDrag() this.dragRow : " + this.dragRow);
+	trace("dataset Row : " + obj.getTreeRow(this.dragRow));
+	return true;
+};
+
+this.grdOnDragMove = function(obj:nexacro.Grid, e:nexacro.GridDragEventInfo)
+{
+	if(e.col == obj.getBindCellIndex("Body", "WBS_CODE"))
+	{
+		//trace("this.grdOnDragMove() this.dragRow : " + this.dragRow + " this.dropRow : " + e.row);
+		
+		if(this.dragRow == e.row)
+		{
+			var strVal = "[" + this.dsPjWbs.getColumn(this.dragRow, "WBS_CODE") + "] - \"" + this.dsPjWbs.getColumn(e.row, "WBS_NAME") + "\" 항목";
+			this.stcSelectInfo.set_text(strVal);
+			this.stcDropInfo.set_visible(false);
+			this.stcSelectInfo.set_border("2px dashed crimson");
+		}
+		else
+		{
+			var movePRow = this.grdMainList.getTreeParentRow(e.row, true);	//Drop 대상이 되는 Row의 부모 Row정보
+			var dragPRow = this.grdMainList.getTreeParentRow(this.dragRow, true);	//Drag된 Row의 부모 Row정보
+
+			var isDropPoss = true;
+
+			if(dragPRow == e.row)
+			{
+				isDropPoss = false;
+			}
+			else
+			{
+				while(movePRow > -1)
+				{
+					if(this.dragRow == movePRow)
+					{
+						isDropPoss = false;
+						break;
+					}
+					else
+					{
+						movePRow = this.grdMainList.getTreeParentRow(movePRow, true);
+					}
+				}
+			}
+
+			var moveStrVal = "[" + this.dsPjWbs.getColumn(this.dragRow, "WBS_CODE") + "] - \"" + this.dsPjWbs.getColumn(this.dragRow, "WBS_NAME") + "\"";
+			var targStrVal = "[" + this.dsPjWbs.getColumn(e.row, "WBS_CODE") + "] - \"" + this.dsPjWbs.getColumn(e.row, "WBS_NAME") + "\"";
+			
+			if(isDropPoss)
+			{
+				this.stcSelectInfo.set_text(moveStrVal + " 항목을");
+				this.stcDropInfo.set_text(targStrVal + " 항목의 하위로 <b v='true'><fc v='blue'>이동 가능</fc></b>");
+			}
+			else
+			{
+				this.stcSelectInfo.set_text(moveStrVal + " 항목");
+				this.stcDropInfo.set_text(targStrVal + " 항목의 하위로 <b v='true'><fc v='red'>이동 불가</fc></b>");
+			}
+
+			this.stcSelectInfo.set_border("2px dashed crimson, 2px dashed crimson, 2px none crimson");
+			this.stcDropInfo.set_border("2px none crimson, 2px dashed crimson, 2px dashed crimson");
+
+			this.stcDropInfo.set_visible(true);
+		}
+		this.stcSelectInfo.set_visible(true);
+	}
+
+	//trace("this.stcSelectInfo.text : " + this.stcSelectInfo.getDisplayText());
+	//trace("this.stcDropInfo.text : " + this.stcDropInfo.getDisplayText());
+	
+	var objSizeSel = nexacro.getTextSize(this.stcSelectInfo.getDisplayText(), 'bold 14px/normal "NanumSquareR"');
+	var objSizeDrop = nexacro.getTextSize(this.stcDropInfo.getDisplayText(), 'bold 14px/normal "NanumSquareR"');
+	
+	var objSizeW;
+	var objSizeSelW = parseInt(objSizeSel.nx);
+	var objSizeDropW = parseInt(objSizeDrop.nx);
+
+	if(this.stcDropInfo.visible)
+	{
+		if(objSizeSelW >= objSizeDropW)	objSizeW = objSizeSelW;
+		else 							objSizeW = objSizeDropW;
+	}
+	else
+	{
+		objSizeW	= objSizeSelW;
+	}
+	objSizeW = objSizeW + 20;
+	
+	//trace("objSizeW : " + objSizeW + " objSizeSelW : " + objSizeSelW + " objSizeDropW : " + objSizeDropW);
+
+	this.stcSelectInfo.set_width(objSizeW);
+	this.stcDropInfo.set_width(objSizeW);
+
+	this.stcSelectInfo.move(e.clientx, e.clienty + obj.getOffsetTop());
+	this.stcDropInfo.move(e.clientx, e.clienty + obj.getOffsetTop() + 24);
+};
+
+this.grdOnDrop = function(obj:nexacro.Grid,e:nexacro.GridDragEventInfo)
+{
+	this.dropRow = e.row;
+	
+	this.stcSelectInfo.set_visible(false);
+	this.stcDropInfo.set_visible(false);
+
+	trace("this.grdOnDrop() this.dragRow : " + this.dragRow + " this.dropRow : " + this.dropRow);
+
+	if( !this.isEscKeyDropCancel )
+	{		
+		if(this.dragRow != this.dropRow)
+		{
+			var dragPWbsId = this.dsPjWbs.getColumn(this.dragRow, "P_WBS_CODE");	//Drag가 시작된 row의 부모 WBS_CODE
+			var dropWbsId = this.dsPjWbs.getColumn(this.dropRow, "WBS_CODE");	//Drop된 row의 WBS_CODE
+
+			if(dragPWbsId != dropWbsId && e.col == obj.getBindCellIndex("Body", "WBS_CODE"))
+			{
+				var parentRow = this.grdMainList.getTreeParentRow(this.dropRow, true);
+				var dragPRow = this.grdMainList.getTreeParentRow(this.dragRow, true);	//Drag된 Row의 부모 Row정보
+		
+				var isDropPoss = true;
+				
+				if(dragPRow == e.row)
+				{
+					isDropPoss = false;
+				}
+				else
+				{
+					while(parentRow > -1)
+					{
+						if(this.dragRow == parentRow)
+						{
+							isDropPoss = false;
+							break;
+						}
+						else
+						{
+							parentRow = this.grdMainList.getTreeParentRow(parentRow, true);
+						}
+					}
+					
+					if(isDropPoss)
+					{
+						this.setWaitCursor(true, true);
+						this.setTimer(1, 100);
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		this.isEscKeyDropCancel = false;
+	}
+};
+
+this.grdOnDragLeave = function(obj:nexacro.Grid,e:nexacro.DragEventInfo)
+{
+	this.stcSelectInfo.set_visible(false);
+	this.stcDropInfo.set_visible(false);
+};
+
+this.grdOnKeyUp = function(obj:nexacro.Grid,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 27)
+	{
+		var dragEvt = nexacro.GridDragEventInfo;
+		dragEvt.row = -1
+		this.grdOnDrag(this.grdMainList, dragEvt);
+
+		var dropEvt = nexacro.GridDragEventInfo;
+		dropEvt.col = -1;
+		this.grdOnDrop(this.grdMainList, dropEvt);
+
+		this.isEscKeyDropCancel = true;
+	}
+};
+
+this.formOnTimer = function(obj:nexacro.Form,e:nexacro.TimerEventInfo)
+{
+	if(e.timerid == 1)
+	{
+		this.fnSetTempDragDataList(this.grdMainList, this.dsPjWbsTmp, this.dragRow, this.dropRow);
+		this.killTimer(1);
+		this.setTimer(2, 100);
+	}
+	else if(e.timerid == 2)
+	{
+		this.killTimer(2);
+		this.setWaitCursor(false, true);
+	}
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	//trace("this.dsOnColumnChanged()");
+	//trace("obj.id : " + obj.id + " e.columnid : " + e.columnid);
+	obj.setUpdateRow(e);
+};]]></Script>
+  </Form>
+</FDL>

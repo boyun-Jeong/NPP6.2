@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR5000_P01" left="0" top="0" width="550" height="180" titletext="요청내용 변경사유" onload="form_onload">
+    <Layouts>
+      <Layout width="550" height="180">
+        <Div id="divPage" taborder="0" left="0.00" top="0" enableevent="false" async="false" width="550" height="120">
+          <Layouts>
+            <Layout>
+              <Static id="stcBg00" taborder="3" left="20.00" height="34" cssclass="sta_WF_inputBg" right="20" text="" top="2"/>
+              <Static id="stcProcUserNm" taborder="2" text="작성자" cssclass="sta_WF_inputTitle" left="20.00" top="2" width="130" height="34"/>
+              <Edit id="edtUserNm" taborder="4" left="stcProcUserNm:5.00" top="7" height="24" readonly="true" readonlyComp="Y" width="150"/>
+              <Static id="stcBg" taborder="5" left="20.00" cssclass="sta_WF_inputBg" right="20" text="" top="35" height="80"/>
+              <Static id="stcOpinion" taborder="6" left="20.00" top="35" width="130" cssclass="sta_WF_inputTitle_E" text="변경사유" initvalueid="변경사유;NULL" height="80"/>
+              <TextArea id="txaOpinion" taborder="7" left="154.00" cssclass="txa_WF_normal" right="26" enable="true" text="" top="40" validationGroup="input01" validation="접수의견;NULL" height="70" imemode="hangul"/>
+              <Static id="Static00_01_00_00_00" taborder="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="120" right="530"/>
+              <Static id="Static00_01_00_00_00_00" taborder="1" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="128" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtnBottom" taborder="1" text="" cssclass="div_POP_msg_btnbg" left="20.00" right="20" height="54" bottom="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="12"/>
+              <Button id="btnSave" taborder="1" text="저장" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="110" width="100" height="32" bottom="12"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsSub">
+        <ColumnInfo>
+          <Column id="CD_NO" type="STRING" size="256"/>
+          <Column id="LANG_CD" type="STRING" size="256"/>
+          <Column id="UP_CD_NO" type="STRING" size="256"/>
+          <Column id="CD_LVL" type="STRING" size="256"/>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="UP_CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+          <Column id="CMM_CD_DESC" type="STRING" size="256"/>
+          <Column id="ITM_VAL_1" type="STRING" size="256"/>
+          <Column id="ITM_VAL_2" type="STRING" size="256"/>
+          <Column id="ITM_VAL_3" type="STRING" size="256"/>
+          <Column id="ITM_VAL_4" type="STRING" size="256"/>
+          <Column id="ITM_VAL_5" type="STRING" size="256"/>
+          <Column id="CODE_DIV" type="STRING" size="256"/>
+          <Column id="SORT_ORDR" type="STRING" size="256"/>
+          <Column id="USE_YN" type="STRING" size="256"/>
+          <Column id="RMK" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM_MAIN" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM_SUB" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMain">
+        <ColumnInfo>
+          <Column id="CD_NO" type="STRING" size="256"/>
+          <Column id="LANG_CD" type="STRING" size="256"/>
+          <Column id="UP_CD_NO" type="STRING" size="256"/>
+          <Column id="CD_LVL" type="STRING" size="256"/>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="UP_CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+          <Column id="CMM_CD_DESC" type="STRING" size="256"/>
+          <Column id="ITM_VAL_1" type="STRING" size="256"/>
+          <Column id="ITM_VAL_2" type="STRING" size="256"/>
+          <Column id="ITM_VAL_3" type="STRING" size="256"/>
+          <Column id="ITM_VAL_4" type="STRING" size="256"/>
+          <Column id="ITM_VAL_5" type="STRING" size="256"/>
+          <Column id="CODE_DIV" type="STRING" size="256"/>
+          <Column id="SORT_ORDR" type="STRING" size="256"/>
+          <Column id="USE_YN" type="STRING" size="256"/>
+          <Column id="RMK" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRet"/>
+      <Dataset id="dsCont">
+        <ColumnInfo>
+          <Column id="CHG_SAYU" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)	︰ 요청내용 변경사유
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2025.03.22
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2025.03.22	WEMB		최초작성
+*------------------------------------------------------------------
+* Description
+	<< Popup param >>
+	pGridFormats	: 선택 목록에 사용될 그리드 포맷
+	pGridInnerDsArr	: 선택 목록 그리드에 콤보 InnerDataset Object Array
+	pDsData			: 선택 목록 그리드 Bind Dataset Object
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+ include "lib::lib_WorkFlow.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function(type)
+{	
+	
+}
+
+// 선택
+this.fnSelect = function(selType)
+{	
+	
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+	}
+	
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+		case "contSave" :
+			this.dsRet.clearData();
+			this.dsRet.assign(this.dsCont);
+			this.dsRet.copyRow(this.dsRet.setAddRow(), this.dsCont, this.dsCont.rowposition);
+			Ex.core.pclose(this, this.dsRet.saveXML());
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{	
+	this.divPage.form.edtUserNm.set_value(Ex.util.getSession("gvUserNm"));
+	//this.dsMain.setInsertRow();
+	this.fnGetCmmCd();
+	this.fnSearch('M');	// 메인그리드검색
+	
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSave" :		// 저장
+			var param = {
+				id : "contSave"
+			  , msg : "요청내용을 수정하시겠습니까?"
+			  , arrparam : ['']
+			  , msgtype : "I"
+			  };
+			Ex.core.confirm(this, param);
+			break;
+
+		case "btnClose" :		// 닫기
+			Ex.core.pclose(this);
+			break;
+	}
+}
+
+// 공통 onkeydown event : component
+this.fnCommOnkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == '13')
+	{
+		this.divContent.form.divSearchArea.form.btnSearch.setFocus();
+		this.fnSearch();
+		obj.setFocus();
+	}
+};
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divPage.form.txaOpinion" propid="value" datasetid="dsCont" columnid="CHG_SAYU"/>
+    </Bind>
+  </Form>
+</FDL>

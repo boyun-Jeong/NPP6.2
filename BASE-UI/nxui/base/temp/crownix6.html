@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html style="margin:0;height:100%">
+<head>
+<meta charset="utf-8">
+<title>Crownix HTML5 Viewer</title>
+<script src="https://crownixdev.wemb.co.kr:1443/reporting/html5/js/jquery-1.11.0.min.js"></script>
+<script src="https://crownixdev.wemb.co.kr:1443/reporting/html5/js/crownix-viewer.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://crownixdev.wemb.co.kr:1443/reporting/html5/css/crownix-viewer.min.css">
+<script type="text/javascript">
+var crownixViewer;
+function _crownix_createViewer(sUrl,sId) {
+crownixViewer = new m2soft.crownix.Viewer(sUrl, sId);
+return crownixViewer;
+}
+</script>
+</head>
+<body style="margin:0;height:100%">
+<div id="crownix-viewer" style="position:absolute;width:100%;height:100%"></div>
+<script>
+window.onload = function() {
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PJ0920_W" left="0" top="0" width="1840" height="720" titletext="주프로젝트선택" onload="form_onload">
+    <Layouts>
+      <Layout width="1840" height="720">
+        <Grid id="grdMainList" taborder="1" binddataset="dsPjProject" useinputpanel="false" cellsizingtype="col" autofittype="col" left="0" top="104" right="0" bottom="40" oncellclick="grdMainList_oncellclick" cssclass="grd_WF_normal">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="34" band="left"/>
+                <Column size="136" band="left"/>
+                <Column size="210"/>
+                <Column size="120"/>
+                <Column size="59"/>
+                <Column size="91"/>
+                <Column size="37"/>
+                <Column size="60"/>
+                <Column size="70"/>
+                <Column size="70"/>
+                <Column size="100"/>
+                <Column size="70"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" text="주 프로젝트 여부"/>
+                <Cell col="2" text="프로젝트"/>
+                <Cell col="3" text="기간"/>
+                <Cell col="4" text="진행상태"/>
+                <Cell col="5" text="사업종류"/>
+                <Cell col="6" text="등급"/>
+                <Cell col="7" text="감리대상"/>
+                <Cell col="8" text="현업 PM"/>
+                <Cell col="9" text="IT PM"/>
+                <Cell col="10" text="수행사"/>
+                <Cell col="11" text="수행 PM"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="expr:currow+1"/>
+                <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" text="bind:MAIN_PROJECT_YN"/>
+                <Cell col="2" style="align:left;selectfont: ;" text="bind:PJT_NAME" textAlign="left"/>
+                <Cell col="3" text="expr:PJT_STIME.substr(0, 4)+'-'+PJT_STIME.substr(4, 2)+'-'+PJT_STIME.substr(6, 2)+' ~ '+PJT_ETIME.substr(0, 4)+'-'+PJT_ETIME.substr(4, 2)+'-'+PJT_ETIME.substr(6, 2)"/>
+                <Cell col="4" displaytype="combotext" edittype="none" style="align:middle;" text="bind:PJT_STATUS_CD" combodataset="dsProcStsCd" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                <Cell col="5" displaytype="combotext" edittype="none" style="align:left;" text="bind:PJT_TYPE_CD" combodataset="dsBusiKindCd" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                <Cell col="6" displaytype="combotext" style="align:middle;" text="bind:PJT_SIZE_CD" combodataset="dsDevGradeCd" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                <Cell col="7" displaytype="normal" text="expr:SPV_YN=='Y' ? '여' : SPV_YN=='N' ? &quot;부&quot; : ''"/>
+                <Cell col="8" text="bind:UPMU_USER_NM"/>
+                <Cell col="9" displaytype="normal" edittype="none" style="align:middle;selectfont: ;" text="bind:IN_PM_USER_NM"/>
+                <Cell col="10" style="align:left;" text="bind:OUT_CPY_NAME" textAlign="left"/>
+                <Cell col="11" edittype="none" text="bind:OUT_PM_USER_NM"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divSearch" taborder="0" left="0" top="0" right="0" height="50" scrollbars="none" cssclass="div_WF_divSearchArea">
+          <Layouts>
+            <Layout>
+              <Static id="Static00_00_00_00" taborder="8" left="149" top="13" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="Static00" taborder="2" text="상태" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_00_00:0" top="13" width="64" height="24"/>
+              <Static id="Static00_00" taborder="7" left="0" top="13" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+              <Static id="Static07" taborder="3" text="년도" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00:0" top="13" width="49" height="24"/>
+              <Static id="Static03" taborder="4" text="FIX h12" cssclass="Guide_Color" visible="false" left="0" top="66" width="991" height="12"/>
+              <Static id="Static09" taborder="5" text="FIX w30" cssclass="Guide_Color" visible="false" left="324" top="0" width="30" height="50"/>
+              <Static id="Static00_00_00_00_00" taborder="9" left="381" top="13" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="Static11" taborder="6" text="프로젝트명" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_00_00_00:0" top="13" width="81" height="24"/>
+              <Calendar id="calYear" taborder="0" type="spin" dateformat="yyyy" editformat="yyyy" onchanged="divSearch_calYear_onchanged" left="Static07:0" top="13" width="80" height="24" cssclass="cal_WF_normal"/>
+              <Combo id="cboProcStsCd" taborder="1" innerdataset="@dsProcStsCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" left="Static00:0" top="13" width="138" height="24" cssclass="cbo_WF_normal"/>
+              <Edit id="edtPjtNm" taborder="11" left="Static11:0" top="13" width="215" height="24" cssclass="edt_WF_normal" enable="true" readonly="true"/>
+              <Button id="btnSearchPjtPop" taborder="10" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommOnclick" top="13" width="24" left="edtPjtNm:-1"/>
+              <Button id="btnSearch" taborder="13" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Button id="btnSearchReset" taborder="12" top="13" width="90" height="24" text="초기화" right="btnSearch:5" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+          <InitValue/>
+        </Div>
+        <Static id="Static19" taborder="2" cssclass="Guide_Color" visible="false" left="0" right="0" bottom="64" height="20"/>
+        <Static id="sta_listCnt" taborder="3" cssclass="sta_WF_GridCount" visible="false" left="106" top="70" width="150" height="24" style="align:left middle;" countDataset="dsPjProject"/>
+        <Static id="Static00_01" taborder="4" left="0" top="50" height="20" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_00_00" taborder="5" left="0" top="94" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="sta_userInfo" taborder="6" text="프로젝트조회" cssclass="sta_WF_gridTitle" left="0" top="70" width="106" height="24"/>
+        <Div id="divGrdBotBtn" taborder="7" width="200" height="32" bottom="0" right="0" isButtonGroup="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnSave" taborder="0" text="저장" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="0" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divGrdTopBtn" taborder="8" width="97" height="24" visible="true" isButtonGroup="true" top="70" right="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnExcelDown" taborder="0" text="엑셀" top="0" width="60" right="0" cssclass="btn_WF_excelDown" onclick="fnCommOnclick" height="24" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsPjProject" oncolumnchanged="dsPjProject_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="PJT_ID" type="STRING" size="16"/>
+          <Column id="PJT_NAME" type="STRING" size="200"/>
+          <Column id="PJT_STIME" type="STRING" size="14"/>
+          <Column id="PJT_ETIME" type="STRING" size="14"/>
+          <Column id="PJT_STATUS_CD" type="STRING" size="30"/>
+          <Column id="PJT_TYPE_CD" type="STRING" size="30"/>
+          <Column id="PJT_SIZE_CD" type="STRING" size="30"/>
+          <Column id="SPV_YN" type="STRING" size="1"/>
+          <Column id="UPMU_USER_NM" type="STRING" size="100"/>
+          <Column id="IN_PM_USER_NM" type="STRING" size="100"/>
+          <Column id="OUT_CPY_NAME" type="STRING" size="100"/>
+          <Column id="OUT_PM_USER_NM" type="STRING" size="100"/>
+          <Column id="SUB_PJT_YN" type="STRING" size="1"/>
+          <Column id="MAIN_PROJECT_YN" type="STRING" size="1"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsProcStsCd">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="255"/>
+          <Column id="CMM_CD_NM" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsBusiKindCd">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="255"/>
+          <Column id="CMM_CD_NM" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDevGradeCd" cancolumnchange="ds_pj_delivery_cancolumnchange">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="100"/>
+          <Column id="CMM_CD_NM" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="RESULT0">
+        <ColumnInfo>
+          <Column id="ROWINDEX" type="INT" size="255"/>
+          <Column id="STATUS" type="STRING" size="255"/>
+          <Column id="RESULT" type="INT" size="255"/>
+          <Column id="ERROR" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_YEAR" type="STRING" size="256"/>
+          <Column id="PROC_STS_CD" type="STRING" size="256"/>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="PJT_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPopRtn"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item7" compid="divSearch.cboProcStsCd" propid="value" datasetid="ds_pj_prj" columnid="PJT_STATUS_CD"/>
+      <BindItem id="item0" compid="divSearch.form.edtPjtNm" propid="value" datasetid="dsCond" columnid="PJT_NM"/>
+      <BindItem id="item1" compid="divSearch.form.calYear" propid="value" datasetid="dsCond" columnid="PJT_YEAR"/>
+      <BindItem id="item2" compid="divSearch.form.cboProcStsCd" propid="value" datasetid="dsCond" columnid="PROC_STS_CD"/>
+    </Bind>
+    <InitValue/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ PJ0920_W
+* 화면(명)		︰ 주프로젝트선택
+* 메뉴(경로)	︰ 프로젝트관리 > 프로젝트등록 >  주프로젝트선택
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.09.21
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.09.21	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.setColumn(0, "PJT_YEAR", Ex.util.today().substr(0, 4));
+	this.dsCond.setColumn(0, "PROC_STS_CD", "PROC_STS_CD02");
+	this.dsCond.setColumn(0, "PJT_ID", "");
+	this.dsCond.setColumn(0, "PJT_NM", "");
+}
+
+// 조회
+this.fnSearch = function()
+{
+	var pjtYear = (this.dsCond.getColumn(0, "PJT_YEAR")||'').substr(0, 4);
+	//trace("this.fnSearch() pjtYear : " + pjtYear);
+	this.dsCond.setColumn(0, "PJT_YEAR", pjtYear);
+	
+	var sTranId = "select01";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ0920W/select01";			// 서비스명
+    var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsPjProject=dsPjProject";		// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::" + nErrorCode+"::" + sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "PPJ0100" :
+			trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)	this.dsPopRtn.loadXML(varValue);
+			this.dsCond.setColumn(0, "PJT_ID", this.dsPopRtn.getColumn(0, "PJT_ID"));
+			this.dsCond.setColumn(0, "PJT_NM", this.dsPopRtn.getColumn(0, "PJT_NAME"));
+			this.fnSearch();
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "" :
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// 공통코드 조회
+	this.fnGetCmmCd();
+
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divGrdTopBtn.form.btnExcelDown];	//엑셀
+	Ex.util.setBtnVisible(this, 'exclDown', arrBtn);
+
+	arrBtn = [this.divGrdBotBtn.form.btnSave];			//저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divGrdTopBtn, 'right', true);
+	Ex.util.setBtnAlign(this.divGrdBotBtn, 'right', true);
+
+	this.dsCond.setColumn(0, "PJT_YEAR", Ex.util.today().substr(0, 4));
+	this.dsCond.setColumn(0, "PROC_STS_CD", "PROC_STS_CD02");
+
+	this.fnSearch();
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		 upCmmCd : ['PROC_STS_CD', 'BUSI_KIND_CD', 'DEV_GRADE_CD']	// 조회할 상위코드
+		,codeDiv: ['PJT_MNG_CD', 'PJT_MNG_CD', 'PJT_MNG_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['ALL', 'ALL', 'ALL']								// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y', 'Y', 'Y']									// 사용여부
+		,filter	: ['', '', '']										// filterStr
+		,objDs	: [this.dsProcStsCd, this.dsBusiKindCd, this.dsDevGradeCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearch" :			// 검색
+			/*
+			if( Ex.isEmpty(this.dsCond.getColumn(0, "PJT_ID")) )
+			{
+				var oParam = {id : "alertNoPtjIdI", msg : "프로젝트가 선택되지 않았습니다.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return false;
+			}
+			*/
+			this.fnSearch();
+			break;
+
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;
+
+		case "btnExcelDown" :		// 엑셀다운
+			var oInfo = {
+   				Grid	: [this.grdMainList],
+   				Sheet	: [this.getOwnerFrame().info.menuNm],
+   				FileNm	: [this.getOwnerFrame().info.menuNm],
+   				ExportType : "XLSX",
+   				ExportId : "excel01"
+   			};
+			this.gfnExportExcel(this, oInfo);
+			break;
+
+		case "btnSearchPjtPop" :
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PPJ0100",				// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ0100_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : "프로젝트 검색"
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				//"width=920,height=650"	// <--- width/height/modeless(프레임 처리 옵션)							
+				"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+			);
+			break;
+	}
+}
+
+this.grdOnCellClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(e.row < 0) return;
+	
+	var nRowPos     = this.dsPjProject.rowposition;
+	var strPjtId    = this.dsPjProject.getColumn(nRowPos, "PJT_ID");
+	var strPjtName  = this.dsPjProject.getColumn(nRowPos, "ORG_PJT_NAME");
+	var strSubPjtYn = this.dsPjProject.getColumn(nRowPos, "SUB_PJT_YN");
+	var strParentId = this.dsPjProject.getColumn(nRowPos, "PARENT_ID");
+
+	if(Ex.isEmpty(strPjtId))
+	{
+		var oParam = {id : "alertNoSelectProjectI", msg : "선택된 프로젝트가 없습니다.", arrparam : [], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return;
+	}
+
+	var nFindRow = this.dsPjProject.findRow("PJT_ID", strParentId);
+	
+	//서브프로젝트인경우 메인 프로젝트 명으로 대체
+	if( nFindRow > -1 )
+	{
+		strPjtName = this.dsPjProject.getColumn(nFindRow, "ORG_PJT_NAME");
+	}
+
+	// PJT_NAME 프로젝트/서브프로젝트명을 누를 때 마다 POPUP화면 호출
+	if (e.cell == obj.getBindCellIndex("body", "PJT_NAME"))
+	{
+		var argument  = "referer="    + this.getOwnerFrame().info.menuId;
+		    argument += "&PJT_ID="    + strPjtId;
+			argument += "&PJT_NAME="  + strPjtName;
+			argument += "&PARENT_ID=" + strParentId;
+
+		var objApp = nexacro.getApplication();
+		var rowpos = nexacro.getApplication().gdsMenu.findRow("SCREEN_ID", "PJ0100_W");
+		Ex.core.openLink(this, objApp.gdsMenu.getColumn(rowpos, 'MENU_ID'), argument);
+	}
+};]]></Script>
+  </Form>
+</FDL>

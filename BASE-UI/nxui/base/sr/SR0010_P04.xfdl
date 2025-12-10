@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR0010_P04" left="0" top="0" width="750" height="214" titletext="예약등록" onload="form_onload" scrolltype="none" cssclass="" onrbuttonup="formOnRbuttonUp">
+    <Layouts>
+      <Layout width="750" height="214" mobileorientation="landscape">
+        <Static id="Static00_01_00" taborder="3" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+        <Static id="Static00_01_00_00" taborder="4" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+        <Static id="Static00_02" taborder="6" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="60"/>
+        <Div id="divGrdTopBtn" taborder="0" width="425" height="24" bottom="626" visible="true" right="18.48%" isButtonGroup="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+              <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" bottom="0" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staAuthTitle" taborder="1" text="사용자의 권한그룹" left="1520" top="70" width="200" height="24" cssclass="sta_WF_gridTitle"/>
+        <Div id="divContent" taborder="2" text="Div00" left="20.00" top="0" right="20" bottom="0">
+          <Layouts>
+            <Layout>
+              <Static id="stcBg00" taborder="7" left="0" cssclass="sta_WF_inputBg" right="0" text="" top="99" height="34"/>
+              <Static id="stcBg" taborder="0" left="0" cssclass="sta_WF_inputBg" right="0" text="" top="66" height="34"/>
+              <Static id="stcReqTitle" taborder="1" left="0" top="66" width="100" cssclass="sta_WF_inputTitle" text="요청서 제목" height="34"/>
+              <Static id="stcBg00_00" taborder="2" left="0" height="34" cssclass="sta_WF_inputBg" right="0" text="" top="33"/>
+              <Static id="stcReqId" taborder="3" text="요청서 번호" cssclass="sta_WF_inputTitle" left="0" top="33" width="100" height="34"/>
+              <Static id="stcTitle" taborder="4" text="요청서 예약 등록" cssclass="sta_WF_gridTitle" left="0" top="0" height="24" style="align:left middle;" width="170"/>
+              <Static id="Static32" taborder="5" cssclass="Guide_Color" visible="false" left="0" top="24" height="10" background="#e5dbfa" right="-8"/>
+              <Static id="stcReserveDTime" taborder="6" left="0" top="99" width="100" cssclass="sta_WF_inputTitle" text="예약일시" height="34"/>
+              <Edit id="edtReqId" taborder="8" left="stcReqId:5" top="38" height="24" readonly="true" readonlyComp="Y" width="170" cssclass="edt_WF_normal"/>
+              <Edit id="edtTitle" taborder="9" left="stcReqTitle:5" top="71" height="24" readonly="true" readonlyComp="Y" cssclass="edt_WF_normal" right="5"/>
+              <Calendar id="calReserveDt" taborder="10" left="stcReserveDTime:5.00" top="104" width="130" height="24" dateformat="yyyy-MM-dd" editformat="yyyy-MM-dd" cssclass="cal_WF_normal" readonly="true" validationGroup="input01" text="    -  -  " validation="예약일자;NULL|DATETIME:YYYYMMDD"/>
+              <MaskEdit id="mskReserveTime" taborder="11" left="calReserveDt:2" top="104" width="65" height="24" format="##:##" textAlign="center" type="string" validation="예약일시;NULL|DATETIME:HHMI" text="__:__" validationGroup="input01" cssclass="msk_WF_normal"/>
+              <Button id="btn00" taborder="12" text="job list" left="163" top="0" width="65" height="24" onclick="divContent_btn00_onclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBottom" taborder="5" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnProc" taborder="1" text="" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="125" width="100" height="32" bottom="14" visible="false"/>
+              <Button id="btnClose" taborder="0" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSrBaseInfo" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="REQ_DEPT_NM" type="string" size="32"/>
+          <Column id="CANCEL_POSS_YN" type="string" size="32"/>
+          <Column id="FR_DEPT_NM" type="string" size="32"/>
+          <Column id="REQ_USER_ID" type="string" size="32"/>
+          <Column id="REQ_EM_YN" type="string" size="32"/>
+          <Column id="LM_USER_NM" type="string" size="32"/>
+          <Column id="PROC_COMP_DATE" type="STRING" size="256"/>
+          <Column id="REQ_DATE" type="string" size="32"/>
+          <Column id="REQ_STAT_CD" type="string" size="32"/>
+          <Column id="DEL_YN" type="string" size="32"/>
+          <Column id="REF_REQ_ID" type="STRING" size="256"/>
+          <Column id="REQ_TMPLAT_ID" type="string" size="32"/>
+          <Column id="RTRN_MAP_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="LMPID" type="string" size="32"/>
+          <Column id="REQ_WISH_DT" type="string" size="32"/>
+          <Column id="REQ_ID" type="string" size="32"/>
+          <Column id="RESERV_PROC_YN" type="string" size="32"/>
+          <Column id="URL_CHK" type="STRING" size="256"/>
+          <Column id="MAP_WF_PROC_CD" type="string" size="32"/>
+          <Column id="FR_DEPT_CD" type="string" size="32"/>
+          <Column id="LAST_RTRN_YN" type="string" size="32"/>
+          <Column id="REQ_STAT_NM" type="string" size="32"/>
+          <Column id="PRE_CONF_USER_ID" type="STRING" size="256"/>
+          <Column id="END_DEL_YN" type="string" size="32"/>
+          <Column id="REQ_WISH_TIME" type="string" size="32"/>
+          <Column id="REG_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="REQ_USER_NM" type="string" size="32"/>
+          <Column id="LM_DEPT_CD" type="string" size="32"/>
+          <Column id="SVC_CD" type="string" size="32"/>
+          <Column id="REQ_TMPLAT_VER" type="bigdecimal" size="16"/>
+          <Column id="RTRN_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="FRID" type="string" size="32"/>
+          <Column id="UPMU_ID3" type="STRING" size="256"/>
+          <Column id="MAP_WF_PROC_NM" type="string" size="32"/>
+          <Column id="WF_PROC_NM" type="string" size="32"/>
+          <Column id="PRE_CONF_DEPT_CD" type="STRING" size="256"/>
+          <Column id="UPMU_ID2" type="string" size="32"/>
+          <Column id="CONTENTS" type="string" size="32"/>
+          <Column id="UPMU_ID1" type="string" size="32"/>
+          <Column id="PRE_CONF_USER_NM" type="STRING" size="256"/>
+          <Column id="FR_USER_NM" type="string" size="32"/>
+          <Column id="E_DOCU_NO" type="STRING" size="256"/>
+          <Column id="JOB_REQ_TIME" type="STRING" size="256"/>
+          <Column id="SVC_DTL_CD" type="string" size="32"/>
+          <Column id="LM_DEPT_NM" type="string" size="32"/>
+          <Column id="MAP_PROC_CD" type="string" size="32"/>
+          <Column id="REG_MAP_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="REQ_DEPT_CD" type="string" size="32"/>
+          <Column id="JOB_REQ_DT" type="STRING" size="256"/>
+          <Column id="RESERV_DT" type="STRING" size="256"/>
+          <Column id="RESERV_TIME" type="STRING" size="256"/>
+          <Column id="PRE_CONF_DEPT_NM" type="STRING" size="256"/>
+          <Column id="RESERV_FLAG" type="string" size="32"/>
+          <Column id="KEY_INFO" type="STRING" size="256"/>
+          <Column id="REG_REQ_STAT_CD" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="string" size="32"/>
+          <Column id="RMK" type="STRING" size="256"/>
+          <Column id="LMDT" type="string" size="32"/>
+          <Column id="TITLE" type="string" size="32"/>
+          <Column id="FRDT" type="string" size="32"/>
+          <Column id="LMID" type="string" size="32"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsJobList" oncolumnchanged="dsOnColumnChanged"/>
+      <Dataset id="dsRtn" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="MSG" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ SR0010_P04
+* 화면(명)		︰ 요청서 예약 등록
+* 메뉴(경로)	︰ 
+* 화면 설명	︰ 요청서 예약 등록
+* 작성자		︰ WEMB
+* 작성일		︰ 2025.04.25
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2025.04.25	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.isSave = false;
+this.reservDt;
+this.reservTime;
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+	this.dsCond.setColumn(0, "REQ_ID", this.getOwnerFrame().pREQ_ID);
+}
+
+this.fnInit = function()
+{
+	this.fnSearch();
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+this.fnSearch = function()
+{
+	var sTranId = "select01";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "SR0000D/select02";			// 서비스명
+    var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsSrBaseInfo=dsSrBaseInfo";	// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSearchJobList = function()
+{
+	var sTranId = "selectJobList";				// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "SRComm/getServerJobList";	// 서비스명
+    var sInDs = "";								// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsJobList=dsJobList";			// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnReserve = function()
+{
+	var sTranId = "procReserve";							// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "SR0000D/procReserve";					// 서비스명
+    var sInDs = "dsCond=dsCond dsSrBaseInfo=dsSrBaseInfo";	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsSrBaseInfo=dsSrBaseInfo dsRtn=dsRtn";	// 서버에서 수신할 데이타셋
+    var sArg = "";											// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnCancelReserve = function()
+{
+	var sTranId = "procCancelReserve";						// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "SR0000D/procCancelReserve";				// 서비스명
+    var sInDs = "dsCond=dsCond dsSrBaseInfo=dsSrBaseInfo";	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsSrBaseInfo=dsSrBaseInfo dsRtn=dsRtn";	// 서버에서 수신할 데이타셋
+    var sArg = "";											// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			this.setProcStatus(true);
+			break;
+
+		case "procReserve" :
+			if( Ex.isEmpty(this.dsRtn.getColumn(0, "MSG")) )
+			{
+				Ex.core.toast(this, "요청서 예약 등록 처리 되었습니다.");
+				this.isSave = true;
+				this.setProcStatus(false);
+			}
+			else
+			{
+				this.dsSrBaseInfo.setColumn(0, "RESERV_DT", this.reservDt);
+				this.dsSrBaseInfo.setColumn(0, "RESERV_TIME", this.reservTime);
+
+				var param = {
+					id : "errorprocReserveAlert",
+					msg : this.dsRtn.getColumn(0, "MSG")
+				};
+				Ex.core.error(this, param);				
+				this.reservDt = undefined;
+				this.reservTime = undefined;
+			}
+			break;
+
+		case "procCancelReserve" :
+			if( Ex.isEmpty(this.dsRtn.getColumn(0, "MSG")) )
+			{
+				Ex.core.toast(this, "요청서 예약 등록 취소 처리 되었습니다.");
+				this.isSave = true;
+				this.setProcStatus(false);
+			}
+			else
+			{
+				var param = {
+					id : "errorprocReserveAlert",
+					msg : this.dsRtn.getColumn(0, "MSG")
+				};
+				Ex.core.error(this, param);
+			}
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch (pID)
+	{
+		case "" :
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "pConfirmReserveI" :		// 예약 등록
+			this.reservDt	= this.dsSrBaseInfo.getColumn(0, "RESERV_DT");
+			this.reservTime	= this.dsSrBaseInfo.getColumn(0, "RESERV_TIME");
+			this.fnReserve();
+			break;
+			
+		case "pConfirmCancelReserveI" :	// 예약 취소
+			this.fnCancelReserve();
+			break;
+
+		case "errorprocReserveAlert" :
+			this.setProcStatus(false);
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.setProcStatus = function(isSetTime)
+{
+	if(this.dsSrBaseInfo.getColumn(0, "RESERV_PROC_YN") == "N")	//예약처리여부
+	{
+		if(this.dsSrBaseInfo.getColumn(0, "RESERV_FLAG") == "Y")
+		{
+			this.divContent.form.calReserveDt.set_readonly(true);
+			this.divContent.form.mskReserveTime.set_readonly(true);
+			this.divBottom.form.btnProc.set_text("예약취소");
+		}
+		else
+		{
+			if( Ex.isEmpty(isSetTime) ) isSetTime = false;
+			if(isSetTime)
+			{
+				var dTime = new Date();
+				dTime.setHours(dTime.getHours() + 1);
+				trace("dTime : " + dTime);
+				var dTimeStr = Ex.util.getMaskFormatString(dTime, 'yyyyMMddHHmmss');
+				 
+				trace("RESERV_DT : " + dTimeStr.substr(0, 8));
+				this.dsSrBaseInfo.setColumn(0, "RESERV_DT", dTimeStr.substr(0, 8));
+				var hour = dTimeStr.substr(8, 2);
+				trace("RESERV_TIME : " + hour);
+				this.dsSrBaseInfo.setColumn(0, "RESERV_TIME", hour + "00");
+			}
+		 
+			this.divContent.form.stcReserveDTime.set_cssclass("sta_WF_inputTitle_E");
+			this.divContent.form.calReserveDt.set_readonly(false);
+			this.divContent.form.mskReserveTime.set_readonly(false);
+			
+			this.divBottom.form.btnProc.set_text("예약등록");
+			this.divContent.form.mskReserveTime.setFocus();
+		}
+		this.divBottom.form.btnProc.set_visible(true);
+	}
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{		
+		case "btnProc" :
+			if(this.dsSrBaseInfo.getColumn(0, "RESERV_FLAG") == "Y")	//예약취소
+			{
+				var param = {
+					id : "pConfirmCancelReserveI",
+					msg : "요청서 예약을 취소 하시겠습니까?"
+				};
+				Ex.core.confirm(this, param);
+				return;
+			}
+			else														//예약등록
+			{
+				if( !Ex.util.checkValidate(this.divContent, "input01") ) return false;
+
+				var param = {
+					id : "pConfirmReserveI",
+					msg : "요청서 예약 등록을 하시겠습니까?"
+				};
+				Ex.core.confirm(this, param);
+				return;
+			}
+			break;
+
+		case "btnClose" :
+			Ex.core.pclose(this, this.isSave ? "Y" : "N");
+			break;
+	}
+}
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+this.formOnRbuttonUp = function(obj:nexacro.Form,e:nexacro.MouseEventInfo)
+{
+    if(e.ctrlkey && e.shiftkey)
+    {
+        this.divContent.form.btn00.set_visible(!this.divContent.form.btn00.visible);
+    }
+};
+
+this.divContent_btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.fnSearchJobList();
+};]]></Script>
+    <Bind>
+      <BindItem id="item1" compid="divContent.form.stcProcUserNm" propid="value" datasetid="dsRevProc" columnid="PROC_DATE"/>
+      <BindItem id="item2" compid="divContent.form.edtReqId" propid="value" datasetid="dsSrBaseInfo" columnid="REQ_ID"/>
+      <BindItem id="item3" compid="divContent.form.mskProcDate" propid="value" datasetid="dsRevProc" columnid="PROC_DATE"/>
+      <BindItem id="item4" compid="divContent.form.stcBg00_00" propid="value" datasetid="dsRevProc" columnid="PROC_DATE"/>
+      <BindItem id="item0" compid="divContent.form.edtTitle" propid="value" datasetid="dsSrBaseInfo" columnid="TITLE"/>
+      <BindItem id="item5" compid="divContent.form.calReserveDt" propid="value" datasetid="dsSrBaseInfo" columnid="RESERV_DT"/>
+      <BindItem id="item6" compid="divContent.form.mskReserveTime" propid="value" datasetid="dsSrBaseInfo" columnid="RESERV_TIME"/>
+    </Bind>
+  </Form>
+</FDL>

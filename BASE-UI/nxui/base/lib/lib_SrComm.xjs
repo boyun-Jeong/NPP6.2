@@ -1,0 +1,1539 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script version="1.0" type="xscript5.1"><![CDATA[//include "lib::lib_WorkFlow.xjs";
+this.scrnWfProcForm;
+/***********************************************************************************
+ * fnSrCommSelectWfReqTmplatMt
+ ***********************************************************************************/ 
+this.fnSrCommSelectReqTmplatIdVerByReqId = function()
+{
+    var sTranId = "selectReqTmplatIdVerByReqId";            // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "SR0000D/selectReqTmplatIdVerByReqId";   // 서비스명
+    var sInDs = "dsCond=dsFormInfo";                		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsWfReqTmplatIdVer=dsWfReqTmplatIdVer";	// 서버에서 수신할 데이타셋
+    var sArg = "";                                  		// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg, "fnSrCommCallback");
+}
+
+/***********************************************************************************
+ * fnSrCommSelectWfReqTmplatMt
+ ***********************************************************************************/ 
+this.fnSrCommSelectWfReqTmplatMt = function()
+{
+    var sTranId = "selectWfReqTmplatHt";            // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "WF0120W/selectWfReqTmplatHt";               // 서비스명
+    var sInDs = "dsCond=dsFormInfo";                // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsWfReqTmplatMt=dsWfReqTmplatMt"; // 서버에서 수신할 데이타셋
+    var sArg = "";                                  // 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg, "fnSrCommCallback");
+}
+
+/***********************************************************************************
+ * getReqSelectService - WF프로세스 관리에 셋팅된 테이블/서비스 셋팅값 조회
+ * reqTmplatId  : 요청서양식ID
+ ***********************************************************************************/ 
+this.fnSrCommGetReqSelectService = function(reqTmplatId, reqTmplatVer, wfProcCd, func)
+{
+    //trace("reqTmplatId : " + reqTmplatId + " reqTmplatVer : " + reqTmplatVer + " wfProcCd : " + wfProcCd + " func : " + func);
+
+    var dsReqCond;
+    var isExist = this.isValidObject("_dsReqCond");
+
+    if( !isExist )
+    {
+        dsReqCond = new Dataset;
+        dsReqCond.set_name("_dsReqCond");
+        this.addChild("_dsReqCond", dsReqCond);
+        dsReqCond.addColumn("REQ_TMPLAT_ID", "STRING");
+        dsReqCond.addColumn("REQ_TMPLAT_VER", "STRING");
+        dsReqCond.addColumn("WF_PROC_CD", "STRING");
+        dsReqCond.addColumn("WF_FUNC_CD", "STRING");
+    }
+    
+    //결과1 데이터셋 셋팅
+    var dsReqRegTblInfo;
+    isExist = this.isValidObject("_dsReqRegTblInfo");       
+
+    if( !isExist )
+    {
+        dsReqRegTblInfo = new Dataset;
+        dsReqRegTblInfo.set_name("_dsReqRegTblInfo");
+        this.addChild("_dsReqRegTblInfo", dsReqRegTblInfo);
+    }
+
+    //결과2 데이터셋 셋팅
+    var dsReqProcSvcInfo;
+    isExist = this.isValidObject("_dsReqProcSvcInfo");
+
+    if( !isExist )
+    {
+        dsReqProcSvcInfo = new Dataset;
+        dsReqProcSvcInfo.set_name("_dsReqProcSvcInfo");
+        this.addChild("_dsReqProcSvcInfo", dsReqProcSvcInfo);
+    }
+
+    dsReqCond.clearData();
+    dsReqCond.addRow();
+    dsReqCond.setColumn(0, "REQ_TMPLAT_ID", reqTmplatId);
+    dsReqCond.setColumn(0, "REQ_TMPLAT_VER", reqTmplatVer);
+    dsReqCond.setColumn(0, "WF_PROC_CD", wfProcCd);
+    dsReqCond.setColumn(0, "WF_FUNC_CD", func);
+
+    //trace("[lib_SrComm]-this.fnSrCommGetReqSelectService() reqTmplatId ::: " + reqTmplatId);
+
+    // transaction
+    var sTranId = "selectReqInfo";                                                      // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "SRComm/selectReqInfo";                                              // 서비스명
+    var sInDs = "dsReqCond=_dsReqCond";                                                 // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "_dsReqRegTblInfo=dsReqRegTblInfo _dsReqProcSvcInfo=dsReqProcSvcInfo"; // 서버에서 수신할 데이타셋
+    var sArg = "";                                                                      // 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg, "fnSrCommCallback", false, true, 2);
+}
+
+/***********************************************************************************
+ * getSelectBaseInfo - 기본정보 폼 조회 서비스
+ ***********************************************************************************/ 
+this.fnSrCommGetSelectBaseInfo = function(isAutoSave)
+{
+	trace("this.fnSrCommGetSelectBaseInfo() isAutoSave : " + isAutoSave);
+	if( Ex.isEmpty(isAutoSave) )	isAutoSave = false;
+
+    //요청서 기본 정보 InDataset 셋팅
+    var isExist = this.isValidObject("dsCond_TOP");
+        
+    var dsObj;
+    
+    if( !isExist )
+    {
+        dsObj = new Dataset;
+        dsObj.set_name("dsCond_TOP");
+        this.addChild("dsCond_TOP", dsObj);
+        
+        dsObj.assign(this.topForm.dsCond);
+        
+        dsObj.addColumn("USER_ID",      "STRING");
+        dsObj.addColumn("WF_FUNC_CD",   "STRING");
+        dsObj.addColumn("REF_REQ_ID",   "STRING");
+        dsObj.addColumn("SEQ",          "INT");
+        dsObj.addColumn("CHK_ADV",      "STRING");
+    }
+	else
+	{
+		dsObj = this["dsCond_TOP"];
+	}
+    
+	dsObj.setColumn(0, "USER_ID",		Ex.util.getSession('gvUserId'));
+	dsObj.setColumn(0, "WF_FUNC_CD",	this["dsFormInfo"].getColumn(0, "WF_FUNC_CD"));
+	dsObj.setColumn(0, "REF_REQ_ID",	this.getOwnerFrame().pRefReqId);
+	dsObj.setColumn(0, "SEQ",			this.getOwnerFrame().pSeq);
+	dsObj.setColumn(0, "CHK_ADV",		this.getOwnerFrame().pChkAdv);
+	
+    //요청서 기본 정보 OutDataset 셋팅
+    isExist = this.isValidObject("dsSrBaseInfo_TOP");
+
+	if( !isExist )
+    {
+        dsObj = new Dataset;
+        dsObj.set_name("dsSrBaseInfo_TOP");
+        this.addChild("dsSrBaseInfo_TOP", dsObj);
+        
+        dsObj.assign(this.topForm.dsSrBaseInfo);
+    }
+    
+    //요청서 기본 정보 OutDataset 셋팅
+    isExist = this.isValidObject("dsWfReqTmplatMtHelp_TOP");
+
+    if( !isExist )
+    {
+        dsObj = new Dataset;
+        dsObj.set_name("dsWfReqTmplatMtHelp_TOP");
+        this.addChild("dsWfReqTmplatMtHelp_TOP", dsObj);
+        
+        dsObj.assign(this.topForm.dsWfReqTmplatMtHelp);
+    }
+	
+	var sTranId = "";
+	
+	if(isAutoSave)
+	{
+		sTranId = "selectBaseInfoAutoSave";	// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+	}
+	else
+	{
+		sTranId = "selectBaseInfo";			// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+	}
+
+    var sService = "SR0000D/select01";                                                      // 서비스명
+    var sInDs = "dsCond=dsCond_TOP";                                                        // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsSrBaseInfo_TOP=dsSrBaseInfo dsWfReqTmplatMtHelp_TOP=dsWfReqTmplatMtHelp";   // 서버에서 수신할 데이타셋
+    var sArg = "";                                  // 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg, "fnSrCommCallback");
+}
+
+/***********************************************************************************
+ * fnSrCommSetPreSelectService - 조회 전처리 실행
+   조회 전처리 서비스를 호출한다.
+ ***********************************************************************************/
+this.fnSrCommSetPreSelectService = function()
+{
+	var rtn = this.fnSrCommWfReqProcSvcDtDsInfo("SELECT", "BF", null, true);
+
+	//alert("rtn=>" + rtn);
+
+	if( Ex.isEmpty(rtn) ) return;
+
+    if(rtn)   //SELECT 전처리 데이터셋 셋팅
+    {
+        this.fnSrCommCallTran("BF_SELECT"); //SELECT 전처리 서비스 실행
+    }
+    else
+    {
+		//alert("else rtn=>" + rtn);
+        trace("[lib_SrComm]-fnSrCommSetPreSelectService [preSelect] 조회 전처리 정의된 서비스 없어서 Callback 바로 호출");
+        this.fnSrCommCallback("preSelect", 0, "SUCCESS");
+    }
+}
+
+/***********************************************************************************
+ * fnSrCommSetSelectService - 조회 서비스 실행
+   화면 기본정보 Form과 결재선이 사용되는 경우는 결재선 Form에 지정된 서비스명과
+   IN-OUT DATASET 정보를 dsSelectService Dataset에 정보를 셋팅하고
+   WF프로세스 관리에 셋팅된 조회와 동시에 호출할 서비스에서 사용될 Dataset 정보를 셋팅하여
+   조회 서비스를 호출한다.
+ ***********************************************************************************/
+this.fnSrCommSetSelectService = function(scrnWfProcForm)
+{
+	this["dsFormInfo"].setColumn(0, "IN_DATASET", "");
+    this["dsFormInfo"].setColumn(0, "OUT_DATASET", "");
+    
+    this["dsSelectService"].clearData();
+
+    var inDatasetStr = "";
+    var outDatasetStr = "";
+
+    //trace("[lib_SrComm] this.getSelectService() this.gubunArr.length :::::::::::::::::::::: " + this.gubunArr.length);
+    for(var i=0; i<this.gubunArr.length; i++)
+    {
+        var divScope = nexacro.replaceAll(this.gubunArr[i][0], "divForm", "").toUpperCase();
+
+        //조회 시점에는 이미 TOP 기본정보를 조회한 경우 이므로 제외시킨다.
+		if(divScope != "TOP")
+		{
+			//trace("[lib_SrComm]-this.fnSrCommSetSelectService() divScope : " + divScope + " this.gubunArr[i][0] : " + this.gubunArr[i][0]);
+			
+			if(this.divForm.form[this.gubunArr[i][0]].form.selectServiceInfo)
+			{
+				var selectSvc = this.divForm.form[this.gubunArr[i][0]].form.selectServiceInfo;
+
+				var inDsObj;
+
+				for(var j=0; j<selectSvc.CALL_SVC.length; j++)
+				{
+					var aRow        = this.dsSelectService.addRow();
+					var svcNm       = selectSvc.CALL_SVC[j];
+					var callBackId  = selectSvc.CALLBACK_ID[j];
+					var inDs        = "";
+					var outDs       = "";
+					var inDsNm      = "";
+					var outDsNm     = "";
+					var inDsObj;
+
+					//InDataset 셋팅
+					if(Ex.util.getTypeof(selectSvc.IN_DS_WHERE[j]) == "ARRAY")
+					{
+						for(var k=0; k<selectSvc.IN_DS_WHERE[j].length; k++)
+						{
+							if(Ex.util.getTypeof(selectSvc.IN_DS_WHERE[j][k]) == "DATASET")
+							{
+								inDs = selectSvc.IN_DS_WHERE[j][k].id + "_" + divScope;
+								inDsNm = inDs + "=" + inDs;
+
+								var isExist = this.isValidObject(inDs);
+
+								if( !isExist )
+								{
+									inDsObj = Ex.util.createDataset(this, inDs);
+									inDsObj.set_enableevent(false);
+									inDsObj.update_enableevent(false);
+								}
+								else            inDsObj = this[inDs];
+
+								inDsObj.loadXML(selectSvc.IN_DS_WHERE[j][k].saveXML()); //inDsName
+								
+								inDatasetStr = this["dsFormInfo"].getColumn(0, "IN_DATASET")||'';
+								//trace("[lib_SrComm]-this.fnSrCommSetSelectService() inDatasetStr ::: " + inDatasetStr);
+								if(inDatasetStr.indexOf(inDs) == -1)
+								{
+									inDatasetStr += (Ex.isEmpty(inDatasetStr) ? "" : " ") + inDsNm;
+									this["dsFormInfo"].setColumn(0, "IN_DATASET", inDatasetStr);
+								}
+							}
+							else
+							{
+								var param = {
+									  id : "noDatasetObjectE"
+									, msg : "[NoDatasetObjectE]-A\n" + this.gubunArr[i][0] + "의 selectServiceInfo-[IN_DS_WHERE]\n[DATASET] OBJECT 지정이 올바르지 않습니다."
+								};
+								Ex.core.error(this, param);
+								return;
+							}
+						}
+					}
+					else
+					{
+						if(Ex.util.getTypeof(selectSvc.IN_DS_WHERE[j]) == "DATASET")
+						{
+							inDs = selectSvc.IN_DS_WHERE[j].id + "_" + divScope;
+							inDsNm = inDs + "=" + inDs;
+							
+							var isExist = this.isValidObject(inDs);
+
+							if( !isExist )  inDsObj = Ex.util.createDataset(this, inDs);
+							else            inDsObj = this[inDs];
+
+							inDsObj.loadXML(selectSvc.IN_DS_WHERE[j].saveXML());    //Div에서 불러온 화면 dataset을 SR0000_W에 생성.
+							
+							inDatasetStr = this["dsFormInfo"].getColumn(0, "IN_DATASET")||'';
+							//trace("[lib_SrComm]-this.fnSrCommSetSelectService() inDatasetStr ::: " + inDatasetStr);
+							if(inDatasetStr.indexOf(inDs) == -1)
+							{
+								inDatasetStr += (Ex.isEmpty(inDatasetStr) ? "" : " ") + inDsNm;
+								this["dsFormInfo"].setColumn(0, "IN_DATASET", inDatasetStr);
+							}
+						}
+						else
+						{
+							var param = {
+								  id : "noDatasetObjectE"
+								, msg : "[NoDatasetObjectE]-S\n" + this.gubunArr[i][0] + "의 selectServiceInfo-[IN_DS_WHERE]\n[DATASET] OBJECT 지정이 올바르지 않습니다."
+							};
+							Ex.core.error(this, param);
+							return;
+						}
+					}
+
+					//trace("[lib_SrComm]-this.getSelectService() callService : " + callService + " callBackId : " + callBackId);
+
+					this.dsSelectService.setColumn(aRow, "WF_PROC_CD", divScope);
+					this.dsSelectService.setColumn(aRow, "CALLBACK_ID", callBackId);
+					this.dsSelectService.setColumn(aRow, "SVC_NM", svcNm);
+					this.dsSelectService.setColumn(aRow, "FORM_INDS", inDs);
+
+					//OutDataset 셋팅
+					var strType = selectSvc.OUT_DS_OBJ[j].toString().toUpperCase();
+					var dsType = Ex.util.getTypeof(selectSvc.OUT_DS_OBJ[j]);
+					
+					if(Ex.util.getTypeof(selectSvc.OUT_DS_OBJ[j]) == "ARRAY")   //배열인 경우
+					{
+						for(var k=0; k<selectSvc.OUT_DS_OBJ[j].length; k++)
+						{
+							if(Ex.util.getTypeof(selectSvc.OUT_DS_OBJ[j][k]) == "DATASET")
+							{
+								outDs = selectSvc.OUT_DS_OBJ[j][k].id + "_" + divScope;
+								outDsNm = outDs + "=" + outDs;
+								
+								var isExist = this.isValidObject(outDs);
+
+								if( !isExist )  Ex.util.createDataset(this, outDs);
+
+								outDatasetStr = this["dsFormInfo"].getColumn(0, "OUT_DATASET")||'';
+								//trace("[lib_SrComm]-this.fnSrCommSetSelectService() outDatasetStr ::: " + outDatasetStr);
+								if(outDatasetStr.indexOf(outDs) == -1)
+								{
+									outDatasetStr += (Ex.isEmpty(outDatasetStr) ? "" : " ") + outDsNm;
+									this["dsFormInfo"].setColumn(0, "OUT_DATASET", outDatasetStr);
+								}
+							}
+							else
+							{
+								var param = {
+									  id : "noDatasetObjectE"
+									, msg : "[noDatasetObjectE]-A\n" + this.gubunArr[i][0] + "의 selectServiceInfo-[OUT_DS_OBJ]\n[DATASET] OBJECT 지정이 올바르지 않습니다."
+								};
+								Ex.core.error(this, param);
+								return;
+							}
+						}
+					}
+					else    //단건
+					{
+						if(Ex.util.getTypeof(selectSvc.OUT_DS_OBJ[j]) == "DATASET")
+						{
+							outDs = selectSvc.OUT_DS_OBJ[j].id + "_" + divScope;
+							outDsNm = outDs + "=" + outDs;
+
+							if( !isExist )  Ex.util.createDataset(this, outDs);
+
+							//trace("[lib_SrComm]-this.fnSrCommSetSelectService() divScope : " + divScope + " outDsNm ::: " + outDsNm);
+
+							outDatasetStr = this["dsFormInfo"].getColumn(0, "OUT_DATASET")||'';
+							//trace("[lib_SrComm]-this.fnSrCommSetSelectService() outDatasetStr ::: " + outDatasetStr);
+							if(outDatasetStr.indexOf(outDs) == -1)
+							{
+								outDatasetStr += (Ex.isEmpty(outDatasetStr) ? "" : " ") + outDsNm;
+								this["dsFormInfo"].setColumn(0, "OUT_DATASET", outDatasetStr);
+							}
+						}
+						else
+						{
+							var param = {
+								  id : "noDatasetObjectE"
+								, msg : "[noDatasetObjectE]-S\n" + this.gubunArr[i][0] + "의 selectServiceInfo-[OUT_DS_OBJ]\n[DATASET] OBJECT 지정이 올바르지 않습니다."
+							};
+							Ex.core.error(this, param);
+							return;
+						}
+					}
+					this.dsSelectService.setColumn(aRow, "FORM_OUTDS", outDs);
+				}
+			}
+		}
+    };
+
+	var scrnWfProcCd = "";
+	if( !Ex.isEmpty(scrnWfProcForm) )	scrnWfProcCd = scrnWfProcForm.reqInfo.SCRN_WF_PROC_CD;
+
+	//if(scrnWfProcCd == "" || scrnWfProcCd == "WF_PROC_1000")
+	//{
+		var rtn = this.fnSrCommWfRegTblInfoDs("SELECT", false, scrnWfProcCd);
+		if( Ex.isEmpty(rtn) )	return;
+	//}
+	
+	rtn = this.fnSrCommWfReqProcSvcDtDsInfo("SELECT", "CU", null, false, scrnWfProcCd);
+
+	if( Ex.isEmpty(rtn) )	return;
+
+	this.fnSrCommCallTran("SELECT", scrnWfProcForm);
+}
+
+/***********************************************************************************
+ * fnSrCommSetPostSelectService - 조회 후처리 실행
+   조회 후처리 서비스를 호출한다.
+ ***********************************************************************************/
+this.fnSrCommSetPostSelectService = function()
+{
+    if(this.fnSrCommWfReqProcSvcDtDsInfo("SELECT", "AF", null, true))       //SELECT 전처리 데이터셋 셋팅
+    {
+        this.fnSrCommCallTran("AF_SELECT");             //SELECT 전처리 서비스 실행
+    }
+    else
+    {
+        trace("[lib_SrComm]-fnSrCommSetPostSelectService [postSelect] 조회 후처리 정의된 서비스 없어서 Callback 바로 호출");
+        this.fnSrCommCallback("postSelect", 0, "SUCCESS");
+    }
+}
+
+/***********************************************************************************
+ * fnSrCommSetPreSaveService - 저장 전처리 실행
+   저장 서비스 호출 전 저장 관련 전처리 서비스를 먼저 호출한다.
+   저장의 종류 : 임시저장, 등록, 접수, 승인, 반려
+   (저장 시점 저장에 대한 종류 값은 dsFormInfo Dataset의 SAVE_GUBUN에 담겨 전송한다.)
+ ***********************************************************************************/
+this.fnSrCommSetPreSaveService = function()
+{
+	//trace("this.fnSrCommSetPreSaveService()~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+	var rtn = this.fnSrCommWfReqProcSvcDtDsInfo("SAVE", "BF", null, true);
+	if( Ex.isEmpty(rtn) ) return;
+	
+	//trace("this.fnSrCommSetPreSaveService() rtn : [" + rtn + "]");
+
+    if(rtn)									//SAVE 전처리 데이터셋 셋팅
+    {
+        this.fnSrCommCallTran("BF_SAVE");	//SAVE 전처리 서비스 실행
+    }
+    else
+    {
+        trace("[lib_SrComm]-fnSrCommSetPreSaveService [preSave] 저장 전처리 정의된 서비스 없어서 Callback 바로 호출");
+        this.fnSrCommCallback("preSave", 0, "SUCCESS");
+    }
+}
+
+/***********************************************************************************
+ * fnSrCommSetSaveService - 저장 서비스 실행
+   화면 기본정보 Form과 결재선이 사용되는 경우는 결재선 Form에 지정된 서비스명과
+   IN-OUT DATASET 정보를 dsSaveService Dataset에 정보를 셋팅하고
+   WF프로세스 관리에 셋팅된 조회와 동시에 호출할 서비스에서 사용될 Dataset 정보를 셋팅하여
+   조회 서비스를 호출한다.
+ ***********************************************************************************/
+this.fnSrCommSetSaveService = function()
+{
+    trace("[lib_SrComm]-fnSrCommSetSaveService() 시작");
+
+    this["dsFormInfo"].setColumn(0, "IN_DATASET", "");
+    this["dsFormInfo"].setColumn(0, "OUT_DATASET", "");
+
+    this["dsSaveService"].clearData();
+
+    //결재/검토인 경우 dsApprInfo 파라미터 추가
+    if((this["dsFormInfo"].getColumn(0, "SAVE_GUBUN") == "APV" || this["dsFormInfo"].getColumn(0, "SAVE_GUBUN") == "RTRN") &&
+       (this["dsFormInfo"].getColumn(0, "WF_FUNC_CD") == "WF_FUNC_01" || this["dsFormInfo"].getColumn(0, "WF_FUNC_CD") == "WF_FUNC_02"))
+    {
+        var inDsStr = this["dsFormInfo"].getColumn(0, "IN_DATASET")||'';
+        if(inDsStr.indexOf("dsApprInfo=dsApprInfo") == -1)
+        {
+            this["dsFormInfo"].setColumn(0, "IN_DATASET", (Ex.isEmpty(inDsStr) ? "" : " ") + "dsApprInfo=dsApprInfo");
+        }
+    }
+
+    var inDatasetStr = "";
+    var outDatasetStr = "";
+
+    //trace("[lib_SrComm] this.fnSrCommSetSaveService() gubunArr.length:[" + gubunArr.length + "]");
+    for(var i=0; i<this.gubunArr.length; i++)
+    {
+        var divScope = nexacro.replaceAll(this.gubunArr[i][0], "divForm", "").toUpperCase();
+
+        //if(divScope == "WF_PROC_9020" || divScope.indexOf("WF_PROC_") == -1)  //만족도조사거나 워크플로우 진행단계 화면이 아닌 경우(기본정보, 결재선)
+        //{
+            //trace("[lib_SrComm]-this.fnSrCommSetSaveService() divScope : " + divScope);
+            if(this.divForm.form[this.gubunArr[i][0]].form.saveServiceInfo)
+            {
+                var saveSvc = this.divForm.form[this.gubunArr[i][0]].form.saveServiceInfo;
+
+                //저장 관련 서비스 및 데이터셋 셋팅
+                for(var j=0; j<saveSvc.CALL_SVC.length; j++)
+                {
+                    var aRow        = this.dsSaveService.addRow();
+                    var svcNm       = saveSvc.CALL_SVC[j];
+                    var callBackId  = saveSvc.CALLBACK_ID[j];
+                    var inDs        = "";
+                    var addInDs     = "";
+                    var outDs       = "";
+                    var inDsNm      = "";
+                    var outDsNm     = "";
+                    var inDsObj;
+
+                    //InDataset 셋팅
+                    //trace("j=" + j + "SVC:" + saveSvc.CALL_SVC[j]);
+                    if(Ex.util.getTypeof(saveSvc.IN_DS_OBJ[j]) == "ARRAY")
+                    {
+                        //trace("saveSvc.IN_DS_OBJ[j].length : " + saveSvc.IN_DS_OBJ[j].length);
+                        for(var k=0; k<saveSvc.IN_DS_OBJ[j].length; k++)
+                        {
+                            //trace("saveSvc.IN_DS_OBJ[j][k]:" + saveSvc.IN_DS_OBJ[j][k]);
+                            if(Ex.util.getTypeof(saveSvc.IN_DS_OBJ[j][k]) == "DATASET")
+                            {
+                                inDs = saveSvc.IN_DS_OBJ[j][k].id + "_" + divScope;
+                                addInDs += (Ex.isEmpty(addInDs) ? "" : ",") + inDs;
+                                inDsNm = inDs + "=" + inDs;
+
+                                var isExist = this.isValidObject(inDs);
+
+                                if( !isExist )  inDsObj = Ex.util.createDataset(this, inDs);
+                                else            inDsObj = this[inDs];
+
+                                inDsObj.loadXML(saveSvc.IN_DS_OBJ[j][k].saveXML()); //inDsName
+                                
+                                inDatasetStr = this["dsFormInfo"].getColumn(0, "IN_DATASET")||'';
+                                //trace("[lib_SrComm]-this.fnSrCommSetSaveService() ARRAY divScope:[" + divScope + "] inDatasetStr:[" + inDatasetStr + "]");
+                                if(inDatasetStr.indexOf(inDs) == -1)
+                                {
+                                    inDatasetStr += (Ex.isEmpty(inDatasetStr) ? "" : " ") + inDsNm;
+                                    this["dsFormInfo"].setColumn(0, "IN_DATASET", inDatasetStr);
+                                }
+                            }
+                            else
+                            {
+                                var param = {
+                                      id : "noDatasetObjectE"
+                                    , msg : "[NoDatasetObjectE]-A\n" + this.gubunArr[i][0] + "의 saveServiceInfo-[IN_DS_OBJ]\n[DATASET] OBJECT 지정이 올바르지 않습니다."
+                                };
+                                Ex.core.error(this, param);
+                                return;
+                            }
+                        }
+                        inDs = addInDs;
+                    }
+                    else
+                    {
+                        if(Ex.util.getTypeof(saveSvc.IN_DS_OBJ[j]) == "DATASET")
+                        {
+                            inDs = saveSvc.IN_DS_OBJ[j].id + "_" + divScope;
+                            inDsNm = inDs + "=" + inDs;
+                            
+                            var isExist = this.isValidObject(inDs);
+
+                            if( !isExist )  inDsObj = Ex.util.createDataset(this, inDs);
+                            else            inDsObj = this[inDs];
+
+                            inDsObj.loadXML(saveSvc.IN_DS_OBJ[j].saveXML());    //Div에서 불러온 화면 dataset을 SR0000_W에 생성.
+                            
+                            inDatasetStr = this["dsFormInfo"].getColumn(0, "IN_DATASET")||'';
+                            //trace("[lib_SrComm]-this.fnSrCommSetSaveService() DATASET divScope:[" + divScope + "] inDatasetStr:[" + inDatasetStr + "]");
+                            if(inDatasetStr.indexOf(inDs) == -1)
+                            {
+                                inDatasetStr += (Ex.isEmpty(inDatasetStr) ? "" : " ") + inDsNm;
+                                this["dsFormInfo"].setColumn(0, "IN_DATASET", inDatasetStr);
+                            }
+                        }
+                    }
+
+                    //trace("[lib_SrComm]-this.getSaveService() callBackId : " + callBackId);
+
+                    this.dsSaveService.setColumn(aRow, "WF_PROC_CD", divScope);
+                    this.dsSaveService.setColumn(aRow, "CALLBACK_ID", callBackId);
+                    this.dsSaveService.setColumn(aRow, "SVC_NM", svcNm);
+
+                    if(divScope == "WF_PROC_9020")  //만족도조사인 경우
+                    {
+                        this.dsSaveService.setColumn(aRow, "FORM_INDS", "dsFormInfo," + inDs);
+                    }
+                    else
+                    {
+                        this.dsSaveService.setColumn(aRow, "FORM_INDS", inDs);
+                    }
+                    
+
+                    //OutDataset 셋팅
+                    //trace("[lib_SrComm]-this.fnSrCommSaveService() OutDsType:[" + Ex.util.getTypeof(saveSvc.OUT_DS_OBJ[j]) + "]");
+
+                    if(Ex.util.getTypeof(saveSvc.OUT_DS_OBJ[j]) == "ARRAY") //배열인 경우
+                    {
+                        for(var k=0; k<saveSvc.OUT_DS_OBJ[j].length; k++)
+                        {
+                            if(Ex.util.getTypeof(saveSvc.OUT_DS_OBJ[j][k]) == "DATASET")
+                            {
+                                outDs = saveSvc.OUT_DS_OBJ[j][k].id + "_" + divScope;
+                                outDsNm = outDs + "=" + outDs;
+                                
+                                var isExist = this.isValidObject(outDs);
+
+                                if( !isExist )  Ex.util.createDataset(this, outDs);
+
+                                outDatasetStr = this["dsFormInfo"].getColumn(0, "OUT_DATASET")||'';
+                                //trace("[lib_SrComm]-this.fnSrCommSetSaveService() ARRAY divScope:[" + divScope + "] outDatasetStr:[" + outDatasetStr + "]");
+                                if(outDatasetStr.indexOf(outDs) == -1)
+                                {
+                                    outDatasetStr += (Ex.isEmpty(outDatasetStr) ? "" : " ") + outDsNm;
+                                    this["dsFormInfo"].setColumn(0, "OUT_DATASET", outDatasetStr);
+                                }
+                            }
+                            else
+                            {
+                                var param = {
+                                      id : "noDatasetObjectE"
+                                    , msg : "[noDatasetObjectE]-A\n" + this.gubunArr[i][0] + "의 saveServiceInfo-[OUT_DS_OBJ]\n[DATASET] OBJECT 지정이 올바르지 않습니다."
+                                };
+                                Ex.core.error(this, param);
+                                return;
+                            }
+                        }
+                    }
+                    else    //단건
+                    {
+                        if(Ex.util.getTypeof(saveSvc.OUT_DS_OBJ[j]) == "DATASET")
+                        {
+                            outDs = saveSvc.OUT_DS_OBJ[j].id + "_" + divScope;
+                            outDsNm = outDs + "=" + outDs;
+
+                            if( !isExist )  Ex.util.createDataset(this, outDs);
+
+                            outDatasetStr = this["dsFormInfo"].getColumn(0, "OUT_DATASET")||'';
+                            //trace("[lib_SrComm]-this.fnSrCommSetSaveService() DATASET divScope:[" + divScope + "] outDsNm:[" + outDsNm + "] outDatasetStr:[" + outDatasetStr + "]");
+                            if(outDatasetStr.indexOf(outDs) == -1)
+                            {
+                                outDatasetStr += (Ex.isEmpty(outDatasetStr) ? "" : " ") + outDsNm;
+                                this["dsFormInfo"].setColumn(0, "OUT_DATASET", outDatasetStr);
+                            }
+                        }
+                    }
+                    //trace("[lib_SrComm]-this.fnSrCommSetSaveService() divScope:[" + divScope + "] outDs:[" + outDs + "]");
+                    this.dsSaveService.setColumn(aRow, "FORM_OUTDS", outDs);
+                }
+            }
+        //}
+    };
+    
+    trace("[lib_SrComm]-fnSrCommSetSaveService() 종료");
+
+    //trace("[lib_SrComm]-this.fnSrCommSetSaveService [111] IN_DATASET:[" + this["dsFormInfo"].getColumn(0, "IN_DATASET") + "]");
+    var rtn = this.fnSrCommWfRegTblInfoDs("SAVE", false);
+	if( Ex.isEmpty(rtn) )	return;
+    //trace("[lib_SrComm]-fnSrCommSetSaveService() 종료 000");
+    
+    //trace("[lib_SrComm]-this.fnSrCommSetSaveService [222] IN_DATASET:[" + this["dsFormInfo"].getColumn(0, "IN_DATASET") + "]");
+    rtn = this.fnSrCommWfReqProcSvcDtDsInfo("SAVE", "CU", null, false);
+	if( Ex.isEmpty(rtn) )	return;
+    
+    //trace("[lib_SrComm]-fnSrCommSetSaveService() 종료 111");
+    
+    //trace("[lib_SrComm]-this.fnSrCommSetSaveService [333] IN_DATASET:[" + this["dsFormInfo"].getColumn(0, "IN_DATASET") + "]");
+    this.fnSrCommCallTran("SAVE");
+    trace("[lib_SrComm]-fnSrCommSetSaveService() 종료 222");
+}
+
+/***********************************************************************************
+ * fnSrCommSetPostSaveService - 저장 후처리 실행
+   저장 서비스 호출 후 저장 관련 후처리 서비스를 호출한다.
+   저장의 종류 : 임시저장, 등록, 접수, 승인, 반려
+   (저장 시점 저장에 대한 종류 값은 dsFormInfo Dataset의 SAVE_GUBUN에 담겨 전송한다.)
+ ***********************************************************************************/
+this.fnSrCommSetPostSaveService = function()
+{
+    if(this.fnSrCommWfReqProcSvcDtDsInfo("SAVE", "AF")) //SELECT 전처리 데이터셋 셋팅
+    {
+        this.fnSrCommCallTran("AF_SAVE");               //SELECT 전처리 서비스 실행
+    }
+    else
+    {
+        trace("[lib_SrComm]-fnSrCommSetPostSaveService [postSave] 저장 후처리 정의된 서비스 없어서 Callback 바로 호출");
+        this.fnSrCommCallback("postSave", 0, "SUCCESS");
+    }
+}
+
+/***********************************************************************************
+ * fnSrCommWfRegTblInfoDs
+   WF프로세스 관리에 셋팅된 요청서 등록 화면 데이터셋 정보를 셋팅한다.
+   (transaction시 데이터셋 전송 목록으로 사용하기 위해)
+ ***********************************************************************************/
+this.fnSrCommWfRegTblInfoDs = function(procGubun, isDsClear, scrnWfProcCd)
+{
+	var rtn = false;
+    if( Ex.isEmpty(isDsClear) ) isDsClear = true;
+    
+	if(isDsClear)
+	{
+		this["dsFormInfo"].setColumn(0, "IN_DATASET", "");
+		this["dsFormInfo"].setColumn(0, "OUT_DATASET", "");
+	}
+
+	var paramDs = "";
+	var paramDsNm = "";
+	var paramDsObj;
+
+	var inDatasetStr = "";
+	var outDatasetStr = "";
+
+	var dsReqRegTblInfo = this["_dsReqRegTblInfo"];     //요청서 등록 화면 테이블 정보
+
+	//trace("[lib_SrComm]-this.fnSrCommWfRegTblInfoDs() START dsReqRegTblInfo.rowcount : " + dsReqRegTblInfo.rowcount)
+
+	for(var i=0; i<dsReqRegTblInfo.rowcount; i++)   //WF 프로세스 관리에 셋팅된 요청서 등록 화면 관련 테이블 목록
+	{
+		var dsNm        = dsReqRegTblInfo.getColumn(i, "DATASET_NM");
+		var wfProcCd    = dsReqRegTblInfo.getColumn(i, "WF_PROC_CD");
+
+		var isTargWfProcCd = false;
+		if( !Ex.isEmpty(scrnWfProcCd) )
+		{
+			if(wfProcCd == scrnWfProcCd)	isTargWfProcCd = true;
+		}
+		else
+		{
+			isTargWfProcCd = true;
+		}
+
+		if(isTargWfProcCd)
+		{
+			var formDiv = this.divForm.form["divForm" + wfProcCd];
+			
+			if(formDiv)
+			{
+				var formInDsObj = this.divForm.form["divForm" + wfProcCd].form[dsNm];
+
+				if(Ex.util.getTypeof(formInDsObj) == "DATASET")
+				{
+					paramDs = dsNm + "_" + wfProcCd;
+					paramDsNm = paramDs + "=" + paramDs;
+
+					var isExist = this.isValidObject(paramDs);
+
+					if( !isExist )  inDsObj = Ex.util.createDataset(this, paramDs);
+					else            inDsObj = this[paramDs];
+
+					inDsObj.loadXML(formInDsObj.saveXML());
+
+					//trace(inDsObj.saveXML());
+					
+					if(procGubun == "SAVE")
+					{
+						inDatasetStr = this["dsFormInfo"].getColumn(0, "IN_DATASET")||'';
+						//trace("[lib_SrComm]-this.fnSrCommWfRegTblInfoDs() inDatasetStr ::: " + inDatasetStr);
+						if(inDatasetStr.indexOf(paramDs) == -1)
+						{
+							inDatasetStr += (Ex.isEmpty(inDatasetStr) ? "" : " ") + paramDsNm;
+							this["dsFormInfo"].setColumn(0, "IN_DATASET", inDatasetStr);
+						}
+					}
+
+					//조회/저장 공통 셋팅
+					outDatasetStr = this["dsFormInfo"].getColumn(0, "OUT_DATASET")||'';
+					//trace("[lib_SrComm]-this.fnSrCommWfRegTblInfoDs() outDatasetStr ::: " + outDatasetStr);
+					if(outDatasetStr.indexOf(paramDs) == -1)
+					{
+						outDatasetStr += (Ex.isEmpty(outDatasetStr) ? "" : " ") + paramDsNm;
+						this["dsFormInfo"].setColumn(0, "OUT_DATASET", outDatasetStr);
+					}
+				}
+				else
+				{
+					var param = {
+						  id : "noDatasetObjectE"
+						, msg : "요청서 양식 화면에 IN Dataset 설정시 DATASET:[" + dsNm + "] 존재하지 않습니다."
+					};
+					Ex.core.error(this, param);
+					return;
+				}
+			}
+		}
+	}
+	//trace("[lib_SrComm]-this.fnSrCommWfRegTblInfoDs() " + procGubun + " END dsReqRegTblInfo.rowcount : " + dsReqRegTblInfo.rowcount)
+	rtn = true;
+	return rtn;
+}
+
+/***********************************************************************************
+ * fnSrCommWfReqProcSvcDtDsInfo
+   WF프로세스 관리의 서비스 정의에 셋팅된 정보를 서비스 구분에 따라 셋팅한다.
+ ***********************************************************************************/
+this.fnSrCommWfReqProcSvcDtDsInfo = function(procGubun, preGubun, frBkGubun, isDsClear, wfProcCd)
+{
+	//frBkGubun 미사용
+    if( Ex.isEmpty(isDsClear) ) isDsClear = true;
+    
+	//trace("this.fnSrCommWfReqProcSvcDtDsInfo() wfProcCd : " + wfProcCd + " procGubun : " + procGubun + " preGubun : " + preGubun + " frBkGubun : " + frBkGubun + " isDsClear : " + isDsClear);
+	
+	var saveGubun = this["dsFormInfo"].getColumn(0, "SAVE_GUBUN")||'';
+	
+    if(isDsClear)
+    {
+        this["dsFormInfo"].setColumn(0, "IN_DATASET", "");
+        this["dsFormInfo"].setColumn(0, "OUT_DATASET", "");
+    }
+
+    //결재/검토인 경우 dsApprInfo 파라미터 추가
+    if( procGubun == "SAVE" && (saveGubun == "APV" || saveGubun == "RTRN") )
+    {
+        var inDsStr = this["dsFormInfo"].getColumn(0, "IN_DATASET")||'';
+        if(inDsStr.indexOf("dsApprInfo=dsApprInfo") == -1)
+        {
+            this["dsFormInfo"].setColumn(0, "IN_DATASET", (Ex.isEmpty(inDsStr) ? "" : " ") + "dsApprInfo=dsApprInfo");
+        }
+    }
+
+    var inDs = "";
+    var inDsNm = "";
+    var inDsObj;
+    var outDs = "";
+    var outDsNm = "";
+    var outDsObj;
+
+    var inDatasetStr = "";
+    var outDatasetStr = "";
+
+    var dsReqProcSvcInfo = this["_dsReqProcSvcInfo"];       //요청서 등록 화면 테이블 정보
+
+    //trace("[lib_SrComm]-this.fnSrCommWfReqProcSvcDtDsInfo() START dsReqProcSvcInfo.rowcount : " + dsReqProcSvcInfo.rowcount)
+	
+	if(dsReqProcSvcInfo.rowcount > 0)
+	{
+		var isExistsSvc = false;
+		var curWfProcCd = this["dsFormInfo"].getColumn(0, "WF_PROC_CD");
+
+		for(var i=0; i<this.gubunArr.length; i++)
+		{
+			var divScope = nexacro.replaceAll(this.gubunArr[i][0], "divForm", "").toUpperCase();
+			var chkWfProc = true;
+			
+			if( !Ex.isEmpty(wfProcCd) )
+			{
+				if(wfProcCd != divScope)	chkWfProc = false;
+			}
+			
+			var func = this["dsFormInfo"].getColumn(0, "WF_FUNC_CD");
+			
+			//trace("[lib_SrComm]-this.fnSrCommWfReqProcSvcDtDsInfo() func : " + func + " preGubun : " + preGubun + " divScope : " + divScope + " chkWfProc : " + chkWfProc);
+
+			if(divScope.indexOf("WF_PROC_") > -1 && chkWfProc)   //워크플로우 진행단계에 해당하는 화면인 경우
+			{
+				if( !Ex.isEmpty(frBkGubun) )    frBkGubun = "&& FR_BK_GUBUN=='" + frBkGubun + "'";
+				else                            frBkGubun = "";
+				
+				var filterStr = "";
+
+				if( Ex.isEmpty(func) )
+				{
+					if(procGubun == "SELECT")
+					{
+						//filterStr = "WF_PROC_CD=='" + divScope + "' && FUNC=='ALL' && PROC_GUBUN=='" + procGubun + "' && PRE_GUBUN=='" + preGubun + "' " + frBkGubun;
+						filterStr = "WF_PROC_CD=='" + divScope + "' && PROC_GUBUN=='" + procGubun + "' && PRE_GUBUN=='" + preGubun + "' " + frBkGubun;
+					}
+					else
+					{
+						//filterStr = "WF_PROC_CD=='" + this["dsFormInfo"].getColumn(0, "WF_PROC_CD") + "' && PROC_GUBUN.indexOf('" + procGubun + "') > -1 && PRE_GUBUN=='" + preGubun + "' " + frBkGubun;
+						//filterStr = "WF_PROC_CD=='" + this["dsFormInfo"].getColumn(0, "WF_PROC_CD") + "' && PROC_GUBUN=='" + procGubun + "' && PRE_GUBUN=='" + preGubun + "' " + frBkGubun;
+						//filterStr = "WF_PROC_CD=='" + divScope + "' && PROC_GUBUN=='" + procGubun + "' && PRE_GUBUN=='" + preGubun + "' " + frBkGubun;
+
+						var wfFunc = "";
+
+						//임시저장, 등록, 접수시
+						if(saveGubun == "TEMP" || saveGubun == "REG" || saveGubun == "REV")
+						{
+							if(saveGubun == "REV")
+							{
+								wfFunc = "WF_FUNC_04";	//접수
+							}
+							else
+							{
+								if(saveGubun == "REG")
+								{
+									wfFunc = "WF_FUNC_00";	//임시저장, 등록
+								}
+								else
+								{
+									if(divScope == "WF_PROC_1000")	wfFunc = "WF_FUNC_00";	//등록(임시저장)
+									else							wfFunc = "WF_FUNC_04";	//담당자(임시저장)
+								}
+							}
+
+							if(saveGubun == "TEMP")
+							{
+								filterStr = "WF_PROC_CD=='" + divScope + "' && FUNC=='" + wfFunc + "' && INC_TEMP_SAVE_YN=='Y' && PROC_GUBUN=='" + procGubun + "' && PRE_GUBUN=='" + preGubun + "' " + frBkGubun;
+							}
+							else
+							{
+								filterStr = "WF_PROC_CD=='" + divScope + "' && FUNC=='" + wfFunc + "' && PROC_GUBUN=='" + procGubun + "' && PRE_GUBUN=='" + preGubun + "' " + frBkGubun + " ";
+								filterStr += "&& ((WF_PROC_CD=='" + curWfProcCd + "' && WF_PROC_AGREE_YN=='Y') || WF_PROC_AGREE_YN=='N')";
+							}
+						}
+						else if( saveGubun == "APV")				//결재 승인시
+						{
+							filterStr = "WF_PROC_CD=='" + divScope + "' && FUNC=='WF_FUNC_01' && PROC_GUBUN.indexOf('SAVE') > -1 && PRE_GUBUN=='" + preGubun + "' " + frBkGubun + " ";
+							filterStr += "&& ((WF_PROC_CD=='" + curWfProcCd + "' && WF_PROC_AGREE_YN=='Y') || WF_PROC_AGREE_YN=='N')";
+						}
+						else if( saveGubun.indexOf("RTRN") > -1)	//결재 반려, 접수 반려시
+						{
+							if(saveGubun == "RTRN")	wfFunc = "WF_FUNC_01";
+							else														wfFunc = "WF_FUNC_04";
+							
+							filterStr = "WF_PROC_CD=='" + divScope + "' && FUNC=='" + func + "' && PROC_GUBUN.indexOf('RTRN') > -1 && PRE_GUBUN=='" + preGubun + "' " + frBkGubun + " ";
+							filterStr += "&& ((WF_PROC_CD=='" + curWfProcCd + "' && WF_PROC_AGREE_YN=='Y') || WF_PROC_AGREE_YN=='N')";
+						}
+					}
+				}
+				else
+				{
+					if(procGubun == "SELECT")
+					{
+						//filterStr = "WF_PROC_CD=='" + divScope + "' && (FUNC=='ALL' || FUNC=='" + func + "') && PROC_GUBUN=='" + procGubun + "' && PRE_GUBUN=='" + preGubun + "' " + frBkGubun;
+						filterStr = "WF_PROC_CD=='" + divScope + "' && PROC_GUBUN=='" + procGubun + "' && PRE_GUBUN=='" + preGubun + "' " + frBkGubun;
+					}
+					else
+					{
+						//filterStr = "WF_PROC_CD=='" + divScope + "' && PROC_GUBUN.indexOf('" + procGubun + "') > -1 && PRE_GUBUN=='" + preGubun + "' " + frBkGubun;
+						var wfFunc = "";
+
+						//임시저장, 등록, 접수시
+						if(saveGubun == "TEMP" || saveGubun == "REG" || saveGubun == "REV")
+						{
+							if(saveGubun == "REV")
+							{
+								wfFunc = "WF_FUNC_04";	//접수
+							}
+							else
+							{
+								if(saveGubun == "REG")
+								{
+									wfFunc = "WF_FUNC_00";	//임시저장, 등록
+								}
+								else
+								{
+									if(divScope == "WF_PROC_1000")	wfFunc = "WF_FUNC_00";	//등록(임시저장)
+									else							wfFunc = "WF_FUNC_04";	//담당자(임시저장)
+								}
+							}
+
+							if(saveGubun == "TEMP")
+							{
+								filterStr = "WF_PROC_CD=='" + divScope + "' && FUNC=='" + wfFunc + "' && INC_TEMP_SAVE_YN=='Y' && PROC_GUBUN=='" + procGubun + "' && PRE_GUBUN=='" + preGubun + "' " + frBkGubun;
+							}
+							else
+							{
+								filterStr = "WF_PROC_CD=='" + divScope + "' && FUNC=='" + wfFunc + "' && PROC_GUBUN=='" + procGubun + "' && PRE_GUBUN=='" + preGubun + "' " + frBkGubun + " ";
+								filterStr += "&& ((WF_PROC_CD=='" + curWfProcCd + "' && WF_PROC_AGREE_YN=='Y') || WF_PROC_AGREE_YN=='N')";
+							}
+						}
+						else if( saveGubun == "APV")				//결재 승인시
+						{
+							filterStr = "WF_PROC_CD=='" + divScope + "' && FUNC=='WF_FUNC_01' && PROC_GUBUN.indexOf('SAVE') > -1 && PRE_GUBUN=='" + preGubun + "' " + frBkGubun + " ";
+							filterStr += "&& ((WF_PROC_CD=='" + curWfProcCd + "' && WF_PROC_AGREE_YN=='Y') || WF_PROC_AGREE_YN=='N')";
+						}
+						else if( saveGubun.indexOf("RTRN") > -1)	//결재 반려, 접수 반려시
+						{
+							if(saveGubun == "RTRN")	wfFunc = "WF_FUNC_01";
+							else					wfFunc = "WF_FUNC_04";
+							
+							filterStr = "WF_PROC_CD=='" + divScope + "' && FUNC=='" + func + "' && PROC_GUBUN.indexOf('RTRN') > -1 && PRE_GUBUN=='" + preGubun + "' " + frBkGubun + " ";
+							filterStr += "&& ((WF_PROC_CD=='" + curWfProcCd + "' && WF_PROC_AGREE_YN=='Y') || WF_PROC_AGREE_YN=='N')";
+						}
+					}
+				}
+
+				//trace("XX[lib_SrComm]-this.fnSrCommWfReqProcSvcDtDsInfo() procGubun:[" + procGubun + " preGubun : " + preGubun + " ===" + filterStr + "===");
+				dsReqProcSvcInfo.set_filterstr(filterStr);
+				//trace("XX[lib_SrComm]-this.fnSrCommWfReqProcSvcDtDsInfo() dsReqProcSvcInfo.filterstr:\n" + dsReqProcSvcInfo.filterstr + " dsReqProcSvcInfo.rowcount=[" + dsReqProcSvcInfo.rowcount + "]");
+				//trace("XX[lib_SrComm]-this.fnSrCommWfReqProcSvcDtDsInfo() dsReqProcSvcInfo.saveXML():\n" + dsReqProcSvcInfo.saveXML());
+
+				if( !isExistsSvc )  if(dsReqProcSvcInfo.rowcount > 0) isExistsSvc = true;
+
+				for(var j=0; j<dsReqProcSvcInfo.rowcount; j++)  //WF 프로세스 관리에 정의된 서비스 목록
+				{
+					if(divScope == dsReqProcSvcInfo.getColumn(j, "WF_PROC_CD"))
+					{
+						var strInDs = dsReqProcSvcInfo.getColumn(j, "IN_DATASET");
+
+						//trace("[lib_SrComm]-this.fnSrCommWfReqProcSvcDtDsInfo() i=" + i + " j=" + j + " divScope : " + divScope + " strInDs : " + strInDs)
+
+						if( !Ex.isEmpty(strInDs) )
+						{
+							var inDsArr = strInDs.split(",");
+
+							for(var k=0; k<inDsArr.length; k++)
+							{
+								var formInDsObj = this.divForm.form[this.gubunArr[i][0]].form[inDsArr[k]];
+								
+								if(Ex.util.getTypeof(formInDsObj) == "DATASET")
+								{
+									inDs = inDsArr[k] + "_" + divScope;
+									inDsNm = inDs + "=" + inDs;
+
+									var isExist = this.isValidObject(inDs);
+
+									if( !isExist )  inDsObj = Ex.util.createDataset(this, inDs);
+									else            inDsObj = this[inDs];
+
+									inDsObj.loadXML(formInDsObj.saveXML());
+
+									//trace(inDsObj.saveXML());
+
+									inDatasetStr = this["dsFormInfo"].getColumn(0, "IN_DATASET")||'';
+									//trace("[lib_SrComm]-this.fnSrCommWfReqProcSvcDtDsInfo() inDatasetStr ::: " + inDatasetStr);
+									if(inDatasetStr.indexOf(inDs) == -1)
+									{
+										inDatasetStr += (Ex.isEmpty(inDatasetStr) ? "" : " ") + inDsNm;
+										this["dsFormInfo"].setColumn(0, "IN_DATASET", inDatasetStr);
+									}
+								}
+								else
+								{
+									var param = {
+										  id : "noDatasetObjectE"
+										, msg : "WF단계 : [" + divScope + "] 구분:[" + procGubun + "] 전처리:[" + preGubun + "]\nIN Dataset 설정시 DATASET " + inDsArr[k] + " 존재하지 않습니다."
+									};
+									Ex.core.error(this, param);
+									return;
+								}
+							}
+						}
+
+						var strOutDs =  dsReqProcSvcInfo.getColumn(j, "OUT_DATASET");   //this.divForm.form[this.gubunArr[i][0]].form[;
+						//trace("[lib_SrComm]-this.fnSrCommWfReqProcSvcDtDsInfo() i=" + i + " j=" + j + " divScope : " + divScope + " strOutDs : " + strOutDs)
+						
+						if( !Ex.isEmpty(strOutDs) )
+						{
+							var outDsArr = strOutDs.split(",");
+							
+							for(var k=0; k<outDsArr.length; k++)
+							{
+								var formOutDsObj = this.divForm.form[this.gubunArr[i][0]].form[outDsArr[k]];
+
+								if(Ex.util.getTypeof(formOutDsObj) == "DATASET")
+								{
+									outDs = outDsArr[k] + "_" + divScope;
+									outDsNm = outDs + "=" + outDs;
+
+									var isExist = this.isValidObject(outDs);
+
+									if( !isExist )  outDsObj = Ex.util.createDataset(this, outDs);
+									else            outDsObj = this[outDs];
+
+									outDsObj.loadXML(formOutDsObj.saveXML());
+									//trace(outDsObj.saveXML());
+
+									outDatasetStr = this["dsFormInfo"].getColumn(0, "OUT_DATASET")||'';
+									if(outDatasetStr.indexOf(outDs) == -1)
+									{
+										outDatasetStr += (Ex.isEmpty(outDatasetStr) ? "" : " ") + outDsNm;
+										this["dsFormInfo"].setColumn(0, "OUT_DATASET", outDatasetStr);
+									}
+								}
+								else
+								{
+									var param = {
+										  id : "noDatasetObjectE"
+										, msg : "WF단계 : [" + divScope + "] 구분:[" + procGubun + "] 전처리:[" + preGubun + "]\nOUT Dataset 설정시 DATASET " + outDsArr[k] + " 존재하지 않습니다."
+									};
+									Ex.core.error(this, param);
+									return;
+								}
+							}
+						}
+						//trace("[lib_SrComm]-this.fnSrCommWfReqProcSvcDtDsInfo() outDatasetStr ::: " + outDatasetStr);
+					}
+				}
+			}
+			dsReqProcSvcInfo.set_filterstr("");
+		}
+	}
+	else
+	{
+		return false;
+	}
+    //alert("procGubun : " + procGubun + " preGubun : " + preGubun + " frBkGubun : " + frBkGubun + " isExistsSvc : " + isExistsSvc);
+    //trace("[lib_SrComm]-this.fnSrCommWfReqProcSvcDtDsInfo() IN_DATASET:[" + this["dsFormInfo"].getColumn(0, "IN_DATASET") + "]");
+    //trace("[lib_SrComm]-this.fnSrCommWfReqProcSvcDtDsInfo() " + procGubun + " " + " Return:[" + (dsReqProcSvcInfo.rowcount > 0 ? true : false) + "]");
+    //return dsReqProcSvcInfo.rowcount > 0 ? true : false;
+    return isExistsSvc;
+}
+
+/***********************************************************************************
+ * fnSrCommSetDivFormReqInfoData - 해당 Div Form에 요청정보를 추출할 수 있도록 셋팅을 해준다.
+ * divFormObj       : 셋팅하고자 하는 div Form Object
+ * divScrnWfProcCd  : 해당 div에 셋팅할 WF_PROC_CD 단계 코드
+ ***********************************************************************************/ 
+this.fnSrCommSetDivFormReqInfoData = function(divFormObj, divScrnWfProcCd)
+{
+    var reqInfo = new Object();
+    reqInfo["SCRN_WF_PROC_CD"] = divScrnWfProcCd;
+    reqInfo["PARENT_FORM"] = this;
+    //this.topForm._formObj = this;
+
+    for(var i=0; i<this.dsFormInfo.getColCount(); i++)
+    {
+        //trace("[lib_SrComm this.fnSrCommSetDivFormReqInfoData()] i=" + i + " COL_NM : " + this.dsFormInfo.getColID(i) + " VALUE : " + this.dsFormInfo.getColumn(0, this.dsFormInfo.getColID(i)));
+        reqInfo[this.dsFormInfo.getColID(i)] = this.dsFormInfo.getColumn(0, this.dsFormInfo.getColID(i));
+    }
+    divFormObj.reqInfo = reqInfo;
+    
+    if(divFormObj.parent.id.indexOf("WF_PROC_") > -1)
+    {
+        divFormObj.dsWfProc = this.dsWfProc;
+    }
+    //trace("[lib_SrComm]-this.fnSrCommSetDivFormReqInfoData() " + divFormObj.parent.id + "-요청서 정보 [셋팅완료]");
+}
+
+/***********************************************************************************
+ * setFileConfig - 첨부파일 셋팅
+ * divFormObj   : 셋팅하고자 하는 div Form Object
+ * keyInfoArr   : 첨부파일의 키 정보
+ * isSearch     : 조회실행여부
+ ***********************************************************************************/ 
+this.fnSrCommSetFileConfig = function(divObjForm, keyInfoArr, isDownloadOnly)
+{
+    if( Ex.isEmpty(keyInfoArr) )
+    {
+        keyInfoArr = ["", "", ""];
+    }
+    else
+    {
+        if( Ex.isArray(keyInfoArr) )
+        {
+            if(keyInfoArr < 3) for(var i=0; i<3-keyInfoArr.length; i++) keyInfoArr.push("");        
+        }
+        else keyInfoArr = ["", "", ""];
+    }
+
+	var isSearch = true;
+
+	if( Ex.isEmpty(isDownloadOnly) )	isDownloadOnly = false;
+
+    var oParam = {
+         sSvcId         : 'srFileSvc'                   // divFormFile callback 후처리용 서비스 ID
+        ,limitMinCnt    : 0                             // 파일 최소 갯수; default 0
+        ,limitCnt       : 3                             // 파일 최대 갯수; default 5
+        ,limitSize      : 100                           // 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+        ,folderName     : 'sr'                          // 폴더명(업무명)
+        ,tableName      : "SR0000_W" + "_divFormFile"   // 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+        ,primaryKey1    : keyInfoArr[0]                 // 테이블 PK1(ex. 요청서ID 등)
+        ,primaryKey2    : keyInfoArr[1]                 // 테이블 PK2 (복합 키인 경우 사용)
+        ,primaryKey3    : keyInfoArr[2]                 // 테이블 PK3 (복합 키인 경우 사용)
+        ,fileDownYn     : 'Y'                           // 파일다운권한;  공백 시 메뉴의 조회 권한
+        ,fileUpYn       : 'Y'                           // 파일업로드권한; 공백 시 메뉴의 추가 권한
+        ,deleteYn       : 'Y'                           // 파일삭제권한;  공백 시 메뉴의 삭제 권한
+    };
+
+	if(isDownloadOnly)
+	{
+		divObjForm.setConfig(this, oParam, isSearch, true, false);
+	}
+	else
+	{
+		var curWfProcCd 	= this.dsFormInfo.getColumn(0, "WF_PROC_CD");
+		var saveBtnYn		= this.dsFormInfo.getColumn(0,"SAVE_BTN_YN") == "Y" ? true : false;
+		var regBtnYn		= this.dsFormInfo.getColumn(0,"REG_BTN_YN") == "Y" ? true : false;
+		var revBtnYn		= this.dsFormInfo.getColumn(0,"REV_BTN_YN") == "Y" ? true : false;
+		var apvBtnYn		= this.dsFormInfo.getColumn(0,"APV_BTN_YN") == "Y" ? true : false;
+		
+		//alert("curWfProcCd : " + curWfProcCd + " saveBtnYn : " + saveBtnYn + " revBtnYn : " + revBtnYn + " apvBtnYn : " + apvBtnYn);
+		
+		if(regBtnYn || saveBtnYn || revBtnYn || apvBtnYn)
+		{
+			if(curWfProcCd != "WF_PROC_9999")
+			{
+				divObjForm.setConfig(this, oParam, isSearch, false, false);
+			}
+			else
+			{
+				divObjForm.setConfig(this, oParam, isSearch, true, false);
+			}
+		}
+		else
+		{
+			divObjForm.setConfig(this, oParam, isSearch, true, false);
+		}
+	}
+    divObjForm.parent.set_visible(true);
+
+    if(isSearch) divObjForm.fnSearchFile();
+    
+    //trace("[lib_SrComm]-this.setFileConfig() keyInfoArr[0] : " + keyInfoArr[0] + " [설정완료]");
+}
+
+/***********************************************************************************
+ * fnSrCommCallTran - 요청서 공통 화면 Transaction 호출 함수
+ * tranGubun    : 전/기본/후처리 조회/저장 구분값
+ ***********************************************************************************/ 
+this.fnSrCommCallTran = function(tranGubun, scrnWfProcForm)
+{
+    //trace("[lib_SrComm]-this.fnSrCommCallTran() tranGubun:[" + tranGubun + "[ Start=================================================>");
+    var sTranId     = "";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService    = "SRComm/";                // 서비스명
+    var sInDs       = "dsFormInfo=dsFormInfo "; // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs      = "";                       // 서버에서 수신할 데이타셋
+    var sArg        = "";
+
+    switch(tranGubun)
+    {
+        case "BF_SELECT" :
+            sTranId   = "preSelect";
+            break;
+
+        case "SELECT" :
+            sTranId = "select";
+            sInDs += "dsSelectService=dsSelectService ";
+            break;
+
+        case "AF_SELECT" :
+            sTranId = "postSelect";
+            break;
+
+        case "BF_SAVE" :
+            sTranId   = "preSave";
+            break;
+
+        case "SAVE" :
+            sTranId = "save";
+            sInDs += "dsSaveService=dsSaveService ";
+            sOutDs += "dsFormInfo=dsFormInfo ";
+            break;
+
+        case "AF_SAVE" :
+            sTranId = "postSave";
+            break;
+    }
+    sService += sTranId;
+    sInDs += this["dsFormInfo"].getColumn(0, "IN_DATASET")||'';     // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    sOutDs += this["dsFormInfo"].getColumn(0, "OUT_DATASET")||'';   // 서버에서 수신할 데이타셋
+    
+    //trace("[lib_SrComm]-this.fnSrCommCallTran() sTranId=[" + sTranId + "] " + sService);
+    //trace("[lib_SrComm]-this.fnSrCommCallTran() sInDs=[" + sInDs + "]");
+    //trace("[lib_SrComm]-this.fnSrCommCallTran() sOutDs=[" + sOutDs + "]");
+
+	this.scrnWfProcForm = scrnWfProcForm;	
+    Ex.core.callService(this, sTranId, sService, sInDs, sOutDs, sArg, "fnSrCommCallback");
+}
+
+/***********************************************************************************
+ * fnSrCommCallback - 요청서 lib Transaction Callback 함수
+ * sSvcId       : 서비스 호출 식별자ID
+ * nErrorCode   : 응답코드
+ * sErrorMsg    : 응답 메시지
+ ***********************************************************************************/ 
+this.fnSrCommCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+    trace("[lib_SrComm]-this.fnSrCommCallback() sSvcId:[" + sSvcId + "] nErrorCode:[" + nErrorCode + "] sErrorMsg:[" + sErrorMsg + "]");
+
+    if(nErrorCode < 0) 
+    {
+        var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+        Ex.core.error(this, param);
+        return;
+    }
+
+	if(sSvcId == "selectReqTmplatIdVerByReqId")
+	{
+		this.fnCallback(sSvcId, nErrorCode, sErrorMsg);
+    }
+	else if(sSvcId == "selectWfReqTmplatHt")
+    {
+        //trace("[lib_SrComm]-this.fnSrCommCallback() selectWfReqTmplatHt [실행완료]");
+        this.fnCallback(sSvcId, nErrorCode, sErrorMsg);
+    }
+    else if(sSvcId == "selectReqInfo")
+    {
+        //trace("[lib_SrComm]-this.fnSrCommCallback selectReqInfo [실행완료] _dsReqRegTblInfo:[" + this["_dsReqRegTblInfo"].rowcount + "] _dsReqProcSvcInfo:[" + this["_dsReqProcSvcInfo"].rowcount + "]");
+        //trace("===selectReqInfo===\n" + this["_dsReqProcSvcInfo"].saveXML());
+        this.fnCallback(sSvcId, nErrorCode, sErrorMsg);
+    }
+    else if(sSvcId == "selectBaseInfo")
+    {
+        //trace("[lib_SrComm]-this.fnSrCommCallback() [TOP] 기본 정보 조회 [실행완료]");
+        this.fnCallback(sSvcId, nErrorCode, sErrorMsg);
+    }
+	else if(sSvcId == "selectBaseInfoAutoSave")
+    {
+        //trace("[lib_SrComm]-this.fnSrCommCallback() [TOP] 기본 정보 조회 [실행완료]");
+        this.fnCallback(sSvcId, nErrorCode, sErrorMsg);
+    }
+    else if(sSvcId == "preSelect")  
+    {
+        //trace("[lib_SrComm]-this.fnSrCommCallback() [요청서] 조회 전처리 [실행완료]");
+        this.fnCallback(sSvcId, nErrorCode, sErrorMsg);
+        
+        //alert("&&&& REQ_ID===" + this["dsFormInfo"].getColumn(0, "REQ_ID"));
+
+        if( this["dsFormInfo"].getColumn(0, "REQ_ID").indexOf("REQ") == -1 )
+        {
+            this.fnSrCommSetSelectService();        //조회 서비스 실행
+        }
+        else
+        {
+            this.fnSrCommSetPostSelectService();    //조회 후처리 서비스 실행
+        }
+    }
+    else if(sSvcId == "select") 
+    {
+        //trace("[lib_SrComm]-this.fnSrCommCallback() [요청서] 조회 [실행완료]");
+		if( !Ex.isEmpty(this.scrnWfProcForm) )
+		{
+			var divScope = nexacro.replaceAll(this.scrnWfProcForm.reqInfo.SCRN_WF_PROC_CD).toUpperCase();
+			var outDatasets = this.dsFormInfo.getColumn(0, "OUT_DATASET").split(" ");
+
+			//trace("[lib_SrComm]-fnSrCommCallback() [select] divScope : " + divScope + " OUD_DATASET:[" + this.dsFormInfo.getColumn(0, "OUT_DATASET") + "] outDatasets.length ::::: " + outDatasets.length);
+
+			for(var j=0; j<outDatasets.length; j++)
+			{
+				if(outDatasets[j].indexOf(divScope) > -1)
+				{
+					var outDs   = outDatasets[j].split("=")[0];
+					var formOutDs = nexacro.replaceAll(outDs, "_" + divScope, "");
+
+					//trace("[lib_SrComm]-fnSrCommCallback() [" + sSvcId + "] outDs=[" + outDs + "] formOutDs=[" + formOutDs + "]");
+
+					if(this.divForm.form["divForm" + this.scrnWfProcForm.reqInfo.SCRN_WF_PROC_CD].form.isValidObject(formOutDs))
+					{
+						//trace("formOutDs : " + formOutDs + " outDs : " + outDs + " " + this[outDs].rowcount);
+						//trace("formOutDs : " + formOutDs + " outDs : " + outDs);
+						//this.divForm.form[this.gubunArr[i][0]].form[formOutDs].loadXML(this[outDs].saveXML());
+						this.divForm.form["divForm" + this.scrnWfProcForm.reqInfo.SCRN_WF_PROC_CD].form[formOutDs].loadXML(this[outDs].saveXML());
+						this[outDs].clearData();
+						//trace("[lib_SrComm] fnSrCommCallback() select] DataSetPrint\n" + this.divForm.form[this.gubunArr[i][0]].form[formOutDs].saveXML());
+					}
+				}
+			}
+			this.scrnWfProcForm.fnCallback(sSvcId, nErrorCode, sErrorMsg);
+		}
+		else
+		{
+			this.fnCallback(sSvcId, nErrorCode, sErrorMsg);
+		}
+
+		if( Ex.isEmpty(this.scrnWfProcForm) )
+		{
+			this.fnSrCommSetPostSelectService();    //조회 후처리 서비스 실행
+		}
+    }
+    else if(sSvcId == "postSelect") 
+    {
+		trace("[lib_SrComm] " + sSvcId + " " + this.isAutoSave);
+
+		if(this.autoSaveYn == "N")
+		{
+			Ex.core.toast(this, "10002");
+		}
+		this.autoSaveYn = "N";
+        //trace("[lib_SrComm]-this.fnSrCommCallback() [요청서] 조회 후처리 [실행완료]");
+        this.fnCallback(sSvcId, nErrorCode, sErrorMsg);
+    }
+    else if(sSvcId == "preSave")    
+    {
+        //trace("[lib_SrComm]-this.fnSrCommCallback() [요청서] 저장 전처리 [실행완료]");
+        this.fnCallback(sSvcId, nErrorCode, sErrorMsg);
+        this.fnSrCommSetSaveService();  //저장 서비스 실행
+    }
+    else if(sSvcId == "save")   
+    {
+        //trace("[lib_SrComm]-this.fnSrCommCallback() [요청서] 저장 [실행완료]");
+        this.fnCallback(sSvcId, nErrorCode, sErrorMsg);
+        this.fnSrCommSetPostSaveService();  //저장 후처리 서비스 실행
+    }
+    else if(sSvcId == "postSave")
+    {
+        //trace("[lib_SrComm]-this.fnSrCommCallback() [요청서] 저장 후처리 [실행완료]");
+        this.fnCallback(sSvcId, nErrorCode, sErrorMsg);
+    }
+}
+
+//this.setFormDatasetInsert = function(formObj, parentPath)
+this.setFormDatasetInsert = function(formObj, clearKeyColumnArr, excludeDsNameArr, parentPath, tempReqId)
+{
+    if( Ex.isEmpty(clearKeyColumnArr) ) return;
+
+    if( Ex.isEmpty(parentPath) ) parentPath = "this";
+    var components = formObj.components;
+
+    if(Ex.isEmpty(tempReqId) )
+    {
+        tempReqId = formObj.dsFormInfo.getColumn(0, "TEMP_REQ_ID");
+        //trace("tempReqId:::::::::::::::::::::::[" + tempReqId + "]");
+    }
+
+    //trace("components.length :::::::::::::::::::::: " + components.length);
+    for(var i=0; i<components.length; i++)
+    {
+        //trace("i=" + i + " Comp:[" + components[i] + "]");
+        if(components[i] == "[object Div]")
+        {
+            //this.setFormDatasetInsert(components[i].form, parentPath + "." + components[i].id + ".form");
+            this.setFormDatasetInsert(components[i].form, clearKeyColumnArr, excludeDsNameArr, parentPath + "." + components[i].id + ".form", tempReqId);
+            
+            if( !Ex.isEmpty(components[i].url) )
+            {
+                if(components[i].form.reqInfo)
+                {
+                    if( !Ex.isEmpty(components[i].form.reqInfo["REQ_ID"]) )
+                    {
+                        //trace("reqInfo REQ_ID : [" + components[i].form.reqInfo["REQ_ID"] + "]");
+                        //components[i].form.reqInfo["REQ_ID"] = "";
+                        components[i].form.reqInfo["REQ_ID"] = tempReqId;
+                    }
+                }
+            }
+        }
+        else if(components[i] == "[object Tab]")
+        {
+            for (var j=0; j<components[i].tabpages.length; j++)
+            {
+                //this.setFormDatasetInsert(components[i].tabpages[j].form, parentPath + "." + components[i].id + "." + components[i].tabpages[j].id + ".form");
+                this.setFormDatasetInsert(components[i].tabpages[j].form, clearKeyColumnArr, excludeDsNameArr, parentPath + "." + components[i].id + "." + components[i].tabpages[j].id + ".form", tempReqId);
+            }
+        }
+    }
+
+    for(var i=0; i<formObj.all.length; i++)
+    {
+        var obj = formObj.all[i];
+        if(obj instanceof Dataset)
+        {
+            var isSkip = false;
+            
+            if(excludeDsNameArr)
+            {
+                for(var j=0; j<excludeDsNameArr.length; j++)
+                {
+                    var path = "divForm" + excludeDsNameArr[0].split(";")[0];
+                    var dsNameArr = excludeDsNameArr[0].split(";")[1].split(",");
+                    
+                    if(parentPath.indexOf(path) > -1)
+                    {
+                        for(var k=0; k<dsNameArr.length; k++)
+                        {
+                            if(dsNameArr[k] == formObj.all[i].id)
+                            {
+                                isSkip = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            //trace("isSkip : " + isSkip + " COMP PATH:[" + parentPath + "] Dataset NAME:[" + formObj.all[i].id + "]");
+            //trace("Dataset NAME:[" + formObj.all[i].id + "]");
+            
+            if(!isSkip)
+            {
+                for(var j=0; j<clearKeyColumnArr.length; j++)
+                {
+                    var col = clearKeyColumnArr[j];
+                    
+                    var colArr = [];
+                    
+                    if(col.indexOf(","))    colArr = col.split(",");
+                    else                    colArr.push(col);
+
+                    var isClear = true;
+
+                    for(var k=0; k<colArr.length; k++)
+                    {
+                        if(obj.colinfos[colArr[k]] != "[object DSColumnInfo]")
+                        {
+                            isClear = false;
+                        }
+                    }
+                    
+                    if(isClear && obj.rowcount > 0)
+                    {
+                        var updatecontrol   = obj.updatecontrol;
+                        var enableevent     = obj.enableevent;
+
+                        if(enableevent)     obj.set_enableevent(false);
+                        if(updatecontrol)   obj.set_updatecontrol(false);
+
+                        for(var row=0; row<obj.rowcount; row++)
+                        {
+                            obj.setRowType(row, Dataset.ROWTYPE_INSERT);
+                            
+                            if(obj.colinfos["ROWFLAG"] == "[object DSColumnInfo]")
+                            {
+                                obj.setColumn(row, "ROWFLAG", "I");
+                            }                       
+
+                            for(var k=0; k<colArr.length; k++)
+                            {
+                                if(colArr[k] == "REQ_ID")
+                                {
+                                    obj.setColumn(row, colArr[k], tempReqId);
+                                }
+                                else
+                                {
+                                    obj.setColumn(row, colArr[k], "");
+                                }
+                            }
+                        }
+                        
+                        if(updatecontrol)   obj.set_updatecontrol(true);
+                        if(enableevent)     obj.set_enableevent(true);
+                    }
+                }
+            }
+        }
+    }
+};
+
+this.fnReqCopy = function(scope)
+{
+	if(	!(scope.reqInfo.WF_PROC_CD == "WF_PROC_1000" && (scope.reqInfo.REQ_STAT_CD == "RQST00" || scope.reqInfo.REQ_STAT_CD == "RQST91") ) )
+	{
+		var param = {
+			  id : "copySrm"
+			, msg : "해당 요청서내용을 복사하시겠습니까?"
+			, arrparam : ['']
+			, msgtype : "I"
+		};
+		Ex.core.confirm(scope, param);
+	}
+	else
+	{
+		Ex.core.popup(
+			scope,					// <--- 팝업 실행 스코프
+			"alikePop",				// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+			"sr::SR5000_P08.xfdl",	// <--- 팝업창 오픈 Url
+			{
+				title		: "유사요청건 조회",
+				pDs			: scope.dsWfSrm
+			},							// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			"autosize"					// <--- width/height/modeless(프레임 처리 옵션)
+			//"width=1200,height=750"				// <--- width/height/modeless(프레임 처리 옵션)
+		);
+	}
+};]]></Script>

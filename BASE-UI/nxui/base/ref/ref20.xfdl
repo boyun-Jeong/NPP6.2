@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="ref20" classname="ref08" left="0" top="0" width="1840" height="720" titletext="그리드복사" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Grid id="grdList1" taborder="0" binddataset="dsPage" useinputpanel="false" left="0" top="56" height="111" width="503" cssclass="grd_WF_normal">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="28"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+                <Cell col="4" text="Column4"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0" combodataset="dsCode" combocodecol="CODE" combodatacol="NAME" displaytype="combotext"/>
+                <Cell col="1" text="bind:Column1"/>
+                <Cell col="2" text="bind:Column2" edittype="readonly"/>
+                <Cell col="3" text="bind:Column3"/>
+                <Cell col="4" text="bind:Column4"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnUseCopy3" taborder="13" text="useCopy=true" left="648" top="296" width="120" height="110" onclick="fnCommOnclick"/>
+        <TextArea id="TextArea00" taborder="1" left="btnUseCopy3:5" top="56" height="589" right="10"/>
+        <Grid id="grdList2" taborder="2" binddataset="dsPage" useinputpanel="false" left="0" top="175" height="111" selecttype="multirow" width="503" cssclass="grd_WF_normal">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="28"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+                <Cell col="4" text="Column4"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column1"/>
+                <Cell col="2" text="bind:Column2" edittype="readonly"/>
+                <Cell col="3" text="bind:Column3"/>
+                <Cell col="4" text="bind:Column4"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <TextArea id="TextArea01" taborder="3" left="grdList1:5" top="56" width="134" height="111" value="좌측 Grid&#10;selecttype=row" readonly="true"/>
+        <TextArea id="TextArea01_00" taborder="4" left="grdList2:5" top="175" width="134" height="111" value="좌측 Grid&#10;selecttype=multirow" readonly="true"/>
+        <Grid id="grdList3" taborder="5" binddataset="dsPage" useinputpanel="false" left="0" top="295" height="111" selecttype="cell" width="503" cssclass="grd_WF_normal">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="28"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+                <Cell col="4" text="Column4"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column1"/>
+                <Cell col="2" text="bind:Column2" edittype="normal"/>
+                <Cell col="3" text="bind:Column3"/>
+                <Cell col="4" text="bind:Column4"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <TextArea id="TextArea01_00_00" taborder="6" left="509" top="295" width="134" height="111" value="좌측 Grid&#10;selecttype=cell" readonly="true"/>
+        <Grid id="grdList4" taborder="8" binddataset="dsPage" useinputpanel="false" left="0" top="414" height="111" selecttype="area" width="503" cssclass="grd_WF_normal">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="28"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+                <Cell col="4" text="Column4"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column1"/>
+                <Cell col="2" text="bind:Column2"/>
+                <Cell col="3" text="bind:Column3"/>
+                <Cell col="4" text="bind:Column4"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <TextArea id="TextArea01_00_00_00" taborder="7" left="grdList4:5" top="414" width="134" height="111" value="좌측 Grid&#10;selecttype=area" readonly="true"/>
+        <Grid id="grdList5" taborder="9" binddataset="dsPage" useinputpanel="false" left="0" top="534" height="111" selecttype="multiarea" width="503" cssclass="grd_WF_normal">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="28"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+                <Cell col="4" text="Column4"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column1"/>
+                <Cell col="2" text="bind:Column2"/>
+                <Cell col="3" text="bind:Column3"/>
+                <Cell col="4" text="bind:Column4"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <TextArea id="TextArea01_00_00_00_00" taborder="10" left="grdList5:5" top="534" width="134" height="111" value="좌측 Grid&#10;selecttype=multiarea" readonly="true"/>
+        <Button id="btnUseCopy1" taborder="11" text="useCopy=true" left="TextArea01:5" top="57" width="120" height="110" onclick="fnCommOnclick"/>
+        <Button id="btnUseCopy2" taborder="12" text="useCopy=true" left="TextArea01_00:5" top="176" width="120" height="110" onclick="fnCommOnclick"/>
+        <Button id="btnUseCopy4" taborder="14" text="useCopy=true" left="TextArea01_00_00_00:5" top="415" width="120" height="110" onclick="fnCommOnclick"/>
+        <Button id="btnUseCopy5" taborder="15" text="useCopy=true" left="TextArea01_00_00_00_00:5" top="535" width="120" height="110" onclick="fnCommOnclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsPage" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="Column0" type="string" size="255"/>
+          <Column id="Column1" type="string" size="255"/>
+          <Column id="Column2" type="string" size="255"/>
+          <Column id="Column3" type="string" size="255"/>
+          <Column id="Column4" type="string" size="255"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Column0">AA</Col>
+            <Col id="Column1">2</Col>
+            <Col id="Column2">3</Col>
+            <Col id="Column3">4</Col>
+            <Col id="Column4">5</Col>
+          </Row>
+          <Row>
+            <Col id="Column0">BB</Col>
+            <Col id="Column1">22</Col>
+            <Col id="Column2">33</Col>
+            <Col id="Column3">44</Col>
+            <Col id="Column4">55</Col>
+          </Row>
+          <Row>
+            <Col id="Column1">222</Col>
+            <Col id="Column2">333</Col>
+            <Col id="Column3">444</Col>
+            <Col id="Column4">555</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCode">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">AA</Col>
+            <Col id="NAME">가나다</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">BB</Col>
+            <Col id="NAME">라마바</Col>
+          </Row>
+          <Row>
+            <Col id="NAME">-선택-</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 그리드 복사
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+// 페이징 처리를위한 폼 변수(약속된 폼변수)
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+}
+
+// 저장
+this.fnSave = function()
+{
+	trace("fnSave call");
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "search" :
+			// 조회페이지 정보갱신및 페이지 디스플레이를 위한 호출(필수)
+			this.divPage.pageDisp();
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	trace("pID="+pID+" ,varValue="+varValue);
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var btn = nexacro.replaceAll(obj.name, "btnUseCopy", "");
+	
+	var useCopy = this["grdList" + btn].useCopy;
+	trace("this.fnCommOnclick() useCopy : " + useCopy);
+	this["grdList" + btn].set_useCopy(!useCopy);
+	obj.set_text("useCopy=" + (!useCopy));
+	
+	trace("this.fnCommOnclick() grdList" + btn + " useCopy : " + this["grdList" + btn].useCopy);
+}]]></Script>
+  </Form>
+</FDL>

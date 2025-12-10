@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ENV version="2.1">
+  <Environment themeid="theme::base" filesecurelevel="all" networksecurelevel="all" checkversion="false" tracemode="append" userfontid="font::KoPub.xfont" onerror="Environment_onerror">
+    <ScreenDefinition>
+      <Screen id="screen01" type="desktop" httptimeout="30" formlayoutwidth="1024" formlayoutheight="768" scrollbarsize="10" icon="url('')" useproxykeepalive="true" usehttpkeepalive="true" datatyperule="2.0"/>
+    </ScreenDefinition>
+    <Variables/>
+    <Cookies/>
+    <httpheader>
+      <Variable id="fommScreenId" initval=""/>
+      <Variable id="fommMenuId" initval=""/>
+    </httpheader>
+  </Environment>
+  <Script type="xscript5.1"><![CDATA[this.Environment_onerror = function(obj:nexacro.Environment,e:nexacro.ErrorEventInfo)
+{
+	if(e.statuscode == 10401) return true;
+};]]></Script>
+</ENV>

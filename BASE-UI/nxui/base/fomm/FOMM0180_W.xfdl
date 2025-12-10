@@ -1,0 +1,540 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM0180_W" width="1840" height="720" titletext="세션관리" onload="form_onload">
+    <Layouts>
+      <Layout width="1840" height="720">
+        <Static id="Static00_01" taborder="3" left="0" top="79" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="sta_userInfo" taborder="0" text="접속이력 목록" cssclass="sta_WF_gridTitle" left="0" top="Static00_01:0" width="120" height="24"/>
+        <Static id="sta_mainListCnt" taborder="1" left="sta_userInfo:6.00" top="Static00_01:0" width="45" height="24" cssclass="sta_WF_grdCnt" countDataset="dsMain1" text="(0 건)"/>
+        <Static id="Static00_00" taborder="4" left="0" top="Static00_01:24" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Grid id="grd_main1" taborder="10" binddataset="dsMain1" left="0" top="Static00_00:0" autofittype="col" bottom="0" cssclass="grd_WF_normal" width="1200" onlbuttondown="grd_main1_onlbuttondown">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="100"/>
+                <Column size="80"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="120"/>
+                <Column size="140"/>
+                <Column size="150"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="접속일자"/>
+                <Cell col="1" text="접속시간"/>
+                <Cell col="2" text="사번"/>
+                <Cell col="3" text="성명"/>
+                <Cell col="4" text="접속서버IP"/>
+                <Cell col="5" text="접속IP"/>
+                <Cell col="6" text="대메뉴"/>
+                <Cell col="7" text="중메뉴"/>
+                <Cell col="8" text="메뉴명"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="date" text="bind:REG_STIME" calendardateformat="yyyy-MM-dd" calendareditformat="yyyy-MM-dd"/>
+                <Cell col="1" displaytype="date" calendardateformat="HH:mm:ss" calendareditformat="HH:mm:ss" text="bind:REG_HHMMSS"/>
+                <Cell col="2" text="bind:USER_ID"/>
+                <Cell col="3" text="bind:USER_NAME"/>
+                <Cell col="4" text="bind:SVR_IP"/>
+                <Cell col="5" text="bind:CLIENT_IP"/>
+                <Cell col="6" text="bind:LV1_MENU_NM"/>
+                <Cell col="7" text="bind:LV2_MENU_NM"/>
+                <Cell col="8" style="align:left;" text="bind:LV3_MENU_NM"/>
+              </Band>
+            </Format>
+            <Format id="default_excel">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="100"/>
+                <Column size="80"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="120"/>
+                <Column size="140"/>
+                <Column size="150"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="접속일자"/>
+                <Cell col="1" text="접속시간"/>
+                <Cell col="2" text="사번"/>
+                <Cell col="3" text="성명"/>
+                <Cell col="4" text="접속서버IP"/>
+                <Cell col="5" text="접속IP"/>
+                <Cell col="6" text="대메뉴"/>
+                <Cell col="7" text="중메뉴"/>
+                <Cell col="8" text="메뉴명"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="date" text="bind:REG_STIME" calendardateformat="yyyy-MM-dd" calendareditformat="yyyy-MM-dd"/>
+                <Cell col="1" text="bind:REG_STIME" displaytype="date" calendardateformat="HH:mm:ss" calendareditformat="HH:mm:ss"/>
+                <Cell col="2" text="bind:USER_ID"/>
+                <Cell col="3" text="bind:USER_NAME"/>
+                <Cell col="4" text="bind:SVR_IP"/>
+                <Cell col="5" text="bind:CLIENT_IP"/>
+                <Cell col="6" text="bind:LV1_MENU_NM"/>
+                <Cell col="7" text="bind:LV2_MENU_NM"/>
+                <Cell col="8" style="align:left;" text="bind:LV3_MENU_NM"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grd_main2" taborder="2" binddataset="dsMain2" oncellclick="grd_main_oncellclick" left="grd_main1:20" top="Static00_00:0" right="0" autofittype="col" cssclass="grd_WF_normal" height="230">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="50" band="left"/>
+                <Column size="50" band="left"/>
+                <Column size="120"/>
+                <Column size="140"/>
+                <Column size="150"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" text="순위"/>
+                <Cell col="2" text="대메뉴"/>
+                <Cell col="3" text="중메뉴"/>
+                <Cell col="4" text="메뉴명"/>
+                <Cell col="5" text="접속건수"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="expr:currow+1"/>
+                <Cell col="1" text="bind:RANK_NO"/>
+                <Cell col="2" text="bind:LV1_MENU_NM"/>
+                <Cell col="3" text="bind:LV2_MENU_NM"/>
+                <Cell col="4" style="align:left;" text="bind:LV3_MENU_NM"/>
+                <Cell col="5" text="bind:CNT"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divGrdTopBtn2" taborder="5" width="135" visible="true" right="0" isButtonGroup="true" top="Static00_01:0" height="24" text="">
+          <Layouts>
+            <Layout>
+              <Button id="btnExcelDown2" taborder="0" text="엑셀" top="0" width="60" right="0" cssclass="btn_WF_excelDown" onclick="fnCommOnclick" height="24" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="div_search" taborder="6" left="0" top="0" right="0" height="79" cssclass="div_WF_divSearchArea" text="">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="7" text="접속일시" cssclass="sta_WF_schTitle" left="20" top="12" width="60" height="24"/>
+              <Static id="Static00_00_00_00_00_00" taborder="13" left="575.00" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" bottom="10"/>
+              <Static id="Static07" taborder="11" text="성명" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_00_00_00_00:0" top="12" height="24" width="80"/>
+              <Edit id="edtUserNm" taborder="3" left="Static07:-26.00" top="12" height="24" autoselect="true" imemode="hangul" lengthunit="utf8" cssclass="edt_WF_normal" width="150" onkeyup="fnCommOnkeydown"/>
+              <Calendar id="calEndDate" taborder="1" autoselect="true" dateformat="yyyy-MM-dd" left="231" top="12" width="110" height="24" cssclass="cal_WF_normal" onkeyup="fnCommOnkeydown"/>
+              <Static id="Static00_00_00_00_00" taborder="12" left="calEndDate:0" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" bottom="10"/>
+              <Static id="Static02" taborder="9" text="사번" cssclass="sta_WF_schTitle" left="Static00_00_00_00_00:0" top="12" width="80" height="24"/>
+              <Calendar id="calSttDate" taborder="0" left="102" top="12" width="110" height="24" dateformat="yyyy-MM-dd" autoselect="true" cssclass="cal_WF_normal" onkeyup="fnCommOnkeydown"/>
+              <Static id="Static04" taborder="8" text="~" left="217" top="12" width="10" height="24"/>
+              <Static id="Static05" taborder="10" text="메뉴명" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="20" top="42" width="60" height="24"/>
+              <Edit id="edtMenuNm" taborder="4" left="103.00" top="42" height="24" autoselect="true" enable="true" imemode="hangul" lengthunit="utf8" cssclass="edt_WF_normal" right="1029" onkeyup="fnCommOnkeydown"/>
+              <Button id="btnSearch" taborder="5" top="27" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Button id="btnSearchReset" taborder="6" top="27" width="90" height="24" text="초기화" right="btnSearch:5" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+              <Static id="Static00_00" taborder="14" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Edit id="edtUserId" taborder="2" left="Static02:-26.00" top="12" height="24" autoselect="true" imemode="hangul" lengthunit="utf8" cssclass="edt_WF_normal" width="150" onkeyup="fnCommOnkeydown"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00_00_00" taborder="8" left="1200" top="407" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Grid id="grd_main3" taborder="7" left="grd_main1:20" cssclass="grd_WF_normal" autofittype="col" right="0" useSort="true" binddataset="dsMain3" top="Static00_00_00:0" bottom="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="50" band="left"/>
+                <Column size="50" band="left"/>
+                <Column size="80"/>
+                <Column size="60"/>
+                <Column size="110"/>
+                <Column size="55"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" text="순위"/>
+                <Cell col="2" text="사번"/>
+                <Cell col="3" text="성명"/>
+                <Cell col="4" text="부서명"/>
+                <Cell col="5" text="접속건수"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="expr:currow+1"/>
+                <Cell col="1" text="bind:RANK_NO"/>
+                <Cell col="2" style="align:left;" text="bind:USER_ID"/>
+                <Cell col="3" text="bind:USER_NAME"/>
+                <Cell col="4" style="align:left;" text="bind:DEPT_NM"/>
+                <Cell col="5" text="bind:CNT"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divGrdLeftBtn" taborder="9" width="200" height="24" visible="true" right="37.50%" isButtonGroup="true" top="320">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Static id="Static00_00_00_00_00_00" taborder="17" left="1200.00" top="99" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="567"/>
+        <Div id="divGrdTopBtn1" taborder="11" width="135" visible="true" right="Static00_00_00_00_00_00:0" isButtonGroup="true" top="99" height="24" text="">
+          <Layouts>
+            <Layout>
+              <Button id="btnExcelDown1" taborder="0" text="엑셀" top="0" width="60" right="0" cssclass="btn_WF_excelDown" onclick="fnCommOnclick" height="24" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divGrdTopBtn3" taborder="12" width="135" visible="true" right="0" isButtonGroup="true" top="grd_main2:20" height="24" text="">
+          <Layouts>
+            <Layout>
+              <Button id="btnExcelDown3" taborder="0" text="엑셀" top="0" width="60" right="0" cssclass="btn_WF_excelDown" onclick="fnCommOnclick" height="24" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="stcMenurank" taborder="14" text="메뉴 순위" cssclass="sta_WF_gridTitle" left="grd_main1:20" top="99" width="120" height="24"/>
+        <Static id="stcMenuRankCnt" taborder="13" left="stcMenurank:-36.00" top="99" width="45" height="24" cssclass="sta_WF_grdCnt" countDataset="dsMain2" text="(0 건)"/>
+        <Static id="stcMenurank00" taborder="15" text="접속자 순위" cssclass="sta_WF_gridTitle" left="grd_main1:20.00" top="grd_main2:20" width="120" height="24"/>
+        <Static id="stcMenuRankCnt00" taborder="16" left="stcMenurank00:-20.00" top="grd_main2:20" width="45" height="24" cssclass="sta_WF_grdCnt" countDataset="dsMain3" text="(0 건)"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsMain1">
+        <ColumnInfo>
+          <Column id="SLOG_ID" type="STRING" size="256"/>
+          <Column id="MENU_ID" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NAME" type="STRING" size="256"/>
+          <Column id="REG_STIME" type="STRING" size="256"/>
+          <Column id="CLIENT_IP" type="STRING" size="256"/>
+          <Column id="SVR_IP" type="STRING" size="256"/>
+          <Column id="MENU_NM" type="STRING" size="256"/>
+          <Column id="MENU_URL" type="STRING" size="256"/>
+          <Column id="SYYMM" type="STRING" size="256"/>
+          <Column id="SDAY" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCntrStCd">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="CODE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCntrTypeCd">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="CODE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="MENU_NM" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NAME" type="STRING" size="256"/>
+          <Column id="START_DATE" type="STRING" size="256"/>
+          <Column id="END_DATE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMain2">
+        <ColumnInfo>
+          <Column id="RANK_NO" type="STRING" size="256"/>
+          <Column id="MENU_NM" type="STRING" size="256"/>
+          <Column id="MENU_URL" type="STRING" size="256"/>
+          <Column id="CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMain3">
+        <ColumnInfo>
+          <Column id="RANK_NO" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NAME" type="STRING" size="256"/>
+          <Column id="DEPT_NAME" type="STRING" size="256"/>
+          <Column id="CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ FOMM0180_W
+* 화면(명)		︰ 세션관리
+* 메뉴(경로)	︰ 관리자 > 세션관리 > 세션관리
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2024.02.15
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2024.02.15	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+	this.fnSearchReset();	
+	this.fnSearch();		// 조회
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{ 
+	this.dsCond.clearData();
+	var rowPos = this.dsCond.addRow();
+	var today = Ex.util.today();
+	
+	this.dsCond.setColumn(rowPos, 'START_DATE', Ex.util.addDate(today, -7));
+	this.dsCond.setColumn(rowPos, 'END_DATE', today);
+	
+	this.div_search.form.edtMenuNm.setFocus();
+}
+
+// 변경 행 확인
+this.fnSearch = function()
+{
+	this.fnSearch01();
+	this.fnSearch02();
+	this.fnSearch03();
+}
+
+// 조회
+this.fnSearch01 = function()
+{
+	// transaction
+	var sTranId = "select01";               // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0180W/select01";    // 서비스명
+    var sInDs = "dsCond=dsCond";            // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsMain1=dsData1";         // 서버에서 수신할 데이타셋
+    var sArg = "";                   		// 서버 @ParamVariable 인자와 맵핑됨
+    
+    /**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 조회
+this.fnSearch02 = function()
+{
+	// transaction
+	var sTranId = "select02";               // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0180W/select02";      // 서비스명
+    var sInDs = "dsCond=dsCond";            // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsMain2=dsData2";       // 서버에서 수신할 데이타셋
+    var sArg = "";                   		// 서버 @ParamVariable 인자와 맵핑됨
+    
+    /**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 조회
+this.fnSearch03 = function()
+{
+	// transaction
+	var sTranId = "select03";               // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0180W/select03";      // 서비스명
+    var sInDs = "dsCond=dsCond";            // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsMain3=dsData3";       // 서버에서 수신할 데이타셋
+    var sArg = "";                   		// 서버 @ParamVariable 인자와 맵핑됨
+    
+    /**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;
+			
+		case "select02" :
+			//Ex.core.toast(this, "10002");
+			break;
+			
+		case "select03" :
+			
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+		case "pSearchConfirm" :
+			this.fnSearch();
+			break;
+			
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+	}
+}
+
+
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// 버튼&권한 mapping && visible 처리
+	var	arrBtn = [this.divGrdTopBtn1.form.btnExcelDown1, this.divGrdTopBtn2.form.btnExcelDown2, this.divGrdTopBtn3.form.btnExcelDown3];	// 엑셀
+	Ex.util.setBtnVisible(this, 'exclDown', arrBtn);
+	
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divGrdTopBtn1, 'right', true);
+	Ex.util.setBtnAlign(this.divGrdTopBtn2, 'right', true);
+	Ex.util.setBtnAlign(this.divGrdTopBtn3, 'right', true);
+
+}
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearch" :		// 검색
+			this.fnSearch();
+			break;
+		
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;
+		
+		case "btnExcelDown1" :	// 엑셀다운
+			var oInfo = {
+   				Grid	: [this.grd_main1],
+   				Sheet	: [''],
+   				FileNm	: ["접속이력"],
+   				ExportType : "XLSX",
+   				ExportId : "excel01"
+   			};
+			this.gfnExportExcel(this, oInfo);
+			break;
+		
+		case "btnExcelDown2" :	// 엑셀다운
+			var oInfo = {
+   				Grid	: [this.grd_main2],
+   				Sheet	: [''],
+   				FileNm	: ["메뉴순위"],
+   				ExportType : "XLSX",
+   				ExportId : "excel02"
+   			};
+			this.gfnExportExcel(this, oInfo);
+			break;
+		
+		case "btnExcelDown3" :	// 엑셀다운
+			var oInfo = {
+   				Grid	: [this.grd_main3],
+   				Sheet	: [''],
+   				FileNm	: ["접속자순위"],
+   				ExportType : "XLSX",
+   				ExportId : "excel03"
+   			};
+			this.gfnExportExcel(this, oInfo);
+			break;
+	}
+}
+
+// 공통 oncloumnchanged event : dataset
+// Grid rowFlag 처리르 위해 호출 필요
+this.fnCommOncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+
+// 공통 onkeydown event : component
+this.fnCommOnkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == '13')
+	{
+		//this.div_search.form.edtMenuNm.setFocus();
+		this.fnSearch();
+		//obj.setFocus();
+	}
+};
+
+
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="div_search.form.calSttDate" propid="value" datasetid="dsCond" columnid="START_DATE"/>
+      <BindItem id="item1" compid="div_search.form.calEndDate" propid="value" datasetid="dsCond" columnid="END_DATE"/>
+      <BindItem id="item5" compid="div_search.form.edtMenuNm" propid="value" datasetid="dsCond" columnid="MENU_NM"/>
+      <BindItem id="item6" compid="div_search.form.edtUserNm" propid="value" datasetid="dsCond" columnid="USER_NAME"/>
+      <BindItem id="item2" compid="div_search.form.edtUserId" propid="value" datasetid="dsCond" columnid="USER_ID"/>
+    </Bind>
+  </Form>
+</FDL>

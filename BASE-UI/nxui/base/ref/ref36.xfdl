@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="ref01" left="0" top="0" width="900" height="720" titletext="팝업" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divRight" taborder="1" left="288.00" top="20" height="308" right="20" text="">
+          <Layouts>
+            <Layout>
+              <Static id="Static05" taborder="2" text="추가 데이터" cssclass="sta_WF_gridTitle" left="0.00" top="0" width="97" height="24"/>
+              <Grid id="grd00" taborder="0" top="Static05:10" height="115" right="0" left="0" autofittype="col" binddataset="dsAddList">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="40" band="left"/>
+                      <Column size="40" band="left"/>
+                      <Column size="200"/>
+                      <Column size="260"/>
+                      <Column size="50"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="28" band="head"/>
+                      <Row size="28"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="No."/>
+                      <Cell col="2" text="제목"/>
+                      <Cell col="3" text="내용"/>
+                      <Cell col="4" text="시간(초)"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" expr="currow+1" textAlign="center"/>
+                      <Cell col="2" text="bind:TITLE"/>
+                      <Cell col="3" text="bind:CONT"/>
+                      <Cell col="4" text="bind:SECONDS" editinputtype="number" editmaxlength="2" textAlign="right"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Div id="div01" taborder="1" top="0" width="200" height="24" right="0">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnDel" taborder="1" text="행삭제" top="0" height="24" onclick="fnCommOnclick" width="70" right="0" cssclass="btn_WF_del"/>
+                    <Button id="btnAdd" taborder="0" text="행추가" top="0" height="24" onclick="fnCommOnclick" width="70" right="btnDel:5" cssclass="btn_WF_add"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="Static05_00" taborder="3" text="진행 데이터" cssclass="sta_WF_gridTitle" left="0" top="grd00:10" width="247" height="24"/>
+              <Button id="btnModal00" taborder="4" text="▼" left="284.00" top="grd00:10" height="24" onclick="fnCommOnclick" width="24"/>
+              <Grid id="grd00_00" taborder="5" top="btnModal00:10" height="115" right="0" left="0" autofittype="col" binddataset="dsExecList">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="40" band="left"/>
+                      <Column size="200"/>
+                      <Column size="290"/>
+                      <Column size="60"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="28" band="head"/>
+                      <Row size="28"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="No."/>
+                      <Cell col="1" text="제목"/>
+                      <Cell col="2" text="내용"/>
+                      <Cell col="3" text="시간(초)"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="currow+1" textAlign="center"/>
+                      <Cell col="1" text="bind:TITLE"/>
+                      <Cell col="2" text="bind:CONT"/>
+                      <Cell col="3" text="bind:SECONDS" editmaxlength="2" editinputtype="number" textAlign="right"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="stcPjtNameBg" taborder="6" left="120" top="-5" height="34" right="209" cssclass="sta_WF_schTitle"/>
+              <Static id="staCoNm" taborder="7" text="시간(초)" left="130" top="0" width="50" height="24"/>
+              <Spin id="spnSeconds" taborder="8" left="staCoNm:0" top="0" width="80" height="24" min="3" max="20" value="10"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="stcBackMid2_00_00_01" taborder="2" left="0" top="divRight:0" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divLeft" taborder="0" text="div00" left="20.00" top="20" right="617" bottom="395">
+          <Layouts>
+            <Layout>
+              <Button id="btnModal" taborder="0" text="실행" left="0.00" top="40" height="24" onclick="fnCommOnclick" width="100"/>
+              <Button id="btnModal00" taborder="1" text="중단" left="160" top="40" height="24" onclick="fnCommOnclick" width="100"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSlide" taborder="3" text="div02" left="40" top="101" width="230" height="150"/>
+        <Div id="divArea" taborder="4" left="20" height="150" right="20" top="stcBackMid2_00_00_01:0"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsAddList">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="CONT" type="STRING" size="256"/>
+          <Column id="SECONDS" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsExecList">
+        <ColumnInfo>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="CONT" type="STRING" size="256"/>
+          <Column id="SECONDS" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 팝업 처리
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.00
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	trace("workArea form init call");
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+}
+
+// 저장
+this.fnSave = function()
+{
+	trace("fnSave call");
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "ABOUT" : // 서비스 ID
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	trace("pID="+pID+" ,varValue="+varValue);
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var divId = obj.parent.parent.parent.parent.id;
+	
+	//trace("this.fnCommOnclick() divId ::: " + divId + " obj.name : " + obj.name);
+
+	switch(obj.name)
+	{
+		case "btnAdd" :
+			var rowPos = this.dsCmmMsgMt.setInsertRow(this.dsCmmMsgMt.rowposition+1);
+			this.dsCmmMsgDt.clearData();
+			break;
+		
+		/* 사이즈 제외 옵션처리는 위 모달팝업과 동일 */
+		/* autosize 설정 시, 오픈 url (ref::ref01_01.xfdl) 화면 디자인 크기(600x430)으로 팝업 오픈 */
+		case "btnDel" :
+			break;
+			
+		case "btnAppend" :
+			break;
+	}
+};]]></Script>
+  </Form>
+</FDL>

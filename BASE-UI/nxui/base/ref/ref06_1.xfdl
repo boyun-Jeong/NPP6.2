@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="ref06" classname="ref06" left="0" top="0" width="1840" height="720" titletext="엑셀 Import multi" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Button id="btnImportCase1" taborder="0" text="Import case1(시트명필수)" onclick="btnImportCase1_onclick" left="10" top="34" width="150" height="35"/>
+        <Static id="Static00" taborder="1" text="head=" left="353" top="37" width="45" height="28"/>
+        <Edit id="edtCase1head" taborder="2" value="A1:G1;" left="413" top="33" width="116" height="33"/>
+        <Static id="Static01" taborder="3" text="body=" left="545" top="37" width="41" height="28"/>
+        <Edit id="edtCase1body" taborder="4" value="A2;" left="589" top="33" width="116" height="33"/>
+        <Static id="Static13" taborder="5" text="DRM(문서보안)이 걸린 엑셀문서는 읽지 못함" left="10" top="3" width="979" height="31" style="color:red;padding:0 0 0 20;font:bold 10 Dotum;"/>
+        <TextArea id="TextArea01" taborder="6" value="- ref::ref06_1.xfdl &#13;&#10;*자세한 처리는 스크립트를 참조" readonly="true" left="712" top="8" width="269" height="58" style="color:red;font:bold 9 Gulim;"/>
+        <Static id="Static02" taborder="7" text="기본 엑셀 Import기능의 모든 제약사항을 준수해야함&#13;&#10;- 엑셀 Import 샘플 메뉴 참고" left="10" top="138" width="971" height="64" style="background:antiquewhite;padding:0 0 0 20;"/>
+        <Static id="Static03" taborder="8" text="Sheet1=" left="169" top="37" width="45" height="28"/>
+        <Edit id="edtCase1Sheet" taborder="9" value="Sheet1" left="229" top="33" width="116" height="33"/>
+        <Static id="Static04" taborder="10" text="head=" left="353" top="85" width="45" height="28"/>
+        <Edit id="edtCase1head01" taborder="11" value="A1:D1;" left="413" top="81" width="116" height="33"/>
+        <Static id="Static05" taborder="12" text="body=" left="545" top="85" width="41" height="28"/>
+        <Edit id="edtCase1body01" taborder="13" value="A2;" left="589" top="81" width="116" height="33"/>
+        <Static id="Static06" taborder="14" text="Sheet2=" left="169" top="85" width="45" height="28"/>
+        <Edit id="edtCase1Sheet01" taborder="15" value="Sheet2" left="229" top="81" width="116" height="33"/>
+        <Static id="Static07" taborder="16" text="Multi Sheet Import시 추가되는 제약사항&#13;&#10;- Sheet명은 필수지정 해야함&#13;&#10;&#13;&#10;샘플파일위치 : test::multiSheet_import_test.xls" left="10" top="210" width="971" height="74" style="background:antiquewhite;padding:0 0 0 20;"/>
+        <Static id="Static08" taborder="17" text="공통사항 : 반드시 하나의 행/열이 데이타셋의 행과 컬럼에 매핑될수 있는 엑셀 양식이어야 한다.&#13;&#10;              엑셀데이타중 열 혹은 행이 머지되어 있지 않아야 한다." left="8" top="287" width="772" height="57" style="color:red;"/>
+        <Grid id="grdImport1" taborder="18" left="10" top="352" width="970" height="211" binddataset="dsImport1">
+          <Formats/>
+        </Grid>
+        <Grid id="grdImport2" taborder="19" left="12" top="573" width="970" height="211" binddataset="dsImport2">
+          <Formats/>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsImport1"/>
+      <Dataset id="dsImport2"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 엑셀 Import Multi
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	trace("workArea form init call");
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+}
+
+// 저장
+this.fnSave = function()
+{
+	trace("fnSave call");
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "ABOUT" : // 서비스 ID
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+}
+
+//-----엑셀 Import 콜백---
+this.fnImportExcelCallback = function(bSuccess,sImportID,strFileNm)
+{
+	// bSuccess 성공/실패를 boolean값으로 리턴한다.
+	// sImportID는 지정한 경우만 반환한다.
+	// strFileNm은 성공일경우만 반환한다.
+	trace("fnImportExcelCallback IMPORTID/IMPORTFILENM="+sImportID+","+strFileNm);
+	if (bSuccess) 
+	{
+		trace("성공");
+		this.grdImport1.createFormat();
+		this.grdImport2.createFormat();
+	}
+	else
+	{
+		trace("실패,");
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+/**
+ * Excel을 Dataset으로 Import하는 함수
+ * this.gfnImportExcelBySheet(this , oParam,sImportID)
+ * Import 콜백함수
+ * fn_importCallback(bSuccess,sImportID)
+ * oParam 구성 샘플
+	var oParam = {};
+	oParam.dataset = [this.dsImport1 , this.dsImport2]; //  필수
+	oParam.sheet = ["Sheet1","Sheet2"]; // 필수
+	oParam.head = ["A1:G1","A1:D1"]; // []
+	oParam.body = ["A2","A2"]; // []
+ **/
+this.btnImportCase1_onclick = function(obj:Button,  e:nexacro.ClickEventInfo)
+{
+	// Array 인덱스별 시트정보를 정확히 매핑하여 기술해야함
+	
+	var sheet1SheetNm = this.edtCase1Sheet.value||'';
+	var sheet1Head = this.edtCase1head.value||'';
+	var sheet1Body = this.edtCase1body.value||'';
+
+	var sheet2SheetNm = this.edtCase1Sheet01.value||'';
+	var sheet2Head = this.edtCase1head01.value||'';
+	var sheet2Body = this.edtCase1body01.value||'';
+
+	var oParam = {};
+	oParam.dataset = [this.dsImport1   , this.dsImport2]; //  Dataset 객체지정필수
+	oParam.sheet    = [sheet1SheetNm , sheet2SheetNm]; // 시트명지정필수
+	oParam.head     = [sheet1Head      , sheet2Head]; // []
+	oParam.body     = [sheet1Body      , sheet2Body]; // []
+	this.gfnImportExcelBySheet(this , oParam , "importCase1ByMultiSheet" );
+}]]></Script>
+  </Form>
+</FDL>

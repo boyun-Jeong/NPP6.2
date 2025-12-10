@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PJ0700_W" left="0" top="0" width="1820" height="720" titletext="마일스톤관리" onload="form_onload">
+    <Layouts>
+      <Layout width="1820" height="720">
+        <Grid id="grdMainList" taborder="6" binddataset="dsPjMilestone" useinputpanel="false" cellsizingtype="col" autofittype="col" onsummclick="grdMainList_onsummclick" left="0" top="104" right="0" bottom="40" cssclass="grd_WF_normal" oncellclick="grdOnCellClick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40" band="left"/>
+                <Column size="40" band="left"/>
+                <Column size="60" band="left"/>
+                <Column size="120" band="left"/>
+                <Column size="220" band="left"/>
+                <Column size="120" band="left"/>
+                <Column size="500"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No."/>
+                <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                <Cell col="2" text="행상태"/>
+                <Cell col="3" cssclass="grdHCell_WF_essential" text="구분"/>
+                <Cell col="4" cssclass="grdHCell_WF_essential" text="명칭"/>
+                <Cell col="5" cssclass="grdHCell_WF_essential" text="예정일자"/>
+                <Cell col="6" text="비고"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="currow+1"/>
+                <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                <Cell col="2" text="bind:ROWFLAG"/>
+                <Cell col="3" displaytype="combotext" edittype="combo" text="bind:MILESTONE_CODE" combodataset="dsMilestoneCode" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" validation="구분;NULL"/>
+                <Cell col="4" edittype="normal" style="align:left;" text="bind:MILESTONE_NAME" validation="명칭;NULL" textAlign="left"/>
+                <Cell col="5" displaytype="date" edittype="date" text="bind:MILESTONE_SDATE" validation="예정일자;NULL|DATETIME:YYYYMMDD " calendardateformat="yyyy-MM-dd"/>
+                <Cell col="6" edittype="normal" style="align:left;" text="bind:MILESTONE_DESC" textAlign="left"/>
+              </Band>
+            </Format>
+            <Format id="default_excel">
+              <Columns>
+                <Column size="40" band="left"/>
+                <Column size="120" band="left"/>
+                <Column size="220" band="left"/>
+                <Column size="120" band="left"/>
+                <Column size="500"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No."/>
+                <Cell col="1" text="구분"/>
+                <Cell col="2" text="명칭"/>
+                <Cell col="3" text="예정일자"/>
+                <Cell col="4" text="비고"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="currow+1"/>
+                <Cell col="1" displaytype="combotext" text="bind:MILESTONE_CODE" combodataset="dsMilestoneCode" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" validation="구분;NULL"/>
+                <Cell col="2" style="align:left;" text="bind:MILESTONE_NAME" validation="명칭;NULL" textAlign="left"/>
+                <Cell col="3" displaytype="date" text="bind:MILESTONE_SDATE" validation="예정일자;NULL"/>
+                <Cell col="4" style="align:left;" text="bind:MILESTONE_DESC" textAlign="left"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcGrdTitle" taborder="2" text="마일스톤" cssclass="sta_WF_gridTitle" left="0" top="70" width="81" height="21"/>
+        <Div id="divSearch" taborder="0" left="0" top="0" right="0" height="50" scrollbars="none" cssclass="div_WF_divSearchArea">
+          <Layouts>
+            <Layout>
+              <Static id="Static00_00" taborder="0" left="0" top="13" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+              <Static id="stcPjtNm" taborder="1" text="프로젝트명" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00:0" top="13" width="81" height="24"/>
+              <Button id="btnSearchReset" taborder="4" top="13" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick" visible="false"/>
+              <Button id="btnSearch" taborder="5" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Edit id="edtPjtNm" taborder="2" left="stcPjtNm:0" top="13" width="215" height="24" cssclass="edt_WF_normal" enable="true" readonly="true"/>
+              <Button id="btnSearchPjtPop" taborder="3" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommOnclick" top="13" width="24" left="edtPjtNm:-1"/>
+            </Layout>
+          </Layouts>
+          <InitValue/>
+        </Div>
+        <Static id="sta_listCnt" taborder="3" cssclass="sta_WF_GridCount" left="stcGrdTitle:5" top="70" width="150" height="24" style="align:left middle;" countDataset="dsPjMilestone"/>
+        <Static id="Static00_01" taborder="1" left="0" top="50" height="20" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_00_00" taborder="5" left="0" top="94" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divGrdBotBtn" taborder="7" width="200" height="32" bottom="0" right="0" text="">
+          <Layouts>
+            <Layout>
+              <Button id="btnSave" taborder="0" text="저장" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="0" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divGrdTopBtn" taborder="4" width="207" height="24" visible="true" isButtonGroup="true" top="70" right="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnExcelDown" taborder="2" text="엑셀" top="0" width="60" right="0" cssclass="btn_WF_excelDown" onclick="fnCommOnclick" height="24" visible="false"/>
+              <Button id="btnDelete" taborder="1" text="삭제" top="0" width="60" bottom="0" right="btnExcelDown:5" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+              <Button id="btnAdd" taborder="0" text="추가" top="0" width="60" right="btnDelete:5" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsPjMilestone" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="MILESTONE_ID" type="STRING" size="12"/>
+          <Column id="PJT_ID" type="STRING" size="12"/>
+          <Column id="MILESTONE_NAME" type="STRING" size="20"/>
+          <Column id="MILESTONE_CODE" type="STRING" size="200"/>
+          <Column id="MILESTONE_SDATE" type="STRING" size="14"/>
+          <Column id="MILESTONE_EDATE" type="STRING" size="14"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="REG_USER_ID" type="STRING" size="10"/>
+          <Column id="REG_USER_NM" type="STRING" size="100"/>
+          <Column id="REG_USER_DEPT" type="STRING" size="100"/>
+          <Column id="LMOD_SDATE" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="10"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="STRING" size="100"/>
+          <Column id="MILESTONE_DESC" type="STRING" size="4000"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMilestoneCode">
+        <Rows/>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="PJT_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPopRtn"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.edtPjtNm" propid="value" datasetid="dsCond" columnid="PJT_NM"/>
+    </Bind>
+    <InitValue/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ PJ0700_W
+* 화면(명)		︰ 마일스톤 관리
+* 메뉴(경로)	︰ 프로젝트관리 > 범위 및 일정 >  마일스톤 관리
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.09.25
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.09.25	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	//this.dsCond.setColumn(0, "PJT_ID", "");
+	//this.dsCond.setColumn(0, "PJT_NM", "");
+}
+
+// 조회
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "select01";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ0700W/select01";			// 서비스명
+    var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsPjMilestone=dsPjMilestone";	// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSave = function()
+{
+	var sTranId = "save01";
+    var sService = "PJ0700W/save01";
+    var sInDs = "dsCond=dsCond dsPjMilestone=dsPjMilestone:U";
+	var sOutDs = "dsPjMilestone=dsPjMilestone";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+// 공통 저장 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			this.grdMainList.setCellProperty("Head", this.grdMainList.getBindCellIndex('Body', 'CHK'), "text", "0");
+			break;
+
+		case "save01" :
+			Ex.core.toast(this, "10004", null, {toastType:'S'});
+			this.grdMainList.setCellProperty("Head", this.grdMainList.getBindCellIndex('Body', 'CHK'), "text", "0");
+			break;	
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "PJ0100_P01" :
+			trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)	this.dsPopRtn.loadXML(varValue);
+			this.dsCond.setColumn(0, "PJT_ID", this.dsPopRtn.getColumn(0, "PJT_ID"));
+			this.dsCond.setColumn(0, "PJT_NM", this.dsPopRtn.getColumn(0, "PJT_NAME"));
+			this.fnSearch();
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.grdMainList.displayRowType();
+
+	// 공통코드 조회
+	this.fnGetCmmCd();
+	
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divGrdTopBtn.form.btnAdd];		//쓰기
+	Ex.util.setBtnVisible(this, 'write', arrBtn);
+		arrBtn = [this.divGrdTopBtn.form.btnDelete];	//삭제
+	Ex.util.setBtnVisible(this, 'delete', arrBtn);
+		arrBtn = [this.divGrdTopBtn.form.btnExcelDown];	//엑셀
+	Ex.util.setBtnVisible(this, 'exclDown', arrBtn);
+
+		arrBtn = [this.divGrdBotBtn.form.btnSave];		//저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+	
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divGrdTopBtn, 'right', true);
+	Ex.util.setBtnAlign(this.divGrdBotBtn, 'right', true);
+
+	if( !Ex.isEmpty(this.dsCond.getColumn(0, "PJT_ID")) )	this.fnSearch();		// 조회
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['MLST_KIND_CD']			// 조회할 상위코드
+		,codeDiv: ['PJT_MNG_CD']			// 조회할 코드의 업무구분
+		,optStr	: ['SEL']					// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y']						// 사용여부
+		,filter	: ['']						// filterStr
+		,objDs	: [this.dsMilestoneCode]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+this.fnCheckValidate = function()
+{
+	// 저장할 dataset에 변경된 data 있는 지 확인
+	if( !Ex.util.isUpdated(this.dsPjMilestone) )
+		return false;
+
+	// Grid Validation
+	if( !this.grdMainList.checkValidate() ) return false;
+
+	return true;
+} 
+ 
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearch" :		// 검색
+			if( Ex.isEmpty(this.dsCond.getColumn(0, "PJT_ID")) )
+			{
+				var oParam = {id : "alertNoPtjIdI", msg : "프로젝트가 선택되지 않았습니다.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return false;
+			}
+			this.fnSearch();
+			break;
+		
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;
+			
+		case "btnAdd" : 	// 추가
+			if( Ex.isEmpty(this.dsCond.getColumn(0, "PJT_ID")) )
+			{
+				var oParam = {id : "alertNoPtjIdI", msg : "프로젝트가 선택되지 않았습니다.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return false;
+			}
+			var aRow = this.dsPjMilestone.setInsertRow();
+			this.dsPjMilestone.setColumn(aRow, "PJT_ID",          this.dsCond.getColumn(0, "PJT_ID"));
+			this.dsPjMilestone.setColumn(aRow, "MILESTONE_SDATE", Ex.util.today());
+			this.dsPjMilestone.setColumn(aRow, "MILESTONE_CODE",  undefined);
+			break;
+			
+		case "btnDelete" :	// 삭제
+			this.fnDelete(this.dsPjMilestone);
+			break;
+			
+		case "btnExcelDown" :	// 엑셀다운
+			var oInfo = {
+   				Grid	: [this.grdMainList],
+   				Sheet	: [this.getOwnerFrame().info.menuNm],
+   				FileNm	: [this.getOwnerFrame().info.menuNm],
+   				ExportType : "XLSX",
+   				ExportId : "excel01"
+   			};
+			this.gfnExportExcel(this, oInfo);
+			break;
+			
+		case "btnSave" : 	// 저장
+			// validation
+			if( this.fnCheckValidate() )
+			{	
+				var param = {
+						id : "saveConfirm"
+					  , msg : "10003"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+			break;
+
+		case "btnSearchPjtPop" :
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ0100_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ0100_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : "프로젝트 검색"
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				//"width=920,height=650"	// <--- width/height/modeless(프레임 처리 옵션)							
+				"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+			);
+	}
+}
+
+this.grdOnCellClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	obj.dropdownCombo();
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};]]></Script>
+  </Form>
+</FDL>

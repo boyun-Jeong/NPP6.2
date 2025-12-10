@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="WebScoketTest" width="1280" height="720" titletext="New Form" onload="form_onload" onbeforeclose="onBeforeClose">
+    <Layouts>
+      <Layout height="720" horizontalgap="0" mobileorientation="landscape" spacing="0px" tabletemplate="1* / 1*" verticalgap="0" width="1280">
+        <TextArea id="TextArea00" taborder="0" left="90.00" top="134" right="550" bottom="280"/>
+        <Static id="stcAutoInMsg" taborder="1" left="90.00" top="30" width="20" height="24" border="1px solid blue" textAlign="center" text="●" color="RED" verticalAlign="middle"/>
+        <Static id="stcConnSocket" taborder="2" left="115.00" top="30" width="127" height="24" border="1px solid blue" text="소켓연결 [X]"/>
+        <Button id="btnConnect" taborder="3" text="연결" left="247.00" top="30" width="53" height="24" onclick="fnCommOnclick"/>
+        <Button id="btnDisConnect" taborder="4" text="해제" left="305.00" top="30" width="53" height="24" onclick="fnCommOnclick"/>
+        <Edit id="edit" taborder="5" left="90.00" top="76" width="370" height="31"/>
+        <Button id="sendBtn" taborder="6" text="전송" left="470.00" top="76" width="79" height="31" onclick="sendBtn_onclick"/>
+        <Static id="stc00" taborder="7" text="&quot;전송할 메세지/수신인 ID&quot; 형식으로 전송합니다." left="560" top="76" width="252" height="31"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 팝업 처리
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.00
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.webSocket;	//전역변수 설정
+this.formObj;	//전역변수 설정
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+	this.formObj = obj;
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	trace("workArea form init call");
+	this.connect(this.formObj);   //호출
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "" : // 서비스 ID
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	trace("pID="+pID+" ,varValue="+varValue);
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.connect = function (sCope, gubun)
+{
+	//trace("this.connect() sCope.id : " + sCope.id);
+	if(gubun != "CLOSE")
+	{
+		var wsUrl = nexacro.replaceAll(nexacro.getApplication().xadl, "spp/SppApp.xadl.js", "");
+			wsUrl = nexacro.replaceAll(wsUrl, "https://", "");
+			wsUrl = nexacro.replaceAll(wsUrl, "http://", "");
+		//trace("xadl // wsUrl :: " + wsUrl);
+
+		var connectUrl = 'ws://' + wsUrl + "spp/ws/inmsg/" + Ex.util.getSession('gvUserId');
+
+		trace("sCope.webSocket:[" + sCope.webSocket + "]");
+
+		if( Ex.isEmpty(sCope.webSocket) )
+		{
+			sCope.webSocket = new WebSocket(connectUrl);
+		}
+	}
+
+	//웹 소켓이 연결되었을 때 호출되는 이벤트
+	sCope.webSocket.onopen = function(event)
+	{
+		console.log('접속되었습니다.');
+		sCope.sendMessage(sCope, '접속되었습니다.');
+	};
+
+	//웹 소켓에서 메시지가 날라왔을 때 호출되는 이벤트
+	sCope.webSocket.onmessage = function(event)
+	{
+		if(event != null)
+		{
+			sCope.sendMessage(sCope, event.data);
+		}
+	};
+
+	//접속이 종료된 후 수행하는 부분
+	sCope.webSocket.onclose = function()
+	{
+		sCope.sendMessage(sCope, "CLOSE");
+		sCope.webSocket = undefined;
+		console.log('Closed!');
+	};
+
+	sCope.webSocket.onerror = function(event)
+	{
+		if(event != null)
+		{
+			sCope.sendMessage(sCope, "onerror " + event.data);
+		}
+	};
+	
+	if(gubun == "CLOSE")
+	{
+		sCope.webSocket.close();
+		sCope.webSocket = undefined;
+	}
+};
+
+this.sendMessage = function (sCope, val)
+{
+	trace("this.connect() sendMessage() val : " + val);
+	if(!Ex.isEmpty(val))
+	{
+		if(val == "접속되었습니다.")
+		{
+			sCope.stcAutoInMsg.set_color("lawngreen");
+			sCope.stcConnSocket.set_background("lawngreen");
+			sCope.stcConnSocket.set_text("소켓연결 [O]");
+			var txaVal = sCope.TextArea00.value||'';
+			sCope.TextArea00.set_value(txaVal + (!Ex.isEmpty(txaVal) ? "\n" : "") + "WebSocket Connect");
+			
+			Ex.core.toast(this, "WebSocket Connect", null, opts);
+		}
+		else if(val == "CLOSE")
+		{
+			sCope.stcAutoInMsg.set_color("RED");
+			sCope.stcConnSocket. set_background("");
+			sCope.stcConnSocket.set_text("소켓연결 [X]");
+			var txaVal = sCope.TextArea00.value||'';
+			sCope.TextArea00.set_value(txaVal + (!Ex.isEmpty(txaVal) ? "\n" : "") + "WebSocket Connection Close");
+			
+			Ex.core.toast(this, "WebSocket Connection Close", null, opts);
+		}
+		else
+		{
+			var txaVal = sCope.TextArea00.value||'';
+			sCope.TextArea00.set_value(txaVal + (!Ex.isEmpty(txaVal) ? "\n" : "") + val);
+			
+			// 조회 되었습니다. / 저장되었습니다. 와 같은 한줄짜리 간단 메시지출력만 하세요.
+			var opts = {
+				displaySecond	: 5,		//단위: 초, default 2
+				toastType		: "S"		// toast "S" : success
+			};
+			Ex.core.toast(this, val, null, opts);
+		}
+	}
+};
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnConnect" :
+			this.connect(this.formObj);	//연결
+			break;
+
+		case "btnDisConnect" :			//해제
+			if( !Ex.isEmpty(this.webSocket) )
+			{
+				this.connect(this.formObj, "CLOSE");
+			}
+			break;
+	}
+};
+
+this.onBeforeClose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	if( !Ex.isEmpty(this.webSocket) )
+	{
+		this.connect(this.formObj, "CLOSE");
+	}
+};
+
+
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+this.sendBtn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var editWords = this.edit.value;
+	var userId = Ex.util.getSession('gvUserId');
+	
+	console.log(editWords);
+	
+	const [message, targetId] = editWords.split("/");
+	
+	if(targetId && message){
+		const formattedMessage = `${userId}가 ${targetId}에게 <${message}>라는 메세지를 보냈습니다.`;
+		this.sendMessage(this.formObj, formattedMessage);
+	}
+	this.edit.value = "";
+	
+};
+
+]]></Script>
+  </Form>
+</FDL>

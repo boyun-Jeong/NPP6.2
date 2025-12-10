@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="form" classname="top" left="0" top="0" titletext="IT부문 Bottom" onload="form_onload" scrolltype="none" cssclass="" height="250" width="1375" font="normal 24pt/normal &quot;PretendardR&quot;" color="transparent" onclick="frHome_D00_onclick" scrollbartype="none" background="#ecf5ff">
+    <Layouts>
+      <Layout width="1375" height="250" mobileorientation="landscape">
+        <Div id="divMain" taborder="12" top="0" right="0" left="0" bottom="0" text="">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitleLeft" taborder="0" left="20.00" top="10" width="110" height="28" background="url('theme://NHSB_IMAGE_SET/HOME/main-titbullet01.png') no-repeat left center" text="작업캘린더" padding="0px 0px 0px 19px" color="black" font="bold 16px 'KoPubB'"/>
+              <Div id="divCalendar" taborder="1" left="20.00" top="43" width="629" cssclass="div_HOME_border" background="white" url="mainWidget::nhsb_D23_cal.xfdl" bottom="10" async="false"/>
+              <Static id="stcTitleRight" taborder="2" left="691.00" top="10" width="110" height="28" background="url('theme://NHSB_IMAGE_SET/HOME/main-titbullet01.png') no-repeat left center" text="시스템작업" padding="0px 0px 0px 19px" color="black" font="bold 16px 'KoPubB'"/>
+              <Div id="divSet" taborder="3" left="880.00" top="13" width="215" height="24">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcSec" taborder="0" text="보안" left="107.00" top="0" width="40" bottom="0" color="#545a69" font="bold 10px 'KoPubL'" verticalAlign="middle" onclick="fnCommOnclick" cursor="pointer" border="1px solid #96d2fc" borderRadius="10px" textAlign="center"/>
+                    <Static id="stcNw" taborder="1" text="네트워크" left="152.00" top="0" width="58" bottom="0" color="#545a69" font="bold 10px 'KoPubL'" verticalAlign="middle" onclick="fnCommOnclick" cursor="pointer" border="1px solid #96d2fc" borderRadius="10px" textAlign="center"/>
+                    <Static id="stcAll" taborder="2" text="전체" left="2" top="0" width="44" bottom="0" color="#2c8bf8" font="bold 10px 'KoPubL'" verticalAlign="middle" padding="0px 0px 0px 0px" onclick="fnCommOnclick" cursor="pointer" border="1px solid #96d2fc" textAlign="center" borderRadius="10px"/>
+                    <Static id="stcServer" taborder="3" text="서버" left="51.00" top="0" width="50" bottom="0" color="#545a69" font="bold 10px 'KoPubL'" verticalAlign="middle" onclick="fnCommOnclick" cursor="pointer" borderRadius="10px" textAlign="center" border="1px solid #96d2fc"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divCnt" taborder="4" left="795.00" top="10" width="76" height="28" background="transparent url('theme://NHSB_IMAGE_SET/HOME/btnset-bg-01.png') no-repeat left center">
+                <Layouts>
+                  <Layout>
+                    <Static id="stc00" taborder="0" text="건수: " left="0" top="5" width="34" bottom="5" color="#545a69" font="bold 11px 'KoPubL'" verticalAlign="middle" padding="1px 0px 0px 10px"/>
+                    <Static id="stcCnt" taborder="1" text="&lt;fc v='#2c8bf8'&gt;0&lt;/fc&gt; 건" top="5" width="44" font="bold 11px 'KoPubL'" color="#545a69" padding="1px 10px 0px 0px" usedecorate="true" verticalAlign="middle" bottom="5" right="0" textAlign="right"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="stcEndIcon" taborder="5" left="1269.00" top="16" width="16" height="16" background="#e5ffd1" border="1px solid #cdd8e5" borderRadius="4px"/>
+              <Static id="stcStartIcon" taborder="6" left="1209.00" top="16" width="16" height="16" background="#fff3d6" border="1px solid #cdd8e5" borderRadius="4px"/>
+              <Static id="stc00" taborder="7" text="START" left="1230.00" top="14" width="35" height="20" color="#333333" font="bold 10px 'KoPubB'"/>
+              <Static id="stc00_00" taborder="8" text="END" left="1290.00" top="14" width="35" height="20" color="#333333" font="bold 10px 'KoPubB'"/>
+              <Div id="divCond" taborder="9" left="1104.00" top="10" height="28" background="transparent url('theme://NHSB_IMAGE_SET/HOME/btnset-bg-01.png') no-repeat left center" width="75">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcMonthly" taborder="0" text="월간 현황" left="8" top="5" width="64" bottom="5" color="#545a69" font="bold 10px 'KoPubL'" verticalAlign="middle" padding="1px 0px 0px 17px" background="transparent url('theme://NHSB_IMAGE_SET/HOME/btnset-icon04.png') no-repeat left center" cursor="pointer" onclick="divMain_divCond_stcMonthly_onclick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Button id="btnExcel" taborder="10" top="10" width="28" height="28" right="20" border="0px none" cursor="pointer" background="transparent url('theme://NHSB_IMAGE_SET/HOME/btn-excel.png') no-repeat center center" onclick="divMain_btnExcel_onclick"/>
+              <Static id="stcDivider" taborder="11" left="669.00" top="0" width="2" background="url('theme://NHSB_IMAGE_SET/HOME/main-divider.png') no-repeat center center" bottom="0" onclick="stcDivider_onclick"/>
+              <ListView id="lsvWorkList" taborder="12" left="699.00" top="43" width="658" binddataset="dsWorkList" border="0px none" cssclass="lsv_HOME_normal" background="transparent" nodatatext="adsfdsaf" color="transparent" bottom="10" scrollbarsize="15" oncellclick="divMain_lsvWorkList_oncellclick">
+                <Formats>
+                  <Format id="default">
+                    <Band id="body" width="100%" height="35" border="0px one">
+                      <Cell id="CellBg" left="0" top="1" border="0px none" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-con-grid.png') no-repeat left center" right="0" height="33"/>
+                      <Cell id="cellUserType" left="5.00" top="5" width="116" background="#ffc2a8" border="0px none" padding="0px 8px 0px 8px" textAlign="center" font="bold 11px &quot;KoPubL&quot;" color="#545a69" expr="EXPR:WORK_DEPT_NM" borderRadius="12px 12px" bottom="8"/>
+                      <Cell id="cellTitle" left="cellUserType:14.00" top="5" width="293" height="21" color="#32333b" font="bold 12px &quot;KoPubL&quot;" border="0px none" expr="EXPR:TITLE" cursor="pointer"/>
+                      <Cell id="Cell00" left="439.00" top="7" width="21" height="17" border="0px none" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-grid-badge-start.png') no-repeat center center"/>
+                      <Cell id="Cell01" left="536.00" top="7" width="21" height="17" border="0px none" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-grid-badge-end.png') no-repeat center center"/>
+                      <Cell id="celStartDate" left="Cell00:0.00" top="5" width="75" height="21" color="#32333b" font="bold 11px &quot;KoPubL&quot;" border="0px none" padding="0px 0px 0px 5px" textAlign="left" expr="EXPR:REQ_DATE_NM"/>
+                      <Cell id="cellEndDate" left="Cell01:0.00" top="5" height="21" color="#32333b" font="bold 11px &quot;KoPubL&quot;" border="0px none" padding="0px 0px 0px 5px" textAlign="left" width="75" expr="EXPR:DUE_DATE_NM"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </ListView>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdExcel" taborder="1" left="729.00" top="255" width="578" height="91" binddataset="dsWorkList" cssclass="grd_WF_normal" visible="false">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="120"/>
+                <Column size="200"/>
+                <Column size="120"/>
+                <Column size="120"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="담당부서"/>
+                <Cell col="1" text="요청서 제목"/>
+                <Cell col="2" text="요청일자"/>
+                <Cell col="3" text="완료일자"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:WORK_DEPT_NM"/>
+                <Cell col="1" text="bind:TITLE"/>
+                <Cell col="2" text="bind:REQ_DATE_NM"/>
+                <Cell col="3" text="bind:DUE_DATE_NM"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="SEARCH_GBN" type="STRING" size="256"/>
+          <Column id="SEARCH_YYYYMM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="SEARCH_GBN"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsWorkList" onvaluechanged="dsWorkList_onvaluechanged"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ frHome_D00
+* 화면(명)		︰ - 
+* 메뉴(경로)	︰ -
+* 화면 설명	︰ 대시보드 우측 내 정보 Div
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.SEARCH_GBN = '전체';
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();
+	this.divMain.form.divCalendar.form.fnSetCallScope(this);
+}
+
+this.fnSearchReset = function()
+{
+}
+
+
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	
+}
+
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch(pID)
+	{
+	
+	}
+}
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	this.fnGetCmmCd();
+}
+
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['DAT_TYPE_CD']			// 조회할 상위코드
+		,codeDiv: ['CMM_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['ALL']			// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y']				// 사용여부
+		,filter	: ['']				// filterStr
+		,objDs	: [this.dsDatTypeCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util;
+}
+
+
+
+this.fnSetBtnOn = function()
+{
+	var arrBtn = [
+		this.divMain.form.divSet.form.stcAll,
+		this.divMain.form.divSet.form.stcServer,
+		this.divMain.form.divSet.form.stcSec,
+		this.divMain.form.divSet.form.stcNw
+	];
+
+	for(var i = 0; i < arrBtn.length; i++)
+	{
+		arrBtn[i].set_color('#545a69');
+	}
+	
+	switch(this.SEARCH_GBN)
+	{
+		case "전체" :
+			this.divMain.form.divSet.form.stcAll.set_color('#2c8bf8');
+			break;
+			
+		case "서버" :
+			this.divMain.form.divSet.form.stcServer.set_color('#2c8bf8');
+			break;
+			
+		case "보안" :
+			this.divMain.form.divSet.form.stcSec.set_color('#2c8bf8');
+			break;
+
+		case "네트워크" :
+			this.divMain.form.divSet.form.stcNw.set_color('#2c8bf8');
+			break;
+	}
+}
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var objApp = nexacro.getApplication();
+	switch(obj.name)
+	{
+		case "stcAll" :
+			this.SEARCH_GBN = '전체';
+			break;
+			
+		case "stcServer" :
+			this.SEARCH_GBN = '서버';
+			break;
+			
+		case "stcSec" :
+			this.SEARCH_GBN = '보안';
+			break;
+
+		case "stcNw" :
+			this.SEARCH_GBN = '네트워크';
+			break;
+	}
+	
+	this.fnSetBtnOn();
+	
+	if( this.divMain.form.divCalendar.form ) {
+		this.divMain.form.divCalendar.form.SEARCH_GBN = this.SEARCH_GBN;
+		this.divMain.form.divCalendar.form.fnSearch01();	// 달력 건수 표기용 조회
+		this.divMain.form.divCalendar.form.fnSearch02();	// 작업리스트 목록 조회
+	}
+	
+}
+
+
+// 월간현황 onclick
+this.divMain_divCond_stcMonthly_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	var objApp = nexacro.getApplication();
+	var rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'FOMM0300_W');	
+	if( rowpos >= 0 )
+		Ex.core.openLink(this, objApp.gdsMenu.getColumn(rowpos, 'MENU_ID'), '');
+};
+
+
+this.dsWorkList_onvaluechanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	this.divMain.form.divCnt.form.stcCnt.set_text("<fc v='#2c8bf8'>" + obj.rowcount + "</fc> 건");
+};
+
+this.divMain_lsvWorkList_oncellclick = function(obj:nexacro.ListView,e:nexacro.ListViewClickEventInfo)
+{
+	if( e.bandid == 'body'  && e.cellid == 'cellTitle' )
+	{
+		var svcCd = this.dsWorkList.getColumn(this.dsWorkList.rowposition, "SVC_CD");
+		var reqId = this.dsWorkList.getColumn(this.dsWorkList.rowposition, "REQ_ID");
+		var reqTmplatId = this.dsWorkList.getColumn(this.dsWorkList.rowposition, "REQ_TMPLAT_ID");
+		var reqTmplatVer = this.dsWorkList.getColumn(this.dsWorkList.rowposition, "REQ_TMPLAT_VER");
+		
+		if( Ex.isEmpty(reqId) )
+			return;
+		
+		var popURL = "";
+		if(svcCd == "SRM")	popURL = "sr::SR0010_W.xfdl";
+		else				popURL = "sr::SR0000_W.xfdl";
+
+		Ex.core.popup(
+			this,									// <--- 팝업 실행 스코프
+			"srReqWritePop",						// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+			popURL,									// <--- 팝업창 오픈 Url
+			{
+				title			: "요청서",
+				//pIsCopy	: true,
+				//pClearKeyColumnArr : ["REQ_ID"],
+				pREQ_ID			: reqId,
+				pREQ_TMPLAT_ID	: reqTmplatId,
+				pREQ_TMPLAT_VER : reqTmplatVer
+			},												// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			//"width=1500,height=817,useCloseButton=false"	// <--- width/height/modeless(프레임 처리 옵션)
+			"autosize,useCloseButton=false"
+		); 
+	}
+};
+
+
+
+this.divMain_btnExcel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var oInfo = {
+		Grid	: [this.grdExcel],
+		Sheet	: [''],
+		FileNm	: ["작업리스트"],
+		ExportType : "XLSX",
+		ExportId : "excel01"
+	};
+	this.gfnExportExcel(this, oInfo);
+};
+]]></Script>
+  </Form>
+</FDL>

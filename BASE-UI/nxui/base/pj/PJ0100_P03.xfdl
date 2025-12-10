@@ -1,0 +1,845 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PJ0100_W" left="0" top="0" width="1840" height="720" titletext="WBS 관리" onload="form_onload">
+    <Layouts>
+      <Layout width="1840" height="720">
+        <Static id="Static00_00_00_00" taborder="15" left="0" top="128" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Grid id="grdMainList" taborder="16" binddataset="dsPjWbs" cellsizingtype="col" autofittype="col" left="20" top="Static00_00_00_00:0" right="20" bottom="100" oncellclick="grdMainList_oncellclick" treeinitstatus="expand,all" treeusecheckbox="false" onheadclick="grdMainList_onheadclick" onheaddblclick="grdMainList_onheaddblclick" cssclass="grd_WF_normal">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="38"/>
+                <Column size="155"/>
+                <Column size="250"/>
+                <Column size="40"/>
+                <Column size="118"/>
+                <Column size="118"/>
+                <Column size="51"/>
+                <Column size="57"/>
+                <Column size="57"/>
+                <Column size="57"/>
+                <Column size="90"/>
+                <Column size="90"/>
+                <Column size="180"/>
+                <Column size="57"/>
+                <Column size="57"/>
+                <Column size="57"/>
+                <Column size="57"/>
+              </Columns>
+              <Rows>
+                <Row size="40" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell style="background:#96b7dcff;color: ;" text="NO"/>
+                <Cell col="1" style="background:#96b7dcff;color: ;" text="WBS"/>
+                <Cell col="2" text="작업"/>
+                <Cell col="3" text="상태"/>
+                <Cell col="4" style="color: ;" text="계획&#13;&#10;시작일"/>
+                <Cell col="5" style="color: ;" text="계획&#13;&#10;종료일"/>
+                <Cell col="6" style="background:#96b7dcff;" text="Days"/>
+                <Cell col="7" style="background:#96b7dcff;" text="총&#13;&#10;작업량"/>
+                <Cell col="8" style="background:#96b7dcff;" text="계획&#13;&#10;작업량"/>
+                <Cell col="9" style="color: ;" text="가중치"/>
+                <Cell col="10" style="color: ;" text="위엠비&#13;&#10;담당"/>
+                <Cell col="11" text="수행사&#13;&#10;담당"/>
+                <Cell col="12" style="color: ;" text="산출물명"/>
+                <Cell col="13" style="background:#96b7dcff;" text="계획"/>
+                <Cell col="14" text="조정&#13;&#10;계획"/>
+                <Cell col="15" style="color: ;" text="실적"/>
+                <Cell col="16" style="background:#96b7dcff;" text="달성율"/>
+              </Band>
+              <Band id="body">
+                <Cell style="selectbackground: ;" expr="expr:currow+1"/>
+                <Cell col="1" displaytype="treeitemcontrol" edittype="tree" style="align:right;selectbackground: ;" text="bind:WBS_CODE" treelevel="bind:LVL" textAlign="left"/>
+                <Cell col="2" displaytype="text" edittype="expr:LVL == 0 ? 'none' : 'text'" style="align:left;selectbackground: ;" text="bind:WBS_NAME" textAlign="left"/>
+                <Cell col="3" displaytype="imagecontrol" style="selectbackground: ;" expr="ACTL_CMPL_RATE==100 ? &quot;theme://SPP_IMAGE_SET/WF/ico_WF_legend12.png&quot; : (ACTL_CMPL_RATE==0 ? (PLAN_CMPL_RATE==0 ? &quot;theme://SPP_IMAGE_SET/WF/ico_WF_legend14.png&quot; : &quot;theme://SPP_IMAGE_SET/WF/ico_WF_legend13.png&quot; ):(ACTL_CMPL_RATE&gt;=PLAN_CMPL_RATE ? &quot;theme://SPP_IMAGE_SET/WF/ico_WF_legend11.png&quot; : &quot;theme://SPP_IMAGE_SET/WF/ico_WF_legend13.png&quot; ))"/>
+                <Cell col="4" displaytype="date" edittype="date" style="selectbackground: ;" text="bind:PLAN_SDATE" calendardisplaynulltype="none" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="5" displaytype="date" edittype="date" style="selectbackground: ;" text="bind:PLAN_EDATE" calendardisplaynulltype="nulltext" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="6" style="selectbackground: ;" text="bind:PLAN_DAYS"/>
+                <Cell col="7" style="selectbackground: ;" text="bind:PLAN_TOT_WORK"/>
+                <Cell col="8" edittype="none" style="selectbackground: ;" text="bind:PLAN_WORK"/>
+                <Cell col="9" edittype="normal" style="selectbackground: ;" text="bind:WEIGHT"/>
+                <Cell col="10" edittype="normal" style="align:left;selectbackground: ;" text="bind:CHG_USER_NM" textAlign="left"/>
+                <Cell col="11" edittype="normal" style="align:left middle;" text="bind:EXE_USER_NM" textAlign="left"/>
+                <Cell col="12" edittype="normal" style="align:left;selectbackground: ;" text="bind:WBS_DESC" tooltiptext="bind:WBS_DESC" textAlign="left"/>
+                <Cell col="13" style="selectbackground: ;" text="bind:PLAN_CMPL_RATE"/>
+                <Cell col="14" edittype="expr:IS_LAST_LVL=='Y' ? 'normal' : 'none'" style="selectbackground: ;" text="bind:PLAN_CMPL_MRATE" editautoselect="true"/>
+                <Cell col="15" edittype="expr:IS_LAST_LVL=='Y' ? 'normal' : 'none'" style="selectbackground: ;" text="bind:ACTL_CMPL_RATE" editautoselect="true"/>
+                <Cell col="16" edittype="none" style="selectbackground: ;" text="bind:ACTL_PLAN_RATE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcPjtSchePlan" taborder="2" text="프로젝트 일정계획" cssclass="sta_WF_gridTitle" left="20" top="70" width="136" height="24"/>
+        <Div id="divSearch" taborder="0" left="20" top="0" right="20" height="50" scrollbars="none" cssclass="div_WF_divSearchArea">
+          <Layouts>
+            <Layout>
+              <Static id="stcPjtNm" taborder="1" text="프로젝트명" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="20" top="13" width="81" height="24"/>
+              <Static id="Static00_00_00_00" taborder="7" left="604" top="13" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="Static03" taborder="8" text="WBS레벨" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_00_00:0" top="13" width="72" height="24"/>
+              <Combo id="cboWbsLvl" taborder="9" left="Static03:0" top="12" height="24" datacolumn="NAME" codecolumn="LVL" width="135" cssclass="cbo_WF_normal"/>
+              <Static id="Static00_00_00" taborder="4" left="339" top="13" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="Static09" taborder="5" text="서브프로젝트" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_00:0" top="13" width="100" height="24"/>
+              <Static id="Static00_00" taborder="0" left="0" top="13" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+              <Edit id="edtPjtNm" taborder="2" left="stcPjtNm:0" top="13" width="215" height="24" cssclass="edt_WF_normal" enable="true" readonly="true"/>
+              <Button id="btnSearchPjtPop" taborder="3" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommOnclick" top="13" width="24" left="edtPjtNm:-1"/>
+              <Combo id="cboSubPjt" taborder="6" left="Static09:0" top="12" height="24" width="135" codecolumn="PJT_ID" datacolumn="PJT_NAME" cssclass="cbo_WF_normal">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows/>
+                </Dataset>
+              </Combo>
+              <Button id="btnSearch" taborder="11" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Button id="btnSearchReset" taborder="10" top="13" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+          <InitValue/>
+        </Div>
+        <Static id="stcCalcDate" taborder="4" text="기준일자" left="20" top="104" height="24" width="63" style="font:bold antialias 10 Malgun Gothic, 맑은 고딕;" cssclass="sta_WF_schTitle"/>
+        <Calendar id="calCalcDate" taborder="5" left="86" top="104" height="24" width="105" cssclass="cal_WF_normal"/>
+        <Static id="stc_calcDate00" taborder="6" text="계획 :" left="calCalcDate:20" top="104" width="41" height="24" style="font:bold antialias 10 Malgun Gothic, 맑은 고딕;" cssclass="sta_WF_schTitle"/>
+        <Edit id="edtPlanCmplRate" taborder="7" left="stc_calcDate00:5" top="104" height="24" width="50" enable="false" style=":disabled {background:#ffffffff;border:0 solid #808080ff ;color:#2367b5ff;align:right middle;}" cssclass="edt_WF_normal" textAlign="right"/>
+        <Static id="stcMonthDiffUnit" taborder="8" text="%" cssclass="mm" left="edtPlanCmplRate:5" top="104" width="16" height="24" style="align:left middle;"/>
+        <Static id="stc_calcDate01" taborder="9" text="실적 :" left="stcMonthDiffUnit:10" top="104" width="43" height="24" style="font:bold antialias 10 Malgun Gothic, 맑은 고딕;" cssclass="sta_WF_schTitle"/>
+        <Edit id="edtActlCmplRate" taborder="10" left="stc_calcDate01:5" top="104" height="24" width="50" enable="false" style=":disabled {background:#ffffffff;border:0 solid #808080ff ;color:#2367b5ff;align:right middle;}" cssclass="edt_WF_normal" textAlign="right"/>
+        <Static id="stcMonthDiffUnit00" taborder="11" text="%" cssclass="mm" left="edtActlCmplRate:5" top="104" width="16" height="24" style="align:left middle;"/>
+        <Static id="stc_calcDate02" taborder="12" text="달성율 :" left="stcMonthDiffUnit00:10" top="104" width="55" height="24" style="font:bold antialias 10 Malgun Gothic, 맑은 고딕;" cssclass="sta_WF_schTitle"/>
+        <Edit id="edt_actlPlanRate" taborder="13" left="stc_calcDate02:5" top="104" height="24" width="50" enable="false" style=":disabled {background:#ffffffff;border:0 solid #808080ff ;color:#f73a00ff;align:right middle;}" cssclass="edt_WF_normal" textAlign="right"/>
+        <Static id="Static28" taborder="17" text="범례 : " cssclass="sta_WF_schTitle" left="20" width="49" height="24" style="background:URL('img::sta_WF_SchTitle.png') left middle;" top="grdMainList:5"/>
+        <Static id="txt_total10" taborder="18" cssclass="stc_WF_legend11" left="Static28:0" bottom="75" width="16" height="16" style="color:green;font:11 돋움;"/>
+        <Static id="txt_total11" taborder="19" text="정상" left="txt_total10:5" width="50" height="24" top="grdMainList:5"/>
+        <Static id="txt_total13" taborder="20" cssclass="stc_WF_legend12" left="txt_total11:0" bottom="75" width="16" height="16" style="color:blue;font:11 돋움;"/>
+        <Static id="txt_total12" taborder="21" text="완료" left="txt_total13:5" width="50" height="24" top="grdMainList:5"/>
+        <Static id="txt_total14" taborder="22" left="txt_total12:0" bottom="75" width="16" height="16" style="color:blue;font:11 돋움;" cssclass="stc_WF_legend13"/>
+        <Static id="txt_total15" taborder="23" text="미진" left="txt_total14:5" width="50" height="24" top="grdMainList:5"/>
+        <Static id="txt_total16" taborder="24" cssclass="stc_WF_legend14" left="txt_total15:0" bottom="75" width="16" height="16" style="color:blue;font:11 돋움;"/>
+        <Static id="txt_total17" taborder="25" text="미대상" left="txt_total16:5" width="50" height="24" top="grdMainList:5"/>
+        <Static id="Static00_01" taborder="1" left="0" top="50" height="20" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_00_00" taborder="3" left="0" top="94" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="Div00" taborder="26" top="104" width="590" height="24" right="20">
+          <Layouts>
+            <Layout>
+              <Button id="btnChart" taborder="1" text="차트" top="0" right="0" width="70" height="24" onclick="fnCommOnclick" visible="false" cssclass="btn_WF_chart"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="stcMonthDiffUnit00_00" taborder="14" text="%" cssclass="mm" left="edt_actlPlanRate:5" top="104" width="16" height="24" style="align:left middle;"/>
+        <Grid id="Grid00" taborder="27" useinputpanel="false" left="0" top="777" right="0" height="62" binddataset="dsPjWbs" autofittype="col" visible="false">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="102"/>
+                <Column size="53"/>
+                <Column size="93"/>
+                <Column size="96"/>
+                <Column size="90"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="40"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="WBS_CODE"/>
+                <Cell col="1" text="LVL"/>
+                <Cell col="2" text="계획시작일"/>
+                <Cell col="3" text="계획종료일"/>
+                <Cell col="4" text="총작업량"/>
+                <Cell col="5" text="계획작업량"/>
+                <Cell col="6" text="계획"/>
+                <Cell col="7" text="WEIGHT"/>
+                <Cell col="8" text="실적"/>
+                <Cell col="9" text="달성율"/>
+                <Cell col="10" text="IS_LAST_LVL"/>
+                <Cell col="11" text="IS_CALCU"/>
+                <Cell col="12" text="pjt_id"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:WBS_CODE"/>
+                <Cell col="1" text="bind:LVL"/>
+                <Cell col="2" text="bind:PLAN_SDATE"/>
+                <Cell col="3" text="bind:PLAN_EDATE"/>
+                <Cell col="4" text="bind:PLAN_TOT_WORK"/>
+                <Cell col="5" text="bind:PLAN_WORK"/>
+                <Cell col="6" text="bind:PLAN_CMPL_RATE"/>
+                <Cell col="7" text="bind:WEIGHT"/>
+                <Cell col="8" text="bind:ACTL_CMPL_RATE"/>
+                <Cell col="9" text="bind:ACTL_PLAN_RATE"/>
+                <Cell col="10" text="bind:IS_LAST_LVL"/>
+                <Cell col="11" text="bind:IS_CALCU"/>
+                <Cell col="12" text="bind:PJT_ID"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="Grid01" taborder="28" binddataset="dsPjWbs" useinputpanel="false" autofittype="col" left="0" top="723" right="0" height="54" visible="false">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="121"/>
+                <Column size="80"/>
+                <Column size="147"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="PJT_ID"/>
+                <Cell col="1" text="WBS_ID"/>
+                <Cell col="2" text="WBS_CODE"/>
+                <Cell col="3" text="IS_CALCU"/>
+                <Cell col="4" text="WBS_CODE_TMP"/>
+                <Cell col="5" text="LVL"/>
+                <Cell col="6" text="LVL_TMP"/>
+                <Cell col="7" text="PARENT_ID"/>
+                <Cell col="8" text="IS_LAST_LVL"/>
+                <Cell col="9" text="CALC_DATE"/>
+                <Cell col="10" text="OUTPRNT_ORD"/>
+                <Cell col="11" text="CAN_SAVE"/>
+                <Cell col="12" text="PLAN_DAYS"/>
+                <Cell col="13" text="EXE_USER_NM"/>
+                <Cell col="14" text="PLAN_CMPL_MRATE"/>
+                <Cell col="15" text="IS_AUTOCALCU"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:PJT_ID"/>
+                <Cell col="1" text="bind:WBS_ID"/>
+                <Cell col="2" text="bind:WBS_CODE"/>
+                <Cell col="3" text="bind:IS_CALCU"/>
+                <Cell col="4" text="bind:WBS_CODE_TMP"/>
+                <Cell col="5" text="bind:LVL"/>
+                <Cell col="6" text="bind:LVL_TMP"/>
+                <Cell col="7" text="bind:PARENT_ID"/>
+                <Cell col="8" text="bind:IS_LAST_LVL"/>
+                <Cell col="9" text="bind:CALC_DATE"/>
+                <Cell col="10" text="bind:OUTPRNT_ORD"/>
+                <Cell col="11" text="bind:CAN_SAVE"/>
+                <Cell col="12" text="bind:PLAN_DAYS"/>
+                <Cell col="13" text="bind:EXE_USER_NM"/>
+                <Cell col="14" text="bind:PLAN_CMPL_MRATE"/>
+                <Cell col="15" text="bind:IS_AUTOCALCU"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divBtnBottom" taborder="29" height="60" bottom="0" text="" cssclass="div_POP_msg_btnbg" left="20" right="20">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsPjWbs" oncolumnchanged="dsPjWbs_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="WBS_ID" type="STRING" size="12"/>
+          <Column id="WBS_CODE" type="STRING" size="20"/>
+          <Column id="WBS_NAME" type="STRING" size="200"/>
+          <Column id="PJT_ID" type="STRING" size="12"/>
+          <Column id="LVL" type="INT" size="10"/>
+          <Column id="LVL_TMP" type="INT" size="10"/>
+          <Column id="PARENT_ID" type="STRING" size="12"/>
+          <Column id="LEAF_YN" type="STRING" size="1"/>
+          <Column id="PLAN_SDATE" type="STRING" size="14"/>
+          <Column id="PLAN_EDATE" type="STRING" size="14"/>
+          <Column id="PLAN_TOT_WORK" type="FLOAT" size="10"/>
+          <Column id="PLAN_WORK" type="FLOAT" size="10"/>
+          <Column id="PLAN_CMPL_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="WEIGHT" type="BIGDECIMAL" size="255"/>
+          <Column id="ACTL_SDATE" type="STRING" size="14"/>
+          <Column id="ACTL_EDATE" type="STRING" size="14"/>
+          <Column id="ACTL_WORK" type="INT" size="10"/>
+          <Column id="ACTL_CMPL_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="WORK_CMPL_YN" type="STRING" size="1"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="REG_USER_ID" type="STRING" size="10"/>
+          <Column id="REG_USER_NM" type="STRING" size="100"/>
+          <Column id="REG_USER_DEPT" type="STRING" size="100"/>
+          <Column id="LMOD_SDATE" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="10"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="STRING" size="100"/>
+          <Column id="WBS_DESC" type="STRING" size="4000"/>
+          <Column id="ACTL_PLAN_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="CHG_USER_NM" type="STRING" size="100"/>
+          <Column id="OUT_DOCS" type="STRING" size="256"/>
+          <Column id="IS_LAST_LVL" type="STRING" size="256"/>
+          <Column id="IS_CALCU" type="STRING" size="256"/>
+          <Column id="CALC_DATE" type="STRING" size="14"/>
+          <Column id="OUTPRNT_ORD" type="INT" size="256"/>
+          <Column id="CAN_SAVE" type="STRING" size="1"/>
+          <Column id="PLAN_DAYS" type="INT" size="256"/>
+          <Column id="EXE_USER_NM" type="STRING" size="200"/>
+          <Column id="PLAN_CMPL_MRATE" type="BIGDECIMAL" size="256"/>
+          <Column id="IS_AUTOCALCU" type="STRING" size="10"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSelectedPrj">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="12"/>
+          <Column id="PJT_NAME" type="STRING" size="200"/>
+          <Column id="PJT_STATUS_CD" type="STRING" size="30"/>
+          <Column id="PJT_DESC" type="STRING" size="4000"/>
+          <Column id="PJT_EXEC_CD" type="STRING" size="30"/>
+          <Column id="IN_PM_USER_ID" type="STRING" size="10"/>
+          <Column id="IN_PM_USER_NM" type="STRING" size="100"/>
+          <Column id="IN_PM_DEPT" type="STRING" size="100"/>
+          <Column id="OUT_PM_USER_ID" type="STRING" size="10"/>
+          <Column id="OUT_PM_USER_NM" type="STRING" size="100"/>
+          <Column id="OUT_CPY_ID" type="STRING" size="12"/>
+          <Column id="OUT_CPY_NAME" type="STRING" size="100"/>
+          <Column id="UPMU_USER_ID" type="STRING" size="10"/>
+          <Column id="UPMU_USER_NM" type="STRING" size="100"/>
+          <Column id="UPMU_USER_DEPT" type="STRING" size="100"/>
+          <Column id="PJT_STIME" type="STRING" size="14"/>
+          <Column id="PJT_ETIME" type="STRING" size="14"/>
+          <Column id="PJT_TYPE_CD" type="STRING" size="30"/>
+          <Column id="PJT_SIZE_CD" type="STRING" size="30"/>
+          <Column id="PJT_DEV_CD" type="STRING" size="30"/>
+          <Column id="PJT_STD_YN" type="STRING" size="1"/>
+          <Column id="PJT_OPEN_DATE" type="STRING" size="14"/>
+          <Column id="CONTRT_ID" type="STRING" size="30"/>
+          <Column id="DEV_AMOUNT" type="FLOAT" size="256"/>
+          <Column id="DEV_MM" type="FLOAT" size="256"/>
+          <Column id="HW_AMOUNT" type="FLOAT" size="256"/>
+          <Column id="SW_AMOUNT" type="FLOAT" size="256"/>
+          <Column id="TOT_AMOUNT" type="FLOAT" size="256"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="REG_USER_ID" type="STRING" size="10"/>
+          <Column id="REG_USER_NM" type="STRING" size="100"/>
+          <Column id="REG_USER_DEPT" type="STRING" size="100"/>
+          <Column id="SYSMODTIME" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="10"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsChrgdPsn">
+        <ColumnInfo>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="WBS_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsOutDoc">
+        <ColumnInfo>
+          <Column id="DOC_ID" type="STRING" size="256"/>
+          <Column id="DOC_NM" type="STRING" size="256"/>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="WBS_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPjWbsTot">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="16"/>
+          <Column id="CALC_DATE" type="STRING" size="14"/>
+          <Column id="ACTL_PLAN_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="PLAN_CMPL_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="ACTL_CMPL_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="STAGE_CD" type="STRING" size="30"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="REG_USER_ID" type="STRING" size="10"/>
+          <Column id="REG_USER_NM" type="STRING" size="100"/>
+          <Column id="REG_USER_DEPT" type="STRING" size="100"/>
+          <Column id="LMOD_SDATE" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="10"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="STRING" size="100"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="dsCpyPopUsr">
+        <ColumnInfo>
+          <Column id="CHK" type="string" size="1"/>
+          <Column id="USER_ID" type="string" size="9"/>
+          <Column id="USER_NAME" type="string" size="20"/>
+          <Column id="BUSEO_ID" type="string" size="6"/>
+          <Column id="BUSEO_NAME" type="string" size="50"/>
+          <Column id="DEPT_ID" type="string" size="6"/>
+          <Column id="DEPT_NAME" type="string" size="50"/>
+          <Column id="JBC_JID" type="string" size="4"/>
+          <Column id="JBC_JNAME" type="string" size="30"/>
+          <Column id="JBC_POSI_ID" type="string" size="4"/>
+          <Column id="JBC_POSI" type="string" size="30"/>
+          <Column id="CONTACT_PHONE" type="string" size="20"/>
+          <Column id="ADDRESS_1" type="string" size="200"/>
+          <Column id="ADDRESS_2" type="string" size="100"/>
+          <Column id="POSTCODE" type="string" size="7"/>
+          <Column id="NH_GUBUN" type="string" size="1"/>
+          <Column id="NH_ACTIVE" type="string" size="1"/>
+          <Column id="NH_STATUS" type="string" size="3"/>
+          <Column id="BUJAE_YN" type="string" size="1"/>
+          <Column id="BUJAE_STIME" type="string" size="14"/>
+          <Column id="BUJAE_ETIME" type="string" size="14"/>
+          <Column id="BUJAE_SAYU" type="string" size="30"/>
+          <Column id="DAEJIC_ID" type="string" size="9"/>
+          <Column id="DAEJIC_NM" type="string" size="20"/>
+          <Column id="CONTACT_MOBILE" type="string" size="20"/>
+          <Column id="CONTACT_OFFICE" type="string" size="20"/>
+          <Column id="MY_CHR_ID1" type="string" size="9"/>
+          <Column id="MY_CHR_NM1" type="string" size="20"/>
+          <Column id="MY_CHR_ID2" type="string" size="9"/>
+          <Column id="MY_CHR_NM2" type="string" size="20"/>
+          <Column id="MY_MGR_ID" type="string" size="9"/>
+          <Column id="MY_MGR_NM" type="string" size="20"/>
+          <Column id="LAST_LOGIN_TIME" type="string" size="14"/>
+          <Column id="NH_PASSWD" type="string" size="28"/>
+          <Column id="SYSMODTIME" type="string" size="14"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="dsResultWbs">
+        <ColumnInfo>
+          <Column id="ROWINDEX" type="INT" size="255"/>
+          <Column id="STATUS" type="STRING" size="255"/>
+          <Column id="RESULT" type="INT" size="255"/>
+          <Column id="ERROR" type="STRING" size="255"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="dsPjWbsLvl">
+        <ColumnInfo>
+          <Column id="LVL" type="INT" size="10"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPjWbsTmp" oncolumnchanged="dsPjWbs_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="WBS_ID" type="STRING" size="12"/>
+          <Column id="WBS_CODE" type="STRING" size="20"/>
+          <Column id="WBS_NAME" type="STRING" size="200"/>
+          <Column id="PJT_ID" type="STRING" size="12"/>
+          <Column id="LVL" type="INT" size="10"/>
+          <Column id="PARENT_ID" type="STRING" size="12"/>
+          <Column id="LEAF_YN" type="STRING" size="1"/>
+          <Column id="PLAN_SDATE" type="STRING" size="14"/>
+          <Column id="PLAN_EDATE" type="STRING" size="14"/>
+          <Column id="PLAN_TOT_WORK" type="FLOAT" size="10"/>
+          <Column id="PLAN_WORK" type="FLOAT" size="10"/>
+          <Column id="PLAN_CMPL_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="WEIGHT" type="BIGDECIMAL" size="255"/>
+          <Column id="ACTL_SDATE" type="STRING" size="14"/>
+          <Column id="ACTL_EDATE" type="STRING" size="14"/>
+          <Column id="ACTL_WORK" type="INT" size="10"/>
+          <Column id="ACTL_CMPL_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="WORK_CMPL_YN" type="STRING" size="1"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="REG_USER_ID" type="STRING" size="10"/>
+          <Column id="REG_USER_NM" type="STRING" size="100"/>
+          <Column id="REG_USER_DEPT" type="STRING" size="100"/>
+          <Column id="LMOD_SDATE" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="10"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="STRING" size="100"/>
+          <Column id="WBS_DESC" type="STRING" size="4000"/>
+          <Column id="ACTL_PLAN_RATE" type="BIGDECIMAL" size="255"/>
+          <Column id="CHG_USER_NM" type="STRING" size="100"/>
+          <Column id="OUT_DOCS" type="STRING" size="256"/>
+          <Column id="IS_LAST_LVL" type="STRING" size="256"/>
+          <Column id="IS_CALCU" type="STRING" size="256"/>
+          <Column id="CALC_DATE" type="STRING" size="14"/>
+          <Column id="OUTPRNT_ORD" type="INT" size="256"/>
+          <Column id="CAN_SAVE" type="STRING" size="1"/>
+          <Column id="PLAN_DAYS" type="INT" size="256"/>
+          <Column id="EXE_USER_NM" type="STRING" size="200"/>
+          <Column id="PLAN_CMPL_MRATE" type="BIGDECIMAL" size="256"/>
+          <Column id="IS_AUTOCALCU" type="STRING" size="10"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="PJT_NM" type="STRING" size="256"/>
+          <Column id="SUB_PJT_ID" type="STRING" size="256"/>
+          <Column id="LVL" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSubPjt">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="PJT_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPopRtn"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="calCalcDate" propid="value" datasetid="dsPjWbsTot" columnid="CALC_DATE"/>
+      <BindItem id="item2" compid="edtPlanCmplRate" propid="value" datasetid="dsPjWbsTot" columnid="PLAN_CMPL_RATE"/>
+      <BindItem id="item3" compid="edtActlCmplRate" propid="value" datasetid="dsPjWbsTot" columnid="ACTL_CMPL_RATE"/>
+      <BindItem id="item4" compid="edt_actlPlanRate" propid="value" datasetid="dsPjWbsTot" columnid="ACTL_PLAN_RATE"/>
+      <BindItem id="item0" compid="divSearch.form.edtPjtNm" propid="value" datasetid="dsCond" columnid="PJT_NM"/>
+      <BindItem id="item5" compid="divSearch.form.cboSubPjt" propid="value" datasetid="dsCond" columnid="SUB_PJT_ID"/>
+      <BindItem id="item6" compid="divSearch.form.cboWbsLvl" propid="value" datasetid="dsCond" columnid="LVL"/>
+    </Bind>
+    <InitValue/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ PJ0100_W
+* 화면(명)		︰ 프로젝트일정계획
+* 메뉴(경로)	︰ 프로젝트관리 > 범위 및 일정 >  프로젝트일정계획(WBS 관리)
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.09.22
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.09.22	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_PjComm.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.fv_grdMainOldRow;
+this.fv_isSave = "N";
+this.fv_jsonProject;
+this.fv_subPrjId = "";
+this.fv_nLvl;
+this.fv_autoSaveYn = "";
+this.isSetSubPjtCbo = false;
+this.isSetPjtWBSLvlCbo	= false;
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();	// 컴포넌트 초기화	
+	this.resetScroll();
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	//this.dsCond.setColumn(0, "PJT_ID", "");
+	//this.dsCond.setColumn(0, "PJT_NM", "");
+	this.dsCond.setColumn(0, "SUB_PJT_ID", undefined);
+	this.dsCond.setColumn(0, "LVL", undefined);
+}
+
+// 조회
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "select01";								// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ0100W/select01";						// 서비스명
+    var sInDs = "dsCond=dsCond";							// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsPjWbs=dsPjWbs dsPjWbsTot=dsPjWbsTot";	// 서버에서 수신할 데이타셋
+    var sArg = "";											// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/*저장 : 최하위 레벨 계획시작일, 계획종료일, 총작업량, 계획작업량 자동 계산 저장*/
+this.fnSave = function()
+{
+	// transaction
+	var sTranId = "save01";													// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ0100W/save01";										// 서비스명
+    var sInDs = "dsCond=dsCond dsPjWbs:U=dsPjWbs dsPjWbsTot=dsPjWbsTot:U";	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsPjWbs=dsPjWbs dsPjWbsTot=dsPjWbsTot";					// 서버에서 수신할 데이타셋
+    var sArg = "";															// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/*저장 2번째 : 최하위 레벨 값을 이용한 상위 레벨 계획시작일, 계획종료일, 
+                총작업량, 계획작업량, 계획, 달성율 자동계산
+*/
+this.fn_save_uplvl = function ()
+{
+
+	var jsonSubProject = this.divSearch.div_subProject.getValue();
+	
+ 	var params 	  	 = Iject.Util.setParam("model", "MPJ0100Modify01");
+ 	var svcId 		 = "MPJ0100Modify01";
+ 	var inDatasets 	 = "DS_PJ_WBS=ds_pj_wbs:U DS_PJ_WBS_TOT=ds_pj_wbs_tot:U";
+ 	var outDatasets  = "ds_resultWbs=RESULT_PJ_WBS";
+ 	var argument	 = "strPjtId=" + fv_jsonProject.id +" strSubPjtId="+ jsonSubProject["id"] ;
+ 	var callbackFunc = "fn_callback";
+ 	Iject.xuptran(this, svcId, params, inDatasets, outDatasets, argument, callbackFunc);
+	
+	var sTranId = "save02";													// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ0100W/save02";										// 서비스명
+    var sInDs = "dsCond=dsCond dsPjWbs:U=dsPjWbs dsPjWbsTot=dsPjWbsTot:U";	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsPjWbs=dsPjWbs dsPjWbsTot=dsPjWbsTot";					// 서버에서 수신할 데이타셋
+    var sArg = "";															// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::" + nErrorCode+"::" + sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "PJ0100_P01" :
+			trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)	this.dsPopRtn.loadXML(varValue);
+			this.dsCond.setColumn(0, "PJT_ID", this.dsPopRtn.getColumn(0, "PJT_ID"));
+			this.dsCond.setColumn(0, "PJT_NM", this.dsPopRtn.getColumn(0, "PJT_NAME"));
+			this.fnSetCombo();
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "" :
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.divSearch.form.cboSubPjt.set_displaynulltext(Ex.core.word("- 전체 - "));	
+	
+	this.fv_today = Ex.util.today();
+
+	// 공통코드 조회
+	this.fnGetCmmCd();
+
+	this.dsCond.setColumn(0, "PJT_ID", this.getOwnerFrame().pParentId||'');
+	this.dsCond.setColumn(0, "PJT_NM", this.getOwnerFrame().pPjtName||'');
+	this.dsCond.setColumn(0, "SUB_PJT_ID", this.getOwnerFrame().pPjtId||'');
+	
+	this.fnSetCombo();
+
+	trace("[PJ0100_W] this.fnLinkParam() this.getOwnerFrame().referer : " + this.getOwnerFrame().referer +
+		  " this.getOwnerFrame().PJT_ID : " + this.getOwnerFrame().pPjtId +
+		  " this.getOwnerFrame().PARENT_ID : " + this.getOwnerFrame().pParentId +
+		  " this.getOwnerFrame().PARENT_NM : " + this.getOwnerFrame().pPjtName);
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		 upCmmCd : ['PROC_STS_CD', 'BUSI_KIND_CD', 'DEV_GRADE_CD']			// 조회할 상위코드
+		,codeDiv: ['PJT_MNG_CD', 'PJT_MNG_CD', 'PJT_MNG_CD']				// 조회할 코드의 업무구분
+		,optStr	: ['ALL', 'ALL', 'ALL']										// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y', 'Y', 'Y']											// 사용여부
+		,filter	: ['', '', '']												// filterStr
+		,objDs	: [this.dsProcStsCd, this.dsBusiKindCd, this.dsDevGradeCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+this.fnLinkParam = function()
+{
+	this.fnInit(true);
+}
+
+//Sub Project Combo 조회
+this.fnSetCombo = function()
+{
+	this.setSubPjtList(this, this.dsCond.getColumn(0, "PJT_ID"), this.divSearch.form.cboSubPjt, this.searchSubPjtInfoCallBack);
+	this.setPjtWBSLvlList(this, this.dsCond.getColumn(0, "PJT_ID"), this.divSearch.form.cboWbsLvl, this.searchPjtWBSLvlInfoCallBack);
+}
+
+//Sub Project Combo 조회 CallBack
+this.searchSubPjtInfoCallBack = function(rtnDs)
+{
+	//trace("[MS0000_D02] this.searchSubPjtInfoCallBack() rtnObj.ROWCOUNT : " + rtnObj.ROWCOUNT);
+	//this.dsSubPjt.assign(rtnDs);
+	var aRow = this.divSearch.form.cboSubPjt.getInnerDataset().insertRow(0);
+	this.divSearch.form.cboSubPjt.getInnerDataset().setColumn(0, "PJT_NAME", Ex.core.word("- 전체 -"));
+
+	this.divSearch.form.cboSubPjt.set_displaynulltext("");
+	
+	if( !Ex.isEmpty(this.PJT_ID) )	this.divSearch.form.cboSubPjt.set_value(this.PJT_ID);
+	else							this.divSearch.form.cboSubPjt.set_index(0);
+
+	this.isSetSubPjtCbo = true;
+	
+	this.isComboSetCompleted();
+}
+
+this.searchPjtWBSLvlInfoCallBack = function(rtnDs)
+{
+	//trace("[MS0000_D02] this.searchPjtWBSLvlInfoCallBack() rtnObj.ROWCOUNT : " + rtnObj.ROWCOUNT);
+	//this.dsSubPjt.assign(rtnDs);
+	trace(this.divSearch.form.cboWbsLvl.getInnerDataset().saveXML());
+	var aRow = this.divSearch.form.cboWbsLvl.getInnerDataset().insertRow(0);
+	this.divSearch.form.cboWbsLvl.getInnerDataset().setColumn(0, "NAME", Ex.core.word("- 전체 -"));
+
+	if( !Ex.isEmpty(this.LVL) )	this.divSearch.form.cboWbsLvl.set_value(this.LVL);
+	else							this.divSearch.form.cboWbsLvl.set_index(0);
+	
+	this.isSetPjtWBSLvlCbo	= true;
+
+	this.isComboSetCompleted();
+}
+
+this.isComboSetCompleted = function()
+{
+	if(this.isSetSubPjtCbo && this.isSetPjtWBSLvlCbo) this.fnSearch();	// 조회
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearch" :			// 검색
+			this.fnSearch();
+			break;
+		
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;
+
+		case "btnChart" :
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ0100_P02",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ0100_P02.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : "WBS CHART"
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+			);
+			break;
+
+		case "btnExcelDown" :		// 엑셀다운
+			var oInfo = {
+   				Grid	: [this.grdMainList],
+   				Sheet	: [this.getOwnerFrame().info.menuNm],
+   				FileNm	: [this.getOwnerFrame().info.menuNm],
+   				ExportType : "XLSX",
+   				ExportId : "excel01"
+   			};
+			this.gfnExportExcel(this, oInfo);
+			break;
+			
+		case "btnSearchPjtPop" :
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ0100_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ0100_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : "프로젝트 검색"
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				//"width=920,height=650"	// <--- width/height/modeless(프레임 처리 옵션)							
+				"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+			);
+			
+		case "btnClose" :
+			Ex.core.pclose(this);
+			break;
+	}
+}
+
+this.grdOnCellClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(e.row < 0) return;
+
+	var strPjtId    = this.dsPjProject.getColumn(nRowPos, "PJT_ID");
+
+	if(Ex.isEmpty(strPjtId))
+	{
+		var oParam = {id : "alertNoSelectProjectI", msg : "선택된 프로젝트가 없습니다.", arrparam : [], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return;
+	}
+
+	// PJT_NAME 프로젝트/서브프로젝트명을 누를 때 마다 POPUP화면 호출
+	if (e.cell == obj.getBindCellIndex("body", "PJT_NAME"))
+	{
+		var nIndex      = this.grdMainList.getCellPos();
+		var nRowPos     = this.dsPjProject.rowposition;
+		var strPjtNm    = this.dsPjProject.getColumn(nRowPos, "PJT_NAME");
+
+		Ex.core.popup(
+			this,					// <--- 팝업 실행 스코프
+			"PPJ0210",				// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+			"pj::PJ0210_P01.xfdl",	// <--- 팝업창 오픈 Url
+			{
+				title	: "프로젝트 상세보기",
+				pPjtId	: strPjtId,
+				pIsNew	: 'N'				
+			},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			"autosize"				// <--- width/height/modeless(프레임 처리 옵션)
+		);
+	}
+};]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="form" classname="top" left="0" top="0" titletext="요청현황" onload="form_onload" scrolltype="none" cssclass="" height="250" width="530" font="normal 24pt/normal &quot;PretendardR&quot;" color="white" onclick="frHome_D00_onclick" scrollbartype="none">
+    <Layouts>
+      <Layout width="530" height="250" mobileorientation="landscape">
+        <Static id="stcTitleLeft" taborder="1" left="20" top="10" width="110" height="28" background="url('theme://NHSB_IMAGE_SET/HOME/main-titbullet01.png') no-repeat left center" text="요청목록" padding="0px 0px 0px 19px" color="black" font="bold 16px 'KoPubB'"/>
+        <Div id="divLeft01" taborder="1" left="20" top="stcTitleLeft:10" width="208" height="41" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-circlechart02-num.png') no-repeat left center">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="요청건" left="0" top="0" width="104" height="30" color="white" textAlign="center" font="14px 'KoPubL'"/>
+              <Static id="stcCnt" taborder="1" text="0" top="10" width="104" height="30" color="#005bc3" textAlign="right" font="bold 20px 'KoPubL'" right="0" padding="1px 20px 0px 0px" verticalAlign="middle" onclick="fnCommOnclick" cursor="pointer" tooltiptext="등록(임시저장/반려) 건도 포함"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divLeft02" taborder="2" left="20" top="divLeft01:5" width="208" height="41" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-circlechart02-num.png') no-repeat left center">
+          <Layouts>
+            <Layout>
+              <Static id="stcCnt" taborder="0" text="0" top="10" width="104" height="30" color="#005bc3" textAlign="right" font="bold 20px 'KoPubL'" right="0" padding="1px 20px 0px 0px" verticalAlign="middle" onclick="fnCommOnclick" cursor="pointer"/>
+              <Static id="stcTitle" taborder="1" text="접수중" left="0" top="0" width="104" height="30" color="white" textAlign="center" font="14px 'KoPubL'"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divLeft03" taborder="3" left="20" top="divLeft02:5" width="208" height="41" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-circlechart02-num.png') no-repeat left center">
+          <Layouts>
+            <Layout>
+              <Static id="stcCnt" taborder="0" text="0" top="10" width="104" height="30" color="#005bc3" textAlign="right" font="bold 20px 'KoPubL'" right="0" padding="1px 20px 0px 0px" verticalAlign="middle" onclick="fnCommOnclick" cursor="pointer"/>
+              <Static id="stcTitle" taborder="1" text="처리중" left="0" top="0" width="104" height="30" color="white" textAlign="center" font="14px 'KoPubL'"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divLeft04" taborder="4" left="20" top="divLeft03:5" width="208" height="41" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-circlechart02-num.png') no-repeat left center">
+          <Layouts>
+            <Layout>
+              <Static id="stcCnt" taborder="0" text="0" top="10" width="104" height="30" color="#005bc3" textAlign="right" font="bold 20px 'KoPubL'" right="0" padding="1px 20px 0px 0px" verticalAlign="middle" onclick="fnCommOnclick" cursor="pointer"/>
+              <Static id="stcTitle" taborder="1" text="완료" left="0" top="0" width="104" height="30" color="white" textAlign="center" font="14px 'KoPubL'"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="stcDivider" taborder="5" left="divLeft02:10.58%" top="0" width="2" background="url('theme://NHSB_IMAGE_SET/HOME/main-divider.png') no-repeat center center" bottom="0" onclick="stcDivider_onclick"/>
+        <Div id="divRight01" taborder="6" left="274.00" top="56" height="51" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-circlechart01-num.png') no-repeat left center" width="233">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="전체" left="20.00" top="10" width="53" color="#005bc3" textAlign="center" font="bold 16px 'KoPubL'" bottom="10" background="url('theme://NHSB_IMAGE_SET/HOME/main-titbullet02.png') no-repeat left center"/>
+              <Static id="stcCnt" taborder="1" text="0" top="10" width="84" color="white" textAlign="right" font="bold 25px 'KoPubL'" right="44" padding="1px 0px 0px 0px" verticalAlign="middle" bottom="10" onclick="fnCommOnclick" cursor="pointer"/>
+              <Static id="stcPrefix" taborder="2" text="건" top="10" width="14" color="#c2dafd" textAlign="right" font="bold 12px 'KoPubL'" padding="1px 0px 0px 0px" verticalAlign="middle" bottom="10" left="stcCnt:2"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divRight02" taborder="7" left="274.00" top="116" height="51" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-circlechart01-num.png') no-repeat left center" width="233">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="팀" left="20.00" top="10" width="53" color="#005bc3" textAlign="center" font="bold 16px 'KoPubL'" bottom="10" background="url('theme://NHSB_IMAGE_SET/HOME/main-titbullet02.png') no-repeat left center"/>
+              <Static id="stcCnt" taborder="1" text="0" top="10" width="84" color="white" textAlign="right" font="bold 25px 'KoPubL'" right="44" padding="1px 0px 0px 0px" verticalAlign="middle" bottom="10" onclick="fnCommOnclick" cursor="pointer"/>
+              <Static id="stcPrefix" taborder="2" text="건" top="10" width="14" color="#c2dafd" textAlign="right" font="bold 12px 'KoPubL'" padding="1px 0px 0px 0px" verticalAlign="middle" bottom="10" left="stcCnt:2"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divRight03" taborder="8" left="274.00" top="176" height="51" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-circlechart01-num.png') no-repeat left center" width="233">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="개인" left="20.00" top="10" width="53" color="#005bc3" textAlign="center" font="bold 16px 'KoPubL'" bottom="10" background="url('theme://NHSB_IMAGE_SET/HOME/main-titbullet02.png') no-repeat left center"/>
+              <Static id="stcCnt" taborder="1" text="0" top="10" width="84" color="white" textAlign="right" font="bold 25px 'KoPubL'" right="44" padding="1px 0px 0px 0px" verticalAlign="middle" bottom="10" onclick="fnCommOnclick" cursor="pointer"/>
+              <Static id="stcPrefix" taborder="2" text="건" top="10" width="14" color="#c2dafd" textAlign="right" font="bold 12px 'KoPubL'" padding="1px 0px 0px 0px" verticalAlign="middle" bottom="10" left="stcCnt:2"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="stcTitleRight" taborder="9" left="274.00" top="10" width="180" height="28" background="url('theme://NHSB_IMAGE_SET/HOME/main-titbullet01.png') no-repeat left center" text="당월 미적기 처리건수" padding="0px 0px 0px 19px" color="black" font="bold 16px 'KoPubB'"/>
+        <Static id="stcYear" taborder="10" left="174" top="15" width="54" height="17" background="url('theme://NHSB_IMAGE_SET/HOME/main-year-bg.png') no-repeat center center" color="#006dbb" font="bold 10px 'KoPubL'" textAlign="center" verticalAlign="middle"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="YYYY" type="STRING" size="256"/>
+          <Column id="FROM_DATE" type="STRING" size="256"/>
+          <Column id="TO_DATE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="YYYY"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDataYear" onrowsetchanged="dsData_onrowsetchanged">
+        <ColumnInfo>
+          <Column id="REQ_CNT" type="STRING" size="256"/>
+          <Column id="PROC_WAIT_CNT" type="STRING" size="256"/>
+          <Column id="PROC_CNT" type="STRING" size="256"/>
+          <Column id="FIN_cNT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="REQ_CNT">0</Col>
+            <Col id="PROC_WAIT_CNT">0</Col>
+            <Col id="PROC_CNT">0</Col>
+            <Col id="FIN_cNT">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDataMonth" onrowsetchanged="dsData_onrowsetchanged">
+        <ColumnInfo>
+          <Column id="ALL_CNT" type="STRING" size="256"/>
+          <Column id="DEPT_CNT" type="STRING" size="256"/>
+          <Column id="IND_CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="ALL_CNT">0</Col>
+            <Col id="DEPT_CNT">0</Col>
+            <Col id="IND_CNT">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ frHome_D00
+* 화면(명)		︰ - 
+* 메뉴(경로)	︰ -
+* 화면 설명	︰ 대시보드 우측 내 정보 Div
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.YYYY;
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();
+	this.fnSearchReset();
+	this.fnSearch();
+}
+
+this.fnSearchReset = function()
+{
+	this.dsCond.setColumn(0, 'YYYY', this.YYYY);
+	var FROM_DATE	= Ex.util.today().substr(0, 6) + '01';
+	var TO_DATE		= Ex.util.addDate(Ex.util.addMonth(FROM_DATE, 1), -1);
+	this.dsCond.setColumn(0, 'FROM_DATE', FROM_DATE);
+	this.dsCond.setColumn(0, 'TO_DATE', TO_DATE);
+	
+}
+
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+this.fnSearch = function()
+{
+	trace('nhsb_D02 >> fnSearch');
+	this.fnSearchYear();
+	this.fnSearchMonth();
+}
+
+
+// 조회
+this.fnSearchYear = function()
+{
+	var sTranId = "selectReqCntYear";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "nhHome/selectReqCntYear";            // 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsDataYear=dsData";       	// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSearchMonth = function()
+{
+	var sTranId = "selectReqCntDelayed";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "nhHome/selectReqCntDelayed";            // 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsDataMonth=dsData";       	// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select12":
+			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch(pID)
+	{
+	
+	}
+}
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	this.YYYY = Ex.util.today().substr(0, 4);
+	this.stcYear.set_text('(' + this.YYYY + ')');
+}
+
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var objApp = nexacro.getApplication();
+	var rowpos = -1;
+	var param;
+	switch(obj)
+	{
+		case this.divLeft01.form.stcCnt :		// 요청목록 > 요청건
+			rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SR0120_W');
+			param = 'ALL';
+			break;
+		case this.divLeft02.form.stcCnt :		// 요청목록 > 접수중
+			rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SR0120_W');
+			param = 'PROC_WAIT_CNT';
+			break;
+		case this.divLeft03.form.stcCnt :		// 요청목록 > 처리중
+			rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SR0120_W');
+			param = 'ING';
+			break;
+		case this.divLeft04.form.stcCnt :		// 요청목록 > 완료
+			rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SR0120_W');
+			param = 'COMPL';
+			break;
+			
+		case this.divRight01.form.stcCnt :		// 당월미적기 > 전체
+			//rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SR9921_W');
+			param = 'DELAY-ALL';
+			rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SR0221_W');
+			break;
+		case this.divRight02.form.stcCnt :		// 당월미적기 > 부서
+			param = 'DELAY-DEPT';
+			rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SR0221_W');
+			break;
+		case this.divRight03.form.stcCnt :		// 당월미적기 > 개인
+			param = 'DELAY-USER';
+			rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SR0221_W');
+			break;
+	}
+	
+	if( rowpos >= 0 ) {
+		var fromDate	= this.YYYY + '0101';
+		var toDate		= this.YYYY + '1231';
+
+		var toDay = Ex.util.today();
+		trace("Ex.util.today().substring(0, 6) : " + toDay.substring(0, 6) + " Ex.util.getLastDayOfMonth(toDay) : " + Ex.util.getLastDayOfMonth(toDay));
+
+		if(param.startsWith("DELAY-"))
+		{
+			fromDate	= Ex.util.getFirstDate(Ex.util.today());
+			toDate		= toDay.substring(0, 6) + Ex.util.getLastDayOfMonth(toDay);
+		}
+		Ex.core.openLink(this, objApp.gdsMenu.getColumn(rowpos, 'MENU_ID'), {param : param, fromDate : fromDate, toDate : toDate}, true);
+	}
+	else
+		trace('해당 메뉴ID가 없어 이동할 수 없습니다');
+}
+
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divLeft01.form.stcCnt" propid="text" datasetid="dsDataYear" columnid="REQ_CNT"/>
+      <BindItem id="item1" compid="divLeft02.form.stcCnt" propid="text" datasetid="dsDataYear" columnid="PROC_WAIT_CNT"/>
+      <BindItem id="item2" compid="divLeft03.form.stcCnt" propid="text" datasetid="dsDataYear" columnid="PROC_CNT"/>
+      <BindItem id="item3" compid="divLeft04.form.stcCnt" propid="text" datasetid="dsDataYear" columnid="FIN_CNT"/>
+      <BindItem id="item4" compid="divRight01.form.stcCnt" propid="text" datasetid="dsDataMonth" columnid="ALL_CNT"/>
+      <BindItem id="item5" compid="divRight02.form.stcCnt" propid="text" datasetid="dsDataMonth" columnid="DEPT_CNT"/>
+      <BindItem id="item6" compid="divRight03.form.stcCnt" propid="text" datasetid="dsDataMonth" columnid="IND_CNT"/>
+    </Bind>
+  </Form>
+</FDL>

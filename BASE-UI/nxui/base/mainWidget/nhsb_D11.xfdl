@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="form" classname="top" left="0" top="0" titletext="현업 Bottom" onload="form_onload" scrolltype="none" cssclass="" height="250" width="1375" font="normal 24pt/normal &quot;PretendardR&quot;" color="white" onclick="frHome_D00_onclick" scrollbartype="none">
+    <Layouts>
+      <Layout width="1375" height="250" mobileorientation="landscape">
+        <Div id="divLeft" taborder="3" left="0" top="0" width="434" height="250" cssclass="div_HOME_border">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" left="20.00" top="10" width="110" height="28" background="url('theme://NHSB_IMAGE_SET/HOME/main-titbullet01.png') no-repeat left center" text="나의 할일" padding="0px 0px 0px 19px" color="black" font="bold 16px 'KoPubB'"/>
+              <Div id="divTodo01" taborder="1" left="40.00" top="48" width="171" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-con-set-01.png') no-repeat center center /contain" bottom="20" text="" onclick="fnCommOnclick" cursor="pointer">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcTitle" taborder="0" text="결재" left="30" top="98" width="112" height="30" color="#555555" font="bold 12px 'KoPubL'" verticalAlign="middle" textAlign="center" onclick="fnCommOnclick" cursor="pointer"/>
+                    <Static id="stcPrefix" taborder="2" text="건" left="103.00" top="128" width="40" height="35" color="#333333" font="bold 12px 'KoPubL'" verticalAlign="middle" textAlign="left" padding="8px 0px 0px 0px" onclick="fnCommOnclick" cursor="pointer"/>
+                    <Static id="stcCnt" taborder="1" text="0" left="30" top="128" height="35" color="#333333" font="bold 25px 'KoPubL'" verticalAlign="middle" textAlign="right" right="stcPrefix:0" padding="0px 8px 0px 0px" onclick="fnCommOnclick" cursor="pointer"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divTodo02" taborder="2" left="221.00" top="47" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-con-set-02.png') no-repeat center center /contain" bottom="21" width="171" onclick="fnCommOnclick" cursor="pointer">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcTitle" taborder="0" text="테스트/만족도" left="30.00" top="98" width="112" height="30" color="#555555" font="bold 12px 'KoPubL'" verticalAlign="middle" textAlign="center" onclick="fnCommOnclick" cursor="pointer"/>
+                    <Static id="stcPrefix" taborder="1" text="건" left="103.00" top="128" width="40" height="35" color="#333333" font="bold 12px 'KoPubL'" verticalAlign="middle" textAlign="left" padding="8px 0px 0px 0px" onclick="fnCommOnclick" cursor="pointer"/>
+                    <Static id="stcCnt" taborder="2" text="0" left="30" top="128" height="35" color="#333333" font="bold 25px 'KoPubL'" verticalAlign="middle" textAlign="right" right="stcPrefix:0" padding="0px 8px 0px 0px" onclick="fnCommOnclick" cursor="pointer"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divRight" taborder="1" text="div00" left="divLeft:20" top="0" bottom="0" right="0" cssclass="div_HOME_border">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" left="20.00" top="10" width="200" height="28" background="url('theme://NHSB_IMAGE_SET/HOME/main-titbullet01.png') no-repeat left center" text="ITSM 연간 처리현황" padding="0px 0px 0px 19px" color="black" font="bold 16px 'KoPubB'"/>
+              <Div id="divCnt02" taborder="3" left="675" top="41" width="198" height="92" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-processing-set02.png') no-repeat center center /contain">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcCnt" taborder="0" text="0" left="122.00" top="10" width="61" height="61" font="bold 24px 'KopubL'" textAlign="center" verticalAlign="middle"/>
+                    <Static id="stcTitle" taborder="1" text="적기처리건수" left="7.00" top="48" width="84" height="20" color="#3f4050" font="bold 12px 'KoPubL'" textAlign="center"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divCnt04" taborder="4" left="675" top="divCnt02:5" width="198" height="92" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-processing-set04.png') no-repeat center center /contain">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcCnt" taborder="0" text="0" left="122.00" top="9" width="60" height="60" font="bold 24px 'KopubL'" textAlign="center" verticalAlign="middle"/>
+                    <Static id="stcTitle" taborder="1" text="만족도미응답건수" left="-2.00" top="45" width="102" height="20" color="#3f4050" font="bold 12px 'KoPubL'" textAlign="center"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divGaugeTop" taborder="5" left="40" top="47" width="483" height="84" background="url('theme://NHSB_IMAGE_SET/HOME/main-gaugebar-bg.png') no-repeat left center /contain">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcTitle" taborder="0" left="37" top="30" width="134" height="24" background="url('theme://NHSB_IMAGE_SET/HOME/main-titbullet02.png') no-repeat left center" text="적기처리율" font="bold 16px 'KoPubL'" color="#005bc3" padding="0px 0px 0px 10px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divGaugeBot" taborder="6" left="40.00" width="483" height="84" background="url('theme://NHSB_IMAGE_SET/HOME/main-gaugebar-bg.png') no-repeat left center /contain" bottom="20">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcTitle" taborder="0" left="37.00" top="30" width="134" height="24" background="url('theme://NHSB_IMAGE_SET/HOME/main-titbullet02.png') no-repeat left center" text="만족도평균" font="bold 16px 'KoPubL'" color="#005bc3" padding="0px 0px 0px 10px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divCnt01" taborder="1" left="441" top="stcTitle:3" width="198" height="92" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-processing-set01.png') no-repeat center center /contain">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcCnt" taborder="0" text="0" left="127" top="10" width="61" height="61" font="bold 24px 'KopubL'" textAlign="center" verticalAlign="middle"/>
+                    <Static id="stcTitle" taborder="1" text="처리완료건수" left="10" top="48" width="84" height="20" color="#3f4050" font="bold 12px 'KoPubL'" textAlign="center"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divCnt03" taborder="2" left="440" top="divCnt01:5" width="198" height="92" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-processing-set03.png') no-repeat center center /contain">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcCnt" taborder="0" text="0" left="127.00" top="9" width="62" height="60" font="bold 24px 'KopubL'" textAlign="center" verticalAlign="middle"/>
+                    <Static id="stcTitle" taborder="1" text="만족도응답건수" left="5.00" top="45" width="94" height="20" color="#3f4050" font="bold 12px 'KoPubL'" textAlign="center"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divPointTop" taborder="7" left="181.00" top="42" width="49" height="41" background="url('theme://NHSB_IMAGE_SET/HOME/main-circlechart01-legend.png') no-repeat center center" visible="false">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcCnt" taborder="0" text="0" left="5" top="0" height="24" right="19" font="bold 14px 'KoPubL'" textAlign="right" verticalAlign="middle"/>
+                    <Static id="stcPrefix" taborder="1" text="%" top="0" height="24" right="0" width="15" font="10px 'KoPubL'" textAlign="left" verticalAlign="middle" padding="2px 0px 0px 0px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divPointBot" taborder="8" left="181.00" top="138" width="49" height="41" background="url('theme://NHSB_IMAGE_SET/HOME/main-circlechart01-legend.png') no-repeat center center" visible="false">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcCnt" taborder="0" text="0" left="5.00" top="0" height="24" right="19" font="bold 14px 'KoPubL'" textAlign="right" verticalAlign="middle"/>
+                    <Static id="stcPrefix" taborder="1" text="점" top="0" height="24" right="0" width="15" font="10px 'KoPubL'" textAlign="left" verticalAlign="middle" padding="2px 0px 0px 0px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <ProgressBar id="pbarGaugeBgBot" taborder="9" max="100" min="0" left="181.00" top="175" width="200" height="24" smooth="true" background="#dddddd" boxShadow="-1px -1px 2px 1px #cecece" border="0px solid" cssclass="pg_WF_green" visible="false" pos="0" step="1" borderRadius="10px"/>
+              <ProgressBar id="pbarGaugeBgTop" taborder="10" max="100" min="0" left="181.00" top="79" width="200" height="24" smooth="true" background="#dddddd" border="0px solid" boxShadow="-1px -1px 2px 1px #cecece" direction="forward" visible="false" borderRadius="10px"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="FROMDATE" type="STRING" size="256"/>
+          <Column id="TODATE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="FROMDATE">11</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTodoCnt" onrowsetchanged="dsData_onrowsetchanged"/>
+      <Dataset id="dsYearlyCnt"/>
+      <Dataset id="dsSatisCnt"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ frHome_D00
+* 화면(명)		︰ - 
+* 메뉴(경로)	︰ -
+* 화면 설명	︰ 대시보드 우측 내 정보 Div
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.nRatioLeft = 181;	// default left
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();
+	this.fnSearchReset();
+	this.fnSearch();
+}
+
+this.fnSearchReset = function()
+{
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+	
+	var FROMDATE	= Ex.util.today().substr(0, 4) + '0101'		// 년초
+	//var TODATE		= Ex.util.addDate(Ex.util.addMonth(Ex.util.today(), 1), -1);		// 이번달 마지막일
+	var TODATE		= Ex.util.today().substr(0, 6) + Ex.util.getLastDayOfMonth(Ex.util.today());
+	trace("FROMDATE : " + FROMDATE + " TODATE : " + TODATE);
+	this.dsCond.setColumn(0, 'FROMDATE', FROMDATE);
+	this.dsCond.setColumn(0, 'TODATE', TODATE);
+}
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+this.fnSearch = function()
+{
+	//trace('nhsb_D11 >> fnSearch');
+	this.fnSearchMyWork();	// 나의할일
+	this.fnSearchtReqFinYearly();	// 연간처리현황
+	this.fnSearchtSatisAvg();	// 만족도평균
+}
+
+// 나의 할일
+this.fnSearchMyWork = function()
+{
+	var sTranId = "selectMyWork";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "nhHome/selectMyWork";            // 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsTodoCnt=dsData";       	// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 연간처리현황
+this.fnSearchtReqFinYearly = function()
+{
+	var sTranId = "selectReqFinYearly";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "nhHome/selectReqFinYearly";            // 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsYearlyCnt=dsData";       	// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 만족도평균
+this.fnSearchtSatisAvg = function()
+{
+	var sTranId = "selectSatisAvg";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "nhHome/selectSatisAvg";            // 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsSatisCnt=dsData";       	// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "selectReqFinYearly" :
+			// 적기처리율 setting
+			var RATIO	= 0;
+			var TOT		= parseInt(this.dsYearlyCnt.getColumn(0, 'TOT')||0);
+			var FINISH	= parseInt(this.dsYearlyCnt.getColumn(0, 'FINISH')||0);
+			if( TOT == 0 || FINISH == 0 )
+			{
+				this.divRight.form.divPointTop.form.stcCnt.set_text('0');
+				this.divRight.form.divPointTop.set_left(this.nRatioLeft);
+			}
+			else
+			{
+				RATIO = nexacro.round((FINISH/TOT) * 100);
+				this.divRight.form.divPointTop.form.stcCnt.set_text(RATIO);
+				this.divRight.form.divPointTop.set_left(
+					nexacro.toNumber(this.nRatioLeft) +
+					nexacro.toNumber(this.divRight.form.pbarGaugeBgTop.getOffsetWidth() * (RATIO / 100))
+				);
+			}
+			/*
+			alert(
+				"this.nRatioLeft : " + this.nRatioLeft + 
+				" this.divRight.form.divPointTop.left : " + this.divRight.form.divPointTop.left +
+				" this.divRight.form.pbarGaugeBgTop.getOffsetWidth() : " + this.divRight.form.pbarGaugeBgTop.getOffsetWidth() +
+				" (RATIO / 100) : " + (RATIO / 100)
+			);
+			*/
+			this.divRight.form.divPointTop.set_visible(true);
+			this.divRight.form.pbarGaugeBgTop.set_visible(true);
+			this.divRight.form.pbarGaugeBgTop.set_pos(RATIO);
+			//for(var i=0; i<RATIO; i++)	this.divRight.form.pbarGaugeBgBot.stepIt();
+			break;
+			
+		case "selectSatisAvg" :
+			// 만족도평균 setting
+			var COUNT_ALL	= parseInt(this.dsSatisCnt.getColumn(0, 'COUNT_ALL')||0);	// 만족도 응답건수
+			var SUM_ITEM	= parseInt(this.dsSatisCnt.getColumn(0, 'SUM_ITEM')||0);
+			var COUNT_ITEM	= parseInt(this.dsSatisCnt.getColumn(0, 'COUNT_ITEM')||0);
+			var AVG_ITEM	= parseInt(this.dsSatisCnt.getColumn(0, 'AVG_ITEM')||0);
+			var COUNT_NOT	= parseInt(this.dsSatisCnt.getColumn(0, 'COUNT_NOT')||0);	// 만족도 미응답건수
+			
+			var SCORE		= (AVG_ITEM * 100) / 5;		// 만족도평균(점)
+// 			alert(
+// 				"this.nRatioLeft : " + this.nRatioLeft + 
+// 				" this.divRight.form.divPointTop.left : " + this.divRight.form.divPointTop.left +
+// 				" this.divRight.form.pbarGaugeBgBot.getOffsetWidth() : " + this.divRight.form.pbarGaugeBgBot.getOffsetWidth() +
+// 				" AVG_ITEM : " + AVG_ITEM +
+// 				" SCORE : " + SCORE
+// 			);
+			this.divRight.form.divPointBot.form.stcCnt.set_text(SCORE);
+			
+			if( SCORE == 0 )
+			{
+				this.divRight.form.divPointBot.form.stcCnt.set_text('0');
+				this.divRight.form.divPointBot.set_left(this.nRatioLeft);
+			}
+			else
+			{
+				this.divRight.form.divPointBot.form.stcCnt.set_text(SCORE);
+				this.divRight.form.divPointBot.set_left(
+					nexacro.toNumber(this.nRatioLeft) +
+					nexacro.toNumber(this.divRight.form.pbarGaugeBgBot.getOffsetWidth() * (SCORE / 100) )
+				);
+			}
+			this.divRight.form.divPointBot.set_visible(true);
+			this.divRight.form.pbarGaugeBgBot.set_visible(true);
+			this.divRight.form.pbarGaugeBgBot.set_pos(SCORE);
+			//for(var i=0; i<SCORE; i++)	this.divRight.form.pbarGaugeBgBot.stepIt();
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	switch(pID)
+	{
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	this.fnGetCmmCd();
+}
+
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['DAT_TYPE_CD']			// 조회할 상위코드
+		,codeDiv: ['CMM_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['ALL']			// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y']				// 사용여부
+		,filter	: ['']				// filterStr
+		,objDs	: [this.dsDatTypeCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util;
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var objApp = nexacro.getApplication();
+	var rowpos = -1;
+	var param = '';
+	switch(obj)
+	{
+		// 나의 할 일 > 결재
+		case this.divLeft.form.divTodo01 :
+		case this.divLeft.form.divTodo01.form.stcTitle :
+		case this.divLeft.form.divTodo01.form.stcCnt :
+		case this.divLeft.form.divTodo01.form.stcPrefix :
+			rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SR0140_W');	// 결재함	
+			break;
+		
+		// 나의 할 일 > 테스트/만족도
+		case this.divLeft.form.divTodo02:
+		case this.divLeft.form.divTodo02.form.stcTitle :
+		case this.divLeft.form.divTodo02.form.stcCnt :
+		case this.divLeft.form.divTodo02.form.stcPrefix :
+			param = 'TEST_SATIS';
+			rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SR0120_W');	// 요청함
+			break;
+	}
+	
+	if( rowpos >= 0 )	Ex.core.openLink(this, objApp.gdsMenu.getColumn(rowpos, 'MENU_ID'), {param : param});
+	else				trace('해당 메뉴ID가 없어 이동할 수 없습니다');
+}]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divLeft.form.divTodo01.form.stcCnt" propid="text" datasetid="dsTodoCnt" columnid="APPR_CNT"/>
+      <BindItem id="item1" compid="divLeft.form.divTodo02.form.stcCnt" propid="text" datasetid="dsTodoCnt" columnid="STF_CNT"/>
+      <BindItem id="item2" compid="divRight.form.divCnt01.form.stcCnt" propid="text" datasetid="dsYearlyCnt" columnid="TOT"/>
+      <BindItem id="item3" compid="divRight.form.divCnt02.form.stcCnt" propid="text" datasetid="dsYearlyCnt" columnid="FINISH"/>
+      <BindItem id="item4" compid="divRight.form.divCnt03.form.stcCnt" propid="text" datasetid="dsSatisCnt" columnid="COUNT_ALL"/>
+      <BindItem id="item5" compid="divRight.form.divCnt04.form.stcCnt" propid="text" datasetid="dsSatisCnt" columnid="COUNT_NOT"/>
+    </Bind>
+  </Form>
+</FDL>

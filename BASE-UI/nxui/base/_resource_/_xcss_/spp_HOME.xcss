@@ -1,0 +1,1060 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XCSS version="1.1">
+  <CSSData><![CDATA[]]></CSSData>
+  <CSSData type="desktop"><![CDATA[/***************************************************************/
+/***** PROJECT NAME 	: SPP2.0			********/
+/***** XCSSNAME 	: spp_HOME(HOME/DASH)		********/
+/***** Naming Rule 	: Component_HOME_cssname	********/
+/***** Naming Rule Ex 	: btn_HOME_primary		********/
+/***** USING FRAME 	: all Frame(SPP 홈/대시보드)	********/
+/***** CREATION DATES 	: 2023.04  			********/
+/***** DRAFTER 		: SPP TEAM			********/
+/***** AMENDER 		: SPP TEAM			********/
+/***** MOD DATES 	: 2023.04			********/
+/***************************************************************/
+
+/*******************************************************
+ * editable component border rule
+ * normal/readony
+ *	-nexa-border		: 1px solid #dbdbdb;
+ *	border-radious		: 3px 3px;
+ * mouseover/focused
+ *	-nexa-border		: 1px solid #3697f8;
+ *	border-radious		: 3px 3px;
+ * disabled
+ *	-nexa-border		: 1px solid #b8b8b8;
+ *	border-radious		: 3px 3px;
+ *******************************************************/
+ 
+
+/****************************************************************************************************************************/
+/*****************************************************   DIV START   ********************************************************/
+/****************************************************************************************************************************/
+/* 
+ * div_HOME_border
+ * SPP 홈/대시보드 영역 border 
+ */
+.Div.div_HOME_border
+{
+	-nexa-border		: 1px solid #c4c8d7;
+	border-radius 		: 10px;
+}
+
+/* 
+ * div_HOME_myAppv
+ * SPP 홈 나의 결재 div css
+ */
+.Div.div_HOME_myAppv
+{
+/*	-nexa-edge 		: url('theme://SPP_IMAGE_SET/HOME/bg_HOME_myAppv.png') 0px 0px;		*/
+	-nexa-edge 		: url('theme://NHSB_IMAGE_SET/HOME/box-3d-box01.png') 0px 0px;
+	-nexa-border		: 0px none;
+	cursor 			: pointer;
+}
+
+/* 
+ * div_HOME_myRequest
+ * SPP 홈 나의 요청 div css
+ */
+.Div.div_HOME_myRequest
+{
+/*	-nexa-edge 		: url('theme://SPP_IMAGE_SET/HOME/bg_HOME_myRequest.png') 0px 0px;	*/
+	-nexa-edge 		: url('theme://NHSB_IMAGE_SET/HOME/box-3d-box04.png') 0px 0px;
+	-nexa-border		: 0px none;
+	cursor 			: pointer;
+}
+
+/* 
+ * div_HOME_myTask
+ * SPP 홈 나의 접수/처리 div css
+ */
+.Div.div_HOME_myTask
+{
+/*	-nexa-edge 		: url('theme://SPP_IMAGE_SET/HOME/bg_HOME_myTask.png') 0px 0px;		*/
+	-nexa-edge 		: url('theme://NHSB_IMAGE_SET/HOME/box-3d-box03.png') 0px 0px;
+	-nexa-border		: 0px none;
+	cursor 			: pointer;
+}
+
+/* 
+ * div_HOME_myReview
+ * SPP 홈 나의 검토 div css
+ */
+.Div.div_HOME_myReview
+{
+/*	-nexa-edge 		: url('theme://SPP_IMAGE_SET/HOME/bg_HOME_myReview.png') 0px 0px;	*/
+	-nexa-edge 		: url('theme://NHSB_IMAGE_SET/HOME/box-3d-box02.png') 0px 0px;
+	-nexa-border		: 0px none;
+	cursor 			: pointer;
+}
+
+
+
+/* 
+ * div_HOME_myWidgetBg
+ * SPP 홈 myWidget div background css
+ */
+.Div.div_HOME_myWidgetBg,
+.Div.div_HOME_myWidgetBg[status=disabled]
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/HOME/main-btn05-off.png') 0px 0px;
+	-nexa-border		: 0px none;
+	cursor 			: pointer;
+}
+.Div.div_HOME_myWidgetBg[status=mouseover],
+.Div.div_HOME_myWidgetBg[status=focused]
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/HOME/main-btn05-on.png') 0px 0px;
+	-nexa-border		: 0px none;
+	cursor 			: pointer;
+}
+
+
+
+
+/* 
+ * div_HOME_myWidgetBg02
+ * SPP 홈 div widget background 02
+ */
+.Div.div_HOME_myWidgetBg02
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/HOME/main-numbox01.png') 0px 0px;
+	-nexa-border		: 0px none;
+	cursor 			: pointer;
+}
+
+
+
+
+
+/* 
+ * div_HOME_widget01
+ * SPP 홈 Widget01 div css
+ */
+.Div.div_HOME_widget01
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/HOME/main-ico01.png') 0px 0px;
+	-nexa-border		: 0px none;
+	cursor 			: pointer;
+}
+
+/* 
+ * div_HOME_widget02
+ * SPP 홈 Widget02 div css
+ */
+.Div.div_HOME_widget02
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/HOME/main-ico02.png') 0px 0px;
+	-nexa-border		: 0px none;
+	cursor 			: pointer;
+}
+
+/* 
+ * div_HOME_widget03
+ * SPP 홈 Widget03 div css
+ */
+.Div.div_HOME_widget03
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/HOME/main-ico03.png') 0px 0px;
+	-nexa-border		: 0px none;
+	cursor 			: pointer;
+}
+
+/* 
+ * div_HOME_widget04
+ * SPP 홈 Widget04 div css
+ */
+.Div.div_HOME_widget04
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/HOME/main-ico04.png') 0px 0px;
+	-nexa-border		: 0px none;
+	cursor 			: pointer;
+}
+
+/* 
+ * div_HOME_widget05
+ * SPP 홈 Widget05 div css
+ */
+.Div.div_HOME_widget05
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/HOME/main-ico05.png') 0px 0px;
+	-nexa-border		: 0px none;
+	cursor 			: pointer;
+}
+
+/* 
+ * div_HOME_widget06
+ * SPP 홈 Widget06 div css
+ */
+.Div.div_HOME_widget06
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/HOME/main-ico06.png') 0px 0px;
+	-nexa-border		: 0px none;
+	cursor 			: pointer;
+}
+
+
+
+/* 
+ * div_HOME_calNormal
+ * SPP 홈 작업캘린더 div css	기본
+ */
+.Div.div_HOME_calNormal
+{
+	background 		: white;
+	-nexa-border		: 1px solid #c4c8d7;
+	border-radius 		: 3px 3px;
+	cursor 			: pointer;
+}
+
+.Div.div_HOME_calNormal[status=mouseover]
+{
+	background 		: white;
+	-nexa-border		: 1px solid #005bc3;
+	border-radius 		: 3px 3px;
+	cursor 			: pointer;
+}
+
+/* 
+ * div_HOME_calSel
+ * SPP 홈 작업캘린더 div css	선택날짜
+ */
+.Div.div_HOME_calSel
+{
+	background 		: #ecf5ff;
+	-nexa-border		: 1px solid #c4c8d7;
+	border-radius 		: 3px 3px;
+	cursor 			: pointer;
+}
+
+/* 
+ * div_HOME_calToday
+ * SPP 홈 작업캘린더 div css	선택날짜
+ */
+.Div.div_HOME_calToday
+{
+	background 		: #ecf5ff;
+	-nexa-border		: 1px solid #005bc3;
+	border-radius 		: 3px 3px;
+	cursor 			: pointer;
+}
+
+/* 
+ * div_HOME_calHoliday
+ * SPP 홈 작업캘린더 div css	휴일;이행통제일
+ */
+.Div.div_HOME_calHoliday
+{
+	background 		: #ffeae9;
+	-nexa-border		: 1px solid #ff4d4c;
+	border-radius 		: 3px 3px;
+	cursor 			: pointer;
+}
+
+/* 
+ * div_HOME_calSatday
+ * SPP 홈 작업캘린더 div css	토요일
+ */
+.Div.div_HOME_calSatday
+{
+	background 		: #94c6f5;
+	-nexa-border		: 1px solid #3082ed;
+	border-radius 		: 3px 3px;
+	cursor 			: pointer;
+}
+
+/* 
+ * sta_HOME_calEtcMonth
+ * SPP 홈 작업캘린더 날짜 css	이전/다음달 날짜
+ */
+.Static.sta_HOME_calEtcMonth
+{
+	-nexa-text-align	: right;
+	-nexa-vertical-align 	: top;
+	-nexa-border		: 0px;
+	color			: #c4c8d7;
+	font			: bold 12px 'KoPubL';
+	-nexa-padding 		: 1px 0px 0px 0px;
+}
+
+
+/* 
+ * sta_HOME_calCntNormal
+ * SPP 홈 작업캘린더 건수 css	기본
+ */
+.Static.sta_HOME_calCntNormal
+{
+	background 		: #ecf5ff;
+	-nexa-border 		: 1px solid #c4c8d7;
+	border-radius 		: 2px;
+	font			: normal 8px 'KoPubL';
+	color			: #005bc3;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	cursor			:pointer;
+}
+
+/* 
+ * sta_HOME_calCntHoliday
+ * SPP 홈 작업캘린더 건수 css	휴일;이행통제일
+ */
+.Static.sta_HOME_calCntHoliday
+{
+	background 		: #ffc0c0;
+	-nexa-border 		: 1px solid #ff6867;
+	border-radius 		: 2px;
+	font			: bold 8px 'KoPubL';
+	color			: #f98888;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	cursor			:pointer;
+}
+
+/* 
+ * sta_HOME_calCntSatday
+ * SPP 홈 작업캘린더 건수 css	토요일
+ */
+.Static.sta_HOME_calCntSatday
+{
+	background 		: #cbe3fa;
+	-nexa-border 		: 1px solid #68a4f1;
+	border-radius 		: 2px;
+	font			: bold 8px 'KoPubL';
+	color			: #f98888;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	cursor			:pointer;
+}
+
+/* 
+ * sta_HOME_calCurMonth
+ * SPP 홈 작업캘린더 날짜 css	현재달 날짜
+ */
+.Static.sta_HOME_calCurMonth
+{
+	-nexa-text-align	: right;
+	-nexa-vertical-align 	: top;
+	-nexa-border		: 0px;
+	color			: #555555;
+	font			: normal 12px 'KoPubL';
+	-nexa-padding 		: 1px 0px 0px 0px;
+}
+
+
+/* 
+ * sta_HOME_calSelDate
+ * SPP 홈 작업캘린더 날짜 css	선택 날짜
+ */
+.Static.sta_HOME_calSelDate
+{
+	-nexa-text-align	: right;
+	-nexa-vertical-align 	: top;
+	-nexa-border		: 0px;
+	color			: #c4c8d7;
+	font			: bold 12px 'KoPubL';
+	-nexa-padding 		: 1px 0px 0px 0px;
+}
+
+
+/* 
+ * sta_HOME_calHoliday
+ * SPP 홈 작업캘린더 날짜 css	휴일;이행통제일
+ */
+.Static.sta_HOME_calHoliday
+{
+	-nexa-text-align	: right;
+	-nexa-vertical-align 	: top;
+	-nexa-border		: 0px;
+	color			: #c4c8d7;
+	font			: bold 12px 'KoPubL';
+	-nexa-padding 		: 1px 0px 0px 0px;
+}
+
+
+
+
+/* 
+ * sta_IT_Title15
+ * Grid Title static css
+ */
+.Static.sta_IT_Title15
+{
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	background		: transparent URL('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-bullet.png') no-repeat left center;
+	-nexa-border		: 0px;
+	color			: #000000;
+	font			: bold 15px 'KoPub돋움체_Pro';
+	-nexa-padding		: 0px 0px 0px 10px;
+}
+/* 
+ * sta_IT_Title14
+ * Grid Title static css
+ */
+.Static.sta_IT_Title14
+{
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	background		: transparent URL('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-bullet.png') no-repeat left center;
+	-nexa-border		: 0px;
+	color			: #000000;
+	font			: bold 14px 'KoPub돋움체_Pro';
+	-nexa-padding		: 0px 0px 0px 10px;
+}
+
+
+
+/* 
+ * div_IT_icon01
+ * SPP IT포털현황 요청진행 아이콘 div css
+ */
+.Div.div_IT_icon01
+{
+/*	-nexa-edge 		: url('theme://SPP_IMAGE_SET/HOME/bg_HOME_myTask.png') 0px 0px;		*/
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con01.png') 0px 0px;
+	-nexa-border		: 0px none;
+}
+
+/* 
+ * div_IT_icon02
+ * SPP IT포털현황 결재대기 아이콘 div css
+ */
+.Div.div_IT_icon02
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con02.png') 0px 0px;
+	-nexa-border		: 0px none;
+}
+
+/* 
+ * div_IT_icon03
+ * SPP IT포털현황 사업계획관리 아이콘 div css
+ */
+.Div.div_IT_icon03
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con04.png') 0px 0px;
+	-nexa-border		: 0px none;
+}
+
+/* 
+ * div_IT_icon04
+ * SPP IT포털현황 계약관리 아이콘 div css
+ */
+.Div.div_IT_icon04
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con06.png') 0px 0px;
+	-nexa-border		: 0px none;
+}
+
+/* 
+ * div_IT_icon05
+ * SPP IT포털현황 검수관리 아이콘 div css
+ */
+.Div.div_IT_icon05
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con09.png') 0px 0px;
+	-nexa-border		: 0px none;
+}
+
+/* 
+ * div_IT_icon06
+ * SPP IT포털현황 요청관리 아이콘 div css
+ */
+.Div.div_IT_icon06
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con05.png') 0px 0px;
+	-nexa-border		: 0px none;
+}
+
+/* 
+ * div_IT_icon07
+ * SPP IT포털현황 IT작업관리 아이콘 div css
+ */
+.Div.div_IT_icon07
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con03.png') 0px 0px;
+	-nexa-border		: 0px none;
+}
+
+/* 
+ * div_IT_icon08
+ * SPP IT포털현황 인시턴트관리 아이콘 div css
+ */
+.Div.div_IT_icon08
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con08.png') 0px 0px;
+	-nexa-border		: 0px none;
+}
+
+/* 
+ * div_IT_icon09
+ * SPP IT포털현황 서비스수준관리 아이콘 div css
+ */
+.Div.div_IT_icon09
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con07.png') 0px 0px;
+	-nexa-border		: 0px none;
+}
+
+/* 
+ * div_IT_icon10
+ * SPP IT포털현황 투자 아이콘 div css
+ */
+.Div.div_IT_icon10
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-badge03.png') 0px 0px;
+	-nexa-border		: 0px none;
+}
+
+/* 
+ * div_IT_icon11
+ * SPP IT포털현황 운영 아이콘 div css
+ */
+.Div.div_IT_icon11
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-badge02.png') 0px 0px;
+	-nexa-border		: 0px none;
+}
+
+/* 
+ * div_IT_icon12
+ * SPP IT포털현황 통합 아이콘 div css
+ */
+.Div.div_IT_icon12
+{
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-badge01.png') 0px 0px;
+	-nexa-border		: 0px none;
+}
+
+
+/* 
+ * div_IT_dott
+ * SPP IT포털현황 도트 구분선 div css
+ */
+.Div.div_IT_dott
+{
+/*	-nexa-edge 		: url('theme://SPP_IMAGE_SET/HOME/bg_HOME_myTask.png') 0px 0px;		*/
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/IT_PORTAL/con-line02-dotted.png') 0px 0px;
+	-nexa-border		: 0px none;
+}
+
+/* 
+ * div_IT_bg02
+ * SPP IT포털현황 요청진행 건수 배경 div css
+ */
+.Div.div_IT_bg02
+{
+/*	-nexa-edge 		: url('theme://SPP_IMAGE_SET/HOME/bg_HOME_myTask.png') 0px 0px;		*/
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-fr02.png') 0px 0px;
+	-nexa-border		: 0px none;
+}
+
+/* 
+ * div_IT_bg03
+ * SPP IT포털현황 결재대기 건수 배경 div css
+ */
+.Div.div_IT_bg03
+{
+/*	-nexa-edge 		: url('theme://SPP_IMAGE_SET/HOME/bg_HOME_myTask.png') 0px 0px;		*/
+	-nexa-edge 		: url('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-fr01.png') 0px 0px;
+	-nexa-border		: 0px none;
+}
+
+
+
+/* 
+ * sta_IT_bg01
+ * SPP IT포털현황 좌측 배경 div css
+ */
+.Static.sta_IT_bg01
+{
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: top;
+	background		: transparent URL('theme://MIRAE_IMAGE_SET/IT_PORTAL/con-fm02.png') no-repeat left center;
+	-nexa-border		: 0px;
+	color			: #3d3d3d;
+	font			: bold 12px 'KoPub돋움체_Pro';
+	-nexa-padding		: 24px 0px 0px 40px;
+}
+
+/* 
+ * sta_IT_bg02
+ * SPP IT포털현황 요청진행, 결재대기 건수 배경 div css
+ */
+.Static.sta_IT_bg02
+{
+	-nexa-text-align	: right;
+	-nexa-vertical-align 	: middle;
+	background		: transparent URL('theme://MIRAE_IMAGE_SET/IT_PORTAL/num-fr02.png') no-repeat left center;
+	-nexa-border		: 0px;
+	color			: #2f79d9;
+	font			: bold 12px 'KoPub돋움체_Pro';
+	-nexa-padding		: 0px 20px 0px 10px;
+}
+
+/* 
+ * sta_IT_bg03
+ * SPP IT포털현황 좌측 요청진행 건수 배경 div css
+ */
+.Static.sta_IT_bg03
+{
+	-nexa-text-align	: right;
+	-nexa-vertical-align 	: middle;
+	background		: transparent URL('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-fr02.png') no-repeat left center;
+	-nexa-border		: 0px;
+	color			: #043b72;
+	font			: bold 12px 'KoPub돋움체_Pro';
+	-nexa-padding		: 0px 10px 0px 10px;
+}
+
+/* 
+ * sta_IT_bg04
+ * SPP IT포털현황 좌측 결재대기 건수 배경 div css
+ */
+.Static.sta_IT_bg04
+{
+	-nexa-text-align	: right;
+	-nexa-vertical-align 	: middle;
+	background		: transparent URL('theme://MIRAE_IMAGE_SET/IT_PORTAL/maspp-fr01.png') no-repeat left center;
+	-nexa-border		: 0px;
+	color			: #043b72;
+	font			: bold 12px 'KoPub돋움체_Pro';
+	-nexa-padding		: 0px 10px 0px 10px;
+}
+
+/* 
+ * sta_IT_bg05
+ * SPP IT포털현황 좌측 결재대기 건수 배경 div css
+ */
+.Static.sta_IT_bg05
+{
+	-nexa-text-align	: right;
+	-nexa-vertical-align 	: middle;
+	background		: transparent URL('theme://MIRAE_IMAGE_SET/IT_PORTAL/num-fr04.png') no-repeat left center;
+	-nexa-border		: 0px;
+	color			: #2f79d9;
+	font			: bold 12px 'KoPub돋움체_Pro';
+	-nexa-padding		: 0px 20px 0px 22px;
+}
+
+/* 
+ * sta_IT_bg06
+ * SPP IT포털현황 우측 남색 배경 div css
+ */
+.Static.sta_IT_bg06
+{
+	-nexa-text-align	: right;
+	-nexa-vertical-align 	: middle;
+	background		: transparent URL('theme://MIRAE_IMAGE_SET/IT_PORTAL/con-fr-line-right.png') no-repeat left center;
+	-nexa-border		: 0px;
+	color			: #ffffff;
+	font			: bold 12px 'KoPub돋움체_Pro';
+	-nexa-padding		: 0px 25px 0px 10px;
+}
+
+/* 
+ * sta_IT_bg07
+ * SPP IT포털현황 우측 흰색 배경 div css
+ */
+.Static.sta_IT_bg07
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align 	: middle;
+	background		: transparent URL('theme://MIRAE_IMAGE_SET/IT_PORTAL/con-fr-line-left.png') no-repeat left center;
+	-nexa-border		: 0px;
+	color			: #3d3d3d;
+	font			: bold 12px 'KoPub돋움체_Pro';
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+
+/****************************************************************************************************************************/
+/*****************************************************   DIV END   **********************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   BUTTON START   *****************************************************/
+/****************************************************************************************************************************/
+/* 
+ * btn_HOME_boardOff
+ * SPP 홈 공지사항 Tab대용 버튼 Off상태
+ */
+.Button.btn_HOME_boardOff,
+.Button.btn_HOME_boardOff[status=mouseover],
+.Button.btn_HOME_boardOff[userstatus=pushed],
+.Button.btn_HOME_boardOff[userstatus=selected],
+.Button.btn_HOME_boardOff[status=focused]
+{
+	background 		: transparent URL('theme://MIRAE_IMAGE_SET/HOME/main-tab01-off.png') no-repeat center center;
+	-nexa-border 		: 0px none;
+	border-radius 		: 5px 5px 0px 0px;
+	-nexa-text-align 	: center;
+	font 			: bold 14px "KoPubL";
+	color			: #383e4b;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_HOME_boardOn
+ * SPP 홈 공지사항 Tab대용 버튼 On상태
+ */
+.Button.btn_HOME_boardOn,
+.Button.btn_HOME_boardOn[status=mouseover],
+.Button.btn_HOME_boardOn[userstatus=pushed],
+.Button.btn_HOME_boardOn[userstatus=selected],
+.Button.btn_HOME_boardOn[status=focused]
+{
+	background 		: transparent URL('theme://NHSB_IMAGE_SET/HOME/main-tab01-on.png') no-repeat center center;
+	-nexa-border 		: 0px none;
+	-nexa-text-align 	: center;
+	font 			: bold 14px "KoPubL";
+	color			: #ffffff;
+	cursor			: pointer;
+}
+
+
+
+
+/* 
+ * btn_HOME_boardOff2
+ * SPP 홈 공지사항 Tab대용 버튼 Off상태
+ */
+.Button.btn_HOME_boardOff2,
+.Button.btn_HOME_boardOff2[status=mouseover],
+.Button.btn_HOME_boardOff2[userstatus=pushed],
+.Button.btn_HOME_boardOff2[userstatus=selected],
+.Button.btn_HOME_boardOff2[status=focused]
+{
+	background 		: transparent URL('theme://NHSB_IMAGE_SET/HOME/main-tab02-off.png') no-repeat center center /contain;
+	-nexa-border 		: 0px none;
+	border-radius 		: 5px 5px 0px 0px;
+	-nexa-text-align 	: center;
+	font 			: bold 14px "KoPubL";
+	color			: #5e656f;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_HOME_boardOn2
+ * SPP 홈 공지사항 Tab대용 버튼 On상태
+ */
+.Button.btn_HOME_boardOn2,
+.Button.btn_HOME_boardOn2[status=mouseover],
+.Button.btn_HOME_boardOn2[userstatus=pushed],
+.Button.btn_HOME_boardOn2[userstatus=selected],
+.Button.btn_HOME_boardOn2[status=focused]
+{
+	background 		: transparent URL('theme://NHSB_IMAGE_SET/HOME/main-tab02-on.png') no-repeat center center /contain;
+	-nexa-border 		: 0px none;
+	border-radius 		: 5px 5px 0px 0px;
+	-nexa-text-align 	: center;
+	font 			: bold 14px "KoPubL";
+	color			: #ffffff;
+	cursor			: pointer;
+}
+
+
+
+
+
+
+/* 
+ * btn_HOME_arrowRight
+ * SPP 홈 오른쪽 화살표('>') 이미지 버튼
+ */
+.Button.btn_HOME_arrowRight,
+.Button.btn_HOME_arrowRight[status=mouseover],
+.Button.btn_HOME_arrowRight[userstatus=pushed],
+.Button.btn_HOME_arrowRight[userstatus=selected],
+.Button.btn_HOME_arrowRight[status=focused]
+{
+	background 		: transparent url('theme://SPP_IMAGE_SET/HOME/btn_HOME_arrowRight.png') no-repeat center center /auto;
+	-nexa-border 		: 0px none;
+	cursor			: pointer;
+}
+
+
+/* 
+ * btn_HOME_setting
+ * HOME 마이메뉴 설정용
+ */
+.Button.btn_HOME_setting,
+.Button.btn_HOME_setting[status=focused],
+.Button.btn_HOME_setting[userstatus=selected]
+{
+	background		: url('theme://NHSB_IMAGE_SET/HOME/btn-setting.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer; 
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+.Button.btn_HOME_setting[status=mouseover],
+.Button.btn_HOME_setting[userstatus=pushed]
+{
+	background		: url('theme://NHSB_IMAGE_SET/HOME/btn-setting-hover.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer; 
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+
+
+/* 
+ * btn_HOME_link
+ * HOME 마이메뉴 설정용
+ */
+.Button.btn_HOME_link,
+.Button.btn_HOME_link[status=focused],
+.Button.btn_HOME_link[userstatus=selected]
+{
+	background		: url('theme://NHSB_IMAGE_SET/HOME/btn-new.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer; 
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+.Button.btn_HOME_link[status=mouseover],
+.Button.btn_HOME_link[userstatus=pushed]
+{
+	background		: url('theme://NHSB_IMAGE_SET/HOME/btn-new-hover.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer; 
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+/****************************************************************************************************************************/
+/*****************************************************   BUTTON END   *******************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   GRID START   *******************************************************/
+/****************************************************************************************************************************/
+/* 
+ * grd_HOME_board
+ * SPP 홈 공지사항 Grid css
+ */
+.Grid.grd_HOME_board
+{
+	background 		: transparent;
+	-nexa-border 		: 0px solid #010103, 0px none, 0px none, 0px none;
+	color			: #444444;
+	font 			: 14px 'KoPubL';
+}
+.Grid.grd_HOME_board .body .row .cell,
+.Grid.grd_HOME_board .body .row .cell[status=mouseover],
+.Grid.grd_HOME_board .body .row .cell[userstatus=selected],
+.Grid.grd_HOME_board .body .row .cell .subcell,
+.Grid.grd_HOME_board .body .row .cell .subcell[status=mouseover],
+.Grid.grd_HOME_board .body .row .cell .subcell[userstatus=selected]
+{
+	background		: transparent;
+	-nexa-background-odd 	: transparent;
+	-nexa-border 		: 0px none;
+	-nexa-text-align 	: left;
+	-nexa-vertical-align 	: middle;
+	color 			: #444444;
+	-nexa-color-odd 	: #444444;
+	font 			: bold 14px 'KoPubL';
+	cursor			: pointer;
+}
+
+
+/* 
+ * grdBCelledit_HOME_readonly
+ * SPP grid body 클릭이벤트 cell css
+ */
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit,
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=disabled],
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=mouseover],
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=readonly],
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=focused]
+{
+	background 		: transparent;
+	-nexa-border 		: 1px solid #444444;
+	border-radius 		: 5px 5px;
+	-nexa-padding 		: 3px 6px 3px 6px;
+	-nexa-text-align	: center;
+	color			: #444444;
+	font 			: bold 13px 'KoPubL';
+	cursor			: pointer;
+}
+
+
+
+
+
+/* 
+ * grd_HOME_normal
+ * SPP 홈 Grid css
+ */
+.Grid.grd_HOME_normal
+{
+	background 		: transparent;
+	-nexa-border 		: 2px solid #000000, 0px, 1px solid #ced5df, 0px;
+	color			: #32333b;
+	font 			: bold 12px 'KoPubL';
+}
+
+/*-----------------------------------head------------------------------------*/
+.Grid.grd_HOME_normal .head .row .cell,
+.Grid.grd_HOME_normal .head .row .cell[status=mouseover],
+.Grid.grd_HOME_normal .head .row .cell[userstatus=selected],
+.Grid.grd_HOME_normal .head .row .cell .subcell,
+.Grid.grd_HOME_normal .head .row .cell .subcell[status=mouseover],
+.Grid.grd_HOME_normal .head .row .cell .subcell[userstatus=selected]
+{
+	background		: #ecf5ff;
+	-nexa-border 		: 0px, 0px, 1px solid #ced5df, 0px;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	color 			: #32333b;
+	font 			: bold 12px 'KoPubL';
+	-nexa-padding 		: 4px 4px 4px 4px;
+}
+
+.Grid.grd_WF_normal .head .row .cell[status=disabled]
+{
+	color 			: #444444;
+}
+
+
+.Grid.grd_HOME_normal .body .row .cell,
+.Grid.grd_HOME_normal .body .row .cell[status=mouseover],
+.Grid.grd_HOME_normal .body .row .cell[userstatus=selected],
+.Grid.grd_HOME_normal .body .row .cell .subcell,
+.Grid.grd_HOME_normal .body .row .cell .subcell[status=mouseover],
+.Grid.grd_HOME_normal .body .row .cell .subcell[userstatus=selected]
+{
+	background		: #f8fdff;
+	-nexa-background-odd 	: white;
+	-nexa-border 		: 0px none, 0px none, 1px solid #ced5df, 0px none;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	color 			: #32333b;
+	-nexa-color-odd 	: #32333b;
+	font 			: bold 12px 'KoPubL';
+}
+
+
+
+/* 
+ * grdHCell_HOME_fCell
+ * SPP HOME grid head 첫번째 cell line 이미지 없는 css
+ */
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell,
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell[status=mouseover],
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell[userstatus=selected],
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell .subcell,
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell .subcell[status=mouseover],
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell .subcell[userstatus=selected]
+{
+	background		: #ecf5ff;
+	-nexa-border 		: 0px, 0px, 1px solid #ced5df, 0px;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	color 			: #32333b;
+	font 			: bold 12px 'KoPubL';
+	-nexa-padding 		: 4px 4px 4px 4px;
+	
+}
+/****************************************************************************************************************************/
+/*****************************************************   GRID END   *********************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/**************************************************   ListView.lsv_HOME_normal START   ******************************************************/
+/****************************************************************************************************************************/
+.ListView.lsv_HOME_normal.lsv_WF_HOME, 
+.ListView.lsv_HOME_normal.lsv_WF_HOME[status=readonly]
+{
+	-nexa-border : 0px none;
+	background : transparent;
+	color : transparent;
+	
+}
+.ListView.lsv_HOME_normal[status=mouseover],
+.ListView.lsv_HOME_normal[status=focused]
+{
+	
+}
+.ListView.lsv_HOME_normal[status=disabled]
+{
+	background : #666666;
+}
+.ListView.lsv_HOME_normal .body,
+.ListView.lsv_HOME_normal .body[status=readonly], .ListView.lsv_HOME_normal .detail[status=readonly],
+.ListView.lsv_HOME_normal .body[status=focused], .ListView.lsv_HOME_normal .detail[status=focused],
+.ListView.lsv_HOME_normal .body[status=mouseover], .ListView.lsv_HOME_normal .detail[status=mouseover]
+{
+	-nexa-border : 0px none;
+	background : transparent;
+	font : 12px "KoPubL";
+}
+.ListView.lsv_HOME_normal .detail
+{
+	-nexa-border : 0px none;
+	background : transparent;
+	font : 12px "KoPubL";
+}
+.ListView.lsv_HOME_normal .body[userstatus=selected]
+{
+	background : transparent;
+}
+.ListView.lsv_HOME_normal .detail[userstatus=selected]
+{
+	background : transparent;
+}
+.ListView.lsv_HOME_normal .body[status=disabled], .ListView.lsv_HOME_normal .detail[status=disabled]
+{
+	color : #999999;
+}
+.ListView.lsv_HOME_normal .body .cell, .ListView.lsv_HOME_normal .detail .cell,
+.ListView.lsv_HOME_normal .body .cell[status=disabled], .ListView.lsv_HOME_normal .detail .cell[status=disabled],
+.ListView.lsv_HOME_normal .body .cell[status=readonly], .ListView.lsv_HOME_normal .detail .cell[status=readonly],
+.ListView.lsv_HOME_normal .body .cell[status=focused], .ListView.lsv_HOME_normal .detail .cell[status=focused]
+{
+	background	: transparent;
+	-nexa-border : 0px none;
+	-nexa-padding : 0px;
+}
+.ListView.lsv_HOME_normal .body .cell[status=mouseover], .ListView.lsv_HOME_normal .detail .cell[status=mouseover]
+{
+	-nexa-border : 0px none;
+}
+
+.ListView.lsv_HOME_normal .body .expandbar
+{
+	background : linear-gradient(to top,#eaeaea,#ffffff);
+	-nexa-border : 1px solid #c2c2c2;
+}
+
+.ListView.lsv_HOME_normal .body .expandbar[status=mouseover],.ListView.lsv_HOME_normal .body .expandbar[status=focused]
+{
+	background : linear-gradient(to top,#e7e7e7,#fefefe);
+	-nexa-border : 1px solid #a0a0a0;
+}
+
+.ListView.lsv_HOME_normal .body .expandbar[status=disabled]
+{
+	color : #bbbbbb;
+	background : #f5f5f5;
+	-nexa-border : 1px solid #d9d9d9;
+	opacity : 0.50;
+}
+.ListView.lsv_HOME_normal .body .expandbar[userstatus=collapse]
+{
+	-nexa-icon : URL('theme://images/cmb_WF_Drop.png');
+}
+
+.ListView.lsv_HOME_normal .body .expandbar[userstatus=expand]
+{
+	-nexa-icon : URL('theme://images/btn_expand.png');
+}
+
+/****************************************************************************************************************************/
+/****************************************************   ListView.lsv_HOME_normal END   ******************************************************/
+/****************************************************************************************************************************/]]></CSSData>
+  <CSSData type="mobile_large"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_small"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_medium"><![CDATA[]]></CSSData>
+</XCSS>

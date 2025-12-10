@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="form" classname="top" left="0" top="0" titletext="계약현황/검수현황" onload="form_onload" scrolltype="none" cssclass="" height="250" width="675" font="normal 24pt/normal &quot;PretendardR&quot;" color="white">
+    <Layouts>
+      <Layout width="675" height="250" mobileorientation="landscape">
+        <Static id="stcGrdTitle" taborder="0" text="계약현황" left="10.00" top="10" width="275" height="24" cssclass="sta_WF_gridTitle"/>
+        <Button id="btnMore2" taborder="1" top="14" width="20" height="20" onclick="fnCommOnclick" right="11" border="0px none" cursor="pointer" cssclass="btn_WF_hyperlink"/>
+        <Static id="stcGrdTitle00" taborder="2" text="검수현황" left="50%" top="10" width="275" height="24" cssclass="sta_WF_gridTitle"/>
+        <Button id="btnMore" taborder="3" top="14" width="20" height="20" onclick="fnCommOnclick" right="stcGrdTitle00:20" border="0px none" cursor="pointer" cssclass="btn_WF_hyperlink"/>
+        <Grid id="grdData" taborder="4" left="120.00" top="55" bottom="15" right="348" cssclass="grd_HOME_normal" autofittype="col" binddataset="dsData1">
+          <Formats>
+            <Format id="btnTab01">
+              <Columns>
+                <Column size="58"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="구분" cssclass="grdHCell_HOME_fCell"/>
+                <Cell col="1" text="계약번호"/>
+                <Cell col="2" text="계약일자"/>
+              </Band>
+              <Band id="body">
+                <Cell textAlign="center" text="bind:CNTC_NM"/>
+                <Cell col="1" text="bind:CNTC_NO" color="#043b72" textAlign="center"/>
+                <Cell col="2" text="bind:CNTC_DATE" color="#043b72" displaytype="date" edittype="none" textAlign="center"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grdData00" taborder="5" left="460.00" top="55" bottom="15" right="13" cssclass="grd_HOME_normal" autofittype="col" binddataset="dsData2">
+          <Formats>
+            <Format id="btnTab01">
+              <Columns>
+                <Column size="58"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="구분" cssclass="grdHCell_HOME_fCell"/>
+                <Cell col="1" text="계약번호"/>
+                <Cell col="2" text="계약일자"/>
+              </Band>
+              <Band id="body">
+                <Cell textAlign="center" text="bind:CNTC_NM"/>
+                <Cell col="1" text="bind:CNTC_NO" color="#043b72" textAlign="center"/>
+                <Cell col="2" text="bind:PAY_DATE" color="#043b72" displaytype="date" edittype="none" textAlign="center"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divIco01_01_01_00_00_00" taborder="6" left="344.00" top="55" width="102" height="35" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-circlechart02-num.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01_00_00_00_00" taborder="7" left="344.00" top="102" width="102" height="35" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-circlechart02-num.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01_00_00_00_02" taborder="8" left="344.00" top="149" width="102" height="35" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-circlechart02-num.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Static id="stcCntStep01" taborder="9" text="투자예산" top="55" width="54" height="28" color="white" font="12px 'KoPubL'" verticalAlign="middle" textAlign="center" left="346.00"/>
+        <Static id="stcCntStep01_00" taborder="10" text="운영예산" top="102" width="54" height="28" color="white" font="12px 'KoPubL'" verticalAlign="middle" textAlign="center" left="346.00"/>
+        <Static id="stcCntStep01_00_00" taborder="11" top="149" width="54" height="28" color="white" font="12px 'KoPubL'" verticalAlign="middle" textAlign="center" left="346.00" text="검수예정"/>
+        <Static id="cnt5" taborder="12" text="0" top="58" width="39" height="32" color="#3e3e46" font="18px 'KoPubL'" verticalAlign="middle" textAlign="center" left="403.00"/>
+        <Static id="cnt6" taborder="13" text="0" top="105" width="39" height="32" color="#3e3e46" font="18px 'KoPubL'" verticalAlign="middle" textAlign="center" left="403.00"/>
+        <Static id="cnt7" taborder="14" text="0" top="152" width="39" height="32" color="#3e3e46" font="18px 'KoPubL'" verticalAlign="middle" textAlign="center" left="403.00"/>
+        <Div id="divIco01_01_01_00_00_00_03" taborder="15" left="7.00" top="55" width="100" height="35" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-circlechart02-num.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01_00_00_00_00_00" taborder="16" left="7.00" top="102" width="100" height="35" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-circlechart02-num.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01_00_00_00_02_00" taborder="17" left="7.00" top="149" width="100" height="35" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-circlechart02-num.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01_00_00_00_01_00" taborder="18" left="7.00" top="196" width="100" height="35" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-circlechart02-num.png')" text="">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Static id="stcCntStep01_01" taborder="19" text="투자(건)" top="55" width="50" height="28" color="white" font="12px 'KoPubL'" verticalAlign="middle" textAlign="center" left="8.00"/>
+        <Static id="stcCntStep01_00_01" taborder="20" text="운영(건)" top="102" width="50" height="28" color="white" font="12px 'KoPubL'" verticalAlign="middle" textAlign="center" left="8.00"/>
+        <Static id="stcCntStep01_00_00_01" taborder="21" top="149" width="50" height="28" color="white" font="12px 'KoPubL'" verticalAlign="middle" textAlign="center" left="8.00" text="변경(건)"/>
+        <Static id="stcCntStep01_00_00_00_00" taborder="22" text="종료(건)" top="196" width="50" height="28" color="white" font="12px 'KoPubL'" verticalAlign="middle" textAlign="center" left="8.00"/>
+        <Static id="cnt1" taborder="23" text="0" top="58" width="39" height="32" color="#3e3e46" font="18px 'KoPubL'" verticalAlign="middle" textAlign="center" left="65.00"/>
+        <Static id="cnt2" taborder="24" top="105" width="39" height="32" color="#3e3e46" font="18px 'KoPubL'" verticalAlign="middle" textAlign="center" left="65.00" text="0"/>
+        <Static id="cnt3" taborder="25" text="0" top="152" width="39" height="32" color="#3e3e46" font="18px 'KoPubL'" verticalAlign="middle" textAlign="center" left="65.00"/>
+        <Static id="cnt4" taborder="26" text="0" top="199" width="39" height="32" color="#3e3e46" font="18px 'KoPubL'" verticalAlign="middle" textAlign="center" left="65.00"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="BUDGET_YY" type="STRING" size="256"/>
+          <Column id="SCREEN_ID" type="STRING" size="256"/>
+          <Column id="CNTR_REQ_YY" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData1"/>
+      <Dataset id="dsData2"/>
+      <Dataset id="dsCnt1"/>
+      <Dataset id="dsCnt2"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ iv_D00
+* 화면(명)		︰ 사업계획/계획현황
+* 메뉴(경로)	︰ -
+* 화면 설명	︰ Home Widget
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.curBtn = this.btnTab01;
+
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnSearch01();
+	this.fnSearch02();
+	//this.fnSearch(this.curBtn);
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 최초 전체 조회
+this.fnSearch01 = function(obj)
+{
+	var sTranId = "select07";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJHOME/select07";            // 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData1=dsData1 dsCnt1=dsCnt1";       	// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	
+// 	switch(obj.name) 
+// 	{
+// 		case "btnTab01" :		// 기초사업
+// 			this.dsCond.setColumn(0, 'BUDGET_YY', Ex.util.today().substr(0, 4) );
+// 			sService = "IV0110W/select01";
+// 			break;
+// 			
+// 		case "btnTab02" :		// 본사업
+// 			this.dsCond.setColumn(0, 'BUDGET_YY', Ex.util.today().substr(0, 4) );
+// 			sService = "IV0210W/select01";
+// 			break;
+// 			
+// 		case "btnTab03" :		// 사업추진
+// 			this.dsCond.setColumn(0, 'BUDGET_YY', Ex.util.today().substr(0, 4) );
+// 			this.dsCond.setColumn(0, 'SCREEN_ID', 'IV0310W' );
+// 			sService = "IV0310W/select02";
+// 			break;
+// 			
+// 		case "btnTab04" :		// 계약요청
+// 			this.dsCond.setColumn(0, 'CNTR_REQ_YY', Ex.util.today().substr(0, 4) );
+// 			this.dsCond.setColumn(0, 'SCREEN_ID', '' );
+// 			sService = "IV0410W/select01";
+// 			break;
+// 			
+// 		case "btnTab05" :		// 계약체결
+// 			this.dsCond.setColumn(0, 'CNTR_REQ_YY', Ex.util.today().substr(0, 4) );
+// 			this.dsCond.setColumn(0, 'SCREEN_ID', 'IV0430W' );
+// 			sService = "IV0410W/select01";
+// 			break;
+// 	}
+	
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSearch02 = function(obj)
+{
+	var sTranId = "select08";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJHOME/select08";            // 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData2=dsData2 dsCnt2=dsCnt2";      	// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select07" :
+			for(var i = 0 ; i < this.dsCnt1.rowcount; i++ ){
+			 var cnt = this.dsCnt1.getColumn(i,"CNT")
+			 var cntc_cd = this.dsCnt1.getColumn(i,"CNTC_CD")
+				if(cntc_cd =='10')this.cnt1.text = cnt;
+				if(cntc_cd =='20')this.cnt2.text = cnt;
+				if(cntc_cd =='30')this.cnt3.text = cnt;
+				if(cntc_cd =='40')this.cnt4.text = cnt;
+			}
+				
+			break;
+		case "select08" :
+			for(var i = 0 ; i < this.dsCnt2.rowcount; i++ ){
+			 var cnt = this.dsCnt2.getColumn(i,"CNT")
+			 var cntc_cd = this.dsCnt2.getColumn(i,"CNTC_CD")
+				if(cntc_cd =='10')this.cnt5.text = cnt;
+				if(cntc_cd =='20')this.cnt6.text = cnt;
+				if(cntc_cd =='30')this.cnt7.text = cnt;
+
+			}
+				
+			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch(pID)
+	{
+	
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+	
+	}
+}
+
+
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	
+}
+
+
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['DAT_TYPE_CD']			// 조회할 상위코드
+		,codeDiv: ['CMM_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['ALL']			// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y']				// 사용여부
+		,filter	: ['']				// filterStr
+		,objDs	: [this.dsDatTypeCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util;
+}
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var objApp = nexacro.getApplication();
+	var rowpos = -1;
+	switch(obj.name)
+	{
+		case "btnMore" :	rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'CT0110_W');	break;	// 신규계약
+		case "btnMore2" :	rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'CT0140_W');	break;	// 계약검수
+	}
+	
+	if( rowpos >= 0 )
+		Ex.core.openLink(this, objApp.gdsMenu.getColumn(rowpos, 'MENU_ID'), '');
+}
+
+
+
+
+this.fnBtnTabOnclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsData.clearData();
+			//		기초사업		본사업			사업추진			계약요청		계약체결
+	var arrBtn = 	[this.btnTab01, this.btnTab02, this.btnTab03, this.btnTab04, this.btnTab05];
+
+	// set css
+	for(var i = 0; i < arrBtn.length; i++)
+		arrBtn[i].set_cssclass('btn_HOME_boardOff');
+	obj.set_cssclass('btn_HOME_boardOn');
+	
+	// 마지막 선택 버튼 저장
+	this.curBtn = obj;
+	
+	// grid 
+	this.grdData.set_formatid(obj.name);
+	
+	// search
+	this.fnSearch(obj);
+};
+]]></Script>
+  </Form>
+</FDL>

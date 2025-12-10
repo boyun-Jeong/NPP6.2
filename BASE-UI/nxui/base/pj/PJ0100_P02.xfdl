@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PJ0100_P02" left="0" top="0" width="1280" height="760" titletext="WBS Chart" onload="form_onload">
+    <Layouts>
+      <Layout width="1280" height="760">
+        <Div id="divContents" taborder="0" left="0" top="0" right="0" bottom="60" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staListCnt" taborder="1" cssclass="sta_WF_GridCount" left="167" top="20" width="150" height="24" style="align:left middle;" countDataset="dsPjWbs"/>
+              <WebView id="wvPage" taborder="1" left="20" top="20" right="20" bottom="0" url="about:blank"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtnBottom" taborder="1" height="60" bottom="0" text="" cssclass="div_POP_msg_btnbg" left="20" right="20">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ PJ0100_P02
+* 화면(명)		︰ WBS Chart
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2024.01.16
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2024.01.16	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.divContents.form.wvPage.set_url(nexacro.getEnvironment().services["svc_url"].url + "wbsChart");	//?strPjtId=11&nLvl=&strSubPjtId=
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnClose" :
+			Ex.core.pclose(this);
+			break;
+	}
+}]]></Script>
+  </Form>
+</FDL>

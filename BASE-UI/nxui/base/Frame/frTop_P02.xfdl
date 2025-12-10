@@ -1,0 +1,1280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="frTop_P02" classname="top" left="0" top="0" titletext="통합검색" onload="form_onload" scrolltype="none" cssclass="" height="800" width="1300">
+    <Layouts>
+      <Layout width="1300" height="800" mobileorientation="landscape">
+        <Div id="divBottom" taborder="0" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divContent" taborder="1" text="Div00" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="Static00_01" taborder="0" left="5" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-5"/>
+              <Static id="Static00_01_00" taborder="1" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Static id="Static00_01_00_00" taborder="2" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+              <Static id="Static00_02" taborder="3" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="0"/>
+              <Static id="stcTopLine" taborder="4" left="20.00" top="Static00_01:100" height="2" background="#8a96a8" right="20"/>
+              <Div id="divSearchArea" taborder="5" left="20.00" top="Static00_01:0" height="100" right="20" cssclass="div_WF_divSearchArea" text="">
+                <Layouts>
+                  <Layout>
+                    <Static id="staSearchStr" taborder="3" text="검색어" left="20" top="13" width="89" height="24" cssclass="sta_WF_schTitle"/>
+                    <Static id="Static00" taborder="4" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+                    <Edit id="edtSearchStr" taborder="0" left="80.00" top="13" width="200" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown" validationGroup="fvValiCmp" text="" validation="검색어;NULL"/>
+                    <Button id="btnSearch" taborder="2" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+                    <Button id="btnSearchReset" taborder="1" top="13" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+                    <Static id="Static00_01" taborder="5" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24" right="0"/>
+                    <CheckBox id="chkViewAll" taborder="6" left="20.00" top="41" width="100" height="20" falsevalue="N" truevalue="Y" value="Y" cssclass="chk_WF_normal" text="전체" onchanged="fnChkBoxCtrl"/>
+                    <CheckBox id="chkView01" taborder="7" left="110.00" top="41" width="100" height="20" falsevalue="N" truevalue="Y" value="N" cssclass="chk_WF_normal" text="요청정보" onchanged="fnChkBoxCtrl"/>
+                    <CheckBox id="chkView02" taborder="8" left="200.00" top="41" width="100" height="20" falsevalue="N" truevalue="Y" value="N" cssclass="chk_WF_normal" text="IT작업신청" onchanged="fnChkBoxCtrl"/>
+                    <CheckBox id="chkView03" taborder="9" left="290.00" top="41" width="100" height="20" falsevalue="N" truevalue="Y" value="N" cssclass="chk_WF_normal" text="사업계획" onchanged="fnChkBoxCtrl"/>
+                    <CheckBox id="chkView04" taborder="10" left="380.00" top="41" width="100" height="20" falsevalue="N" truevalue="Y" value="N" cssclass="chk_WF_normal" text="계약" onchanged="fnChkBoxCtrl"/>
+                    <CheckBox id="chkView05" taborder="11" left="480.00" top="41" width="100" height="20" falsevalue="N" truevalue="Y" value="N" cssclass="chk_WF_normal" text="투자검수정보" onchanged="fnChkBoxCtrl"/>
+                    <CheckBox id="chkView06" taborder="12" left="590.00" top="41" width="100" height="20" falsevalue="N" truevalue="Y" value="N" cssclass="chk_WF_normal" text="운영검수정보" onchanged="fnChkBoxCtrl"/>
+                    <CheckBox id="chkView13" taborder="13" left="590.00" top="64" width="100" height="20" falsevalue="N" truevalue="Y" value="N" cssclass="chk_WF_normal" text="첨부파일" onchanged="fnChkBoxCtrl"/>
+                    <CheckBox id="chkView12" taborder="14" left="480.00" top="64" width="100" height="20" falsevalue="N" truevalue="Y" value="N" cssclass="chk_WF_normal" text="게시판" onchanged="fnChkBoxCtrl"/>
+                    <CheckBox id="chkView11" taborder="15" left="380.00" top="64" width="100" height="20" falsevalue="N" truevalue="Y" value="N" cssclass="chk_WF_normal" text="업무시스템" onchanged="fnChkBoxCtrl"/>
+                    <CheckBox id="chkView10" taborder="16" left="290.00" top="64" width="100" height="20" falsevalue="N" truevalue="Y" value="N" cssclass="chk_WF_normal" text="업무정보" onchanged="fnChkBoxCtrl"/>
+                    <CheckBox id="chkView09" taborder="17" left="200.00" top="64" width="100" height="20" falsevalue="N" truevalue="Y" value="N" cssclass="chk_WF_normal" text="업무정보" onchanged="fnChkBoxCtrl"/>
+                    <CheckBox id="chkView08" taborder="18" left="110.00" top="64" width="100" height="20" falsevalue="N" truevalue="Y" value="N" cssclass="chk_WF_normal" text="구성정보" onchanged="fnChkBoxCtrl"/>
+                    <CheckBox id="chkView07" taborder="19" left="20.00" top="64" width="100" height="20" falsevalue="N" truevalue="Y" value="N" cssclass="chk_WF_normal" text="자산정보" onchanged="fnChkBoxCtrl"/>
+                    <Calendar id="calEndDate" taborder="20" left="550.00" top="14" width="135" height="24" cssclass="cal_WF_normal" readonly="false" onkeydown="fnCommOnkeydown" enable="true" visible="false"/>
+                    <Static id="Static01_00" taborder="21" text="~" left="535.00" top="14" width="15" height="24" textAlign="center" verticalAlign="middle" visible="false"/>
+                    <Calendar id="calBeginDate" taborder="22" left="400.00" top="14" width="135" height="24" cssclass="cal_WF_normal" readonly="false" onkeydown="fnCommOnkeydown" enable="true" visible="false"/>
+                    <Static id="stcDtctDt" taborder="23" text="작성일자" left="330.00" top="13" width="70" height="24" cssclass="sta_WF_schTitle" visible="false"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divColls" taborder="6" left="30" top="stcTopLine:0" right="30" text="" bottom="20">
+                <Layouts>
+                  <Layout type="default" tabledirection="horizontal" flexwrap="nowrap" horizontalgap="0">
+                    <Tab id="tabRst" taborder="0" tabindex="0" left="0" top="8" right="0" bottom="20">
+                      <Tabpages>
+                        <Tabpage id="tabRstAll" text="전체">
+                          <Layouts>
+                            <Layout>
+                              <Div id="divColl" taborder="0" left="0" top="0" text="" visible="true" bottom="0" right="0">
+                                <Layouts>
+                                  <Layout type="default">
+                                    <Static id="stcTitle" taborder="0" text="검색결과" left="0" top="20" width="100" height="24" cssclass="sta_WF_gridTitle" visible="true"/>
+                                    <Static id="stcCollsLine" taborder="1" left="0" top="stcTitle:6" background="linear-gradient(to right, #043C73, #4371f7, #d9e3ff)" right="0" height="2"/>
+                                    <Grid id="grdList" taborder="2" left="0" top="stcCollsLine:13" right="0" visible="true" autofittype="col" binddataset="dsRstAll" bottom="0" nodatatext="검색 결과가 없습니다." oncellclick="divContent_divColls_tabRst_tabRstAll_divColl_grdList_oncellclick" cssclass="grd_WF_normal" autosizingtype="row" useCheck="false" useContext="false" useCopy="false" useFilter="false" useSort="false">
+                                      <Formats>
+                                        <Format id="default">
+                                          <Columns>
+                                            <Column size="110"/>
+                                            <Column size="764"/>
+                                          </Columns>
+                                          <Rows>
+                                            <Row size="24"/>
+                                            <Row size="24"/>
+                                          </Rows>
+                                          <Band id="body">
+                                            <Cell rowspan="2" displaytype="normal" text="expr:dataset.parent.fnGridTitleExpr3(dataset,currow)" suppress="1" suppressalign="middle" cursor="pointer" background="#f9f3f3" cssclass="grdBCell_WF_event grdBCell_WF_backColor_f9f3f3"/>
+                                            <Cell col="1" text="expr:dataset.parent.fnGridTitleExpr(dataset,currow)" displaytype="decoratetext" cursor="pointer" suppress="0" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" textAlign="left" autosizerow="default" wordWrap="char" border="1px solid #ced3e5,1px solid #ced3e5,0px solid #ced3e5"/>
+                                            <Cell row="1" col="1" text="expr:dataset.parent.fnGridTitleExpr2(dataset,currow)" border="0px solid #ced3e5,1px solid #ced3e5,1px solid #ced3e5" color="#8e8e8e" textAlign="left" cursor="pointer" displaytype="expr:dataset.getRowLevel(currow)&gt;0?'normal':'decoratetext'" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" suppress="0"/>
+                                          </Band>
+                                        </Format>
+                                      </Formats>
+                                    </Grid>
+                                    <Static id="stcCnt" taborder="3" left="86.00" top="20" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsSchRst"/>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                        <Tabpage id="tabRst01" text="요청정보">
+                          <Layouts>
+                            <Layout>
+                              <Div id="divColl" taborder="0" left="0" top="0" text="" visible="true" bottom="0" right="0">
+                                <Layouts>
+                                  <Layout type="default">
+                                    <Static id="stcTitle" taborder="0" text="검색결과" left="0" top="20" width="100" height="24" cssclass="sta_WF_gridTitle" visible="true"/>
+                                    <Static id="stcCollsLine" taborder="1" left="0" top="stcTitle:6" background="linear-gradient(to right, #043C73, #4371f7, #d9e3ff)" right="0" height="2"/>
+                                    <Grid id="grdList" taborder="2" left="0" top="stcCollsLine:13" right="0" visible="true" autofittype="col" bottom="0" nodatatext="검색 결과가 없습니다." cssclass="grd_WF_normal" autosizingtype="row" oncellclick="divContent_divColls_tabRst_tabRstAll_divColl_grdList_oncellclick">
+                                      <Formats>
+                                        <Format id="default">
+                                          <Columns>
+                                            <Column size="110"/>
+                                            <Column size="764"/>
+                                          </Columns>
+                                          <Rows>
+                                            <Row size="24"/>
+                                            <Row size="24"/>
+                                          </Rows>
+                                          <Band id="body">
+                                            <Cell rowspan="2" displaytype="normal" text="expr:dataset.parent.fnGridTitleExpr3(dataset,currow)" suppress="1" suppressalign="middle" cursor="pointer" background="#f9f3f3" cssclass="grdBCell_WF_event grdBCell_WF_backColor_f9f3f3"/>
+                                            <Cell col="1" text="expr:dataset.parent.fnGridTitleExpr(dataset,currow)" displaytype="decoratetext" cursor="pointer" suppress="0" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" textAlign="left" autosizerow="default" wordWrap="char" border="1px solid #ced3e5,1px solid #ced3e5,0px solid #ced3e5"/>
+                                            <Cell row="1" col="1" text="expr:dataset.parent.fnGridTitleExpr2(dataset,currow)" border="0px solid #ced3e5,1px solid #ced3e5,1px solid #ced3e5" color="#8e8e8e" textAlign="left" cursor="pointer" displaytype="expr:dataset.getRowLevel(currow)&gt;0?'normal':'decoratetext'" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" suppress="0"/>
+                                          </Band>
+                                        </Format>
+                                      </Formats>
+                                    </Grid>
+                                    <Static id="stcCnt" taborder="3" left="86.00" top="20" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsRst01"/>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                        <Tabpage id="tabRst02" text="IT작업신청">
+                          <Layouts>
+                            <Layout>
+                              <Div id="divColl" taborder="0" left="0" top="0" text="" visible="true" bottom="0" right="0">
+                                <Layouts>
+                                  <Layout type="default">
+                                    <Static id="stcTitle" taborder="0" text="검색결과" left="0" top="20" width="100" height="24" cssclass="sta_WF_gridTitle" visible="true"/>
+                                    <Static id="stcCollsLine" taborder="1" left="0" top="stcTitle:6" background="linear-gradient(to right, #043C73, #4371f7, #d9e3ff)" right="0" height="2"/>
+                                    <Grid id="grdList" taborder="2" left="0" top="stcCollsLine:13" right="0" visible="true" autofittype="col" bottom="0" nodatatext="검색 결과가 없습니다." cssclass="grd_WF_normal" autosizingtype="row" oncellclick="divContent_divColls_tabRst_tabRstAll_divColl_grdList_oncellclick">
+                                      <Formats>
+                                        <Format id="default">
+                                          <Columns>
+                                            <Column size="110"/>
+                                            <Column size="764"/>
+                                          </Columns>
+                                          <Rows>
+                                            <Row size="24"/>
+                                            <Row size="24"/>
+                                          </Rows>
+                                          <Band id="body">
+                                            <Cell rowspan="2" displaytype="normal" text="expr:dataset.parent.fnGridTitleExpr3(dataset,currow)" suppress="1" suppressalign="middle" cursor="pointer" background="#f9f3f3" cssclass="grdBCell_WF_event grdBCell_WF_backColor_f9f3f3"/>
+                                            <Cell col="1" text="expr:dataset.parent.fnGridTitleExpr(dataset,currow)" displaytype="decoratetext" cursor="pointer" suppress="0" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" textAlign="left" autosizerow="default" wordWrap="char" border="1px solid #ced3e5,1px solid #ced3e5,0px solid #ced3e5"/>
+                                            <Cell row="1" col="1" text="expr:dataset.parent.fnGridTitleExpr2(dataset,currow)" border="0px solid #ced3e5,1px solid #ced3e5,1px solid #ced3e5" color="#8e8e8e" textAlign="left" cursor="pointer" displaytype="expr:dataset.getRowLevel(currow)&gt;0?'normal':'decoratetext'" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" suppress="0"/>
+                                          </Band>
+                                        </Format>
+                                      </Formats>
+                                    </Grid>
+                                    <Static id="stcCnt" taborder="3" left="86.00" top="20" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsRst02"/>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                        <Tabpage id="tabRst03" text="사업계획">
+                          <Layouts>
+                            <Layout>
+                              <Div id="divColl" taborder="0" left="0" top="0" text="" visible="true" bottom="0" right="0">
+                                <Layouts>
+                                  <Layout type="default">
+                                    <Static id="stcTitle" taborder="0" text="검색결과" left="0" top="20" width="100" height="24" cssclass="sta_WF_gridTitle" visible="true"/>
+                                    <Static id="stcCollsLine" taborder="1" left="0" top="stcTitle:6" background="linear-gradient(to right, #043C73, #4371f7, #d9e3ff)" right="0" height="2"/>
+                                    <Grid id="grdList" taborder="2" left="0" top="stcCollsLine:13" right="0" visible="true" autofittype="col" bottom="0" nodatatext="검색 결과가 없습니다." cssclass="grd_WF_normal" autosizingtype="row" oncellclick="divContent_divColls_tabRst_tabRstAll_divColl_grdList_oncellclick">
+                                      <Formats>
+                                        <Format id="default">
+                                          <Columns>
+                                            <Column size="110"/>
+                                            <Column size="764"/>
+                                          </Columns>
+                                          <Rows>
+                                            <Row size="24"/>
+                                            <Row size="24"/>
+                                          </Rows>
+                                          <Band id="body">
+                                            <Cell rowspan="2" displaytype="normal" text="expr:dataset.parent.fnGridTitleExpr3(dataset,currow)" suppress="1" suppressalign="middle" cursor="pointer" background="#f9f3f3" cssclass="grdBCell_WF_event grdBCell_WF_backColor_f9f3f3"/>
+                                            <Cell col="1" text="expr:dataset.parent.fnGridTitleExpr(dataset,currow)" displaytype="decoratetext" cursor="pointer" suppress="0" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" textAlign="left" autosizerow="default" wordWrap="char" border="1px solid #ced3e5,1px solid #ced3e5,0px solid #ced3e5"/>
+                                            <Cell row="1" col="1" text="expr:dataset.parent.fnGridTitleExpr2(dataset,currow)" border="0px solid #ced3e5,1px solid #ced3e5,1px solid #ced3e5" color="#8e8e8e" textAlign="left" cursor="pointer" displaytype="expr:dataset.getRowLevel(currow)&gt;0?'normal':'decoratetext'" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" suppress="0"/>
+                                          </Band>
+                                        </Format>
+                                      </Formats>
+                                    </Grid>
+                                    <Static id="stcCnt" taborder="3" left="86.00" top="20" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsRst03"/>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                        <Tabpage id="tabRst04" text="계약정보">
+                          <Layouts>
+                            <Layout>
+                              <Div id="divColl" taborder="0" left="0" top="0" text="" visible="true" bottom="0" right="0">
+                                <Layouts>
+                                  <Layout type="default">
+                                    <Static id="stcTitle" taborder="0" text="검색결과" left="0" top="20" width="100" height="24" cssclass="sta_WF_gridTitle" visible="true"/>
+                                    <Static id="stcCollsLine" taborder="1" left="0" top="stcTitle:6" background="linear-gradient(to right, #043C73, #4371f7, #d9e3ff)" right="0" height="2"/>
+                                    <Grid id="grdList" taborder="2" left="0" top="stcCollsLine:13" right="0" visible="true" autofittype="col" bottom="0" nodatatext="검색 결과가 없습니다." cssclass="grd_WF_normal" autosizingtype="row" oncellclick="divContent_divColls_tabRst_tabRstAll_divColl_grdList_oncellclick">
+                                      <Formats>
+                                        <Format id="default">
+                                          <Columns>
+                                            <Column size="110"/>
+                                            <Column size="764"/>
+                                          </Columns>
+                                          <Rows>
+                                            <Row size="24"/>
+                                            <Row size="24"/>
+                                          </Rows>
+                                          <Band id="body">
+                                            <Cell rowspan="2" displaytype="normal" text="expr:dataset.parent.fnGridTitleExpr3(dataset,currow)" suppress="1" suppressalign="middle" cursor="pointer" background="#f9f3f3" cssclass="grdBCell_WF_event grdBCell_WF_backColor_f9f3f3"/>
+                                            <Cell col="1" text="expr:dataset.parent.fnGridTitleExpr(dataset,currow)" displaytype="decoratetext" cursor="pointer" suppress="0" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" textAlign="left" autosizerow="default" wordWrap="char" border="1px solid #ced3e5,1px solid #ced3e5,0px solid #ced3e5"/>
+                                            <Cell row="1" col="1" text="expr:dataset.parent.fnGridTitleExpr2(dataset,currow)" border="0px solid #ced3e5,1px solid #ced3e5,1px solid #ced3e5" color="#8e8e8e" textAlign="left" cursor="pointer" displaytype="expr:dataset.getRowLevel(currow)&gt;0?'normal':'decoratetext'" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" suppress="0"/>
+                                          </Band>
+                                        </Format>
+                                      </Formats>
+                                    </Grid>
+                                    <Static id="stcCnt" taborder="3" left="86.00" top="20" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsRst04"/>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                        <Tabpage id="tabRst05" text="투자검수정보">
+                          <Layouts>
+                            <Layout>
+                              <Div id="divColl" taborder="0" left="0" top="0" text="" visible="true" bottom="0" right="0">
+                                <Layouts>
+                                  <Layout type="default">
+                                    <Static id="stcTitle" taborder="0" text="검색결과" left="0" top="20" width="100" height="24" cssclass="sta_WF_gridTitle" visible="true"/>
+                                    <Static id="stcCollsLine" taborder="1" left="0" top="stcTitle:6" background="linear-gradient(to right, #043C73, #4371f7, #d9e3ff)" right="0" height="2"/>
+                                    <Grid id="grdList" taborder="2" left="0" top="stcCollsLine:13" right="0" visible="true" autofittype="col" bottom="0" nodatatext="검색 결과가 없습니다." cssclass="grd_WF_normal" autosizingtype="row" oncellclick="divContent_divColls_tabRst_tabRstAll_divColl_grdList_oncellclick">
+                                      <Formats>
+                                        <Format id="default">
+                                          <Columns>
+                                            <Column size="110"/>
+                                            <Column size="764"/>
+                                          </Columns>
+                                          <Rows>
+                                            <Row size="24"/>
+                                            <Row size="24"/>
+                                          </Rows>
+                                          <Band id="body">
+                                            <Cell rowspan="2" displaytype="normal" text="expr:dataset.parent.fnGridTitleExpr3(dataset,currow)" suppress="1" suppressalign="middle" cursor="pointer" background="#f9f3f3" cssclass="grdBCell_WF_event grdBCell_WF_backColor_f9f3f3"/>
+                                            <Cell col="1" text="expr:dataset.parent.fnGridTitleExpr(dataset,currow)" displaytype="decoratetext" cursor="pointer" suppress="0" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" textAlign="left" autosizerow="default" wordWrap="char" border="1px solid #ced3e5,1px solid #ced3e5,0px solid #ced3e5"/>
+                                            <Cell row="1" col="1" text="expr:dataset.parent.fnGridTitleExpr2(dataset,currow)" border="0px solid #ced3e5,1px solid #ced3e5,1px solid #ced3e5" color="#8e8e8e" textAlign="left" cursor="pointer" displaytype="expr:dataset.getRowLevel(currow)&gt;0?'normal':'decoratetext'" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" suppress="0"/>
+                                          </Band>
+                                        </Format>
+                                      </Formats>
+                                    </Grid>
+                                    <Static id="stcCnt" taborder="3" left="86.00" top="20" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsRst05"/>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                        <Tabpage id="tabRst06" text="운영검수정보">
+                          <Layouts>
+                            <Layout>
+                              <Div id="divColl" taborder="0" left="0" top="0" text="" visible="true" bottom="0" right="0">
+                                <Layouts>
+                                  <Layout type="default">
+                                    <Static id="stcTitle" taborder="0" text="검색결과" left="0" top="20" width="100" height="24" cssclass="sta_WF_gridTitle" visible="true"/>
+                                    <Static id="stcCollsLine" taborder="1" left="0" top="stcTitle:6" background="linear-gradient(to right, #043C73, #4371f7, #d9e3ff)" right="0" height="2"/>
+                                    <Grid id="grdList" taborder="2" left="0" top="stcCollsLine:13" right="0" visible="true" autofittype="col" bottom="0" nodatatext="검색 결과가 없습니다." cssclass="grd_WF_normal" autosizingtype="row" oncellclick="divContent_divColls_tabRst_tabRstAll_divColl_grdList_oncellclick">
+                                      <Formats>
+                                        <Format id="default">
+                                          <Columns>
+                                            <Column size="110"/>
+                                            <Column size="764"/>
+                                          </Columns>
+                                          <Rows>
+                                            <Row size="24"/>
+                                            <Row size="24"/>
+                                          </Rows>
+                                          <Band id="body">
+                                            <Cell rowspan="2" displaytype="normal" text="expr:dataset.parent.fnGridTitleExpr3(dataset,currow)" suppress="1" suppressalign="middle" cursor="pointer" background="#f9f3f3" cssclass="grdBCell_WF_event grdBCell_WF_backColor_f9f3f3"/>
+                                            <Cell col="1" text="expr:dataset.parent.fnGridTitleExpr(dataset,currow)" displaytype="decoratetext" cursor="pointer" suppress="0" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" textAlign="left" autosizerow="default" wordWrap="char" border="1px solid #ced3e5,1px solid #ced3e5,0px solid #ced3e5"/>
+                                            <Cell row="1" col="1" text="expr:dataset.parent.fnGridTitleExpr2(dataset,currow)" border="0px solid #ced3e5,1px solid #ced3e5,1px solid #ced3e5" color="#8e8e8e" textAlign="left" cursor="pointer" displaytype="expr:dataset.getRowLevel(currow)&gt;0?'normal':'decoratetext'" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" suppress="0"/>
+                                          </Band>
+                                        </Format>
+                                      </Formats>
+                                    </Grid>
+                                    <Static id="stcCnt" taborder="3" left="86.00" top="20" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsRst06"/>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                        <Tabpage id="tabRst07" text="자산정보">
+                          <Layouts>
+                            <Layout>
+                              <Div id="divColl" taborder="0" left="0" top="0" text="" visible="true" bottom="0" right="0">
+                                <Layouts>
+                                  <Layout type="default">
+                                    <Static id="stcTitle" taborder="0" text="검색결과" left="0" top="20" width="100" height="24" cssclass="sta_WF_gridTitle" visible="true"/>
+                                    <Static id="stcCollsLine" taborder="1" left="0" top="stcTitle:6" background="linear-gradient(to right, #043C73, #4371f7, #d9e3ff)" right="0" height="2"/>
+                                    <Grid id="grdList" taborder="2" left="0" top="stcCollsLine:13" right="0" visible="true" autofittype="col" bottom="0" nodatatext="검색 결과가 없습니다." cssclass="grd_WF_normal" autosizingtype="row" oncellclick="divContent_divColls_tabRst_tabRstAll_divColl_grdList_oncellclick">
+                                      <Formats>
+                                        <Format id="default">
+                                          <Columns>
+                                            <Column size="110"/>
+                                            <Column size="764"/>
+                                          </Columns>
+                                          <Rows>
+                                            <Row size="24"/>
+                                            <Row size="24"/>
+                                          </Rows>
+                                          <Band id="body">
+                                            <Cell rowspan="2" displaytype="normal" text="expr:dataset.parent.fnGridTitleExpr3(dataset,currow)" suppress="1" suppressalign="middle" cursor="pointer" background="#f9f3f3" cssclass="grdBCell_WF_event grdBCell_WF_backColor_f9f3f3"/>
+                                            <Cell col="1" text="expr:dataset.parent.fnGridTitleExpr(dataset,currow)" displaytype="decoratetext" cursor="pointer" suppress="0" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" textAlign="left" autosizerow="default" wordWrap="char" border="1px solid #ced3e5,1px solid #ced3e5,0px solid #ced3e5"/>
+                                            <Cell row="1" col="1" text="expr:dataset.parent.fnGridTitleExpr2(dataset,currow)" border="0px solid #ced3e5,1px solid #ced3e5,1px solid #ced3e5" color="#8e8e8e" textAlign="left" cursor="pointer" displaytype="expr:dataset.getRowLevel(currow)&gt;0?'normal':'decoratetext'" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" suppress="0"/>
+                                          </Band>
+                                        </Format>
+                                      </Formats>
+                                    </Grid>
+                                    <Static id="stcCnt" taborder="3" left="86.00" top="20" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsRst07"/>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                        <Tabpage id="tabRst08" text="구성정보">
+                          <Layouts>
+                            <Layout>
+                              <Div id="divColl" taborder="0" left="0" top="0" text="" visible="true" bottom="0" right="0">
+                                <Layouts>
+                                  <Layout type="default">
+                                    <Static id="stcTitle" taborder="0" text="검색결과" left="0" top="20" width="100" height="24" cssclass="sta_WF_gridTitle" visible="true"/>
+                                    <Static id="stcCollsLine" taborder="1" left="0" top="stcTitle:6" background="linear-gradient(to right, #043C73, #4371f7, #d9e3ff)" right="0" height="2"/>
+                                    <Grid id="grdList" taborder="2" left="0" top="stcCollsLine:13" right="0" visible="true" autofittype="col" bottom="0" nodatatext="검색 결과가 없습니다." cssclass="grd_WF_normal" autosizingtype="row" oncellclick="divContent_divColls_tabRst_tabRstAll_divColl_grdList_oncellclick">
+                                      <Formats>
+                                        <Format id="default">
+                                          <Columns>
+                                            <Column size="110"/>
+                                            <Column size="764"/>
+                                          </Columns>
+                                          <Rows>
+                                            <Row size="24"/>
+                                            <Row size="24"/>
+                                          </Rows>
+                                          <Band id="body">
+                                            <Cell rowspan="2" displaytype="normal" text="expr:dataset.parent.fnGridTitleExpr3(dataset,currow)" suppress="1" suppressalign="middle" cursor="pointer" background="#f9f3f3" cssclass="grdBCell_WF_event grdBCell_WF_backColor_f9f3f3"/>
+                                            <Cell col="1" text="expr:dataset.parent.fnGridTitleExpr(dataset,currow)" displaytype="decoratetext" cursor="pointer" suppress="0" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" textAlign="left" autosizerow="default" wordWrap="char" border="1px solid #ced3e5,1px solid #ced3e5,0px solid #ced3e5"/>
+                                            <Cell row="1" col="1" text="expr:dataset.parent.fnGridTitleExpr2(dataset,currow)" border="0px solid #ced3e5,1px solid #ced3e5,1px solid #ced3e5" color="#8e8e8e" textAlign="left" cursor="pointer" displaytype="expr:dataset.getRowLevel(currow)&gt;0?'normal':'decoratetext'" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" suppress="0"/>
+                                          </Band>
+                                        </Format>
+                                      </Formats>
+                                    </Grid>
+                                    <Static id="stcCnt" taborder="3" left="86.00" top="20" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsRst08"/>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                        <Tabpage id="tabRst09" text="업무정보">
+                          <Layouts>
+                            <Layout>
+                              <Div id="divColl" taborder="0" left="0" top="0" text="" visible="true" bottom="0" right="0">
+                                <Layouts>
+                                  <Layout type="default">
+                                    <Static id="stcTitle" taborder="0" text="검색결과" left="0" top="20" width="100" height="24" cssclass="sta_WF_gridTitle" visible="true"/>
+                                    <Static id="stcCollsLine" taborder="1" left="0" top="stcTitle:6" background="linear-gradient(to right, #043C73, #4371f7, #d9e3ff)" right="0" height="2"/>
+                                    <Grid id="grdList" taborder="2" left="0" top="stcCollsLine:13" right="0" visible="true" autofittype="col" bottom="0" nodatatext="검색 결과가 없습니다." cssclass="grd_WF_normal" autosizingtype="row" oncellclick="divContent_divColls_tabRst_tabRstAll_divColl_grdList_oncellclick">
+                                      <Formats>
+                                        <Format id="default">
+                                          <Columns>
+                                            <Column size="110"/>
+                                            <Column size="764"/>
+                                          </Columns>
+                                          <Rows>
+                                            <Row size="24"/>
+                                            <Row size="24"/>
+                                          </Rows>
+                                          <Band id="body">
+                                            <Cell rowspan="2" displaytype="normal" text="expr:dataset.parent.fnGridTitleExpr3(dataset,currow)" suppress="1" suppressalign="middle" cursor="pointer" background="#f9f3f3" cssclass="grdBCell_WF_event grdBCell_WF_backColor_f9f3f3"/>
+                                            <Cell col="1" text="expr:dataset.parent.fnGridTitleExpr(dataset,currow)" displaytype="decoratetext" cursor="pointer" suppress="0" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" textAlign="left" autosizerow="default" wordWrap="char" border="1px solid #ced3e5,1px solid #ced3e5,0px solid #ced3e5"/>
+                                            <Cell row="1" col="1" text="expr:dataset.parent.fnGridTitleExpr2(dataset,currow)" border="0px solid #ced3e5,1px solid #ced3e5,1px solid #ced3e5" color="#8e8e8e" textAlign="left" cursor="pointer" displaytype="expr:dataset.getRowLevel(currow)&gt;0?'normal':'decoratetext'" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" suppress="0"/>
+                                          </Band>
+                                        </Format>
+                                      </Formats>
+                                    </Grid>
+                                    <Static id="stcCnt" taborder="3" left="86.00" top="20" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsRst09"/>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                        <Tabpage id="tabRst10" text="업무분장">
+                          <Layouts>
+                            <Layout>
+                              <Div id="divColl" taborder="0" left="0" top="0" text="" visible="true" bottom="0" right="0">
+                                <Layouts>
+                                  <Layout type="default">
+                                    <Static id="stcTitle" taborder="0" text="검색결과" left="0" top="20" width="100" height="24" cssclass="sta_WF_gridTitle" visible="true"/>
+                                    <Static id="stcCollsLine" taborder="1" left="0" top="stcTitle:6" background="linear-gradient(to right, #043C73, #4371f7, #d9e3ff)" right="0" height="2"/>
+                                    <Grid id="grdList" taborder="2" left="0" top="stcCollsLine:13" right="0" visible="true" autofittype="col" bottom="0" nodatatext="검색 결과가 없습니다." cssclass="grd_WF_normal" autosizingtype="row" oncellclick="divContent_divColls_tabRst_tabRstAll_divColl_grdList_oncellclick">
+                                      <Formats>
+                                        <Format id="default">
+                                          <Columns>
+                                            <Column size="110"/>
+                                            <Column size="764"/>
+                                          </Columns>
+                                          <Rows>
+                                            <Row size="24"/>
+                                            <Row size="24"/>
+                                          </Rows>
+                                          <Band id="body">
+                                            <Cell rowspan="2" displaytype="normal" text="expr:dataset.parent.fnGridTitleExpr3(dataset,currow)" suppress="1" suppressalign="middle" cursor="pointer" background="#f9f3f3" cssclass="grdBCell_WF_event grdBCell_WF_backColor_f9f3f3"/>
+                                            <Cell col="1" text="expr:dataset.parent.fnGridTitleExpr(dataset,currow)" displaytype="decoratetext" cursor="pointer" suppress="0" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" textAlign="left" autosizerow="default" wordWrap="char" border="1px solid #ced3e5,1px solid #ced3e5,0px solid #ced3e5"/>
+                                            <Cell row="1" col="1" text="expr:dataset.parent.fnGridTitleExpr2(dataset,currow)" border="0px solid #ced3e5,1px solid #ced3e5,1px solid #ced3e5" color="#8e8e8e" textAlign="left" cursor="pointer" displaytype="expr:dataset.getRowLevel(currow)&gt;0?'normal':'decoratetext'" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" suppress="0"/>
+                                          </Band>
+                                        </Format>
+                                      </Formats>
+                                    </Grid>
+                                    <Static id="stcCnt" taborder="3" left="86.00" top="20" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsRst10"/>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                        <Tabpage id="tabRst11" text="업무시스템">
+                          <Layouts>
+                            <Layout>
+                              <Div id="divColl" taborder="0" left="0" top="0" text="" visible="true" bottom="0" right="0">
+                                <Layouts>
+                                  <Layout type="default">
+                                    <Static id="stcTitle" taborder="0" text="검색결과" left="0" top="20" width="100" height="24" cssclass="sta_WF_gridTitle" visible="true"/>
+                                    <Static id="stcCollsLine" taborder="1" left="0" top="stcTitle:6" background="linear-gradient(to right, #043C73, #4371f7, #d9e3ff)" right="0" height="2"/>
+                                    <Grid id="grdList" taborder="2" left="0" top="stcCollsLine:13" right="0" visible="true" autofittype="col" bottom="0" nodatatext="검색 결과가 없습니다." cssclass="grd_WF_normal" autosizingtype="row" oncellclick="divContent_divColls_tabRst_tabRstAll_divColl_grdList_oncellclick">
+                                      <Formats>
+                                        <Format id="default">
+                                          <Columns>
+                                            <Column size="110"/>
+                                            <Column size="764"/>
+                                          </Columns>
+                                          <Rows>
+                                            <Row size="24"/>
+                                            <Row size="24"/>
+                                          </Rows>
+                                          <Band id="body">
+                                            <Cell rowspan="2" displaytype="normal" text="expr:dataset.parent.fnGridTitleExpr3(dataset,currow)" suppress="1" suppressalign="middle" cursor="pointer" background="#f9f3f3" cssclass="grdBCell_WF_event grdBCell_WF_backColor_f9f3f3"/>
+                                            <Cell col="1" text="expr:dataset.parent.fnGridTitleExpr(dataset,currow)" displaytype="decoratetext" cursor="pointer" suppress="0" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" textAlign="left" autosizerow="default" wordWrap="char" border="1px solid #ced3e5,1px solid #ced3e5,0px solid #ced3e5"/>
+                                            <Cell row="1" col="1" text="expr:dataset.parent.fnGridTitleExpr2(dataset,currow)" border="0px solid #ced3e5,1px solid #ced3e5,1px solid #ced3e5" color="#8e8e8e" textAlign="left" cursor="pointer" displaytype="expr:dataset.getRowLevel(currow)&gt;0?'normal':'decoratetext'" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" suppress="0"/>
+                                          </Band>
+                                        </Format>
+                                      </Formats>
+                                    </Grid>
+                                    <Static id="stcCnt" taborder="3" left="86.00" top="20" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsRst11"/>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                        <Tabpage id="tabRst12" text="게시판">
+                          <Layouts>
+                            <Layout>
+                              <Div id="divColl" taborder="0" left="0" top="0" text="" visible="true" bottom="0" right="0">
+                                <Layouts>
+                                  <Layout type="default">
+                                    <Static id="stcTitle" taborder="0" text="검색결과" left="0" top="20" width="100" height="24" cssclass="sta_WF_gridTitle" visible="true"/>
+                                    <Static id="stcCollsLine" taborder="1" left="0" top="stcTitle:6" background="linear-gradient(to right, #043C73, #4371f7, #d9e3ff)" right="0" height="2"/>
+                                    <Grid id="grdList" taborder="2" left="0" top="stcCollsLine:13" right="0" visible="true" autofittype="col" bottom="0" nodatatext="검색 결과가 없습니다." cssclass="grd_WF_normal" autosizingtype="row" oncellclick="divContent_divColls_tabRst_tabRstAll_divColl_grdList_oncellclick">
+                                      <Formats>
+                                        <Format id="default">
+                                          <Columns>
+                                            <Column size="110"/>
+                                            <Column size="764"/>
+                                          </Columns>
+                                          <Rows>
+                                            <Row size="24"/>
+                                            <Row size="24"/>
+                                          </Rows>
+                                          <Band id="body">
+                                            <Cell rowspan="2" displaytype="normal" text="expr:dataset.parent.fnGridTitleExpr3(dataset,currow)" suppress="1" suppressalign="middle" cursor="pointer" background="#f9f3f3" cssclass="grdBCell_WF_event grdBCell_WF_backColor_f9f3f3"/>
+                                            <Cell col="1" text="expr:dataset.parent.fnGridTitleExpr(dataset,currow)" displaytype="decoratetext" cursor="pointer" suppress="0" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" textAlign="left" autosizerow="default" wordWrap="char" border="1px solid #ced3e5,1px solid #ced3e5,0px solid #ced3e5"/>
+                                            <Cell row="1" col="1" text="expr:dataset.parent.fnGridTitleExpr2(dataset,currow)" border="0px solid #ced3e5,1px solid #ced3e5,1px solid #ced3e5" color="#8e8e8e" textAlign="left" cursor="pointer" displaytype="expr:dataset.getRowLevel(currow)&gt;0?'normal':'decoratetext'" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" suppress="0"/>
+                                          </Band>
+                                        </Format>
+                                      </Formats>
+                                    </Grid>
+                                    <Static id="stcCnt" taborder="3" left="86.00" top="20" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsRst12"/>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                        <Tabpage id="tabRst13" text="첨부파일">
+                          <Layouts>
+                            <Layout>
+                              <Div id="divColl" taborder="0" left="0" top="0" text="" visible="true" bottom="0" right="0">
+                                <Layouts>
+                                  <Layout type="default">
+                                    <Static id="stcTitle" taborder="0" text="검색결과" left="0" top="20" width="100" height="24" cssclass="sta_WF_gridTitle" visible="true"/>
+                                    <Static id="stcCollsLine" taborder="1" left="0" top="stcTitle:6" background="linear-gradient(to right, #043C73, #4371f7, #d9e3ff)" right="0" height="2"/>
+                                    <Grid id="grdList" taborder="2" left="0" top="stcCollsLine:13" right="0" visible="true" autofittype="col" bottom="0" nodatatext="검색 결과가 없습니다." cssclass="grd_WF_normal" autosizingtype="row" oncellclick="divContent_divColls_tabRst_tabRstAll_divColl_grdList_oncellclick">
+                                      <Formats>
+                                        <Format id="default">
+                                          <Columns>
+                                            <Column size="110"/>
+                                            <Column size="764"/>
+                                          </Columns>
+                                          <Rows>
+                                            <Row size="24"/>
+                                            <Row size="24"/>
+                                          </Rows>
+                                          <Band id="body">
+                                            <Cell rowspan="2" displaytype="normal" text="expr:dataset.parent.fnGridTitleExpr3(dataset,currow)" suppress="1" suppressalign="middle" cursor="pointer" background="#f9f3f3" cssclass="grdBCell_WF_event grdBCell_WF_backColor_f9f3f3"/>
+                                            <Cell col="1" text="expr:dataset.parent.fnGridTitleExpr(dataset,currow)" displaytype="decoratetext" cursor="pointer" suppress="0" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" textAlign="left" autosizerow="default" wordWrap="char" border="1px solid #ced3e5,1px solid #ced3e5,0px solid #ced3e5"/>
+                                            <Cell row="1" col="1" text="expr:dataset.parent.fnGridTitleExpr2(dataset,currow)" border="0px solid #ced3e5,1px solid #ced3e5,1px solid #ced3e5" color="#8e8e8e" textAlign="left" cursor="pointer" displaytype="expr:dataset.getRowLevel(currow)&gt;0?'normal':'decoratetext'" cssclass="expr:dataset.getRowLevel(currow)&gt;0?'grdBCell_WF_event, grdBCell_WF_backColor_f9f3f3':''" suppress="0"/>
+                                          </Band>
+                                        </Format>
+                                      </Formats>
+                                    </Grid>
+                                    <Static id="stcCnt" taborder="3" left="86.00" top="20" width="60" height="24" cssclass="sta_WF_grdCnt" text=" 0 건" countDataset="dsRst13"/>
+                                  </Layout>
+                                </Layouts>
+                              </Div>
+                            </Layout>
+                          </Layouts>
+                        </Tabpage>
+                      </Tabpages>
+                    </Tab>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="query" type="STRING" size="256"/>
+          <Column id="researchQuery" type="STRING" size="256"/>
+          <Column id="collection" type="STRING" size="256"/>
+          <Column id="sort" type="STRING" size="256"/>
+          <Column id="searchField" type="STRING" size="256"/>
+          <Column id="userId" type="STRING" size="256"/>
+          <Column id="deptCd" type="STRING" size="256"/>
+          <Column id="startDate" type="STRING" size="256"/>
+          <Column id="endDate" type="STRING" size="256"/>
+          <Column id="startPage" type="STRING" size="256"/>
+          <Column id="endPage" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="query"/>
+            <Col id="collection">ALL</Col>
+            <Col id="sort">TITLE</Col>
+            <Col id="searchField">ALL</Col>
+            <Col id="userId">3</Col>
+            <Col id="deptCd">DEPT01</Col>
+            <Col id="startDate">2020/07/01</Col>
+            <Col id="endDate">2024/07/14</Col>
+            <Col id="startPage">1</Col>
+            <Col id="endPage">3</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData"/>
+      <Dataset id="dsMenuLv1"/>
+      <Dataset id="dsMenuLv2"/>
+      <Dataset id="dsMenuLv3"/>
+      <Dataset id="dsViewCd"/>
+      <Dataset id="dsRst01"/>
+      <Dataset id="dsRst02"/>
+      <Dataset id="dsRst03"/>
+      <Dataset id="dsRst04"/>
+      <Dataset id="dsRst05"/>
+      <Dataset id="dsRst06"/>
+      <Dataset id="dsRst07"/>
+      <Dataset id="dsRst08"/>
+      <Dataset id="dsRst09"/>
+      <Dataset id="dsRst10"/>
+      <Dataset id="dsRst11"/>
+      <Dataset id="dsRst12"/>
+      <Dataset id="dsRst13"/>
+      <Dataset id="dsRstAll"/>
+      <Dataset id="dsSchRst" useclientlayout="true">
+        <ColumnInfo>
+          <Column id="collection" type="STRING" size="256" prop="COUNT"/>
+          <Column id="rank" type="STRING" size="256"/>
+          <Column id="r_pk" type="STRING" size="256"/>
+          <Column id="r_type" type="STRING" size="256"/>
+          <Column id="r_title" type="STRING" size="256"/>
+          <Column id="r_conts" type="STRING" size="256"/>
+          <Column id="r_name" type="STRING" size="256"/>
+          <Column id="r_datetime" type="STRING" size="256"/>
+          <Column id="r_desc" type="STRING" size="256"/>
+          <Column id="r_itsys_nm" type="STRING" size="256"/>
+          <Column id="r_host" type="STRING" size="256"/>
+          <Column id="r_ipaddr" type="STRING" size="256"/>
+          <Column id="r_table" type="STRING" size="256"/>
+          <Column id="r_db" type="STRING" size="256"/>
+          <Column id="r_sid" type="STRING" size="256"/>
+          <Column id="r_svcid" type="STRING" size="256"/>
+          <Column id="r_fileconts" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ frTab_P01
+* 화면(명)		︰ Sitemap
+* 메뉴(경로)	︰ 
+* 화면 설명	︰ Sitemap
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_WorkFlow.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.GBN = 'SITEMAP';
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.fnSearchReset();
+	
+	//this.fnSearch();
+	this.fnGetCmmCd();
+	this.fnCompInit();		// 컴포넌트 초기화
+	
+	//this.divContent.form.divSiteMap.form.height = 0;
+	
+	//alert(this.isValidObject("dsCond"));
+	
+	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.clearData();
+	
+	this.fnChkBoxInit();
+	
+	var rowpos = this.dsCond.addRow();	
+	var oSession = Ex.util.getSession('session');
+	
+	this.dsCond.setColumn(rowpos, 'searchField', 'ALL');
+	this.dsCond.setColumn(rowpos, 'sort', 'TITLE');
+	this.dsCond.setColumn(rowpos, 'userId', oSession.gvUserId);
+	this.dsCond.setColumn(rowpos, 'deptCd', oSession.gvDeptCd);
+	
+}
+
+// 조회
+this.fnSearch = function()
+{
+	var schChk = this.fnChkBoxGetVal();
+			
+	if(!Ex.isEmpty(schChk)) {
+		this.dsCond.setColumn(0,"collection",schChk);
+	}
+				
+
+	// transaction
+	var sTranId = "unifiedSerarch";			// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "unifiedSerarch";	// 서비스명
+    var sInDs = "dsCond=dsCond";		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsSchRst=dsSchRst";			// 서버에서 수신할 데이타셋
+    var sArg = "";						// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+
+}
+
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['VIEW_CD']					//조회할 상위코드
+		,codeDiv: ['CMM_CD']						//조회할 코드의 업무구분
+		,optStr	: ['']															//ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y']																//사용여부
+		,filter	: ['']																	//filterStr
+		,objDs	: [this.dsViewCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);	
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "unifiedSerarch" :		
+			
+			this.dsRstAll.clearData();
+			
+			//this.setVisibleInit(this, this.divContent.form.divColls);
+		
+			for(var i=0; i<this.dsViewCd.rowcount; i++) {
+				var vColelts =  this.dsViewCd.getColumn(i,"ITM_VAL_1");
+				var cmmId = this.dsViewCd.getColumn(i,"CMM_CD");
+				var objDsId = "dsRst"+cmmId;
+				
+				this.dsSchRst.filter("collection=='"+vColelts+"'");	
+				this[objDsId].copyData(this.dsSchRst, true);
+				this.dsSchRst.filter("");
+				
+				if(this[objDsId].rowcount > 0) {
+					this[objDsId].filter("rowidx<5");
+					this.dsRstAll.appendData(this[objDsId],true,true);				
+					this[objDsId].filter("");
+				}
+			}
+			
+			//this.dsRstAll.keystring = "collection";	
+			this.dsRstAll.rowposition = -1;
+			this.divContent.form.divColls.form.tabRst.tabRstAll.form.divColl.form.grdList.scrollTo(0,0);
+			
+			/*
+			var arryRst = this.chkDataCnt(this);
+			
+			if(arryRst.length !=0) {
+				this.setVisibleTrue(this.divContent.form.divColls,arryRst);
+			}
+			*/
+						
+			
+			
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)	return;
+	
+	switch(mID)
+	{
+	
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	//trace(this.dsViewCd.saveXML());
+	
+	
+	var crDsId = "dsRst";
+	//var arrColInfo = new Array("collection","rank","pk","type","title","FILE_NM");
+	
+	for(var i=0;i<this.dsViewCd.rowcount;i++) {
+		//var objDs = new Dataset();
+		var dsId = this.dsViewCd.getColumn(i,"CMM_CD");
+		//objDs.name = crDsId+dsId;
+		//this.addChild(objDs.name, objDs );	
+		
+		var tapId = "tabRst"+dsId;
+		//trace(tapId+" / "+this[objDs.name]);	
+		this[crDsId+dsId].assign(this.dsSchRst);
+		this.divContent.form.divColls.form.tabRst.tabpages[tapId].form.divColl.form.grdList.setBindDataset(this[crDsId+dsId]);
+		this.divContent.form.divColls.form.tabRst.tabpages[tapId].form.divColl.form.stcCnt.setCountDataset(this[crDsId+dsId]);		
+	}	
+	this.dsRstAll.assign(this.dsSchRst);
+	
+};
+
+
+this.fnChkBoxCtrl = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo) {
+	if(obj.name == "chkViewAll") {	
+		for(var i=0;i<this.dsViewCd.rowcount;i++) {
+			var compNm = "chkView"+this.dsViewCd.getColumn(i,"CMM_CD");
+			this.divContent.form.divSearchArea.form[compNm].value = 'N';
+		}
+	
+	} else {
+		if(this.divContent.form.divSearchArea.form.chkViewAll.value == 'Y') {
+			this.divContent.form.divSearchArea.form.chkViewAll.value = 'N';
+		}
+	}
+};
+
+
+this.chkDataCnt = function(frmObj) {
+	
+			var collsCnt = frmObj.dsViewCd.rowcount;	
+			var collsId = "";
+			var rtnArry = new Array();
+					
+			for(var i=0;i<collsCnt;i++) {
+				var cmmCd = frmObj.dsViewCd.getColumn(i,"CMM_CD");
+				collsId = "dsRst"+cmmCd;
+				if(frmObj.isValidObject(collsId)) {
+					if(frmObj[collsId].rowcount>0) {
+						rtnArry.push(cmmCd)
+					}
+				}
+			}						
+			return rtnArry;					
+};
+	
+this.setVisibleTrue = function(frmObj, arryId) {
+					
+			var offHeight = 302;
+			var collsHeight = offHeight*arryId.length;
+			frmObj.height = collsHeight;
+			
+			var rtnArry = new Array();
+			
+			for(var idx of arryId) {
+				var divNm = "divColl"+ idx;					
+				var objDiv = frmObj.form.lookup(divNm);						
+				objDiv.visible = true;
+				rtnArry.push(objDiv);
+			}						
+			return rtnArry;
+};
+				
+				
+this.setVisibleInit = function(frmObj,divObj) {	
+			var collsCnt = frmObj.dsViewCd.rowcount;	
+			
+			for(var i=0; i < collsCnt; i++) {	
+				var cmmCd = frmObj.dsViewCd.getColumn(i,"CMM_CD");
+				var divNm = "divColl"+ cmmCd;					
+				var objDiv = divObj.form.lookup(divNm);		
+				//trace(divNm);
+				objDiv.visible = false;						
+			}	
+};
+
+this.fnChkBoxGetVal = function(){	
+	var rtnVal = "";
+	
+	if(this.divContent.form.divSearchArea.form.chkViewAll.isChecked()) {
+		rtnVal = "ALL"
+	} else {
+		var vCnt = this.dsViewCd.rowcount;
+		for(var i=0; i<vCnt; i++){			
+			var cmmCd = this.dsViewCd.getColumn(i,"CMM_CD");
+			var chkBoxNm = "chkView"+cmmCd;
+			
+			if(this.divContent.form.divSearchArea.form[chkBoxNm].isChecked())
+			{
+				var itmNm = this.dsViewCd.getColumn(i,"ITM_VAL_1");
+				if(Ex.isEmpty(rtnVal)) {
+					rtnVal += itmNm;
+				} else {
+					rtnVal += ','+itmNm;
+				}				
+			}			
+		}		
+	}
+	
+	return rtnVal;
+};
+
+this.fnChkBoxInit = function(){		
+	
+	this.divContent.form.divSearchArea.form.chkViewAll.value = 'Y';
+
+	var vCnt = this.dsViewCd.rowcount;
+	for(var i=0; i<vCnt; i++){			
+		var cmmCd = this.dsViewCd.getColumn(i,"CMM_CD");
+		var chkBoxNm = "chkView"+cmmCd;
+		
+		this.divContent.form.divSearchArea.form[chkBoxNm].value = 'N';
+			
+				
+	}
+};
+
+this.fnGridTitleExpr  = function(bindDs, vRow) {
+
+	var rtnVal = "";
+	
+	var rPk = bindDs.getColumn(vRow,"r_pk");
+	var rType = bindDs.getColumn(vRow,"r_type");
+	var rTitle = bindDs.getColumn(vRow,"r_title");
+	var rConts = bindDs.getColumn(vRow,"r_conts");
+	var rName = bindDs.getColumn(vRow,"r_name");
+	var rDatetime = bindDs.getColumn(vRow,"r_datetime");
+	var rDesc  = bindDs.getColumn(vRow,"r_desc");
+	
+	var rItsysNm  = bindDs.getColumn(vRow,"r_itsys_nm");
+	var rHost  = bindDs.getColumn(vRow,"r_host");
+	var rIpaddr  = bindDs.getColumn(vRow,"r_ipaddr");
+	var rTable  = bindDs.getColumn(vRow,"r_table");
+	var rDb  = bindDs.getColumn(vRow,"r_db");
+	var rSid  = bindDs.getColumn(vRow,"r_sid");
+	var rSvcid  = bindDs.getColumn(vRow,"r_svcid");
+	var rFileconts  = bindDs.getColumn(vRow,"r_fileconts");
+	
+	var qry = this.dsCond.getColumn(0,'query');
+	var contsLen = 0;
+	var descLen = 0;
+	var fileLen = 0;
+	
+	var contsIdx = -1;
+	var descIdx = -1;
+	var fileIdx = -1;
+
+	if(!Ex.isEmpty(rConts)) {
+		contsLen = rConts.length;
+		contsIdx = rConts.indexOf(qry);
+	}
+
+	if(!Ex.isEmpty(rDesc)) {
+		descLen = rDesc.length;
+		descIdx = rDesc.indexOf(qry);
+	}
+	
+	if(!Ex.isEmpty(rFileconts)) {
+		fileLen = rFileconts.length;
+		fileIdx = rFileconts.indexOf(qry);
+	}
+
+	
+	if(!Ex.isEmpty(rTitle)) {
+		rtnVal = "<fs v='10'><fc v='#6759dd'>[ "+rTitle+" ]</fc></fs>";
+	}
+		
+	if(!Ex.isEmpty(rType)) {
+		rtnVal += "  >  "+rType;
+	}
+		
+	if(!Ex.isEmpty(rConts)) {
+			if(contsIdx!=-1) {
+				if(contsLen > 510) {
+					if(contsIdx>500) {
+						rtnVal += "\n" +rConts.substring(contsIdx-100,contsIdx+410)+"...";
+					} else {
+						rtnVal += "\n"+rConts.slice(0,510)+"...";
+					}
+				} else {		
+					rtnVal += "\n"+rConts;
+				}
+			} 
+	}
+	
+	if(contsIdx == -1) {
+		if(!Ex.isEmpty(rDesc)) {
+			if(descIdx!=-1) {
+				if(descLen > 510) {
+					if(descIdx>500) {
+						rtnVal += "\n" +rDesc.substring(descIdx-100,descIdx+410)+"...";
+					} else {
+						rtnVal += "\n"+rDesc.slice(0,510)+"...";
+					}
+				} else {
+					rtnVal += "\n"+rDesc;
+				}
+			}
+		}
+	}
+
+	if(contsIdx == -1 && descIdx == -1) {
+		if(!Ex.isEmpty(rFileconts)) {
+			if(fileLen > 510) {
+				if(fileIdx>490) {
+					rtnVal += "\n" +rFileconts.substring(fileIdx-110,fileIdx+420)+"...";
+				} else {
+					rtnVal += "\n"+rFileconts.slice(0,520)+"...";
+				}
+			} else {
+				rtnVal += "\n"+rFileconts;
+			}	
+		}
+	}
+	
+	rtnVal += "\n";
+	rtnVal += "\n";
+	//rtnVal += rItsysNm;
+	
+	//rtnVal += !Ex.isEmpty(rItsysNm)?" : "+rHost:rHost;
+	//rtnVal += !Ex.isEmpty(rHost)?" : "+rIpaddr:rIpaddr;
+	//rtnVal += !Ex.isEmpty(rIpaddr)?" : "+rTable:rTable;
+	//rtnVal += !Ex.isEmpty(rTable)?" : "+rDb:rDb;
+	//rtnVal += !Ex.isEmpty(rDb)?" : "+rSid:rSid;
+	//rtnVal += !Ex.isEmpty(rSid)?" : "+rSvcid:rSvcid;	
+	
+	//rtnVal += "\n";
+	
+		
+	//if(!Ex.isEmpty(rDatetime)) {
+	//	rtnVal +="<fc v='#8e8e8e'>"+rDatetime+"</fc>";
+	//}
+	
+	//if(!Ex.isEmpty(rName)) {
+	//	rtnVal += "<fc v='#8e8e8e'>";
+	//	rtnVal += !Ex.isEmpty(rDatetime)?" : "+rName:rName;
+	//	rtnVal += "</fc>";
+	//}
+	
+	rtnVal = nexacro.replaceAll(rtnVal,"<!HS>","<b v='true'><fc v='#e00021'>");
+	rtnVal = nexacro.replaceAll(rtnVal,"<!HE>","</fc></b>");
+
+	return rtnVal;
+};
+
+this.fnGridTitleExpr2  = function(bindDs, vRow) {
+
+	var rtnVal = "";
+	
+	var rName = bindDs.getColumn(vRow,"r_name");
+	var rDatetime = bindDs.getColumn(vRow,"r_datetime");
+	
+	if(!Ex.isEmpty(rDatetime)) {
+		rtnVal +=rDatetime;
+	}
+	
+	if(!Ex.isEmpty(rName)) {	
+		rtnVal += !Ex.isEmpty(rDatetime)?"  "+rName:rName;		
+	}
+	
+	rtnVal = nexacro.replaceAll(rtnVal,"<!HS>","");
+	rtnVal = nexacro.replaceAll(rtnVal,"<!HE>","");
+	
+	return rtnVal;
+}
+
+this.fnGridTitleExpr3  = function(objDs, vRow) {
+	var rtnVal = "";
+	
+	var colsId = objDs.getColumn(vRow, "collection");	
+	var dsId = "dsRst"+this.dsViewCd.lookup("ITM_VAL_1",colsId,"CMM_CD");
+	rtnVal = this.dsViewCd.lookup("ITM_VAL_1",colsId,"CMM_CD_NM")+"("+this[dsId].rowcount+")";
+	return rtnVal;
+};
+
+
+this.fnGridSubsumExpr  = function(objDs, vRow) {
+	var rtnVal = "";
+	
+	var colsId = objDs.getColumn(vRow-1, "collection");	
+	var dsId = "dsRst"+this.dsViewCd.lookup("ITM_VAL_1",colsId,"CMM_CD");
+	rtnVal = "총 "+this[dsId].rowcount+"건";
+	return rtnVal;
+};
+
+this.fnGridSubsumExpr2  = function(objDs, vRow) {
+	var rtnVal = "";
+	
+	var colsId = objDs.getColumn(vRow-1, "collection");	
+	rtnVal = this.dsViewCd.lookup("ITM_VAL_1",colsId,"CMM_CD_NM");
+
+	return rtnVal;
+};
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnClose" :			// 닫기
+			Ex.core.pclose(this);
+			break;
+		
+		case "btnSearchReset" :
+			this.fnSearchReset();
+			break;
+			
+		case "btnSearch" :	
+		
+			if( !Ex.util.checkValidate(this.divContent.form.divSearchArea, "fvValiCmp") )	return false;
+			
+			if(Ex.isEmpty(this.divContent.form.divSearchArea.form.edtSearchStr.value.trim())) {
+				var param = {id : "ERROR", msg : '검색어은(는) 필수 입력 항목입니다.'};
+				Ex.core.error(this, param);
+				return false;
+			}			
+	
+			this.fnSearch();
+			break;
+	}
+};
+
+
+this.fnCommOnkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if( e.keycode == 13 ) {
+		this.divContent.form.divSearchArea.form.btnSearch.setFocus();
+		this.fnSearch();
+		obj.setFocus();
+	}
+};
+
+
+this.fnBtnTabOnclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var arrBtn = [this.divContent.form.btnSiteMap, this.divContent.form.btnFavorite];
+	for(var i = 0; i < arrBtn.length; i++)
+		arrBtn[i].set_cssclass('btn_HOME_boardOff');
+		
+	obj.set_cssclass('btn_HOME_boardOn');
+	
+	if( this.GBN != obj.GBN ) {
+		this.GBN = obj.GBN;
+		this.fnSearchReset();
+		this.fnSearch();
+	}
+};
+
+
+// 동적 메뉴 버튼 onclick
+this.btnMenuOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var objApp = nexacro.getApplication();
+	var rowpos = objApp.gdsMenu.findRow('MENU_ID', obj.MENU_ID);
+	if( rowpos >= 0 ) {
+		Ex.core.pclose(this, obj.MENU_ID);
+	}
+	else {
+		var param = {id : "ERROR", msg : '연결된 메뉴정보가 올바르지 않습니다.'};
+		Ex.core.error(this, param);
+	}
+	
+	return;
+}
+
+
+this.btnMenuOnmouseenter = function(obj:nexacro.Div,e:nexacro.MouseEventInfo)
+{
+	obj.set_color('#F58220');
+};
+
+
+this.btnMenuOnmouseleave = function(obj:nexacro.Div,e:nexacro.MouseEventInfo)
+{
+	obj.set_color('#888888');
+};
+
+this.divContent_divColls_tabRst_tabRstAll_divColl_grdList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var objBindDs = obj.getBindDataset();
+
+	if(e.col==0) {
+		
+		var rowLevl = objBindDs.getRowLevel(objBindDs.rowposition);
+		
+		var colsId = objBindDs.getColumn(objBindDs.rowposition, "collection");		
+		if(rowLevl > 0) {
+			colsId = objBindDs.getColumn(objBindDs.rowposition-1, "collection");
+		}
+		
+		var fRow = this.dsViewCd.findRow("ITM_VAL_1",colsId);
+		var goId = nexacro.toNumber(this.dsViewCd.getColumn(fRow,"CMM_CD"));	
+		
+		if(goId > 0) {
+			this.divContent.form.divColls.form.tabRst.tabindex = goId;
+		}
+	} else if(e.col==1) {
+		
+		var rowLevl = objBindDs.getRowLevel(objBindDs.rowposition);
+		
+		if(rowLevl > 0) {
+			var colsId = objBindDs.getColumn(objBindDs.rowposition-1, "collection");
+			var fRow = this.dsViewCd.findRow("ITM_VAL_1",colsId);
+			var goId = nexacro.toNumber(this.dsViewCd.getColumn(fRow,"CMM_CD"));	
+		
+			if(goId > 0) {
+				this.divContent.form.divColls.form.tabRst.tabindex = goId;
+			}		
+		} else {
+			var vColl = objBindDs.getColumn(objBindDs.rowposition, "collection");
+			
+			switch(vColl) {
+			case "ITPORTAL_BOARD":			
+				var bNo = objBindDs.getColumn(objBindDs.rowposition, "r_pk");
+				this.fnOpenPop(bNo);
+				break;
+			default:
+			}
+		}
+	}
+};
+
+// 게시판 상세화면 팝업
+this.fnOpenPop = function(BOARD_NO)
+{
+	BOARD_NO = BOARD_NO||'';
+	var pPopType;
+	var sSize = '';
+	if( Ex.isEmpty(BOARD_NO) ) {
+		pPopType = 'I';
+		sSize = 'width=1000,height=750';
+	}
+	else {
+		sSize = 'width=1400,height=750';
+		pPopType = 'R';
+	}
+	
+	Ex.core.popup(
+			this,
+			'noticePop',
+			"fomm::FOMM0210_P01.xfdl",             		// <--- 팝업창 오픈 Url
+			{ title			: Ex.core.word('공지사항') + ' ' + Ex.core.word('상세'),
+			  pPopType		: pPopType,
+			  pBoardNo		: BOARD_NO
+			},     	// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			sSize                  // <--- width/height/modeless(프레임 처리 옵션)							
+		);
+}
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContent.form.divSearchArea.form.edtTitle" propid="value" datasetid="dsCond" columnid="TITLE"/>
+      <BindItem id="item1" compid="divContent.form.divSearchArea.form.stcReqId" propid="value" datasetid="dsCond" columnid="SEARCH_TEXT"/>
+      <BindItem id="item2" compid="divContent.form.divSearchArea.form.stcReqDt" propid="value" datasetid="dsCond" columnid="SEARCH_TEXT"/>
+      <BindItem id="item3" compid="divContent.form.divSearchArea.form.calFrReqDt" propid="value" datasetid="dsCond" columnid="FR_REQ_DT"/>
+      <BindItem id="item4" compid="divContent.form.divSearchArea.form.cboReqStatCd" propid="value" datasetid="dsCond" columnid="REQ_STAT_CD"/>
+      <BindItem id="item5" compid="divContent.form.divSearchArea.form.edtReqId" propid="value" datasetid="dsCond" columnid="REQ_ID"/>
+      <BindItem id="item6" compid="divContent.form.divSearchArea.form.calToReqDt" propid="value" datasetid="dsCond" columnid="TO_REQ_DT"/>
+      <BindItem id="item7" compid="divContent.form.divSearchArea.form.chkMyReq" propid="value" datasetid="dsCond" columnid="MY_REQ_YN"/>
+      <BindItem id="item8" compid="divContent.form.divSearchArea.form.edtSearchStr" propid="value" datasetid="dsCond" columnid="query"/>
+      <BindItem id="item9" compid="divContent.form.divSearchArea.form.edtCoNm" propid="value" datasetid="dsCond" columnid="CO_NM"/>
+      <BindItem id="item10" compid="divContent.form.divSearchArea.form.edtDeptNm" propid="value" datasetid="dsCond" columnid="DEPT_NM"/>
+      <BindItem id="item21" compid="divContent.form.divSearchArea.form.calEndDate" propid="value" datasetid="dsCond" columnid="endDate"/>
+      <BindItem id="item22" compid="divContent.form.divSearchArea.form.calBeginDate" propid="value" datasetid="dsCond" columnid="startDate"/>
+    </Bind>
+  </Form>
+</FDL>

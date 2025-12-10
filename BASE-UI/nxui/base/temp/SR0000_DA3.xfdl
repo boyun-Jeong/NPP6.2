@@ -1,0 +1,667 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="CT0110_W" classname="top" left="0" top="0" titletext="계약 등록 신청/조회" onload="form_onload" scrolltype="none" cssclass="" height="720" width="1600">
+    <Layouts>
+      <Layout width="1600" height="720" mobileorientation="landscape">
+        <Div id="divSearchArea" taborder="0" left="0" top="0" height="79" right="0" cssclass="div_WF_divSearchArea" text="">
+          <Layouts>
+            <Layout>
+              <Static id="stcCntrReqYY" taborder="4" text="평가기간" left="20" top="13" width="110" height="24" cssclass="sta_WF_schTitle"/>
+              <Static id="Static00" taborder="5" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Button id="btnSearch" taborder="2" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Button id="btnSearchReset" taborder="3" top="13" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+              <Static id="Static00_00_00_00_00_00_00" taborder="6" left="316.00" top="10" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" bottom="0"/>
+              <Static id="stcCntrReqDeptNm" taborder="7" text="수행업체명" left="20" top="42" width="90" height="24" cssclass="sta_WF_schTitle"/>
+              <Static id="Static00_00_00_00_00_00_00_00" taborder="8" left="Static00_00_00_00_00_00_00:236" top="10" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" bottom="0"/>
+              <Static id="Static00_00_00_00_00_00_00_00_00" taborder="11" left="Static00_00_00_00_00_00_00_00:236" top="10" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" bottom="0"/>
+              <Static id="stcCntrReqNo" taborder="9" text="계약번호" left="346.00" top="13" width="76" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtCntrReqNo" taborder="1" top="13" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown" width="150" left="stcCntrReqNo:10"/>
+              <Static id="stcCntrReqName" taborder="10" text="계약명" left="612.00" top="13" width="76" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtCntrReqName" taborder="0" left="stcCntrReqName:10" top="13" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown" width="150"/>
+              <Static id="stcCntrReqDeptNm00" taborder="12" text="요청유형" left="346.00" top="42" width="90" height="24" cssclass="sta_WF_schTitle"/>
+              <Button id="btnSearchDept" taborder="14" top="42" height="24" cssclass="btn_WF_SearchIcon" right="Static00_00_00_00_00_00_00:0" width="24" onclick="fnCommbtnPopOnclick" text=""/>
+              <Edit id="edtPlanUserNm01" taborder="13" left="94" top="42" height="24" right="btnSearchDept:0" cssclass="edt_WF_normal" readonly="true" readonlyYn="Y" validationGroup="fvValiCmp" validation="희망부서;NULL" validationCheckReadonly="false" text=""/>
+              <Combo id="cboCntrDcdCd" taborder="15" left="698.00" top="42" height="24" cssclass="cbo_WF_normal" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsCntcCd" onkeydown="fnCommOnkeydown" right="750"/>
+              <Static id="stcCntrReqDeptNm01" taborder="16" text="평가상태" left="612.00" top="42" width="90" height="24" cssclass="sta_WF_schTitle"/>
+              <Static id="Static00_00_00" taborder="17" text="~" left="197.00" top="14" width="12" height="24" textAlign="center"/>
+              <Calendar id="calBizEdate" taborder="18" left="214.00" top="14" height="24" cssclass="cal_WF_normal" validationGroup="fvValiCmp" validation="사업종료일;NULL" width="100"/>
+              <Calendar id="calBizSdate" taborder="19" left="95.00" top="14" height="24" cssclass="cal_WF_normal" validationGroup="fvValiCmp" validation="사업시작일;NULL" width="100"/>
+              <Combo id="cboCntrDcdCd00" taborder="20" left="432.00" top="42" height="24" cssclass="cbo_WF_normal" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsCntcCd" onkeydown="fnCommOnkeydown" right="1016"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00" taborder="1" left="0" top="divSearchArea:0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="stcGrdTitle" taborder="3" text="SLA보고서" left="0" top="Static00:0" width="140" height="24" cssclass="sta_WF_gridTitle"/>
+        <Grid id="grdList" taborder="2" left="0" top="stcGrdTitle:10" bottom="0" binddataset="dsData" cssclass="grd_WF_normal" autofittype="col" right="2" useSort="true" suppresslevel="sameskip" oncellclick="grdCtCntrReq_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="200"/>
+                <Column size="200"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="150"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="계약번호"/>
+                <Cell col="1" text="계약명"/>
+                <Cell col="2" text="요청제목"/>
+                <Cell col="3" text="수행업체명"/>
+                <Cell col="4" text="요청유형"/>
+                <Cell col="5" text="평가요청일"/>
+                <Cell col="6" text="평가기간"/>
+                <Cell col="7" text="평가상태"/>
+              </Band>
+            </Format>
+            <Format id="excel01">
+              <Columns>
+                <Column size="40"/>
+                <Column size="70"/>
+                <Column size="130"/>
+                <Column size="200"/>
+                <Column size="200"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="212"/>
+                <Column size="150"/>
+                <Column size="120"/>
+                <Column size="80"/>
+                <Column size="150"/>
+                <Column size="150"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="150"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" text="예산구분"/>
+                <Cell col="2" text="계약번호"/>
+                <Cell col="3" text="기안문서번호"/>
+                <Cell col="4" text="사업번호"/>
+                <Cell col="5" text="계약일자"/>
+                <Cell col="6" text="계약상태"/>
+                <Cell col="7" text="계약명"/>
+                <Cell col="8" text="업체명"/>
+                <Cell col="9" text="담당부서"/>
+                <Cell col="10" text="담당자"/>
+                <Cell col="11" text="금융기관"/>
+                <Cell col="12" text="금융계좌"/>
+                <Cell col="13" text="업체선정방식"/>
+                <Cell col="14" text="계약금액"/>
+                <Cell col="15" text="집행금액"/>
+                <Cell col="16" text="잔액"/>
+                <Cell col="17" text="계약시작일"/>
+                <Cell col="18" text="계약종료일"/>
+                <Cell col="19" text="계정과목"/>
+                <Cell col="20" text="자동연장여부"/>
+                <Cell col="21" text="대금지급주기"/>
+                <Cell col="22" text="계약서유무"/>
+                <Cell col="23" text="보안구분"/>
+              </Band>
+              <Band id="body">
+                <Cell suppress="1" expr="currow+1"/>
+                <Cell col="1" text="bind:CNTC_CD"/>
+                <Cell col="2" text="bind:CNTC_NO"/>
+                <Cell col="3" text="bind:CSL_NO" textAlign="left"/>
+                <Cell col="4" text="bind:BUSI_MNG_NO" textAlign="left"/>
+                <Cell col="5" text="bind:CNTC_DATE" displaytype="date" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="6" text="bind:CNTC_STAT_CD" textAlign="left"/>
+                <Cell col="7" text="bind:TITLE" textAlign="left"/>
+                <Cell col="8" text="bind:ENTP_NM" textAlign="left"/>
+                <Cell col="9" text="bind:CNTC_CHRG_DEPT_NM" textAlign="left"/>
+                <Cell col="10" text="bind:CNTC_CHRG_NM" textAlign="right"/>
+                <Cell col="11" text="bind:FN_ITT_NM"/>
+                <Cell col="12" text="bind:FAC"/>
+                <Cell col="13" text="bind:ENTP_SELT_MTD_CD"/>
+                <Cell col="14" textAlign="right" text="bind:TOT_CNTC_AMT"/>
+                <Cell col="15" textAlign="right"/>
+                <Cell col="16" textAlign="right"/>
+                <Cell col="17" text="bind:CNTC_START_DT" displaytype="date" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="18" text="bind:CNTC_END_DT" displaytype="date" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="19" text="bind:ACSJ_CD"/>
+                <Cell col="20" text="bind:AUTO_EXT_YN"/>
+                <Cell col="21" text="bind:PAY_CYCLE_CD"/>
+                <Cell col="22" text="bind:CNTC_EXIST_YN"/>
+                <Cell col="23" text="bind:CNTC_SECURITY_YN"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static00_00" taborder="4" left="0" top="stcGrdTitle:0" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divGrdTopBtn" taborder="5" width="191" visible="true" right="0" isButtonGroup="true" top="Static00:0" height="24">
+          <Layouts>
+            <Layout>
+              <Button id="btnAdd" taborder="0" text=" 신규등록" top="0" width="90" right="65" cssclass="btn_WF_add" onclick="fnCommbtnPopOnclick" height="24" visible="false"/>
+              <Button id="btnExcelDown" taborder="1" text="엑셀" top="0" width="60" right="0" cssclass="btn_WF_excelDown" onclick="fnCommOnclick" height="24" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="stcCnt" taborder="6" left="stcGrdTitle:-28.00" top="Static00:0" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsData"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="SCREEN_ID" type="STRING" size="256"/>
+          <Column id="CT_SDATE" type="STRING" size="256"/>
+          <Column id="CT_EDATE" type="STRING" size="256"/>
+          <Column id="CNTC_NO" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="CSL_NO" type="STRING" size="256"/>
+          <Column id="CNTC_CHRG_DEPT_NM" type="STRING" size="256"/>
+          <Column id="CNTC_CHRG_DEPT_ID" type="STRING" size="256"/>
+          <Column id="CNTC_CHRG_ID" type="STRING" size="256"/>
+          <Column id="CNTC_CHRG_NM" type="STRING" size="256"/>
+          <Column id="ENTP_NM" type="STRING" size="256"/>
+          <Column id="ENTP_CD" type="STRING" size="256"/>
+          <Column id="CNTC_CD" type="STRING" size="256"/>
+          <Column id="REQ_STAT_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsData" oncolumnchanged="fnCommOncolumnchanged"/>
+      <Dataset id="dsCntrStCd"/>
+      <Dataset id="dsCntrTypeCd"/>
+      <Dataset id="dsCntcCd" oncolumnchanged="fnCommOncolumnchanged"/>
+      <Dataset id="dsApprovalCd"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ CT0110_W
+* 화면(명)		︰ 계약서등록
+* 메뉴(경로)		︰ 사업계획/계약관리 > 계약관리
+* 화면 설명		︰ 계약서등록
+* 작성자			︰ WEMB
+* 작성일			︰ 2024.05.27
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2024.05.27	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_WorkFlow.xjs";
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.screenId = 'CT0110_W';
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+	this.fnSearchReset();	// 검색조건 초기화
+	this.fnSearch();		// 조회
+}
+
+
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+	this.dsCond.setColumn(0, 'SCREEN_ID', this.screenId);
+	
+	var CNTR_YY_ST = Ex.util.today().substring(0, 4);
+	this.divSearchArea.form.calBizSdate.set_value(CNTR_YY_ST); //금년 1월1일
+	//금년 마지막날 세팅
+	this.divSearchArea.form.calBizEdate.set_value(nexacro.toNumber(CNTR_YY_ST)+1); 
+	var CNTR_YY_ED = Ex.util.addDate(this.dsCond.getColumn(0, 'CT_EDATE'), -1);
+	this.dsCond.setColumn(0, 'CT_EDATE', CNTR_YY_ED);
+	
+	this.divSearchArea.form.cboCntrStCd.set_index(0);
+	this.divSearchArea.form.cboCntrDcdCd.set_index(0);
+}
+
+// 변경 행 확인
+this.fnSearch = function()
+{
+	if( Ex.util.isUpdated(this.dsCtCntrReq) ) {
+		var param = {	id : "pSearchConfirm"
+					  , msg : "10001"
+					  , arrparam : []
+					  , msgtype : "I"};
+		Ex.core.confirm(this, param);
+		return;
+	}
+	
+	this.fnSearch01();
+}
+
+// 조회
+this.fnSearch01 = function()
+{
+	// transaction
+	var sTranId = "select01";         	// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "CT0110W/select01";	// 서비스명
+    var sInDs = "dsCond=dsCond";            // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData=dsData";           // 서버에서 수신할 데이타셋
+    var sArg = "";                   		// 서버 @ParamVariable 인자와 맵핑됨
+    
+    /**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;
+		
+		case "wfInfoCompleted" :
+			this.dsWfProc = this.wffnGetOptDsByWfProcCd();
+			
+			var dsTemp = new Dataset;
+			var oParam = {
+				wfProcCd : ''
+				,optStr: 'NO'
+				,filter	: ''
+				,objDs	: dsTemp
+			}
+			this.wffnGetCger(oParam);
+			
+			var dsRow = this.dsData.rowposition;
+			var reqId = this.dsData.getColumn(dsRow, "REQ_ID");
+			var reqNm = this.dsData.getColumn(dsRow, "REQ_TMPLAT_NM");
+			var reqTmplatId = this.dsData.getColumn(dsRow, "REQ_TMPLAT_ID");
+			var reqTmplatVer = this.dsData.getColumn(dsRow, "REQ_TMPLAT_VER");
+			var srInfoUrl = this.dsData.getColumn(dsRow, "SR_INFO_URL");
+			var reqUrl = this.dsData.getColumn(dsRow, "REQ_URL");
+			var attachUseYn = this.dsData.getColumn(dsRow, "ATTACH_USE_YN");
+
+			Ex.core.popup(
+				this,											// <--- 팝업 실행 스코프
+				"srReqWritePop",								// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"sr::SR0000_W.xfdl",							// <--- 팝업창 오픈 Url
+				{
+					title : Ex.core.word("요청서"),
+					pWF_FUNC_CD	: "WF_FUNC_00",	//등록
+					pREQ_ID : reqId,
+					pREQ_TMPLAT_ID : reqTmplatId,
+					pREQ_TMPLAT_VER : reqTmplatVer,
+					pSR_INFO_URL : srInfoUrl,
+					pSR_REQ_URL : reqUrl,
+					pATTACH_USE_YN : attachUseYn,
+					pDsWfProc : this.dsWfProc,
+					pDsdWfCger : dsTemp,
+					pEditYn : false
+				},												// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				//"width=1500,height=817,useCloseButton=false"	// <--- width/height/modeless(프레임 처리 옵션)
+				"autosize,useCloseButton=false"
+			);
+			break;	
+		
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	if(Ex.isEmpty(varValue))
+		return;		
+		
+	var tempDs = new Dataset();
+	tempDs.loadXML(varValue);
+	
+	switch(pID)
+	{
+		case "cntrReqPop" :
+			if( varValue.toUpperCase() == 'SAVE' )
+				this.fnSearch();
+			break;
+			
+		case "selCompanyPop" :	// 계약업체 선택
+			var COMPANY_ID	= tempDs.getColumn(0, 'COMPANY_ID');
+			var COMPANY_NM	= tempDs.getColumn(0, 'COMPANY_NM');
+			this.dsCond.setColumn(0, 'ENTP_CD', COMPANY_ID);
+			this.dsCond.setColumn(0, 'ENTP_NM', COMPANY_NM);
+			break;
+			
+		case "selUser" :	// 담당자 선택
+			var USER_ID 	= tempDs.getColumn(0, 'USER_ID');
+			var USER_NM 	= tempDs.getColumn(0, 'USER_NM');
+			var MOBILE_NUM 	= tempDs.getColumn(0, 'MOBILE_NUM');
+			var DEPT_CD 	= tempDs.getColumn(0, 'DEPT_CD');
+			var DEPT_NM 	= tempDs.getColumn(0, 'DEPT_NM');
+			this.dsCond.setColumn(0, 'CNTC_CHRG_NM', USER_NM);
+			this.dsCond.setColumn(0, 'CNTC_CHRG_ID', USER_ID);
+			break;
+						
+		case "selDept" :	// 부서 선택
+			var DEPT_CD	= tempDs.getColumn(0, 'DEPT_CD');
+			var DEPT_NM	= tempDs.getColumn(0, 'DEPT_NM');
+			this.dsCond.setColumn(0, 'CNTC_CHRG_DEPT_ID', DEPT_CD);
+			this.dsCond.setColumn(0, 'CNTC_CHRG_DEPT_NM', DEPT_NM);
+			break;
+			
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+		case "pSearchConfirm" :
+			this.fnSearch01();
+			break;
+	}
+}
+
+this.fnExportExcelCallback = function()
+{
+	// TODO: 기본 그리드로 돌아가고자함..
+	this.grdList.set_formatid("default");
+}
+
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.grdList.displayRowType();
+
+	// 공통코드 조회
+	this.fnGetCmmCd();	
+	this.dsApprovalCd.set_filterstr("CD_NO == 124 || CD_NO == 125 || CD_NO == 129 || Ex.isEmpty(CD_NO)");
+	
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divGrdTopBtn.form.btnAdd];	// 쓰기
+	Ex.util.setBtnVisible(this, 'write', arrBtn);
+		arrBtn = [this.divGrdTopBtn.form.btnExcelDown];	// 엑셀
+	Ex.util.setBtnVisible(this, 'exclDown', arrBtn);
+	
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divGrdTopBtn, 'right', true);
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : [	'REQ_STAT_CD'		,	'CNTC_CD',	 		'CNTR_REQ_TYPE_CD']		// 조회할 상위코드
+		,codeDiv: [	'WORKFLOW_CD'		,	'CNTR_CD',	 		'CNTR_CD']		// 조회할 코드의 업무구분
+		,optStr	: [	'ALL'				,	'ALL',		 		'ALL']					// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: [	'Y'					,	'Y',				'Y']				// 사용여부
+		,filter	: [	''					,	'',				'']					// filterStr
+		,objDs	: [ this.dsApprovalCd 	,	this.dsCntcCd,		this.dsCntrTypeCd]					// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+	
+}
+
+/*
+this.fnOpenPop = function(pPopType, CNTR_REQ_ID)
+{
+	if( Ex.isEmpty(pPopType) )	pPopType = 'R';		// default 조회
+	
+	var CNTR_REQ_ST_CD 	= '';	// 계약진행상태 코드
+	var CONTRACT_ID		= '';	// 계약 PK
+	if( !Ex.isEmpty(CNTR_REQ_ID) ) {
+		var rowpos = this.dsCtCntrReq.findRow("CNTR_REQ_ID", CNTR_REQ_ID);
+		CNTR_REQ_ST_CD 	= this.dsCtCntrReq.getColumn(rowpos, 'CNTR_REQ_ST_CD');
+		CONTRACT_ID 	= this.dsCtCntrReq.getColumn(rowpos, 'CONTRACT_ID');
+	}
+	
+	Ex.core.popup(
+			this,
+			'cntrReqPop',
+			"ct::CT0110_P01.xfdl",             		// <--- 팝업창 오픈 Url
+			{ title			: Ex.core.word('계약등록요청') + ' ' + Ex.core.word('상세'),
+			  pScreenId		: this.screenId,
+			  pPopType		: pPopType,
+			  pCntrReqId	: CNTR_REQ_ID||'',
+			  pContractId	: CONTRACT_ID||'',
+			  pCntrReqStCd	: CNTR_REQ_ST_CD||''
+			},     	// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			"width=1100,height=800"                  // <--- width/height/modeless(프레임 처리 옵션)							
+		);
+}
+*/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+
+this.fnCommbtnPopOnclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var popId	= '';
+	var url		= '';
+	var oParam	= {};
+		
+	switch(obj.name)
+	{			
+	
+		case "btnAdd" : 
+			this.dsWfProc = this.wffnGetOptDsByWfProcCd();
+			
+			//var dsRow = this.dsWfReqTmplatMt.rowposition;
+			var reqTmplatId = 'WFT240011';
+			var reqTmplatVer = '1';
+			var reqNm = '신규신청';
+			
+			/* 부모창에서 팝업 호출시 pDsFormAdd_○○○ 형태의 변수를 dsFormInfo 데이터셋에 ○○○에 해당하는 컬럼이 존재하지 않으면 컬럼을 추가해 주고 넘어온 값을 삽입한다.
+			ex) pDsFormAdd_USER_NM → dsFormInfo에 [USER_NM] 컬럼이 추가된다. */
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"srReqWritePop",		// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"sr::SR0000_W.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : Ex.core.word("요청서"),
+					pWF_FUNC_CD	: "WF_FUNC_00",	//등록
+					pREQ_ID : "",
+					pREQ_TMPLAT_ID : reqTmplatId,
+					pREQ_TMPLAT_VER : reqTmplatVer,
+					pDsWfProc : this.dsWfProc,
+					pEditYn : true,
+					pDsFormAdd_USER_ID	: this.pUserId,
+					pDsFormAdd_USER_NM	: this.pUserNm,
+					pDsFormAdd_MOBILE_NUM : this.pMobileNum
+				},												// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"autosize,useCloseButton=false"						
+			); 
+			//TODO 요청서 팝업 닫힐 때 재조회 수행
+			break;			
+	
+		case "btnSearchUser" :		// 담당자 검색
+			popId	= 'selUser';
+			url		= 'fomm::FOMM0000_P01.xfdl';
+			oParam	= {
+				title		: Ex.core.word('담당자') + ' ' + Ex.core.word('선택')
+			  , pSelType	: 'S'
+			};
+			break;
+						
+		case "btnSearchDept" :		// 부서 선택
+			popId	= 'selDept';
+			url		= 'fomm::FOMM0000_P04.xfdl';
+			oParam	= {
+				title		: Ex.core.word('담당부서') + ' ' + Ex.core.word('선택')
+			  , pSelType	: 'S'
+			};
+			break;
+						
+		case "btnSearchDeptWish" :		// 서비스
+			popId	= 'selDeptWish';
+			url		= 'fomm::FOMM0000_P04.xfdl';
+			oParam	= {
+				title		: Ex.core.word('희망부서') + ' ' + Ex.core.word('선택')
+			  , pSelType	: 'S'
+			};
+			break;
+		
+		case "btnSearchCompany" :	// 계약업체 검색
+			popId	= 'selCompanyPop';
+			url		= "ms::MS0500_P02.xfdl",
+			oParam	= {
+				title		: Ex.core.word('계약업체') + ' ' + Ex.core.word('선택')
+			  , pSelType	: 'S'
+			};
+			break;
+	}
+	
+	Ex.core.popup(
+		this,
+		popId,
+		url,           		// <--- 팝업창 오픈 Url
+		oParam,
+		"autosize"
+	);
+};
+
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{	
+		case "btnSearch" :		// 검색
+			this.fnSearch();
+			break;
+		
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;
+			
+		case "btnExcelDown" :	// 엑셀다운
+			this.grdList.set_formatid("excel01");
+			var oInfo = {
+   				Grid	: [this.grdList],
+   				Sheet	: ['계약서조회'],
+   				FileNm	: ["SPP_계약서조회"],
+   				ExportType : "XLSX",
+   				ExportId : "excel01"
+   			};
+			this.gfnExportExcel(this, oInfo);
+			break;
+	}
+}
+
+// 공통 oncloumnchanged event : dataset
+// Grid rowFlag 처리르 위해 호출 필요
+this.fnCommOncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+
+// 공통 onkeydown event : component
+this.fnCommOnkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == '13')
+	{
+		this.divSearchArea.form.btnSearch.setFocus();
+		this.fnSearch();
+		obj.setFocus();
+	}
+};
+
+/*
+this.grdCtCntrReq_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if( e.cell == obj.getBindCellIndex('body', 'CNTC_NM') )
+	{
+		var CNTR_REQ_ID = this.dsCtCntrReq.getColumn(this.dsCtCntrReq.rowposition, 'CNTR_REQ_ID');
+		var oAuth = Ex.util.getMenuAuth(this);
+		
+//		this.alert(""+oAuth.writeYn);
+		if(oAuth.writeYn == 'Y')		// 쓰기권한 확인
+			this.fnOpenPop('U', CNTR_REQ_ID);	// 쓰기권한 Y == 수정모드
+		else
+			this.fnOpenPop('R', CNTR_REQ_ID);	// 쓰기권한 N == 읽기모드
+		
+	}
+};
+*/
+this.grdCtCntrReq_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(e.row > - 1 && e.cell == obj.getBindCellIndex("body", "TITLE"))
+	{	
+		var dsRow = obj.getDatasetRow(e.row);
+		var reqTmplatId = obj.getBindDataset().getColumn(dsRow, "REQ_TMPLAT_ID");
+		var reqTmplatVer = obj.getBindDataset().getColumn(dsRow, "REQ_TMPLAT_VER");
+		var reqId = obj.getBindDataset().getColumn(dsRow, "REQ_ID");
+		
+		this.wffnSearchWfTmplat(reqTmplatId, reqTmplatVer, reqId);
+		
+		//TODO 
+	}
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearchArea.form.edtCntrReqNo" propid="value" datasetid="dsCond" columnid="CNTC_NO"/>
+      <BindItem id="item2" compid="divSearchArea.form.cboCntrStCd" propid="value" datasetid="dsCond" columnid="REQ_STAT_CD"/>
+      <BindItem id="item15" compid="divSearchArea.form.cboCntrDcdCd" propid="value" datasetid="dsCond" columnid="CNTC_CD"/>
+      <BindItem id="item4" compid="divSearchArea.form.edtCntrReqName" propid="value" datasetid="dsCond" columnid="TITLE"/>
+      <BindItem id="item5" compid="divSearchArea.form.edtPlanUserNm01" propid="value" datasetid="dsCond" columnid="CNTC_CHRG_DEPT_NM"/>
+      <BindItem id="item1" compid="divSearchArea.form.edtCntrReqName00" propid="value" datasetid="dsCond" columnid="CSL_NO"/>
+      <BindItem id="item3" compid="divSearchArea.form.edtSearchUser" propid="value" datasetid="dsCond" columnid="CNTC_CHRG_NM"/>
+      <BindItem id="item6" compid="divSearchArea.form.edtCompanyNm" propid="value" datasetid="dsCond" columnid="ENTP_NM"/>
+      <BindItem id="item8" compid="divSearchArea.form.calBizSdate" propid="value" datasetid="dsCond" columnid="CT_SDATE"/>
+      <BindItem id="item7" compid="divSearchArea.form.calBizEdate" propid="value" datasetid="dsCond" columnid="CT_EDATE"/>
+      <BindItem id="item9" compid="divSearchArea.form.cboCntrDcdCd00" propid="value" datasetid="dsCond" columnid="CNTC_CD"/>
+    </Bind>
+  </Form>
+</FDL>

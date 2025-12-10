@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="form" classname="top" left="0" top="0" titletext="서비스요청" onload="form_onload" scrolltype="none" cssclass="" height="250" width="675" font="normal 24pt/normal &quot;PretendardR&quot;" color="white" onclick="frHome_D00_onclick" scrollbartype="none">
+    <Layouts>
+      <Layout width="675" height="250" mobileorientation="landscape">
+        <Static id="Static02_00" taborder="13" left="107" top="202" width="140" height="2" background="#8FB6E8"/>
+        <Static id="stcGrdTitle" taborder="0" text="요청관리" left="10" top="10" width="140" height="24" cssclass="sta_WF_gridTitle"/>
+        <Div id="divIco01" taborder="1" left="20" top="102" width="36" height="32" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-ico07.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_00" taborder="2" left="20" top="178" width="36" height="32" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-ico08.png')"/>
+        <Static id="Static01" taborder="3" text="요청" left="20" top="divIco01:0" width="36" height="20" color="#4077bc" font="bold 15px &quot;KoPubL&quot;" textAlign="center" verticalAlign="middle"/>
+        <Static id="Static01_00" taborder="4" text="처리" left="20" top="divIco01_00:0" width="36" color="#4077bc" font="bold 15px &quot;KoPubL&quot;" textAlign="center" verticalAlign="middle" height="20"/>
+        <Static id="Static01_00_00" taborder="5" text="월별 요청(건)" left="10" top="stcGrdTitle:5" width="135" height="20" color="#2a538a" font="bold 15px 'KoPubL'" textAlign="left"/>
+        <Div id="divIco01_01" taborder="6" left="77" top="173" width="60" height="60" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-numbox03-off.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_00" taborder="7" left="147" top="173" width="60" height="60" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-numbox03-off.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01" taborder="8" left="217" top="173" width="60" height="60" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-numbox03-on.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Static id="Static02" taborder="12" left="107" top="127" width="140" height="2" background="#9de0d9"/>
+        <Div id="divIco01_01_02" taborder="9" left="77" top="97" width="60" height="60" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-numbox02-on.png')" text="">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_00_00" taborder="10" left="147" top="97" width="60" height="60" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-numbox02-off.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01_00" taborder="11" left="217" top="97" width="60" height="60" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-numbox02-off.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Static id="Static01_00_00_00" taborder="14" text="일별 요청(건)" left="309" top="39" width="135" height="20" color="#2a538a" font="bold 15px 'KoPubL'" textAlign="left" onclick="Static01_00_00_00_onclick"/>
+        <Static id="stcMonthB2" taborder="15" text="5월" left="77" top="70" width="60" height="24" color="#12407d" font="bold 14px 'KoPubL'" verticalAlign="middle" textAlign="center"/>
+        <Static id="stcMonthB1" taborder="16" text="6월" left="147" top="70" width="60" height="24" color="#12407d" font="bold 14px 'KoPubL'" verticalAlign="middle" textAlign="center"/>
+        <Static id="stcMonth" taborder="17" text="7월" left="217" top="70" width="60" height="24" color="#12407d" font="bold 14px 'KoPubL'" verticalAlign="middle" textAlign="center"/>
+        <Static id="stcReqCntB2" text="152" left="77" top="115" width="60" height="24" color="white" font="bold 18px 'PretendardR'" verticalAlign="middle" textAlign="center"/>
+        <Static id="stcReqCntB1" taborder="20" text="132" left="147" top="115" width="60" height="24" color="white" font="bold 18px 'PretendardR'" verticalAlign="middle" textAlign="center"/>
+        <Static id="stcReqCnt" taborder="21" text="146" left="217" top="115" width="60" height="24" color="white" font="bold 18px 'PretendardR'" verticalAlign="middle" textAlign="center"/>
+        <Static id="stcProcCntB2" taborder="22" text="139" left="77" top="191" width="60" height="24" color="white" font="bold 18px 'PretendardR'" verticalAlign="middle" textAlign="center"/>
+        <Static id="stcProcCntB1" taborder="23" text="132" left="147" top="191" width="60" height="24" color="white" font="bold 18px 'PretendardR'" verticalAlign="middle" textAlign="center"/>
+        <Static id="stcProcCnt" taborder="24" text="147" left="217" top="191" width="60" height="24" color="white" font="bold 18px 'PretendardR'" verticalAlign="middle" textAlign="center"/>
+        <Div id="divIco01_01_01_00_00" taborder="26" left="591.00" top="62" width="74" height="33" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-numcircle-green.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01_00_00_00" taborder="27" left="591" top="97" width="74" height="33" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-numcircle-green.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01_00_00_01" taborder="28" left="591" top="132" width="74" height="33" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-numcircle-green.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01_00_00_03" taborder="30" left="591" height="33" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-numcircle-red.png')" width="74" top="202">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Static id="stcCntStep01" taborder="31" text="22" top="62" width="31" height="33" color="white" font="15px 'KoPubL'" verticalAlign="middle" textAlign="center" right="9" padding="0px 7px 0px 0px"/>
+        <Static id="stcCntStep02" taborder="32" text="14" top="97" width="31" height="33" color="white" font="15px 'KoPubL'" verticalAlign="middle" textAlign="center" right="9" padding="0px 7px 0px 0px"/>
+        <Static id="stcCntStep03" taborder="33" text="8" top="132" width="31" height="33" color="white" font="15px 'KoPubL'" verticalAlign="middle" textAlign="center" right="9" padding="0px 7px 0px 0px"/>
+        <Static id="stcCntStep00" taborder="35" text="0" top="202" width="31" height="33" color="white" font="15px 'KoPubL'" verticalAlign="middle" textAlign="center" right="9" padding="0px 7px 0px 0px"/>
+        <Static id="stcMonthB2_00_00_00_01_01" taborder="36" text="요청" top="62" width="30" height="33" font="12px &quot;KoPubL&quot;" verticalAlign="middle" textAlign="center" right="50" color="#61636b"/>
+        <Static id="stcMonthB2_00_00_00_01_01_00" taborder="37" text="결재" top="97" width="30" height="33" font="12px &quot;KoPubL&quot;" verticalAlign="middle" textAlign="center" right="50" color="#61636b"/>
+        <Static id="stcMonthB2_00_00_00_01_01_00_00" taborder="38" text="접수중" top="131" width="35" height="33" font="12px &quot;KoPubL&quot;" verticalAlign="middle" textAlign="center" right="47" color="#61636b"/>
+        <Static id="stcMonthB2_00_00_00_01_01_00_00_00_00" taborder="40" text="지연" top="203" width="30" height="33" font="12px &quot;KoPubL&quot;" verticalAlign="middle" textAlign="center" right="51" color="#61636b"/>
+        <Div id="divChart" taborder="46" left="279.00" top="52" width="290" url="comm::comHighChartDiv.xfdl" async="true" bottom="-10" border="0px none" text=""/>
+        <Static id="Static00" taborder="1" text="Static00" left="42.81%" top="10" width="1" cssclass="sta_TPF_line" bottom="10" background="url('theme://MIRAE_IMAGE_SET/HOME/main-linedashed.png')"/>
+        <Static id="Static00_00" taborder="25" text="Static00" left="574.00" top="40" width="1" cssclass="sta_TPF_line" bottom="10" background="url('theme://MIRAE_IMAGE_SET/HOME/main-linedashed.png')"/>
+        <Div id="divIco01_01_01_00_01" taborder="41" left="570.00" top="74" width="10" height="10" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-numbox02-on.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01_00_01_00" taborder="42" left="570.00" top="109" width="10" height="10" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-numbox02-on.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01_00_01_00_00" taborder="43" left="570.00" top="144" width="10" height="10" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-numbox02-on.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01_00_01_00_01_00" taborder="45" left="567.00" top="213" width="14" height="14" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-circle-red.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Static id="stcMonth00" taborder="47" text="Today" left="582" top="36" width="78" height="24" color="#12407d" font="bold 15px 'KoPubL'" verticalAlign="middle" textAlign="center"/>
+        <Button id="btnMore" taborder="48" top="11" width="20" height="20" onclick="fnCommOnclick" right="10" border="0px none" cursor="pointer" cssclass="btn_WF_hyperlink"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="PJT_ID">11</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsReqData"/>
+      <Dataset id="dsChart">
+        <ColumnInfo>
+          <Column id="GBN" type="STRING" size="256"/>
+          <Column id="DATE" type="STRING" size="256"/>
+          <Column id="CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="GBN">요청</Col>
+            <Col id="DATE">25일</Col>
+            <Col id="CNT">31</Col>
+          </Row>
+          <Row>
+            <Col id="GBN">요청</Col>
+            <Col id="DATE">26일</Col>
+            <Col id="CNT">18</Col>
+          </Row>
+          <Row>
+            <Col id="GBN">요청</Col>
+            <Col id="DATE">29일</Col>
+            <Col id="CNT">23</Col>
+          </Row>
+          <Row>
+            <Col id="GBN">요청</Col>
+            <Col id="DATE">30일</Col>
+            <Col id="CNT">21</Col>
+          </Row>
+          <Row>
+            <Col id="GBN">요청</Col>
+            <Col id="DATE">31일</Col>
+            <Col id="CNT">25</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsChart1">
+        <ColumnInfo>
+          <Column id="GBN" type="STRING" size="256"/>
+          <Column id="DATE" type="STRING" size="256"/>
+          <Column id="CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="GBN">요청</Col>
+            <Col id="DATE">25일</Col>
+            <Col id="CNT">31</Col>
+          </Row>
+          <Row>
+            <Col id="GBN">요청</Col>
+            <Col id="DATE">26일</Col>
+            <Col id="CNT">18</Col>
+          </Row>
+          <Row>
+            <Col id="GBN">요청</Col>
+            <Col id="DATE">29일</Col>
+            <Col id="CNT">23</Col>
+          </Row>
+          <Row>
+            <Col id="GBN">요청</Col>
+            <Col id="DATE">30일</Col>
+            <Col id="CNT">21</Col>
+          </Row>
+          <Row>
+            <Col id="GBN">요청</Col>
+            <Col id="DATE">31일</Col>
+            <Col id="CNT">25</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ frHome_D00
+* 화면(명)		︰ - 
+* 메뉴(경로)	︰ -
+* 화면 설명	︰ 대시보드 우측 내 정보 Div
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	var sTranId = "select12";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJHOME/select12";            // 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsReqData=dsReqData dsChart=dsChart";       	// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select12":
+			this.fnDrawChart();
+			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch(pID)
+	{
+	
+	}
+}
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	this.fnSearch();
+}
+
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['DAT_TYPE_CD']			// 조회할 상위코드
+		,codeDiv: ['CMM_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['ALL']			// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y']				// 사용여부
+		,filter	: ['']				// filterStr
+		,objDs	: [this.dsDatTypeCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util;
+}
+
+
+
+this.fnDrawChart = function()
+{
+	
+	var arrX = [];	// X축 표기명
+	for(i=0; i< 5;i++)
+		arrX[i] = this.dsChart.getColumn(0, "DAYM"+i);
+		
+		
+	//데이터 가공 시작
+	this.dsChart1.clearData();
+	for(var i=0; i<5; i++)
+	{
+		var aRow = this.dsChart1.addRow();
+		this.dsChart1.setColumn(aRow, "CNT", this.dsChart.getColumn(0, "DAYR"+aRow));
+	}
+	//데이터 가공 끝
+		
+
+	var oParam = {
+		  fontFamily	: 'bold 12px PretendardR'
+		, title 		: ''
+		, align 		: ''
+		, subtitle 		: ''
+		, subalign		: ''
+		, xAxis			: arrX
+		, valuesuffix	: ''
+		, objDs			: this.dsChart1
+		, datalabel		: false
+		, yAxis			: {
+					  title		: ['']
+					, valueCol	: ['CNT']
+					, color		: ['#656FF2', '#38529B']
+					, colorCol  : ['#656FF2', '#38529B']
+		  }
+		, legend : false
+	};
+	var chartScript = this.divChart.form.hcfnGetBasicColumnChart(oParam);
+	this.divChart.form.drawChart(chartScript);
+}
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var objApp = nexacro.getApplication();
+	var rowpos = -1;
+	
+	switch(obj.name)
+	{
+		case "btnMore" :	rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SR0122_W');	break;	// 요청관리
+		//case "btnMore2" :	rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SV0110_W');	break;	// 구성현황(운영)
+	}
+	
+	if( rowpos >= 0 )
+		Ex.core.openLink(this, objApp.gdsMenu.getColumn(rowpos, 'MENU_ID'), '');
+}
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="stcReqCntB2" propid="text" datasetid="dsReqData" columnid="LAST_MONTH_REQ"/>
+      <BindItem id="item1" compid="stcReqCntB1" propid="text" datasetid="dsReqData" columnid="BEFORE_MONTH_REQ"/>
+      <BindItem id="item2" compid="stcReqCnt" propid="text" datasetid="dsReqData" columnid="THIS_MONTH_REQ"/>
+      <BindItem id="item3" compid="stcProcCntB2" propid="text" datasetid="dsReqData" columnid="LAST_MONTH_COM"/>
+      <BindItem id="item4" compid="stcProcCntB1" propid="text" datasetid="dsReqData" columnid="BEFORE_MONTH_COM"/>
+      <BindItem id="item5" compid="stcProcCnt" propid="text" datasetid="dsReqData" columnid="THIS_MONTH_COM"/>
+      <BindItem id="item6" compid="stcMonthB2" propid="text" datasetid="dsReqData" columnid="LAST_MONTH"/>
+      <BindItem id="item7" compid="stcMonthB1" propid="text" datasetid="dsReqData" columnid="BEFORE_MONTH"/>
+      <BindItem id="item8" compid="stcMonth" propid="text" datasetid="dsReqData" columnid="THIS_MONTH"/>
+      <BindItem id="item9" compid="stcCntStep01" propid="text" datasetid="dsReqData" columnid="DAY_REQ"/>
+      <BindItem id="item10" compid="stcCntStep00" propid="text" datasetid="dsReqData" columnid="CHK_DELAY"/>
+      <BindItem id="item11" compid="stcCntStep03" propid="text" datasetid="dsReqData" columnid="DAY_REQ"/>
+      <BindItem id="item12" compid="stcCntStep02" propid="text" datasetid="dsReqData" columnid="APPC"/>
+    </Bind>
+  </Form>
+</FDL>

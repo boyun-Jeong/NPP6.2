@@ -1,0 +1,562 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM0700_P02" left="0" top="0" width="1012" height="500" titletext="표준체크리스트 등록/수정(팝업)" onload="form_onload">
+    <Layouts>
+      <Layout width="1012" height="500">
+        <Static id="stcBackTop" taborder="0" left="0" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="stcBackLeft" taborder="24" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" left="0"/>
+        <Static id="stcBg01" taborder="1" left="20" top="20" height="34" cssclass="sta_WF_inputBg" right="20"/>
+        <Static id="stcCompanyId" taborder="2" text="체크리스트 명" cssclass="sta_WF_inputTitle_E" left="20" top="20" width="130" height="34" style="align:left middle;"/>
+        <Static id="stcBg02" taborder="4" left="20" top="53" height="34" cssclass="sta_WF_inputBg" right="20"/>
+        <Static id="stcCompanyNm" taborder="5" text="개발단계" cssclass="sta_WF_inputTitle_E" left="20" top="53" width="130" height="34" style="align:left middle;"/>
+        <Static id="stcCorpNo" taborder="7" text="테스크유형" cssclass="sta_WF_inputTitle_E" left="33%" top="53" width="124" height="34" style="align:left middle;"/>
+        <Static id="stcBackRight" taborder="26" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+        <Edit id="edtCompanyNm" taborder="3" cssclass="edt_WF_normal" enable="true" left="155" top="25" height="24" tooltiptext="edit" imemode="hangul" maxlength="54" right="stcBackRight:5" validation="체크리스트명;NULL" validationGroup="group01" text=""/>
+        <Static id="stcBg03" taborder="11" left="20" top="86" height="34" cssclass="sta_WF_inputBg" right="20"/>
+        <Static id="stcCompanyCateCd" taborder="12" text="총점수" onclick="Static13_onclick" cssclass="sta_WF_inputTitle_E" left="20" top="86" width="130" height="34" style="align:left middle;"/>
+        <Static id="stcCorpCateCd" taborder="15" text="사용여부" cssclass="sta_WF_inputTitle" left="32.91%" top="86" width="124" height="34" style="align:left middle;"/>
+        <Static id="stcBg04" taborder="18" left="20" top="119" height="68" cssclass="sta_WF_inputBg" right="20" text=""/>
+        <Static id="stcCoBizNm" taborder="19" text="설명" cssclass="sta_WF_inputTitle" left="20" top="119" width="130" height="68" style="align:left middle;"/>
+        <Combo id="cboChklstStopCd" taborder="6" left="stcCompanyNm:5" top="58" height="24" value="" index="-1" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsChklstStepCd" onkeydown="fnCommOnkeydown" cssclass="cbo_WF_normal" text="" validationGroup="group01" right="stcCorpNo:5" validation="개발단계;NULL"/>
+        <Edit id="edtCoBizNm00_00_00" taborder="25" imemode="hangul" lengthunit="utf8" maxlength="80" left="155" top="124" tooltiptext="edit" validate="" right="25" cssclass="edt_WF_normal" height="0"/>
+        <Static id="stcCorpNo00" taborder="9" text="통계" cssclass="sta_WF_inputTitle_E" left="64.92%" top="53" width="124" height="34" style="align:left middle;"/>
+        <Combo id="cboChklstTypeCd" taborder="8" left="stcCorpNo:5" top="59" height="24" value="" index="-1" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsChklstTypeCd" onkeydown="fnCommOnkeydown" cssclass="cbo_WF_normal" text="" validationGroup="group01" right="stcCorpNo00:5" validation="테스크유형;NULL"/>
+        <Combo id="cboChklstCalCd" taborder="10" left="stcCorpNo00:5" top="58" height="24" value="" index="-1" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsChklstCalCd" onkeydown="fnCommOnkeydown" cssclass="cbo_WF_normal" text="" validationGroup="group01" right="stcBackRight:5" validation="통계;NULL"/>
+        <Div id="divBtnBottom" taborder="29" text="" cssclass="div_POP_msg_btnbg" left="20.00" width="972" top="438" bottom="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="14"/>
+              <Button id="btnSave" taborder="0" text="저장" width="110" height="32" bottom="14" cssclass="btn_WF_primary_save" right="btnClose:5" onclick="fnCommOnclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdMainList" taborder="23" left="20" binddataset="dsFommChklstGrd" cssclass="grd_WF_normal" useCheck="true" treeusecheckbox="false" treeuseline="false" treeinitstatus="expand,null" treeusebutton="use" treeuseimage="true" autofittype="col" useSort="true" useContext="false" oncellclick="grdOnCellClick" width="972" top="237" bottom="divBtnBottom:0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="48"/>
+                <Column size="60"/>
+                <Column size="600"/>
+                <Column size="75"/>
+                <Column size="75"/>
+                <Column size="75"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="NO"/>
+                <Cell col="2" text="행상태"/>
+                <Cell col="3" text="등급명" cssclass="grdHCell_WF_essential"/>
+                <Cell col="4" cssclass="grdHCell_WF_essential" text="시작&#13;&#10;점수"/>
+                <Cell col="5" text="종료&#13;&#10;점수" cssclass="grdHCell_WF_essential"/>
+                <Cell col="6" text="사용&#13;&#10;여부" cssclass="grdHCell_WF_essential"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                <Cell col="1" expr="expr:currow+1"/>
+                <Cell col="2" text="bind:ROWFLAG"/>
+                <Cell col="3" text="bind:GRD_NM" textAlign="left" edittype="text" validation="등급명;NULL"/>
+                <Cell col="4" displaytype="number" edittype="text" text="bind:GRD_FR_VAL" combodisplayrowcount="0" validation="시작점수;NULL|NUMBER" textAlign="right" editinputfilter="sign,space,symbol,dot,comma,alpha" editmaxlength="3"/>
+                <Cell col="5" edittype="text" style="align:left;" text="bind:GRD_TO_VAL" validation="종료점수;NULL|NUMBER" textAlign="right" displaytype="number" editinputfilter="alpha,comma,dot,sign,space,symbol" editmaxlength="5"/>
+                <Cell col="6" edittype="combo" style="align:left;" text="bind:USE_YN" validation="사용여부;NULL" displaytype="combotext" combodataset="dsUseYn" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcTreeTitle" taborder="27" text="평가표" left="20" top="196" width="95" cssclass="sta_WF_gridTitle" bottom="275"/>
+        <Static id="Static00_00" taborder="28" left="5.00" top="178" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-833" bottom="513"/>
+        <Static id="stcCorpNo00_00" taborder="17" cssclass="sta_WF_inputTitle" left="64.92%" top="86" width="124" height="34" style="align:left middle;" visible="false"/>
+        <Combo id="cboUseYn" taborder="16" left="462" top="91" height="24" value="" index="-1" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsUseYn" cssclass="cbo_WF_normal" validation="사용여부;NULL" text="" validationGroup="group01" right="stcCorpNo00_00:5" oninnerdatachanged="cboUseYn_oninnerdatachanged"/>
+        <Static id="stcBackTop00" taborder="30" left="0" top="187" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="stcBackTop00_00" taborder="20" left="0" top="227" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Button id="btnAdd" taborder="21" text="추가" top="200" width="60" right="92" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24"/>
+        <Button id="btnRowDelete" taborder="22" text="삭제" top="200" width="60" right="27" cssclass="btn_WF_del" onclick="fnCommOnclick" height="24"/>
+        <Edit id="edtChklstMaxVal" taborder="13" cssclass="edt_WF_normal_E" enable="true" top="91" height="24" tooltiptext="edit" imemode="hangul" maxlength="5" validation="점수;NULL" validationGroup="group01" text="" width="80" left="stcCompanyCateCd:5" inputtype="number" inputfilter="alpha,comma,dot,sign,space,symbol"/>
+        <Static id="stcTreeTitle00" taborder="14" text="점" left="242.00" top="89" width="35" bottom="382"/>
+        <TextArea id="txaInput" taborder="31" left="stcCoBizNm:5.00" cssclass="txa_WF_normal" top="125" right="stcBackRight:5" wordWrap="char" text="" onkeydown="divInput_txaInput_onkeydown" onchanged="divInput_txaInput_onchanged" height="56"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="CHKLST_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsChklstStepCd"/>
+      <Dataset id="dsChklstTypeCd"/>
+      <Dataset id="dsChklstCalCd"/>
+      <Dataset id="dsUseYn"/>
+      <Dataset id="dsFommChklst" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="10"/>
+          <Column id="ROWFLAG" type="STRING" size="10"/>
+          <Column id="CHKLST_ID" type="STRING" size="256"/>
+          <Column id="CHKLST_STEP_CD" type="STRING" size="256"/>
+          <Column id="CHKLST_TYPE_CD" type="STRING" size="256"/>
+          <Column id="CHKLST_NM" type="STRING" size="256"/>
+          <Column id="CHKLST_DESC" type="STRING" size="256"/>
+          <Column id="CHKLST_MAX_VAL" type="STRING" size="256"/>
+          <Column id="CHKLST_CAL_CD" type="STRING" size="256"/>
+          <Column id="ORD_NO" type="STRING" size="256"/>
+          <Column id="USE_YN" type="STRING" size="256"/>
+          <Column id="FRID" type="STRING" size="256"/>
+          <Column id="FRDT" type="STRING" size="256"/>
+          <Column id="LMID" type="STRING" size="256"/>
+          <Column id="LMDT" type="STRING" size="256"/>
+          <Column id="LMPID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsFommChklstGrd" oncolumnchanged="dsOnColumnChanged" cancolumnchange="dsCanColumnChange">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="10"/>
+          <Column id="ROWFLAG" type="STRING" size="10"/>
+          <Column id="CHKLST_ID" type="STRING" size="256"/>
+          <Column id="CHKLSTGRD_ID" type="STRING" size="256"/>
+          <Column id="GRD_SEQ" type="STRING" size="256"/>
+          <Column id="GRD_NM" type="STRING" size="256"/>
+          <Column id="GRD_FR_VAL" type="STRING" size="256"/>
+          <Column id="GRD_TO_VAL" type="STRING" size="256"/>
+          <Column id="USE_YN" type="STRING" size="256"/>
+          <Column id="FRID" type="STRING" size="256"/>
+          <Column id="FRDT" type="STRING" size="256"/>
+          <Column id="LMID" type="STRING" size="256"/>
+          <Column id="LMDT" type="STRING" size="256"/>
+          <Column id="LMPID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************
+ * 화면ID	: FOMM0700_P02
+ * 화면명		: 표준체크리스트 등록/수정(팝업)
+ * 화면설명	: 
+ * 작성일		: 2024.08.06
+ * 작성자		: WEMB
+ * 수정이력	: 
+ ***********************************************************************
+ * 수정일     	수정자	내용
+ ***********************************************************************
+* 2024.08.07	WEMB	최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.saveFlg = "N";
+this.chkRow;
+/***********************************************************************
+ * Form Event Functions
+ ***********************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화		
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['CHKLST_STEP_CD',	'CHKLST_TYPE_CD',	'CHKLST_CAL_CD',	'QUE_TYPE_CD',	  'USE_CD'		]	// 조회할 상위코드
+		,codeDiv: ['POR_INFO_CD',		'POR_INFO_CD',		'POR_INFO_CD',		'POR_INFO_CD',	  'CMM_CD'		]	// 조회할 코드의 업무구분
+		,optStr	: ['SEL',				'SEL',				'SEL',				'',			  	  ''			]	// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',					'Y',				'Y',				'Y',			  'Y'			]	// 사용여부
+		,filter	: ['',					'',					'',					'',				  ''			]	// filterStr
+		,objDs	: [this.dsChklstStepCd,	this.dsChklstTypeCd,this.dsChklstCalCd,	this.dsQueTypeCd, this.dsUseYn	]// copy dataset
+	};
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function ()
+{
+	var sTranId = "select01";									// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0700W/select03";							// 서비스명
+    var sInDs = "dsCond=dsCond";								// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsFommChklst=dsFommChklst dsFommChklstGrd=dsFommChklstGrd";						// 서버에서 수신할 데이타셋
+    var sArg = "";												// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+};
+
+// 저장
+this.fnSave = function()
+{
+	var sTranId = "save01";
+	var sService = "FOMM0700W/save01";
+	var sInDs = " dsCond=dsCond dsFommChklst=dsFommChklst:U dsFommChklstGrd=dsFommChklstGrd:U";
+	var sOutDs = "dsFommChklst=dsFommChklst dsFommChklstGrd=dsFommChklstGrd dsCond=dsCond";
+	var sArg = "";
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			this.grdMainList.setCellProperty("Head", this.grdMainList.getBindCellIndex('Body', 'CHK'), "text", "0");
+			break;
+
+		case "save01" :
+			this.saveFlg = "Y";
+			Ex.core.toast(this, "10004", null, {toastType:'S'});
+			
+			if( !Ex.isEmpty(this.dsCond.getColumn(0, "CHKLST_ID")) )
+			{
+				this.getOwnerFrame().pChklstId	= this.dsCond.getColumn(0, "CHKLST_ID");
+			}
+
+			this.grdMainList.setCellProperty("Head", this.grdMainList.getBindCellIndex('Body', 'CHK'), "text", "0");
+			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "" :
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "alertSaveI" :
+			Ex.core.pclose(this, this.saveFlg);
+			break;
+
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+
+		case "deleteConfirm" :
+			this.dsFommChklstGrd.setDeleteRow(0);
+			this.fnSave();
+			break;
+
+		case "AlertNoInputMaxValI" :
+			this.edtChklstMaxVal.setFocus();
+			break;
+
+		case "AlertgrdFrValChkI" :
+			this.dsFommChklstGrd.set_rowposition(this.chkRow);	// 데이터셋 ROW 포커스 이동
+			this.grdMainList.showEditor(true);		// 그리드 편집모드로 변경
+			this.grdMainList.setCellPos(4, this.chkRow);		// 그리드 셀 포커스 이동
+			break;
+
+		case "AlertgrdToValChkI" :
+			this.dsFommChklstGrd.set_rowposition(this.chkRow);	// 데이터셋 ROW 포커스 이동
+			this.grdMainList.showEditor(true);					// 그리드 편집모드로 변경
+			this.grdMainList.setCellPos(5, this.chkRow);		// 그리드 셀 포커스 이동
+			break;
+	}
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+
+	for(var i = objDs.rowcount-1; i >= 0; i--) objDs.setDeleteRow(i);
+
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+this.fnAdd = function(objDs:Dataset)
+{
+	var rowPos = objDs.setAddRow();
+	
+	if (this.dsCond.getColumn(0,"CHKLST_ID") != undefined){
+		objDs.setColumn(rowPos,"CHKLST_ID",this.dsCond.getColumn(0,"CHKLST_ID"));
+	}
+	var grdObj = this.grdMainList;
+	objDs.setColumn(rowPos,"USE_YN","Y");
+	objDs.set_rowposition(rowPos);
+	grdObj.showEditor(true);					// 그리드 편집모드로 변경
+	grdObj.setCellPos(3, objDs.rowposition);	// 그리드 셀 포커스 이동
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// 공통코드 조회
+	this.fnGetCmmCd();
+	
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.grdMainList.displayRowType(); 	
+	
+	if( Ex.isEmpty(this.getOwnerFrame().pChklstId))	//신규
+	{
+		var aRow = this.dsFommChklst.setAddRow();
+		this.cboUseYn.set_index(0);
+		this.edtCompanyNm.setFocus();
+		
+
+		// 초기값 세팅		
+	}
+	else
+	{
+		this.dsCond.setColumn(0, "CHKLST_ID", this.getOwnerFrame().pChklstId);
+		this.fnSearch();
+	}
+	
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divBtnBottom.form.btnSave];		// 저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+
+	if( !Ex.isEmpty(this.getOwnerFrame().pEqpImeiNo))	//신규
+	{
+		arrBtn = [this.divBtnBottom.form.btnDelete];	// 삭제
+		Ex.util.setBtnVisible(this, 'delete', arrBtn);
+	}
+	
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divBtnBottom, 'right', true);
+}
+
+this.fnCheckValidateM = function()
+{
+	// 저장할 dataset에 변경된 data 있는 지 확인
+	if( !Ex.util.checkValidate(this, "group01") ) return false;
+	return true;
+}
+
+this.fnCheckValidateD = function()
+{	
+	if( !Ex.util.checkValidateGrid(this, this.grdMainList,"isAll") )	return false;
+	return true;
+};
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{		
+		case "btnAdd" :
+			if( Ex.isEmpty(this.dsFommChklst.getColumn(0, "CHKLST_MAX_VAL")) )
+			{
+				var param = {
+					  id	: "AlertNoInputMaxValI"					//fnMsgAfter에서 식별자로 사용되는 ID
+					, msg	: this.stcCompanyCateCd.text + "가 입력되지 않았습니다."					//메시지 내용
+					, arrparam : [""]						//메시지의 변수에 들어갈 실제값
+					, msgtype : "I"							//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+				};
+				Ex.core.alert(this, param);
+				return false;
+			}
+			this.fnAdd(this.dsFommChklstGrd);
+			break;
+
+		case "btnRowDelete" :
+			this.fnDelete(this.dsFommChklstGrd);
+			break;
+			
+		case "btnSave" : 	// 저장
+			// validation
+			if(!Ex.util.isUpdated(this.dsFommChklst) && !Ex.util.isUpdated(this.dsFommChklstGrd))
+			{
+				var oParam = {id : "alertNotAddI", msg : "변경 사항이 없습니다.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return;
+			}
+			else
+			{				
+				if(Ex.util.isUpdated(this.dsFommChklst) && !Ex.util.isUpdated(this.dsFommChklstGrd))
+				 {
+					if(this.fnCheckValidateM())
+					{
+						var param = {
+							id : "saveConfirm"
+						  , msg : "10003"
+						  , arrparam : ['']
+						  , msgtype : "I"};
+						Ex.core.confirm(this, param);
+					}
+				 }
+				 else if(!Ex.util.isUpdated(this.dsFommChklst) && Ex.util.isUpdated(this.dsFommChklstGrd))
+				 {			
+					if(this.fnCheckValidateD())
+					{
+						var param = {
+							id : "saveConfirm"
+						  , msg : "10003"
+						  , arrparam : ['']
+						  , msgtype : "I"};
+						Ex.core.confirm(this, param);
+					}
+				 }
+				 else
+				 {
+					if(this.fnCheckValidateM())
+					{
+						if(this.fnCheckValidateD())					
+							{
+								var param = {
+									id : "saveConfirm"
+								  , msg : "10003"
+								  , arrparam : ['']
+								  , msgtype : "I"};
+								Ex.core.confirm(this, param);
+							}
+					}
+				}
+			}			
+			break;
+			
+		case "btnClose" :
+			Ex.core.pclose(this, this.saveFlg);
+			break;
+	}
+}
+
+this.grdOnCellClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	obj.dropdownCombo();
+};
+
+this.dsCanColumnChange = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.columnid == "GRD_FR_VAL" || e.columnid == "GRD_TO_VAL")
+	{		
+		var chklstMaxVal = nexacro.toNumber(this.dsFommChklst.getColumn(0, "CHKLST_MAX_VAL"));
+		
+		this.chkRow = e.row;
+		var grdFrVal;
+		var grdToVal;
+		var msgId = "";
+		var msg = "";
+		
+		if(e.columnid == "GRD_FR_VAL")
+		{
+			msgId = "AlertgrdFrValChkI";
+
+			if( !Ex.isEmpty(obj.getColumn(e.row, "GRD_TO_VAL")) )
+			{
+				grdFrVal = nexacro.toNumber(e.newvalue, 0);
+				grdToVal = nexacro.toNumber(obj.getColumn(e.row, "GRD_TO_VAL"), 0);
+				
+				if(chklstMaxVal <= grdFrVal)
+				{
+					msg = "시작 점수는 " + this.stcCompanyCateCd.text + "보다 같거나 클 수 없습니다.";
+				}
+				else
+				{
+					if(grdFrVal >= grdToVal)
+					{
+						msg = "시작 점수는 종료 점수보다 같거나 클 수 없습니다.";
+					}
+				}
+			}
+		}
+		else if(e.columnid == "GRD_TO_VAL")
+		{
+			msgId = "AlertgrdToValChkI";
+
+			if( !Ex.isEmpty(obj.getColumn(e.row, "GRD_FR_VAL")) )
+			{
+				grdFrVal = nexacro.toNumber(obj.getColumn(e.row, "GRD_FR_VAL"), 0);
+				grdToVal = nexacro.toNumber(e.newvalue, 0);
+
+				if(chklstMaxVal < grdToVal)
+				{
+					msg = "종료 점수는 " + this.stcCompanyCateCd.text + "보다 클 수 없습니다.";
+				}
+				else
+				{
+					if(grdFrVal >= grdToVal)
+					{
+						msg = "시작 점수는 종료 점수보다 같거나 클 수 없습니다.";
+					}
+				}
+			}
+		}
+		
+		if( !Ex.isEmpty(msg) )
+		{
+			obj.setColumn(e.row, e.columnid, e.oldvalue);
+				
+			var param = {
+				  id	: "AlertgrdToValChkI"	//fnMsgAfter에서 식별자로 사용되는 ID
+				, msg	: msg					//메시지 내용
+				, arrparam : [""]				//메시지의 변수에 들어갈 실제값
+				, msgtype : "I"					//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+			};
+			Ex.core.alert(this, param);
+			return false;
+		}
+	}
+	return true;
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};]]></Script>
+    <Bind>
+      <BindItem id="item6" compid="cboEqpTelecomCd" propid="value" datasetid="dsOpCommEqp" columnid="EQP_TELECOM_CD"/>
+      <BindItem id="item1" compid="cboChklstStopCd" propid="value" datasetid="dsFommChklst" columnid="CHKLST_STEP_CD"/>
+      <BindItem id="item3" compid="edtCompanyNm" propid="value" datasetid="dsFommChklst" columnid="CHKLST_NM"/>
+      <BindItem id="item0" compid="cboChklstTypeCd" propid="value" datasetid="dsFommChklst" columnid="CHKLST_TYPE_CD"/>
+      <BindItem id="item2" compid="cboChklstCalCd" propid="value" datasetid="dsFommChklst" columnid="CHKLST_CAL_CD"/>
+      <BindItem id="item4" compid="cboUseYn" propid="value" datasetid="dsFommChklst" columnid="USE_YN"/>
+      <BindItem id="item7" compid="edtChklstMaxVal" propid="value" datasetid="dsFommChklst" columnid="CHKLST_MAX_VAL"/>
+      <BindItem id="item5" compid="txaInput" propid="value" datasetid="dsFommChklst" columnid="CHKLST_DESC"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,498 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PJ3200_W" left="0" top="0" width="1820" height="720" titletext="이슈관리" onload="form_onload">
+    <Layouts>
+      <Layout width="1820" height="720">
+        <Static id="stcGrdTitle" taborder="2" text="이슈 목록" cssclass="sta_WF_gridTitle" left="0" top="70" width="86" height="24"/>
+        <Div id="divSearch" taborder="0" left="0" top="0" right="0" height="50" scrollbars="none" cssclass="div_WF_divSearchArea">
+          <Layouts>
+            <Layout>
+              <Button id="btnSearchPjtPop" taborder="3" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommOnclick" top="13" width="24" left="315"/>
+              <Static id="Static00_00_00_00" taborder="4" left="btnSearchPjtPop:0" top="13" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="stccRepTypeCd" taborder="5" text="이슈명" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_00_00:0" top="13" width="70" height="24"/>
+              <Edit id="edtIssieNm" taborder="6" left="stccRepTypeCd:0" top="13" width="280" height="24" cssclass="edt_WF_normal" onkeyup="onKeyUp"/>
+              <Static id="Static00_00_00_00_00" taborder="7" left="edtIssieNm:0" top="13" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="stcIssueDelayCd" taborder="8" text="지연" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_00_00_00:0" top="13" width="66" height="24"/>
+              <Combo id="cboIssueDelayCd" taborder="9" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" left="stcIssueDelayCd:0" top="13" width="90" height="24" cssclass="cbo_WF_normal" innerdataset="dsYnCd"/>
+              <Static id="Static00_00_00_00_00_00" taborder="10" left="cboIssueDelayCd:0" top="13" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="stcIssueStatusCd" taborder="11" text="상태" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_00_00_00_00:0" top="13" width="71" height="24"/>
+              <Edit id="edtPjtNm" taborder="2" left="101" top="13" width="215" height="24" cssclass="edt_WF_normal" enable="true" readonly="true"/>
+              <Static id="stcPjtNm" taborder="1" text="프로젝트명" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="20" top="13" width="81" height="24"/>
+              <Static id="Static00_00" taborder="0" left="0" top="13" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+              <Button id="btnSearchReset" taborder="13" top="13" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+              <Button id="btnSearch" taborder="14" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Combo id="cboIssueStatusCd" taborder="12" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" left="stcIssueStatusCd:0" top="13" width="90" height="24" cssclass="cbo_WF_normal" innerdataset="dsIssueStatusCd"/>
+            </Layout>
+          </Layouts>
+          <InitValue/>
+        </Div>
+        <Static id="sta_listCnt" taborder="3" cssclass="sta_WF_GridCount" visible="false" left="stcGrdTitle:5" top="70" width="150" height="24" style="align:left middle;" countDataset="dsIssue"/>
+        <Static id="Static00_01" taborder="1" left="0" top="50" height="20" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_00_00" taborder="4" left="0" top="94" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divGrdBotBtn" taborder="6" width="180" height="32" bottom="0" right="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnSave" taborder="1" text="저장" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="0" onclick="fnCommOnclick"/>
+              <Button id="btnAddRep" taborder="0" text="등록" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="btnSave:5" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divGrdTopBtn" taborder="5" width="107" height="24" visible="true" isButtonGroup="true" top="70" right="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="1" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdMainList" taborder="7" binddataset="dsIssue" cellsizingtype="col" autofittype="col" left="0" right="0" oncellclick="grdOnCellClick" top="104" bottom="40" cssclass="grd_WF_normal">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="50" band="left"/>
+                <Column size="50" band="left"/>
+                <Column size="60" band="left"/>
+                <Column size="105"/>
+                <Column size="90"/>
+                <Column size="290"/>
+                <Column size="70" band="right"/>
+                <Column size="100" band="right"/>
+                <Column size="100" band="right"/>
+                <Column size="70" band="right"/>
+                <Column size="70" band="right"/>
+                <Column size="100" band="right"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" style="align:middle;" text="선택"/>
+                <Cell col="2" text="행상태"/>
+                <Cell col="3" text="이슈NO"/>
+                <Cell col="4" text="담당자"/>
+                <Cell col="5" text="이슈명"/>
+                <Cell col="6" text="유형"/>
+                <Cell col="7" text="식별일"/>
+                <Cell col="8" text="완료예정일"/>
+                <Cell col="9" text="지연여부"/>
+                <Cell col="10" text="진행상태"/>
+                <Cell col="11" text="등록자"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="expr:currow+1"/>
+                <Cell col="1" displaytype="expr:REG_USER_ID == Ex.util.getSession('gvUserId') ? &quot;checkboxcontrol&quot; : &quot;none&quot;" edittype="expr:REG_USER_ID == Ex.util.getSession('gvUserId') ? &quot;checkbox&quot; : &quot;none&quot;" style="align:center;" text="bind:CHK"/>
+                <Cell col="2" text="bind:ROWFLAG"/>
+                <Cell col="3" style="align:center;" cssclass="grdBCell_WF_event" text="bind:ISSUE_NO" tooltiptext="bind:ISSUE_NO"/>
+                <Cell col="4" style="align:center;" text="bind:CHG_USER_NM"/>
+                <Cell col="5" style="align:left;" cssclass="grdBCell_WF_event" text="bind:ISSUE_NAME" textAlign="left" tooltiptext="bind:ISSUE_NAME"/>
+                <Cell col="6" displaytype="combotext" style="align:center;" text="bind:ISSUE_TYPE_CD" combodataset="dsIssueTypeCd" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                <Cell col="7" displaytype="date" style="align:center;" text="bind:ISSUE_STIME" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="8" displaytype="date" style="align:center;" text="bind:CPL_PLAN_TIME" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="9" style="align:center;color:EXPR(RISK_DELAY_CD == 'Y' ? '#f83a00' : '');color2:EXPR(RISK_DELAY_CD == 'Y' ? '#f83a00' : '');selectcolor:EXPR(RISK_DELAY_CD == 'Y' ? '#f83a00' : '');" text="bind:ISSUE_DELAY_CD" cssclass="expr:ISSUE_DELAY_CD == 'Y' ? 'grdBCell_WF_danger' : ''"/>
+                <Cell col="10" displaytype="combotext" style="align:center;" text="bind:ISSUE_STATUS_CD" combodataset="dsIssueStatusCd" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                <Cell col="11" text="bind:REG_USER_NM"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsIssue" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="10"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="REPORT_ID" type="STRING" size="16"/>
+          <Column id="REPORT_TYPE_CD" type="STRING" size="30"/>
+          <Column id="REPORT_NAME" type="STRING" size="200"/>
+          <Column id="PJT_ID" type="STRING" size="16"/>
+          <Column id="PJT_NAME" type="STRING" size="200"/>
+          <Column id="CONTENTS" type="STRING" size="4000"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="REG_USER_ID" type="STRING" size="10"/>
+          <Column id="REG_USER_NM" type="STRING" size="100"/>
+          <Column id="REG_USER_DEPT" type="STRING" size="100"/>
+          <Column id="LMOD_SDATE" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="10"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsIssueStatusCd"/>
+      <Dataset id="dsIssueTypeCd"/>
+      <Dataset id="dsYnCd"/>
+      <Dataset id="dsPopRtn"/>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="PJT_NM" type="STRING" size="256"/>
+          <Column id="ISSUE_NM" type="STRING" size="256"/>
+          <Column id="ISSUE_DELAY_CD" type="STRING" size="256"/>
+          <Column id="ISSUE_STATUS_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item10" compid="divSearch.cboRepTypeCd" propid="value" datasetid="ds_search" columnid="CI_STATE"/>
+      <BindItem id="item9" compid="divSearch.edtRepNm" propid="value" datasetid="ds_search" columnid="CI_NAME"/>
+      <BindItem id="item0" compid="divSearch.edtRegUserNm" propid="value" datasetid="ds_search" columnid="CI_NAME"/>
+      <BindItem id="item1" compid="divSearch.form.edtPjtNm" propid="value" datasetid="dsCond" columnid="PJT_NM"/>
+      <BindItem id="item2" compid="divSearch.form.cboIssueDelayCd" propid="value" datasetid="dsCond" columnid="ISSUE_DELAY_CD"/>
+      <BindItem id="item3" compid="divSearch.form.cboIssueStatusCd" propid="value" datasetid="dsCond" columnid="ISSUE_STATUS_CD"/>
+      <BindItem id="item4" compid="divSearch.form.edtIssieNm" propid="value" datasetid="dsCond" columnid="ISSUE_NM"/>
+    </Bind>
+    <InitValue/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ PJ2100_W
+* 화면(명)		︰ 이슈관리
+* 메뉴(경로)	︰ 프로젝트관리 > 위험 및 이슈 >  이슈관리
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.10.20
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.10.20	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.setColumn(0, "PJT_ID", "");
+	this.dsCond.setColumn(0, "PJT_NM", "");
+	this.dsCond.setColumn(0, "ISSUE_NM", "");
+	this.dsCond.setColumn(0, "ISSUE_DELAY_CD", undefined);
+	this.dsCond.setColumn(0, "ISSUE_STATUS_CD", undefined);
+	this.divSearch.form.edtIssieNm.setFocus();
+}
+
+// 조회
+this.fnSearch = function()
+{
+	if(Ex.isEmpty(this.dsCond.getColumn(0, "PJT_ID")))
+	{
+		var oParam = {id : "alertNoSearchProjectI", msg : "프로젝트를 선택하세요.", arrparam : [], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return;
+	}
+	
+	// transaction
+	var sTranId = "select01";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ3200W/select01";			// 서비스명
+    var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsIssue=dsIssue";		// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSave = function()
+{
+	var sTranId = "save01";
+    var sService = "PJ3200W/save01";
+    var sInDs = "dsCond=dsCond dsIssue=dsIssue:U";
+	var sOutDs = "dsIssue=dsIssue";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+	
+	this.setAddRepButton();
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::" + nErrorCode+"::" + sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			this.setAddRepButton();
+			break;
+
+		case "save01" :
+			Ex.core.toast(this, "10004");
+			this.setAddRepButton();
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	trace("this.fnPopupAfter() pID ::: " + pID + " varValue ::: " + varValue);
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "PJ0100_P01" :
+			trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)	this.dsPopRtn.loadXML(varValue);
+			this.dsCond.setColumn(0, "PJT_ID", this.dsPopRtn.getColumn(0, "PJT_ID"));
+			this.dsCond.setColumn(0, "PJT_NM", this.dsPopRtn.getColumn(0, "PJT_NAME"));
+			this.fnSearch();
+			break;
+
+		case "PJ3200_P01" :
+			trace("varValue ::: " + varValue);
+			if(varValue == "Y") this.fnSearch();
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "alertSearchDateI" :
+			this.divSearch.form.calStime.setFocus();
+			break;
+
+		case "alertSearchFromDateI" :
+			this.divSearch.form.calStime.setFocus();
+			break;
+
+		case "alertSearchToDateI" :
+			this.divSearch.form.calEtime.setFocus();
+			break;
+
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.grdMainList.displayRowType();
+	
+	// 공통코드 조회
+	this.fnGetCmmCd();
+
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divGrdTopBtn.form.btnDelete];	//삭제
+	Ex.util.setBtnVisible(this, 'delete', arrBtn);
+
+	arrBtn = [this.divGrdBotBtn.form.btnAddRep];		//등록
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+	
+	arrBtn = [this.divGrdBotBtn.form.btnSave];			//저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divGrdTopBtn, 'right', true);
+	Ex.util.setBtnAlign(this.divGrdBotBtn, 'right', true);
+
+	this.fnSearchReset();
+	//this.fnSearch();	// 조회
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		 upCmmCd : ['YN_CD2',	'ISU_P_STS_CD',			'ISSUE_TYPE_CD']	// 조회할 상위코드
+		,codeDiv: ['CMM_CD',	'PJT_MNG_CD',			'PJT_MNG_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['ALL',		'ALL',					'']					// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',			'Y',					'Y']				// 사용여부
+		,filter	: ['',			'',						'']					// filterStr
+		,objDs	: [this.dsYnCd,	this.dsIssueStatusCd,	this.dsIssueTypeCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+this.setAddRepButton = function()
+{
+	var cnt = this.dsIssue.getCaseCount("ROWFLAG=='D'");
+	trace("this.dsOnColumnDataChanged() cnt : " + cnt);
+	if(cnt > 0)
+	{
+		if(this.divGrdBotBtn.form.btnAddRep.visible)
+		{
+			this.divGrdBotBtn.form.btnAddRep.set_enable(false);
+		}
+	}
+	else
+	{
+		if(this.divGrdBotBtn.form.btnAddRep.visible)
+		{
+			this.divGrdBotBtn.form.btnAddRep.set_enable(true);
+		}
+	}
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearchPjtPop" :			
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ0100_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ0100_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : "프로젝트 검색"
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				//"width=920,height=650"	// <--- width/height/modeless(프레임 처리 옵션)							
+				"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+			);
+			break;
+
+		case "btnSearch" :			// 검색
+			this.fnSearch();
+			break;
+		
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;
+
+		case "btnDelete" :			// 삭제
+			this.fnDelete(this.dsIssue);
+			break;
+
+		case "btnAddRep" : 			// 등록
+			if(Ex.isEmpty(this.dsCond.getColumn(0, "PJT_ID")))
+			{
+				var oParam = {id : "alertNoSelectProjectI", msg : "프로젝트를 선택하세요.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return;
+			}
+		
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ3200_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ3200_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title		: "이슈관리 등록",
+					pPjtId		: this.dsCond.getColumn(0, "PJT_ID"),
+					pPjtNm		: this.dsCond.getColumn(0, "PJT_NM"),
+					pIssueId	: '',
+					pMode		: 'NEW'
+				},							// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"autosize"					// <--- width/height/modeless(프레임 처리 옵션)							
+			);
+			break;
+
+		case "btnSave" :			//저장
+			if(this.dsIssue.getCaseCount("ROWFLAG=='D'") > 0)
+			{
+				var param = {
+						id : "saveConfirm"
+					  , msg : "10003"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+			break;
+	}
+}
+
+this.onKeyUp = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 13) this.fnSearch();
+};
+
+this.grdOnCellClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(e.row < 0) return;
+
+	// PJT_NAME 프로젝트/서브프로젝트명을 누를 때 마다 POPUP화면 호출
+	if (e.cell == obj.getBindCellIndex("body","ISSUE_NO") || e.cell == obj.getBindCellIndex("body","ISSUE_NAME"))
+	{
+		var strPjtId    = this.dsIssue.getColumn(obj.getDatasetRow(e.row), "PJT_ID");
+
+		if(Ex.isEmpty(strPjtId))
+		{
+			var oParam = {id : "alertNoSelectProjectI", msg : "선택된 프로젝트가 없습니다.", arrparam : [], msgtype : "I"};
+			Ex.core.alert(this, oParam);
+			return;
+		}
+
+		var strPjtNm  = this.dsIssue.getColumn(obj.getDatasetRow(e.row), "PJT_NAME");
+		var strIssueId = this.dsIssue.getColumn(obj.getDatasetRow(e.row), "ISSUE_ID");
+
+		Ex.core.popup(
+			this,					// <--- 팝업 실행 스코프
+			"PJ3200_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+			"pj::PJ3200_P01.xfdl",	// <--- 팝업창 오픈 Url
+			{
+				title		: "이슈관리 상세",
+				pPjtId		: strPjtId,
+				pPjtNm  	: strPjtNm,
+				PMode		: 'SEARCH',
+				pIssueId	: strIssueId
+			},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			"autosize"				// <--- width/height/modeless(프레임 처리 옵션)
+		);
+	}
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+}]]></Script>
+  </Form>
+</FDL>

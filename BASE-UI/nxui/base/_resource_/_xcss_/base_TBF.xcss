@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XCSS version="1.1">
+  <CSSData><![CDATA[]]></CSSData>
+  <CSSData type="desktop"><![CDATA[/*******************************************************/
+/***** PROJECT NAME 	: SPP2.0		********/
+/***** XCSSNAME 	: spp_TBF(TabFrame)	********/
+/***** Naming Rule 	: Component_TAB_cssname	********/
+/***** Naming Rule Ex 	: btn_TBF_primary	********/
+/***** USING FRAME 	: Tab Frame(SPP 공통)	********/
+/***** CREATION DATES 	: 2023.04  		********/
+/***** DRAFTER 		: SPP TEAM		********/
+/***** AMENDER 		: SPP TEAM		********/
+/***** MOD DATES 	: 2023.04		********/
+/*******************************************************/
+
+
+/****************************************************************************************************************************/
+/*****************************************************   TAB START    *******************************************************/
+/****************************************************************************************************************************/
+/* 
+ * tab_TBF_mdi
+ * MDI Tab css, MDI tabbuttonitem css, MDI extrabutton css
+ */
+.Tab.tab_TBF_mdi,
+.Tab.tab_TBF_mdi[status=focused],
+.Tab.tab_TBF_mdi[status=mouseover]
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+
+}
+
+.Tab.tab_TBF_mdi .tabbuttonitem,
+.Tab.tab_TBF_mdi .tabbuttonitem[status=mouseover]
+{
+	background		: #F2F2F2;
+	-nexa-border		: 1px solid #b9b9b9, 1px solid #b9b9b9, 2px solid #3697f8, 1px solid #b9b9b9;
+	-nexa-padding		: 0px 10px 0px 14px;
+	cursor			: pointer;
+	font			: 14px 'KoPubL';
+
+}
+.Tab.tab_TBF_mdi .tabbuttonitem[status=focused],
+.Tab.tab_TBF_mdi .tabbuttonitem[userstatus=selected],
+.Tab.tab_TBF_mdi .tabbuttonitem[userstatus=selected][status=mouseover]
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #3697f8, 1px solid #3697f8, 2px solid white, 1px solid #3697f8;
+	-nexa-padding		: 10px 10px 10px 14px;
+	cursor			: pointer;
+	color			: #0a5dad;
+	font			: 14px 'KoPubL';
+}
+
+.Tab.tab_TBF_mdi .tabbuttonitem .tabbuttonitemtext
+{
+	-nexa-text-align 	: left;
+	-nexa-vertical-align 	: middle;
+	font			: 14px 'KoPubL';
+}
+
+.Tab.tab_TBF_mdi .tabbuttonitem .extrabutton
+{
+	background		: url(theme://SPP_IMAGE_SET/TBF/btn_TBF_MdiX.png) no-repeat center center;
+	-nexa-padding		: 7px 10px 7px 14px;
+	cursor	 		: pointer;
+}
+/****************************************************************************************************************************/
+/*****************************************************   TAB END    *********************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   STATIC START    ****************************************************/
+/****************************************************************************************************************************/
+/* 
+ * sta_TBF_mdiBg
+ * MDI background static css
+ */
+.Static.sta_TBF_mdiBg
+{
+	background		: #ffffff;
+	-nexa-border		: 0px, 0px, 2px solid #252c43, 0px;
+}
+/****************************************************************************************************************************/
+/*****************************************************   STATIC END    ******************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   BUTTON START    ****************************************************/
+/****************************************************************************************************************************/
+/* 
+ * btn_TBF_mdiAllX
+ * MDI All close Button css
+ */
+.Button.btn_TBF_mdiAllX,
+.Button.btn_TBF_mdiAllX[userstatus=selected]
+{
+	background		: #fafafa URL('theme://MIRAE_IMAGE_SET/TBF/tab-all.gif') no-repeat center center;
+	-nexa-border		: 0px none;
+	border-radius		: 3px 3px;
+	cursor			: pointer;
+}
+.Button.btn_TBF_mdiAllX[status=mouseover],
+.Button.btn_TBF_mdiAllX[status=focused]
+{
+	background		: #fafafa URL('theme://MIRAE_IMAGE_SET/TBF/tab-all-over.gif') no-repeat center center;
+	-nexa-border		: 0px none;
+	border-radius		: 3px 3px;
+	cursor			: pointer;
+}
+/****************************************************************************************************************************/
+/*****************************************************   BUTTON END    ******************************************************/
+/****************************************************************************************************************************/]]></CSSData>
+  <CSSData type="mobile_large"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_small"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_medium"><![CDATA[]]></CSSData>
+</XCSS>

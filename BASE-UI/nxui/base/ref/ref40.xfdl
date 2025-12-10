@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="ref23" width="1280" height="1720" titletext="차트 및 화면 캡쳐" onload="refChart_onload">
+    <Layouts>
+      <Layout height="1720" mobileorientation="landscape" width="1280">
+        <Button id="Button00" taborder="0" text="차트 그리기" left="20" top="10" width="120" height="32" onclick="Button00_onclick"/>
+        <Div id="divChart01" taborder="1" text="Div00" left="20" top="47" url="comm::comHighChartDiv.xfdl" border="1px solid chocolate" right="760" height="400"/>
+        <Div id="divChart02" taborder="2" text="Div00" left="20" top="divChart01:5" width="500" height="300" url="comm::comHighChartDiv.xfdl" border="1px solid chocolate"/>
+        <Div id="divChart03" taborder="3" text="Div00" left="20" top="divChart02:5" width="500" height="300" url="comm::comHighChartDiv.xfdl" border="1px solid chocolate"/>
+        <Div id="divChart04" taborder="4" text="Div00" left="20" top="divChart03:5" width="500" height="300" url="comm::comHighChartDiv.xfdl" border="1px solid chocolate"/>
+        <Div id="divChart05" taborder="5" text="Div00" left="20" top="divChart04:5" width="500" height="300" url="comm::comHighChartDiv.xfdl" border="1px solid chocolate"/>
+        <Button id="ButtonImage" taborder="6" text="이미지 저장" left="150.00" top="10" width="100" height="32" onclick="ButtonImage_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+this.refChart_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.formObj = obj;
+	this.gfnFormOnLoad(this, this.fnInit);	
+};
+
+this.fnInit = function()
+{
+
+}
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	// custom pie chart(donut)
+	var oParam = {
+		 colors		: []
+		,title		: ''
+		,subtitle	: ''
+		,objDs		: this.dsChart
+		,nameCol	: 'Name'
+		,valueCol	: 'Value'
+	};
+	var chartScript = this.divChart01.form.miraefnGetPie2DChart(oParam);
+	trace(chartScript);
+	this.divChart01.form.drawChart(chartScript);
+	chartScript = this.divChart03.form.miraefnGetPie2DChart(oParam);
+	this.divChart03.form.drawChart(chartScript);
+	chartScript = this.divChart05.form.miraefnGetPie2DChart(oParam);
+	this.divChart05.form.drawChart(chartScript);
+	
+	oParam = {
+		 colors		: []
+		,title		: ''
+		,subtitle	: ''
+		,objDs		: this.dsChart
+		,nameCol	: 'Name'
+		,valueCol	: 'Value'
+	};
+	var chartScript = this.divChart02.form.miraefnGetHalfDonutChart(oParam);
+	this.divChart02.form.drawChart(chartScript);
+	chartScript = this.divChart04.form.miraefnGetHalfDonutChart(oParam);
+	this.divChart04.form.drawChart(chartScript);
+};
+
+this.ButtonImage_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var ele = document.getElementById(this.formObj.getElement().handle.id);
+	
+	html2canvas(ele).then(canvas => {
+		const link = document.createElement("a");
+		link.href = canvas.toDataURL("image/jpeg");
+		link.download = "testImage.jpeg";
+		link.click();
+	});
+};]]></Script>
+    <Objects>
+      <Dataset id="dsChart">
+        <ColumnInfo>
+          <Column id="Name" type="STRING" size="256"/>
+          <Column id="Value" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="Name">Name1</Col>
+            <Col id="Value">10.0</Col>
+          </Row>
+          <Row>
+            <Col id="Name">Name2</Col>
+            <Col id="Value">10.0</Col>
+          </Row>
+          <Row>
+            <Col id="Name">Name3</Col>
+            <Col id="Value">20</Col>
+          </Row>
+          <Row>
+            <Col id="Name">Name4</Col>
+            <Col id="Value">10.0</Col>
+          </Row>
+          <Row>
+            <Col id="Name">Name5</Col>
+            <Col id="Value">15</Col>
+          </Row>
+          <Row>
+            <Col id="Name">Name6</Col>
+            <Col id="Value">10.0</Col>
+          </Row>
+          <Row>
+            <Col id="Name">Name7</Col>
+            <Col id="Value">25</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsChart21">
+        <ColumnInfo>
+          <Column id="data" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="data">27.6</Col>
+          </Row>
+          <Row>
+            <Col id="data">28.8</Col>
+          </Row>
+          <Row>
+            <Col id="data">21.7</Col>
+          </Row>
+          <Row>
+            <Col id="data">34.1</Col>
+          </Row>
+          <Row>
+            <Col id="data">29.0</Col>
+          </Row>
+          <Row>
+            <Col id="data">28.4</Col>
+          </Row>
+          <Row>
+            <Col id="data">45.6</Col>
+          </Row>
+          <Row>
+            <Col id="data">51.7</Col>
+          </Row>
+          <Row>
+            <Col id="data">39.0</Col>
+          </Row>
+          <Row>
+            <Col id="data">60.0</Col>
+          </Row>
+          <Row>
+            <Col id="data">28.6</Col>
+          </Row>
+          <Row>
+            <Col id="data">32.1</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsChart22">
+        <ColumnInfo>
+          <Column id="data" type="STRING" size="256"/>
+          <Column id="data2" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="data">-13.6</Col>
+            <Col id="data2">-5</Col>
+          </Row>
+          <Row>
+            <Col id="data">-14.9</Col>
+            <Col id="data2">-4</Col>
+          </Row>
+          <Row>
+            <Col id="data">-5.8</Col>
+            <Col id="data2">0</Col>
+          </Row>
+          <Row>
+            <Col id="data">-0.7</Col>
+            <Col id="data2">-2</Col>
+          </Row>
+          <Row>
+            <Col id="data">3.1</Col>
+            <Col id="data2">-1</Col>
+          </Row>
+          <Row>
+            <Col id="data">13.0</Col>
+            <Col id="data2">0</Col>
+          </Row>
+          <Row>
+            <Col id="data">14.5</Col>
+            <Col id="data2">0</Col>
+          </Row>
+          <Row>
+            <Col id="data">10.8</Col>
+            <Col id="data2">4</Col>
+          </Row>
+          <Row>
+            <Col id="data">5.8</Col>
+            <Col id="data2">0</Col>
+          </Row>
+          <Row>
+            <Col id="data">-0.7</Col>
+            <Col id="data2">4</Col>
+          </Row>
+          <Row>
+            <Col id="data">-11.0</Col>
+            <Col id="data2">10</Col>
+          </Row>
+          <Row>
+            <Col id="data">-16.4</Col>
+            <Col id="data2">-5</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

@@ -1,0 +1,877 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PJ3100_P01" left="0" top="0" width="1050" height="760" titletext="위험관리 상세" onload="form_onload">
+    <Layouts>
+      <Layout width="1050" height="760">
+        <Div id="divContents" taborder="0" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="stcBg08" taborder="35" cssclass="sta_WF_inputBg" left="20" top="280" height="34" right="20"/>
+              <Static id="stcBg09" taborder="38" cssclass="sta_WF_inputBg" left="20" top="313" height="113" right="20"/>
+              <Static id="Static05" taborder="0" text="위험 상세" cssclass="sta_WF_gridTitle" left="20" top="20" width="132" height="24"/>
+              <Static id="stcBg01" taborder="1" cssclass="sta_WF_inputBg" left="20" top="49" height="34" right="20"/>
+              <Static id="stcBg03" taborder="12" cssclass="sta_WF_inputBg" left="20" top="115" height="34" right="20"/>
+              <Static id="stcPjtName" taborder="2" text="프로젝트명" cssclass="sta_WF_inputTitle" left="20" top="49" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcBg04" taborder="15" cssclass="sta_WF_inputBg" left="20" top="148" height="34" right="20"/>
+              <Static id="stcIssue" taborder="4" text="연결이슈 NO" cssclass="sta_WF_inputTitle" left="50%" top="49" width="130" height="34" style="align:left middle;"/>
+              <Edit id="edtPjtName" taborder="3" maxlength="80" left="stcPjtName:5" top="54" height="24" enable="false" right="stcIssue:5" cssclass="edt_WF_normal"/>
+              <Static id="stcRiskName" taborder="13" text="제목" cssclass="sta_WF_inputTitle_E" left="20" top="115" width="130" height="34" style="align:left middle;"/>
+              <Edit id="edtRiskName" taborder="14" left="stcRiskName:5" top="120" height="24" validate="" right="25" validation="제목;NULL" validationGroup="input01" cssclass="edt_WF_normal"/>
+              <Static id="stcRiskStime" taborder="18" text="식별일자" cssclass="sta_WF_inputTitle_E" left="50.00%" top="148" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcRiskDesc" taborder="39" text="위험내용" cssclass="sta_WF_inputTitle_E" left="20" top="313" width="130" height="112" style="align:left middle;"/>
+              <TextArea id="txaRiskDesc" taborder="40" left="stcRiskDesc:5" top="319" right="25" height="100" validationGroup="input01" validation="위험내용;NULL" cssclass="txa_WF_normal"/>
+              <Calendar id="calRiskStime" taborder="19" cssclass="cal_WF_normal" left="stcRiskStime:5" top="153" width="130" height="24" validate="" enable="true" validationGroup="input01" validation="식별일자;NULL|DATETIME:YYYYMMDD"/>
+              <Static id="stcBg05" taborder="20" cssclass="sta_WF_inputBg" left="20" top="181" height="34" right="20"/>
+              <Static id="stcRegUser" taborder="16" text="등록자" cssclass="sta_WF_inputTitle_E" left="20" top="148" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcBg06" taborder="25" cssclass="sta_WF_inputBg" left="20" top="214" height="34" right="20"/>
+              <Static id="stcBg07" taborder="30" cssclass="sta_WF_inputBg" left="20" top="247" height="34" right="20"/>
+              <Static id="stcChgUser" taborder="26" text="담당자" onclick="Static13_onclick" cssclass="sta_WF_inputTitle_E" left="20" top="214" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcRiskRealCd" taborder="36" text="발생가능성" cssclass="sta_WF_inputTitle_E" left="20" top="280" width="130" height="34" style="align:left middle;"/>
+              <Combo id="cboRiskRealCd" taborder="37" innerdataset="dsRiskRealCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" left="stcRiskRealCd:5" top="285" width="130" height="24" validationGroup="input01" validation="발생가능성;NULL" cssclass="cbo_WF_normal"/>
+              <Edit id="edtIssueNm" taborder="6" left="77%" top="54" height="24" validate="" right="25" readonly="true" cssclass="edt_WF_normal"/>
+              <Edit id="edtIssueNo" taborder="5" left="stcIssue:5" top="54" height="24" validate="" right="edtIssueNm:2" cssclass="edt_WF_normal" readonly="true"/>
+              <Static id="Static32" taborder="44" text="위험활동 이력" cssclass="sta_WF_gridTitle" left="20" top="639" height="24" width="132"/>
+              <Grid id="grdRiskAction" taborder="47" binddataset="dsRiskAction" useinputpanel="false" cellsizingtype="col" autofittype="col" oncellclick="grdOnCellClick" onsummclick="grdRiskActionList_onsummclick" left="20" right="20" height="131" autoupdatetype="itemselect" onexpandup="grdOnExpandUp" cssclass="grd_WF_normal" top="673">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="74" band="left"/>
+                      <Column size="40" band="left"/>
+                      <Column size="60" band="left"/>
+                      <Column size="130" band="left"/>
+                      <Column size="100"/>
+                      <Column size="250"/>
+                      <Column size="100"/>
+                      <Column size="200"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="No"/>
+                      <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="2" text="행상태"/>
+                      <Cell col="3" cssclass="grdHCell_WF_essential" text="수행일자"/>
+                      <Cell col="4" cssclass="grdHCell_WF_essential" text="담당자"/>
+                      <Cell col="5" cssclass="grdHCell_WF_essential" text="조치내용"/>
+                      <Cell col="6" cssclass="grdHCell_WF_essential" text="처리결과"/>
+                      <Cell col="7" text="첨부파일"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="expr:currow+1" textAlign="center"/>
+                      <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                      <Cell col="2" text="bind:ROWFLAG"/>
+                      <Cell col="3" displaytype="date" edittype="date" style="align:center;" text="bind:ACT_TIME" calendardisplaynulltype="nulltext" validation="수행일자;NULL|DATETIME:YYYYMMDD" calendardateformat="yyyy-MM-dd"/>
+                      <Cell col="4" edittype="expand" style="align:center;" text="bind:ACT_USER_NM" validation="담당자;NULL" expandshow="show" expandsize="24" validationStatus="false"/>
+                      <Cell col="5" edittype="text" style="align:left;cursor: ;" text="bind:ACT_DESC" validation="조치내용;NULL" tooltiptext="bind:ACT_DESC" textAlign="left"/>
+                      <Cell col="6" displaytype="combotext" edittype="combo" style="align:center;" text="bind:ACT_STATUS_CD" combodataset="dsActionStatusCd" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" validation="처리결과;NULL"/>
+                      <Cell col="7" displaytype="text" style="align:left;" text="bind:ORG_FILE_NM" expr="expr:FILE_CNT &gt;1 ? ORG_FILE_NM +'외 '+ (FILE_CNT-1) + '건': ORG_FILE_NM" calendardisplaynulltype="default" expandshow="show" expandsize="24" tooltiptext="bind:ORG_FILE_NM"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Div id="divFiles" taborder="42" left="20" top="436" right="20" __USE_MODE="1" _ENABLE_READONLY_ALL_SKIP="Y" url="comm::comFile.xfdl" text="" height="192"/>
+              <Div id="divRegUser" taborder="17" left="stcRegUser:5" top="153" height="24" right="530" url="fomm::FOMM0000_D02.xfdl"/>
+              <Div id="divActUser" taborder="48" left="stcChgUser:5" top="219" height="24" right="stcRiskRealCd:-135" url="fomm::FOMM0000_D02.xfdl"/>
+              <Static id="stcBackMid2_00" taborder="41" left="20" top="426" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Static id="stcBackMid2_00_00" taborder="43" left="20" top="629" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Static id="stcBackMid2_00_00_00" taborder="46" left="20" top="663" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Div id="divGrdTopBtn" taborder="45" width="425" height="24" visible="true" isButtonGroup="true" top="639" right="20">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnDelete" taborder="1" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+                    <Button id="btnAdd" taborder="0" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="stcBg02" taborder="7" cssclass="sta_WF_inputBg" left="20" top="82" height="34" right="20"/>
+              <Static id="stcRiskNo" taborder="8" text="위험 NO" cssclass="sta_WF_inputTitle_E" left="20" top="82" width="130" height="34" style="align:left middle;"/>
+              <Static id="Static28_00" taborder="10" text="진행상태" cssclass="sta_WF_inputTitle_E" left="50.00%" top="82" width="130" height="34" style="align:left middle;"/>
+              <Combo id="cboRiskStatusCd" taborder="11" innerdataset="dsRiskStatusCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" left="Static28_00:5" top="87" width="130" height="24" validationGroup="input01" validation="진행상태;NULL" cssclass="cbo_WF_normal"/>
+              <Static id="stcRiskImpactCd" taborder="21" text="영향도" cssclass="sta_WF_inputTitle_E" left="20" top="181" width="130" height="34" style="align:left middle;"/>
+              <Combo id="cboRiskImpactCd" taborder="22" innerdataset="dsRiskImpactCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" left="stcRiskImpactCd:5" top="186" width="130" height="24" validationGroup="input01" validation="영향도;NULL" cssclass="cbo_WF_normal"/>
+              <Static id="stcRiskTypeCd" taborder="23" text="위험유형" cssclass="sta_WF_inputTitle_E" left="50.00%" top="181" width="130" height="34" style="align:left middle;"/>
+              <Combo id="cboRiskTypeCd" taborder="24" innerdataset="dsRiskTypeCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" left="stcRiskTypeCd:5" top="186" width="130" height="24" validationGroup="input01" validation="위험유형;NULL" cssclass="cbo_WF_normal"/>
+              <Calendar id="calCplPlanTime" taborder="32" cssclass="cal_WF_normal" enable="true" left="155" top="252" width="130" height="24" validate="" validation="완료예정일;NULL|DATETIME:YYYYMMDD" validationGroup="input01"/>
+              <Static id="stcCplPlanTime" taborder="31" text="완료예정일" cssclass="sta_WF_inputTitle_E" left="20" top="247" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcCplActTime" taborder="33" text="실제완료일" onclick="Static13_onclick" cssclass="sta_WF_inputTitle" left="50.00%" top="247" width="130" height="34" style="align:left middle;"/>
+              <Calendar id="calCplActTime" taborder="34" cssclass="cal_WF_normal" left="stcCplActTime:5" top="252" width="130" height="24" validate="" validationGroup="input01" validation="실제완료일;DATETIME:YYYYMMDD"/>
+              <Static id="stcRiskPlanCd" taborder="28" text="대응유형" cssclass="sta_WF_inputTitle_E" left="50.00%" top="214" width="130" height="34" style="align:left middle;"/>
+              <Radio id="rdoRiskPlanCd" taborder="29" left="stcRiskPlanCd:5" top="219" height="24" right="25" innerdataset="dsRiskPlanCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" cssclass="rdo_WF_normal" validation="대응유형;NULL" direction="vertical" validationGroup="input01"/>
+              <Div id="divChgUser" taborder="27" left="stcChgUser:5" top="219" height="24" right="530" url="fomm::FOMM0000_D02.xfdl"/>
+              <Edit id="edtRiskNo" taborder="9" left="stcRiskNo:5" top="87" height="24" validate="" right="Static28_00:5" validation="위험 NO;NULL" validationGroup="input01" cssclass="edt_WF_normal"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtnBottom" taborder="1" height="60" bottom="0" text="" cssclass="div_POP_msg_btnbg" left="20" right="20">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="14"/>
+              <Button id="btnSave" taborder="1" text="저장" width="110" height="32" bottom="14" cssclass="btn_WF_primary_save" right="btnClose:5" onclick="fnCommOnclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divFilesAct" taborder="2" left="0" top="765" __USE_MODE="1" _ENABLE_READONLY_ALL_SKIP="Y" url="comm::comFile.xfdl" text="" height="192" width="602" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsRisk" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="16"/>
+          <Column id="ROWFLAG" type="STRING" size="16"/>
+          <Column id="RISK_ID" type="string" size="16"/>
+          <Column id="RISK_NO" type="string" size="20"/>
+          <Column id="RISK_NAME" type="string" size="200"/>
+          <Column id="PJT_ID" type="string" size="16"/>
+          <Column id="PJT_NAME" type="string" size="200"/>
+          <Column id="RISK_STATUS_CD" type="string" size="30"/>
+          <Column id="RISK_TYPE_CD" type="string" size="30"/>
+          <Column id="RISK_DESC" type="string" size="4000"/>
+          <Column id="RISK_STIME" type="string" size="14"/>
+          <Column id="RISK_IMPACT_CD" type="string" size="30"/>
+          <Column id="RISK_PLAN_CD" type="string" size="30"/>
+          <Column id="RISK_REAL_CD" type="string" size="30"/>
+          <Column id="CPL_PLAN_TIME" type="string" size="14"/>
+          <Column id="CPL_ACT_TIME" type="string" size="14"/>
+          <Column id="CHG_USER_ID" type="string" size="10"/>
+          <Column id="CHG_USER_NM" type="string" size="100"/>
+          <Column id="CHG_USER_DEPT" type="string" size="100"/>
+          <Column id="REG_STIME" type="string" size="14"/>
+          <Column id="REG_USER_ID" type="string" size="10"/>
+          <Column id="REG_USER_NM" type="string" size="100"/>
+          <Column id="REG_USER_DEPT" type="string" size="100"/>
+          <Column id="SYSMODTIME" type="string" size="14"/>
+          <Column id="LMOD_USER_ID" type="string" size="10"/>
+          <Column id="LMOD_USER_NM" type="string" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="string" size="100"/>
+          <Column id="RISK_DELAY_CD" type="string" size="1"/>
+          <Column id="CHK" type="string" size="1"/>
+          <Column id="ISSUE_ID" type="string" size="16"/>
+          <Column id="ISSUE_NO" type="string" size="20"/>
+          <Column id="ISSUE_NAME" type="string" size="200"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRiskAction" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="ACT_ID" type="string" size="16"/>
+          <Column id="RISK_ID" type="string" size="16"/>
+          <Column id="ACT_DESC" type="string" size="4000"/>
+          <Column id="ACT_STATUS_CD" type="string" size="30"/>
+          <Column id="ACT_TIME" type="string" size="14"/>
+          <Column id="ACT_USER_ID" type="string" size="10"/>
+          <Column id="ACT_USER_NM" type="string" size="100"/>
+          <Column id="ACT_USER_DEPT" type="string" size="100"/>
+          <Column id="REG_STIME" type="string" size="14"/>
+          <Column id="REG_USER_ID" type="string" size="10"/>
+          <Column id="REG_USER_NM" type="string" size="100"/>
+          <Column id="REG_USER_DEPT" type="string" size="100"/>
+          <Column id="SYSMODTIME" type="string" size="14"/>
+          <Column id="LMOD_USER_ID" type="string" size="10"/>
+          <Column id="LMOD_USER_NM" type="string" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="string" size="100"/>
+          <Column id="ORG_FILE_NM" type="string" size="200"/>
+          <Column id="FILE_CNT" type="int" size="10"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRiskImpactCd"/>
+      <Dataset id="dsActionStatusCd"/>
+      <Dataset id="dsRiskPlanCd">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRiskRealCd"/>
+      <Dataset id="dsRiskTypeCd"/>
+      <Dataset id="dsRiskStatusCd"/>
+      <Dataset id="dsFileList" updatecontrol="false" enableevent="false"/>
+      <Dataset id="dsPopRtn"/>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="RISK_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ PJ3100_P01
+* 화면(명)		︰ 위험관리 상세
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.10.18
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.10.18	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.saveFlg = "N";				//화면 저장 여부
+this.isCloseBtnClick = false;	//닫기 버튼을 눌러 닫는 경우 true
+this.dSaveChkRow;				//저장시 Validaton Check에 걸린경우 해당 row정보를 저장
+// 실행활동 이력 첨부파일 setting
+this.actFileParam = {
+	 sSvcId		: 'actFileSvc'			// divFile callback 후처리용 서비스 ID
+	,limitMinCnt: 0						// 파일 최소 갯수; defualt 0
+	,limitCnt	: 3						// 파일 최대 갯수; default 5
+	,limitSize	: 100					// 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+	,folderName	: 'pj'					// 폴더명(업무명)
+	,tableName	: 'PJ_RISK_ACTION'		// 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+	,primaryKey1: ''					// 테이블 PK1(ex. 요청서ID 등)
+	,primaryKey2: ''					// 테이블 PK2 (복합 키인 경우 사용)
+	,primaryKey3: ''					// 테이블 PK3 (복합 키인 경우 사용)
+	,fileDownYn	: ''					// 파일다운권한; 	 공백 시 메뉴의 조회 권한
+	,fileUpYn	: ''					// 파일업로드권한; 공백 시 메뉴의 추가 권한
+	,deleteYn	: ''					// 파일삭제권한; 	 공백 시 메뉴의 삭제 권한
+};
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+	//trace("[PJ3100_P01] this.form_onload() this.getOwnerFrame()._formObj : " + this.getOwnerFrame()._formObj);
+}
+
+this.fnInit = function()
+{
+	trace("this.getOwnerFrame().id : " + this.getOwnerFrame().id);
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	//trace("[PJ3100_P01] this.fnSearch()");
+	var sTranId = "select01";																		// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ3100P/select01";																// 서비스명
+    var sInDs = "dsCond=dsCond";																	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsRisk=dsRisk dsRiskAction=dsRiskAction dsFileList=dsFileList";	// 서버에서 수신할 데이타셋
+    var sArg = "";																					// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSave = function()
+{
+	//trace("[PJ3100_P01] this.fnSave()");
+	var sTranId = "save01";
+    var sService = "PJ3100P/save01";
+    var sInDs = "dsCond=dsCond dsRisk=dsRisk:U dsRiskAction=dsRiskAction:A";
+	var sOutDs = "dsRisk=dsRisk dsRiskAction=dsRiskAction dsFileList=dsFileList dsCond=dsCond";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+	{
+		objDs.setDeleteRow(i);
+	}
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+this.fnUploadCallback = function(sSvcId, nErrorCode, sErrorMsg)
+{
+	//trace("[PJ3100_P01] this.fnUploadCallback() sSvcId : " + sSvcId + " nErrorCode : " + nErrorCode + " sErrorMsg : " + sErrorMsg);
+
+	// TO DO
+	// 개발자가 지정한 sSvcId(setConfig 옵션에 넣은 파일첨부ID), nErrorCode(에러코드), sErrorMsg(에러메시지)
+	if (nErrorCode < 0) 
+	{
+		Ex.core.error(this, {id:"ERROR", msg:sSvcId + "\n" + Ex.core.msg(sErrorMsg)});
+		return;
+	}
+	
+	switch(sSvcId)
+	{
+		case "riskFileSvc" :
+			this.divFilesAct.form.fnUploadFiles(true);
+			break;
+
+		case "actFileSvc" :
+			this.fnSave();
+			break;
+	}
+};
+
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			
+			var strRegUserId    = this.dsRisk.getColumn(0, "REG_USER_ID");
+			var strRegUserNm    = this.dsRisk.getColumn(0, "REG_USER_NM");
+			var strRegDept      = this.dsRisk.getColumn(0, "REG_USER_DEPT");
+			this.divContents.form.divRegUser.form.setValue(strRegUserId, strRegUserNm, strRegDept);
+			
+			var strChgUserId    = this.dsRisk.getColumn(0, "CHG_USER_ID");
+			var strChgUserNm    = this.dsRisk.getColumn(0, "CHG_USER_NM");
+			var strChgDept      = this.dsRisk.getColumn(0, "CHG_USER_DEPT");
+			this.divContents.form.divChgUser.form.setValue(strChgUserId, strChgUserNm, strChgDept);
+			
+			this.setGridFileInfo();
+
+			this.actFileParam.primaryKey1 = this.dsRisk.getColumn(0, "RISK_ID")||'';
+			this.divFilesAct.form.setConfig(this, this.actFileParam);
+			this.divFilesAct.form.dsFommFile.loadXML(this.dsFileList.saveXML("dsFommFile", "ALL"));
+
+			this.divContents.form.grdRiskAction.setCellProperty("Head", this.divContents.form.grdRiskAction.getBindCellIndex('Body', 'CHK'), "text", "0");
+
+			this.fn_setEditMode();
+			break;
+
+		case "save01" :
+			this.saveFlg = "Y";
+			Ex.core.toast(this, "10004", null, {toastType:'S'});
+			this.divContents.form.grdRiskAction.setCellProperty("Head", this.divContents.form.grdRiskAction.getBindCellIndex('Body', 'CHK'), "text", "0");
+			
+			if( !Ex.isEmpty(this.dsCond.getColumn(0, "RISK_ID")) )
+			{
+				this.getOwnerFrame().pRiskId	= this.dsCond.getColumn(0, "RISK_ID");
+				this.getOwnerFrame().pMode = "SEARCH";
+				this.divContents.form.divFiles.form.fnReplaceTempkeyAndSearch(this.dsCond.getColumn(0, "RISK_ID"));
+			}
+			
+			var strRegUserId    = this.dsRisk.getColumn(0, "REG_USER_ID");
+			var strRegUserNm    = this.dsRisk.getColumn(0, "REG_USER_NM");
+			var strRegDept      = this.dsRisk.getColumn(0, "REG_USER_DEPT");
+			this.divContents.form.divRegUser.form.setValue(strRegUserId, strRegUserNm, strRegDept);
+			
+			var strChgUserId    = this.dsRisk.getColumn(0, "CHG_USER_ID");
+			var strChgUserNm    = this.dsRisk.getColumn(0, "CHG_USER_NM");
+			var strChgDept      = this.dsRisk.getColumn(0, "CHG_USER_DEPT");
+			this.divContents.form.divChgUser.form.setValue(strChgUserId, strChgUserNm, strChgDept);
+
+			this.setGridFileInfo();
+
+			this.actFileParam.primaryKey1 = this.dsRisk.getColumn(0, "RISK_ID")||'';
+			this.divFilesAct.form.setConfig(this, this.actFileParam);
+			this.divFilesAct.form.dsFommFile.assign(this.dsFileList);
+			
+			this.divContents.form.grdRiskAction.setCellProperty("Head", this.divContents.form.grdRiskAction.getBindCellIndex('Body', 'CHK'), "text", "0");
+			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "comFilePop" :
+			//trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)
+			{
+				this.dsFileList.loadXML(varValue);
+				
+				for(var i=0; i<this.dsFileList.rowcount; i++)	this.dsFileList.setColumn(i, "CHK", "0");
+
+				this.divFilesAct.form.dsFommFile.set_enableevent(false);
+				this.divFilesAct.form.dsFommFile.set_updatecontrol(false);
+				
+				this.divFilesAct.form.dsFommFile.loadXML(this.dsFileList.saveXML("dsFommFile", "ALL"));
+				for(var i=0; i<this.divFilesAct.form.dsFommFile.rowcount; i++)
+				{
+					var rowFlag = this.divFilesAct.form.dsFommFile.getColumn(i, "ROWFLAG");
+					trace("i=" + i + " rowFlag : " + rowFlag);
+
+					if(rowFlag == "I")
+					{
+						this.divFilesAct.form.dsFommFile.setRowType(i, Dataset.ROWTYPE_INSERT);
+					}
+					else if(rowFlag == "D")
+					{
+						this.divFilesAct.form.dsFommFile.setRowType(i, Dataset.ROWTYPE_UPDATE);
+					}
+				}
+				
+				this.setGridFileInfo(this.dsRiskAction.rowposition);				
+				//trace(this.divFilesAct.form.dsFommFile.saveXML());
+			}
+			break;
+
+		case "selectUserPop" :
+			trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)
+			{
+				this.dsPopRtn.loadXML(varValue);
+				this.dsRiskAction.setColumn(this.dsRiskAction.rowposition, "ACT_USER_ID",   this.dsPopRtn.getColumn(0, "USER_ID"));
+				this.dsRiskAction.setColumn(this.dsRiskAction.rowposition, "ACT_USER_NM",   this.dsPopRtn.getColumn(0, "USER_NM"));
+				this.dsRiskAction.setColumn(this.dsRiskAction.rowposition, "ACT_USER_DEPT", this.dsPopRtn.getColumn(0, "DEPT_NM"));
+			}
+			break;
+
+		case "PJ0600_P01" :
+			if(varValue.indexOf("Dataset id=") > -1)
+			{
+				this.dsPopRtn.loadXML(varValue);
+				this.dsRisk.setColumn(0, "MEET_ID", this.dsPopRtn.getColumn(0, "MEET_ID"));
+			}
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			for(var i=this.dsFileList.rowcount-1; i>=0; i--)
+			{
+				var pk2 = this.dsFileList.getColumn(i, "PK2");
+				
+				var fRow = this.dsRiskAction.findRowExpr("ACT_ID", pk2);
+				
+				if(fRow == -1)
+				{
+					this.divFilesAct.form.FileUpTransfer.removeFile(this.dsFileList.getColumn(i, "FILE_NM"));
+					this.dsFileList.setDeleteRow(i);
+				}
+				else
+				{
+					if(this.dsRiskAction.getColumn(fRow, "ROWFLAG") == "D")
+					{
+						this.divFilesAct.form.FileUpTransfer.removeFile(this.dsFileList.getColumn(i, "FILE_NM"));
+						this.dsFileList.setDeleteRow(i);
+					}
+				}
+			}
+			this.divContents.form.divFiles.form.fnUploadFiles(true);
+			break;
+
+		case "alertCboActCdStsI" :
+			this.dsPjActCd.setColumn(0, "ACTION_CD", "AITM_PROC_STS_CD02");
+			this.divContents.form.cboActCd.setFocus();
+			break;
+
+		case "alertEdtimeI" :
+			this.divContents.form.calCplPlanTime.setFocus();
+			break;
+
+		case "alertChkCplActTimeI" :
+			this.divContents.form.calCplActTime.setFocus();
+			break;
+
+		case "alertChkGrdStsI" :
+			this.grdRiskAction.getBindDataset().set_rowposition(this.dSaveChkRow);			// 데이터셋 ROW 포커스 이동
+			this.grdRiskAction.showEditor(true);											// 그리드 편집모드로 변경
+			var cellIdx = this.grdRiskAction.getBindCellIndex("Body", "ACT_STATUS_CD");
+			this.grdRiskAction.setCellPos(cellIdx, this.dSaveChkRow);						// 그리드 셀 포커스 이동
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.divContents.form.grdRiskAction.displayRowType();
+
+	this.divContents.form.divRegUser.form.setEnable(false);
+
+	this.dsCond.setColumn(0, "PJT_ID", this.getOwnerFrame().pPjtId);
+	this.dsCond.setColumn(0, "RISK_ID", this.getOwnerFrame().pRiskId);
+
+	// 공통코드 조회
+	this.fnGetCmmCd();
+	
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divContents.form.divGrdTopBtn.form.btnAdd];	// 쓰기
+	Ex.util.setBtnVisible(this, 'write', arrBtn);
+
+	arrBtn = [this.divContents.form.divGrdTopBtn.form.btnDelete];	// 삭제
+	Ex.util.setBtnVisible(this, 'delete', arrBtn);
+
+	arrBtn = [this.divBtnBottom.form.btnSave];	// 저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+	
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divContents.form.divGrdTopBtn, 'right', true);
+	Ex.util.setBtnAlign(this.divBtnBottom, 'right', true);
+
+	// 첨부파일 setting
+	var oParam = {
+		 sSvcId		: 'riskFileSvc'									// divFile callback 후처리용 서비스 ID
+		,limitMinCnt: 0												// 파일 최소 갯수; defualt 0
+		,limitCnt	: 3												// 파일 최대 갯수; default 5
+		,limitSize	: 100											// 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+		,folderName	: 'pj'											// 폴더명(업무명)
+		,tableName	: 'PJ_RISK'										// 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+		,primaryKey1: this.dsCond.getColumn(0, "RISK_ID")||''		// 테이블 PK1(ex. 요청서ID 등)
+		,primaryKey2: ''											// 테이블 PK2 (복합 키인 경우 사용)
+		,primaryKey3: ''											// 테이블 PK3 (복합 키인 경우 사용)
+		,fileDownYn	: ''											// 파일다운권한; 	 공백 시 메뉴의 조회 권한
+		,fileUpYn	: ''											// 파일업로드권한; 공백 시 메뉴의 추가 권한
+		,deleteYn	: ''											// 파일삭제권한; 	 공백 시 메뉴의 삭제 권한
+	};
+	this.divContents.form.divFiles.form.setConfig(this, oParam);
+
+	this.divFilesAct.form.setConfig(this, this.actFileParam);
+	
+	this.divFilesAct.form.dsFommFile.set_enableevent(false);
+	this.divFilesAct.form.dsFommFile.set_updatecontrol(false);
+	
+	this.dsFileList.loadXML(this.divFilesAct.form.dsFommFile.saveXML());
+	
+	trace("this.divFilesAct.form.dsFommFile.enableevent : " + this.divFilesAct.form.dsFommFile.enableevent);
+	trace("this.divFilesAct.form.dsFommFile.updatecontrol : " + this.divFilesAct.form.dsFommFile.updatecontrol);
+	
+	this.fv_today = Ex.util.today();
+
+	//trace("[PJ3100_P01] this.fnCompInit() this.getOwnerFrame().pIsNew : " + this.getOwnerFrame().pIsNew);
+
+	if(this.getOwnerFrame().pMode == "NEW")
+	{
+		var nRow = this.dsRisk.setInsertRow();
+		this.dsRisk.setColumn(0, "PJT_ID",   this.getOwnerFrame().pPjtId);
+		this.dsRisk.setColumn(0, "PJT_NAME", this.getOwnerFrame().pPjtNm);
+		this.dsRisk.setColumn(0, "RISK_PLAN_CD", "RESP_TYPE_CD01");
+		this.divContents.form.divRegUser.form.setValue(Ex.util.getSession('gvUserId'), Ex.util.getSession('gvUserNm'), Ex.util.getSession('gvDeptNm'));
+		this.divContents.form.edtRiskNo.setFocus();
+	}
+	else if( !Ex.isEmpty(this.dsCond.getColumn(0, "RISK_ID")) )
+	{
+		this.fnSearch();
+ 	}
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		 upCmmCd : ['RISK_P_STS_CD',	'RISK_TYPE_CD',		'EFFECT_LVL_CD',		'RESP_TYPE_CD',		'OCC_P_LVL_CD',		'MES_PROC_STS'			]	// 조회할 상위코드
+		,codeDiv: ['PJT_MNG_CD',		'PJT_MNG_CD',		'PJT_MNG_CD',			'PJT_MNG_CD',		'PJT_MNG_CD',		'PJT_MNG_CD'			]	// 조회할 코드의 업무구분
+		,optStr	: ['SEL',				'SEL',				'SEL',					'',					'SEL',				'SEL'					]	// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',					'Y',				'Y',					'Y',				'Y',				'Y'						]	// 사용여부
+		,filter	: ['',					'',					'',						'',					'',					''						]	// filterStr
+		,objDs	: [this.dsRiskStatusCd, this.dsRiskTypeCd,	this.dsRiskImpactCd,	this.dsRiskPlanCd,	this.dsRiskRealCd,	this.dsActionStatusCd	]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+this.fnCheckValidate = function()
+{
+	// 저장할 dataset에 변경된 data 있는 지 확인
+	if( !Ex.util.isUpdated(this.dsRisk) &&
+		!Ex.util.isUpdated(this.dsRiskAction) &&
+		!this.divContents.form.divFiles.form.isUpdateForm() &&
+		!this.divFilesAct.form.isUpdateForm())
+	{
+		return false;
+	}
+
+	if( !Ex.util.checkValidate(this.divContents, "input01") ) return false;
+	
+	var msgNo;
+
+	//등록자 입력 체크
+	var rtnVal = this.divContents.form.divRegUser.form.fnCheckValidate();
+	
+	if(rtnVal == "NO_INPUT")	msgNo = 11001;	//"은(는) 필수 입력 항목입니다.";
+	else if(rtnVal == "NO_ID")	msgNo = 20001;	//"은(는) 입력 후 검색까지 완료해야 합니다.";
+
+	trace("divRegUser rtnVal : " + rtnVal);
+
+	if(rtnVal == "NO_INPUT" || rtnVal == "NO_ID")
+	{
+		var oParam = {id : "alertRegUserI", msg : msgNo, arrparam : [Ex.core.word(this.divContents.form.stcRegUser.text)], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return false;
+	}
+
+	//담당자 입력 체크
+	rtnVal = this.divContents.form.divChgUser.form.fnCheckValidate();
+
+	trace("divChgUser rtnVal : " + rtnVal);
+
+	if(rtnVal == "NO_INPUT")	msgNo = 11001;	//"은(는) 필수 입력 항목입니다.";
+	else if(rtnVal == "NO_ID")	msgNo = 20001;	//"은(는) 입력 후 검색까지 완료해야 합니다.";
+
+	if(rtnVal == "NO_INPUT" || rtnVal == "NO_ID")
+	{
+		var oParam = {id : "alertChkChgUserI", msg : msgNo, arrparam : [Ex.core.word(this.divContents.form.stcChgUser.text)], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return false;
+	}
+	
+	if(this.dsRisk.getColumn(0, "RISK_STIME") > this.dsRisk.getColumn(0, "CPL_PLAN_TIME"))
+	{
+		var oParam = {id : "alertEdtimeI", msg : "완료예정일은(는) 식별일자보다 작게 입력 불가능 합니다.", arrparam : [], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return false;
+	}
+
+	if( !this.divContents.form.grdRiskAction.checkValidate(true) ) return false;
+
+	//진행상태가 완료인 경우 
+	if(this.divContents.form.cboRiskStatusCd.value == "RISK_P_STS_CD03")
+	{
+		//실제완료일 필수 입력
+		if( Ex.isEmpty(this.dsRisk.getColumn(0, "CPL_ACT_TIME")) )
+		{
+			var oParam = {id : "alertChkCplActTimeI", msg : "진행상태가 완료인 경우 실제완료일을 입력 하세요.", arrparam : [], msgtype : "I"};
+			Ex.core.alert(this, oParam);
+			return false;
+		}
+		
+		//위험활동이력 완료여부 체크
+		var fRow = this.dsRiskAction.findRowExpr("ACT_STATUS_CD != 'RISK_P_STS_CD03'");
+		if( fRow > -1)
+		{
+			this.dSaveChkRow = fRow;
+			var oParam = {id : "alertChkGrdStsI", msg : "진행상태가 완료인 경우 위험활동이력이 모두 완료되야 합니다.", arrparam : [], msgtype : "I"};
+			Ex.core.alert(this, oParam);
+			return false;
+		}
+	}
+	return true;
+} 
+
+this.fn_setEditMode = function()
+{
+	var strRegUserId = this.dsRisk.getColumn(0, "REG_USER_ID");
+
+	if(Ex.util.getSession('gvUserId') != strRegUserId)
+	{
+		Ex.util.setCompPropAll(this, this.divContents.form, false, [this.divContents.form.divRegUser]);
+		this.divBtnBottom.form.btnSave.set_visible(false);
+
+		//첨부파일 영역
+		this.divContents.form.divFiles.form.grdFile.set_readonly(false);
+		this.divContents.form.divFiles.form.divBtn.form.btnDownload.set_enable(true);
+	}
+}
+
+this.userDeptChangedCallBack = function(compId, dsRtnObj)
+{
+	trace("[PJ3100_P01] this.userDeptChangedCallBack() compId : " + compId);
+	if(compId == "divRegUser")
+	{
+		if( !Ex.isEmpty(dsRtnObj.getColumn(0, "USER_ID")) )
+		{
+			this.dsRisk.setColumn(0, "REG_USER_ID",		dsRtnObj.getColumn(0, "USER_ID"));
+			this.dsRisk.setColumn(0, "REG_USER_NM",		dsRtnObj.getColumn(0, "USER_NM"));
+			this.dsRisk.setColumn(0, "REG_USER_DEPT",	dsRtnObj.getColumn(0, "DEPT_NM"));
+		}
+		else
+		{
+			this.dsRisk.setColumn(0, "REG_USER_ID",   "");
+			this.dsRisk.setColumn(0, "REG_USER_NM",   "");
+			this.dsRisk.setColumn(0, "REG_USER_DEPT", "");
+		}
+	}
+	else if(compId == "divChgUser")
+	{
+		if( !Ex.isEmpty(dsRtnObj.getColumn(0, "USER_ID")) )
+		{
+			this.dsRisk.setColumn(0, "CHG_USER_ID",		dsRtnObj.getColumn(0, "USER_ID"));
+			this.dsRisk.setColumn(0, "CHG_USER_NM",		dsRtnObj.getColumn(0, "USER_NM"));
+			this.dsRisk.setColumn(0, "CHG_USER_DEPT",	dsRtnObj.getColumn(0, "DEPT_NM"));
+		}
+		else
+		{
+			this.dsRisk.setColumn(0, "CHG_USER_ID",   "");
+			this.dsRisk.setColumn(0, "CHG_USER_NM",   "");
+			this.dsRisk.setColumn(0, "CHG_USER_DEPT", "");
+		}
+	}
+}
+
+this.setGridFileInfo = function(row)
+{
+	var startRow = 0;
+	var endRow	= this.dsRiskAction.rowcount;
+	
+	if( !Ex.isEmpty(row) )
+	{
+		startRow = row;
+		endRow = startRow + 1;
+	}
+
+	trace("this.setGridFileInfo() row : " + row + " startRow : " + startRow + " endRow : " + endRow);
+	
+	this.dsRiskAction.set_enableevent(false);
+	this.dsRiskAction.set_updatecontrol(false);
+
+	for(var i=startRow; i<endRow; i++)
+	{
+		this.dsFileList.set_filterstr("PK1=='" + (this.dsRiskAction.getColumn(i, "RISK_ID")||('TEMP_KEY_' + Ex.util.getSession('gvUserId'))) +
+									  "' && PK2=='" + this.dsRiskAction.getColumn(i, "ACT_ID") + "'");
+									  
+		trace("i=" + i + " this.dsFileList.rowcount : " + this.dsFileList.rowcount);
+		if(this.dsFileList.rowcount == 1)
+		{
+			this.dsRiskAction.setColumn(i, "ORG_FILE_NM", this.dsFileList.getColumn(0, "FILE_NM"));
+		}
+		else if(this.dsFileList.rowcount > 1)
+		{
+			this.dsRiskAction.setColumn(i, "ORG_FILE_NM", this.dsFileList.getColumn(0, "FILE_NM") + " 외 " + (this.dsFileList.rowcount-1) + "건");
+		}
+		else
+		{
+			this.dsRiskAction.setColumn(0, "ORG_FILE_NM", "");
+		}		
+	}
+	
+	this.dsRiskAction.set_updatecontrol(true);
+	this.dsRiskAction.set_enableevent(true);
+
+	this.dsFileList.set_filterstr("");
+}
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnAdd" : 	// 저장
+			var nRow = this.dsRiskAction.setInsertRow();
+			this.dsRiskAction.setColumn(nRow, "ACT_ID", Ex.util.getUniqueId("ACT_ID_"));
+			this.dsRiskAction.setColumn(nRow, "RISK_ID", this.dsRisk.getColumn(0, "RISK_ID"));
+			break;
+
+		case "btnDelete" : 	// 삭제
+			this.fnDelete(this.dsRiskAction);
+			break;
+
+		case "btnSave" : 	// 저장
+			// validation
+			if( this.fnCheckValidate() )
+			{
+				var param = {
+						id : "saveConfirm"
+					  , msg : "10003"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+			break;
+
+		case "btnClose" : 	// 닫기
+			this.isCloseBtnClick = true;
+			Ex.core.pclose(this, this.saveFlg);
+			break;
+	}
+}
+
+this.grdOnCellClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	obj.dropdownCalendar();
+	obj.dropdownCombo();
+};
+
+this.grdOnExpandUp = function(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo)
+{
+	if (e.cell == obj.getBindCellIndex("body","ACT_USER_NM"))
+	{
+		Ex.core.popup(
+			this,
+			'selectUserPop',
+			"fomm::FOMM0000_P01.xfdl",             		// <--- 팝업창 오픈 Url
+			{
+				title		: Ex.core.word('사용자 선택'),
+				pSelType	: 'S',
+				pType		: "name"
+			},											// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			"width=900,height=500"                  	// <--- width/height/modeless(프레임 처리 옵션)							
+		);
+	}
+	else if ( e.cell == obj.getBindCellIndex("body","ORG_FILE_NM"))
+	{
+		this.actFileParam.primaryKey1 = this.dsRisk.getColumn(0, "RISK_ID")||('TEMP_KEY_' + Ex.util.getSession('gvUserId'));
+		this.actFileParam.primaryKey2 = this.dsRiskAction.getColumn(this.dsRiskAction.rowposition, "ACT_ID")||'';
+		trace("this.actFileParam.primaryKey1 : " + this.actFileParam.primaryKey1 + "\nthis.actFileParam.primaryKey2 : " + this.actFileParam.primaryKey2);
+
+		Ex.core.popup(
+			this,
+			'comFilePop',
+			"comm::comFilePop.xfdl",             		// <--- 팝업창 오픈 Url
+			{
+				title			: Ex.core.word('위험활동 이력 - 첨부파일'),
+				pTargetFileDiv	: this.divFilesAct,
+				pDsObj			: this.dsFileList,
+				pIsSearch		: false,
+				pBtnConfVisible	: true,
+				pFileCfg		: this.actFileParam,
+				pFilterStr		: "PK1=='" + this.actFileParam.primaryKey1 + "' && PK2=='" + this.actFileParam.primaryKey2 + "'"
+			},											// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			"autosize,bCloseButton=false"				// <--- width/height/modeless(프레임 처리 옵션)
+		);
+	}
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+this.onBeforeClose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	if(!this.isCloseBtnClick) if(this.saveFlg == "Y") this.getOwnerFrame()._formObj.fnSearch();
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContents.form.edtPjtName" propid="value" datasetid="dsRisk" columnid="PJT_NAME"/>
+      <BindItem id="item1" compid="divContents.form.edtRiskName" propid="value" datasetid="dsRisk" columnid="RISK_NAME"/>
+      <BindItem id="item2" compid="divContents.form.txaRiskDesc" propid="value" datasetid="dsRisk" columnid="RISK_DESC"/>
+      <BindItem id="item3" compid="divContents.form.calRiskStime" propid="value" datasetid="dsRisk" columnid="RISK_STIME"/>
+      <BindItem id="item7" compid="divContents.form.cboRiskRealCd" propid="value" datasetid="dsRisk" columnid="RISK_REAL_CD"/>
+      <BindItem id="item10" compid="divContents.form.edtIssueNo" propid="value" datasetid="dsRisk" columnid="ISSUE_NO"/>
+      <BindItem id="item9" compid="divContents.form.edtIssueNm" propid="value" datasetid="dsRisk" columnid="ISSUE_NAME"/>
+      <BindItem id="item12" compid="divContents.form.cboRiskStatusCd" propid="value" datasetid="dsRisk" columnid="RISK_STATUS_CD"/>
+      <BindItem id="item5" compid="divContents.form.cboRiskImpactCd" propid="value" datasetid="dsRisk" columnid="RISK_IMPACT_CD"/>
+      <BindItem id="item8" compid="divContents.form.cboRiskTypeCd" propid="value" datasetid="dsRisk" columnid="RISK_TYPE_CD"/>
+      <BindItem id="item4" compid="divContents.form.calCplPlanTime" propid="value" datasetid="dsRisk" columnid="CPL_PLAN_TIME"/>
+      <BindItem id="item6" compid="divContents.form.calCplActTime" propid="value" datasetid="dsRisk" columnid="CPL_ACT_TIME"/>
+      <BindItem id="item13" compid="divContents.form.edtRiskNo" propid="value" datasetid="dsRisk" columnid="RISK_NO"/>
+      <BindItem id="item14" compid="divContents.form.rdoRiskPlanCd" propid="value" datasetid="dsRisk" columnid="RISK_PLAN_CD"/>
+    </Bind>
+  </Form>
+</FDL>

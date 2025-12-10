@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="ref07_1" classname="ref07" left="0" top="0" width="1840" height="720" titletext="엑셀 다운로드" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divInput" taborder="1" text="div00" left="0" top="0" height="34" right="0">
+          <Layouts>
+            <Layout>
+              <Static id="stcBg01" taborder="0" left="0" top="0" height="34" cssclass="sta_WF_inputBg" right="0" text=""/>
+              <Static id="stcPrePlanNm" taborder="2" left="345" top="0" width="125" height="34" cssclass="sta_WF_inputTitle" text="엑셀파일명"/>
+              <Edit id="edtExcelFileNm" taborder="1" left="stcPrePlanNm:5.00" top="5" height="24" cssclass="edt_WF_normal" readonly="false" width="185" text="다운로드_테스트" value="다운로드_테스트"/>
+              <Button id="btnExcelDown" taborder="3" text="다운로드" left="edtExcelFileNm:2" top="5" width="95" height="24" onclick="fnCommOnclick" cursor="pointer"/>
+              <Edit id="edtControllerNm" taborder="4" left="130" top="5" height="24" cssclass="edt_WF_normal" readonly="true" validationGroup="fvValiCmp" validation="사업명;NULL" right="stcPrePlanNm:5" value="IVExcel/downloadExcel01" text="IVExcel/downloadExcel01"/>
+              <Static id="stcPrePlanNm00" taborder="5" left="0.00" top="0" width="125" height="34" cssclass="sta_WF_inputTitle_E" text="호출Controller"/>
+              <Static id="stc00" taborder="6" text="※ 파일명 미지정시 랜덤으로 파일명을 생성하여 다운로드" left="774" top="5" width="329" height="24"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="stcBg01" taborder="1" left="0" top="33" height="34" cssclass="sta_WF_inputBg" right="0" text=""/>
+        <Static id="stcPrePlanNm00" taborder="2" left="0" top="33" width="125" height="34" cssclass="sta_WF_inputTitle_E" text="예산년도"/>
+        <Spin id="spnBudgetYy" taborder="3" left="stcPrePlanNm00:5" top="38" width="70" height="24" min="1900" max="2999" value="" cssclass="spn_WF_normal" onkeydown="fnCommOnkeydown"/>
+        <Static id="stcPrePlanNm00_00" taborder="4" left="345" top="33" width="125" height="34" cssclass="sta_WF_inputTitle_E" text="출력구분"/>
+        <Combo id="cboPrintGubun" taborder="5" text="기초사업계획" left="stcPrePlanNm00_00:5" top="38" width="150" height="24" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" index="0" value="B">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">B</Col>
+                <Col id="datacolumn">기초사업계획</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">P</Col>
+                <Col id="datacolumn">본사업계획</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">D</Col>
+                <Col id="datacolumn">사업추진</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="BUDGET_YY" type="STRING" size="256"/>
+          <Column id="DRV_ID" type="STRING" size="256"/>
+          <Column id="CHK_GUBUN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="BUDGET_YY">2026</Col>
+            <Col id="CHK_GUBUN">B</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 엑셀 Export
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+}
+
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.clearData();
+	var rowPos = this.dsCond.addRow();
+	
+	var BUDGET_YY = Ex.util.today().substring(0, 4);
+	BUDGET_YY = parseInt(BUDGET_YY) + 1;   //20241206 예산년도
+
+	this.dsCond.setColumn(rowPos, 'BUDGET_YY', BUDGET_YY);
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "ABOUT" : // 서비스 ID
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+}
+
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.id)
+	{
+		case "btnExcelDown" :
+			Ex.core.excelDownService(this, this.divInput.form.edtControllerNm.value, this.dsCond, this.divInput.form.edtExcelFileNm.value);
+			break;
+	}
+}]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divInput.form.stcBg01" propid="value" datasetid="dsIvPrePlan" columnid="PRE_PLAN_NM"/>
+      <BindItem id="item1" compid="stcBg01" propid="value" datasetid="dsIvPrePlan" columnid="PRE_PLAN_NM"/>
+      <BindItem id="item2" compid="spnBudgetYy" propid="value" datasetid="dsCond" columnid="BUDGET_YY"/>
+      <BindItem id="item3" compid="cboPrintGubun" propid="value" datasetid="dsCond" columnid="CHK_GUBUN"/>
+    </Bind>
+  </Form>
+</FDL>

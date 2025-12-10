@@ -1,0 +1,613 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="CH0300_D03" width="1280" height="470" titletext="사업계획" onload="form_onload">
+    <Layouts>
+      <Layout width="1280" height="470">
+        <Div id="divUp" taborder="0" text="div00" left="0" top="0" right="0" height="240">
+          <Layouts>
+            <Layout>
+              <Static id="stcBg03" taborder="0" left="0" top="107" height="68" cssclass="sta_WF_inputBg" right="0"/>
+              <Static id="stcBg01" taborder="1" left="0" top="34" height="34" cssclass="sta_WF_inputBg" right="0"/>
+              <Static id="stcBusi1" taborder="2" text="사업분류" left="20.16%" top="34" width="103" height="34" cssclass="sta_WF_inputTitle_E"/>
+              <Static id="stcBusi2" taborder="3" text="신규사업여부" left="0.00%" top="34" height="34" width="103" visible="true" cssclass="sta_WF_inputTitle_E"/>
+              <Static id="stcBusi6" taborder="4" text="비용산정근거" left="0" top="107" height="68" cssclass="sta_WF_inputTitle_E" width="114"/>
+              <Static id="stcInfoTitle" taborder="5" text="계획정보" left="0" top="0" width="120" height="24" cssclass="sta_WF_gridTitle" onrbuttonup="stOonRbuttonUp"/>
+              <Static id="stcEmpty01" taborder="6" left="0" top="24" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Button id="btnY" taborder="7" text="Y" left="125.00" top="0" width="25" height="24" visible="false" onclick="fnCommOnclick"/>
+              <Button id="btnN" taborder="8" text="N" left="155.00" top="0" width="25" height="24" visible="false" onclick="fnCommOnclick"/>
+              <Combo id="cboBusiPlan" taborder="9" left="365.00" top="39" height="24" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsBusinessCd" cssclass="cbo_WF_normal" onkeydown="fnCommOnkeydown" width="114" validationGroup="group01" text="" validation="사업분류;NULL" validationCheckEnable="true"/>
+              <Combo id="cboBusiNew" taborder="10" left="108.00" top="39" height="24" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsYnCd" cssclass="cbo_WF_normal" onkeydown="fnCommOnkeydown" width="145" onitemchanged="divDown_cboBusiNew_onitemchanged"/>
+              <TextArea id="txaContents" taborder="11" left="119.00" top="112" right="5" cssclass="txa_WF_normal" validationGroup="group01" validation="비용산정근거;NULL" acceptstab="true" wordWrap="char" height="58" text=""/>
+              <Static id="stcBusi5" taborder="12" text="업체명" left="69.61%" top="34" height="34" cssclass="sta_WF_inputTitle" width="103"/>
+              <Edit id="edtBusiEntp" taborder="13" left="999.00" top="39" height="24" enable="true" readonly="true" cssclass="edt_WF_normal" readonlyComp="Y" width="233"/>
+              <Button id="btnSearchCompany" taborder="14" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommbtnPopOnclick" top="39" width="24" left="1232"/>
+              <Static id="stcBusi4" taborder="15" text="추진기간" left="40.16%" top="34" width="103" height="34" cssclass="sta_WF_inputTitle_E"/>
+              <Calendar id="calBusiSt" taborder="16" left="622.00" top="39" height="24" onchanged="doChgWishDt" width="115" validation="추진기간;NULL" validationGroup="group01" cssclass="cal_WF_normal" text="    -  -      "/>
+              <Calendar id="calBusied" taborder="17" left="762.00" top="39" height="24" onchanged="doChgWishDt" width="115" validation="추진기간;NULL" validationGroup="group01" cssclass="cal_WF_normal" text="    -  -      "/>
+              <Static id="Static01" taborder="18" text="~" left="743.00" top="39" width="15" height="24" textAlign="center" verticalAlign="middle"/>
+              <Static id="stcBg03_00" taborder="19" left="0" cssclass="sta_WF_inputBg" right="0" height="34" top="67"/>
+              <Static id="stcLabel05_00" taborder="20" text="사업번호" left="0" width="103" cssclass="sta_WF_inputTitle" top="67" height="34"/>
+              <Static id="stcLabel06_01" taborder="21" text="사업계획번호" left="20.16%" top="67" cssclass="sta_WF_inputTitle" width="103" height="34"/>
+              <Edit id="edtSvcNm00" taborder="22" left="108.00" height="24" enable="true" readonly="true" cssclass="edt_WF_normal" readonlyComp="Y" top="72" right="1027"/>
+              <Static id="stcLabel06_00_01" taborder="23" text="이전사업번호" left="40.16%" top="67" cssclass="sta_WF_inputTitle" width="103" height="34"/>
+              <Edit id="edtReqTmplatNm01" taborder="24" left="365.00" top="72" enable="true" readonly="true" cssclass="edt_WF_normal" readonlyComp="Y" height="23" right="770"/>
+              <Static id="stcLabel06_00_01_00" taborder="25" text="추진부서" left="61.56%" top="67" cssclass="sta_WF_inputTitle_E" width="103" height="34"/>
+              <Edit id="edtPreBusiNo" taborder="26" left="622.00" top="72" height="24" validationGroup="group01" validation="담당자;NULL" cssclass="edt_WF_normal" isChgLang="false" text="" readonly="true" readonlyComp="Y" right="518"/>
+              <Button id="btnSearchPop_RefNo" taborder="27" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommbtnPopOnclick" top="72" text="" left="761.00" width="24"/>
+              <Static id="stcLabel06_00_01_01" taborder="28" text="담당자" left="81.02%" top="67" cssclass="sta_WF_inputTitle" width="111" height="34"/>
+              <Edit id="edtPreConfUser" taborder="29" top="72" height="24" cssclass="edt_WF_normal" isChgLang="false" text="" readonly="true" readonlyComp="Y" left="1152.00" right="6"/>
+              <Edit id="edtPreConfDep" taborder="30" left="896.00" top="72" height="24" validationGroup="group01" validation="추진부서;NULL" cssclass="edt_WF_normal" isChgLang="false" text="" readonly="true" readonlyComp="Y" right="273" validationCheckReadonly="false"/>
+              <Button id="btnSearchPop_Dept" taborder="31" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommbtnPopOnclick" top="72" width="24" left="1006.00" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divDown" taborder="1" text="div01" left="0" top="220" right="0" bottom="0">
+          <Layouts>
+            <Layout>
+              <Static id="stcInfoTitle2" taborder="0" text="예산계획" left="0" top="105" width="120" height="24" cssclass="sta_WF_gridTitle" onrbuttonup="stOonRbuttonUp"/>
+              <Static id="stcEmpty01_00" taborder="1" left="0" top="129" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Grid id="grdDataList" taborder="2" binddataset="dsSrReqIvBdgt" useinputpanel="false" autofittype="col" left="0" top="140" right="0" cssclass="grd_WF_normal" autoenter="select" bottom="50" oncloseup="divDown_grdDataList_oncloseup">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="40"/>
+                      <Column size="45"/>
+                      <Column size="170"/>
+                      <Column size="200"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="80"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="행상태"/>
+                      <Cell col="2" text="예산계정"/>
+                      <Cell col="3" text="계정과목"/>
+                      <Cell col="4" text="1분기 계획"/>
+                      <Cell col="5" text="2분기 계획"/>
+                      <Cell col="6" text="3분기 계획"/>
+                      <Cell col="7" text="4분기 계획"/>
+                      <Cell col="8" text="계획 소계"/>
+                      <Cell col="9" text="지급주기"/>
+                      <Cell col="10" text="1분기 확정"/>
+                      <Cell col="11" text="2분기 확정"/>
+                      <Cell col="12" text="3분기 확정"/>
+                      <Cell col="13" text="4분기 확정"/>
+                      <Cell col="14" text="확정 소계"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                      <Cell col="1" displaytype="normal" edittype="none" style="align: ;" editlimit="2" text="bind:ROWFLAG"/>
+                      <Cell col="2" displaytype="combocontrol" text="bind:BDGT_ACSJ_CD" combodataset="dsBbdgtAcsjCd" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" edittype="combo" validation="예산계정;NULL"/>
+                      <Cell col="3" displaytype="combocontrol" text="bind:ACSJ_TCD" combodataset="dsCntrTcdCd" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" edittype="combo" validation="계정과목;NULL"/>
+                      <Cell col="4" text="bind:BDGT_PAY1" displaytype="number" edittype="text" textAlign="right"/>
+                      <Cell col="5" text="bind:BDGT_PAY2" displaytype="number" edittype="text" textAlign="right"/>
+                      <Cell col="6" text="bind:BDGT_PAY3" displaytype="number" edittype="text" textAlign="right"/>
+                      <Cell col="7" text="bind:BDGT_PAY4" displaytype="number" edittype="text" textAlign="right"/>
+                      <Cell col="8" displaytype="number" textAlign="right" expr="(BDGT_PAY1+BDGT_PAY2+BDGT_PAY3+BDGT_PAY4)"/>
+                      <Cell col="9" displaytype="combocontrol" text="bind:PAY_CYCLE_TCD" combodataset="dsPayCycleCd" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" edittype="combo" validation="지급주기;NULL"/>
+                      <Cell col="10" text="bind:CNFM_BDGT_PAY1" displaytype="number" edittype="text"/>
+                      <Cell col="11" text="bind:CNFM_BDGT_PAY2" displaytype="number" edittype="text"/>
+                      <Cell col="12" text="bind:CNFM_BDGT_PAY3" displaytype="number" edittype="text"/>
+                      <Cell col="13" text="bind:CNFM_BDGT_PAY4" displaytype="number" edittype="text"/>
+                      <Cell col="14" displaytype="number" expr="(CNFM_BDGT_PAY1+CNFM_BDGT_PAY2+CNFM_BDGT_PAY3+CNFM_BDGT_PAY4)"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Div id="divGrdBtn" taborder="3" width="250" isButtonGroup="true" right="0" isChgLang="false" height="24" bottom="stcEmpty01_00:0">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick" height="24"/>
+                    <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="REQ_TMPLAT_ID" type="STRING" size="256"/>
+          <Column id="REQ_TMPLAT_VER" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="REQ_TMPLAT_ID"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSrReqIvBdgt" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="BDGT_SEQ" type="STRING" size="256"/>
+          <Column id="BDGT_ACSJ_CD" type="STRING" size="256"/>
+          <Column id="ACSJ_TCD" type="STRING" size="256"/>
+          <Column id="BDGT_PAY1" type="INT" size="256"/>
+          <Column id="BDGT_PAY2" type="INT" size="256"/>
+          <Column id="BDGT_PAY3" type="INT" size="256"/>
+          <Column id="BDGT_PAY4" type="INT" size="256"/>
+          <Column id="PAY_CYCLE_TCD" type="STRING" size="256"/>
+          <Column id="ENTRY_ID" type="STRING" size="256"/>
+          <Column id="ENTRY_DT" type="STRING" size="256"/>
+          <Column id="UPDATE_ID" type="STRING" size="256"/>
+          <Column id="UPDATE_DT" type="STRING" size="256"/>
+          <Column id="CNFM_BDGT_PAY1" type="INT" size="256"/>
+          <Column id="CNFM_BDGT_PAY2" type="INT" size="256"/>
+          <Column id="CNFM_BDGT_PAY3" type="INT" size="256"/>
+          <Column id="CNFM_BDGT_PAY4" type="INT" size="256"/>
+          <Column id="FRID" type="STRING" size="256"/>
+          <Column id="FR_USER_NM" type="STRING" size="256"/>
+          <Column id="FR_DEPT_CD" type="STRING" size="256"/>
+          <Column id="FR_DEPT_NM" type="STRING" size="256"/>
+          <Column id="FRDT" type="STRING" size="256"/>
+          <Column id="LMID" type="STRING" size="256"/>
+          <Column id="LM_USER_NM" type="STRING" size="256"/>
+          <Column id="LM_DEPT_CD" type="STRING" size="256"/>
+          <Column id="LM_DEPT_NM" type="STRING" size="256"/>
+          <Column id="LMDT" type="STRING" size="256"/>
+          <Column id="LMPID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSrReqIvInfo" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="BUSI_PLAN_NO" type="STRING" size="256"/>
+          <Column id="BUSI_PLAN_TCD" type="STRING" size="256"/>
+          <Column id="IS_NEW_YN" type="STRING" size="256"/>
+          <Column id="BDGT_DESC" type="STRING" size="256"/>
+          <Column id="PLAN_ENTP_NM" type="STRING" size="256"/>
+          <Column id="BUSI_YEAR" type="STRING" size="256"/>
+          <Column id="PLAN_START_DT" type="STRING" size="256"/>
+          <Column id="PLAN_END_DT" type="STRING" size="256"/>
+          <Column id="FRID" type="STRING" size="256"/>
+          <Column id="FR_USER_NM" type="STRING" size="256"/>
+          <Column id="FR_DEPT_CD" type="STRING" size="256"/>
+          <Column id="FR_DEPT_NM" type="STRING" size="256"/>
+          <Column id="FRDT" type="STRING" size="256"/>
+          <Column id="LMID" type="STRING" size="256"/>
+          <Column id="LM_USER_NM" type="STRING" size="256"/>
+          <Column id="LM_DEPT_CD" type="STRING" size="256"/>
+          <Column id="LM_DEPT_NM" type="STRING" size="256"/>
+          <Column id="LMDT" type="STRING" size="256"/>
+          <Column id="LMPID" type="STRING" size="256"/>
+          <Column id="REQ_BUSI_PLAN_NO" type="STRING" size="256"/>
+          <Column id="BUSI_NO" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCntrTcdCd"/>
+      <Dataset id="dsPayCycleCd"/>
+      <Dataset id="dsBbdgtAcsjCd"/>
+      <Dataset id="dsYnCd"/>
+      <Dataset id="dsBusinessCd"/>
+    </Objects>
+    <Bind>
+      <BindItem id="recUserNm" compid="txRecUser" propid="value" datasetid="dtSrReqInfo" columnid="recUserNm"/>
+      <BindItem id="item0" compid="divUp.form.stcBg03_00" propid="value" datasetid="dsSrReqIvInfo" columnid="REQ_BUSI_PLAN_NO"/>
+      <BindItem id="item1" compid="divDown.form.stcBg03" propid="value" datasetid="dsSrReqIvInfo" columnid="BDGT_DESC"/>
+      <BindItem id="item2" compid="divDown.form.edtBusiEntp" propid="value" datasetid="dsSrReqIvInfo" columnid="PLAN_ENTP_NM"/>
+      <BindItem id="item3" compid="divDown.form.cboBusiPlan" propid="value" datasetid="dsSrReqIvInfo" columnid="BUSI_PLAN_TCD"/>
+      <BindItem id="item4" compid="divDown.form.cboBusiNew" propid="value" datasetid="dsSrReqIvInfo" columnid="IS_NEW_YN"/>
+      <BindItem id="item5" compid="divDown.form.calBusiSt" propid="value" datasetid="dsSrReqIvInfo" columnid="PLAN_START_DT"/>
+      <BindItem id="item6" compid="divDown.form.calBusied" propid="value" datasetid="dsSrReqIvInfo" columnid="PLAN_END_DT"/>
+      <BindItem id="item7" compid="divDown.form.txaContents" propid="value" datasetid="dsSrReqIvInfo" columnid="BDGT_DESC"/>
+      <BindItem id="item8" compid="divDown.form.edtBusiEntp" propid="accessibilityaction" datasetid="dsSrReqIvInfo" columnid="PLAN_ENTP_NM"/>
+      <BindItem id="item9" compid="divUp.form.edtSvcNm00" propid="value" datasetid="dsSrReqIvInfo" columnid="BUSI_NO"/>
+      <BindItem id="item10" compid="divUp.form.edtReqTmplatNm01" propid="value" datasetid="dsSrReqIvInfo" columnid="BUSI_PLAN_NO"/>
+      <BindItem id="item11" compid="divUp.form.edtPreBusiNo" propid="value" datasetid="dsSrReqIvInfo" columnid="REQ_BUSI_PLAN_NO"/>
+      <BindItem id="item12" compid="divDown.form.edtReqTitle" propid="value" datasetid="dsSrBaseInfo" columnid="TITLE"/>
+      <BindItem id="item13" compid="divDown.form.btnSearchCompany" propid="value" datasetid="dsSrReqIvInfo" columnid="PLAN_START_DT"/>
+      <BindItem id="item14" compid="divDown.form.btnSearchCompany" propid="accessibilityaction" datasetid="dsSrReqIvInfo" columnid="PLAN_ENTP_NM"/>
+      <BindItem id="item15" compid="divUp.form.edtPreConfUser" propid="value" datasetid="dsSrBaseInfo" columnid="PRE_CONF_USER_NM"/>
+      <BindItem id="item16" compid="edtPreConfUser00" propid="value" datasetid="dsSrBaseInfo" columnid="PRE_CONF_DEPT_NM"/>
+      <BindItem id="item17" compid="divUp.form.edtPreConfDep" propid="value" datasetid="dsSrBaseInfo" columnid="PRE_CONF_DEPT_NM"/>
+      <BindItem id="item18" compid="divDown.form.stcBg03_00" propid="value" datasetid="dsSrBaseInfo" columnid="PRE_CONF_DEPT_NM"/>
+      <BindItem id="item19" compid="divUp.form.stcBg03" propid="value" datasetid="dsSrBaseInfo" columnid="PRE_CONF_DEPT_NM"/>
+      <BindItem id="item20" compid="divUp.form.stcBg03" propid="accessibilityaction" datasetid="dsSrReqIvInfo" columnid="PLAN_ENTP_NM"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ CH0300_D03
+* 화면(명)		︰ 사업계획 요청서
+* 메뉴(경로)		︰ 사업계획/계약 > 사업계획관리 > 사업계획조회(IV9110_W)
+* 화면 설명		︰ 사업계획 요청서
+* 작성자			︰ WEMB
+* 작성일			︰ 2024.06.10 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2024.06.10 	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_WorkFlow.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+ this.dsSrBaseInfo = (!Ex.isEmpty(this.reqInfo) ? this.reqInfo.PARENT_FORM.topForm.dsSrBaseInfo : null);
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+	
+	this.dsCond.setColumn(0, "REQ_ID", this.reqInfo.REQ_ID);
+	
+	if( Ex.isEmpty(this.wfDsReqWfProc) )
+	{
+		this.wfdsReqWfProc = new Dataset();
+	}
+	this.wfdsReqWfProc.loadXML(this.dsWfProc.saveXML());
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것	
+	this.fnCompInit();		// 컴포넌트 초기화
+	this.fn_initDataset();
+	// TODO 변경예정
+	this.dsSrReqIvInfo.setColumn(0,'BUSI_YEAR','2024');
+}
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['BUSINESS_CD',	 	'BDGT_ACSJ_CD',	 	'CNTC_TCD_CD', 		'PAY_CYCLE_CD', 		'YN_CD'		]	// 조회할 상위코드
+		,codeDiv: ['CNTR_CD',			'CNTR_CD',			'CNTR_CD',			'CNTR_CD',				'CMM_CD'	]			// 조회할 코드의 업무구분
+		,optStr	: ['SEL',				'SEL',				'SEL',				'SEL',					'SEL'		]				// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',					'Y',				'Y',				'Y',					'Y'			]					// 사용여부
+		,filter	: ['',					'',					'', 				'', 					''			]						// filterStr
+		,objDs	: [this.dsBusinessCd,	this.dsBbdgtAcsjCd,	this.dsCntrTcdCd,	this.dsPayCycleCd,		this.dsYnCd	]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+	this.dsBbdgtAcsjCd.set_filterstr("ITM_VAL_1=='00' || Ex.isEmpty(CODE_DIV)"); 
+}
+
+this.fn_initDataset = function()
+{
+	if( Ex.isEmpty(this.dsCond.getColumn(0, "REQ_ID")) )
+	{
+		this.dsSrReqIvInfo.setInsertRow();
+		// TODO : 등록단계일 때 확정예산 편집불가
+		
+	}	
+}
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+
+	for(var i = objDs.rowcount-1; i >= 0; i--) objDs.setDeleteRow(i);
+
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+	
+	switch (sSvcId)
+	{
+		case "select01" :
+			
+			break;
+			
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	if(Ex.isEmpty(varValue))
+		return;		
+		
+	var tempDs = new Dataset();
+	var tempDs2;
+	
+	if(pID == "selRefNo")
+	{
+		tempDs2 = new Dataset();
+		var RtnVal = varValue.split("¶");
+		tempDs.loadXML(RtnVal[0]);
+		tempDs2.loadXML(RtnVal[1]);
+		
+		trace(tempDs2.saveXML());
+	}
+	else
+	{
+		tempDs.loadXML(varValue);
+	}
+
+	switch(pID)
+	{				
+		case "selCompanyPop" :	// 계약업체 선택
+			var COMPANY_ID	= tempDs.getColumn(0, 'COMPANY_ID');
+			var COMPANY_NM	= tempDs.getColumn(0, 'COMPANY_NM'); 	
+			this.dsSrReqIvInfo.setColumn(this.dsSrReqIvInfo.rowposition, 'PLAN_ENTP_CD', COMPANY_ID);
+			this.dsSrReqIvInfo.setColumn(this.dsSrReqIvInfo.rowposition, 'PLAN_ENTP_NM', COMPANY_NM);
+			break;
+		
+		case "selDept" :  
+			var DEPT_CD	= tempDs.getColumn(0, 'DEPT_CD');
+			var DEPT_NM	= tempDs.getColumn(0, 'DEPT_NM');  
+			this.dsSrBaseInfo.setColumn(0,"PRE_CONF_DEPT_CD",DEPT_CD);
+			this.dsSrBaseInfo.setColumn(0,"PRE_CONF_DEPT_NM",DEPT_NM);
+			
+			break;
+			
+		case "selRefNo" :  
+			this.dsSrReqIvInfo.setColumn(0,'REQ_BUSI_PLAN_NO', tempDs.getColumn(0, 'BUSI_NO'));
+			
+			this.dsSrBaseInfo.setColumn(0,"TITLE", tempDs.getColumn(0, 'TITLE'));
+			this.dsSrBaseInfo.setColumn(0,"CONTENTS", tempDs.getColumn(0, 'CONTENTS'));
+			this.dsSrReqIvInfo.setColumn(0, 'BUSI_PLAN_TCD', tempDs.getColumn(0, 'BUSI_PLAN_TCD'));
+			this.dsSrReqIvInfo.setColumn(0, 'IS_NEW_YN', 'N');
+			
+			this.dsSrReqIvInfo.setColumn(0, 'BDGT_DESC', tempDs.getColumn(0, 'BDGT_DESC'));
+			
+			// 예산계획 리셋 
+					
+			for (var i =0; i<this.dsSrReqIvBdgt.rowcount; i++){
+				this.dsSrReqIvBdgt.setColumn(i,'CHK',1);
+			}
+			this.fnDelete(this.dsSrReqIvBdgt);
+			
+			// 예산계획 DataSet 세팅
+			for(var i=0; i<tempDs2.rowcount; i++)
+			{	
+				this.dsSrReqIvBdgt.addRow();
+				this.dsSrReqIvBdgt.copyRow(this.dsSrReqIvBdgt.rowcount+i,tempDs2,i);
+			}
+			
+			/*
+			this.dsSrReqIvBdgt.assign(tempDs2);
+			this.dsSrReqIvBdgt.set_updatecontrol(false);
+			for(var i=0; i<this.dsSrReqIvBdgt.rowcount; i++)
+			{
+				this.dsSrReqIvBdgt.setColumn(i, "REQ_ID", this.reqInfo.REQ_ID);
+				this.dsSrReqIvBdgt.setColumn(i, "ROWFLAG", "I");
+				this.dsSrReqIvBdgt.setRowType(i, Dataset.ROWTYPE_INSERT);
+			}
+			this.dsSrReqIvBdgt.set_updatecontrol(true);
+			*/
+			break;
+		
+				
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue) return;
+	
+	switch(mID)
+	{	
+		case "pAlertGubunI" :
+			break;
+			
+		case "saveConfirm" :
+			//this.nLastRow = this.dsCmmWordMt.rowposition;	// 마지막 rowposition 저장
+			//this.fnSetDatasetDt();		// 저장용 datset 전처리
+			this.fnSaveCheck();
+			break;
+
+		case "pAlertJobContI" :
+			this.txaContents.setFocus();
+			break;
+
+		case "rowposChangeConfirm" :		// 행변경 confirm
+			this.rowChangeFlag  = true;
+			this.dsCmmWordMt.set_rowposition(this.nSelRow);
+			break;
+
+		case "pAlertGridI" :
+			this.divDown.form.grdDataList.setFocus();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	this.divDown.form.grdDataList.displayRowType();	
+	
+	// 공통코드 조회
+	this.fnGetCmmCd();
+}
+
+this.isUpdateForm = function()
+{
+	if( !Ex.util.isUpdated(this.dsSrBaseInfo) && !Ex.util.isUpdated(this.dsSrReqIvBdgt) && !Ex.util.isUpdated(this.dsSrReqIvInfo) ) return false;
+	else return true;
+}
+
+this.fnSaveCheck = function(isReg)
+{
+	
+
+	if( !Ex.util.checkValidate(this.divDown, "group01") || !Ex.util.checkValidate(this.divUp, "group01")  ) return false; 
+	else if( this.dsSrReqIvInfo.getColumn(0,"PLAN_START_DT") > this.dsSrReqIvInfo.getColumn(0,"PLAN_END_DT") )
+	{	
+		var param = {id : "pAlertDate", msg : "추진기간을 확인해주세요"};
+		Ex.core.alert(this, param);
+		return false;
+	} 
+	else if(this.dsSrReqIvBdgt.rowcount == 0)
+	{
+		var param = {id : "pAlertGridI", msg : "예산계획이 등록되지 않았습니다."};
+		Ex.core.alert(this, param);
+		return false;
+	}
+	else if(isReg && !this.divDown.form.grdDataList.checkValidate(true) ) return false;
+
+	//alert(" 원활한 테스트를 위해 추진부서를 요청자 부서로 고정합니다 ");
+	//this.dsSrBaseInfo.setColumn(0, "PRE_CONF_DEPT_CD",this.dsSrBaseInfo.getColumn(0,'REQ_DEPT_CD'));
+	return true;
+}
+
+this.isModify = function()
+{
+	if( Ex.util.isUpdated(this.dsSrReqIvBdgt) || Ex.util.isUpdated(this.dsSrReqIvInfo) ) return true;
+	else return false;
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+	if(e.columnid == 'BUSI_PLAN_TCD' ){
+		this.dsBbdgtAcsjCd.set_filterstr("ITM_VAL_1=='" + e.newvalue + "' || Ex.isEmpty(CODE_DIV)"); 		
+	}
+	
+};
+
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{	
+	// TO DO
+	// 개발자가 컴포넌트 onclick event를 'fnCommOnclick'으로 지정하고 컴포넌트 id로 구분하여 작성
+	switch(obj.name)
+	{
+		case "btnAdd" :
+			
+			var rowPos = this.dsSrReqIvBdgt.setInsertRow(this.dsSrReqIvBdgt.rowcount + 1);
+			this.dsSrReqIvBdgt.setColumn(rowPos, "REQ_ID", this.dsCond.getColumn(0,"REQ_ID"));
+			
+			this.dsSrReqIvBdgt.setColumn(rowPos, "BDGT_PAY1", "0");
+			this.dsSrReqIvBdgt.setColumn(rowPos, "BDGT_PAY2", "0");
+			this.dsSrReqIvBdgt.setColumn(rowPos, "BDGT_PAY3", "0");
+			this.dsSrReqIvBdgt.setColumn(rowPos, "BDGT_PAY4", "0");
+			
+			break;
+
+		case "btnDelete" :
+			this.fnDelete(this.dsSrReqIvBdgt);
+			break;
+	}
+}
+
+this.fnCommbtnPopOnclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var popId	= '';
+	var url		= '';
+	var oParam	= {};
+	var pPopType= '';
+	switch(obj.name)
+	{							
+		case "btnSearchCompany" :		// 업체 선택
+			popId	= 'selCompanyPop';
+			url		= 'ms::MS0500_P02.xfdl';
+			oParam	= {
+				title		: Ex.core.word('계약업체') + ' ' + Ex.core.word('선택')
+			  , pSelType	: 'S'
+			};
+			break;
+			
+		case "btnSearchPop_Dept" :		// 부서 선택
+			popId	= 'selDept';
+			url		= 'fomm::FOMM0000_P04.xfdl';
+			oParam	= {
+				title		: Ex.core.word('추진부서') + ' ' + Ex.core.word('선택')
+			  , pSelType	: 'S'
+			};
+			break;
+								
+		case "btnSearchPop_RefNo" :		// 이전사업번호 선택 팝업
+			//TODO 조회 화면에서 선택하면 사업번호 값 가져오기
+			popId	= 'selRefNo';
+			url		= 'iv::IV9110_W.xfdl';
+			oParam	= {
+				title		: Ex.core.word('이전사업번호') + ' ' + Ex.core.word('선택')
+			  , pSelType	: 'S'
+			  , pPopType	: 'P'
+			};
+			break;
+			
+	}
+	
+	Ex.core.popup(
+		this,
+		popId,
+		url,           		// <--- 팝업창 오픈 Url
+		oParam,
+		"autosize"
+	);
+};
+ 
+this.divDown_grdDataList_oncloseup = function(obj:nexacro.Grid,e:nexacro.GridEditEventInfo)
+{
+	if(e.col ==2) {	
+		this.dsCntrTcdCd.set_filterstr("ITM_VAL_2=='" + e.value + "' || Ex.isEmpty(CODE_DIV)");
+		this.dsSrReqIvBdgt.setColumn(e.row,'ACSJ_TCD',undefined);
+		obj.updateToDataset();
+	}
+	if(e.col ==3) {	
+		//TODO 계정과목 변경 시 - 예산계정의 ITM_VAL_2와 안맞으면 예산계정 ''
+		
+	}
+};
+this.divDown_cboBusiNew_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if(this.dsSrReqIvInfo.getColumn(0,'IS_NEW_YN') =='Y')
+	{
+		this.dsSrReqIvInfo.setColumn(0,'REQ_BUSI_PLAN_NO', '');
+		this.dsSrBaseInfo.setColumn(0,"TITLE",'');
+		this.dsSrBaseInfo.setColumn(0,"CONTENTS", '');
+		this.dsSrReqIvInfo.setColumn(0, 'BDGT_DESC', '');
+	}
+	else if(this.dsSrReqIvInfo.getColumn(0,'IS_NEW_YN') =='N'){
+		this.divUp.form.btnSearchPop_RefNo.click();
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

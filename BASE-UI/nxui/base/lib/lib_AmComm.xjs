@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script version="1.0" type="xscript5.1"><![CDATA[// include "lib::lib_AmComm.xjs";
+// 자산관리(am) 공통 라이브러리
+
+// 자산분류 전체 조회
+this.amfnGetClass = function(optStr, dsClassH, dsClassM, dsClassL)
+{
+	if( Ex.isEmpty(optStr) )
+		optStr = 'ALL';
+	
+	if(optStr.toUpperCase() != 'ALL')
+		optStr = 'SEL';
+		
+	if( Ex.isEmpty(dsClassH) ) {
+		trace('대분류용 dataset을 지정해주세요');
+		return;
+	}
+	if( Ex.isEmpty(dsClassM) ) {
+		trace('중분류용 dataset을 지정해주세요');
+		return;
+	}
+	if( Ex.isEmpty(dsClassL) ) {
+		trace('소분류용 dataset을 지정해주세요');
+		return;
+	}
+// 	if( Ex.isEmpty(dsClassD) ) {
+// 		trace('세분류용 dataset을 지정해주세요');
+// 		return;
+// 	}
+	
+	this.__optStr = (optStr||'').toUpperCase();
+	
+	this.__dsClassH = dsClassH;
+	this.__dsClassM = dsClassM;
+	this.__dsClassL = dsClassL;
+//	this.__dsClassD = dsClassD;
+	
+	this.__dsCondClass = new Dataset();
+	this.__dsCondClass.addColumn("column00", "string", 256);
+	this.__dsCondClass.addRow();
+
+	this.__dsClassInfo = new Dataset();
+	// transaction
+	var sTranId = "amfnSelectClassAll";                          // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "MS0100W/select01";                         // 서비스명
+    var sInDs = "dsCond=__dsCondClass";                  // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "__dsClassInfo=dsClassTree";           // 서버에서 수신할 데이타셋
+    var sArg = "";                   // 서버 @ParamVariable 인자와 맵핑됨
+	var sCallback = "amfnCallback";
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg, sCallback);
+}
+
+// 자산분류 조회 콜백함수
+this.amfnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	switch (sSvcId)
+	{
+		case "amfnSelectClassAll" :
+			// 대분류 copy
+			var filterH = this.__dsClassH.filterstr;
+			this.__dsClassInfo.set_filterstr("LVL=='2'");
+			this.__dsClassH.copyData(this.__dsClassInfo, true);
+			// 중분류 copy
+			var filterM = this.__dsClassM.filterstr;
+			this.__dsClassInfo.set_filterstr("LVL=='3'");
+			this.__dsClassM.copyData(this.__dsClassInfo, true);
+			// 소분류 copy
+			var filterL = this.__dsClassL.filterstr;
+			this.__dsClassInfo.set_filterstr("LVL=='4'");
+			this.__dsClassL.copyData(this.__dsClassInfo, true);
+			
+			
+			// 옵션 추가
+ 			this.__dsClassH.set_filterstr('');
+ 			this.__dsClassM.set_filterstr('');
+ 			this.__dsClassL.set_filterstr('');
+			
+			if( !Ex.isEmpty(this.__optStr) ) {
+				this.__dsClassH.setInsertRow(0);
+				this.__dsClassM.setInsertRow(0);
+				this.__dsClassL.setInsertRow(0);
+				this.__dsClassH.setColumn(0, 'CLASS_ID' , '');
+				this.__dsClassM.setColumn(0, 'CLASS_ID' , '');
+				this.__dsClassL.setColumn(0, 'CLASS_ID' , '');
+				
+				if(this.__optStr == 'ALL') {	
+					this.__dsClassH.setColumn(0, 'CLASS_NM' , '- 전체 -');
+					this.__dsClassM.setColumn(0, 'CLASS_NM' , '- 전체 -');
+					this.__dsClassL.setColumn(0, 'CLASS_NM' , '- 전체 -');
+				}
+				else if(this.__optStr == 'SEL') {
+					this.__dsClassH.setColumn(0, 'CLASS_NM' , '- 선택 -');
+					this.__dsClassM.setColumn(0, 'CLASS_NM' , '- 선택 -');
+					this.__dsClassL.setColumn(0, 'CLASS_NM' , '- 선택 -');
+				}
+			}
+			
+			this.__dsClassH.set_filterstr(filterH);
+			this.__dsClassM.set_filterstr(filterM);
+			this.__dsClassL.set_filterstr(filterL);
+			
+			break;
+	}
+	
+	if(this.fnCallback) {	// 공통 callback 호출
+		this.fnCallback(sSvcId, nErrorCode, sErrorMsg);
+		return;
+	}
+}
+
+/*
+ * 자산 중분류(MS_CLASS TBL)로 확장정보 화면 URL get
+ */
+this.amfnGetSubUrlFromClass = function(classH, classM, classL, classD)
+{
+	var screenUrl = '';
+	
+	if( classH == 'S0000' ) {	// SW
+		screenUrl = 'am::AM0100_D11.xfdl';	// 라이선스
+	}
+	else {	// HW
+		switch(classM)
+		{
+			case "HSV00" :	screenUrl = 'am::AM0100_D01.xfdl';	break;		// 서버
+			case "HDS00" :	// 저장장치
+				if( classL == 'HDSST' )			screenUrl = 'am::AM0100_D02.xfdl';	// 스토리지
+				else if( classL == 'HDSSN')		screenUrl = 'am::AM0100_D03.xfdl';	// SAN스위치
+				break;
+			case "HBD00" :	// 백업장비
+				if( classL == 'HBDPB' )			screenUrl = 'am::AM0100_D04.xfdl';	// 백업장비(PTL)
+				else if( classL == 'HBDVB' )	screenUrl = 'am::AM0100_D05.xfdl';	// 백업장비(VTL)
+				break;		
+			case "HSD00" :	screenUrl = '';	break;		// 보안장비
+			case "HGD00" :	// 기반장비
+				if( classL == 'HGDRA' )			screenUrl = 'am::AM0100_D06.xfdl';	// 기반장비(RACK)
+				break;
+			case "HTD00" :	screenUrl = 'am::AM0100_D07.xfdl';	break;		// 통신장비
+			case "HMD00" :	screenUrl = '';	break;		// 전송장비
+			case "HCD00" :	screenUrl = '';	break;		// 관제장비
+			case "HHI00" :	screenUrl = '';	break;		// HW설치비
+			case "HOA00" :	screenUrl = 'am::AM0100_D08.xfdl';	break;		// 전산장비
+		}
+	}
+
+// 	if( classH == '20000000' ) {	// SW
+// 		screenUrl = 'am::AM0100_D11.xfdl';	// 라이선스
+// 	}
+// 	else if( classH == '10000000' ) {	// HW
+// 		switch(classM)
+// 		{
+// 			case "10SV0000" :			// 서버
+// 				if( classL == '10SV0600' )	screenUrl = 'am::AM0100_D06.xfdl';	// 기타장비 RACK??
+// 				else						screenUrl = 'am::AM0100_D01.xfdl';	// 서버
+// 				break;
+// 			case "10ST0000" :	// 스토리지
+// 				screenUrl = 'am::AM0100_D02.xfdl';
+// 				break;
+// 			case "10SA0000" :	// SAN
+// 				screenUrl = 'am::AM0100_D03.xfdl';	// SAN스위치
+// 				break;
+// 			case "10BE0000" :	// 백업장비
+// 				if( classL == '10BE0200' )		screenUrl = 'am::AM0100_D04.xfdl';	// 백업장비(PTL)
+// 				else if( classL == '10BE0100' )	screenUrl = 'am::AM0100_D05.xfdl';	// 백업장비(VTL)
+// 				break;		
+// 			case "10SE0000" :	screenUrl = '';	break;		// 보안장비
+// // 			case "HGD00" :	// 기반장비
+// // 				if( classL == 'HGDRA' )			screenUrl = 'am::AM0100_D06.xfdl';	// 기반장비(RACK)
+// // 				break;
+// 			case "10NW0000" :	screenUrl = 'am::AM0100_D07.xfdl';	break;		// 통신장비
+// 			case "HMD00" :	screenUrl = '';	break;		// 전송장비
+// 			case "HCD00" :	screenUrl = '';	break;		// 관제장비
+// 			case "HHI00" :	screenUrl = '';	break;		// HW설치비
+// 		}
+// 	}
+	trace(classH + ' :: ' + classM + ' :: ' + classL + ' :: ' + classD + ' // screenUrl :: ' + screenUrl);
+	return screenUrl;
+}
+
+
+/*
+ * 자산 기본정보/확장정보 Div 내 컴포넌트 readonly 처리를 위한 uti;
+ * Ex.util.setCompPropAll()과 별도 구분으로 처리
+ * 컴포넌트 userproperty readonlyYn 값을 보고 처리한다.
+ */
+this.amfnSetCompReadonly = function(bReadonly, scope)
+{
+	if( Ex.isEmpty(bReadonly) ) bReadonly = true;
+	if( Ex.isEmpty(scope) )		scope = this;
+	
+	for(var i = 0; i < scope.components.length; i++)
+	{
+		var comp = scope.components[i];
+		if(comp.readonlyYn == 'Y')		// readonlyYn :: 컴포넌트 userproperty로 추가해 놓음
+			continue;
+	
+		switch( comp.toString().toUpperCase() )
+		{
+			case "[OBJECT CHECKBOX]" :
+			case "[OBJECT EDIT]" :
+			case "[OBJECT COMBO]" :
+			case "[OBJECT MASKEDIT]" :
+			case "[OBJECT CALENDAR]" :
+			case "[OBJECT TEXTAREA]" :
+			case "[OBJECT RADIO]" :
+			case "[OBJECT SPIN]" :
+				comp.set_readonly(bReadonly);
+				break;
+
+			case "[OBJECT BUTTON]" :
+				comp.set_enable(!bReadonly);
+				break;
+		}
+		
+	}
+	
+}
+
+
+/*
+ * 분류체계별 자산 ICON 이미지 경로를 반환한다
+ */
+this.amfnGetAssetIcon = function(classH, classM, classL)
+{
+	var imgUrl = '';
+	if( classH == 'S0000' ) {	// SW
+		imgUrl = "url('theme://NHSB_IMAGE_SET/WF/ASSET_ICON/SW/" + classM + ".png')";
+	}
+	else {	// HW
+		if(classM == 'HOA00') {	// 전산장비
+			imgUrl = "url('theme://NHSB_IMAGE_SET/WF/ASSET_ICON/HW/OA_ICON/" + classL + ".png')";
+		}
+		else {
+			imgUrl = "url('theme://NHSB_IMAGE_SET/WF/ASSET_ICON/HW/" + classM + ".png')";
+		}
+	}
+	return imgUrl;
+}]]></Script>

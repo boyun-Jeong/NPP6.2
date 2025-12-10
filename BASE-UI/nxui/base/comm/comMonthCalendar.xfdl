@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comMonthCalendar" left="0" top="0" width="296" height="360" titletext="월력" onload="doLoad" background="white">
+    <Layouts>
+      <Layout>
+        <Div id="divCalendar" taborder="0" text="Div00" left="0" top="0" right="0" bottom="0" border="1px solid #8a96a8" background="white">
+          <Layouts>
+            <Layout>
+              <Div id="divMonth" taborder="0" left="0" top="60" cssclass="div_WF_Dboard_CalBg" right="0" bottom="0" background="transparent">
+                <Layouts>
+                  <Layout>
+                    <Button id="btn01" taborder="0" left="11" top="9" width="90" height="60" cssclass="btn_WF_calDayOff" text="1월" onclick="doClick"/>
+                    <Button id="btn02" taborder="1" left="102" top="9" width="90" height="60" cssclass="btn_WF_calDayOff" text="2월" onclick="doClick"/>
+                    <Button id="btn03" taborder="2" left="193" top="9" height="60" cssclass="btn_WF_calDayOff" text="3월" onclick="doClick" width="90"/>
+                    <Button id="btn04" taborder="3" left="11" top="70" width="90" height="60" cssclass="btn_WF_calDayOff" text="4월" onclick="doClick"/>
+                    <Button id="btn05" taborder="4" left="102" top="70" width="90" height="60" text="5월" cssclass="btn_WF_calDayOff" onclick="doClick"/>
+                    <Button id="btn06" taborder="5" top="70" width="90" height="60" cssclass="btn_WF_calDayOff" text="6월" left="193" onclick="doClick"/>
+                    <Button id="btn07" taborder="6" left="11" top="131" width="90" height="60" cssclass="btn_WF_calDayOff" text="7월" onclick="doClick"/>
+                    <Button id="btn08" taborder="7" left="102" top="131" width="90" height="60" cssclass="btn_WF_calDayOff" text="8월" onclick="doClick"/>
+                    <Button id="btn09" taborder="8" left="193" top="131" width="90" height="60" cssclass="btn_WF_calDayOff" text="9월" onclick="doClick"/>
+                    <Button id="btn10" taborder="9" left="11" top="192" width="90" height="60" cssclass="btn_WF_calDayOff" text="10월" onclick="doClick"/>
+                    <Button id="btn11" taborder="10" left="102" top="192" width="90" height="60" cssclass="btn_WF_calDayOff" text="11월" onclick="doClick"/>
+                    <Button id="btn12" taborder="11" left="193" top="192" width="90" height="60" cssclass="btn_WF_calDayOff" text="12월" onclick="doClick"/>
+                    <Button id="btnCurMonth" taborder="12" text="현재 월" left="11" top="253" bottom="11" right="11" cssclass="btn_WF_primary_save" onclick="doClick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divYear" taborder="1" left="0" top="0" height="60" cssclass="div_WF_calTopBg" right="0">
+                <Layouts>
+                  <Layout>
+                    <Spin id="spYear" taborder="0" left="88" top="11" width="120" height="40" cssclass="spn_WF_normal" max="9999" min="0" value="" canchange="divCalendar_divYear_spYear_canchange"/>
+                    <Button id="btnNextYear" taborder="1" left="214" top="11" width="70" height="40" cssclass="btn_WF_btnNext2" onclick="doClick"/>
+                    <Button id="btnPreYear" taborder="2" left="12" top="11" width="70" height="40" cssclass="btn_WF_btnPrev2" onclick="doClick"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/*****************************************************************
+ * 프로그램 ID		: comMonthCalendar.xfdl
+ * 작성자			: WEMB
+ * 작성일자		: 2023.04.00
+ * 설명				: 사용자 정의 캘린더(월력)
+					  캘린더 EDIT 영역 입력 불가 클릭시 캘린더 팝업이 호출되도록 수정
+ * 서비스(JAVA)		: 
+ * 라이센스        : 본 프로그램 소스는 농협 서면에 의한 사전 승인 없이
+ *                	  타 업체 및 타 회사원에게 누설 되어서는 안됨. 본 프로그램
+ *                	  소스는 농협의 사전 승인 없이 임의로 복제, 복사, 배포할 수 없음
+ * version			: 1.0		
+ * 변경이력		: {변경일자}, {변경자}: {변경내역} 형식으로 매 줄마다 기록.
+ *****************************************************************/
+/***********************************************************************************
+ * Script Include
+ ***********************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+
+/*****************************************************************
+ * 함수명 	: doLoad
+ * 설명		: 화면 초기 이벤트
+ *****************************************************************/
+this.doLoad = function(obj:nexacro.Form, e:nexacro.LoadEventInfo)
+{
+}
+
+this.doClick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if(obj.id == "btnPreYear")
+	{
+		this.divCalendar.form.divYear.form.spYear.set_value(nexacro.toNumber(this.divCalendar.form.divYear.form.spYear.value) - 1);
+	}
+	else if(obj.id == "btnNextYear")
+	{
+		this.divCalendar.form.divYear.form.spYear.set_value(nexacro.toNumber(this.divCalendar.form.divYear.form.spYear.value) + 1);
+	}
+	else if(obj.id == "btnCurMonth") {
+		var sDate = "";
+		if(this.divCalendar.form.divYear.visible)
+			sDate = Ex.util.today().substring(0, 6);	// YYYYMM
+		else
+			sDate = Ex.util.today().substring(4, 6);	// MM
+			
+		this.parent.parent.monthCalendarCallBack(this.parent, sDate);
+		this.parent.closePopup();
+	}
+	else
+	{
+		var year = "";
+		
+		if(this.divCalendar.form.divYear.visible)
+		{
+			year = this.divCalendar.form.divYear.form.spYear.value;
+		}
+		
+		var month = nexacro.replaceAll(obj.id, "btn", "");
+		this.parent.parent.monthCalendarCallBack(this.parent, year + "" + month);
+		this.parent.closePopup();
+	}
+};
+
+
+this.divCalendar_divYear_spYear_canchange = function(obj:nexacro.Spin,e:nexacro.ChangeEventInfo)
+{
+	if(e.postvalue > 9999) {
+		return false;
+	}
+};
+
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR0010_D02" left="0" top="0" width="750" height="230" titletext="접수의견(기본화면)" onload="form_onload" scrolltype="none" cssclass="">
+    <Layouts>
+      <Layout width="750" height="230" mobileorientation="landscape">
+        <Div id="divGrdTopBtn" taborder="0" width="425" height="24" bottom="626" visible="true" right="18.48%" isButtonGroup="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+              <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" bottom="0" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staAuthTitle" taborder="1" text="사용자의 권한그룹" left="1520" top="70" width="200" height="24" cssclass="sta_WF_gridTitle"/>
+        <Div id="divContent" taborder="2" text="Div00" left="0" top="34" right="0" bottom="0">
+          <Layouts>
+            <Layout>
+              <Static id="stcBg00" taborder="5" left="0" height="34" cssclass="sta_WF_inputBg" right="0" text="" top="0"/>
+              <Static id="stcBg" taborder="0" left="0" cssclass="sta_WF_inputBg" right="0" text="" top="33" bottom="0"/>
+              <Static id="stcOpinion" taborder="1" left="0" top="33" width="90" cssclass="sta_WF_inputTitle" text="접수의견" initvalueid="접수의견;NULL" bottom="0"/>
+              <Static id="stcProcUserNm" taborder="2" text="접수자" cssclass="sta_WF_inputTitle" left="0" top="0" width="90" height="34"/>
+              <Static id="Static04" taborder="4" text="접수일시" cssclass="sta_WF_inputTitle" left="50%" top="0" width="90" height="34" visible="false"/>
+              <Edit id="edtUserNm" taborder="3" left="stcProcUserNm:5.00" top="5" height="24" readonly="true" readonlyComp="Y" width="150" cssclass="edt_WF_normal"/>
+              <MaskEdit id="mskProcDate" taborder="6" type="string" mask="@@@@-@@-@@ @@:@@:@@" maskchar="_" top="5" height="24" readonly="true" style=":disabled {align:center middle;}" format="####-##-## @@:@@:@@" readonlyComp="Y" width="150" left="Static04:5.00" visible="false" cssclass="msk_WF_normal"/>
+              <TextArea id="txaOpinion" taborder="7" left="95.00" cssclass="txa_WF_normal" right="5" enable="true" text="" top="38" bottom="5"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="stcTitle" taborder="3" text="접수의견 작성" cssclass="sta_WF_gridTitle" left="2.00" top="0" width="129" height="24" fittocontents="width"/>
+        <Static id="stcEmpty01" taborder="4" left="0" top="24" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="stcDesc" taborder="5" text="※ 형상 배포 전 &lt;fc v='red'&gt;[이행후검토]&lt;/fc&gt; 단계로 진행시 형상배포를 &lt;fc v='red'&gt;처리할 수 없습니다.&lt;/fc&gt;" left="stcTitle:10.00" top="0" width="465" height="24" font="bold 12px/normal &quot;돋움&quot;" usedecorate="true" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRevProc" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+          <Column id="DEPT_CD" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="POS_NM" type="STRING" size="256"/>
+          <Column id="GUBUN_NM" type="STRING" size="256"/>
+          <Column id="CEGR_ID" type="STRING" size="256"/>
+          <Column id="PROC_EXAM_OPIN" type="STRING" size="256"/>
+          <Column id="PROC_DATE" type="STRING" size="256"/>
+          <Column id="PROC_SDTIME" type="STRING" size="256"/>
+          <Column id="PROC_EDTIME" type="STRING" size="256"/>
+          <Column id="RMK" type="STRING" size="256"/>
+          <Column id="FRID" type="STRING" size="256"/>
+          <Column id="FRDT" type="STRING" size="256"/>
+          <Column id="LMID" type="STRING" size="256"/>
+          <Column id="LMDT" type="STRING" size="256"/>
+          <Column id="LMPID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ SR0010_D02
+* 화면(명)	︰ 접수의견 공통
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ SPP 검토의견 작성 DIV
+* 작성자		︰ WEMB
+* 작성일		︰ 2024.04.09
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        	작성자		이력
+*------------------------------------------------------------------
+* 2024.04.09	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_WorkFlow.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+/*
+this.selectServiceInfo = {
+	CALLBACK_ID		: ["select01"],
+	CALL_SVC		: ["sr/SRComm/selectRevProc"],
+
+	IN_DS_WHERE		: [this.dsCond],
+	OUT_DS_OBJ		: [this.dsRevProc]
+};
+
+this.saveServiceInfo = {
+	CALLBACK_ID		: ["save01"],
+	CALL_SVC		: ["sr/SRComm/callPrSrRevProc"],
+
+	IN_DS_OBJ		: [new Array(this.dsRevProc)],
+	OUT_DS_OBJ		: []
+};
+*/
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+
+	this.dsCond.setColumn(0, "REQ_ID", this.reqInfo.REQ_ID);
+	this.dsCond.setColumn(0, "WF_PROC_CD", this.reqInfo.SCRN_WF_PROC_CD);
+}
+
+this.fnInit = function()
+{
+	if((this.reqInfo.REQ_TMPLAT_ID == "WFT250027" || this.reqInfo.REQ_TMPLAT_ID == 'WFT240159') && this.reqInfo.MAP_WF_PROC_CD == "CHM0006")	//변경완료인 경우
+	{
+		this.stcDesc.set_visible(true);
+	}
+
+	if( !Ex.isEmpty(this.getOwnerFrame().pIS_OPIN_ESS) )
+	{
+		if(this.getOwnerFrame().pIS_OPIN_ESS)
+		{
+			this.divContent.form.stcOpinion.set_cssclass("sta_WF_inputTitle_E");
+			this.divContent.form.txaOpinion.set_validation(this.divContent.form.stcOpinion.text + ";NULL");
+		}
+	}
+
+	if( !Ex.isEmpty(this.getOwnerFrame().pOPINION) ) this.dsRtn.setColumn(0, "OPINION", this.getOwnerFrame().pOPINION);
+	this.divContent.form.txaOpinion.setFocus();	
+	
+	this.reqInfo.PARENT_FORM.setWfProcDivFormSize(this.parent, this.getOffsetHeight());
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select" :
+			//this.wfdsReqCgerDt = this.getOwnerFrame().pDsdWfCger;
+			trace("[SR0010_D02]-this.fnCallback() [select01] SCRN_WF_PROC_CD : " + this.reqInfo.SCRN_WF_PROC_CD);
+			trace("[SR0010_D02]-this.fnCallback() [select01] this.reqInfo.REQ_ID : " + this.reqInfo.REQ_ID);
+
+			if( this.dsRevProc.rowcount == 0)
+			{
+				var aRow = this.dsRevProc.setInsertRow();
+				this.dsRevProc.setColumn(aRow, "REQ_ID", this.reqInfo.REQ_ID);
+				this.dsRevProc.setColumn(aRow, "WF_PROC_CD", this.reqInfo.WF_PROC_CD);
+
+				if(this.reqInfo.WF_FUNC_CD == "WF_FUNC_04" && (this.reqInfo.SAVE_BTN_YN == "Y" || this.reqInfo.REV_BTN_YN == "Y") )
+				{
+					this.dsRevProc.setColumn(0, "USER_ID", Ex.util.getSession('gvUserId'));
+					this.dsRevProc.setColumn(0, "USER_NM", Ex.util.getSession('gvUserNm'));
+				}
+			}
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch (pID)
+	{
+		case "" :
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "pAlertSaveGubunI" :	// 그냥 닫기
+			this.dsRtn.setColumn(0, "RESULT", "CLOSE");
+			Ex.core.pclose(this, this.dsRtn.saveXML());
+			break;
+			
+		case "pConfirm" :			// 접수/반려 버튼
+			this.dsRtn.setColumn(0, "RESULT", "PROC");
+			Ex.core.pclose(this, this.dsRtn.saveXML());
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.isUpdateForm = function()
+{
+	if( !Ex.util.isUpdated(this.dsRevProc) ) return false;
+	if(this.dsRevProc.getColumn(0, "ROWFLAG") == "I" && Ex.isEmpty(this.divContent.form.txaOpinion.value) ) return false;
+	else return true;
+}
+
+this.fnSaveCheck = function(isReg)
+{
+	if(isReg) 
+	{
+		if( !this.fnCheckValidate() ) return false;
+	}
+	return true;
+}
+
+this.fnRtnCheck = function()
+{
+	if( !this.fnCheckValidate() ) return false;
+	return true;
+}
+
+this.fnCheckValidate = function()
+{
+	if( !Ex.util.checkValidate(this.divContent, "fvValiCmp") ) return false;
+	return true;
+}
+
+this.addDatasetTransfer = function(dsObj)
+{
+	var newDsObj = new Dataset;
+	newDsObj.set_name(dsObj.id);
+	newDsObj.loadXML(dsObj.saveXML());
+	this.addChild(dsObj.id, newDsObj);
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{		
+		case "" :
+			break;
+	}
+}
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContent.form.txaOpinion" propid="value" datasetid="dsRevProc" columnid="PROC_EXAM_OPIN"/>
+      <BindItem id="item1" compid="divContent.form.stcProcUserNm" propid="value" datasetid="dsRevProc" columnid="PROC_DATE"/>
+      <BindItem id="item2" compid="divContent.form.edtUserNm" propid="value" datasetid="dsRevProc" columnid="USER_NM"/>
+      <BindItem id="item3" compid="divContent.form.mskProcDate" propid="value" datasetid="dsRevProc" columnid="PROC_DATE"/>
+      <BindItem id="item5" compid="divContent.form.edtOpinion" propid="value" datasetid="dsRevProc" columnid="PROC_EXAM_OPIN"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comTextareaPop" left="0" top="0" width="600" height="469" titletext="TexaArea 확장 팝업" onload="form_onload" onbeforeclose="onBeforeClose">
+    <Layouts>
+      <Layout width="600" height="469">
+        <Div id="divContents" taborder="0" left="0" top="0" right="0" bottom="60" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTitle" taborder="0" text="" cssclass="sta_WF_gridTitle" left="20" top="20" width="147" height="24"/>
+              <Static id="stcBackMid1" taborder="1" left="20" top="44" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Div id="divGrdTopBtn" taborder="2" height="24" visible="true" isButtonGroup="true" top="20" right="20" width="140">
+                <Layouts>
+                  <Layout/>
+                </Layouts>
+              </Div>
+              <TextArea id="txaMsg" taborder="3" left="20" top="stcBackMid1:0" right="20" bottom="0" cssclass="txa_WF_normal" acceptstab="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtnBottom" taborder="1" height="60" bottom="0" text="" cssclass="div_POP_msg_btnbg" left="20" right="20">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="14"/>
+              <Button id="btnConf" taborder="1" text="적용" top="13" height="31" cssclass="btn_WF_primary_save" right="btnClose:5" width="100" visible="false" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ comTextareaPop
+* 화면(명)	︰ TexaArea 확장 팝업
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2024.03.15
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+2024.01.30		 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+/* param 변수
+pBtnConfUseYn	//적용버튼 사용유무[STRING(Y/N)]
+isEss			//내용필수여부[boolean]
+subTitle		//상단 TEXTAREA 위의 제목 TEXT[STRING]
+pMsg			//내용 TEXT[STRING]
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "" :
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "" :
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.rtnVal = this.divContents.form.txaMsg.value;
+			Ex.core.pclose(this, this.rtnVal);
+			break;
+
+		case "pAlertEssI" :
+		case "pAlertLengthI" :
+			this.divContents.form.txaMsg.setFocus();
+			break;
+			
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	if( Ex.isEmpty(this.getOwnerFrame().pIsEdit) )	this.getOwnerFrame().pIsEdit = true;
+	
+	if(!this.getOwnerFrame().pIsEdit)	this.divContents.form.txaMsg.set_readonly(true);
+	
+	if( Ex.isEmpty(this.getOwnerFrame().isEss) ) this.getOwnerFrame().isEss = false;
+	
+	this.divContents.form.staTitle.set_text(this.getOwnerFrame().subTitle);
+	if(this.getOwnerFrame().subTitle == '사용자 테스트 참고사항')
+	{
+	 this.divContents.form.txaMsg.set_displaynulltext("릴리스 및 이행후 검토 단계에서 <개발 및 코드 리뷰>를 입력 해주세요.");
+	}
+	var objStaticSize = nexacro.getTextSize(this.getOwnerFrame().subTitle, this.divContents.form.staTitle._getCurrentStyleInheritValue("font"));
+	this.divContents.form.staTitle.set_width(parseInt(objStaticSize.nx) + 15);
+
+	//브라우저 spellcheck 기능헤제
+	var eleTxa = document.getElementById(this.divContents.form.txaMsg.getElement().handle.id);
+	eleTxa.setAttribute("spellcheck", "false");
+
+	this.divContents.form.txaMsg.set_value(this.getOwnerFrame().pMsg);
+
+	if( Ex.isEmpty(this.getOwnerFrame().isHeightChange) || this.getOwnerFrame().isHeightChange)
+	{
+		var minHeight = 65;
+		
+		var oFHeight = this.getOwnerFrame().height;						//팝업 프레임 높이
+		var orgTextH = this.divContents.form.txaMsg.getOffsetHeight();	//Textarea 원본 높이
+		var orgTextOB = this.divContents.form.txaMsg.getOffsetBottom();	//Textarea 원본 Bottom
+
+		//trace("this.getOwnerFrame().pBtnConfUseYn ::: " + this.getOwnerFrame().pBtnConfUseYn);
+
+		this.divContents.form.txaMsg.set_height(minHeight);				//Textarea MinSize로 변경
+		var textOB = this.divContents.form.txaMsg.getOffsetBottom();	//Textarea 변경 후 Bottom
+		var vScroll = this.divContents.form.txaMsg.vscrollbar.max;		//변경 후 세로 스크롤의 크기
+
+		var textHStep = orgTextOB - textOB;
+
+		//trace("orgTextOB : " + orgTextOB + " textOB : " + textOB + " vScroll : " + vScroll);	//290
+
+		var confH;	//팝업 프레임 적용할 높이
+		
+		if(vScroll > 0)
+		{
+			if(vScroll < (orgTextOB - textOB))
+			{
+				confH = oFHeight - (orgTextOB - textOB) + vScroll;
+			}
+			else
+			{
+				confH = oFHeight;
+			}
+		}
+		else
+		{
+			confH = oFHeight - (orgTextOB - textOB);
+		}
+		
+		this.divContents.form.txaMsg.set_bottom(0);
+		this.getOwnerFrame().set_height(confH);
+
+		var nTop = parseInt( (nexacro.getApplication().mainframe.height / 2) - Math.round(this.getOwnerFrame().height / 2) );
+		this.getOwnerFrame().set_top(nTop);
+	}
+	
+	if(this.getOwnerFrame().pBtnConfUseYn == "Y")
+	{
+		if( !Ex.isEmpty(this.getOwnerFrame().pBtnConfText) )
+		{
+			this.divBtnBottom.form.btnConf.set_text(this.getOwnerFrame().pBtnConfText);
+		}
+		this.divBtnBottom.form.btnConf.set_visible(true);
+		if(this.getOwnerFrame().subTitle != '사용자 테스트 참고사항')
+		{
+		 this.divContents.form.txaMsg.setFocus();
+		}
+		
+		return;
+	}
+	else
+	{
+		this.divContents.form.txaMsg.set_readonly(true);
+		this.divBtnBottom.form.btnClose.setFocus();
+	}
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnConf" :	//적용
+			if( !Ex.isEmpty(this.getOwnerFrame().pValLenCheck) )
+			{
+				var validAttrArr = this.getOwnerFrame().pValLenCheck.split(":");
+				var chkAttr = validAttrArr[0];	//validation Check이름(NULL, MIN, MAX, MIN_LEN, MAX_LEN 등)
+				
+				trace("validAttrArr.length : " + validAttrArr.length + " chkAttr : " + chkAttr);
+				
+				var charSet = "utf16";
+				if(chkAttr == "MIN_LEN_ASC" || chkAttr == "MAX_LEN_ASC") charSet = "ascii";
+				if(chkAttr == "MIN_LEN_UTF8" || chkAttr == "MAX_LEN_UTF8") charSet = "utf8";
+				
+				if(!Ex.isEmpty(this.divContents.form.txaMsg.value) )
+				{
+					if(validAttrArr.length == 2)
+					{
+						var chkVal = validAttrArr[1];	//validation에 사용되는 기준값
+						
+						trace("charSet : " + charSet + " Ex.util.getLength(this.divContents.form.txaMsg.value, charSet) : " + Ex.util.getLength(this.divContents.form.txaMsg.value, charSet));
+						trace("nexacro.toNumber(chkVal) : " + nexacro.toNumber(chkVal));
+
+						if( Ex.util.getLength(this.divContents.form.txaMsg.value, charSet) > nexacro.toNumber(chkVal))
+						{
+							var msgStr = Ex.core.msg(11007);
+							msgStr = Ex.core.msgMapping(msgStr, ["입력항목", chkVal]);
+
+							var param = {
+								  id	: "pAlertLengthI"			//fnMsgAfter에서 식별자로 사용되는 ID
+								, msg	: msgStr	//메시지 내용
+								, arrparam : []					//메시지의 변수에 들어갈 실제값
+								, msgtype : "I"					//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+							};
+							Ex.core.alert(this, param);
+							return;
+						}
+					}
+				}
+			}
+
+			if( this.getOwnerFrame().isEss )
+			{
+				if( Ex.isEmpty(this.divContents.form.txaMsg.value) )
+				{
+					var param = {
+						  id	: "pAlertEssI"			//fnMsgAfter에서 식별자로 사용되는 ID
+						, msg	: "내용이 입력되지 않았습니다."	//메시지 내용
+						, arrparam : []					//메시지의 변수에 들어갈 실제값
+						, msgtype : "I"					//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+					};
+					Ex.core.alert(this, param);
+					return;
+				}
+			}
+			
+			if( Ex.isEmpty(this.getOwnerFrame().pIsValueChgSaveChk) )	this.getOwnerFrame().pIsValueChgSaveChk = true;
+			
+			if(this.getOwnerFrame().pIsValueChgSaveChk)
+			{
+				if(this.getOwnerFrame().pMsg != this.divContents.form.txaMsg.value)
+				{
+					var param = {
+						  id : "saveConfirm"
+						, msg : this.divBtnBottom.form.btnConf.text + "하시겠습니까?"
+						, arrparam : []
+						, msgtype : "I"
+					};
+					Ex.core.confirm(this, param);
+				}
+				else
+				{
+					Ex.core.pclose(this, "NO_CHANGE");
+				}
+			}
+			else
+			{
+				var param = {
+					  id : "saveConfirm"
+					, msg : this.divBtnBottom.form.btnConf.text + "하시겠습니까?"
+					, arrparam : []
+					, msgtype : "I"
+				};
+				Ex.core.confirm(this, param);
+			}
+			break;
+
+		case "btnClose" : 	// 닫기
+			Ex.core.pclose(this, "NO_CHANGE");
+			break;
+	}
+}]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM0300_D02" width="1750" height="590" titletext="일정등록 달력 Page" onload="form_onload">
+    <Layouts>
+      <Layout height="590" width="1750">
+        <Static id="stcTitle1" taborder="1" text="일" top="0" left="0" height="57" width="250" cssclass="stc_WF_calDateTitle"/>
+        <Static id="stcTitle2" taborder="2" text="월" top="0" left="250" height="57" width="250" cssclass="stc_WF_calDateTitle"/>
+        <Static id="stcTitle3" taborder="3" text="화" top="0" left="500" height="57" width="250" cssclass="stc_WF_calDateTitle"/>
+        <Static id="stcTitle4" taborder="4" text="수" top="0" left="750" height="57" width="250" cssclass="stc_WF_calDateTitle"/>
+        <Static id="stcTitle5" taborder="5" text="목" top="0" left="1000" height="57" width="250" cssclass="stc_WF_calDateTitle"/>
+        <Static id="stcTitle6" taborder="6" text="금" top="0" left="1250" height="57" width="250" cssclass="stc_WF_calDateTitle"/>
+        <Static id="stcTitle7" taborder="7" text="토" top="0" left="1500" height="57" width="250" cssclass="stc_WF_calDateTitle"/>
+        <Div id="divCalComp" taborder="0" left="0" top="57" cssclass="div_WF_Calendar" right="0" text="" onsize="divOnSize" bottom="0" divVisible="N" formscrollbartype="none none">
+          <Layouts>
+            <Layout>
+              <Div id="div1" taborder="0" left="0" top="0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div2" taborder="1" left="250" top="0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="249" async="true"/>
+              <Div id="div3" taborder="2" left="500" top="0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div4" taborder="3" left="750" top="0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="249" async="true"/>
+              <Div id="div5" taborder="4" left="1000" top="0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="249" async="true"/>
+              <Div id="div6" taborder="5" left="1250" top="0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="249" async="true"/>
+              <Div id="div7" taborder="6" left="1500" top="0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="249" async="true"/>
+              <Div id="div8" taborder="7" left="0" top="div1:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div9" taborder="8" left="250" top="div2:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div10" taborder="9" left="500" top="div3:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div11" taborder="10" left="750" top="div4:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div12" taborder="11" left="1000" top="div5:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div13" taborder="12" left="1250" top="div6:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div14" taborder="13" left="1500" top="div7:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div15" taborder="14" left="0" top="div8:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div16" taborder="15" left="250" top="div9:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="249" async="true"/>
+              <Div id="div17" taborder="16" left="500" top="div10:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div18" taborder="17" left="750" top="div11:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="249" async="true"/>
+              <Div id="div19" taborder="18" left="1000" top="div12:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="249" async="true"/>
+              <Div id="div20" taborder="19" left="1250" top="div13:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="249" async="true"/>
+              <Div id="div21" taborder="20" left="1500" top="div14:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="249" async="true"/>
+              <Div id="div22" taborder="21" left="0" top="div15:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div23" taborder="22" left="250" top="div16:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div24" taborder="23" left="500" top="div17:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div25" taborder="24" left="750" top="div18:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div26" taborder="25" left="1000" top="div19:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div27" taborder="26" left="1250" top="div20:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div28" taborder="27" left="1500" top="div21:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div29" taborder="28" left="0" top="div22:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div30" taborder="29" left="250" top="div23:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="249" async="true"/>
+              <Div id="div31" taborder="30" left="500" top="div24:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div32" taborder="31" left="750" top="div25:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="249" async="true"/>
+              <Div id="div33" taborder="32" left="1000" top="div26:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="249" async="true"/>
+              <Div id="div34" taborder="33" left="1250" top="div27:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="249" async="true"/>
+              <Div id="div35" taborder="34" left="1500" top="div28:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="249" async="true"/>
+              <Div id="div36" taborder="35" left="0" top="div29:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div37" taborder="36" left="250" top="div30:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div38" taborder="37" left="500" top="div31:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div39" taborder="38" left="750" top="div32:0" text="" url="fomm::FOMM0300_D01.xfdl" width="250" height="84" async="true"/>
+              <Div id="div40" taborder="39" left="1000" top="div33:0" height="84" text="" url="fomm::FOMM0300_D01.xfdl" width="250" async="true"/>
+              <Div id="div41" taborder="40" left="1250" top="div34:0" text="" url="fomm::FOMM0300_D01.xfdl" width="250" height="84" async="true"/>
+              <Div id="div42" taborder="41" left="1500" top="div35:0" text="" url="fomm::FOMM0300_D01.xfdl" width="250" height="84" async="true"/>
+              <Div id="divInfo" taborder="42" left="0" width="585" height="24" bottom="0">
+                <Layouts>
+                  <Layout>
+                    <Static id="Static28" taborder="0" text="범례 : " cssclass="sta_WF_schTitle" left="0" width="49" height="24" style="background:URL('img::sta_WF_SchTitle.png') left middle;" top="0"/>
+                    <Static id="txt_total10" taborder="1" cssclass="stc_WF_legend11" left="49" width="16" height="16" style="color:green;font:11 돋움;" top="4"/>
+                    <Static id="txt_total11" taborder="2" text="완료" left="70" width="50" height="24" top="0"/>
+                    <Static id="txt_total14" taborder="3" left="120" width="16" height="16" style="color:blue;font:11 돋움;" cssclass="stc_WF_legend13" top="4"/>
+                    <Static id="txt_total15" taborder="4" text="미완료" left="141" width="50" height="24" top="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00_00" taborder="8" left="0" height="5" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" right="0" top="561" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ FOMM0300_D02
+* 화면(명)		︰ 일정등록 달력 Page
+* 메뉴(경로)	︰ 
+* 화면 설명	︰ SPP FAQ 조회
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.12.12
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.12.12	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/ 
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();		// 컴포넌트 초기화
+	//this.fnSearch();		// 조회
+	
+	for(var i=0; i<this.divCalComp.form.components.length; i++)
+	{
+		var compObj = this.divCalComp.form.components[i];
+		if(compObj.id != "divInfo")
+		{
+			//trace("i=" + i + " compObj.id : " + compObj.id);
+			compObj.form.divBox.form.stcAll.addEventHandler('onclick', this.openPopup, this.divCalComp.form);
+			compObj.form.divBox.form.stcAllCnt.addEventHandler('onclick', this.openPopup, this.divCalComp.form);
+			compObj.form.divBox.form.stcComp.addEventHandler('onclick', this.openPopup, this.divCalComp.form);
+			compObj.form.divBox.form.stcCompCnt.addEventHandler('onclick', this.openPopup, this.divCalComp.form);
+			compObj.form.divBox.form.stcNoComp.addEventHandler('onclick', this.openPopup, this.divCalComp.form);
+			compObj.form.divBox.form.stcNoCompCnt.addEventHandler('onclick', this.openPopup, this.divCalComp.form);
+			compObj.form.divBox.addEventHandler('onclick', this.openPopup, this.divCalComp.form);
+		}
+	}
+}
+
+this.openPopup = function(obj, e)
+{
+	//trace("this.openPopup() obj.id : " + obj.id + " obj.parent.id : " + obj.parent.id + " obj.parent.parent.id : " + obj.parent.parent.id);
+	var strType = obj.toString().toUpperCase();
+	
+	var clickDivObj;
+	var day = "";
+	
+	if(strType == "[OBJECT DIV]")
+	{
+		clickDivObj = obj.parent.parent;
+		day = obj.form.stcDt.text;
+	}
+	else
+	{
+		clickDivObj = obj.parent.parent.parent.parent;
+		day = obj.parent.stcDt.text;
+	}
+
+	trace("clickDivObj.id : " + clickDivObj.id + " day : " + day);
+
+	if( !Ex.isEmpty(day) )
+	{
+		var dform = clickDivObj.parent.parent.parent.parent.parent;
+		dform.fnDaySelect(day);
+		trace("dform.rdoGubun.value : " + dform.rdoGubun.value);
+		trace("clickDivObj.form.divBox.fullDt : " + clickDivObj.form.divBox.fullDt);
+		
+		Ex.core.popup(
+			dform,					// <--- 팝업 실행 스코프
+			"PJ1910_P01",				// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+			"fomm::FOMM0300_P01.xfdl",	// <--- 팝업창 오픈 Url
+			{
+				title		: "작업 캘린더 상세",
+				pWorkDt		: clickDivObj.form.divBox.fullDt,
+				pWorkUserId	: dform.rdoGubun.value == "0" ? Ex.util.getSession('gvUserId') : ""
+			},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			"autosize"				// <--- width/height/modeless(프레임 처리 옵션)
+		);
+	}
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{	
+		case "PJ1910_P01" :
+			this.fnSearch01();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// 공통코드 조회
+	//this.fnGetCmmCd();
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['YN_CD',		'DAT_TYPE_CD']			// 조회할 상위코드
+		,codeDiv: ['CMM_CD',	'CMM_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['ALL',		'ALL']			// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',			'Y']				// 사용여부
+		,filter	: ['',			'ITM_VAL_1=="FAQ"||ITM_VAL_1=="ETC"']				// filterStr
+		,objDs	: [this.dsYnCd,	this.dsDatTypeCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util;
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case 'btnSearch' :	// 조회
+			this.fnSearch();
+			break;
+			
+		case 'btnSearchReset' :	// 조회조건 초기화
+			this.fnSearchReset();
+			break;
+	}
+}
+
+this.divOnSize = function(obj:nexacro.Div,e:nexacro.SizeEventInfo)
+{
+	//trace("this.formOnSize() obj.form.components.length : " + obj.form.components.length + " e.cx : " + e.cx + " e.cy : " + e.cy);
+
+	var divWidth = nexacro.floor(e.cx / 7);
+	var defaultLeft = nexacro.floor((e.cx - (divWidth * 7)) / 2);
+
+	//trace("divWidth : " + divWidth + " defaultLeft : " + defaultLeft);
+	
+	for(var i=1; i<=obj.form.components.length; i++)
+	{
+		if(obj.form.components[i-1].id != "divInfo")
+		{
+			var divDayComp = obj.form["div" + i];
+			var divIdx = nexacro.replaceAll(divDayComp.id, "div", "");
+			var divKind = divIdx % 7;
+			
+			//요일 헤더 사이즈 조절 시작
+			if(i<=7)
+			{
+				var stcIdx = nexacro.replaceAll(this["stcTitle" + i].id, "stcTitle", "");
+				this["stcTitle" + i].set_left( defaultLeft + (divWidth * ( (divKind == 0 ? 7 : divKind)- 1 ) ) );
+				this["stcTitle" + i].set_width(divWidth);
+			}
+			//요일 헤더 사이즈 조절 종료
+
+			//trace("BF divIdx : " + divIdx + " divKind :[" + divKind + "] left : " + divDayComp.left + " width : " + divDayComp.width);
+			divDayComp.set_left( defaultLeft + (divWidth * ( (divKind == 0 ? 7 : divKind)- 1 ) ) );
+			divDayComp.set_width(divWidth);
+			//trace("AF divIdx : " + divIdx + " divKind :[" + divKind + "] left : " + divDayComp.left + " width : " + divDayComp.width);
+		}
+	}
+};]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

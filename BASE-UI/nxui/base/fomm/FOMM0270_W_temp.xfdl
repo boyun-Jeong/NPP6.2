@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="MAD2300" classname="sample03" left="0" top="0" width="1012" height="642" titletext="시스템링크페이지관리" onload="fn_form_onload">
+    <Layouts>
+      <Layout>
+        <Static id="Static25" taborder="0" text="h15" cssclass="Guide_Color" visible="false" left="0" top="41" right="0" height="15"/>
+        <Div id="div_search" taborder="7" text="Div00" left="0" top="0" height="41" cssclass="div_WF_SearchBg" right="20" scrollbars="none">
+          <Layouts>
+            <Layout>
+              <Button id="btnSearch" taborder="12" text="조회" cssclass="btn_WF_search" right="7" bottom="7" width="62" height="25" onclick="fnCommOnclick"/>
+              <!--
+              <Static id="Static06" taborder="27" text="FIX w20" cssclass="Guide_Color" visible="false" left="0" top="0" width="20" height="41"/>
+              <Static id="Static02" taborder="29" text="FIX w30" cssclass="Guide_Color" visible="false" left="881" top="0" width="30" height="41"/>
+-->
+              <Edit id="edt_clssf" taborder="31" left="8.89%" top="8" height="21" onkeyup="edt_clssf_onkeyup" width="221" onchanged="div_search_edt_clssf_onchanged"/>
+              <Edit id="edt_page_desc" taborder="32" left="429" top="8" height="21" onkeyup="edt_page_desc_onkeyup" width="357"/>
+              <Static id="Static03" taborder="33" text="페이지설명" onclick="Div00_Static01_onclick" cssclass="sta_WF_SchTitle" left="366.00" top="8" width="88" height="21"/>
+              <Static id="Static00" taborder="34" text="FIX w30" cssclass="Guide_Color" visible="false" left="309" top="7" width="30" height="41" onclick="div_search_Static00_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static01" taborder="8" text="W20" cssclass="Guide_Color" visible="false" top="0" right="0" width="20" bottom="0"/>
+        <Grid id="grdMain_list" taborder="9" binddataset="ds_sys_linkpage" scrollbars="autoboth" useinputpanel="false" left="0" top="84" autofittype="col" right="20" onexpandup="grdMain_list_onexpandup" bottom="2">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="34"/>
+                <Column size="140"/>
+                <Column size="199"/>
+                <Column size="496"/>
+                <Column size="70"/>
+                <Column size="57"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="번호"/>
+                <Cell col="1" text="분류명"/>
+                <Cell col="2" text="페이지설명"/>
+                <Cell col="3" text="페이지URL"/>
+                <Cell col="4" text="정렬순번"/>
+                <Cell col="5" text="사용여부"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="expr:currow + 1"/>
+                <Cell col="1" edittype="expr:(REG_DT == null || REG_DT =='' || REG_DT =='undefined') ? 'normal' : 'none'" style="align:left;" text="bind:CLSSF"/>
+                <Cell col="2" edittype="expr:(REG_DT == null || REG_DT =='' || REG_DT =='undefined') ? 'normal' : 'none'" style="align:left;" text="bind:PAGE_DESC"/>
+                <Cell col="3" edittype="normal" style="align:left;" text="bind:PAGE_URL"/>
+                <Cell col="4" edittype="normal" text="bind:ORD_SEQ"/>
+                <Cell col="5" displaytype="checkbox" edittype="checkbox" text="bind:USE_YN"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static09" taborder="130" text="h5" cssclass="Guide_Color" visible="false" left="0" top="79" right="0" height="5"/>
+        <Static id="Static21" taborder="138" text="시스템링크페이지관리" cssclass="sta_WF_SubTitle" left="0" top="56" width="164" height="21"/>
+        <Static id="Static03" taborder="141" text="분류명" onclick="Div00_Static01_onclick" cssclass="sta_WF_SchTitle" left="21" top="9" width="64" height="21"/>
+        <Div id="div_comBtn01" taborder="145" left="464" top="56" right="20" height="23" style="background:transparent;border:0 solid #808080ff ;" gridName="grd_list01" sqlId="deleteScrnList,insertScrnList,updateScrnList" svcId="saveScreenList"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="CLSSF" type="STRING" size="50"/>
+          <Column id="PAGE_DESC" type="STRING" size="60"/>
+          <Column id="PAGE_URL" type="STRING" size="300"/>
+          <Column id="ORD_SEQ" type="INT" size="5"/>
+          <Column id="USE_YN" type="STRING" size="1"/>
+          <Column id="REG_DT" type="STRING" size="8"/>
+          <Column id="CHG_DT" type="STRING" size="8"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsData">
+        <ColumnInfo>
+          <Column id="ROWINDEX" type="INT" size="256"/>
+          <Column id="STATUS" type="STRING" size="256"/>
+          <Column id="RESULT" type="INT" size="256"/>
+          <Column id="ERROR" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="div_search.form.edt_clssf" propid="value" datasetid="dsCond" columnid="CLSSF"/>
+      <BindItem id="item1" compid="div_search.form.edt_page_desc" propid="value" datasetid="dsCond" columnid="PAGE_DESC"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[
+this.objApp = nexacro.getApplication();   
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+	
+	this.fnSearch();		// 조회
+}
+
+// 조회
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "select01";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0270W/select01";            			// 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData=dsData";       			// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;	
+			
+		case "save01" :
+			Ex.core.toast(this, "10004", null, {toastType:'S'});
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.grdMain_list.displayRowType();
+
+	// 공통코드 조회
+	this.fnGetCmmCd();
+
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divTopBtn, 'right', true);
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['YN_CD',		'DAT_TYPE_CD']			// 조회할 상위코드
+		,codeDiv: ['CMM_CD',	'CMM_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['ALL',		'ALL']			// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',			'Y']				// 사용여부
+		,filter	: ['',			"ITM_VAL_1=='NTC'||ITM_VAL_1=='ETC'"]				// filterStr
+		,objDs	: [this.dsYnCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util;
+}
+
+// 데이터셋 column 값 변경 후 이벤트
+this.dsData_Oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);	// ROWFLAG컬럼 변경을 위한 함수 호출
+};
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnClose" :
+			Ex.core.pclose(this);
+			break;
+			
+		case 'btnSearch' :	// 조회
+			this.fnSearch();
+			break;
+	}
+}
+]]></Script>
+  </Form>
+</FDL>

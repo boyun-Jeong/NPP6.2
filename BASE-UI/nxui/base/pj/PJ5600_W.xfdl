@@ -1,0 +1,848 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PJ5600_W" left="0" top="0" width="1820" height="720" titletext="시나리오 테스트 결함관리" onload="form_onload">
+    <Layouts>
+      <Layout width="1820" height="720">
+        <Div id="divSearch" taborder="0" left="0" top="0" height="195" right="0" cssclass="div_WF_divSearchArea" text="">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="5"/>
+              <Static id="Static00_00" taborder="4" left="360" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" bottom="5"/>
+              <Static id="stcSubProject" taborder="5" text="서브프로젝트" left="Static00_00:0" top="13" width="100" height="24" cssclass="sta_WF_schTitle_E"/>
+              <Static id="stcStdftName" taborder="12" text="결함명" left="Static00_00:0" top="42" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Static id="stcStestVersion" taborder="18" text="테스트 차수" left="Static00_00:0" top="71" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Static id="Static00_00_00" taborder="7" left="730" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" bottom="5"/>
+              <Static id="stcStdftTypeCd" taborder="14" text="결함유형" left="Static00_00_00:0" top="42" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Combo id="cboStdftTypeCd" taborder="15" left="stcStdftTypeCd:0" top="42" width="240" height="24" cssclass="cbo_WF_normal" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsStdftTypeCd"/>
+              <Static id="stcStdftNo" taborder="10" text="결함ID" left="Static00:0" top="42" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtStdftNo" taborder="11" left="stcStdftNo:0" top="42" width="240" height="24" cssclass="edt_WF_normal" onkeyup="onKeyUp"/>
+              <Static id="stcStestNo" taborder="20" text="시나리오ID" left="Static00_00_00:0" top="71" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtStestNo" taborder="21" left="stcStestNo:0" top="71" width="240" height="24" cssclass="edt_WF_normal" onkeyup="onKeyUp"/>
+              <Static id="stcBizId" taborder="8" text="업무" left="Static00_00_00:0" top="13" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtStdftName" taborder="13" left="stcStdftName:0" top="42" width="240" height="24" cssclass="edt_WF_normal" onkeyup="onKeyUp"/>
+              <Combo id="cboSubProject" taborder="6" left="stcSubProject:0" top="13" width="240" height="24" cssclass="cbo_WF_normal" codecolumn="PJT_ID" datacolumn="PJT_NAME" onitemchanged="cboOnItemChanged"/>
+              <Combo id="cboBizId" taborder="9" text="" left="stcBizId:0" top="13" width="240" height="24" cssclass="cbo_WF_normal" codecolumn="BIZ_ID" datacolumn="BIZ_NAME"/>
+              <Static id="stcPjtNm" taborder="1" text="프로젝트명" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle_E" left="Static00:0" top="13" width="100" height="24"/>
+              <Edit id="edtPjtNm" taborder="2" left="stcPjtNm:0" top="13" width="218" height="24" cssclass="edt_WF_normal" enable="true" readonly="true"/>
+              <Button id="btnSearchPjtPop" taborder="3" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommOnclick" top="13" width="24" left="edtPjtNm:-1"/>
+              <Static id="stcStestTypeCd" taborder="16" text="테스트 종류" left="Static00:0" top="71" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Static id="stcDate" taborder="36" text="일자" left="Static00_00:0" top="158" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Combo id="cboDateGbn" taborder="37" left="stcDate:0" top="158" width="90" height="24" cssclass="cbo_WF_normal" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsInfTypeCd"/>
+              <Calendar id="calStime" taborder="38" left="cboDateGbn:2" top="158" width="120" height="24" validate="title:시작일자,required:false,date" cssclass="cal_WF_normal"/>
+              <Static id="Static14" taborder="39" text="~" left="calStime:5" top="158" width="10" height="21" visible="true"/>
+              <Calendar id="calEtime" taborder="40" left="Static14:5" top="158" width="120" height="24" visible="true" validate="title:종료일자,required:false,date" cssclass="cal_WF_normal"/>
+              <Button id="btnSearch" taborder="42" top="85" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Button id="btnSearchReset" taborder="41" top="85" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+              <Static id="stcStestName" taborder="22" text="시나리오명" left="Static00:0" top="100" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtStestName" taborder="23" left="120" top="100" width="240" height="24" cssclass="edt_WF_normal" onkeyup="onKeyUp"/>
+              <Static id="stcDftUserNm" taborder="24" text="최초확인자" left="Static00_00:0" top="100" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtDftUserNm" taborder="25" left="490" width="240" height="24" cssclass="edt_WF_normal" top="100" onkeyup="onKeyUp"/>
+              <Combo id="cboStestTypeCd" taborder="17" left="stcStestTypeCd:0" top="71" height="24" cssclass="cbo_WF_normal" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsStestTypeCd" width="240"/>
+              <Combo id="cboStestVersion" taborder="19" left="stcStestVersion:0" top="71" height="24" cssclass="cbo_WF_normal" codecolumn="CODE" datacolumn="NAME" innerdataset="dsStestVersion" right="Static00_00_00:0" displayrowcount="11"/>
+              <Static id="stcActUserNm" taborder="26" text="조치자" left="Static00_00_00:0" top="100" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtActUserNm" taborder="27" left="stcActUserNm:0" width="240" height="24" cssclass="edt_WF_normal" top="100" onkeyup="onKeyUp"/>
+              <Static id="stcConfUserNm" taborder="28" text="최종확인자" left="Static00:0" top="129" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtConfUserNm" taborder="29" left="stcConfUserNm:0" width="240" height="24" cssclass="edt_WF_normal" top="129" onkeyup="onKeyUp"/>
+              <Static id="stcStdftRcvCd" taborder="30" text="접수상태" left="Static00_00:0" top="129" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Combo id="cboStdftRcvCd" taborder="31" left="stcStdftRcvCd:0" top="129" height="24" cssclass="cbo_WF_normal" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsStdftRcvCd" right="1088"/>
+              <Static id="stcStdftActCd" taborder="32" text="처리상태" left="Static00_00_00:0" top="129" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Combo id="cboStdftActCd" taborder="33" left="stcStdftActCd:0" top="129" width="240" height="24" cssclass="cbo_WF_normal" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsStdftActCd"/>
+              <Static id="stcStdftConfCd" taborder="34" text="확인상태" left="Static00:0" top="158" width="100" cssclass="sta_WF_schTitle" height="24"/>
+              <Combo id="cboStdftConfCd" taborder="35" left="stcStdftConfCd:0" top="158" cssclass="cbo_WF_normal" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsStdftConfCd" width="240" height="24"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00_01" taborder="1" left="0" top="divSearch:0" height="20" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_00_00" taborder="5" left="0" top="Static00_01:24" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Grid id="grdMainList" taborder="6" binddataset="dsStDefect" cellsizingtype="col" left="0" right="0" oncellclick="grdOnCellClick" top="Static00_01:34" bottom="40" cssclass="grd_WF_normal">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="50" band="left"/>
+                <Column size="40" band="left"/>
+                <Column size="60" band="left"/>
+                <Column size="120" band="left"/>
+                <Column size="160" band="left"/>
+                <Column size="200" band="left"/>
+                <Column size="0"/>
+                <Column size="0"/>
+                <Column size="90"/>
+                <Column size="90"/>
+                <Column size="90"/>
+                <Column size="100"/>
+                <Column size="200"/>
+                <Column size="200"/>
+                <Column size="60"/>
+                <Column size="120"/>
+                <Column size="200"/>
+                <Column size="90"/>
+                <Column size="90"/>
+                <Column size="90"/>
+                <Column size="90"/>
+                <Column size="100"/>
+                <Column size="110"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="110"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell rowspan="2" text="No"/>
+                <Cell col="1" rowspan="2" displaytype="checkboxcontrol" edittype="checkbox" style="align:middle;"/>
+                <Cell col="2" rowspan="2" text="행상태"/>
+                <Cell col="3" rowspan="2" text="업무"/>
+                <Cell col="4" rowspan="2" text="결함 ID"/>
+                <Cell col="5" rowspan="2" text="결함 명"/>
+                <Cell col="6" rowspan="2" text="서브 PJT"/>
+                <Cell col="7" rowspan="2" text="업무"/>
+                <Cell col="8" rowspan="2" text="결함유형"/>
+                <Cell col="9" rowspan="2" text="테스트 종류"/>
+                <Cell col="10" rowspan="2" text="테스트 차수"/>
+                <Cell col="11" rowspan="2" text="시나리오 ID"/>
+                <Cell col="12" rowspan="2" text="시나리오 명"/>
+                <Cell col="13" rowspan="2" text="테스트 절차"/>
+                <Cell col="14" rowspan="2" text="#STEP"/>
+                <Cell col="15" rowspan="2" text="스텝 ID"/>
+                <Cell col="16" rowspan="2" text="스텝 명"/>
+                <Cell col="17" rowspan="2" text="결함구분"/>
+                <Cell col="18" rowspan="2" text="접수상태"/>
+                <Cell col="19" rowspan="2" text="처리상태"/>
+                <Cell col="20" rowspan="2" text="확인상태"/>
+                <Cell col="21" rowspan="2" text="최초확인자"/>
+                <Cell col="22" rowspan="2" text="최초확인자 사번"/>
+                <Cell col="23" rowspan="2" text="최초확인일"/>
+                <Cell col="24" colspan="4" text="조치내역"/>
+                <Cell col="28" rowspan="2" text="최종확인자"/>
+                <Cell col="29" rowspan="2" text="최종확인자 사번"/>
+                <Cell col="30" rowspan="2" text="최종확인일"/>
+                <Cell row="1" col="24" text="조치자"/>
+                <Cell row="1" col="25" text="조치자 사번"/>
+                <Cell row="1" col="26" text="조치예정일"/>
+                <Cell row="1" col="27" text="조치완료일"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="expr:currow+1"/>
+                <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                <Cell col="2" text="bind:ROWFLAG"/>
+                <Cell col="3" style="align:left;" text="bind:BIZ_NAME"/>
+                <Cell col="4" cssclass="grdBCell_WF_event" text="bind:STDFT_NO"/>
+                <Cell col="5" style="align:left;" cssclass="grdBCell_WF_event" text="bind:STDFT_NAME" tooltiptext="bind:STDFT_NAME" textAlign="left"/>
+                <Cell col="6" style="align:left;" text="bind:PJT_NAME"/>
+                <Cell col="7" style="align:left;" text="bind:BIZ_NAME"/>
+                <Cell col="8" displaytype="combotext" text="bind:STDFT_TYPE_CD" combodataset="dsStdftTypeCdGrid" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                <Cell col="9" displaytype="combotext" text="bind:STEST_TYPE_CD" combodataset="dsStestTypeCdGrid" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                <Cell col="10" displaytype="combotext" text="bind:STEST_VERSION" combodataset="dsStestVersionGrid" combocodecol="CODE" combodatacol="NAME"/>
+                <Cell col="11" text="bind:STEST_NO"/>
+                <Cell col="12" style="align:left;" text="bind:STEST_NAME" tooltiptext="bind:STEST_NAME" textAlign="left"/>
+                <Cell col="13" style="align:left;" text="bind:CASE_DESC" tooltiptext="bind:CASE_DESC" textAlign="left"/>
+                <Cell col="14" text="bind:STEP_SEQ"/>
+                <Cell col="15" text="bind:STEP_NO"/>
+                <Cell col="16" style="align:left;" text="bind:STEP_NAME" tooltiptext="bind:STEP_NAME" textAlign="left"/>
+                <Cell col="17" displaytype="combotext" text="bind:STDFT_CLASS_CD" combodataset="dsStdftClassCd" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                <Cell col="18" displaytype="combotext" text="bind:STDFT_RCV_CD" combodataset="dsStdftRcvCdGrid" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                <Cell col="19" displaytype="combotext" text="bind:STDFT_ACT_CD" combodataset="dsStdftActCdGrid" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                <Cell col="20" displaytype="combotext" text="bind:STDFT_CONF_CD" combodataset="dsStdftConfCdGrid" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                <Cell col="21" displaytype="normal" text="bind:DFT_USER_NM"/>
+                <Cell col="22" displaytype="normal" text="bind:DFT_USER_ID"/>
+                <Cell col="23" displaytype="date" text="bind:DFT_REG_DATE" calendardisplaynulltype="nulltext" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="24" text="bind:ACT_USER_NM"/>
+                <Cell col="25" text="bind:ACT_USER_ID"/>
+                <Cell col="26" displaytype="date" text="bind:ACT_PDATE" calendardisplaynulltype="nulltext" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="27" displaytype="date" text="bind:ACT_ADATE" calendardisplaynulltype="nulltext" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="28" displaytype="normal" text="bind:CONF_USER_NM"/>
+                <Cell col="29" displaytype="normal" text="bind:CONF_USER_ID"/>
+                <Cell col="30" displaytype="date" text="bind:CONF_DATE" calendardisplaynulltype="nulltext" calendardateformat="yyyy-MM-dd"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcGrdTitle" taborder="2" text="시나리오 결함 목록" cssclass="sta_WF_gridTitle" left="0" top="Static00_01:0" width="141" height="24"/>
+        <Static id="sta_listCnt" taborder="3" cssclass="sta_WF_GridCount" left="stcGrdTitle:5" top="Static00_01:0" width="150" height="24" style="align:left middle;" countDataset="dsStDefect"/>
+        <Div id="divGrdBotBtn" taborder="7" width="290" height="32" bottom="0" right="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnSave" taborder="1" text="저장" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="0" onclick="fnCommOnclick"/>
+              <Button id="btnAddRep" taborder="0" text="등록" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="btnSave:5" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divGrdTopBtn" taborder="4" width="242" height="24" visible="true" isButtonGroup="true" top="Static00_01:0" right="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="1" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+              <Button id="btnExcelDown" taborder="0" text="엑셀" top="0" width="60" right="btnDelete:5" cssclass="btn_WF_excelDown" onclick="fnCommOnclick" height="24"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsStDefect" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="10"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="STDFT_ID" type="string" size="16"/>
+          <Column id="STEST_ID" type="string" size="16"/>
+          <Column id="STEST_NO" type="string" size="100"/>
+          <Column id="STEST_TYPE_CD" type="string" size="30"/>
+          <Column id="STEST_VERSION" type="bigdecimal" size="22"/>
+          <Column id="STEST_NAME" type="string" size="200"/>
+          <Column id="CASE_DESC" type="string" size="200"/>
+          <Column id="STEP_SEQ" type="bigdecimal" size="3"/>
+          <Column id="STEP_NO" type="string" size="100"/>
+          <Column id="STEP_NAME" type="string" size="200"/>
+          <Column id="PJT_ID" type="string" size="16"/>
+          <Column id="BIZ_ID" type="string" size="16"/>
+          <Column id="BIZ_NAME" type="string" size="100"/>
+          <Column id="STDFT_NO" type="string" size="100"/>
+          <Column id="STDFT_NAME" type="string" size="200"/>
+          <Column id="STDFT_TYPE_CD" type="string" size="30"/>
+          <Column id="STDFT_DESC" type="string" size="4000"/>
+          <Column id="STDFT_RCV_CD" type="string" size="30"/>
+          <Column id="STDFT_RCV_DESC" type="string" size="4000"/>
+          <Column id="STDFT_ACT_CD" type="string" size="30"/>
+          <Column id="STDFT_CLASS_CD" type="string" size="30"/>
+          <Column id="STDFT_SEVERITY_CD" type="string" size="30"/>
+          <Column id="STDFT_CONF_CD" type="string" size="30"/>
+          <Column id="DFT_USER_ID" type="string" size="10"/>
+          <Column id="DFT_USER_NM" type="string" size="100"/>
+          <Column id="DFT_USER_DEPT" type="string" size="100"/>
+          <Column id="DFT_REG_DATE" type="string" size="14"/>
+          <Column id="ACT_USER_ID" type="string" size="10"/>
+          <Column id="ACT_USER_NM" type="string" size="100"/>
+          <Column id="ACT_USER_DEPT" type="string" size="100"/>
+          <Column id="ACT_PDATE" type="string" size="14"/>
+          <Column id="ACT_ADATE" type="string" size="14"/>
+          <Column id="ACT_DESC" type="string" size="4000"/>
+          <Column id="CONF_USER_ID" type="string" size="10"/>
+          <Column id="CONF_USER_NM" type="string" size="100"/>
+          <Column id="CONF_USER_DEPT" type="string" size="100"/>
+          <Column id="CONF_DATE" type="string" size="14"/>
+          <Column id="REG_STIME" type="string" size="14"/>
+          <Column id="REG_USER_ID" type="string" size="10"/>
+          <Column id="REG_USER_NM" type="string" size="100"/>
+          <Column id="REG_USER_DEPT" type="string" size="100"/>
+          <Column id="SYSMODTIME" type="string" size="14"/>
+          <Column id="LMOD_USER_ID" type="string" size="10"/>
+          <Column id="LMOD_USER_NM" type="string" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="string" size="100"/>
+          <Column id="REMARK" type="string" size="4000"/>
+          <Column id="PJT_NAME" type="string" size="200"/>
+          <Column id="P_PJT_ID" type="string" size="16"/>
+          <Column id="P_PJT_NAME" type="string" size="200"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsStdftTypeCd"/>
+      <Dataset id="dsStdftTypeCdGrid"/>
+      <Dataset id="dsStestTypeCd"/>
+      <Dataset id="dsStestTypeCdGrid"/>
+      <Dataset id="dsStestVersion">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsStestVersionGrid">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsStdftRcvCd"/>
+      <Dataset id="dsStdftRcvCdGrid"/>
+      <Dataset id="dsStdftActCd"/>
+      <Dataset id="dsStdftActCdGrid"/>
+      <Dataset id="dsStdftConfCd"/>
+      <Dataset id="dsStdftConfCdGrid"/>
+      <Dataset id="dsStdftClassCd"/>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="PJT_NM" type="STRING" size="256"/>
+          <Column id="SUB_PJT_ID" type="STRING" size="256"/>
+          <Column id="BIZ_ID" type="STRING" size="256"/>
+          <Column id="STDFT_NO" type="STRING" size="256"/>
+          <Column id="STDFT_NM" type="STRING" size="256"/>
+          <Column id="STDFT_TYPE_CD" type="STRING" size="256"/>
+          <Column id="STEST_TYPE_CD" type="STRING" size="256"/>
+          <Column id="STEST_VERSION" type="STRING" size="256"/>
+          <Column id="STEST_NO" type="STRING" size="256"/>
+          <Column id="STEST_NM" type="STRING" size="256"/>
+          <Column id="DFT_USER_NM" type="STRING" size="256"/>
+          <Column id="ACT_USER_NM" type="STRING" size="256"/>
+          <Column id="CONF_USER_NM" type="STRING" size="256"/>
+          <Column id="STDFT_RCV_CD" type="STRING" size="256"/>
+          <Column id="STDFT_ACT_CD" type="STRING" size="256"/>
+          <Column id="STDFT_CONF_CD" type="STRING" size="256"/>
+          <Column id="DATE_GBN" type="STRING" size="256"/>
+          <Column id="SDATE" type="STRING" size="256"/>
+          <Column id="EDATE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPopRtn"/>
+    </Objects>
+    <InitValue/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ PJ5600_W
+* 화면(명)		︰ 시나리오 테스트 결함관리
+* 메뉴(경로)	︰ 프로젝트관리 > 시나리오 테스트 관리 >  시나리오 테스트 결함관리
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.11.14
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.11.14	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_PjComm.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.setColumn(0, "BIZ_ID", undefined);
+	this.dsCond.setColumn(0, "STDFT_NO", "");
+	this.dsCond.setColumn(0, "STDFT_NM", "");
+	this.dsCond.setColumn(0, "STDFT_TYPE_CD", undefined);
+	this.dsCond.setColumn(0, "STEST_TYPE_CD", undefined);
+	this.dsCond.setColumn(0, "STEST_VERSION", undefined);
+	this.dsCond.setColumn(0, "STEST_NO", "");
+	this.dsCond.setColumn(0, "STEST_NM", "");
+	this.dsCond.setColumn(0, "DFT_USER_NM", "");
+	this.dsCond.setColumn(0, "ACT_USER_NM", "");
+	this.dsCond.setColumn(0, "CONF_USER_NM", "");
+	this.dsCond.setColumn(0, "STDFT_RCV_CD", undefined);
+	this.dsCond.setColumn(0, "STDFT_ACT_CD", undefined);
+	this.dsCond.setColumn(0, "STDFT_CONF_CD", undefined);
+	this.dsCond.setColumn(0, "DATE_GBN", "DRDATE");
+	this.dsCond.setColumn(0, "SDATE", "");
+	this.dsCond.setColumn(0, "EDATE", "");
+
+	this.divSearch.form.cboBizId.setFocus();
+}
+
+// 조회
+this.fnSearch = function()
+{
+	if( Ex.isEmpty((this.dsCond.getColumn(0, "PJT_ID"))) )
+	{
+		var oParam = {id : "alertNoSelPjtI", msg : "프로젝트를 선택하세요.", arrparam : [], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return;
+	}
+
+	if( Ex.isEmpty((this.dsCond.getColumn(0, "SUB_PJT_ID"))) )
+	{
+		var oParam = {id : "alertNoSelSubPjtI", msg : "서브프로젝트를 선택하세요.", arrparam : [], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return;
+	}
+
+	// transaction
+	var sTranId = "select01";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ5600W/select01";			// 서비스명
+    var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsStDefect=dsStDefect";		// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSave = function()
+{
+	var sTranId = "save01";
+    var sService = "PJ5600W/save01";
+    var sInDs = "dsCond=dsCond dsStDefect=dsStDefect:U";
+	var sOutDs = "dsStDefect=dsStDefect";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+	
+	this.setAddRepButton();
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::" + nErrorCode+"::" + sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			this.setAddRepButton();
+			break;
+
+		case "save01" :
+			Ex.core.toast(this, "10004");
+			this.setAddRepButton();
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	trace("this.fnPopupAfter() pID ::: " + pID + " varValue ::: " + varValue);
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "PJ0100_P01" :
+			//trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)	this.dsPopRtn.loadXML(varValue);
+			this.dsCond.setColumn(0, "PJT_ID", this.dsPopRtn.getColumn(0, "PJT_ID"));
+			this.dsCond.setColumn(0, "PJT_NM", this.dsPopRtn.getColumn(0, "PJT_NAME"));
+			this.fnSetSubPjtCombo();
+			break;
+
+		case "PJ5600_P01" :
+			trace("varValue ::: " + varValue);
+			if(varValue == "Y") this.fnSearch();
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+
+		case "alertNoSelSubPjtI" :
+			this.divSearch.form.cboSubProject.setFocus();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.grdMainList.displayRowType();
+
+	this.divSearch.form.cboSubProject.set_displaynulltext(Ex.core.word("- 선택 - "));
+	this.divSearch.form.cboBizId.set_displaynulltext(Ex.core.word("- 전체 - "));
+	// 공통코드 조회
+	this.fnGetCmmCd();
+
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divGrdTopBtn.form.btnDelete];	//삭제
+	Ex.util.setBtnVisible(this, 'delete', arrBtn);
+	
+	arrBtn = [this.divGrdBotBtn.form.btnAddRep];		//등록
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+	
+	arrBtn = [this.divGrdBotBtn.form.btnSave];			//저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divGrdTopBtn, 'right', true);
+	Ex.util.setBtnAlign(this.divGrdBotBtn, 'right', true);
+	
+	this.fnSearchReset();
+
+	//this.fnSearch();	// 조회
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var upcmmCd	= ['STEST_DFT_CD', 'STEST_DFT_CD', 'STEST_REV_CD', 'STEST_REV_CD', 'STEST_DPRC_CD', 'STEST_DPRC_CD', 'STEST_CLS_CD', 'STEST_CTYPE_CD', 'STEST_CTYPE_CD', 'STEST_TYPE_CD', 'STEST_TYPE_CD'];
+	var codeDiv	= ['PJT_MNG_CD', 'PJT_MNG_CD', 'PJT_MNG_CD', 'PJT_MNG_CD', 'PJT_MNG_CD', 'PJT_MNG_CD', 'PJT_MNG_CD', 'PJT_MNG_CD', 'PJT_MNG_CD', 'PJT_MNG_CD', 'PJT_MNG_CD'];
+	var optStr	= ['ALL', '', 'ALL', '', 'ALL', '', '', 'ALL', '', 'ALL', ''];
+	var useYn	= ['Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y'];
+	var filter	= ['', '', '', '', '', '', '', '', '', '', ''];
+	var objDs	= [this.dsStdftTypeCd, this.dsStdftTypeCdGrid, this.dsStdftRcvCd, this.dsStdftRcvCdGrid, this.dsStdftActCd, this.dsStdftActCdGrid, this.dsStdftClassCd, this.dsStdftConfCd, this.dsStdftConfCdGrid, this.dsStestTypeCd, this.dsStestTypeCdGrid];
+	
+	var oParam = {
+		 upCmmCd	: upcmmCd	// 조회할 상위코드
+		,codeDiv	: codeDiv	// 조회할 코드의 업무구분
+		,optStr		: optStr	// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn		: useYn		// 사용여부
+		,filter		: filter	// filterStr
+		,objDs		: objDs		// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+
+	//일자 검색조건 Combo
+	var innerDS = new Dataset;
+	innerDS.addColumn("CODE", "string");
+	innerDS.addColumn("NAME", "string");
+	
+	var aRow = innerDS.addRow();
+	innerDS.setColumn(aRow, "CODE", "DRDATE");
+	innerDS.setColumn(aRow, "NAME", Ex.core.word("최초확인일"));
+	
+	aRow = innerDS.addRow();
+	innerDS.setColumn(aRow, "CODE", "APDATE");
+	innerDS.setColumn(aRow, "NAME", Ex.core.word("조치예정일"));
+
+	aRow = innerDS.addRow();
+	innerDS.setColumn(aRow, "CODE", "AADATE");
+	innerDS.setColumn(aRow, "NAME", Ex.core.word("조치완료일"));
+
+	aRow = innerDS.addRow();
+	innerDS.setColumn(aRow, "CODE", "CFDATE");
+	innerDS.setColumn(aRow, "NAME", Ex.core.word("최종확인일"));
+	
+	this.addChild("dsDateGbn", innerDS);
+	
+	this.divSearch.form.cboDateGbn.set_innerdataset(innerDS);
+	this.divSearch.form.cboDateGbn.set_codecolumn("CODE");
+	this.divSearch.form.cboDateGbn.set_datacolumn("NAME");
+
+	this.divSearch.form.cboDateGbn.set_index(0);
+
+	//테스트 차수
+	var aRow = this.dsStestVersion.addRow();
+	this.dsStestVersion.setColumn(aRow, "CODE", undefined);
+	this.dsStestVersion.setColumn(aRow, "NAME", Ex.core.word("- 전체 -"));
+
+	aRow = this.dsStestVersionGrid.addRow();
+	this.dsStestVersionGrid.setColumn(aRow, "CODE", undefined);
+	this.dsStestVersionGrid.setColumn(aRow, "NAME", "");
+
+	for(var i=1; i<=10; i++)
+	{
+		aRow = this.dsStestVersion.addRow();
+		this.dsStestVersion.setColumn(aRow, "CODE", i);
+		this.dsStestVersion.setColumn(aRow, "NAME", i + Ex.core.word("차"));
+		
+		aRow = this.dsStestVersionGrid.addRow();
+		this.dsStestVersionGrid.setColumn(aRow, "CODE", i);
+		this.dsStestVersionGrid.setColumn(aRow, "NAME", i + Ex.core.word("차"));
+	}
+}
+
+//Sub Project Combo 조회
+this.fnSetSubPjtCombo = function()
+{
+	this.setSubPjtList(this, this.dsCond.getColumn(0, "PJT_ID"), this.divSearch.form.cboSubProject, this.searchSubPjtInfoCallBack);
+}
+
+//Sub Project Combo 조회 CallBack
+this.searchSubPjtInfoCallBack = function()
+{
+	var aRow = this.divSearch.form.cboSubProject.getInnerDataset().insertRow(0);
+	this.divSearch.form.cboSubProject.getInnerDataset().setColumn(0, "PJT_NAME", Ex.core.word("- 선택 -"));
+
+	var fRow = -1;
+	this.divSearch.form.cboSubProject.set_displaynulltext("");
+	
+	if(this.divSearch.form.cboSubProject.getInnerDataset().rowcount > 1)
+	{
+		fRow = this.divSearch.form.cboSubProject.getInnerDataset().findRow("PJT_ID", this.dsCond.getColumn(0, "SUB_PJT_ID"));
+	}
+	else
+	{
+		fRow = 0;
+	}
+
+	if(fRow > -1)	this.divSearch.form.cboSubProject.set_index(fRow);
+	else			this.divSearch.form.cboSubProject.set_index(0);
+	
+	this.dsCond.setColumn(0, "SUB_PJT_ID", this.divSearch.form.cboSubProject.value);
+
+	//trace("AF this.searchProjectBizCallBack() DS_COND BIZ_ID : " + this.dsCond.getColumn(0, "BIZ_ID"));
+	//trace("AF this.searchProjectBizCallBack() COMBO BIZ_ID : " + this.divSearch.form.cboBizId.value);
+	
+	this.fnSetPjtBizCombo(this.dsCond.getColumn(0, "SUB_PJT_ID"));
+}
+
+//업무 Combo 조회
+this.fnSetPjtBizCombo = function(subPjtId)
+{
+	//trace("this.fnSetPjtBizCombo() this:[" + this + "] subPjtId:[" + subPjtId + "]");
+	if( !Ex.isEmpty(this.divSearch.form.cboBizId.innerdataset) )
+	{
+		this.divSearch.form.cboBizId.getInnerDataset().clearData();
+		var aRow = this.divSearch.form.cboBizId.getInnerDataset().insertRow(0);
+		this.divSearch.form.cboBizId.getInnerDataset().setColumn(0, "BIZ_NAME", Ex.core.word("- 전체 -"));
+	}
+	else
+	{
+		this.divSearch.form.cboBizId.set_displaynulltext(Ex.core.word("- 전체 - "));
+	}
+	this.setProjectBiz(this, subPjtId, this.divSearch.form.cboBizId, this.searchProjectBizCallBack);
+}
+
+//업무 Combo 조회 CallBack
+this.searchProjectBizCallBack = function()
+{
+	//trace("BF this.searchProjectBizCallBack() DS_COND BIZ_ID : " + this.dsCond.getColumn(0, "BIZ_ID"));
+	//trace("BF this.searchProjectBizCallBack() COMBO BIZ_ID : " + this.divSearch.form.cboBizId.value);
+	var aRow = this.divSearch.form.cboBizId.getInnerDataset().insertRow(0);
+	this.divSearch.form.cboBizId.getInnerDataset().setColumn(0, "BIZ_NAME", Ex.core.word("- 전체 -"));
+
+	var fRow = -1;
+	this.divSearch.form.cboBizId.set_displaynulltext("");
+	
+	if(this.divSearch.form.cboBizId.getInnerDataset().rowcount > 1)
+	{
+		fRow = this.divSearch.form.cboBizId.getInnerDataset().findRow("BIZ_ID", this.dsCond.getColumn(0, "BIZ_ID"));
+	}
+	else
+	{
+		fRow = 0;
+	}
+
+	if(fRow > -1)	this.divSearch.form.cboBizId.set_index(fRow);
+	else			this.divSearch.form.cboBizId.set_index(0);
+	
+	this.dsCond.setColumn(0, "BIZ_ID", this.divSearch.form.cboBizId.value);
+
+	//trace("AF this.searchProjectBizCallBack() DS_COND BIZ_ID : " + this.dsCond.getColumn(0, "BIZ_ID"));
+	//trace("AF this.searchProjectBizCallBack() COMBO BIZ_ID : " + this.divSearch.form.cboBizId.value);
+
+	if( !Ex.isEmpty(this.dsCond.getColumn(0, "SUB_PJT_ID")) )
+	{
+		this.fnSearch();	// 조회
+	}
+}
+
+this.setAddRepButton = function()
+{
+	var cnt = this.dsStDefect.getCaseCount("ROWFLAG=='D'");
+	//trace("this.dsOnColumnDataChanged() cnt : " + cnt);
+	if(cnt > 0)
+	{
+		if(this.divGrdBotBtn.form.btnAddRep.visible)
+		{
+			this.divGrdBotBtn.form.btnAddRep.set_enable(false);
+		}
+	}
+	else
+	{
+		if(this.divGrdBotBtn.form.btnAddRep.visible)
+		{
+			this.divGrdBotBtn.form.btnAddRep.set_enable(true);
+		}
+	}
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearchPjtPop" :			
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ0100_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ0100_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : "프로젝트 검색"
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				//"width=920,height=650"	// <--- width/height/modeless(프레임 처리 옵션)							
+				"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+			);
+			break;
+
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;
+
+		case "btnSearch" :			// 검색
+			this.fnSearch();
+			break;
+
+		case "btnExcelDown" :		// 엑셀다운
+			var oInfo = {
+   				Grid	: [this.grdMainList],
+   				Sheet	: [this.getOwnerFrame().info.menuNm],
+   				FileNm	: [this.getOwnerFrame().info.menuNm],
+   				ExportType : "XLSX",
+   				ExportId : "excel01"
+   			};
+			this.gfnExportExcel(this, oInfo);
+			break;
+
+		case "btnDelete" :			// 삭제
+			this.fnDelete(this.dsStDefect);
+			break;
+
+		case "btnAddRep" : 			// 등록
+			if(Ex.isEmpty(this.dsCond.getColumn(0, "PJT_ID")))
+			{
+				var oParam = {id : "alertNoSelPjtI", msg : "프로젝트를 선택하세요.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return;
+			}
+			
+			if(Ex.isEmpty(this.dsCond.getColumn(0, "SUB_PJT_ID")))
+			{
+				var oParam = {id : "alertNoSelSubPjtI", msg : "서브프로젝트를 선택하세요.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return;
+			}
+
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ5600_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ5600_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title		: "시나리오 테스트 결함 등록",
+					pPjtId		: this.dsCond.getColumn(0, "PJT_ID"),
+					pPjtNm		: this.dsCond.getColumn(0, "PJT_NM"),
+					pSubPjtId	: this.dsCond.getColumn(0, "SUB_PJT_ID"),
+					pStdftId	: '',
+					pMode		: 'NEW'
+				},							// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"autosize"					// <--- width/height/modeless(프레임 처리 옵션)							
+			);
+			break;
+
+		case "btnSave" :			//저장
+			if(this.dsStDefect.getCaseCount("ROWFLAG=='D'") > 0)
+			{
+				var param = {
+						id : "saveConfirm"
+					  , msg : "10003"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+			break;
+	}
+}
+
+this.onKeyUp = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 13) this.fnSearch();
+};
+
+this.cboOnItemChanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if(obj.id == "cboSubProject")
+	{
+		trace("this.cboOnItemChanged() cboSubProject e.postvalue : " + e.postvalue);
+		this.fnSetPjtBizCombo(e.postvalue);
+	}
+};
+
+this.grdOnCellClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(e.row < 0) return;
+
+	// PJT_NAME 프로젝트/서브프로젝트명을 누를 때 마다 POPUP화면 호출
+	if (e.cell == obj.getBindCellIndex("body", "STDFT_NO") || e.cell == obj.getBindCellIndex("body", "STDFT_NAME"))
+	{
+		var strPjtId    = this.dsStDefect.getColumn(obj.getDatasetRow(e.row), "P_PJT_ID");
+		var strPjtNm	= this.dsStDefect.getColumn(obj.getDatasetRow(e.row), "P_PJT_NAME");
+		var strSubPjtId	= this.dsStDefect.getColumn(obj.getDatasetRow(e.row), "PJT_ID");
+		var strSubPjtNm	= this.dsStDefect.getColumn(obj.getDatasetRow(e.row), "PJT_NAME");
+		var strStdftId	= this.dsStDefect.getColumn(obj.getDatasetRow(e.row), "STDFT_ID");
+
+		trace("strStdftId : " + strStdftId);
+
+		Ex.core.popup(
+			this,					// <--- 팝업 실행 스코프
+			"PJ5600_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+			"pj::PJ5600_P01.xfdl",	// <--- 팝업창 오픈 Url
+			{
+				title		: "시나리오 테스트 결함 상세",
+				pPjtId		: strPjtId,
+				pPjtNm		: strPjtNm,
+				pSubPjtId	: strSubPjtId,
+				pStdftId	: strStdftId,
+				pMode		: 'SEARCH'
+			},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			"autosize"				// <--- width/height/modeless(프레임 처리 옵션)
+		);
+	}
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+}]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.cboSubProject" propid="value" datasetid="dsCond" columnid="SUB_PJT_ID"/>
+      <BindItem id="item1" compid="divSearch.form.edtStdftNo" propid="value" datasetid="dsCond" columnid="STDFT_NO"/>
+      <BindItem id="item2" compid="divSearch.form.edtStdftName" propid="value" datasetid="dsCond" columnid="STDFT_NM"/>
+      <BindItem id="item3" compid="divSearch.form.cboBizId" propid="value" datasetid="dsCond" columnid="BIZ_ID"/>
+      <BindItem id="item4" compid="divSearch.form.cboStdftTypeCd" propid="value" datasetid="dsCond" columnid="STDFT_TYPE_CD"/>
+      <BindItem id="item5" compid="divSearch.form.edtStestNo" propid="value" datasetid="dsCond" columnid="STEST_NO"/>
+      <BindItem id="item11" compid="divSearch.form.edtPjtNm" propid="value" datasetid="dsCond" columnid="PJT_NM"/>
+      <BindItem id="item9" compid="divSearch.form.cboDateGbn" propid="value" datasetid="dsCond" columnid="DATE_GBN"/>
+      <BindItem id="item10" compid="divSearch.form.calEtime" propid="value" datasetid="dsCond" columnid="EDATE"/>
+      <BindItem id="item12" compid="divSearch.form.calStime" propid="value" datasetid="dsCond" columnid="SDATE"/>
+      <BindItem id="item8" compid="divSearch.form.edtStestName" propid="value" datasetid="dsCond" columnid="STEST_NM"/>
+      <BindItem id="item13" compid="divSearch.form.edtDftUserNm" propid="value" datasetid="dsCond" columnid="DFT_USER_NM"/>
+      <BindItem id="item7" compid="divSearch.form.cboStestTypeCd" propid="value" datasetid="dsCond" columnid="STEST_TYPE_CD"/>
+      <BindItem id="item6" compid="divSearch.form.cboStestVersion" propid="value" datasetid="dsCond" columnid="STEST_VERSION"/>
+      <BindItem id="item14" compid="divSearch.form.edtActUserNm" propid="value" datasetid="dsCond" columnid="ACT_USER_NM"/>
+      <BindItem id="item15" compid="divSearch.form.edtConfUserNm" propid="value" datasetid="dsCond" columnid="CONF_USER_NM"/>
+      <BindItem id="item16" compid="divSearch.form.cboStdftRcvCd" propid="value" datasetid="dsCond" columnid="STDFT_RCV_CD"/>
+      <BindItem id="item17" compid="divSearch.form.cboStdftActCd" propid="value" datasetid="dsCond" columnid="STDFT_ACT_CD"/>
+      <BindItem id="item18" compid="divSearch.form.cboStdftConfCd" propid="value" datasetid="dsCond" columnid="STDFT_CONF_CD"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="CustomCalendar" width="110" height="22" onload="doLoad" titletext="사용자 정의 캘린더" scrolltype="none">
+    <Layouts>
+      <Layout height="22" mobileorientation="landscape" width="110">
+        <Calendar id="bnCd" taborder="1" top="0" width="22" height="22" dateformat="yyyy-MM-dd" readonly="false" onchanged="doChanged" ondropdown="bnCd_ondropdown" right="0"/>
+        <Edit id="edCalendar" taborder="0" left="0" top="0" height="22" readonly="true" cursor="pointer" oneditclick="doEditclick" right="bnCd:5"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰사용자 정의 캘린더
+* 메뉴(경로)	: 공통관리 > 플랫폼 > 공통
+* 화면 설명	: 캘린더 EDIT 영역 입력 불가 클릭시 캘린더 팝업이 호출되도록 수정
+* 작성자		︰WEMB
+* 작성일		︰2023.04.00
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include
+ ***********************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.binddatasetid = this.parent.binddatasetid;
+this.columnid = this.parent.columnid;
+
+this.ownerFrame = this.getOwnerFrame();
+/*****************************************************************
+ * 함수명 	: doLoad
+ * 설명		: 화면 초기 이벤트
+ *****************************************************************/
+this.doLoad = function(obj:nexacro.Form, e:nexacro.LoadEventInfo)
+{	trace("CustomCalendar this.doLoad() this.parent.binddataset : " + this.parent.binddatasetid + ", this.parent.columnid : " + this.parent.columnid);
+	var bindObj = new BindItem();
+	bindObj.init("item0", "edCalendar", "value", this.parent.binddatasetid, this.parent.columnid);
+	this.addChild("item0", bindObj);
+	bindObj.bind();
+};
+
+/*****************************************************************
+ * 함수명	: doChanged
+ * 설명	: 캘린더 값 변경 이벤트
+ *****************************************************************/
+this.doChanged = function(obj:nexacro.Calendar,e:nexacro.ChangeEventInfo)
+{	trace("CustomCalendar this.doChanged()");
+	this.edCalendar.set_value(e.posttext);
+	
+	if( !Ex.isEmpty(this.ownerFrame.form.callCalendarValChgEventFunc) )
+	{
+		Ex.isFunction(this.ownerFrame.form.callCalendarValChgEventFunc)
+		{
+			var item = new Object();
+			item.parentid = obj.parent.parent.id;
+			item.binddatasetid = this.parent.binddatasetid;
+			item.columnid = this.parent.columnid;
+			item.text = e.posttext;
+			item.value = e.postvalue;
+			this.ownerFrame.form.callCalendarValChgEventFunc.call(this.ownerFrame.form, item);
+		}
+	}
+};
+
+/*****************************************************************
+ * 함수명	: doEditclick
+ * 설명	: 캘린더 edit click 이벤트
+ *****************************************************************/
+this.doEditclick = function(obj:nexacro.Edit,e:nexacro.EditClickEventInfo)
+{
+	this.bnCd.dropdown();
+};
+
+this.bnCd_ondropdown = function(obj:nexacro.Calendar,e:nexacro.EventInfo)
+{
+	var val = nexacro.replaceAll(this.edCalendar.value, "-", "");
+	if(val.length == 8)
+	{
+		trace("val : " + val);
+		this.bnCd.set_value(this.DataSvrUtil_StrToDate(nexacro.replaceAll(this.edCalendar.value, "-", "")));
+	}
+};]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

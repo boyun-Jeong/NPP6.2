@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PageDiv" width="170" height="22" titletext="New Form" onload="doLoad">
+    <Layouts>
+      <Layout width="170" height="22">
+        <Static id="stPageContent" taborder="1" text="총 &lt;fc v='#39b54a'&gt;0&lt;/fc&gt;건     현재 &lt;fc v='#39b54a'&gt;0&lt;/fc&gt;/0페이지" top="0" width="155" height="22" usedecorate="true" textAlign="right" right="0" font="12px/normal &quot;NotoSansR&quot;"/>
+        <Static id="stIcon" taborder="0" top="0" height="22" background="url('imagerc::search/searchTableBullet.png') no-repeat center center" right="stPageContent:1" width="5"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 페이징 공통
+* 메뉴(경로)	︰ 공통관리 > 플랫폼 > 공통
+* 화면 설명	︰ 공통 팝업
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.00
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include
+ ***********************************************************************************/
+
+/************************************************************************************************
+ * FORM 변수 선언 영역
+ ************************************************************************************************/
+this.formObj;
+/*****************************************************************
+ * 함수명	: doLoad
+ * 설명	: 화면 초기 이벤트
+ *****************************************************************/
+this.doLoad = function(obj:nexacro.Form, e:nexacro.LoadEventInfo)
+{	trace("PageInfo this.doLoad()");
+	this.formObj = this;
+	this.set_visible(false);
+};
+
+/*****************************************************************
+ * 함수명	: setPage
+ * 설명	: 페이징 정보 표시
+ *****************************************************************/
+this.setPage = function(curPage, lastPage, totCnt)
+{	trace("PageInfo this.setPage() curPage : " + curPage + ", lastPage : " + lastPage + ", totCnt : " + totCnt + ", this.formObj.visible : " + this.formObj.visible);
+	if(this.formObj.visible) this.formObj.set_visible(false);
+	
+	if(nexacro.toNumber(curPage) > 0)	//&& nexacro.toNumber(lastPage) > 0 && nexacro.toNumber(totCnt) > 0
+	{
+		var text = "<b v='true'>총</b> <fc v='#39b54a'>" + totCnt + "</fc><b v='true'>건</b>     <b v='true'>현재</b> <fc v='#39b54a'>" + curPage + "</fc>/<b v='true'>" + lastPage + "페이지</b>";
+		this.stPageContent.set_text(text);
+		this.stPageContent.set_fittocontents("width");
+		this.stPageContent.set_right(0);
+		this.stIcon.set_right("stPageContent:3");
+		if(!this.formObj.visible) this.formObj.set_visible(true);
+	}
+};]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

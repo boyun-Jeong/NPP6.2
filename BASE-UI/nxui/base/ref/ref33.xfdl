@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="ref33" classname="ref06" left="0" top="0" width="1840" height="720" titletext="소스배포" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Button id="btnExcelDown" taborder="5" text="엑셀" top="54" width="60" right="0" cssclass="btn_WF_excelDown" onclick="fnCommOnclick" height="24" visible="true"/>
+        <Button id="btnCreate" taborder="3" text="파일생성" top="54" width="100" height="24" onclick="fnCommOnclick" right="btnExcelDown:5" cursor="pointer" enable="false"/>
+        <Button id="btnImport" taborder="0" text="파일선택" top="54" width="100" height="24" onclick="fnCommOnclick" right="btnCreate:5" cursor="pointer"/>
+        <Div id="divSearchArea" taborder="2" left="0" top="0" height="50" right="0" cssclass="div_WF_divSearchArea" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCoNm" taborder="3" text="원본 소스 경로" left="20.00" top="13" width="105" height="24" cssclass="sta_WF_schTitle"/>
+              <Static id="Static00" taborder="4" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+              <Edit id="edtCoNm" taborder="0" left="staCoNm:0" top="13" width="300" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown"/>
+              <Static id="Static00_00" taborder="6" left="edtCoNm:0" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="staDeptNm" taborder="5" text="복사 대상 경로" left="Static00_00:0.00" top="13" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtDeptNm" taborder="1" left="staDeptNm:0.00" top="13" width="300" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown"/>
+              <Button id="btnSearchReset" taborder="2" top="13" width="90" height="24" text="초기화" right="20" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+              <Static id="Static00_00_00" taborder="7" left="edtDeptNm:0" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="staDeptNm00" taborder="8" text="디렉토리 구조 경로" left="Static00_00_00:0.00" top="13" width="120" height="24" cssclass="sta_WF_schTitle" visible="false"/>
+              <Edit id="edtDeptNm00" taborder="9" left="staDeptNm00:0" top="13" width="300" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdImport" taborder="1" left="0" top="divSearchArea:34" right="0" bottom="5" autosizingtype="both" autosizebandtype="allband" cellsizingtype="col">
+          <Formats>
+            <Format id="default"/>
+          </Formats>
+        </Grid>
+        <Static id="stcCnt" taborder="4" left="5" top="55" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="ORG_SOURCE_PATH" type="STRING" size="256"/>
+          <Column id="TARGET_SOURCE_PATH" type="STRING" size="256"/>
+          <Column id="FILE_NM_COLUMN" type="STRING" size="256"/>
+          <Column id="PATH_COLUMN" type="STRING" size="256"/>
+          <Column id="EXT" type="STRING" size="256"/>
+          <Column id="REMARK" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsImport"/>
+      <Dataset id="dsGrid"/>
+      <Dataset id="dsGridHead"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 엑셀 Import
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	this.fnSearchReset();
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.setColumn(0, "ORG_SOURCE_PATH", "C:\\WEMB\\SPP\\workspace\\SPP");
+	this.dsCond.setColumn(0, "TARGET_SOURCE_PATH", "D:\\targetSource\\" + Ex.util.today());
+}
+
+// 조회
+this.fnCreate = function()
+{
+	if(this.dsGrid.rowcount == 0)	return;
+
+	var sTranId = "create01";
+    var sService = "REF0033W/create01";
+    var sInDs = "dsCond=dsCond dsGrid=dsGrid:N";
+    var sOutDs = "";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "create01" : // 서비스 ID
+			var param = {
+				  id	: "CreateAlertI"				//fnMsgAfter에서 식별자로 사용되는 ID
+				, msg	: "배포 파일 생성이 완료되었습니다."	//메시지 내용
+				, arrparam : [""]						//메시지의 변수에 들어갈 실제값
+				, msgtype : "I"							//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+			};
+			Ex.core.alert(this, param);
+			return false;
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	if(!varValue)	return;
+	
+	switch(mID)
+	{
+		case "" :
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	
+	if(!varValue)	return;
+	
+	switch(mID)
+	{
+		case "createConfirm" :
+			this.fnCreate();
+			break;
+
+		case "CreateAlertI" :
+			this.btnCreate.set_enable(false);
+			break;
+	}
+}
+
+//-----엑셀 Import 콜백---
+this.fnImportExcelCallback = function(bSuccess,sImportID,strFileNm)
+{
+	// bSuccess 성공/실패를 boolean값으로 리턴한다.
+	// sImportID는 지정한 경우만 반환한다.
+	// strFileNm은 성공일경우만 반환한다.
+	trace("fnImportExcelCallback IMPORTID/IMPORTFILENM="+sImportID+","+strFileNm);
+	if(bSuccess)
+	{
+		trace("성공");
+
+		this.dsGridHead.assign(this.dsImport);
+		this.dsGridHead.clearData();
+		this.dsGridHead.addColumn("Column" + this.dsGridHead.colcount, "STRING");
+		this.dsGridHead.addRow();
+		this.dsGridHead.copyRow(0, this.dsImport, 0);
+		this.dsGridHead.setColumn(0, "Column" + (this.dsGridHead.colcount-1), "작성건수");
+		this.dsImport.deleteRow(0);
+
+		this.dsImport.addColumn("Column" + this.dsImport.colcount, "INT");
+		
+		this.dsGrid.assign(this.dsImport);
+		this.dsGrid.clearData();
+
+		for(var i=0; i<this.dsGridHead.colcount; i++)
+		{
+			if( (this.dsGridHead.getColumn(0, "Column" + i)||'').indexOf("프로그램파일명") > -1)
+			{
+				this.dsCond.setColumn(0, "FILE_NM_COLUMN", "Column" + i);
+			}
+			
+			if( (this.dsGridHead.getColumn(0, "Column" + i)||'').indexOf("프로그램경로") > -1)
+			{
+				this.dsCond.setColumn(0, "PATH_COLUMN", "Column" + i);
+			}
+			
+			if( (this.dsGridHead.getColumn(0, "Column" + i)||'').indexOf("프로그램종류") > -1)
+			{
+				this.dsCond.setColumn(0, "EXT", "Column" + i);
+			}
+			
+			if( (this.dsGridHead.getColumn(0, "Column" + i)||'').indexOf("비고") > -1)
+			{
+				this.dsCond.setColumn(0, "REMARK", "Column" + i);
+			}
+			
+		}
+		
+		if(this.dsImport.getCaseCount("Ex.isEmpty(" + this.dsCond.getColumn(0, "EXT") + ")") > 0)
+		{
+			var param = {
+				  id	: "AlertI"					//fnMsgAfter에서 식별자로 사용되는 ID
+				, msg	: "프로그램종류가 입력되지 않은 내역이 존재합니다."					//메시지 내용
+				, arrparam : [""]		//메시지의 변수에 들어갈 실제값
+				, msgtype : "I"						//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+			};
+			Ex.core.alert(this, param);
+			return false;
+		}
+			
+		for(var i=0; i<this.dsImport.rowcount; i++)
+		{
+			var ext = (this.dsImport.getColumn(i, this.dsCond.getColumn(0, "EXT"))||'').toString();
+			ext = ext.toUpperCase();
+			trace("ext : " + ext);
+			this.dsImport.setColumn(i, this.dsCond.getColumn(0, "EXT"), ext);
+		}
+
+		for(var i=this.dsImport.rowcount-1; i>=0; i--)
+		{
+			if(Ex.isEmpty(this.dsImport.getColumn(i, this.dsCond.getColumn(0, "FILE_NM_COLUMN"))) && Ex.isEmpty(this.dsImport.getColumn(i, this.dsCond.getColumn(0, "PATH_COLUMN"))) )
+			{
+				this.dsImport.deleteRow(i);
+			}
+		}
+		
+		this.dsImport.set_keystring("S:" + this.dsCond.getColumn(0, "FILE_NM_COLUMN"));
+
+ 		var extArr = ["XFDL", "화면", "JAVA", "CLASS", "XML"];
+
+		for(var i=0; i<extArr.length; i++)
+		{
+			if(extArr[i] == "CLASS")
+			{
+				this.dsImport.set_filterstr(this.dsCond.getColumn(0, "EXT") + ".indexOf('" + extArr[i] + "') > -1");
+			}
+			else
+			{
+				this.dsImport.set_filterstr(this.dsCond.getColumn(0, "EXT") + " == '" + extArr[i] + "'");
+			}
+			//trace("extArr[i] : " + extArr[i] + " this.dsImport.rowcount : " + this.dsImport.rowcount);
+
+			for(var j=0; j<this.dsImport.rowcount; j++)
+			{
+				var fRow = this.dsGrid.findRowExpr(this.dsCond.getColumn(0, "PATH_COLUMN") + " == '" + this.dsImport.getColumn(j, this.dsCond.getColumn(0, "PATH_COLUMN")) + "' && " + 
+												   this.dsCond.getColumn(0, "FILE_NM_COLUMN") + " == '" + this.dsImport.getColumn(j, this.dsCond.getColumn(0, "FILE_NM_COLUMN")) + "'");
+
+				
+				if(fRow == -1)
+				{
+					var aRow = this.dsGrid.addRow();
+					//alert("aRow : " + aRow + " j=" + j);
+					this.dsGrid.copyRow(aRow, this.dsImport, j);
+					this.dsGrid.setColumn(aRow, "Column" + (this.dsGrid.colcount-1), 1);
+				}
+				else
+				{
+					this.dsGrid.setColumn(fRow, "Column" + (this.dsGrid.colcount-1), nexacro.toNumber(this.dsGrid.getColumn(fRow, "Column" + (this.dsGrid.colcount-1))) + 1);
+					var remark = this.dsGrid.getColumn(fRow, this.dsCond.getColumn(0, "REMARK"));
+
+					if( !Ex.isEmpty(remark) )
+					{
+						this.dsGrid.setColumn(fRow, this.dsCond.getColumn(0, "REMARK"), remark + "\n" + this.dsImport.getColumn(j, this.dsCond.getColumn(0, "REMARK")));
+					}
+					else
+					{
+						this.dsGrid.setColumn(fRow, this.dsCond.getColumn(0, "REMARK"), this.dsImport.getColumn(j, this.dsCond.getColumn(0, "REMARK")));
+					}
+				}
+			}
+		}
+
+		this.grdImport.set_binddataset(this.dsGrid);
+
+		if(this.dsGrid.rowcount > 0)
+		{
+			this.grdImport.createFormat();
+			
+			this.grdImport.setRealRowSize(0, 34, -1, true);
+			this.grdImport.setRealRowSize(-1, 34, -1, false);
+
+			for(var i=0; i<this.dsGridHead.colcount; i++)
+			{
+				this.grdImport.setCellProperty("head", i, "text", this.dsGridHead.getColumn(0, "Column" + i));
+			}
+
+			for(var i=0; i<this.grdImport.getCellCount("Head"); i++)
+			{
+				this.grdImport.setRealColSize("head", i, 50, false);
+				this.grdImport.setCellProperty("haad", i, "autosizerow", "limitmin");
+				this.grdImport.setCellProperty("haad", i, "autosizecol", "limitmin");
+			}
+			
+			for(var i=0; i<this.grdImport.getCellCount("Body"); i++)
+			{
+				this.grdImport.setRealColSize("body", i, 50, false);
+				this.grdImport.setCellProperty("Body", i, "autosizerow", "limitmin");
+				this.grdImport.setCellProperty("haad", i, "autosizecol", "limitmin");
+			}
+			
+			for(var i=this.dsImport.rowcount-1; i>=0; i--)
+			{
+				if( Ex.isEmpty(this.dsImport.getColumn(i, this.dsCond.getColumn(0, "FILE_NM_COLUMN"))) ||
+					Ex.isEmpty(this.dsImport.getColumn(i, this.dsCond.getColumn(0, "PATH_COLUMN")))
+				  )
+				{
+					this.dsImport.deleteRow(i);
+				}
+			}
+		}
+		
+		this.stcCnt.set_text(Ex.util.getNumberToMaskStr(this.dsGrid.rowcount) + " 건");
+		this.btnCreate.set_enable(this.dsImport.rowcount > 0 ? true : false);
+	}
+	else
+	{
+		trace("실패");
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+ // 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;
+
+		case "btnExcelDown" :	// 엑셀다운
+			if( !Ex.isEmpty(this.grdImport.binddataset) && this.grdImport.getBindDataset().rowcount > 0 )
+			{
+				var oInfo = {
+					Grid	: [this.grdImport],
+					Sheet	: ["배포파일"],
+					FileNm	: ["배포파일"],
+					ExportType : "XLSX",
+					ExportId : "excel01"
+				};
+				this.gfnExportExcel(this, oInfo);
+			}
+			break;
+
+		case "btnImport" :
+			this.dsImport.clear();
+			this.dsGrid.clear();
+			this.grdImport.createFormat();
+			this.grdImport.set_binddataset(undefined);
+			var sSheet = "head=" + ";" + "body=" + ";"
+			this.gfnImportExcel(this, sSheet, "dsImport");
+			break;
+
+		case "btnCreate" :		// 생성
+			if(this.dsImport.rowcount > 0)
+			{
+				if(this.dsImport.getCaseCount("Ex.isEmpty(" + this.dsCond.getColumn(0, "EXT") + ")") > 0)
+				{
+					var param = {
+						  id	: "AlertI"					//fnMsgAfter에서 식별자로 사용되는 ID
+						, msg	: "프로그램종류가 입력되지 않은 내역이 존재합니다."					//메시지 내용
+						, arrparam : [""]		//메시지의 변수에 들어갈 실제값
+						, msgtype : "I"						//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+					};
+					Ex.core.alert(this, param);
+					return false;
+				}
+				
+				var param = {
+							id : "createConfirm"
+						  , msg : this.dsCond.getColumn(0, "TARGET_SOURCE_PATH") + "\n하위 경로에 배포 대상 파일을 생성하시겠습니까?"
+						  , arrparam : ['']
+						  , msgtype : "I"};
+					Ex.core.confirm(this, param);
+			}
+			break;
+	}
+}]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearchArea.form.edtCoNm" propid="value" datasetid="dsCond" columnid="ORG_SOURCE_PATH"/>
+      <BindItem id="item1" compid="divSearchArea.form.edtDeptNm" propid="value" datasetid="dsCond" columnid="TARGET_SOURCE_PATH"/>
+      <BindItem id="item2" compid="divSearchArea.form.edtUserNm" propid="value" datasetid="dsCond" columnid="USER_NM"/>
+      <BindItem id="item3" compid="divSearchArea.form.edtEmpId" propid="value" datasetid="dsCond" columnid="USER_ID"/>
+      <BindItem id="item4" compid="divSearchArea.form.cboUseYn" propid="value" datasetid="dsCond" columnid="USE_YN"/>
+      <BindItem id="item5" compid="divSearchArea.form.staUseYn00" propid="value" datasetid="dsCond" columnid="USE_YN"/>
+      <BindItem id="item6" compid="divSearchArea.form.cboUserType" propid="value" datasetid="dsCond" columnid="USER_TYPE"/>
+      <BindItem id="item7" compid="divSearchArea.form.Static00_00_00" propid="value" datasetid="dsCond" columnid="DEPT_NM"/>
+      <BindItem id="item8" compid="divSearchArea.form.edtDeptNm00" propid="value" datasetid="dsCond" columnid="DIRECTORY_PATH"/>
+    </Bind>
+  </Form>
+</FDL>

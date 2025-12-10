@@ -1,0 +1,477 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM0271_P02" width="1280" height="848" onload="form_onload" titletext="지식상세(View)">
+    <Layouts>
+      <Layout width="1280" height="848">
+        <Div id="divBtnBottom" taborder="0" position="fixed" text="" cssclass="" maxwidth="" maxheight="" height="60" right="20" bottom="0" width="795">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnButtonComOnclick" cssclass="btn_WF_primary_close" right="0" width="80" height="32" bottom="14"/>
+              <Button id="btnDel" taborder="0" text="삭제" height="32" onclick="fnButtonComOnclick" width="80" right="85" visible="false" cssclass="btn_WF_primary_save" bottom="14"/>
+              <Button id="btnSave" taborder="2" text="저장" height="32" onclick="fnButtonComOnclick" width="80" right="170" visible="false" cssclass="btn_WF_primary_save" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divContents" taborder="1" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="Static00_00_00_00_01" taborder="2" left="0" top="24" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Div id="divInput" taborder="3" left="20" top="Static00_00_00_00_01:0" height="517" position="fixed" text="" right="20" minwidth="1200" maxwidth="">
+                <Layouts>
+                  <Layout>
+                    <Static id="Static06_00_00_00" taborder="16" cssclass="sta_WF_inputBg" left="0" top="66" height="34" right="0"/>
+                    <Static id="Static06_00_00_00_00" taborder="11" cssclass="sta_WF_inputBg" left="0" top="Static06_00_00_00:-1" height="220" right="0"/>
+                    <Static id="Static06_00" taborder="8" cssclass="sta_WF_inputBg" left="0" top="Static06_00_00_00_00:-1" height="100" right="0" text=""/>
+                    <Static id="Static06_01" taborder="13" cssclass="sta_WF_inputBg" left="0" top="Static06_00:-1" height="100" right="0" text=""/>
+                    <Static id="Static06" taborder="0" cssclass="sta_WF_inputBg" left="0" top="0" height="34" right="0" onclick="divContents_divInput_Static06_onclick"/>
+                    <Static id="Static06_00_00" taborder="3" cssclass="sta_WF_inputBg" left="0" top="Static06:-1" height="34" right="0"/>
+                    <Static id="stcKmId" taborder="1" text="지식ID" left="0" top="0" width="100" height="34" cssclass="sta_WF_inputTitle"/>
+                    <Static id="stcRefReqId" taborder="18" text="연관ID" left="33%" top="0" width="99" height="34" cssclass="sta_WF_inputTitle"/>
+                    <Edit id="edtKmId" taborder="2" left="stcKmId:5" top="5" height="24" readonly="true" right="stcRefReqId:5" cssclass="edt_WF_normal"/>
+                    <Static id="stcRegUserNm00" taborder="14" text="업무분류" left="0.00%" top="stcKmId:-1" width="100" height="34" cssclass="sta_WF_inputTitle"/>
+                    <Static id="stcKmTitle" taborder="9" text="제목" left="0" top="stcRegUserNm00:-1" width="100" height="34" cssclass="sta_WF_inputTitle"/>
+                    <Static id="stcRegStime" taborder="4" text="등록일시" left="66%" top="33" width="100" height="34" cssclass="sta_WF_inputTitle"/>
+                    <Edit id="edtKmTitle" taborder="10" left="stcKmTitle:5.00" top="72" height="22" right="5" cssclass="edt_WF_normal" validationGroup="input01" validation="제목;NULL" readonly="true"/>
+                    <Edit id="edtKmCateGbnNm" taborder="15" left="1035" top="5" height="24" readonly="true" onkeydown="doKeyup" right="205"/>
+                    <Static id="stcRegUserNm" taborder="6" text="등록자" left="66%" top="0" width="100" height="34" cssclass="sta_WF_inputTitle"/>
+                    <Edit id="edtRegUserNm" taborder="7" left="stcRegUserNm:5" top="5" height="24" right="5" cssclass="edt_WF_normal" readonly="true"/>
+                    <Calendar id="calRegStime" taborder="5" left="stcRegStime:5.00" top="38" height="24" cssclass="cal_WF_normal" readonly="true" dateformat="yyyy-MM-dd HH:mm:ss" editformat="yyyy-MM-dd HH:mm:ss" right="5"/>
+                    <Static id="stcPreFailCause" taborder="12" text="내용" left="0" top="stcKmTitle:-1" width="100" height="220" cssclass="sta_WF_inputTitle"/>
+                    <Edit id="edtRefReqId" taborder="17" left="stcRefReqId:5" top="5" height="24" right="stcRegUserNm:5" cssclass="edt_WF_normal" readonly="true" oneditclick="divContents_divInput_edtRefReqId_oneditclick" textDecoration="underline" cursor="pointer"/>
+                    <Static id="stcPreFailCause00" taborder="19" text="등록사유" left="0" top="stcPreFailCause:-1" width="100" height="100" cssclass="sta_WF_inputTitle"/>
+                    <Static id="stcPreFailCause00_00" taborder="20" text="원인 및 해결책" left="0" top="stcPreFailCause00:-1" width="100" height="100" cssclass="sta_WF_inputTitle"/>
+                    <Edit id="edtKmId00" taborder="21" left="stcRegUserNm00:5" top="38" height="24" readonly="true" right="stcRegStime:5" cssclass="edt_WF_normal"/>
+                    <TextArea id="txaCauseCont" taborder="22" left="105" top="stcPreFailCause:4" height="90" right="5" validation="지식내용;NULL|MAX_LEN_UTF8:4000" validationGroup="input01" readonly="true"/>
+                    <TextArea id="txaSolvedCont" taborder="23" left="105" top="stcPreFailCause00:4" height="90" right="5" validation="지식내용;NULL|MAX_LEN_UTF8:4000" validationGroup="input01" readonly="true"/>
+                    <Div id="divWebEditor" taborder="24" left="stcPreFailCause:5.00" top="stcKmTitle:4" right="5" url="comm::comWebEditor.xfdl" text="" initvalueid="" async="false" bottom="txaCauseCont:10">
+                      <Layouts>
+                        <Layout/>
+                      </Layouts>
+                    </Div>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="Static00_00_00_00" taborder="4" left="0" top="divInput:0" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Div id="divFiles" taborder="5" left="20" top="Static00_00_00_00:0" right="20" __USE_MODE="1" _ENABLE_READONLY_ALL_SKIP="Y" url="comm::comFile.xfdl" text="" bottom="0"/>
+              <Static id="stcTitle" taborder="1" text="기본정보" cssclass="sta_WF_gridTitle" left="20" top="0" width="193" height="24"/>
+              <Static id="stcBackRight" taborder="6" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+              <Static id="stcBackLeft" taborder="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" left="0"/>
+              <Div id="divTopBtn" taborder="7" position="fixed" text="" cssclass="" maxwidth="" maxheight="" height="24" right="20" width="150" top="20" tabstop="false">
+                <Layouts>
+                  <Layout/>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsSvKmMt">
+        <ColumnInfo>
+          <Column id="CHK" type="string" size="32"/>
+          <Column id="ROWFLAG" type="string" size="32"/>
+          <Column id="KNOW_ID" type="STRING" size="256"/>
+          <Column id="KNOW_CATEGORY" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="REQ_DT" type="STRING" size="256"/>
+          <Column id="REQ_USER_ID" type="STRING" size="256"/>
+          <Column id="REQ_DEPT_ID" type="STRING" size="256"/>
+          <Column id="REQ_USER_JBC_POSI" type="STRING" size="256"/>
+          <Column id="REQ_USER_NM" type="STRING" size="256"/>
+          <Column id="WORK_USER_ID" type="STRING" size="256"/>
+          <Column id="WORK_DEPT_ID" type="STRING" size="256"/>
+          <Column id="WORK_USER_JBC_POSI" type="STRING" size="256"/>
+          <Column id="WORK_USER_NM" type="STRING" size="256"/>
+          <Column id="SR_BRIEF" type="STRING" size="256"/>
+          <Column id="UPMU_ID1" type="STRING" size="256"/>
+          <Column id="UPMU_ID2" type="STRING" size="256"/>
+          <Column id="UPMU_ID3" type="STRING" size="256"/>
+          <Column id="REQ_CONT" type="STRING" size="4000"/>
+          <Column id="PROC_CONT" type="STRING" size="256"/>
+          <Column id="CAUSE_CONT" type="STRING" size="256"/>
+          <Column id="TEST_CONT" type="STRING" size="256"/>
+          <Column id="SOLVED_CONT" type="STRING" size="256"/>
+          <Column id="REG_USER_ID" type="STRING" size="256"/>
+          <Column id="REG_USER_NM" type="STRING" size="256"/>
+          <Column id="REG_STIME" type="STRING" size="256"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="256"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="256"/>
+          <Column id="SYSMODTIME" type="STRING" size="256"/>
+          <Column id="DEL_FLAG" type="STRING" size="256"/>
+          <Column id="REG_DEPT_NM" type="STRING" size="256"/>
+          <Column id="REG_DEPT_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCode"/>
+      <Dataset id="dsKnowCateCd">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="KNOW_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPopRtn"/>
+      <Dataset id="dsKnowProcStsCd">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsResult">
+        <ColumnInfo>
+          <Column id="RTN_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <FileDownTransfer id="FileDownTransfer" onerror="FileDownTransfer_onerror" onsuccess="FileDownTransfer_onsuccess"/>
+      <Dataset id="dsFile">
+        <ColumnInfo>
+          <Column id="EXT_COL_3" type="STRING" size="256"/>
+          <Column id="TMPLAT_YN" type="string" size="32"/>
+          <Column id="FILE_SIZE" type="string" size="32"/>
+          <Column id="EXT_COL_4" type="STRING" size="256"/>
+          <Column id="EXT_COL_1" type="string" size="32"/>
+          <Column id="FLDR_NM" type="string" size="32"/>
+          <Column id="EXT_COL_2" type="STRING" size="256"/>
+          <Column id="CHK" type="string" size="32"/>
+          <Column id="EXT_COL_5" type="STRING" size="256"/>
+          <Column id="DEL_YN" type="string" size="32"/>
+          <Column id="PK2" type="STRING" size="256"/>
+          <Column id="PK1" type="STRING" size="256"/>
+          <Column id="PK3" type="STRING" size="256"/>
+          <Column id="LMPID" type="string" size="32"/>
+          <Column id="KEY_TBL" type="string" size="32"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="FILE_SIZE_NM" type="STRING" size="256"/>
+          <Column id="LMNM" type="string" size="32"/>
+          <Column id="FRNM" type="string" size="32"/>
+          <Column id="FILE_PATH" type="string" size="32"/>
+          <Column id="FILE_NO" type="bigdecimal" size="16"/>
+          <Column id="RMK" type="STRING" size="256"/>
+          <Column id="LMDT" type="string" size="32"/>
+          <Column id="FILE_NM" type="string" size="32"/>
+          <Column id="FILE_SAVE_NM" type="string" size="32"/>
+          <Column id="FILE_ICON" type="string" size="32"/>
+          <Column id="FRDT" type="string" size="32"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TMPLAT_YN">N</Col>
+            <Col id="FILE_SIZE">82935</Col>
+            <Col id="EXT_COL_1">SCRN</Col>
+            <Col id="FLDR_NM">template</Col>
+            <Col id="CHK">0</Col>
+            <Col id="DEL_YN">N</Col>
+            <Col id="LMPID">SV0400_W</Col>
+            <Col id="KEY_TBL">TEMPLATE</Col>
+            <Col id="LMNM">정보윤</Col>
+            <Col id="FRNM">정보윤</Col>
+            <Col id="FILE_PATH">C:\WEMB\SPP_TEST\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SPP\attachFiles/template\20240112\</Col>
+            <Col id="FILE_NO">97</Col>
+            <Col id="LMDT">20240112135629</Col>
+            <Col id="FILE_NM">IT포탈_프로젝트명_3.화면목록.xlsx</Col>
+            <Col id="FILE_SAVE_NM">93625b53-a482-4032-b77b-1ea0120b2641.xlsx</Col>
+            <Col id="FILE_ICON">theme://SPP_IMAGE_SET/FOMM/ico_file_XLS.png</Col>
+            <Col id="FRDT">20240112135629</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ FOMM0271_P02
+* 화면(명)	︰ 지식상세 View
+* 메뉴(경로)	︰ 
+* 화면 설명	︰ 지식상세 View
+* 작성자		︰ WEMB
+* 작성일		︰ 2024.12.16
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2024.12.16	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.saveFlg = "N";
+this.sysAdminYn = 'N';
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/ 
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.sysAdminYn = Ex.util.getSession('gvAdminYn');
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "select01";									// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "SV0400P/select01";							// 서비스명
+    var sInDs = "dsCond=dsCond";								// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsSvKmMt=dsSvKmMt dsKmFrpMt=dsKmFrpMt";		// 서버에서 수신할 데이타셋
+    var sArg = "";												// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+//저장
+this.fnSave = function()
+{
+	// transaction
+	var sTranId = "save01";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "SV0400P/save01";		// 서비스명
+    var sInDs = "dsCond=dsCond dsSvKmMt=dsSvKmMt";			// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsSvKmMt=dsSvKmMt";		// 서버에서 수신할 데이타셋
+    var sArg = "";							// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			isDownOnly = false;
+			
+			if( this.dsSvKmMt.getColumn(0, "REG_USER_ID") == Ex.util.getSession('gvUserId') ) 
+			{
+				this.divContents.form.divInput.form.divWebEditor.form.initCreate(false);
+				this.divContents.form.divInput.form.txaCauseCont.set_readonly(false);
+				this.divContents.form.divInput.form.txaSolvedCont.set_readonly(false);
+				this.divBtnBottom.form.btnSave.set_visible(true);
+				this.divBtnBottom.form.btnDel.set_visible(true);
+			} else {
+				this.divContents.form.divInput.form.divWebEditor.form.initCreate(true);
+				
+				this.divContents.form.divFiles.form.divBtn.form.btnAdd.set_visible(false);
+				this.divContents.form.divFiles.form.divBtn.form.btnDelete.set_visible(false);
+				isDownOnly = true;
+			}
+			
+			if(this.sysAdminYn=="Y") this.divBtnBottom.form.btnDel.set_visible(true);
+			
+			this.divContents.form.divInput.form.divWebEditor.form.setContent(this.dsSvKmMt.getColumn(0, "REQ_CONT"));
+			
+			// 하단 버튼 영역 div align 처리
+			Ex.util.setBtnAlign(this.divBtnBottom, 'right', true);
+			
+			// 첨부파일 setting
+			var oParam = {
+				 sSvcId		: 'fileSvc'										// divFile callback 후처리용 서비스 ID
+				,limitMinCnt: 0												// 파일 최소 갯수; defualt 0
+				,limitCnt	: 3												// 파일 최대 갯수; default 5
+				,limitSize	: 100											// 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+				,folderName	: 'sv'											// 폴더명(업무명)
+				,tableName	: 'FOMM_BOARD_MT'								// 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+				,primaryKey1: this.dsCond.getColumn(0, "KNOW_ID")||'tempPK'	// 테이블 PK1(ex. 요청서ID 등)
+				,primaryKey2: ''											// 테이블 PK2 (복합 키인 경우 사용)
+				,primaryKey3: ''											// 테이블 PK3 (복합 키인 경우 사용)
+				,fileDownYn	: 'Y'											// 파일다운권한; 	 공백 시 메뉴의 조회 권한
+				,fileUpYn	: 'Y'											// 파일업로드권한; 공백 시 메뉴의 추가 권한
+				,deleteYn	: 'Y'											// 파일삭제권한; 	 공백 시 메뉴의 삭제 권한
+			};
+			this.divContents.form.divFiles.form.setConfig(this, oParam, true, isDownOnly, false);
+
+			Ex.util.setBtnAlign(this.divContents.form.divFiles.form.divBtn, 'right', true);
+
+		case "save01" :
+			if( this.dsSvKmMt.rowcount == 0 ) Ex.core.pclose(this, 'Y');
+			
+			// 하단 버튼 영역 div align 처리
+			Ex.util.setBtnAlign(this.divBtnBottom, 'right', true);
+			
+			Ex.core.toast(this, "10002");
+			
+			//Ex.core.pclose(this, "Y");
+			break;
+	}
+}
+
+// 파일 업로드 default callback
+this.fnUploadCallback = function(sSvcId, nErrorCode, sErrorMsg)
+{
+	// TO DO
+	// 개발자가 지정한 sSvcId(setConfig 옵션에 넣은 파일첨부ID), nErrorCode(에러코드), sErrorMsg(에러메시지)
+	if (nErrorCode < 0) 
+	{
+		Ex.core.error(this,{id:"ERROR",msg:sSvcId+"\n"+Ex.core.msg(sErrorMsg)});
+		return;
+	}
+	
+	switch(sSvcId)
+	{
+		case "fileSvc" :
+			this.dsSvKmMt.setColumn(0, "ROWFLAG", "U");
+			this.fnSave();
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "FOMM0271_P03" :
+			if(varValue == "Y") this.fnSearch();
+			this.saveFlg = "Y";
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.divContents.form.divFiles.form.fnUploadFiles();
+			break;
+
+		case "delConfirm" :
+			this.dsSvKmMt.setColumn(0, "ROWFLAG", "D");
+			this.fnSave();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// 공통코드 조회
+	this.fnGetCmmCd();
+	
+	// 지식조회 아이디 가져오기
+	this.dsCond.setColumn(0, "KNOW_ID", this.getOwnerFrame().pKnowId);
+	
+
+	this.fnSearch();
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['CD00360',		'KNOW_FAIL_GBN_CD',	'BIZC0000',	'KNOW_PROC_STS_CD'		]	// 조회할 상위코드
+		,codeDiv: ['',		'SVC_MNG_CD',		'',	'SVC_MNG_CD'			]	// 조회할 코드의 업무구분
+		,optStr	: ['',					'',					'',				''						]	// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',					'Y',				'Y',			'Y'						]	// 사용여부
+		,filter	: ['',	'',					'',				''						]	// filterStr
+		,objDs	: [this.dsKnowCateCd,	this.dsCode,		this.dsUpmu1,	this.dsKnowProcStsCd	]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util;
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnButtonComOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.id)
+	{
+		case "btnSave" :
+			var param = {
+					id : "saveConfirm"
+				  , msg : "10008"
+				  , arrparam : [Ex.core.word("저장") + " "]
+				  , msgtype : "I"};
+			Ex.core.confirm(this, param);
+			break;
+			
+		case "btnDel" :
+			var param = {
+					id : "delConfirm"
+				  , msg : "10008"
+				  , arrparam : [Ex.core.word("삭제") + " "]
+				  , msgtype : "I"};
+			Ex.core.confirm(this, param);
+			break;
+
+		case "btnClose" : 	// 닫기
+			Ex.core.pclose(this, this.saveFlg);
+			break;
+	}
+}
+
+this.divContents_divInput_edtRefReqId_oneditclick = function(obj:nexacro.Edit,e:nexacro.EditClickEventInfo)
+{
+	var reqId = this.dsSvKmMt.getColumn(0, "REQ_ID");
+	var reqTmplatId = this.dsSvKmMt.getColumn(0, "REQ_TMPLAT_ID");
+	var reqTmplatVer = this.dsSvKmMt.getColumn(0, "REQ_TMPLAT_VER");
+ 
+	Ex.core.popup(
+		this,											// <--- 팝업 실행 스코프
+		"srReqWritePop",								// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+		"sr::SR0000_W.xfdl",							// <--- 팝업창 오픈 Url
+		{
+			title : Ex.core.word("변경처리"),
+			pREQ_ID : reqId,
+			pREQ_TMPLAT_ID : reqTmplatId,
+			pREQ_TMPLAT_VER : reqTmplatVer					
+		},												// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+		//"width=1500,height=817,useCloseButton=false"	// <--- width/height/modeless(프레임 처리 옵션)
+		"autosize,useCloseButton=false"
+	);
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContents.form.divInput.form.edtKmId" propid="value" datasetid="dsSvKmMt" columnid="KNOW_ID"/>
+      <BindItem id="item3" compid="divContents.form.divInput.form.edtKmCateGbnNm" propid="value" datasetid="dsSvKmMt" columnid="KM_CATE_GBN_NM"/>
+      <BindItem id="item4" compid="divContents.form.divInput.form.edtKmTitle" propid="value" datasetid="dsSvKmMt" columnid="SR_BRIEF"/>
+      <BindItem id="item6" compid="divContents.form.divInput.form.calRegStime" propid="value" datasetid="dsSvKmMt" columnid="REG_STIME"/>
+      <BindItem id="item8" compid="divContents.form.divInput.form.edtRegUserNm" propid="value" datasetid="dsSvKmMt" columnid="REG_USER_NM"/>
+      <BindItem id="item1" compid="divContents.form.divInput.form.edtRefReqId" propid="value" datasetid="dsSvKmMt" columnid="REQ_ID"/>
+      <BindItem id="item2" compid="divContents.form.divInput.form.edtKmId00" propid="value" datasetid="dsSvKmMt" columnid="UPMU_NM"/>
+      <BindItem id="item5" compid="divContents.form.divInput.form.txaCauseCont" propid="value" datasetid="dsSvKmMt" columnid="CAUSE_CONT"/>
+      <BindItem id="item7" compid="divContents.form.divInput.form.txaSolvedCont" propid="value" datasetid="dsSvKmMt" columnid="SOLVED_CONT"/>
+    </Bind>
+  </Form>
+</FDL>

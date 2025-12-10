@@ -1,0 +1,431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="testPop" width="1280" height="720" titletext="테스트 팝업" onload="onLoad">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1280">
+        <Div id="divBottom" taborder="1" left="0" right="0" height="60" border="1px solid navy" bottom="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="0" top="13" height="32" width="100" right="5" text="닫기" onclick="divBtn_btnClose_onclick" cursor="pointer" visible="false"/>
+              <Button id="btnClose00" taborder="1" top="13" height="32" width="100" right="110" text="버튼" cursor="pointer" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divContent" taborder="0" left="-6" top="0" right="6" bottom="divBottom:0">
+          <Layouts>
+            <Layout>
+              <Button id="Button00" taborder="0" text="Flow 결재알리미" left="5" top="5" width="120" height="33" onclick="fnCommOnclick"/>
+              <Grid id="grdLeft" taborder="1" left="5" top="45" cssclass="grd_WF_normal" autofittype="none" right="1.09%" useSort="true" binddataset="dsCond" height="95" layoutorder="0" flexshrink="10" autoenter="select" autosizingtype="none">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="24" band="head"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="TITLE_1"/>
+                      <Cell col="1" text="CNTN_1"/>
+                      <Cell col="2" text="IS_TABLE_1"/>
+                      <Cell col="3" text="TITLE_2"/>
+                      <Cell col="4" text="CNTN_2"/>
+                      <Cell col="5" text="IS_TABLE_2"/>
+                      <Cell col="6" text="TITLE_3"/>
+                      <Cell col="7" text="CNTN_3"/>
+                      <Cell col="8" text="IS_TABLE_3"/>
+                      <Cell col="9" text="TITLE_4"/>
+                      <Cell col="10" text="CNTN_4"/>
+                      <Cell col="11" text="IS_TABLE_4"/>
+                      <Cell col="12" text="TITLE_5"/>
+                      <Cell col="13" text="CNTN_5"/>
+                      <Cell col="14" text="IS_TABLE_5"/>
+                      <Cell col="15" text="TITLE_6"/>
+                      <Cell col="16" text="API_NAME_1"/>
+                      <Cell col="17" text="TITLE_7"/>
+                      <Cell col="18" text="API_NAME_2"/>
+                      <Cell col="19" text="BOT_ID"/>
+                      <Cell col="20" text="RCVR_USER_ID"/>
+                      <Cell col="21" text="CNTN"/>
+                      <Cell col="22" text="REQ_ID"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:TITLE_1" edittype="text" padding="0px"/>
+                      <Cell col="1" text="bind:CNTN_1" edittype="text" padding="0px"/>
+                      <Cell col="2" text="bind:IS_TABLE_1" edittype="text" padding="0px"/>
+                      <Cell col="3" text="bind:TITLE_2" edittype="text" padding="0px"/>
+                      <Cell col="4" text="bind:CNTN_2" edittype="text" padding="0px"/>
+                      <Cell col="5" text="bind:IS_TABLE_2" edittype="text" padding="0px"/>
+                      <Cell col="6" text="bind:TITLE_3" edittype="text" padding="0px"/>
+                      <Cell col="7" text="bind:CNTN_3" edittype="text" padding="0px"/>
+                      <Cell col="8" text="bind:IS_TABLE_3" edittype="text" padding="0px"/>
+                      <Cell col="9" text="bind:TITLE_4" edittype="text" padding="0px"/>
+                      <Cell col="10" text="bind:CNTN_4" edittype="text" padding="0px"/>
+                      <Cell col="11" text="bind:IS_TABLE_4" edittype="text" padding="0px"/>
+                      <Cell col="12" text="bind:TITLE_5" edittype="text" padding="0px"/>
+                      <Cell col="13" text="bind:CNTN_5" edittype="text" padding="0px"/>
+                      <Cell col="14" text="bind:IS_TABLE_5" edittype="text" padding="0px"/>
+                      <Cell col="15" text="bind:TITLE_6" edittype="text" padding="0px"/>
+                      <Cell col="16" text="bind:API_NAME_1" edittype="text" padding="0px"/>
+                      <Cell col="17" text="bind:TITLE_7" edittype="text" padding="0px"/>
+                      <Cell col="18" text="bind:API_NAME_2" edittype="text" padding="0px"/>
+                      <Cell col="19" text="bind:BOT_ID" edittype="text" padding="0px"/>
+                      <Cell col="20" text="bind:RCVR_USER_ID" edittype="text" padding="0px"/>
+                      <Cell col="21" text="bind:CNTN" edittype="text" padding="0px"/>
+                      <Cell col="22" text="bind:REQ_ID" edittype="text" padding="0px"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Button id="btn01" taborder="2" text="window.open" left="10.00" top="160" width="120" height="33" onclick="fnCommOnclick"/>
+              <Button id="btn02" taborder="3" text="메신져 알림" left="10.00" top="240" width="120" height="33" onclick="fnCommOnclick"/>
+              <Grid id="grdAlert" taborder="4" left="9.00" top="280" cssclass="grd_WF_normal" autofittype="none" right="0.78%" useSort="true" binddataset="dsAlert" height="95" layoutorder="0" flexshrink="10" autoenter="select" autosizingtype="none">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="180"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="180"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="24" band="head"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="SEND_ID"/>
+                      <Cell col="1" text="SENDER_NAME"/>
+                      <Cell col="2" text="TITLE"/>
+                      <Cell col="3" text="TMP_CONTENTS"/>
+                      <Cell col="4" text="FIRST_CONTENT"/>
+                      <Cell col="5" text="SECOND_CONTENT"/>
+                      <Cell col="6" text="THIRD_CONTENT"/>
+                      <Cell col="7" text="LINK_URL"/>
+                      <Cell col="8" text="SYSTEM_NAME"/>
+                      <Cell col="9" text="REQ_ID"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:SEND_ID" edittype="text" padding="0px"/>
+                      <Cell col="1" text="bind:SENDER_NAME" edittype="text" padding="0px"/>
+                      <Cell col="2" text="bind:TITLE" edittype="text" padding="0px"/>
+                      <Cell col="3" text="bind:TMP_CONTENTS" edittype="text" padding="0px"/>
+                      <Cell col="4" text="bind:FIRST_CONTENT" edittype="text" padding="0px"/>
+                      <Cell col="5" text="bind:SECOND_CONTENT" edittype="text" padding="0px"/>
+                      <Cell col="6" text="bind:THIRD_CONTENT" edittype="text" padding="0px"/>
+                      <Cell col="7" text="bind:LINK_URL" edittype="text" padding="0px"/>
+                      <Cell col="8" text="bind:SYSTEM_NAME" edittype="text" padding="0px"/>
+                      <Cell col="9" text="bind:REQ_ID" edittype="text" padding="0px"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Grid id="grdRcv" taborder="5" left="9.00" top="375" cssclass="grd_WF_normal" autofittype="none" right="87.89%" useSort="true" binddataset="dsRcv" height="127" layoutorder="0" flexshrink="10" autoenter="select" autosizingtype="none">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="120"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="24" band="head"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="RCV"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:RCV" edittype="text" padding="0px"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Button id="btnAdd" taborder="6" text="+" left="157" top="375" width="61" height="28" onclick="fnCommOnclick"/>
+              <Button id="btnDelete" taborder="7" text="-" left="157.00" top="404" width="61" height="28" onclick="fnCommOnclick"/>
+              <Grid id="grdAlert00" taborder="8" left="9.00" top="560" cssclass="grd_WF_normal" autofittype="none" right="0.78%" useSort="true" binddataset="dsData" height="95" layoutorder="0" flexshrink="10" autoenter="select" autosizingtype="none">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="800"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="24" band="head"/>
+                      <Row size="24"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="result"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:result" edittype="text" padding="0px"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[this.onLoad = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(obj, this.fnInit);
+};
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	trace("workArea form init call");
+//	this.parent.parent.popupLoadComplete(this, this.divContent, this.divBottom);
+};
+
+this.divBtn_btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	Ex.core.pclose(this, "");
+};
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// FLOW 승인요청
+this.fnButton00 = function()
+{
+	// transaction
+	var sTranId = "flowtest01";         	// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM9999W/select01";	// 서비스명
+    var sInDs = "dsCond=dsCond";            // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData=dsData";           // 서버에서 수신할 데이타셋
+    var sArg = "";                   		// 서버 @ParamVariable 인자와 맵핑됨
+    
+    /**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnBtn01 = function()
+{
+//    var url = "https://crownixdev.wemb.co.kr:1443/reporting/html5/report_view.jsp";
+//    window.open(url, "_blank", "fullscreen=yes");
+
+	var sTranId = "rdCallFrame";         	// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "REPORT/rdCallFrame";	// 서비스명
+    var sInDs = "dsCond=dsCond";            // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "";           // 서버에서 수신할 데이타셋
+    var sArg = "";                   		// 서버 @ParamVariable 인자와 맵핑됨
+    
+    /**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnBtn02 = function()
+{
+	// transaction
+	var sTranId = "alerttest01";         	// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM9999W/select02";	// 서비스명
+    var sInDs = "dsCond=dsAlert dsRcv=dsRcv";            // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData=dsData";           // 서버에서 수신할 데이타셋
+    var sArg = "";                   		// 서버 @ParamVariable 인자와 맵핑됨
+    
+    /**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// component onclick event. 
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	// TO DO
+	// 개발자가 컴포넌트 onclick event를 'fnCommOnclick'으로 지정하고 컴포넌트 id로 구분하여 작성
+	switch(obj.name)
+	{
+		case "Button00" :			//조회
+			this.fnButton00();
+			break;
+
+		case "btn01" :			//
+			this.fnBtn01();
+			break;
+
+		case "btn02" :			//alert
+			this.fnBtn02();
+			break;
+
+		case "btnAdd" :
+		    this.dsRcv.addRow();
+			break;
+
+		case "btnDelete" :
+		    this.dsRcv.deleteRow(this.dsRcv.rowposition);
+			break;
+	}
+}
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+	    case "rdCallFrame" :
+			Ex.core.toast(this, "10002");
+			break;
+
+		case "flowtest01" :
+			Ex.core.toast(this, "10002");
+			break;
+
+		case "alerttest01" :
+			Ex.core.toast(this, "10002");
+			break;
+	}
+}]]></Script>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="TITLE_1" type="STRING" size="256" description="제목"/>
+          <Column id="CNTN_1" type="STRING" size="256" description="결재 알리미 제목입니다"/>
+          <Column id="IS_TABLE_1" type="STRING" size="256" description="0"/>
+          <Column id="TITLE_2" type="STRING" size="256" description="신청부서"/>
+          <Column id="CNTN_2" type="STRING" size="256" description="미래혁신시스템사업본부"/>
+          <Column id="IS_TABLE_2" type="STRING" size="256" description="0"/>
+          <Column id="TITLE_3" type="STRING" size="256" description="신청자"/>
+          <Column id="CNTN_3" type="STRING" size="256" description="박하늘"/>
+          <Column id="IS_TABLE_3" type="STRING" size="256" description="0"/>
+          <Column id="TITLE_4" type="STRING" size="256" description="변경 내용"/>
+          <Column id="CNTN_4" type="STRING" size="256" description="변경내용을 입력하는 곳입니다."/>
+          <Column id="IS_TABLE_4" type="STRING" size="256" description="0"/>
+          <Column id="TITLE_5" type="STRING" size="256" description="서버목록"/>
+          <Column id="CNTN_5" type="STRING" size="256" description="[[{'COLUMN':'서버명','VALUE':'1'},{'COLUMN':'프로토콜','VALUE':'2'},{'COLUMN':'서버 한글명','VALUE':'3'}]]"/>
+          <Column id="IS_TABLE_5" type="STRING" size="256" description="1"/>
+          <Column id="TITLE_6" type="STRING" size="256"/>
+          <Column id="API_NAME_1" type="STRING" size="256"/>
+          <Column id="TITLE_7" type="STRING" size="256"/>
+          <Column id="API_NAME_2" type="STRING" size="256"/>
+          <Column id="BOT_ID" type="STRING" size="256" description="알림봇 ID"/>
+          <Column id="RCVR_USER_ID" type="STRING" size="256" description="받는 USER_ID, https://flowtest.wemb.co.kr에서 geonil.song@miraeasset.com // 1 로 확인"/>
+          <Column id="CNTN" type="STRING" size="256" description="미리보기 내용"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="TITLE_1">제목</Col>
+            <Col id="CNTN_1">결재 알리미 제목입니다</Col>
+            <Col id="IS_TABLE_1">0</Col>
+            <Col id="TITLE_2">신청부서</Col>
+            <Col id="CNTN_2">미래혁신시스템사업본부</Col>
+            <Col id="IS_TABLE_2">0</Col>
+            <Col id="TITLE_3">신청자</Col>
+            <Col id="CNTN_3">박하늘</Col>
+            <Col id="IS_TABLE_3">0</Col>
+            <Col id="TITLE_4">변경 내용</Col>
+            <Col id="CNTN_4">변경내용을 입력하는 곳입니다. 변경내용을 입력하는 곳입니다. 변경내용을 입력하는 곳입니다. 변경내용을 입력하는 곳입니다. 변경내용을 입력하는 곳입니다. 변경내용을 입력하는 곳입니다. 변경내용을 입력하는 곳입니다. 변경내용을 입력하는 곳입니다. 변경내용을 입력하는 곳입니다.</Col>
+            <Col id="IS_TABLE_4">0</Col>
+            <Col id="TITLE_5">서버목록</Col>
+            <Col id="CNTN_5">[[{'COLUMN':'서버명','VALUE':'1'},{'COLUMN':'프로토콜','VALUE':'2'},{'COLUMN':'서버 한글명','VALUE':'3'}],[{'COLUMN':'서버명','VALUE':'1'},{'COLUMN':'프로토콜','VALUE':'2'},{'COLUMN':'서버 한글명','VALUE':'3'}]]</Col>
+            <Col id="IS_TABLE_5">1</Col>
+            <Col id="TITLE_6">승인</Col>
+            <Col id="API_NAME_1">https://itsm.wemb.co.kr/ITBP/mobile.do?a=2&amp;b=3</Col>
+            <Col id="TITLE_7">반려</Col>
+            <Col id="BOT_ID">approvebot_itsm</Col>
+            <Col id="RCVR_USER_ID">geonil.song@miraeasset.com</Col>
+            <Col id="CNTN">결재 알리미 제목입니다. /미래혁신시스템사업본부 /박하늘</Col>
+            <Col id="REQ_ID">TT202409270093</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData">
+        <ColumnInfo>
+          <Column id="result" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsAlert">
+        <ColumnInfo>
+          <Column id="SEND_ID" type="STRING" size="256"/>
+          <Column id="SENDER_NAME" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="SYSTEM_NAME" type="STRING" size="256"/>
+          <Column id="TMP_CONTENTS" type="STRING" size="256"/>
+          <Column id="FIRST_CONTENT" type="STRING" size="256"/>
+          <Column id="SECOND_CONTENT" type="STRING" size="256"/>
+          <Column id="THIRD_CONTENT" type="STRING" size="256"/>
+          <Column id="LINK_URL" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="SEND_ID">s1214461</Col>
+            <Col id="SENDER_NAME">노익현</Col>
+            <Col id="TITLE">Mi-SQUARE 제목입니다.</Col>
+            <Col id="TMP_CONTENTS">첫번째 내용</Col>
+            <Col id="FIRST_CONTENT">두번째 내용</Col>
+            <Col id="SECOND_CONTENT">세번째 내용</Col>
+            <Col id="THIRD_CONTENT">네번째 내용</Col>
+            <Col id="LINK_URL">http://172.23.1.101/admt10/</Col>
+            <Col id="SYSTEM_NAME">IT포탈</Col>
+            <Col id="REQ_ID">TT202409270076</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRcv">
+        <ColumnInfo>
+          <Column id="RCV" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="RCV">s1214484</Col>
+          </Row>
+          <Row>
+            <Col id="RCV">s1214461</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

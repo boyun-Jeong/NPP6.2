@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR0010_P02" classname="top" left="0" top="0" width="1200" height="489" titletext="workflow 처리 이력" onload="form_onload" scrolltype="none" cssclass="">
+    <Layouts>
+      <Layout width="1200" height="489">
+        <Static id="Static00_01_00_00" taborder="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="60" right="0"/>
+        <Static id="Static00_01" taborder="1" left="5" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_01_00" taborder="2" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="60"/>
+        <Static id="Static00_02" taborder="3" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="60"/>
+        <Div id="divTop" taborder="4" text="결재선 검색" left="20" top="20" border="0px solid red" right="20" bottom="80">
+          <Layouts>
+            <Layout>
+              <Static id="stcInfoTitle" taborder="0" text="처리 이력" left="0" top="0" width="120" height="24" cssclass="sta_WF_gridTitle"/>
+              <Static id="stcEmpty01" taborder="1" left="0" top="24" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Grid id="grdUser" taborder="2" left="0" top="stcEmpty01:0" binddataset="dsHist" cssclass="grd_WF_normal" treeusecheckbox="false" treeuseline="false" treeinitstatus="expand,null" treeusebutton="use" treeuseimage="true" autofittype="col" right="0" bottom="0" autosizingtype="both" extendsizetype="row">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48"/>
+                      <Column size="150"/>
+                      <Column size="160"/>
+                      <Column size="110"/>
+                      <Column size="130"/>
+                      <Column size="120"/>
+                      <Column size="360"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="No."/>
+                      <Cell col="1" text="단계"/>
+                      <Cell col="2" text="처리일시"/>
+                      <Cell col="3" text="소요시간"/>
+                      <Cell col="4" text="부서"/>
+                      <Cell col="5" text="처리자"/>
+                      <Cell col="6" text="처리(결재)의견"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="currow+1" autosizecol="limitmax" autosizerow="limitmin"/>
+                      <Cell col="1" text="bind:APPR_NM" textAlign="left" autosizecol="limitmax" autosizerow="limitmin"/>
+                      <Cell col="2" text="bind:PROC_DTIME" textAlign="center" autosizecol="limitmax" autosizerow="limitmin"/>
+                      <Cell col="3" text="bind:CACU_TIME" textAlign="right" autosizecol="limitmax" autosizerow="limitmin"/>
+                      <Cell col="4" text="bind:SRM_DEPT_NM" textAlign="left" autosizecol="limitmax" autosizerow="limitmin"/>
+                      <Cell col="5" text="bind:SRM_USER_INFO" textAlign="left" autosizecol="limitmax" autosizerow="limitmin"/>
+                      <Cell col="6" text="bind:APPR_COMMENT" textAlign="left" autosizecol="limitmax" autosizerow="limitmin"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtnBottom" taborder="5" height="60" bottom="0" text="" cssclass="div_POP_msg_btnbg" left="20" right="20">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsHist" oncolumnchanged="dsOnColumnChanged"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ SR0010_P02
+* 화면(명)	︰ workflow 처리 이력
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ workflow 처리 이력
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.09.03
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일			작성자		이력
+*------------------------------------------------------------------
+* 2024.09.03	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);	
+}
+
+this.fnInit = function()
+{
+	this.dsCond.setColumn(0, "REQ_ID", this.getOwnerFrame().pReqId);
+
+	this.fnSearch();
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "selectUser";						
+    var sService = "SR0010P/select03";		// 서비스명
+    var sInDs = "dsCond=dsCond";			// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsHist=dsHist";			// 서버에서 수신할 데이타셋
+    var sArg = "";							// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch(sSvcId)
+	{
+		case "" :
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "" :	// 사용자선택
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "" :
+			break;
+	}
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var divId = obj.parent.parent.parent.parent.id;
+	
+	//trace("this.fnCommOnclick() divId ::: " + divId + " obj.name : " + obj.name);
+
+	switch(obj.name)
+	{
+		case "btnClose" :			// 닫기
+			Ex.core.pclose(this);
+			break;
+	}
+};]]></Script>
+    <Bind>
+      <BindItem id="item1" compid="divTop.form.divSearchArea.form.edtCoNm" propid="value" datasetid="dsCond" columnid="SEARCH_WORD"/>
+      <BindItem id="item0" compid="divTop.form.divSearchArea.form.cboDelYn" propid="value" datasetid="dsCond" columnid="GUBUN"/>
+    </Bind>
+  </Form>
+</FDL>

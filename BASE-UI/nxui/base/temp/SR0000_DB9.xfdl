@@ -1,0 +1,422 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR0210_D01" width="1280" height="290" titletext="AD신청" onload="form_onload">
+    <Layouts>
+      <Layout width="1280" height="290" description="기존 [SCH10129.xfdl]">
+        <Static id="Static32" taborder="2" cssclass="Guide_Color" visible="false" left="0" top="24" height="10" background="#e5dbfa" right="0"/>
+        <Grid id="grdSrInfrAD" taborder="1" binddataset="dsSrInfrAD" useinputpanel="false" autofittype="col" left="0" top="34" onexpanddown="grdOnExpandDown" right="0" onenterdown="grdOnEnterDown" cssclass="grd_WF_normal" height="150" oncellclick="grdSrInfrAccnt_oncellclick" autoenter="select">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="50" band="left"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="90"/>
+                <Column size="100"/>
+                <Column size="150"/>
+                <Column size="80"/>
+                <Column size="120"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" text="검수대상기간"/>
+                <Cell col="2" text="지급금액"/>
+                <Cell col="3" text="지급일자"/>
+                <Cell col="4" text="검수자"/>
+                <Cell col="5" text="검수담당팀"/>
+                <Cell col="6" text="첨부파일수"/>
+                <Cell col="7" text="검수확인상태"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="normal" edittype="none" style="align: ;" editlimit="2" text="1"/>
+                <Cell col="1" text="2024/01 ~ 2024/01"/>
+                <Cell col="2" text="2,500,000" textAlign="right"/>
+                <Cell col="3"/>
+                <Cell col="4" text="송건일 [3354950]"/>
+                <Cell col="5" text="정보기술팀 [K3800]"/>
+                <Cell col="6" text="0 개"/>
+                <Cell col="7" text="결재중" color="#08007a"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divGrdBtn" taborder="0" width="250" isButtonGroup="true" top="Static32:0" height="24" right="0" isChgLang="false">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Static id="sta_title" taborder="3" text="검수확인내역" cssclass="sta_WF_gridTitle" left="0" top="0" right="0" height="24" style="align:left middle;"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsSrInfrAD" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="SEQ" type="STRING" size="256"/>
+          <Column id="REQ_TYPE" type="STRING" size="256"/>
+          <Column id="WORK_LOC" type="STRING" size="256"/>
+          <Column id="WORK_DTL_LOC" type="STRING" size="256"/>
+          <Column id="COMPN" type="STRING" size="256"/>
+          <Column id="PRJ_NM" type="STRING" size="256"/>
+          <Column id="REQ_USER_ID" type="STRING" size="256"/>
+          <Column id="REQ_USER_NM" type="STRING" size="256"/>
+          <Column id="REQ_DEPT_ID" type="STRING" size="256"/>
+          <Column id="REQ_DEPT_NM" type="STRING" size="256"/>
+          <Column id="JBC_JNAME" type="STRING" size="256"/>
+          <Column id="JOB_NM" type="STRING" size="256"/>
+          <Column id="TEL_NO" type="STRING" size="256"/>
+          <Column id="EMAIL" type="STRING" size="256"/>
+          <Column id="PM_NM" type="STRING" size="256"/>
+          <Column id="USE_SDT" type="STRING" size="256"/>
+          <Column id="USE_EDT" type="STRING" size="256"/>
+          <Column id="PROC_RESLT" type="STRING" size="256"/>
+          <Column id="RMK" type="STRING" size="256"/>
+          <Column id="FRID" type="STRING" size="256"/>
+          <Column id="FRDT" type="STRING" size="256"/>
+          <Column id="LMID" type="STRING" size="256"/>
+          <Column id="LMDT" type="STRING" size="256"/>
+          <Column id="LMPID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCodeSysType">
+        <ColumnInfo>
+          <Column id="CODE_ID" type="string" size="30"/>
+          <Column id="CODE" type="string" size="50"/>
+          <Column id="CODE_NAME" type="string" size="100"/>
+          <Column id="UPPER_CODE" type="string" size="30"/>
+          <Column id="OUTPRNT_ORD" type="int" size="4"/>
+          <Column id="USE_PART" type="string" size="2"/>
+          <Column id="USE_YN" type="string" size="1"/>
+          <Column id="CODE_DESC" type="string" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPopRtn"/>
+      <Dataset id="dsNextWfProcCd">
+        <ColumnInfo>
+          <Column id="NEXT_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="PROC_USER_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <InitValue/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면 ID		︰ SR0200_W
+* 화면(명)		︰ 계정신청
+* 메뉴(경로)	︰ 
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.05.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_WorkFlow.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.nextWfProcCdArr;
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+	
+	this.dsCond.setColumn(0, "REQ_ID", this.reqInfo.REQ_ID);
+	if( Ex.isEmpty(this.wfDsReqWfProc) )
+	{
+		this.wfdsReqWfProc = new Dataset();
+	}
+	this.wfdsReqWfProc.loadXML(this.dsWfProc.saveXML());
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();		// 컴포넌트 초기화	
+	//this.fn_initDataset();
+	
+	this.dsNextWfProcCd.clearData();
+
+	var curWfProcCd = this.reqInfo.WF_PROC_CD;
+	var scrnWfProcCd = this.reqInfo.SCRN_WF_PROC_CD;
+	
+	if(scrnWfProcCd == curWfProcCd)
+	{
+		//trace("SR0200_D01 this.fnInit() curWfProcCd ::: " + curWfProcCd + " scrnWfProcCd : " + scrnWfProcCd);
+		var rtn = this.wffnGetOptByWfProcCd(curWfProcCd, "CUR");
+	
+		this.nextWfProcCdArr = rtn.NEXT_WF_PROC_CD;
+	
+		//trace("SR0200_D01 this.fnInit() rtn.NEXT_WF_PROC_CD ::: " + rtn.NEXT_WF_PROC_CD);
+		//trace("SR0200_D01 this.fnInit() this.getOwnerFrame().parent.id : " + this.getOwnerFrame().form.divUrl.url);
+	
+		if(this.nextWfProcCdArr.length == 1)
+		{
+			this.dsNextWfProcCd.addRow();
+			this.dsNextWfProcCd.setColumn(0, "NEXT_WF_PROC_CD", this.nextWfProcCdArr[0]);
+		}
+		else
+		{
+			this.dsNextWfProcCd.addRow();
+			this.dsNextWfProcCd.setColumn(0, "NEXT_WF_PROC_CD", this.nextWfProcCdArr[0]);
+		}
+	}
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['ITSYS_CD']			// 조회할 상위코드
+		,codeDiv: ['POR_INFO_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['ALL']				// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y']					// 사용여부
+		,filter	: ['']					// filterStr
+		,objDs	: [this.dsCodeSysType]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+this.fn_initDataset = function()
+{
+	//trace("[SR0200_D01] this.fn_initDataset()~~~~~~~~~~~~~~~~~~~~");
+ 	if( Ex.isEmpty(this.dsCond.getColumn(0, "REQ_ID")) )
+	{
+		var aRow = this.dsSrInfrAD.setInsertRow();			
+	}
+}
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+
+	for(var i = objDs.rowcount-1; i >= 0; i--) objDs.setDeleteRow(i);
+
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			//alert("SR0210_D01 /select01 /this.fnCallback()");
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue) return;
+	
+	switch(mID)
+	{	
+		case "saveConfirm" :
+			this.fnSaveCheck();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	this.grdSrInfrAD.displayRowType();
+	
+	// 공통코드 조회
+	this.fnGetCmmCd();
+}
+/*
+this.fnCompntSet = function(bBool)
+{
+	this.btnAdd.set_visible(bBool);
+	this.btnDelete.set_visible(bBool);
+
+	bBool = !bBool;
+
+	this.divGubun.set_enable(!bBool);
+	this.grdSrInfrAccnt.set_readonly(bBool);
+}
+*/
+this.isUpdateForm = function()
+{
+	if( !Ex.util.isUpdated(this.dsSrInfrAD) ) return false;
+	else return true;
+}
+
+this.fnSaveCheck = function(isReg)
+{
+/*
+	//trace("SR0200_W this.fnSaveCheck()");
+	var rtn = this.getCheckboxValue("JOB_TYPE");
+
+	if( Ex.isEmpty(rtn[1]) || rtn[1] == "0000" )
+	{
+		var param = {id : "pAlertGubunI", msg : "계정신청-[구분] 선택 값이 없습니다."};
+		Ex.core.alert(this, param);
+		return false;
+	}
+
+	var strValue = this.dsSrInfrJob.getColumn(0, "JOB_CONT");
+	if( Ex.isEmpty(strValue) )	// || strValue == "<br>" || strValue == "<p><br></p>"
+	{
+		var param = {id : "pAlertJobContI", msg : "계정신청-[신청내용]이 입력되지 않았습니다."};
+		Ex.core.alert(this, param);
+		return false;
+	}
+
+	if(isReg && this.dsSrInfrAccnt.rowcount == 0)
+	{
+		var param = {id : "pAlertSrInfrAccntI", msg : "계정신청 - LIST가 등록되지 않았습니다."};
+		Ex.core.alert(this, param);
+		return false;
+	}
+
+	if(isReg && !this.grdSrInfrAccnt.checkValidate(true) ) return false;
+
+	for(var i = 0; i < this.dsSrInfrAccnt.rowcount; i++)
+	{
+		if( this.dsSrInfrAccnt.getColumn(i, "USE_SDT") > this.dsSrInfrAccnt.getColumn(i, "USE_EDT") )
+		{
+			var param = {id : "pAlertUseSedtI", msg : (i+1) + "행의 사용종료일을 확인하시기 바랍니다."};
+			Ex.core.alert(this, param);
+			return false;
+		}
+	}
+	*/
+	return true;
+} 
+this.getMaxSeq = function(objDs, row)
+{
+	var strSeq;
+	
+	if(row == 0)
+	{
+		strSeq	= '001';
+	}
+	else
+	{
+		strSeq = objDs.getMax("SEQ");
+		strSeq = nexacro.toNumber(strSeq) + 1;
+		strSeq = strSeq.toString();
+		strSeq = strSeq.padLeft(3, "0");
+	}
+	return strSeq;
+}
+
+this.isModify = function()
+{
+	if( Ex.util.isUpdated(this.dsSrInfrAD) ) return true;
+	else return false;
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// component onclick event. 
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{	
+	// TO DO
+	// 개발자가 컴포넌트 onclick event를 'fnCommOnclick'으로 지정하고 컴포넌트 id로 구분하여 작성
+	switch(obj.name)
+	{
+		case "btnAdd" :
+			var rowPos = this.dsSrInfrAD.setInsertRow(this.dsSrInfrAD.rowposition + 1);
+			
+			this.dsSrInfrAD.setColumn(rowPos, "REQ_ID", this.dsCond.getColumn(0, "REQ_ID"));
+			this.dsSrInfrAD.setColumn(rowPos, "SEQ", this.getMaxSeq(this.dsSrInfrAD, rowPos));
+			this.dsSrInfrAD.setColumn(rowPos, "REQ_TYPE", "CHMREQ010"); //010 신청, 020 변경, 030 AD유신청, 040 AD무신청
+			this.dsSrInfrAD.setColumn(rowPos, "USE_SDT", Ex.util.today());
+			this.dsSrInfrAD.setColumn(rowPos, "USE_EDT", Ex.util.addMonth(Ex.util.today(), 1));
+			break;
+
+		case "btnDelete" :
+			this.fnDelete(this.dsSrInfrAD);
+			break;
+	}
+}
+
+this.grdOnEnterDown = function(obj:nexacro.Grid,e:nexacro.GridEditEventInfo)
+{
+	if(e.col == obj.getBindCellIndex("body", "REQ_USER_ID"))
+	{
+		var data = this.dsSrInfrAD.getColumn(e.row, "REQ_USER_ID");
+		this.openFommSearchUserPopup(data);
+	}
+};
+
+this.grdOnExpandDown = function(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo)
+{
+	if(obj.readonly) return;
+	
+	if(e.row > -1 && e.col == obj.getBindCellIndex("body", "REQ_USER_INFO"))
+	{
+		this.openFommSearchUserPopup();
+	}
+};
+
+this.grdSrInfrAD_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	obj.dropdownCombo();
+	obj.dropdownCalendar();
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+	
+	if (e.columnid == "PROC_RESLT") 
+	{
+		this.dsSrInfrAD.setColumn(e.row, "REQ_USER_ID", e.newvalue);
+	}
+}; ]]></Script>
+  </Form>
+</FDL>

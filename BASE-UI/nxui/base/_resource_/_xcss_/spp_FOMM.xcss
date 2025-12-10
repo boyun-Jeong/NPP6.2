@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XCSS version="1.1">
+  <CSSData><![CDATA[]]></CSSData>
+  <CSSData type="desktop"><![CDATA[/***************************************************************/
+/***** PROJECT NAME 	: SPP2.0			********/
+/***** XCSSNAME 	: spp_FOMM(공통 팝업/div 등)	********/
+/***** Naming Rule 	: Component_GBN_cssname		********/
+/***** Naming Rule Ex 	: btn_POP_primary		********/
+/***** USING FRAME 	: FRAME구분 X			********/
+/***** CREATION DATES 	: 2023.04  			********/
+/***** DRAFTER 		: SPP TEAM			********/
+/***** AMENDER 		: SPP TEAM			********/
+/***** MOD DATES 	: 2023.04			********/
+/***************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   STATIC START   *****************************************************/
+/****************************************************************************************************************************/
+/* 
+ * sta_TOAST_normal
+ * toast message Type normal
+ */
+.Static.sta_TOAST_normal
+{
+	background		: #ffffff URL('theme://SPP_IMAGE_SET/FOMM/bg_FOMM_toastInfo.png') no-repeat 10px center;
+	-nexa-border		: 1px solid #7db1f1;
+	-nexa-padding		: 0px 0px 0px 30px;
+	font			: 14px '돋움';
+	box-shadow		: 0px 2px 4px #808080;
+}
+/* 
+ * sta_TOAST_success
+ * toast message Type success
+ */
+.Static.sta_TOAST_success
+{
+	background		: #ffffff URL('theme://SPP_IMAGE_SET/FOMM/bg_FOMM_toastSuccess.png') no-repeat 10px center;
+	-nexa-border		: 1px solid #7ef2a1;
+	-nexa-padding		: 0px 0px 0px 30px;
+	font			: 14px '돋움';
+	box-shadow		: 0px 2px 4px #808080;
+}
+/* 
+ * sta_TOAST_error
+ * toast message Type error
+ */
+.Static.sta_TOAST_error
+{
+	background		: #ffffff URL('theme://SPP_IMAGE_SET/FOMM/bg_FOMM_toastError.png') no-repeat 10px center;
+	-nexa-border		: 1px solid #ff8587;
+	-nexa-padding		: 0px 0px 0px 30px;
+	font			: 14px '돋움';
+	box-shadow		: 0px 2px 4px #808080;
+}
+/* 
+ * sta_TOAST_warning
+ * toast message Type warning
+ */
+.Static.sta_TOAST_warning
+{
+	background		: #ffffff URL('theme://SPP_IMAGE_SET/FOMM/bg_FOMM_toastWarning.png') no-repeat 10px center;
+	-nexa-border		: 1px solid #ffed74;
+	-nexa-padding		: 0px 0px 0px 30px;
+	font			: 14px '돋움';
+	box-shadow		: 0px 2px 4px #808080;
+}
+
+
+/* 
+ * sta_POP_title
+ * popup title background type none
+ */
+.Static.sta_POP_title
+{
+	background		: #ffffff;
+	-nexa-border		: 0px;
+	-nexa-padding		: 2px 0px 0px 20px;
+	font			: bold 18px '돋움';
+	color			: #3556ba;
+}
+/* 
+ * sta_POP_msg_title
+ * message popup title background type none
+ */
+.Static.sta_POP_msg_title
+{
+	background		: #ffffff;
+	-nexa-border		: 0px;
+	-nexa-padding		: 2px 0px 0px 20px;
+	font			: bold 18px '돋움';
+	color			: #3556ba;
+}
+/* 
+ * sta_POP_msg_info
+ * popup title background type info
+ */
+.Static.sta_POP_msg_info
+{
+	background		: #ffffff URL('theme://SPP_IMAGE_SET/FOMM/bg_FOMM_popMsgInfo.png') no-repeat 20px center;
+	-nexa-border		: 0px;
+	-nexa-padding		: 2px 0px 0px 50px;
+	font			: bold 18px '돋움';
+	color			: #3556ba;
+}
+
+/* 
+ * sta_POP_msg_success
+ * popup title background type success
+ */
+.Static.sta_POP_msg_success
+{
+	background		: #ffffff URL('theme://SPP_IMAGE_SET/FOMM/bg_FOMM_popMsgSuccess.png') no-repeat 20px center;
+	-nexa-border		: 0px;
+	-nexa-padding		: 2px 0px 0px 50px;
+	font			: bold 18px '돋움';
+	color			: #3556ba;
+}
+
+/* 
+ * sta_POP_msg_warning
+ * popup title background type warning
+ */
+.Static.sta_POP_msg_warning
+{
+	background		: #ffffff URL('theme://SPP_IMAGE_SET/FOMM/bg_FOMM_popMsgWarning.png') no-repeat 20px center;
+	-nexa-border		: 0px;
+	-nexa-padding		: 2px 0px 0px 50px;
+	font			: bold 18px '돋움';
+	color			: #3556ba;
+}
+
+/* 
+ * sta_POP_msg_error
+ * popup title background type error
+ */
+.Static.sta_POP_msg_error
+{
+	background		: #ffffff URL('theme://SPP_IMAGE_SET/FOMM/bg_FOMM_popMsgError.png') no-repeat 20px center;
+	-nexa-border		: 0px;
+	-nexa-padding		: 2px 0px 0px 50px;
+	font			: bold 18px '돋움';
+	color			: #3556ba;
+}
+
+
+/* 
+ * sta_POP_msg_btnbg
+ * popup 하단 button 영역 backgroun static css
+ */
+.Static.sta_POP_msg_btnbg
+{
+	background		: #ffffff ;
+	-nexa-border		: 0px;
+}
+
+/* 
+ * sta_POP_msg_conts
+ * alert/confirm pop 메시지 내용 static css
+ */
+.Static.sta_POP_msg_conts
+{
+	background		: transparent;
+	font			: bold 14px '돋움';
+	color			: #637195;
+}
+/* 
+ * txa_POP_msg_conts
+ * alert/confirm pop 메시지 내용 text area css
+ */
+.TextArea.txa_POP_msg_conts,
+.TextArea.txa_POP_msg_conts[status=readonly]
+{
+	background		: transparent;
+	-nexa-border 		: 0px;
+	-nexa-padding 		: 0px;
+	-nexa-text-align 	: left;
+	font			: bold 14px '돋움';
+	color			: #637195;
+}
+/****************************************************************************************************************************/
+/*****************************************************   STATIC END	*****************************************************/
+/****************************************************************************************************************************/
+
+
+/****************************************************************************************************************************/
+/*****************************************************   DIV START   ********************************************************/
+/****************************************************************************************************************************/
+/* 
+ * div_POP_msg_btnbg
+ * SPP Popup bottom (divBottom) background css
+ */
+.Div.div_POP_msg_btnbg
+{
+	background		: #ffffff ;
+	-nexa-border		: 1px solid #d0d1d6, 0px, 0px, 0px;
+}
+
+/****************************************************************************************************************************/
+/*****************************************************   DIV END   **********************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   CHILDFRAME START   *************************************************/
+/****************************************************************************************************************************/
+/* 
+ * cf_FOMM_normal
+ * SPP Popup titleBar css
+ */
+.ChildFrame.cf_FOMM_normal .titlebar
+{
+	font			: bold 14px '돋움';
+	color 			: #ffffff;
+	background 		: #3697F8;
+	-nexa-padding 		: 0px 0px 0px 10px;
+}
+
+.ChildFrame.cf_FOMM_normal .titlebar .titleicon
+{
+	-nexa-icon		: url('theme://SPP_IMAGE_SET/FOMM/ico_FOMM_title.png');
+	-nexa-text-padding 	: 0px 0px 0px 10px;
+}
+
+.ChildFrame.cf_FOMM_normal .titlebar .normalbutton
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleNormalN.png');
+	cursor 			: pointer;
+}
+
+.ChildFrame.cf_FOMM_normal .titlebar .normalbutton[status=mouseover]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleNormalM.png');
+}
+.ChildFrame.cf_FOMM_normal .titlebar .normalbutton[userstatus=pushed]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleNormalP.png');
+}
+.ChildFrame.cf_FOMM_normal .titlebar .normalbutton[status=disabled]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleNormalD.png');
+}
+
+.ChildFrame.cf_FOMM_normal .titlebar .minbutton
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleMinN.png');
+	cursor 			: pointer;
+}
+.ChildFrame.cf_FOMM_normal .titlebar .minbutton[status=mouseover]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleMinM.png');
+}
+.ChildFrame.cf_FOMM_normal .titlebar .minbutton[userstatus=pushed]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleMinP.png');
+}
+.ChildFrame.cf_FOMM_normal .titlebar .minbutton[status=disabled]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleMinD.png');
+}
+
+.ChildFrame.cf_FOMM_normal .titlebar .maxbutton
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleMaxD.png');
+	cursor 			: pointer;
+}
+.ChildFrame.cf_FOMM_normal .titlebar .maxbutton[status=mouseover]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleMaxD.png');
+}
+.ChildFrame.cf_FOMM_normal .titlebar .maxbutton[userstatus=pushed]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleMaxD.png');
+}
+.ChildFrame.cf_FOMM_normal .titlebar .maxbutton[status=disabled]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleMaxD.png');
+}
+
+.ChildFrame.cf_FOMM_normal .titlebar .closebutton
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleCloseN.png');
+	cursor 			: pointer;
+}
+.ChildFrame.cf_FOMM_normal .titlebar .closebutton[status=mouseover]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleCloseM.png');
+}
+.ChildFrame.cf_FOMM_normal .titlebar .closebutton[userstatus=pushed]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleCloseP.png');
+}
+.ChildFrame.cf_FOMM_normal .titlebar .closebutton[status=disabled]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/FOMM/btn_FOMM_titleCloseD.png');
+}
+/****************************************************************************************************************************/
+/*****************************************************   CHILDFRAME END		*********************************************/
+/****************************************************************************************************************************/]]></CSSData>
+  <CSSData type="mobile_large"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_small"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_medium"><![CDATA[]]></CSSData>
+</XCSS>

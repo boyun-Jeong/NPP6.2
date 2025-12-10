@@ -1,0 +1,512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PJ5700_W" left="0" top="0" width="1820" height="720" titletext="시나리오 테스트 결함 현황" onload="form_onload">
+    <Layouts>
+      <Layout width="1820" height="720">
+        <Div id="divSearch" taborder="0" left="0" top="0" height="79" right="0" cssclass="div_WF_divSearchArea" text="">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="11"/>
+              <Button id="btnSearch" taborder="10" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Button id="btnSearchReset" taborder="9" top="13" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+              <Static id="Static00_00" taborder="4" left="355" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" bottom="11"/>
+              <Static id="stcSubProject" taborder="5" text="서브프로젝트" left="Static00_00:0" top="13" width="95" height="24" cssclass="sta_WF_schTitle"/>
+              <Static id="Static00_00_00" taborder="7" left="720" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" bottom="11"/>
+              <Static id="stcDate" taborder="8" text="테스트 종류" left="Static00:0" top="42" width="95" height="24" cssclass="sta_WF_schTitle"/>
+              <Combo id="cboSubProject" taborder="6" left="stcSubProject:0" top="13" width="240" height="24" cssclass="cbo_WF_normal" codecolumn="PJT_ID" datacolumn="PJT_NAME"/>
+              <Static id="stcPjtNm" taborder="1" text="프로젝트명" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="20" top="13" width="95" height="24"/>
+              <Edit id="edtPjtNm" taborder="2" left="stcPjtNm:0" top="13" width="218" height="24" cssclass="edt_WF_normal" enable="true" readonly="true"/>
+              <Button id="btnSearchPjtPop" taborder="3" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommOnclick" top="13" width="24" left="edtPjtNm:-1"/>
+              <Combo id="cboStestTypeCd" taborder="11" left="stcDate:0" width="130" cssclass="cbo_WF_normal" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsStestTypeCd" top="42" height="24"/>
+              <Static id="stcDate00" taborder="12" text="테스트 차수" left="Static00_00:0" top="42" width="95" height="24" cssclass="sta_WF_schTitle"/>
+              <Combo id="cboStestVersion" taborder="13" left="stcDate00:0" width="85" height="24" cssclass="cbo_WF_normal" codecolumn="CODE" datacolumn="NAME" innerdataset="dsStestVersion" top="42" displayrowcount="11"/>
+              <Static id="stcDate01" taborder="14" text="기준일자" left="Static00_00_00:0" top="13" width="95" height="24" cssclass="sta_WF_schTitle"/>
+              <Calendar id="calDate" taborder="15" left="stcDate01:0" top="13" width="120" height="24" validate="title:시작일자,required:false,date" cssclass="cal_WF_normal"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00_01" taborder="1" left="0" top="divSearch:0" height="20" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_00_00" taborder="4" left="0" top="Static00_01:24" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Grid id="grdMainList" taborder="5" binddataset="dsStDefect" cellsizingtype="col" left="0" right="0" top="Static00_01:34" bottom="35" cssclass="grd_WF_normal" oncellclick="grdOnCellClick" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="0"/>
+                <Column size="150"/>
+                <Column size="120"/>
+                <Column size="100"/>
+                <Column size="140"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="140"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="140"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="140"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="40" band="head"/>
+                <Row size="32"/>
+                <Row size="32" band="summ"/>
+              </Rows>
+              <Band id="head">
+                <Cell rowspan="2" text="No"/>
+                <Cell col="1" rowspan="2" text="업무"/>
+                <Cell col="2" rowspan="2" text="테스트 종류"/>
+                <Cell col="3" rowspan="2" text="테스트 차수"/>
+                <Cell col="4" colspan="3" text="전체 대상"/>
+                <Cell col="7" colspan="3" text="계획 대상(누적)"/>
+                <Cell col="10" colspan="3" text="계획 대상(주간)"/>
+                <Cell col="13" colspan="3" text="계획 대상(일간)"/>
+                <Cell row="1" col="4" text="전체 완료율&#13;&#10;(확인/대상)"/>
+                <Cell row="1" col="5" text="조치&#13;&#10;(완료/대상)"/>
+                <Cell row="1" col="6" text="확인"/>
+                <Cell row="1" col="7" text="계획대비 진척율&#13;&#10;(확인/대상)"/>
+                <Cell row="1" col="8" text="조치&#13;&#10;(완료/대상)"/>
+                <Cell row="1" col="9" text="확인"/>
+                <Cell row="1" col="10" text="계획대비 진척율&#13;&#10;(확인/대상)"/>
+                <Cell row="1" col="11" text="조치&#13;&#10;(완료/대상)"/>
+                <Cell row="1" col="12" text="확인"/>
+                <Cell row="1" col="13" text="계획대비 진척율&#13;&#10;(확인/대상)"/>
+                <Cell row="1" col="14" text="조치&#13;&#10;(완료/대상)"/>
+                <Cell row="1" col="15" text="확인"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="expr:currow+1"/>
+                <Cell col="1" style="align:left;" text="bind:BIZ_NAME" suppress="2"/>
+                <Cell col="2" displaytype="combotext" text="bind:STEST_TYPE_CD" suppress="3" combodataset="dsStestTypeCdGrid" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                <Cell col="3" displaytype="combotext" text="bind:STEST_VERSION" suppress="4" combodataset="dsStestVersionGrid" combocodecol="CODE" combodatacol="NAME"/>
+                <Cell col="4" displaytype="mask" style="align:right;" text="bind:TOT_RATE" textAlign="right" maskeditformat="##0.#" maskeditpostfixtext="%"/>
+                <Cell col="5" displaytype="text" style="align:right;" text="bind:TOT_PLAN_CNT" expr="Ex.util.getNumberToMaskStr(TOT_ACTL_CNT) + &quot;/&quot; + Ex.util.getNumberToMaskStr(TOT_PLAN_CNT)" textAlign="right"/>
+                <Cell col="6" displaytype="number" style="align:right;" text="bind:TOT_CONF_CNT" textAlign="right"/>
+                <Cell col="7" displaytype="mask" text="bind:SUM_RATE" textAlign="right" cssclass="expr:SUM_PLAN_CNT &gt; 0 &amp;&amp; SUM_RATE &lt; 100 ? 'grdBCell_WF_danger_evt' : ''" maskeditformat="##0.#" maskeditpostfixtext="%"/>
+                <Cell col="8" displaytype="text" text="bind:SUM_PLAN_CNT" expr="Ex.util.getNumberToMaskStr(SUM_ACTL_CNT) + &quot;/&quot; + Ex.util.getNumberToMaskStr(SUM_PLAN_CNT)" textAlign="right" cssclass="expr:SUM_PLAN_CNT&gt;0 &amp;&amp; SUM_RATE&lt;100 ? 'grdBCell_WF_danger' : ''"/>
+                <Cell col="9" displaytype="number" text="bind:SUM_CONF_CNT" textAlign="right" cssclass="expr:SUM_PLAN_CNT &gt; 0 &amp;&amp; SUM_RATE &lt; 100 ? 'grdBCell_WF_danger' : ''"/>
+                <Cell col="10" displaytype="mask" text="bind:WEEK_RATE" textAlign="right" maskeditformat="##0.#" maskeditpostfixtext="%" cssclass="expr:WEEK_PLAN_CNT &gt; 0 &amp;&amp; WEEK_RATE &lt; 100 ? 'grdBCell_WF_danger_evt' : ''"/>
+                <Cell col="11" displaytype="text" text="bind:WEEK_PLAN_CNT" expr="Ex.util.getNumberToMaskStr(WEEK_ACTL_CNT) + &quot;/&quot; + Ex.util.getNumberToMaskStr(WEEK_PLAN_CNT)" textAlign="right" cssclass="expr:WEEK_PLAN_CNT &gt; 0 &amp;&amp; WEEK_RATE &lt; 100 ? 'grdBCell_WF_danger' : ''"/>
+                <Cell col="12" displaytype="number" text="bind:WEEK_CONF_CNT" textAlign="right" cssclass="expr:WEEK_PLAN_CNT &gt; 0 &amp;&amp; WEEK_RATE &lt; 100 ? 'grdBCell_WF_danger' : ''"/>
+                <Cell col="13" displaytype="mask" text="bind:DAY_RATE" textAlign="right" cssclass="expr:WEEK_PLAN_CNT &gt; 0 &amp;&amp; WEEK_RATE &lt; 100 ? 'grdBCell_WF_danger_evt' : ''"/>
+                <Cell col="14" displaytype="text" text="bind:DAY_PLAN_CNT" expr="Ex.util.getNumberToMaskStr(DAY_ACTL_CNT) + &quot;/&quot; + Ex.util.getNumberToMaskStr(DAY_PLAN_CNT)" textAlign="right" maskeditformat="##0.#" maskeditpostfixtext="%" cssclass="expr:WEEK_PLAN_CNT &gt; 0 &amp;&amp; WEEK_RATE &lt; 100 ? 'grdBCell_WF_danger' : ''"/>
+                <Cell col="15" displaytype="number" text="bind:DAY_CONF_CNT" textAlign="right" cssclass="expr:WEEK_PLAN_CNT &gt; 0 &amp;&amp; WEEK_RATE &lt; 100 ? 'grdBCell_WF_danger' : ''"/>
+              </Band>
+              <Band id="summary">
+                <Cell colspan="4" text="합계"/>
+                <Cell col="4" displaytype="mask" expr="dataset.getSum('TOT_PLAN_CNT') != 0 ? nexacro.round(dataset.getSum('TOT_CONF_CNT') / dataset.getSum('TOT_PLAN_CNT')*100,1) : 0" maskeditformat="##0.#" maskeditpostfixtext="%" textAlign="right"/>
+                <Cell col="5" displaytype="text" expr="Ex.util.getNumberToMaskStr(dataset.getSum('TOT_ACTL_CNT')) + &quot;/&quot; + Ex.util.getNumberToMaskStr(dataset.getSum('TOT_PLAN_CNT'))" textAlign="right"/>
+                <Cell col="6" displaytype="number" text="bind:TOT_CONF_CNT" expr="dataset.getSum('TOT_CONF_CNT')" textAlign="right"/>
+                <Cell col="7" displaytype="mask" text="bind:SUM_RATE" expr="dataset.getSum('SUM_PLAN_CNT') != 0 ? nexacro.round(dataset.getSum('SUM_CONF_CNT') / dataset.getSum('SUM_PLAN_CNT')*100,1) : 0" textAlign="right" maskeditformat="##0.#" maskeditpostfixtext="%"/>
+                <Cell col="8" displaytype="text" text="bind:SUM_PLAN_CNT" expr="Ex.util.getNumberToMaskStr(dataset.getSum('SUM_ACTL_CNT')) + &quot;/&quot; + Ex.util.getNumberToMaskStr(dataset.getSum('SUM_PLAN_CNT'))" textAlign="right"/>
+                <Cell col="9" displaytype="number" text="bind:SUM_CONF_CNT" expr="dataset.getSum('SUM_CONF_CNT')" textAlign="right"/>
+                <Cell col="10" displaytype="mask" text="bind:WEEK_RATE" expr="dataset.getSum('WEEK_PLAN_CNT') != 0 ? nexacro.round(dataset.getSum('WEEK_CONF_CNT') / dataset.getSum('WEEK_PLAN_CNT')*100,1) : 0" maskeditformat="##0.#" maskeditpostfixtext="%" textAlign="right"/>
+                <Cell col="11" displaytype="text" text="bind:WEEK_PLAN_CNT" expr="Ex.util.getNumberToMaskStr(dataset.getSum('WEEK_ACTL_CNT')) + &quot;/&quot; + Ex.util.getNumberToMaskStr(dataset.getSum('WEEK_PLAN_CNT'))" textAlign="right"/>
+                <Cell col="12" displaytype="number" text="bind:WEEK_CONF_CNT" expr="dataset.getSum('WEEK_CONF_CNT')" textAlign="right"/>
+                <Cell col="13" displaytype="mask" text="bind:WEEK_RATE" expr="dataset.getSum('WEEK_PLAN_CNT') != 0 ? nexacro.round(dataset.getSum('WEEK_CONF_CNT') / dataset.getSum('WEEK_PLAN_CNT')*100,1) : 0" maskeditformat="##0.#" maskeditpostfixtext="%" textAlign="right"/>
+                <Cell col="14" displaytype="text" text="bind:WEEK_PLAN_CNT" expr="Ex.util.getNumberToMaskStr(dataset.getSum('WEEK_ACTL_CNT')) + &quot;/&quot; + Ex.util.getNumberToMaskStr(dataset.getSum('WEEK_PLAN_CNT'))" textAlign="right"/>
+                <Cell col="15" displaytype="number" text="bind:WEEK_CONF_CNT" expr="dataset.getSum('WEEK_CONF_CNT')" textAlign="right"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcGrdTitle" taborder="2" text="시나리오 테스트 결함 통계" cssclass="sta_WF_gridTitle" left="0" top="Static00_01:0" width="196" height="24"/>
+        <Static id="sta_listCnt" taborder="3" cssclass="sta_WF_GridCount" left="stcGrdTitle:5" top="Static00_01:0" width="150" height="24" style="align:left middle;" countDataset="dsStDefect" visible="false"/>
+        <Static id="stcBottmDesc" taborder="6" text="모든 계산에서 수용 건만 대상으로 합니다." left="0" top="grdMainList:5" width="240" height="24" cssclass="sta_WF_schTitle"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsStDefect">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="10"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="PJT_ID" type="string" size="16"/>
+          <Column id="BIZ_ID" type="string" size="16"/>
+          <Column id="BIZ_NAME" type="string" size="100"/>
+          <Column id="PJT_NAME" type="string" size="200"/>
+          <Column id="P_PJT_ID" type="string" size="16"/>
+          <Column id="P_PJT_NAME" type="string" size="200"/>
+          <Column id="TOT_RATE" type="bigdecimal" size="22"/>
+          <Column id="TOT_ALL_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="TOT_ALL_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="TOT_SC_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="TOT_SC_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="TOT_IF_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="TOT_IF_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="TOT_BP_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="TOT_BP_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="TOT_PR_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="TOT_PR_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="TOT_RT_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="TOT_RT_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="SUM_RATE" type="bigdecimal" size="22"/>
+          <Column id="SUM_ALL_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="SUM_ALL_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="SUM_SC_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="SUM_SC_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="SUM_IF_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="SUM_IF_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="SUM_BP_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="SUM_BP_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="SUM_PR_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="SUM_PR_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="SUM_RT_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="SUM_RT_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="WEEK_RATE" type="bigdecimal" size="22"/>
+          <Column id="WEEK_ALL_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="WEEK_ALL_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="WEEK_SC_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="WEEK_SC_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="WEEK_IF_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="WEEK_IF_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="WEEK_BP_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="WEEK_BP_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="WEEK_PR_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="WEEK_PR_PLAN_CNT" type="bigdecimal" size="22"/>
+          <Column id="WEEK_RT_ACTL_CNT" type="bigdecimal" size="22"/>
+          <Column id="WEEK_RT_PLAN_CNT" type="bigdecimal" size="22"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsStestTypeCd"/>
+      <Dataset id="dsStestVersion">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsStestTypeCdGrid"/>
+      <Dataset id="dsStestVersionGrid">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="PJT_NM" type="STRING" size="256"/>
+          <Column id="SUB_PJT_ID" type="STRING" size="256"/>
+          <Column id="BDATE" type="STRING" size="256"/>
+          <Column id="STEST_TYPE_CD" type="STRING" size="256"/>
+          <Column id="STEST_VERSION" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPopRtn"/>
+    </Objects>
+    <InitValue/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ PJ5700_W
+* 화면(명)		︰ 시나리오 테스트 결함 현황
+* 메뉴(경로)	︰ 프로젝트관리 > 시나리오 테스트 관리 >  시나리오 테스트 결함 현황
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.11.15
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.11.15	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_PjComm.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.setColumn(0, "BDATE", Ex.util.getWeekDay(Ex.util.today(), 5));
+	this.dsCond.setColumn(0, "STEST_TYPE_CD", undefined);
+	this.dsCond.setColumn(0, "STEST_VERSION", undefined);
+	this.divSearch.form.calDate.setFocus();
+}
+
+// 조회
+this.fnSearch = function()
+{
+	if( Ex.isEmpty((this.dsCond.getColumn(0, "PJT_ID"))) )
+	{
+		var oParam = {id : "alertNoSelPjtI", msg : "프로젝트를 선택하세요.", arrparam : [], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return;
+	}
+
+	if( Ex.isEmpty((this.dsCond.getColumn(0, "SUB_PJT_ID"))) )
+	{
+		var oParam = {id : "alertNoSelSubPjtI", msg : "서브프로젝트를 선택하세요.", arrparam : [], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return;
+	}
+
+	// transaction
+	var sTranId = "select01";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ5700W/select01";			// 서비스명
+    var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsStDefect=dsStDefect";		// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::" + nErrorCode+"::" + sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	trace("this.fnPopupAfter() pID ::: " + pID + " varValue ::: " + varValue);
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "PJ0100_P01" :
+			//trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)	this.dsPopRtn.loadXML(varValue);
+			this.dsCond.setColumn(0, "PJT_ID", this.dsPopRtn.getColumn(0, "PJT_ID"));
+			this.dsCond.setColumn(0, "PJT_NM", this.dsPopRtn.getColumn(0, "PJT_NAME"));
+			this.fnSetSubPjtCombo();
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+
+		case "alertNoSelSubPjtI" :
+			this.divSearch.form.cboSubProject.setFocus();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.divSearch.form.cboSubProject.set_displaynulltext(Ex.core.word("- 선택 - "));	
+
+	this.fnGetCmmCd();	// 공통코드 조회
+	
+	this.fnSearchReset();
+
+	//this.fnSearch();	// 조회
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		 upCmmCd	: ['STEST_TYPE_CD',		'STEST_TYPE_CD']		// 조회할 상위코드
+		,codeDiv	: ['PJT_MNG_CD',		'PJT_MNG_CD']			// 조회할 코드의 업무구분
+		,optStr		: ['ALL',				'ALL']					// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn		: ['Y',					'Y']					// 사용여부
+		,filter		: ['',					'']						// filterStr
+		,objDs		: [this.dsStestTypeCd,	this.dsStestTypeCdGrid]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+
+	var aRow = this.dsStestVersion.addRow();
+	this.dsStestVersion.setColumn(aRow, "CODE", undefined);
+	this.dsStestVersion.setColumn(aRow, "NAME", Ex.core.word("- 전체 -"));
+	
+	aRow = this.dsStestVersionGrid.addRow();
+	this.dsStestVersionGrid.setColumn(aRow, "CODE", undefined);
+	this.dsStestVersionGrid.setColumn(aRow, "NAME", "");
+
+	for(var i=1; i<=10; i++)
+	{
+		aRow = this.dsStestVersion.addRow();
+		this.dsStestVersion.setColumn(aRow, "CODE", i);
+		this.dsStestVersion.setColumn(aRow, "NAME", i + Ex.core.word("차"));
+		
+		aRow = this.dsStestVersionGrid.addRow();
+		this.dsStestVersionGrid.setColumn(aRow, "CODE", i);
+		this.dsStestVersionGrid.setColumn(aRow, "NAME", i + Ex.core.word("차"));
+	}
+}
+
+//Sub Project Combo 조회
+this.fnSetSubPjtCombo = function()
+{
+	this.setSubPjtList(this, this.dsCond.getColumn(0, "PJT_ID"), this.divSearch.form.cboSubProject, this.searchSubPjtInfoCallBack);
+}
+
+//Sub Project Combo 조회 CallBack
+this.searchSubPjtInfoCallBack = function()
+{
+	var aRow = this.divSearch.form.cboSubProject.getInnerDataset().insertRow(0);
+	this.divSearch.form.cboSubProject.getInnerDataset().setColumn(0, "PJT_NAME", Ex.core.word("- 선택 -"));
+
+	var fRow = -1;
+	this.divSearch.form.cboSubProject.set_displaynulltext("");
+	
+	if(this.divSearch.form.cboSubProject.getInnerDataset().rowcount > 1)
+	{
+		fRow = this.divSearch.form.cboSubProject.getInnerDataset().findRow("PJT_ID", this.dsCond.getColumn(0, "PJT_ID"));
+	}
+	else
+	{
+		fRow = 0;
+	}
+
+	if(fRow > -1)	this.divSearch.form.cboSubProject.set_index(fRow);
+	else			this.divSearch.form.cboSubProject.set_index(0);
+	
+	this.dsCond.setColumn(0, "SUB_PJT_ID", this.divSearch.form.cboSubProject.value);
+
+	//trace("AF this.searchProjectBizCallBack() DS_COND BIZ_ID : " + this.dsCond.getColumn(0, "BIZ_ID"));
+	//trace("AF this.searchProjectBizCallBack() COMBO BIZ_ID : " + this.divSearch.form.cboBizId.value);
+}
+
+this.fn_popup_chk = function(strMode, nRow)
+{
+	var nPlan = this.dsStDefect.getColumn(nRow, (strMode + "_PLAN_CNT"));
+	var nRate = this.dsStDefect.getColumn(nRow, (strMode + "_RATE"));
+	
+	if(nPlan > 0 && nRate < 100)
+	{
+		return true;
+	}
+	return false;
+}
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearchPjtPop" :			
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ0100_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ0100_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : "프로젝트 검색"
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				//"width=920,height=650"	// <--- width/height/modeless(프레임 처리 옵션)							
+				"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+			);
+			break;
+
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;
+
+		case "btnSearch" :			// 검색
+			this.fnSearch();
+			break;
+	}
+}
+
+this.grdOnCellClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var strMode  = "";
+	var strTitle = "";
+	var isEvent  = false;
+	
+	if( e.cell == obj.getBindCellIndex("body","SUM_RATE"))
+	{
+		strMode = "SUM";
+		strTitle = "누적";
+		isEvent = this.fn_popup_chk(strMode, e.row);
+		if(!isEvent) return false;
+	}
+	else if( e.cell == obj.getBindCellIndex("body","WEEK_RATE"))
+	{
+		strMode = "WEEK";
+		strTitle = "주간";
+		isEvent = this.fn_popup_chk(strMode, e.row);
+		if(!isEvent) return false;
+	}
+	else if( e.cell == obj.getBindCellIndex("body","DAY_RATE"))
+	{
+		strMode = "DAY";
+		strTitle = "일간";
+		isEvent = this.fn_popup_chk(strMode, e.row);
+		if(!isEvent) return false;
+	}
+	
+	if( isEvent )
+	{
+		Ex.core.popup(
+			this,					// <--- 팝업 실행 스코프
+			"PJ5700_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+			"pj::PJ5700_P01.xfdl",	// <--- 팝업창 오픈 Url
+			{
+				title			: "[" + Ex.core.word(strTitle) + "] 시나리오 결함 목록 상세",
+				pPjtId			: this.dsStDefect.getColumn(e.row, "PJT_ID"),
+				pBizId			: this.dsStDefect.getColumn(e.row, "BIZ_ID"),
+				pStestTypeCd	: this.dsStDefect.getColumn(e.row, "STEST_TYPE_CD"),
+				pStestVersion	: this.dsStDefect.getColumn(e.row, "STEST_VERSION"),
+				pBdate			: this.dsCond.getColumn(0, "BDATE"),
+				pMode			: strMode
+			},							// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			//"width=920,height=650"	// <--- width/height/modeless(프레임 처리 옵션)							
+			"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+		);
+	}
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.cboSubProject" propid="value" datasetid="dsCond" columnid="SUB_PJT_ID"/>
+      <BindItem id="item11" compid="divSearch.form.edtPjtNm" propid="value" datasetid="dsCond" columnid="PJT_NM"/>
+      <BindItem id="item1" compid="divSearch.form.cboStestTypeCd" propid="value" datasetid="dsCond" columnid="STEST_TYPE_CD"/>
+      <BindItem id="item2" compid="divSearch.form.cboStestVersion" propid="value" datasetid="dsCond" columnid="STEST_VERSION"/>
+      <BindItem id="item3" compid="divSearch.form.calDate" propid="value" datasetid="dsCond" columnid="BDATE"/>
+    </Bind>
+  </Form>
+</FDL>

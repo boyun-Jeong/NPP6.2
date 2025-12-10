@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Xwiki" width="1840" height="720" titletext="New Form" onload="onLoad">
+    <Layouts>
+      <Layout height="720" horizontalgap="0" mobileorientation="landscape" spacing="0px" tabletemplate="1* / 1*" verticalgap="0" width="1840">
+        <WebBrowser id="xWiki" taborder="0" left="0" top="0" width="1600" height="720" url="http://10.230.40.87:8090"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ WebScoketTest
+* 화면(명)		︰ 웹소켓테스트
+* 메뉴(경로)	︰ TEST > TEST1 > 사용자 관리
+* 화면 설명	︰ SPP 기본 사용자 관리 화면
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.formObj;	//전역변수 설정
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.onLoad = function(obj:nexacro.Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(obj, this.fnInit);
+	this.formObj = obj;
+};
+
+this.fnInit = function()
+{	
+	// 폼 로드 시 필요한 기술사항은 this.fnInit에서 기술할 것.
+	trace("workArea form init call :: XWiki");
+};
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		Ex.core.error(this,{id:"ERROR",msg:sSvcId+"\n"+Ex.core.msg(sErrorMsg)});
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

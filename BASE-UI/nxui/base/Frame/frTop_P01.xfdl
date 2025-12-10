@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="frTop_P01" classname="top" left="0" top="0" titletext="Site Map" onload="form_onload" scrolltype="none" cssclass="" height="800" width="1760">
+    <Layouts>
+      <Layout width="1760" height="800" mobileorientation="landscape">
+        <Div id="divBottom" taborder="0" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divContent" taborder="1" text="Div00" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="Static00_01" taborder="0" left="5" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-5"/>
+              <Static id="Static00_01_00" taborder="1" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Static id="Static00_01_00_00" taborder="2" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+              <Static id="Static00_02" taborder="3" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="0"/>
+              <Div id="divSearchArea" taborder="4" left="20.00" top="20" height="50" right="20" cssclass="div_WF_divSearchArea" text="">
+                <Layouts>
+                  <Layout>
+                    <Static id="staSearchStr" taborder="3" text="메뉴명" left="20" top="13" width="89" height="24" cssclass="sta_WF_schTitle"/>
+                    <Static id="Static00" taborder="4" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+                    <Edit id="edtSearchStr" taborder="0" left="80.00" top="13" width="200" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown"/>
+                    <Button id="btnSearch" taborder="2" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+                    <Button id="btnSearchReset" taborder="1" top="13" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+                    <Static id="Static00_01" taborder="5" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divSiteMap" taborder="5" left="20" top="114" right="20" bottom="20"/>
+              <Button id="btnSiteMap" taborder="6" text="사이트맵" left="20.00" top="divSearchArea:11" width="110" height="31" cssclass="btn_HOME_boardOn" onclick="fnBtnTabOnclick" GBN="SITEMAP"/>
+              <Button id="btnFavorite" taborder="7" text="즐겨찾기" left="btnSiteMap:5.00" top="divSearchArea:11" width="110" height="31" cssclass="btn_HOME_boardOff" onclick="fnBtnTabOnclick" GBN="FAVORITE"/>
+              <Static id="stcTopLine" taborder="8" left="20.00" top="112" height="2" background="#8a96a8" right="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="GBN" type="STRING" size="256"/>
+          <Column id="MENU_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData"/>
+      <Dataset id="dsMenuLv1"/>
+      <Dataset id="dsMenuLv2"/>
+      <Dataset id="dsMenuLv3"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ frTab_P01
+* 화면(명)		︰ Sitemap
+* 메뉴(경로)	︰ 
+* 화면 설명	︰ Sitemap
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.GBN = 'SITEMAP';
+
+
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.fnSearchReset();
+	this.fnCompInit();		// 컴포넌트 초기화
+	this.fnSearch();
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.clearData();
+	var rowpos = this.dsCond.addRow();
+	this.dsCond.setColumn(rowpos, 'GBN', this.GBN);
+}
+
+// 조회
+this.fnSearch = function()
+{
+	// sitemap div 초기화
+	for(var i = this.divContent.form.divSiteMap.form.components.length-1; i >= 0; i--)
+		this.divContent.form.divSiteMap.form.components[i].destroy();
+	
+	// transaction
+	var sTranId = "selectSiteMap";			// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0000P/selectSiteMap";	// 서비스명
+    var sInDs = "dsCond=dsCond";		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData=dsData";			// 서버에서 수신할 데이타셋
+    var sArg = "";						// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "selectSiteMap" :
+			this.fnSetMenuDataset();	// lvl별로 dataset 조개기
+			this.fnDrawSiteMap();	// siteMap 그리기
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)	return;
+	
+	switch(mID)
+	{
+	
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	
+}
+
+
+// lvl별 dataset 쪼개기
+this.fnSetMenuDataset = function()
+{
+	this.dsData.set_filterstr("MENU_LVL==1");
+	this.dsMenuLv1.copyData(this.dsData, true);
+	
+	this.dsData.set_filterstr("MENU_LVL==2");
+	this.dsMenuLv2.copyData(this.dsData, true);
+	
+	this.dsData.set_filterstr("MENU_LVL==3");
+	this.dsMenuLv3.copyData(this.dsData, true);
+	
+	this.dsData.set_filterstr("");
+}
+
+
+// siteMap 그리기
+this.fnDrawSiteMap = function()
+{
+	var nMargin 	= 20;
+	var nMargin2	= 10;
+	var nTop		= 0;
+	var nLeft		= nMargin;
+	
+	var nTopLv2		= 0;
+	var nLeftLv2	= 0;
+	var nMaxBotLv2 	= 0;
+	var nMaxCol 	= 5;
+	
+	for(var i = 0; i < this.dsMenuLv1.rowcount; i++)
+	{
+		nMaxBotLv2 = 0;
+		
+		var MENU_ID = this.dsMenuLv1.getColumn(i, 'MENU_ID');
+		var MENU_NM = this.dsMenuLv1.getColumn(i, 'MENU_NM');
+		var READ_YN = this.dsMenuLv1.getColumn(i, 'READ_YN');
+		
+		// 해당 대매뉴 하위 중메뉴가 없을 경우 continue;
+		//trace(MENU_ID + '  '  + MENU_NM + '  ' + this.dsMenuLv2.getCaseCount("UP_MENU_ID=='" + MENU_ID + "'"));
+		
+		if(this.dsMenuLv2.getCaseCountNF("UP_MENU_ID=='" + MENU_ID + "'") == 0)
+			continue;	
+		
+		var chkCnt = 0;		
+		this.dsMenuLv2.filter("UP_MENU_ID=='" + MENU_ID + "'");
+		
+		for(var j=0;j<this.dsMenuLv2.rowcount;j++){
+			var MENU_IDL2 = this.dsMenuLv2.getColumn(j, 'MENU_ID');
+			trace(chkCnt);
+			if(this.dsMenuLv3.getCaseCountNF("UP_MENU_ID=='" + MENU_IDL2 + "'") != 0) {
+				chkCnt++;
+			}
+		}		
+		this.dsMenuLv2.filter("");		
+		if(chkCnt==0) continue;
+		
+		// 대메뉴 Div
+		var divLv1 = new Div();
+		divLv1.init("divLv1_" + (i+1), 0, nTop, null, 300, nMargin2, null);
+		this.divContent.form.divSiteMap.addChild('divLv1_'+(i+1), divLv1);
+		divLv1.show();
+		divLv1.set_borderRadius('10px 10px');
+		
+		// 대메뉴 Static
+		var stcLv1 = new Static();
+		stcLv1.init("stcLv1_" + (i+1), nMargin, 10, null, 32, 0, null);
+		stcLv1.set_text(this.dsMenuLv1.getColumn(i, "MENU_NM"));
+		stcLv1.set_background("transparent url('theme://MIRAE_IMAGE_SET/HOME/spp-tit-b-circle.png') no-repeat left center");
+		stcLv1.set_padding('0px 0px 0px 24px');
+		stcLv1.set_font('bold 14px "KoPubL"');
+		stcLv1.set_color('#1078c9');
+		
+		// 접근권한 처리
+// 		if(READ_YN == "Y") {
+// 			stObj.set_cssclass("sta_WF_SiteMapTitle02");
+// 		}
+// 		else {
+// 			stcLv1.set_enable(false);
+// 			stObj.set_cssclass("sta_WF_SiteMapTitle03");
+// 		}
+		divLv1.addChild("stcLv1_"+(i+1), stcLv1);
+		stcLv1.show();
+		
+		// 대메뉴 구분선 추가
+		var tempId = 'stcLv2Line_'+i;
+		if( !divLv1.form.components[tempId] ) {
+			//var nLineWidth = nexacro.getTextSize(stcLv1.getDisplayText(), stcLv1._getCurrentStyleInheritValue("font")).nx;
+			var stcLv2Line = new Static();
+			stcLv2Line.init(tempId, stcLv1.getOffsetLeft(), stcLv1.getOffsetBottom() + 2, null, 2, 20, null);
+			stcLv2Line.set_background('linear-gradient(to right, #043C73, #4371f7, #d9e3ff');
+			divLv1.addChild(tempId, stcLv2Line);
+			stcLv2Line.show();
+		}
+		
+		
+		// 하위메뉴 div
+		var menuDiv = new Div();
+		menuDiv.init("menuDiv"+(i+1), nMargin, stcLv1.getOffsetBottom() + 10, null, 300, 0, null);
+		divLv1.addChild("menuDiv" + (i + 1), menuDiv);
+		menuDiv.show();
+		
+		var nBottom = this.fnDrawMiddleMenu(menuDiv, MENU_ID);
+		if(nBottom > nMaxBotLv2)
+			nMaxBotLv2 = nBottom;
+			
+		menuDiv.set_height(nMaxBotLv2 + 5);
+		
+		divLv1.set_height(menuDiv.getOffsetTop() + menuDiv.getOffsetHeight() + nMargin2);
+		nTop += divLv1.getOffsetHeight();
+	}
+	
+	this.divContent.form.divSiteMap.form.resetScroll();
+	this.divContent.form.resetScroll();
+	
+}
+
+
+// 중메뉴 draw
+this.fnDrawMiddleMenu = function(div, UP_MENU_ID)
+{
+	var rtn = 300;
+	var nMaxBottom = 0;
+	
+	var nTopDiv  	= 0;
+	var nLeftDiv	= 0;
+	
+	var nTop 	= 10;
+	var nLeft 	= 0;
+	var nWidth 	= 200;
+	var nHeight = 32;
+	
+	var nDivMargin = 20;
+	
+	this.dsMenuLv2.set_filterstr("UP_MENU_ID=='" + UP_MENU_ID + "'");
+	for(var i = 0; i < this.dsMenuLv2.rowcount; i++)
+	{
+		nTop = 0;
+		var nMaxWidth = 80;
+		var MENU_ID_LV2 = this.dsMenuLv2.getColumn(i, 'MENU_ID');
+		var MENU_NM_LV2 = this.dsMenuLv2.getColumn(i, 'MENU_NM');
+		var READ_YN_LV2 = this.dsMenuLv2.getColumn(i, 'READ_YN');
+		
+		// 해당 중매뉴 하위 소메뉴가 없을 경우 continue;
+		if(this.dsMenuLv3.getCaseCountNF("UP_MENU_ID=='" + MENU_ID_LV2 + "'") == 0)
+			continue;
+		
+		var divLv2 = new Div();
+		divLv2.init('divLv2_'+(i+1), nLeftDiv, nTopDiv, nMaxWidth, 300, null, null);
+		div.addChild('divLv2_'+(i+1), divLv2);
+		divLv2.show();
+		
+		// 중메뉴 Static
+		var stcLv2 = new Static();
+		stcLv2.init("stcLv2_"+(i+1), 0, nTop, null, nHeight, 0, null);
+		stcLv2.set_text(MENU_NM_LV2);
+		divLv2.addChild('stcLv2_'+(i+1), stcLv2);
+		stcLv2.set_color('#222222');
+		stcLv2.set_font('bold 13px "KoPubL"');
+		stcLv2.show();
+		
+		// 최대가로길이 갱신
+		var stcSize = nexacro.getTextSize(stcLv2.text, stcLv2._getCurrentStyleInheritValue("font")).nx + 10;
+		if( stcSize > nMaxWidth )
+			nMaxWidth = stcSize;
+		
+		nTop += nHeight;
+		
+		
+		// 소메뉴 Button
+		var nLv3Height = 28;
+		var sFilter = "UP_MENU_ID =='" + MENU_ID_LV2 + "'";
+		if( this.GBN == 'FAVORITE' ) 
+			sFilter += " && FAVORITE_YN =='Y'";
+		this.dsMenuLv3.set_filterstr(sFilter);
+		for(var j = 0; j < this.dsMenuLv3.rowcount; j++)
+		{
+			var MENU_ID_LV3 = this.dsMenuLv3.getColumn(j, 'MENU_ID');
+			var MENU_NM_LV3	= this.dsMenuLv3.getColumn(j, 'MENU_NM');
+			
+			var btnLv3 = new Button();
+			btnLv3.init("btnLv3_"+(j+1), 0, nTop, null, nLv3Height, 0, null);
+			btnLv3.addEventHandler('onclick', this.btnMenuOnclick, this);
+			btnLv3.addEventHandler('onmouseenter', this.btnMenuOnmouseenter, this);
+			btnLv3.addEventHandler('onmouseleave', this.btnMenuOnmouseleave, this);
+			btnLv3.MENU_ID 	= MENU_ID_LV3;
+			btnLv3.set_text('  · ' + MENU_NM_LV3);
+			btnLv3.set_textAlign('left');
+			btnLv3.set_background('#f7f9fc');
+			btnLv3.set_color('#888888');
+			btnLv3.set_font('bold 12px "KopubL"');
+			btnLv3.set_border('0px none');
+			btnLv3.set_cursor('pointer');
+			
+			if( this.dsMenuLv3.rowcount == 1 )
+				btnLv3.set_border('1px solid #d6d6d6, 0px, 1px solid #d6d6d6px, 0px');
+			else if( j == 0 )
+				btnLv3.set_border('1px solid #d6d6d6, 0px, 0px, 0px');
+			else if( j == this.dsMenuLv3.rowcount - 1)
+				btnLv3.set_border('0px, 0px, 1px solid #d6d6d6, 0px');
+			divLv2.addChild("btnLv3_"+(j+1), btnLv3);
+			btnLv3.show();
+			
+			// 최대가로길이 갱신
+			var stcSize = nexacro.getTextSize(btnLv3.text, btnLv3._getCurrentStyleInheritValue("font")).nx + 20;
+			if( stcSize > nMaxWidth )
+				nMaxWidth = stcSize;
+			nTop += nLv3Height;
+		}
+		
+		// 최하위 좌표 갱신
+		if(nMaxBottom < nTop)	
+			nMaxBottom = nTop;
+		
+		nTopDiv = 0;
+		nLeftDiv += nMaxWidth + nDivMargin;
+		
+		divLv2.set_width(nMaxWidth);
+		divLv2.set_height(nTop + 5);
+		divLv2.form.resetScroll();
+	}
+	
+	div.set_height(nMaxBottom);
+	div.form.resetScroll();
+	
+	rtn = nMaxBottom + 10;
+	return rtn;
+}
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnClose" :			// 닫기
+			Ex.core.pclose(this);
+			break;
+		
+		case "btnSearchReset" :
+			this.fnSearchReset();
+			break;
+			
+		case "btnSearch" :
+			this.fnSearch();
+			break;
+	}
+}
+
+
+this.fnCommOnkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if( e.keycode == 13 ) {
+		this.divContent.form.divSearchArea.form.btnSearch.setFocus();
+		this.fnSearch();
+		obj.setFocus();
+	}
+};
+
+
+this.fnBtnTabOnclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var arrBtn = [this.divContent.form.btnSiteMap, this.divContent.form.btnFavorite];
+	for(var i = 0; i < arrBtn.length; i++)
+		arrBtn[i].set_cssclass('btn_HOME_boardOff');
+		
+	obj.set_cssclass('btn_HOME_boardOn');
+	
+	if( this.GBN != obj.GBN ) {
+		this.GBN = obj.GBN;
+		this.fnSearchReset();
+		this.fnSearch();
+	}
+};
+
+
+// 동적 메뉴 버튼 onclick
+this.btnMenuOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var objApp = nexacro.getApplication();
+	var rowpos = objApp.gdsMenu.findRow('MENU_ID', obj.MENU_ID);
+	if( rowpos >= 0 ) {
+		Ex.core.pclose(this, obj.MENU_ID);
+	}
+	else {
+		var param = {id : "ERROR", msg : '연결된 메뉴정보가 올바르지 않습니다.'};
+		Ex.core.error(this, param);
+	}
+	
+	return;
+}
+
+
+
+this.btnMenuOnmouseenter = function(obj:nexacro.Div,e:nexacro.MouseEventInfo)
+{
+	obj.set_color('#F58220');
+};
+
+this.btnMenuOnmouseleave = function(obj:nexacro.Div,e:nexacro.MouseEventInfo)
+{
+	obj.set_color('#888888');
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContent.form.divSearchArea.form.edtTitle" propid="value" datasetid="dsCond" columnid="TITLE"/>
+      <BindItem id="item1" compid="divContent.form.divSearchArea.form.stcReqId" propid="value" datasetid="dsCond" columnid="SEARCH_TEXT"/>
+      <BindItem id="item2" compid="divContent.form.divSearchArea.form.stcReqDt" propid="value" datasetid="dsCond" columnid="SEARCH_TEXT"/>
+      <BindItem id="item3" compid="divContent.form.divSearchArea.form.calFrReqDt" propid="value" datasetid="dsCond" columnid="FR_REQ_DT"/>
+      <BindItem id="item4" compid="divContent.form.divSearchArea.form.cboReqStatCd" propid="value" datasetid="dsCond" columnid="REQ_STAT_CD"/>
+      <BindItem id="item5" compid="divContent.form.divSearchArea.form.edtReqId" propid="value" datasetid="dsCond" columnid="REQ_ID"/>
+      <BindItem id="item6" compid="divContent.form.divSearchArea.form.calToReqDt" propid="value" datasetid="dsCond" columnid="TO_REQ_DT"/>
+      <BindItem id="item7" compid="divContent.form.divSearchArea.form.chkMyReq" propid="value" datasetid="dsCond" columnid="MY_REQ_YN"/>
+      <BindItem id="item8" compid="divContent.form.divSearchArea.form.edtSearchStr" propid="value" datasetid="dsCond" columnid="MENU_NM"/>
+      <BindItem id="item9" compid="divContent.form.divSearchArea.form.edtCoNm" propid="value" datasetid="dsCond" columnid="CO_NM"/>
+      <BindItem id="item10" compid="divContent.form.divSearchArea.form.edtDeptNm" propid="value" datasetid="dsCond" columnid="DEPT_NM"/>
+    </Bind>
+  </Form>
+</FDL>

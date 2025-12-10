@@ -1,0 +1,561 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="SV0110_P02" classname="top" left="0" top="0" titletext="사용자권한해지" onload="form_onload" scrolltype="none" cssclass="" height="570" width="1000">
+    <Layouts>
+      <Layout width="1000" height="570" mobileorientation="landscape">
+        <Div id="divGrdTopBtn" taborder="0" width="425" height="24" bottom="626" visible="true" right="18.48%" isButtonGroup="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+              <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" bottom="0" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBottom" taborder="1" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+              <Button id="btnSave" taborder="1" text="해지" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="btnClose:5" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divContent" taborder="2" text="Div00" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="Static00_00" taborder="0" left="0" top="119" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Static id="Static00_01" taborder="1" left="5" top="0" height="10" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-5"/>
+              <Static id="Static00_01_00" taborder="2" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Static id="Static00_01_00_00" taborder="3" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+              <Static id="Static00_02" taborder="4" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="0"/>
+              <Grid id="grdData" taborder="5" left="21.00" top="160" bottom="19" binddataset="dsData" cssclass="grd_WF_normal" autofittype="col" useSort="true" visible="true" cellsizingtype="col" right="20" oncellclick="grdOnCellClick">
+                <Formats>
+                  <Format id="singleSel">
+                    <Columns>
+                      <Column size="40" band="left"/>
+                      <Column size="38" band="left"/>
+                      <Column size="0" band="left"/>
+                      <Column size="116"/>
+                      <Column size="150"/>
+                      <Column size="130"/>
+                      <Column size="130"/>
+                      <Column size="130"/>
+                      <Column size="130"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="28" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="No"/>
+                      <Cell col="2" displaytype="checkbox" edittype="checkbox"/>
+                      <Cell col="3" text="사번"/>
+                      <Cell col="4" text="이름"/>
+                      <Cell col="5" text="부서"/>
+                      <Cell col="6" text="권한 그룹"/>
+                      <Cell col="7" text="역할ID"/>
+                      <Cell col="8" text="역할"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                      <Cell col="1" expr="expr:currow+1"/>
+                      <Cell col="2" displaytype="checkbox" edittype="checkbox" text="bind:CHK"/>
+                      <Cell col="3" text="bind:USER_ID" textAlign="center"/>
+                      <Cell col="4" text="bind:USER_NM" textAlign="center"/>
+                      <Cell col="5" text="bind:DEPT_NM"/>
+                      <Cell col="6" text="bind:AUTH_GB_NM"/>
+                      <Cell col="7" text="bind:AUTH_ID"/>
+                      <Cell col="8" text="bind:AUTH_NM"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="stcGrdTitle00" taborder="7" text="권한 목록" left="21.00" top="131" width="100" height="24" cssclass="sta_WF_gridTitle"/>
+              <Static id="stcCnt00" taborder="6" left="stcGrdTitle00:17.00" top="133" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsData"/>
+              <Static id="stcBg01_00" taborder="8" left="19.00" top="88" height="34" cssclass="sta_WF_inputBg" right="20" text=""/>
+              <Static id="stcRqstr00" taborder="9" left="2.06%" top="88" width="90" height="34" cssclass="sta_WF_inputTitle_E" text="신청서번호"/>
+              <Edit id="edtReqUser" taborder="10" left="stcRqstr00:5" top="94" height="24" cssclass="edt_WF_normal" right="618" validationGroup="group1" readonly="true" text="" validation="신청서번호;NULL" validationCheckReadonly="false"/>
+              <Button id="btnSearchSr" taborder="11" top="94" height="24" cssclass="btn_WF_SearchIcon" onclick="fnCommOnclick" text="" left="edtReqUser:-3.00" right="595"/>
+              <Static id="stcGrdTitle00_00" taborder="12" text="권한 해지" left="21.00" top="61" width="100" height="24" cssclass="sta_WF_gridTitle"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSearchArea" taborder="3" left="20.00" top="10" height="50" right="20" cssclass="div_WF_divSearchArea" text="">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Static id="Static00_00_00_00" taborder="1" left="305.00" top="13" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="10" height="24"/>
+              <Button id="btnSearch" taborder="2" top="14" width="75" height="24" text="조회" right="10" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Static id="stcRecUsr" taborder="4" text="사용자" left="20.00" top="14" width="60" height="24" cssclass="sta_WF_schTitle" onclick="divSearchArea_stcTitle_onclick"/>
+              <Div id="divOutUserReg" taborder="3" url="fomm::FOMM0000_D01.xfdl" left="stcRecUsr:5" top="14" height="24" enableevent="false" width="221" visible="true"/>
+              <Static id="stcRecUsr00" taborder="6" text="그룹유형" left="Static00_00_00_00:0" top="14" width="60" height="24" cssclass="sta_WF_schTitle" onclick="divSearchArea_stcTitle_onclick"/>
+              <Radio id="rdoSndYn" taborder="5" left="stcRecUsr00:0" top="14" height="24" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" padding="0px 5px 0px 5px" cssclass="rdo_WF_normal" value="Y" text="" index="-1" enableevent="true" validationCheckReadonly="false" width="160" onitemchanged="divSearchArea_rdoSndYn_onitemchanged">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">G</Col>
+                      <Col id="datacolumn">권한그룹</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">X</Col>
+                      <Col id="datacolumn">확장그룹</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Static id="stcRecUsr00_00" taborder="8" text="역할" left="rdoSndYn:0" top="14" width="50" height="24" cssclass="sta_WF_schTitle" onclick="divSearchArea_stcTitle_onclick"/>
+              <Combo id="cboAuthId" taborder="7" text="" top="14" height="24" innerdataset="dsCommCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" cssclass="cbo_WF_normal" left="stcRecUsr00_00:5.00" onitemchanged="onitemchanged" width="154" type="caseifilterlike"/>
+              <Button id="btnSearchReset" taborder="9" top="14" width="90" height="24" text="초기화" right="btnSearch:5" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="AUTH_GRP_GB" type="STRING" size="256"/>
+          <Column id="AUTH_ID" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsList" onrowposchanged="dsFommUserMt_onrowposchanged" oncolumnchanged="fnCommOncolumnchanged" canrowposchange="dsFommUserMt_canrowposchange"/>
+      <Dataset id="dsData" oncolumnchanged="dsOnColumnChanged"/>
+      <Dataset id="dsAuthCd" oncolumnchanged="dsOnColumnChanged"/>
+      <Dataset id="dsExtdCd" oncolumnchanged="dsOnColumnChanged"/>
+      <Dataset id="dsCommCd" oncolumnchanged="dsOnColumnChanged"/>
+      <Dataset id="dsReq" onrowposchanged="dsFommUserMt_onrowposchanged" oncolumnchanged="fnCommOncolumnchanged" canrowposchange="dsFommUserMt_canrowposchange"/>
+      <Dataset id="dsAuthHisList" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="AUTH_HT_ID" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="AUTH_ID" type="STRING" size="256"/>
+          <Column id="AUTH_GRP_GB" type="STRING" size="256"/>
+          <Column id="AUTH_ACT_GB" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+          <Column id="DEPT_ID" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="RMK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="AUTH_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ SV0110_P02
+* 화면(명)		︰ 서버선택팝업(공통)
+* 메뉴(경로)		︰ 공통
+* 화면 설명		︰ 서버선택팝업
+* 작성자			︰ WEMB
+* 작성일			︰ 2024.05.30
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        	작성자		이력
+*------------------------------------------------------------------
+* 2024.05.30	JBY			최초작성
+*------------------------------------------------------------------
+* Description
+	<< Popup param >>
+	pGridFormats	: 선택 목록에 사용될 그리드 포맷
+	pGridInnerDsArr	: 선택 목록 그리드에 콤보 InnerDataset Object Array
+	pDsData			: 선택 목록 그리드 Bind Dataset Object
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+	this.divContent.form.grdData.displayRowType();
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+	
+	this.divSearchArea.form.divOutUserReg.form.resetInput();
+ 	this.dsCond.setColumn(0, 'AUTH_GRP_GB', "G");
+ 	this.dsCond.setColumn(0, "AUTH_ID", "");
+ 	this.dsCond.setColumn(0, "REQ_ID", "");
+
+}
+// 조회 권한리스트
+this.fnSearchList = function()
+{
+	// transaction
+	var sTranId = "select01";			// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0122W/select04";	// 서비스명
+    var sInDs = "dsCond=dsCond";		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData=dsData";		// 서버에서 수신할 데이타셋
+    var sArg = "";						// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 조회 권한 코드
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "select02";			// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0122W/select01";	// 서비스명
+    var sInDs = "dsCond=dsCond";		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsAuthCd=dsAuthCd dsExtdCd=dsExtdCd";		// 서버에서 수신할 데이타셋
+    var sArg = "";						// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+// 저장
+this.fnSave = function()
+{
+	// transaction
+	var sTranId = "save01";			// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0122W/save01";	// 서비스명
+    var sInDs = "dsAuthHisList=dsAuthHisList";		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "";		// 서버에서 수신할 데이타셋
+    var sArg = "";						// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;
+		case "select02" : 
+			//Ex.core.toast(this, "10002");
+			this.dsCommCd.clear();
+			this.dsCommCd.copyData(this.dsAuthCd,true);
+			this.dsCommCd.insertRow(0);
+			this.dsCommCd.setColumn(0, "CMM_CD_NM", "- 전체 -");
+			this.divSearchArea.form.cboAuthId.set_index(0);
+			break;
+		case "save01" :
+			Ex.core.pclose(this, true);
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO selReqPop
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	if(!varValue)
+		return;
+	
+	switch(pID)
+	{
+		case "selReqPop" : 
+			this.dsReq.loadXML(varValue);
+			this.dsCond.setColumn(0,'REQ_ID',this.dsReq.getColumn(0,'REQ_ID'));
+			break;	
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO selReqPop
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" : 
+			trace(" varValue >>>> " + varValue);
+			var nRow = 0;
+			if(varValue)
+			{	this.dsAuthHisList.clearData();
+				for(var i = 0 ; i < this.dsData.rowcount ; i++)
+				{	
+					if(this.dsData.getColumn(i,'CHK') == 1)
+					{	
+						this.dsAuthHisList.addRow();
+						this.dsAuthHisList.setColumn(nRow,'USER_ID',this.dsData.getColumn(i,'USER_ID'));
+						this.dsAuthHisList.setColumn(nRow,'USER_NM',this.dsData.getColumn(i,'USER_NM'));
+						this.dsAuthHisList.setColumn(nRow,'AUTH_ID',this.dsData.getColumn(i,'AUTH_ID'));
+						this.dsAuthHisList.setColumn(nRow,'AUTH_NM',this.dsData.getColumn(i,'AUTH_NM'));
+						this.dsAuthHisList.setColumn(nRow,'AUTH_GRP_GB',this.dsData.getColumn(i,'AUTH_GRP_GB'));
+						this.dsAuthHisList.setColumn(nRow,'AUTH_ACT_GB','D');
+						this.dsAuthHisList.setColumn(nRow,'REQ_ID',this.dsCond.getColumn(0,'REQ_ID'));
+						this.dsAuthHisList.setColumn(nRow,'DEPT_ID',this.dsData.getColumn(i,'DEPT_ID'));
+						this.dsAuthHisList.setColumn(nRow,'DEPT_NM',this.dsData.getColumn(i,'DEPT_NM'));
+						this.dsAuthHisList.setColumn(nRow,'ROWFLAG','D');
+						nRow++;
+					}
+				}
+
+				this.fnSave();
+				//Ex.core.pclose(this, this.dsData.saveXML());
+			}
+			break;
+			
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+//	this.fnGetCmmCd();
+
+	this.fnSearchReset();	// 검색조건 초기화
+
+	//this.fnSearchList();	// 검색
+	this.fnSearch();	// 검색
+	
+	
+	// 버튼&권한 mapping && visible 처리
+	var	arrBtn = [this.divBottom.form.btnSave];		// 저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+	// 버튼 영역 div align 처리
+//	Ex.util.setBtnAlign(this.divBottom, 'right', true);
+}
+
+
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+// 	var oParam = {
+// 		upCmmCd : ['CI_TYPE_CD',	'CI_TYPE_CD'		]	// 조회할 상위코드
+// 		,codeDiv: ['SVC_MNG_CD',	'SVC_MNG_CD'		]	// 조회할 코드의 업무구분
+// 		,optStr	: ['ALL',			''					]	// ALL: '- 전체 -'; SEL: '- 선택 -'
+// 		,useYn	: ['Y',				'Y'					]	// 사용여부
+// 		,filter	: ['',				''					]	// filterStr
+// 		,objDs	: [this.dsCiTypeCd, this.dsCiTypeCdGrid	]	// copy dataset
+// 	}
+// 	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+
+this.userDeptChangedCallBack = function(compId, dsRtnObj)
+{
+
+	this.deptChangedCallBack(compId, dsRtnObj);
+
+}
+
+this.deptChangedCallBack = function(compId, dsRtnObj)
+{
+	if(compId == "divOutUserReg")
+	{
+		if( !Ex.isEmpty(dsRtnObj.getColumn(0, "USER_ID")) )
+		{
+			this.dsCond.setColumn(0, "USER_ID",	dsRtnObj.getColumn(0, "USER_ID"));
+			this.dsCond.setColumn(0, "USER_NM",	dsRtnObj.getColumn(0, "USER_NM"));
+		}
+		else
+		{
+			this.dsCond.setColumn(0, "USER_ID",	"");
+			this.dsCond.setColumn(0, "USER_NM",	"");
+		}
+	}
+	
+
+}
+
+this.fnCheckValidate = function()
+{
+	var chkCount = 0;
+	// 필수값 체크
+	if( !Ex.util.checkValidate(this.divContent, "group1") ) return false;
+	// Grid Validation
+	if( this.dsData.rowcount < 1 )
+	{
+		var param = {
+				id : "alert_selUserAdd"
+			  , msg : "권한목록을 추가해주세요."
+			  , msgtype : "I"};
+		Ex.core.alert(this, param);
+		return false;
+	}
+	// 권한 중복체크
+	for(var i = 0 ; i < this.dsData.rowcount ; i++)
+	{	if(this.dsData.getColumn(i,'CHK') == 1)
+		{	
+			chkCount++;
+		}
+	}
+	if(chkCount == 0)
+	{
+		var param = {
+				id : "alert_selUserDupl"
+			  , msg : "체크된 항목이 없습니다."
+			  , msgtype : "I"};
+		Ex.core.alert(this, param);
+		return false;
+	}
+	
+	return true;
+}
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;
+
+		case "btnSearch" :		// 검색
+			
+// 			if(Ex.isEmpty(this.dsCond.getColumn(0,'USER_ID'))) {
+// 				var param = {
+// 						id : "alert_select"
+// 					  , msg : "사용자 또는 그룹유형,역할 선택 후 조회할 수 있습니다."
+// 					  , arrparam : [Ex.core.word('사용자')]
+// 					  , msgtype : "I"};
+// 				Ex.core.alert(this, param);
+// 				return;
+// 			}
+			this.fnSearchList();	// 검색
+			break;
+
+	
+		case "btnSave" :			// 선택
+			if( this.fnCheckValidate() ) {	
+				var param = {
+						id : "saveConfirm"
+					  , msg : "권한 해지하시겠습니까?"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+
+			break;
+		case "btnSearchSr" : //요청서 가져오기
+			Ex.core.popup(
+					this,
+					'selReqPop',
+					"sr::SR0000_P01.xfdl",             		// <--- 팝업창 오픈 Url
+						{
+							title		: Ex.core.word('신청서ID') + ' ' + Ex.core.word('선택'),
+							pSvCTmplatId : 'WFT240071'
+						},											// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+					"width=1320,height=500"                  	// <--- width/height/modeless(프레임 처리 옵션)							
+				);
+				return;
+			break;
+
+		case "btnClose" :			// 닫기
+			Ex.core.pclose(this);
+			break;
+	}
+}
+
+// 공통 onkeydown event : component
+this.fnCommOnkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == '13')
+	{
+		this.divContent.form.divSearchArea.form.btnSearch.setFocus();
+		this.fnSearch();
+		obj.setFocus();
+	}
+};
+
+this.grdOnCellClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(obj.id == "grdData")
+	{
+		obj.dropdownCombo();
+	}
+};
+
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+this.divSearchArea_rdoSndYn_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	this.dsCommCd.clear();
+	if(this.dsCond.getColumn(0,'AUTH_GRP_GB') == 'G')
+	{
+		this.dsCommCd.copyData(this.dsAuthCd,true);
+	}else if(this.dsCond.getColumn(0,'AUTH_GRP_GB') == 'X')
+	{
+		this.dsCommCd.copyData(this.dsExtdCd,true);
+	}else
+	{
+		
+	}
+	this.dsCommCd.insertRow(0);
+	this.dsCommCd.setColumn(0, "CMM_CD_NM", "- 전체 -");
+	this.divSearchArea.form.cboAuthId.set_index(0);
+	this.dsCond.setColumn(0,"AUTH_ID",'');
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContent.form.divSearchArea.form.edtSearchStr" propid="value" datasetid="dsCond" columnid="CI_NM"/>
+      <BindItem id="item1" compid="divContent.form.divSearchArea.form.edtSearchStr00" propid="value" datasetid="dsCond" columnid="MAIN_IP"/>
+      <BindItem id="item2" compid="divContent.form.divSearchArea.form.Static00_00" propid="value" datasetid="dsCond" columnid="CI_NM"/>
+      <BindItem id="item3" compid="divContent.form.divSearchArea.form.Static00_00_00" propid="value" datasetid="dsCond" columnid="CI_NM"/>
+      <BindItem id="item4" compid="divContent.form.divSearchArea.form.divSearchArea.form.edtSearchStr" propid="value" datasetid="dsCond" columnid="CI_NM"/>
+      <BindItem id="item5" compid="divContent.form.divSearchArea.form.divSearchArea.form.edtSearchStr00" propid="value" datasetid="dsCond" columnid="MAIN_IP"/>
+      <BindItem id="item6" compid="divContent.form.divSearchArea.form.divSearchArea.form.Static00_00" propid="value" datasetid="dsCond" columnid="CI_NM"/>
+      <BindItem id="item7" compid="divContent.form.divSearchArea.form.divSearchArea.form.Static00_00_00" propid="value" datasetid="dsCond" columnid="CI_NM"/>
+      <BindItem id="item8" compid="divContent.form.stcBg01_00" propid="value" datasetid="dsCond" columnid="REV_DEPT_CD"/>
+      <BindItem id="item10" compid="divForm.form.divContent.form.divInfo.form.edtReqUser02" propid="value" datasetid="dsChklstInfo" columnid="GRD_CHKLST_CONTS"/>
+      <BindItem id="item11" compid="divForm.form.divContent.form.divInfo.form.edtReqUser02_00" propid="value" datasetid="dsChklstInfo" columnid="GRD_TEAM_CHKLST_CONTS"/>
+      <BindItem id="item9" compid="divSearchArea.form.edtSearchStr" propid="value" datasetid="dsCond" columnid="CI_NM"/>
+      <BindItem id="item12" compid="divSearchArea.form.edtSearchStr00" propid="value" datasetid="dsCond" columnid="MAIN_IP"/>
+      <BindItem id="item13" compid="divSearchArea.form.Static00_00" propid="value" datasetid="dsCond" columnid="CI_NM"/>
+      <BindItem id="item14" compid="divSearchArea.form.Static00_00_00" propid="value" datasetid="dsCond" columnid="CI_NM"/>
+      <BindItem id="item15" compid="divSearchArea.form.divSearchArea.form.edtSearchStr" propid="value" datasetid="dsCond" columnid="CI_NM"/>
+      <BindItem id="item16" compid="divSearchArea.form.divSearchArea.form.edtSearchStr00" propid="value" datasetid="dsCond" columnid="MAIN_IP"/>
+      <BindItem id="item17" compid="divSearchArea.form.divSearchArea.form.Static00_00" propid="value" datasetid="dsCond" columnid="CI_NM"/>
+      <BindItem id="item18" compid="divSearchArea.form.divSearchArea.form.Static00_00_00" propid="value" datasetid="dsCond" columnid="CI_NM"/>
+      <BindItem id="item19" compid="divSearchArea.form.rdoSndYn" propid="value" datasetid="dsCond" columnid="AUTH_GRP_GB"/>
+      <BindItem id="item20" compid="divSearchArea.form.cboAuthId" propid="value" datasetid="dsCond" columnid="AUTH_ID"/>
+      <BindItem id="item21" compid="divContent.form.edtReqUser" propid="value" datasetid="dsCond" columnid="REQ_ID"/>
+    </Bind>
+  </Form>
+</FDL>

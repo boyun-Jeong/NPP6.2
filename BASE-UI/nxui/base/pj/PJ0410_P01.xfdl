@@ -1,0 +1,405 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PJ0410_P01" left="0" top="0" width="880" height="630" titletext="보고상세" onload="form_onload">
+    <Layouts>
+      <Layout width="880" height="630">
+        <Div id="divContents" taborder="0" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="staContents" taborder="16" text="보고내용" cssclass="sta_WF_inputTitle_E" left="20" top="153" width="130" height="220" style="align:left middle;"/>
+              <Static id="stcContentsBg" taborder="15" cssclass="sta_WF_inputBg" left="staContents:-1" top="153" height="220" right="20"/>
+              <Static id="Static06" taborder="7" cssclass="sta_WF_inputBg" left="20" top="87" height="34" right="20"/>
+              <Static id="Static07" taborder="8" text="제목" cssclass="sta_WF_inputTitle_E" left="20" top="87" width="130" height="34" style="align:left middle;"/>
+              <Static id="Static10" taborder="2" cssclass="sta_WF_inputBg" left="20" top="54" height="34" right="20"/>
+              <Static id="staUpmuUserNm" taborder="3" text="프로젝트명" cssclass="sta_WF_inputTitle" left="20" top="54" width="130" height="34" style="align:left middle;"/>
+              <Static id="Static13" taborder="10" cssclass="sta_WF_inputBg" left="20" top="120" height="34" right="20"/>
+              <Static id="Static14" taborder="11" text="등록자" onclick="Static13_onclick" cssclass="sta_WF_inputTitle" left="20" top="120" width="130" height="34" style="align:left middle;"/>
+              <Static id="staRepTypeCd" taborder="5" text="보고종류" cssclass="sta_WF_inputTitle_E" left="50.00%" top="54" width="130" height="34" style="align:left middle;"/>
+              <Edit id="edtUpmuUserNm" taborder="4" maxlength="80" left="staUpmuUserNm:5" top="59" height="24" enable="false" right="staRepTypeCd:5" cssclass="edt_WF_normal"/>
+              <Edit id="edtRepName" taborder="9" cssclass="edt_WF_normal" left="Static07:5" top="92" height="24" validate="" right="25" validationGroup="input01" validation="제목;NULL"/>
+              <Static id="Static03" taborder="13" text="등록일시" cssclass="sta_WF_inputTitle" left="50.00%" top="120" width="130" height="34" style="align:left middle;"/>
+              <TextArea id="txaContents" taborder="17" left="staContents:5" top="158" right="25" height="210" cssclass="txa_WF_normal" validationGroup="input01" validation="보고내용;NULL"/>
+              <Calendar id="calPjtStime" taborder="14" onchanged="calPjtStime_onchanged" cssclass="cal_WF_normal" left="Static03:5" top="125" width="148" height="24" validate="" enable="false"/>
+              <Combo id="cboRepTypeCd" taborder="6" innerdataset="dsPjRepCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" left="staRepTypeCd:5" top="59" height="24" right="25" cssclass="cbo_WF_normal" validationGroup="input01" validation="보고종류;NULL"/>
+              <Static id="stcBackMid2_00" taborder="18" left="20" top="stcContentsBg:0" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Div id="divFiles" taborder="19" left="20" top="stcBackMid2_00:0" right="20" __USE_MODE="1" _ENABLE_READONLY_ALL_SKIP="Y" url="comm::comFile.xfdl" text="" bottom="0"/>
+              <Static id="Static05" taborder="0" text="보고상세" cssclass="sta_WF_gridTitle" left="20" top="20" width="132" height="24"/>
+              <Static id="stcBackMid1" taborder="1" left="20" top="44" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Div id="divRegUser" taborder="12" left="Static14:5" top="125" height="24" right="Static03:5" url="fomm::FOMM0000_D02.xfdl"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtnBottom" taborder="1" height="60" bottom="0" text="" cssclass="div_POP_msg_btnbg" left="20" right="20">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="14"/>
+              <Button id="btnSave" taborder="1" text="저장" width="110" height="32" bottom="14" cssclass="btn_WF_primary_save" right="btnClose:5" onclick="fnCommOnclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsPjReport" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="REPORT_ID" type="STRING" size="16"/>
+          <Column id="REPORT_TYPE_CD" type="STRING" size="30"/>
+          <Column id="REPORT_NAME" type="STRING" size="200"/>
+          <Column id="PJT_ID" type="STRING" size="16"/>
+          <Column id="PJT_NAME" type="STRING" size="200"/>
+          <Column id="CONTENTS" type="STRING" size="4000"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="REG_USER_ID" type="STRING" size="10"/>
+          <Column id="REG_USER_NM" type="STRING" size="100"/>
+          <Column id="REG_USER_DEPT" type="STRING" size="100"/>
+          <Column id="LMOD_SDATE" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="10"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPjRepCd">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="30"/>
+          <Column id="DATA" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="REPORT_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ PJ0410_P01
+* 화면(명)		︰ 보고 상세
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.10.05
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.10.05	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.saveFlg = "N";				//화면 저장 여부
+this.isCloseBtnClick = false;	//닫기 버튼을 눌러 닫는 경우 true
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+	//trace("[PJ0410_P01] this.form_onload() this.getOwnerFrame()._formObj : " + this.getOwnerFrame()._formObj);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	//trace("[PJ0410_P01] this.fnSearch()");
+	var sTranId = "select01";									// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ0410P/select01";							// 서비스명
+    var sInDs = "dsCond=dsCond";								// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsPjReport=dsPjReport";						// 서버에서 수신할 데이타셋
+    var sArg = "";												// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSave = function()
+{
+	//trace("[PJ0410_P01] this.fnSave()");
+	var sTranId = "save01";
+    var sService = "PJ0410P/save01";
+    var sInDs = "dsCond=dsCond dsPjReport=dsPjReport:U";
+	var sOutDs = "dsPjReport=dsPjReport dsCond=dsCond";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+this.fnUploadCallback = function(sSvcId, nErrorCode, sErrorMsg)
+{
+	//trace("[PJ0410_P01] this.fnUploadCallback() sSvcId : " + sSvcId + " nErrorCode : " + nErrorCode + " sErrorMsg : " + sErrorMsg);
+
+	// TO DO
+	// 개발자가 지정한 sSvcId(setConfig 옵션에 넣은 파일첨부ID), nErrorCode(에러코드), sErrorMsg(에러메시지)
+	if (nErrorCode < 0) 
+	{
+		Ex.core.error(this, {id:"ERROR", msg:sSvcId + "\n" + Ex.core.msg(sErrorMsg)});
+		return;
+	}
+	
+	switch(sSvcId)
+	{
+		case "fileSvc" :
+			this.fnSave();
+			break;
+	}
+};
+
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			
+			var strRegUserId    = this.dsPjReport.getColumn(0, "REG_USER_ID");
+			var strRegUserNm    = this.dsPjReport.getColumn(0, "REG_USER_NM");
+			var strRegDept      = this.dsPjReport.getColumn(0, "REG_USER_DEPT");
+			this.divContents.form.divRegUser.form.setValue(strRegUserId, strRegUserNm, strRegDept);
+			this.fn_setEditMode();
+			break;
+
+		case "save01" :
+			this.saveFlg = "Y";
+			Ex.core.toast(this, "10004", null, {toastType:'S'});
+			
+			if( !Ex.isEmpty(this.dsCond.getColumn(0, "REPORT_ID")) )
+			{
+				this.getOwnerFrame().pRptId	= this.dsCond.getColumn(0, "REPORT_ID");
+				this.getOwnerFrame().pNew = "N";
+				this.divContents.form.divFiles.form.fnReplaceTempkeyAndSearch(this.dsCond.getColumn(0, "REPORT_ID"));
+			}
+			
+			var strRegUserId    = this.dsPjReport.getColumn(0, "REG_USER_ID");
+			var strRegUserNm    = this.dsPjReport.getColumn(0, "REG_USER_NM");
+			var strRegDept      = this.dsPjReport.getColumn(0, "REG_USER_DEPT");
+			this.divContents.form.divRegUser.form.setValue(strRegUserId, strRegUserNm, strRegDept);
+			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "" :
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.divContents.form.divFiles.form.fnUploadFiles(true);
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.dsCond.setColumn(0, "PJT_ID", this.getOwnerFrame().pPjtId);
+	this.dsCond.setColumn(0, "REPORT_ID", this.getOwnerFrame().pRptId);
+
+	this.divContents.form.divRegUser.form.setEnable(false);
+
+	// 공통코드 조회
+	this.fnGetCmmCd();
+	
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divBtnBottom.form.btnSave];	// 저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+	
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divBtnBottom, 'right', true);
+
+	// 첨부파일 setting
+	var oParam = {
+		 sSvcId		: 'fileSvc'									// divFile callback 후처리용 서비스 ID
+		,limitMinCnt: 0											// 파일 최소 갯수; defualt 0
+		,limitCnt	: 3											// 파일 최대 갯수; default 5
+		,limitSize	: 100										// 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+		,folderName	: 'pj'										// 폴더명(업무명)
+		,tableName	: 'PJ_REPORT'								// 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+		,primaryKey1: this.dsCond.getColumn(0, "REPORT_ID")||''	// 테이블 PK1(ex. 요청서ID 등)
+		,primaryKey2: ''										// 테이블 PK2 (복합 키인 경우 사용)
+		,primaryKey3: ''										// 테이블 PK3 (복합 키인 경우 사용)
+		,fileDownYn	: ''										// 파일다운권한; 	 공백 시 메뉴의 조회 권한
+		,fileUpYn	: ''										// 파일업로드권한; 공백 시 메뉴의 추가 권한
+		,deleteYn	: ''										// 파일삭제권한; 	 공백 시 메뉴의 삭제 권한
+	};
+	this.divContents.form.divFiles.form.setConfig(this, oParam);
+
+	this.fv_today = Ex.util.today();
+
+	//trace("[PJ0410_P01] this.fnCompInit() this.getOwnerFrame().pIsNew : " + this.getOwnerFrame().pIsNew);
+
+	if(this.getOwnerFrame().pNew == "Y")
+	{
+		var nRow = this.dsPjReport.setInsertRow();
+		this.dsPjReport.setColumn(0, "PJT_ID",   this.getOwnerFrame().pPjtId);
+		this.dsPjReport.setColumn(0, "PJT_NAME", this.getOwnerFrame().pPjtNm);
+		this.divContents.form.divRegUser.form.setValue(Ex.util.getSession('gvUserId'), Ex.util.getSession('gvUserNm'), Ex.util.getSession('gvDeptNm'));
+		this.divContents.form.edtRepName.setFocus();
+	}
+	else if( !Ex.isEmpty(this.dsCond.getColumn(0, "REPORT_ID")) )
+	{
+		this.fnSearch();
+ 	}
+	
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		 upCmmCd : ['RPT_KIND_CD']	// 조회할 상위코드
+		,codeDiv: ['PJT_MNG_CD']	// 조회할 코드의 업무구분
+		,optStr	: ['SEL']			// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y']				// 사용여부
+		,filter	: ['']				// filterStr
+		,objDs	: [this.dsPjRepCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+this.fnCheckValidate = function()
+{
+	// 저장할 dataset에 변경된 data 있는 지 확인
+	if( !Ex.util.isUpdated(this.dsPjReport) && !this.divContents.form.divFiles.form.isUpdateForm())
+	{
+		return false;
+	}
+
+	if( !Ex.util.checkValidate(this.divContents, "input01") ) return false;
+	return true;
+} 
+
+this.fn_setEditMode = function()
+{
+	if( !Ex.isEmpty(this.getOwnerFrame().pEditMode) && this.getOwnerFrame().pEditMode == "read")
+	{		
+		this.divBtnBottom.form.btnSave.set_visible(false);
+		Ex.util.setCompPropAll(this, this.divContents.form, false, [this.divContents.form.divRegUser]);
+	}
+	else
+	{
+		var strRegUserId = this.dsPjReport.getColumn(0, "REG_USER_ID");
+		trace("strRegUserId : " + strRegUserId + " sess : " + Ex.util.getSession('gvUserId'));
+		if(Ex.util.getSession('gvUserId') != strRegUserId)
+		{
+			this.divBtnBottom.form.btnSave.set_visible(false);
+			Ex.util.setCompPropAll(this, this.divContents.form, false, [this.divContents.form.divRegUser]);
+			
+			this.divContents.form.divFiles.form.grdFile.set_readonly(false);
+			this.divContents.form.divFiles.form.divBtn.form.btnDownload.set_enable(true);
+		}
+	}
+}
+
+this.userDeptChangedCallBack = function(compId, dsRtnObj)
+{
+	trace("[PJ0410_P01] this.userDeptChangedCallBack() compId : " + compId);
+	if(compId == "divRegUser")
+	{
+		if( !Ex.isEmpty(dsRtnObj.getColumn(0, "USER_ID")) )
+		{
+			this.dsPjReport.setColumn(0, "REG_USER_ID",		dsRtnObj.getColumn(0, "USER_ID"));
+			this.dsPjReport.setColumn(0, "REG_USER_NM",		dsRtnObj.getColumn(0, "USER_NM"));
+			this.dsPjReport.setColumn(0, "REG_USER_DEPT",	dsRtnObj.getColumn(0, "DEPT_NM"));
+		}
+		else
+		{
+			this.dsPjReport.setColumn(0, "REG_USER_ID",   "");
+			this.dsPjReport.setColumn(0, "REG_USER_NM",   "");
+			this.dsPjReport.setColumn(0, "REG_USER_DEPT", "");
+		}
+	}
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearch" :		// 검색
+			this.fnSearch();
+			break;
+			
+		case "btnSave" : 	// 저장
+			// validation
+			if( this.fnCheckValidate() )
+			{
+				var param = {
+						id : "saveConfirm"
+					  , msg : "10003"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+			break;
+
+		case "btnClose" : 	// 닫기
+			this.isCloseBtnClick = true;
+			Ex.core.pclose(this, this.saveFlg);
+			break;
+	}
+}
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+this.onBeforeClose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	if(!this.isCloseBtnClick) if(this.saveFlg == "Y") this.getOwnerFrame()._formObj.fnSearch();
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContents.form.edtUpmuUserNm" propid="value" datasetid="dsPjReport" columnid="PJT_NAME"/>
+      <BindItem id="item1" compid="divContents.form.edtRepName" propid="value" datasetid="dsPjReport" columnid="REPORT_NAME"/>
+      <BindItem id="item2" compid="divContents.form.txaContents" propid="value" datasetid="dsPjReport" columnid="CONTENTS"/>
+      <BindItem id="item3" compid="divContents.form.calPjtStime" propid="value" datasetid="dsPjReport" columnid="REG_STIME"/>
+      <BindItem id="item4" compid="divContents.form.cboRepTypeCd" propid="value" datasetid="dsPjReport" columnid="REPORT_TYPE_CD"/>
+    </Bind>
+  </Form>
+</FDL>

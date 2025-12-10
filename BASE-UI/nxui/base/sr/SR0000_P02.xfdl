@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR0000_P02" left="0" top="0" width="1000" height="750" titletext="요청서 도움말 팝업" onload="form_onload" scrolltype="none" cssclass="">
+    <Layouts>
+      <Layout width="1000" height="750">
+        <Div id="divBottom" taborder="1" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnSave" taborder="1" text="저장" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="125" width="100" height="32" bottom="14" visible="false"/>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divContent" taborder="0" text="Div00" left="0" top="0" right="0" bottom="60" visible="false">
+          <Layouts>
+            <Layout>
+              <Static id="Static00_01" taborder="4" left="5" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-5"/>
+              <Static id="Static00_01_00" taborder="5" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Static id="Static00_01_00_00" taborder="6" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+              <Static id="Static00_02" taborder="7" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="0"/>
+              <Static id="stcBg01_00" taborder="8" left="20" top="53" height="34" cssclass="sta_WF_inputBg" right="20" text=""/>
+              <Static id="stcDatTypeCd" taborder="14" left="240" top="53" width="100" height="34" cssclass="sta_WF_inputTitle_E" text="자료구분"/>
+              <Combo id="cboDatDivCd" taborder="1" left="stcDatTypeCd:5" top="58" width="160" height="24" cssclass="cbo_WF_normal" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsDatTypeCd" validationGroup="fvValiCmp" validation="자료구분;NULL"/>
+              <Static id="stcTitle" taborder="9" left="cboDatDivCd:5" top="53" width="100" height="34" cssclass="sta_WF_inputTitle_E" text="제목"/>
+              <Div id="divFile" taborder="12" left="20" height="133" right="20" bottom="20" url="comm::comFile.xfdl"/>
+              <Static id="stcBg01_00_00" taborder="10" left="20" top="86" cssclass="sta_WF_inputBg" right="20" bottom="divFile:20"/>
+              <Static id="stcConts" taborder="11" left="20" top="86" width="100" cssclass="sta_WF_inputTitle_E" text="내용" bottom="divFile:20"/>
+              <Edit id="edtTitle" taborder="2" left="stcTitle:5" top="58" height="24" cssclass="edt_WF_normal" right="25" validation="제목;NULL" validationGroup="fvValiCmp"/>
+              <Div id="divWebEditor" taborder="3" left="stcConts:5" top="91" right="25" bottom="divFile:26" url="comm::comWebEditor.xfdl" text=""/>
+              <Div id="divTop" taborder="13" left="20" top="20" height="34" right="20" visible="true">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcBg01" taborder="0" left="0" top="0" height="34" cssclass="sta_WF_inputBg" right="0"/>
+                    <Static id="stcBoardNo" taborder="1" left="0" top="0" width="100" height="34" cssclass="sta_WF_inputTitle" text="번호"/>
+                    <Edit id="edtBoardNo" taborder="5" left="stcBoardNo:5" top="5" height="24" cssclass="edt_WF_normal" readonly="true" width="110"/>
+                    <Static id="stcRegiDt" taborder="2" left="edtBoardNo:5" top="0" width="100" height="34" cssclass="sta_WF_inputTitle" text="등록일시"/>
+                    <Static id="stcFrnm" taborder="3" left="490" top="0" width="100" height="34" cssclass="sta_WF_inputTitle" text="작성자"/>
+                    <Edit id="edtTitle00" taborder="4" left="stcFrnm:5" top="5" height="24" cssclass="edt_WF_normal" readonly="true" width="100"/>
+                    <Static id="stcFrDeptNm" taborder="6" left="edtTitle00:5" top="0" width="100" height="34" cssclass="sta_WF_inputTitle" text="부서/팀명"/>
+                    <Edit id="edtFrDeptNm" taborder="7" left="stcFrDeptNm:5" top="5" height="24" cssclass="edt_WF_normal" readonly="true" right="5"/>
+                    <Calendar id="calFrdt" taborder="8" left="325" top="5" width="160" height="24" cssclass="cal_WF_normal" readonly="true" dateformat="yyyy-MM-dd HH:mm:ss" editformat="yyyy-MM-dd HH:mm:ss"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="stcExtCol1" taborder="15" left="20" top="53" width="100" height="34" cssclass="sta_WF_inputTitle_E" text="자료실구분"/>
+              <Combo id="cboExtCol1" taborder="0" left="stcExtCol1:5" top="58" height="24" cssclass="cbo_WF_normal" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsMenuParamCd" validationGroup="fvValiCmp" validation="자료실구분;NULL" right="stcDatTypeCd:5" text=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divComment" taborder="2" text="div00" left="1000" top="0" width="400" visible="false" bottom="60">
+          <Layouts>
+            <Layout>
+              <Div id="divComment" taborder="0" top="53" async="false" url="comm::comCommentDiv.xfdl" bottom="20" background="white" left="0" visible="true" right="0"/>
+              <Static id="Static02" taborder="1" text="댓글" cssclass="sta_WF_gridTitle" left="0" top="20" width="87" height="24"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsBoardMt" oncolumnchanged="dsBoardMt_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="BOARD_NO" type="STRING" size="256"/>
+          <Column id="BOARD_TYPE_CD" type="STRING" size="256"/>
+          <Column id="DAT_TYPE_CD" type="STRING" size="256"/>
+          <Column id="EXT_COL1" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="CONTS" type="STRING" size="256"/>
+          <Column id="BEGIN_DT" type="STRING" size="256"/>
+          <Column id="BEGIN_DATE" type="STRING" size="256"/>
+          <Column id="BEGIN_TIME" type="STRING" size="256"/>
+          <Column id="END_DT" type="STRING" size="256"/>
+          <Column id="END_DATE" type="STRING" size="256"/>
+          <Column id="END_TIME" type="STRING" size="256"/>
+          <Column id="CHK_POP_YN" type="STRING" size="256"/>
+          <Column id="POP_YN" type="STRING" size="256"/>
+          <Column id="DEL_YN" type="STRING" size="256"/>
+          <Column id="READ_CNT" type="STRING" size="256"/>
+          <Column id="RMK" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="BOARD_NO" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsDatTypeCd"/>
+      <Dataset id="dsMenuParamCd"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ SR0000_P02
+* 화면(명)	︰ 요청서 도움말 팝업
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 요청서 도움말 팝업
+* 작성자		︰ WEMB
+* 작성일		︰ 2024.07.29
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일			작성자		이력
+*------------------------------------------------------------------
+* 2024.07.29	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.pPopType = 'R';	// R: read / I: new / U: edit
+this.MENU_PARAM_CD;
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	var sTranId = "select01";               // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0210W/select01";    // 서비스명
+    var sInDs = "dsCond=dsCond";            // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsBoardMt=dsBoardMt";     // 서버에서 수신할 데이타셋
+    var sArg = "";                   		// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 공통 저장 func.
+this.fnSave = function()
+{
+	// transaction
+	var sTranId = "save01";								// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0210W/save01";					// 서비스명
+    var sInDs = "dsBoardMt=dsBoardMt:U dsCond=dsCond";	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "";									// 서버에서 수신할 데이타셋
+    var sArg = "";										// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			var webConts = this.dsBoardMt.getColumn(this.dsBoardMt.rowposition, 'CONTS')||'';
+			this.divContent.form.divWebEditor.form.setContent(webConts, false);
+			Ex.core.toast(this, "10002");
+			break;
+			
+		case "save01" :
+			var param = {
+					id : "saveAlert"
+				  , msg : "10004"
+				  , arrparam : ['']
+				  , msgtype : "S"};
+			Ex.core.alert(this, param);
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.divContent.form.divFile.form.fnUploadFiles();
+			break;
+			
+		case "saveAlert" :
+			Ex.core.pclose(this, 'save');
+			break;
+	}
+}
+
+// 파일 업로드 default callback
+this.fnUploadCallback = function(sSvcId, nErrorCode, sErrorMsg)
+{
+	// TO DO
+	// 개발자가 지정한 sSvcId(setConfig 옵션에 넣은 파일첨부ID), nErrorCode(에러코드), sErrorMsg(에러메시지)
+	if (nErrorCode < 0) 
+	{
+		Ex.core.error(this,{id:"ERROR",msg:sSvcId+"\n"+Ex.core.msg(sErrorMsg)});
+		return;
+	}
+	
+	switch(sSvcId)
+	{
+		case "fileSvc" :
+			this.fnSave();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.fnSearchReset();	// 검색조건 초기화
+	this.fnGetCmmCd();		// 공통코드 조회
+	
+	this.pPopType 	= (this.getOwnerFrame().pPopType||'').toUpperCase();
+	var pBoardNo	= this.getOwnerFrame().pBoardNo||'';
+	
+	this.MENU_PARAM_CD = this.getOwnerFrame().pMenuParamCd||'';
+	if( !Ex.isEmpty(this.MENU_PARAM_CD) ) {
+		this.divContent.form.cboExtCol1.set_readonly(true);
+	}
+	
+	// 첨부파일 setting
+	var oParam = {
+		 sSvcId		: 'fileSvc'			// divFile callback 후처리용 서비스 ID
+		,limitMinCnt: 0					// 파일 최소 갯수; defualt 0
+		,limitCnt	: 3					// 파일 최대 갯수; default 5
+		,limitSize	: 100				// 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+		,folderName	: 'fomm'			// 폴더명(업무명)
+		,tableName	: 'FOMM_BOARD_MT'	// 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+		,primaryKey1: pBoardNo||''		// 테이블 PK1(ex. 요청서ID 등)
+		,primaryKey2: ''				// 테이블 PK2 (복합 키인 경우 사용)
+		,primaryKey3: ''				// 테이블 PK3 (복합 키인 경우 사용)
+		,fileDownYn	: ''				// 파일다운권한; 	 공백 시 메뉴의 조회 권한
+		,fileUpYn	: ''				// 파일업로드권한; 공백 시 메뉴의 추가 권한
+		,deleteYn	: ''				// 파일삭제권한; 	 공백 시 메뉴의 삭제 권한
+	};
+	this.divContent.form.divFile.form.setConfig(this, oParam);
+
+	switch(this.pPopType)
+	{
+		case "I" :
+			this.divBottom.form.btnSave.set_visible(true);
+			this.divContent.form.divWebEditor.form.initCreate();
+			
+			this.dsBoardMt.clearData();
+			var rowPos = this.dsBoardMt.setAddRow();
+			this.dsBoardMt.setColumn(rowPos, 'BOARD_TYPE_CD', 'REF');
+			this.dsBoardMt.setColumn(rowPos, 'EXT_COL1', this.MENU_PARAM_CD);
+			break;
+			
+		case "U" :
+			this.divBottom.form.btnSave.set_visible(true);
+			
+			var oCmtParam = {
+				  tableName		: 'FOMM_BOARD_MT'
+				, primaryKey1	: pBoardNo||''
+				, primaryKey2	: ''
+				, primaryKey3	: ''
+				, extCol1		: this.MENU_PARAM_CD
+				, extCol2		: ''
+				, extCol3		: ''
+				, extCol4		: ''
+				, extCol5		: ''
+				, nDispComment	: ''
+			};
+			this.fnOpencomment(oCmtParam);
+
+			this.divContent.form.divWebEditor.form.initCreate();
+
+			this.dsCond.setColumn(this.dsCond.rowposition, 'BOARD_NO', pBoardNo);
+			this.fnSearch();
+			break;
+
+		case "R" :
+		default	 :
+			var oCmtParam = {
+				  tableName		: 'FOMM_BOARD_MT'
+				, primaryKey1	: pBoardNo||''
+				, primaryKey2	: ''
+				, primaryKey3	: ''
+				, extCol1		: this.MENU_PARAM_CD
+				, extCol2		: ''
+				, extCol3		: ''
+				, extCol4		: ''
+				, extCol5		: ''
+				, nDispComment	: ''
+			};
+			this.fnOpencomment(oCmtParam);
+			
+			this.divContent.form.divWebEditor.form.initCreate(true);
+			
+			// 저장 button visible false
+			this.divBottom.form.btnSave.set_visible(false);
+			
+			// component readonly
+			this.divContent.form.edtTitle.set_readonly(true);
+			this.divContent.form.cboDatDivCd.set_readonly(true);
+			this.divContent.form.cboExtCol1.set_readonly(true);
+			
+			this.dsCond.setColumn(this.dsCond.rowposition, 'BOARD_NO', pBoardNo);
+			this.fnSearch();
+			break;
+	}
+	this.divContent.set_visible(true);
+}
+
+this.fnOpencomment = function(param)
+{
+	var nMargin = 20;
+	this.divComment.set_right(nMargin);
+	this.divComment.set_visible(true);
+	this.divComment.form.divComment.form.setConfig(this, param);
+	
+	this.divContent.set_right(this.divComment.getOffsetWidth() + nMargin);
+}
+
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['DAT_TYPE_CD',							'MENU_PARAM_CD']			// 조회할 상위코드
+		,codeDiv: ['CMM_CD',								'CMM_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['SEL',									'SEL']			// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',										'Y']				// 사용여부
+		,filter	: ['ITM_VAL_1=="REF"||ITM_VAL_1=="ETC"',	'']				// filterStr
+		,objDs	: [this.dsDatTypeCd,						this.dsMenuParamCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util;
+}
+
+// dataset data setting
+this.fnSetMt = function()
+{
+	var rowpos = this.dsBoardMt.rowposition;
+	var webConts = this.divContent.form.divWebEditor.form.getContent();
+	this.dsBoardMt.setColumn(rowpos, 'CONTS', webConts);
+}
+
+// validation
+this.fnCheckValidate = function()
+{
+	// component validation
+	if( !Ex.util.checkValidate(this.divContent, "fvValiCmp") )
+		return false;
+	
+	// 내용 validation
+	var webConts = this.divContent.form.divWebEditor.form.getContent()||'';
+	if( Ex.isEmpty(webConts) ) {
+		var param = {
+				id : "webContsEmptyAlert"
+			  , msg : "11001"
+			  , arrparam : [Ex.core.word('내용')]
+			  , msgtype : "I"};
+		Ex.core.alert(this, param);
+		return false;
+	}
+	return true;
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnClose" :			// 닫기
+			Ex.core.pclose(this);
+			break;
+			
+		case "btnSave" :		// 저장
+			this.fnSetMt();
+			
+			if( Ex.util.isUpdated(this.dsBoardMt) || this.divContent.form.divFile.form.isUpdateForm() )
+			{
+				if( !this.fnCheckValidate() ) {
+					return;
+				}
+				else {
+					var param = {
+							id : "saveConfirm"
+						  , msg : "10003"
+						  , arrparam : ['']
+						  , msgtype : "I"};
+					Ex.core.confirm(this, param);
+				}
+			}
+			break;
+	}
+}
+
+this.dsBoardMt_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContent.form.edtTitle" propid="value" datasetid="dsBoardMt" columnid="TITLE"/>
+      <BindItem id="item1" compid="divContent.form.divTop.form.edtTitle00" propid="value" datasetid="dsBoardMt" columnid="FRNM"/>
+      <BindItem id="item2" compid="divContent.form.divTop.form.edtBoardNo" propid="value" datasetid="dsBoardMt" columnid="BOARD_NO"/>
+      <BindItem id="item4" compid="divContent.form.divTop.form.edtFrDeptNm" propid="value" datasetid="dsBoardMt" columnid="FR_DEPT_NM"/>
+      <BindItem id="item5" compid="divContent.form.cboDatDivCd" propid="value" datasetid="dsBoardMt" columnid="DAT_TYPE_CD"/>
+      <BindItem id="item6" compid="divContent.form.divTop.form.calFrdt" propid="value" datasetid="dsBoardMt" columnid="FRDT"/>
+      <BindItem id="item3" compid="divContent.form.cboExtCol1" propid="value" datasetid="dsBoardMt" columnid="EXT_COL1"/>
+    </Bind>
+  </Form>
+</FDL>

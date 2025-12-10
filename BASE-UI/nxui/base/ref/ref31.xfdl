@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="ref31" left="0" top="0" width="1840" height="720" titletext="체크리스트" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Edit id="edt00" taborder="13" left="110" top="34" height="24" right="0" value="26,27,28,29,30,31,32,33,34,35,36,37,38,39,44,45,46,47,48,49,50,51,52,53,54,55,56,58,61,62,63,98" text="26,27,28,29,30,31,32,33,34,35,36,37,38,39,44,45,46,47,48,49,50,51,52,53,54,55,56,58,61,62,63,98"/>
+        <Div id="divCheckList" taborder="0" left="5" top="edt00:10" right="0" bottom="0" async="false"/>
+        <Radio id="rdoVal" taborder="1" left="0" top="0" width="160" height="24" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" index="0" text="가로답항" value="1">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">H</Col>
+                <Col id="datacolumn">가로답항</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">V</Col>
+                <Col id="datacolumn">세로답항</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Static id="stcChkLstId" taborder="2" text="저장 알림 메시지 타입" left="337.00" top="1" width="139" height="24" cssclass="sta_WF_schTitle"/>
+        <Edit id="edtChkLstId" taborder="3" left="1016.00" top="0" width="60" height="24" value="38" text="38" onkeyup="onkeyup"/>
+        <Static id="stcKeyTbl" taborder="4" text="KEY_TBL" left="1082.00" top="0" width="89" height="24" cssclass="sta_WF_schTitle"/>
+        <Edit id="edtKeyTbl" taborder="5" left="1166.00" top="0" width="130" height="24" value="TEST" text="TEST" onkeyup="onkeyup"/>
+        <Static id="stcPK1" taborder="6" text="PK1" left="1307.00" top="0" width="39" height="24" cssclass="sta_WF_schTitle"/>
+        <Edit id="edtPK1" taborder="7" left="stcPK1:5.00" top="0" width="120" height="24" text="11" onkeyup="onkeyup" value="11"/>
+        <Static id="stcPK2" taborder="8" text="PK2" left="edtPK1:5.00" top="0" width="39" height="24" cssclass="sta_WF_schTitle"/>
+        <Edit id="edtPK2" taborder="9" left="stcPK2:5.00" top="0" width="110" height="24" text="" onkeyup="onkeyup"/>
+        <Static id="stcPK3" taborder="10" text="PK3" left="1641.00" top="0" width="39" height="24" cssclass="sta_WF_schTitle"/>
+        <Edit id="edtPK3" taborder="11" left="stcPK3:5.00" top="0" width="105" height="24" text="" onkeyup="onkeyup"/>
+        <Button id="btnConf" taborder="12" text="적용" left="1794.00" top="0" width="45" height="24" onclick="fnButtonComOnclick"/>
+        <Static id="stcKeyTbl00" taborder="14" text="체크리스트 목록" left="0.00" top="34" width="110" height="25" cssclass="sta_WF_schTitle"/>
+        <Radio id="rdoEditable" taborder="15" left="170" top="0" width="160" height="24" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical" index="0" text="편집모드" value="Y">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">Y</Col>
+                <Col id="datacolumn">편집모드</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">N</Col>
+                <Col id="datacolumn">조회모드</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+        <Combo id="cboMsg" taborder="16" left="stcChkLstId:0" top="0" width="130" height="24" value="N" index="0" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" text="알림없음">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">N</Col>
+                <Col id="datacolumn">알림없음</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">A</Col>
+                <Col id="datacolumn">ALERT</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">T</Col>
+                <Col id="datacolumn">TOAST</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Static id="stcKeyTbl01" taborder="17" text="CHKLST_ID" left="927.00" top="0" width="89" height="24" cssclass="sta_WF_schTitle"/>
+        <Combo id="cboIsUseRegBtn" taborder="18" left="cboMsg:2" top="0" width="130" height="24" value="Y" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" text="등록버튼 사용" index="0">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">Y</Col>
+                <Col id="datacolumn">등록버튼 사용</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">N</Col>
+                <Col id="datacolumn">등록버튼 미사용</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+        <Combo id="cboIsLabelScore" taborder="19" left="cboIsUseRegBtn:2.00" top="0" width="160" height="24" value="Y" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" text="답항 라벨 점수 표기" index="0">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">Y</Col>
+                <Col id="datacolumn">답항 라벨 점수 표기</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">N</Col>
+                <Col id="datacolumn">답항 라벨 점수 미표기</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Combo>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsOparam">
+        <ColumnInfo>
+          <Column id="tableName" type="STRING" size="256"/>
+          <Column id="primaryKey1" type="STRING" size="256"/>
+          <Column id="primaryKey2" type="STRING" size="256"/>
+          <Column id="primaryKey3" type="STRING" size="256"/>
+          <Column id="extCol1" type="STRING" size="256"/>
+          <Column id="extCol2" type="STRING" size="256"/>
+          <Column id="extCol3" type="STRING" size="256"/>
+          <Column id="extCol4" type="STRING" size="256"/>
+          <Column id="extCol5" type="STRING" size="256"/>
+          <Column id="nDispComment" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)	: 공통 댓글
+* 메뉴(경로)	: 공통관리 > 플랫폼 > 공통
+* 화면 설명	: 댓글 핸들링 가이드
+* 작성자		: WEMB
+* 작성일		: 
+* 수정이력		:
+*------------------------------------------------------------------
+* 수정일			작성자			이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	//this.fnButtonComOnclick(this.btnConf);
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+this.fnButtonComOnclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+    switch(obj.name)
+	{
+		case "btnConf" :
+			if( !Ex.isEmpty(this.divCheckList.url) )
+			{
+				trace("this.divCheckList URL Clear");
+				this.divCheckList.set_url("");
+			}
+			this.divCheckList.set_url("fomm::FOMM0700_D01.xfdl");
+
+			if( Ex.isEmpty(this.edtChkLstId.value) )
+			{
+				var param = {
+					  id	: "AlertChkLstIdI"								//fnMsgAfter에서 식별자로 사용되는 ID
+					, msg	: this.stcChkLstId.text + "가 입력되지 않았습니다."	//메시지 내용
+					, arrparam : [Ex.core.word("")]							//메시지의 변수에 들어갈 실제값
+					, msgtype : "I"											//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+				};
+				Ex.core.alert(this, param);
+				return false;
+			}
+			
+			if( Ex.isEmpty(this.edtChkLstId.value) )
+			{
+				var param = {
+					  id	: "AlertKeyTblI"								//fnMsgAfter에서 식별자로 사용되는 ID
+					, msg	: this.stcKeyTbl.text + "가 입력되지 않았습니다."		//메시지 내용
+					, arrparam : [Ex.core.word("")]							//메시지의 변수에 들어갈 실제값
+					, msgtype : "I"											//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+				};
+				Ex.core.alert(this, param);
+				return false;
+			}
+			
+			if( Ex.isEmpty(this.edtChkLstId.value) )
+			{
+				var param = {
+					  id	: "AlertPK!I"									//fnMsgAfter에서 식별자로 사용되는 ID
+					, msg	: this.stcPK1.text + "가 입력되지 않았습니다."		//메시지 내용
+					, arrparam : [Ex.core.word("")]							//메시지의 변수에 들어갈 실제값
+					, msgtype : "I"											//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+				};
+				Ex.core.alert(this, param);
+				return false;
+			}
+
+			var oParam = {
+				 IS_AUTO_SIZE	: false												//true(전체 Form에 Scroll발생)/false([divConts] DIV 영역만 Scroll 발생)
+				,IS_DIV_RESIZE	: true												//checklist 데이터 조회하여 화면을 동적으로 그린 후 Header와 [divConts] DIV 크기 재조정을 실행할지 여부
+				,DIRECTION		: this.rdoVal.value									//답항 그리기 방향 H(가로)/V(세로)
+				,EDITABLE		: this.rdoEditable.value == "Y" ? true : false		//true(편집모드)/ false(조회모드)
+				,MSG			: this.cboMsg.value									//N(NO:알림없음), A(ALERT:alert창), T(TOAST:toast메시지)
+				,IS_USE_REG_BTN	: this.cboIsUseRegBtn.value == "Y" ? true : false	//true(등록버튼 사용), false(등록버튼 미사용)
+				,IS_LABEL_SCORE	: this.cboIsLabelScore.value == "Y" ? true : false	//true(답항라벨 점수 표기), false(답항라벨 점수 미표기)
+				,USE_ONSIZE_EVT	: true												//checklist Form의 onsize 이벤트 사용여부 true(사용) / false(미사용)
+				,CHKLST_ID		: this.edtChkLstId.value							//문항 CHKLIST KEY ID
+				,KEY_TBL		: this.edtKeyTbl.value								//구분값
+				,PK1			: this.edtPK1.value									//테이블 PK1
+				,PK2			: this.edtPK2.value									//테이블 PK2 (복합 키인 경우 사용)
+				,PK3			: this.edtPK3.value									//테이블 PK3 (복합 키인 경우 사용)
+			};
+			this.divCheckList.form.setConfig(this, oParam);
+			break;
+    }
+}
+
+this.onkeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 13)
+	{
+		this.fnButtonComOnclick(this.btnConf);
+	}
+};]]></Script>
+  </Form>
+</FDL>

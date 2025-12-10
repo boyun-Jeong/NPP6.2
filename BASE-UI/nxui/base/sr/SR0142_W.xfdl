@@ -1,0 +1,460 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR0120_W" width="1840" titletext="결재이력조회" onload="form_onload" height="720">
+    <Layouts>
+      <Layout width="1840" height="720">
+        <Static id="Static01" taborder="1" text="W20" cssclass="Guide_Color" visible="false" top="0" right="0" width="20" bottom="0"/>
+        <Static id="Static00" taborder="2" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" top="50"/>
+        <Static id="stcTreeTitle" taborder="4" text="결재이력" left="0" top="Static00:0" width="100" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="Static00_00" taborder="3" left="0" top="stcTreeTitle:0" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Grid id="grdWfProcHist" taborder="0" binddataset="dsWfProcHist" useinputpanel="false" autofittype="col" oncellclick="grdOnCellClick" left="0" top="Static00_00:0" right="0" bottom="0" useFilter="true" cssclass="grd_WF_normal">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="48" band="left"/>
+                <Column size="0" band="left"/>
+                <Column size="125" band="left"/>
+                <Column size="150"/>
+                <Column size="150"/>
+                <Column size="250"/>
+                <Column size="100" band="right"/>
+                <Column size="60" band="right"/>
+                <Column size="130" band="right"/>
+                <Column size="70" band="right"/>
+                <Column size="100" band="right"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="NO"/>
+                <Cell col="1" text="구분"/>
+                <Cell col="2" text="요청ID"/>
+                <Cell col="3" text="요청분류"/>
+                <Cell col="4" text="요청서명"/>
+                <Cell col="5" text="제목"/>
+                <Cell col="6" text="처리자"/>
+                <Cell col="7" text="나의&#13;&#10;결재여부"/>
+                <Cell col="8" text="처리일시"/>
+                <Cell col="9" text="처리결과"/>
+                <Cell col="10" text="대결자"/>
+              </Band>
+              <Band id="body">
+                <Cell text="expr:currow+1"/>
+                <Cell col="1" displaytype="combotext" edittype="none" combodataset="dsSvcCd" combodatacol="CMM_CD_NM" combocodecol="CMM_CD" text="bind:SVC_CD"/>
+                <Cell col="2" edittype="none" text="bind:PROC_NUMBER" cssclass="grdBCell_WF_boldP"/>
+                <Cell col="3" text="bind:SVC_CD_NM"/>
+                <Cell col="4" text="bind:REQ_TMPLAT_NM"/>
+                <Cell col="5" edittype="none" text="bind:TITLE" textAlign="left"/>
+                <Cell col="6" edittype="none" text="bind:SRM_USER_NM"/>
+                <Cell col="7" text="expr:PRC_DIV=='M'||PRC_DIV=='D' ? '○' : ''"/>
+                <Cell col="8" displaytype="date" edittype="none" text="bind:REG_STIME" mask="####-##-## ##:##" calendardateformat="yyyy-MM-dd HH:mm:ss" calendareditformat="yyyy-MM-dd HH:mm:ss"/>
+                <Cell col="9" text="bind:APPR_STAT_CD" combodataset="dsApprStatCd" combodatacol="CMM_CD_NM" combocodecol="CMM_CD" displaytype="combotext" edittype="none"/>
+                <Cell col="10" edittype="none" text="bind:ORG_USER_NM"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcCnt" taborder="5" left="stcTreeTitle:0" top="Static00:0" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsWfProcHist"/>
+        <Div id="divSearchArea" taborder="6" text="Div00" top="0" cssclass="div_WF_divSearchArea" right="0" scrollbars="none" left="0" height="50">
+          <Layouts>
+            <Layout>
+              <Static id="Static06" taborder="0" visible="false" left="0" top="0" width="20" background="#e5dbfa" height="50"/>
+              <Static id="stcReqTitle" taborder="1" text="제목" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static06:0.00" top="13" width="50" height="21"/>
+              <Edit id="edtReqTitle" taborder="2" left="stcReqTitle:0" top="13" width="200" height="24" cssclass="edt_WF_normal" onkeyup="fnCommOnkeyup"/>
+              <Static id="Static00_00_00" taborder="3" left="edtReqTitle:0" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="stcReqTmplatNm" taborder="4" text="요청ID" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_00:0.00" top="14" width="60" height="21"/>
+              <Edit id="edtProcNumber" taborder="5" left="stcReqTmplatNm:0.00" top="13" width="100" height="24" cssclass="edt_WF_normal" onkeyup="fnCommOnkeyup" inputfilter="space,dot,comma,sign,symbol" inputmode="upper" inputtype="alpha,number"/>
+              <Static id="Static00_00_00_00" taborder="6" left="edtProcNumber:0.00" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" height="24" width="30"/>
+              <Static id="stcSvcCd" taborder="7" text="요청분류" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" top="13" width="70" height="21" left="Static00_00_00_00:0.00"/>
+              <Combo id="cboSvcCd" taborder="8" innerdataset="dsSvcCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" displayrowcount="10" cssclass="cbo_WF_normal" left="stcSvcCd:0.00" top="13" width="135" height="24" onitemchanged="div_search_cboSvcCd_onitemchanged" onkeyup="fnCommOnkeyup"/>
+              <Button id="btnSearchReset" taborder="17" top="13" height="24" text="초기화" cssclass="btn_WF_searchReset" onclick="fnCommOnclick" width="90" right="100"/>
+              <Button id="btnSearch" taborder="18" height="24" text="조회" cssclass="btn_WF_search" onclick="fnCommOnclick" top="13" width="75" right="20"/>
+              <Static id="Static00_00_00_00_00" taborder="9" left="cboSvcCd:0.00" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" height="24" width="30"/>
+              <Static id="stcReqStatCd" taborder="10" text="처리기간" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_00_00_00:0" top="13" width="62" height="24"/>
+              <Calendar id="calBeginDate" taborder="11" left="stcReqStatCd:10.00" top="13" height="24" cssclass="cal_WF_normal" readonly="false" enable="true" visible="true" width="135" validation="처리기간;NULL" text="    -  -  " validationGroup="input01" onkeyup="fnCommOnkeyup"/>
+              <Static id="Static01_00" taborder="12" text="~" left="calBeginDate:0.00" top="13" width="18" height="24" textAlign="center" verticalAlign="middle" visible="true"/>
+              <Calendar id="calEndDate" taborder="13" left="Static01_00:0.00" top="13" width="135" height="24" cssclass="cal_WF_normal" readonly="false" enable="true" visible="true" validation="처리기간;NULL" text="    -  -  " validationGroup="input01" onkeyup="fnCommOnkeyup"/>
+              <Static id="Static00_00_00_00_00_00" taborder="14" left="calEndDate:0.00" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" height="24" width="30"/>
+              <Static id="stcReqUsertNm00" taborder="15" text="확인대상" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_00_00_00_00:0.00" top="13" width="70" height="24" visible="false"/>
+              <CheckBox id="chkConf" taborder="16" left="stcReqUsertNm00:0.00" top="13" width="24" height="24" cssclass="chk_WF_normal" truevalue="Y" falsevalue="N" onchanged="chkOnChanged" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divGrdTopBtn" taborder="7" width="425" visible="true" right="0" isButtonGroup="true" top="Static00:0" height="24">
+          <Layouts>
+            <Layout>
+              <Button id="btnExcelDown" taborder="1" text="엑셀" top="0" width="60" right="0" cssclass="btn_WF_excelDown" onclick="fnCommOnclick" height="24" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="SVC_CD" type="STRING" size="256"/>
+          <Column id="PROC_NUMBER" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="REQ_STAT_CD" type="STRING" size="256"/>
+          <Column id="START_DATE" type="STRING" size="256"/>
+          <Column id="END_DATE" type="STRING" size="256"/>
+          <Column id="MYREQ_YN" type="STRING" size="256"/>
+          <Column id="WF_HIST_SEQ" type="STRING" size="256"/>
+          <Column id="ROW_NUM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSvcCd"/>
+      <Dataset id="dsWfProcHist">
+        <ColumnInfo>
+          <Column id="PROC_NUMBER" type="STRING" size="256"/>
+          <Column id="WF_HIST_SEQ" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="APPR_STAT_CD" type="STRING" size="256"/>
+          <Column id="APPR_COMMENT" type="STRING" size="256"/>
+          <Column id="APPR_GBN_CD" type="STRING" size="256"/>
+          <Column id="SRM_USER_ID" type="STRING" size="256"/>
+          <Column id="SRM_USER_NM" type="STRING" size="256"/>
+          <Column id="SRM_JBC_JNAME" type="STRING" size="256"/>
+          <Column id="SRM_DEPT_NM" type="STRING" size="256"/>
+          <Column id="REG_STIME" type="STRING" size="256"/>
+          <Column id="ORG_USER_ID" type="STRING" size="256"/>
+          <Column id="ORG_USER_NM" type="STRING" size="256"/>
+          <Column id="ORG_JBC_JNAME" type="STRING" size="256"/>
+          <Column id="ORG_DEPT_NM" type="STRING" size="256"/>
+          <Column id="DAEJIC_YN" type="STRING" size="256"/>
+          <Column id="MOBL_CONFIRM_STIME" type="STRING" size="256"/>
+          <Column id="MOBL_APP_NM" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="DIV_NM" type="STRING" size="256"/>
+          <Column id="REQ_TMPLAT_ID" type="STRING" size="256"/>
+          <Column id="SVC_CD" type="STRING" size="256"/>
+          <Column id="REQ_STAT_CD" type="STRING" size="256"/>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="WF_PROC_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSvcDtlCd">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsReqCnt"/>
+      <Dataset id="dsRtn"/>
+      <Dataset id="dsApprStatCd"/>
+    </Objects>
+    <InitValue/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면 ID		︰ SR0142_W
+* 화면(명)		︰ 결재이력조회
+* 메뉴(경로)		︰ MY 포털 > 나의 업무(처리) > 결재이력조회
+* 화면 설명		︰ 
+* 작성자			︰ WEMB
+* 작성일			︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2024.08.21	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include  
+ ***********************************************************************************/
+include "lib::lib_WorkFlow.xjs";
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.dsWfProc;
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+
+	var fromDt = Ex.util.getMaskFormatString(Ex.util.addDate(Ex.util.strToDate(Ex.util.today()), -3), "yyyyMMdd");
+	
+	this.dsCond.setColumn(0, "START_DATE",	fromDt);
+	this.dsCond.setColumn(0, "END_DATE",	Ex.util.today());
+
+}
+
+// 조회
+this.fnSearch = function()
+{	
+
+	if(Ex.isEmpty(this.dsCond.getColumn(0, "START_DATE")) || Ex.isEmpty(this.dsCond.getColumn(0, "END_DATE"))){
+		var param = {id : "pAlertDate", msg : "처리기간을 확인해주시오."};
+		Ex.core.alert(this, param);
+		return false;
+	}
+	if(this.dsCond.getColumn(0, "START_DATE") > this.dsCond.getColumn(0, "END_DATE")){
+		var param = {id : "pAlertDate", msg : "처리기간을 확인해주시오."};
+		Ex.core.alert(this, param);
+		return false;
+	}
+			
+	var sTranId = "select01";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "SR0142W/select01";			// 서비스명
+    var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsWfProcHist=dsData";	// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSave = function()
+{
+	var sTranId = "save01";
+	var sService = "SR0143W/save01";
+	var sInDs = " dsCond=dsCond dsWfProcHist=dsWfProcHist:U";
+	var sOutDs = "dsWfProcHist=dsWfProcHist";
+	var sArg = "";
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "select01" :
+//			this.fnSetCount();
+			Ex.core.toast(this, "10002");
+			break;
+		
+		case "save01" :
+			this.saveFlg = "Y";
+			var oParam = {id : "alertSaveI", msg : "10004", arrparam : [], msgtype : "I"};
+			Ex.core.alert(this, oParam);
+			break;
+			
+		case "wfInfoCompleted" :
+			this.dsWfProc = this.wffnGetOptDsByWfProcCd();
+			
+			var dsTemp = new Dataset;
+			var oParam = {
+				wfProcCd : ''
+				,optStr: 'NO'
+				,filter	: ''
+				,objDs	: dsTemp
+			}
+			this.wffnGetCger(oParam);
+			
+			var dsRow = this.dsWfProcHist.rowposition;
+			var reqId = this.dsWfProcHist.getColumn(dsRow, "PROC_NUMBER");
+			var reqNm = this.dsWfProcHist.getColumn(dsRow, "REQ_TMPLAT_NM");
+			var reqTmplatId = this.dsWfProcHist.getColumn(dsRow, "REQ_TMPLAT_ID");
+			var reqTmplatVer = this.dsWfProcHist.getColumn(dsRow, "REQ_TMPLAT_VER");
+			//var srInfoUrl = this.dsWfProcHist.getColumn(dsRow, "SR_INFO_URL");
+			//var reqUrl = this.dsWfProcHist.getColumn(dsRow, "REQ_URL");
+			//var attachUseYn = this.dsWfProcHist.getColumn(dsRow, "ATTACH_USE_YN");
+
+			Ex.core.popup(
+				this,											// <--- 팝업 실행 스코프
+				"srReqWritePop",								// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"sr::SR0000_W.xfdl",							// <--- 팝업창 오픈 Url
+				{
+					title : Ex.core.word("요청서"),
+					pWF_FUNC_CD	: "WF_FUNC_00",	//등록
+					pREQ_ID : reqId,
+					pREQ_TMPLAT_ID : reqTmplatId,
+					pREQ_TMPLAT_VER : reqTmplatVer
+					//pSR_INFO_URL : srInfoUrl,					
+					//pATTACH_USE_YN : attachUseYn
+				},												// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				//"width=1500,height=817,useCloseButton=false"	// <--- width/height/modeless(프레임 처리 옵션)
+				"autosize,useCloseButton=false"
+			);
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "" :
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	if(!varValue) return;
+	switch(mID)
+	{
+		case "selfConfirm" :
+		this.dsWfProcHist.setColumn(this.dsCond.getColumn(0,"ROW_NUM"), "ROWFLAG","U");
+		this.fnSave();
+		break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	this.fnGetCmmCd();		// 공통코드 조회
+
+	this.fnSearchReset();	// 검색조건 초기화
+
+	this.fnSearch();		// 조회
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ["SVC_CD", 		"APPR_STAT_CD",		"WF_PROC_CD"]			// 조회할 상위코드
+		,codeDiv: ["WORKFLOW_CD",	"WORKFLOW_CD",		"WORKFLOW_CD"]			// 조회할 코드의 업무구분
+		,optStr	: ["ALL", 			"",					"ALL"]				// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ["Y", 			"Y",				"Y"]				// 사용여부
+		,filter	: ["", 				"",					""]					// filterStr
+		,objDs	: [this.dsSvcCd,	this.dsApprStatCd,	this.dsWfProcCd]		// copy dataset	
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+	
+	this.dsSvcDtlCd.clearData();
+	var rowpos = this.dsSvcDtlCd.addRow();
+	this.dsSvcDtlCd.setColumn(rowpos, 'CMM_CD', null);
+	this.dsSvcDtlCd.setColumn(rowpos, 'CMM_CD_NM', '- 전체 -');
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// component onclick event. 
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{	
+	// TO DO
+	trace(obj.name);
+	// 개발자가 컴포넌트 onclick event를 'fnCommOnclick'으로 지정하고 컴포넌트 id로 구분하여 작성
+	switch(obj.name)
+	{
+		case "btnSearch" :			// 검색
+			this.fnSearch();
+			break;
+		
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;	
+			
+		case "btnExcelDown" :	// 엑셀다운
+			var oInfo = {
+   				Grid	: [this.grdWfProcHist],
+   				Sheet	: [this.getOwnerFrame().info.menuNm],
+   				FileNm	: [this.getOwnerFrame().info.menuNm],
+   				ExportType : "XLSX",
+   				ExportId : "excel01"
+   			};
+			this.gfnExportExcel(this, oInfo);
+			break;
+	}
+}
+
+this.grdOnCellClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(e.row > - 1 )
+	{
+		var dsRow = obj.getDatasetRow(e.row);
+		
+		var reqTmplatId = obj.getBindDataset().getColumn(dsRow, "REQ_TMPLAT_ID");
+		var reqTmplatVer = obj.getBindDataset().getColumn(dsRow, "REQ_TMPLAT_VER");
+		var reqId = obj.getBindDataset().getColumn(dsRow, "PROC_NUMBER");
+		
+		if(e.cell == obj.getBindCellIndex("body", "PROC_NUMBER"))
+		{
+			this.wffnSearchWfTmplat(reqTmplatId, reqTmplatVer, reqId);
+		}
+		else if(e.cell == obj.getBindCellIndex("body", "DIV_NM"))
+		{
+			if (obj.getBindDataset().getColumn(dsRow, "DIV_NM") == "본인확인")
+			{				
+				this.dsCond.setColumn(0, "ROW_NUM",dsRow);
+				var param = {
+					id : "selfConfirm"
+				  , msg : "본인확인 처리하시겠습니까?"
+				  , arrparam : ['']
+				  , msgtype : "I"
+				};
+				Ex.core.confirm(this, param);
+			}			
+		}		
+	}
+};
+
+
+
+this.chkOnChanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	this.fnSearch();
+};
+this.fnCommOnkeyup = function(obj:nexacro.Calendar,e:nexacro.KeyEventInfo)
+{
+		if(e.keycode == 13)
+	{
+		obj.updateToDataset();
+		this.fnSearch();
+	}
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearchArea.form.cboSvcCd" propid="value" datasetid="dsCond" columnid="SVC_CD"/>
+      <BindItem id="item1" compid="divSearchArea.form.edtProcNumber" propid="value" datasetid="dsCond" columnid="PROC_NUMBER"/>
+      <BindItem id="item2" compid="divSearchArea.form.edtReqTitle" propid="value" datasetid="dsCond" columnid="TITLE"/>
+      <BindItem id="item3" compid="divSearchArea.form.cboSvcDtlCd" propid="value" datasetid="dsCond" columnid="SVC_DTL_CD"/>
+      <BindItem id="item4" compid="divSearchArea.form.stcReqUsertNm" propid="value" datasetid="dsCond" columnid="TITLE"/>
+      <BindItem id="item5" compid="divSearchArea.form.edtLMNM" propid="value" datasetid="dsCond" columnid="PROC_USER_NM"/>
+      <BindItem id="item6" compid="divSearchArea.form.edtReqUserNm" propid="value" datasetid="dsCond" columnid="REQ_USER_NM"/>
+      <BindItem id="item7" compid="divSearchArea.form.rdoEM" propid="value" datasetid="dsCond" columnid="REQ_EM_YN"/>
+      <BindItem id="item8" compid="divSearchArea.form.cboReqStatCd" propid="value" datasetid="dsCond" columnid="REQ_STAT_CD"/>
+      <BindItem id="item9" compid="divSearchArea.form.cboDateType" propid="value" datasetid="dsCond" columnid="DATE_TYPE"/>
+      <BindItem id="item10" compid="divSearchArea.form.calBeginDate" propid="value" datasetid="dsCond" columnid="START_DATE"/>
+      <BindItem id="item11" compid="divSearchArea.form.calEndDate" propid="value" datasetid="dsCond" columnid="END_DATE"/>
+      <BindItem id="item12" compid="divSearchArea.form.cboDateTerm" propid="value" datasetid="dsCond" columnid="DATE_TERM"/>
+      <BindItem id="item13" compid="divSearchArea.form.stcReqUsertNm00" propid="value" datasetid="dsCond" columnid="TITLE"/>
+      <BindItem id="item14" compid="divSearchArea.form.chkConf" propid="value" datasetid="dsCond" columnid="MYREQ_YN"/>
+    </Bind>
+  </Form>
+</FDL>

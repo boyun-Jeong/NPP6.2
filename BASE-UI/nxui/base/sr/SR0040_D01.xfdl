@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR0040_D01" width="1040" height="371" titletext="기본요청서" onload="form_onload">
+    <Layouts>
+      <Layout width="1040" height="371">
+        <Static id="stcReqDescBg" taborder="1" cssclass="sta_WF_inputBg" left="0" top="67" right="0" bottom="0"/>
+        <Static id="stcReqDesc" taborder="0" text="" cssclass="sta_WF_inputTitle_E" left="0" top="67" width="130" bottom="0"/>
+        <Static id="stcProcUserNmBg" taborder="2" cssclass="sta_WF_inputBg" left="0" top="34" height="34" right="0" visible="false"/>
+        <Static id="stcProcUserNm" taborder="3" text="" cssclass="sta_WF_inputTitle" left="0" top="34" width="130" height="34" visible="false"/>
+        <Static id="Static33" taborder="4" cssclass="Guide_Color" visible="false" left="0" top="24" right="0" height="10" background="#e5dbfa"/>
+        <TextArea id="txaReqDesc" taborder="5" left="stcReqDesc:5" top="74" right="5" validationGroup="group01" cssclass="txa_WF_normal" bottom="6"/>
+        <Static id="stcTitle" taborder="6" text="" cssclass="sta_WF_gridTitle" left="0" top="0" right="0" height="24" style="align:left middle;"/>
+        <Edit id="edtProcUserNm" taborder="7" left="stcProcUserNm:5" top="39" height="24" readonly="true" cssclass="edt_WF_normal" readonlyComp="Y" visible="false" width="195"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPopRtn"/>
+      <Dataset id="dsNextWfProcCd">
+        <ColumnInfo>
+          <Column id="NEXT_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="PROC_USER_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSrBasicReq" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="PROC_USER_ID" type="STRING" size="256"/>
+          <Column id="REQ_DESC" type="STRING" size="256"/>
+          <Column id="PROC_USER_NM" type="STRING" size="256"/>
+          <Column id="PROC_DEPT_CD" type="STRING" size="256"/>
+          <Column id="PROC_DEPT_NM" type="STRING" size="256"/>
+          <Column id="PROC_DATE" type="STRING" size="256"/>
+          <Column id="FRID" type="STRING" size="256"/>
+          <Column id="FRDT" type="STRING" size="256"/>
+          <Column id="LMID" type="STRING" size="256"/>
+          <Column id="LMDT" type="STRING" size="256"/>
+          <Column id="LMPID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsProc"/>
+    </Objects>
+    <InitValue/>
+    <Bind>
+      <BindItem id="item0" compid="txaReqDesc" propid="value" datasetid="dsSrBasicReq" columnid="REQ_DESC"/>
+      <BindItem id="item1" compid="edtProcUserNm" propid="value" datasetid="dsSrBasicReq" columnid="PROC_USER_NM"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면 ID		︰ SR0040D_01
+* 화면(명)		︰ 기초요청서
+* 메뉴(경로)	︰ 
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.05.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_WorkFlow.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.nextWfProcCdArr;
+this.baseWfProcCd;
+this.CGER_NM;
+this.WF_PROC_NM;
+
+this.selectServiceInfo = {
+	CALLBACK_ID		: ["select01"],
+	CALL_SVC		: ["sr/SR0040D/select01"],
+
+	IN_DS_WHERE		: [this.dsCond],
+	OUT_DS_OBJ		: [new Array(this.dsSrBasicReq)]
+};
+
+this.saveServiceInfo = {
+	CALLBACK_ID		: ["save01"],
+	CALL_SVC		: ["sr/SR0040D/save01"],
+
+	IN_DS_TYPE		: [new Array("MAP")],
+	IN_DS_OBJ		: [new Array(this.dsSrBasicReq)],
+	OUT_DS_OBJ		: []
+};
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+	
+	this.dsCond.setColumn(0, "REQ_ID", this.reqInfo.REQ_ID);
+	this.dsCond.setColumn(0, "WF_PROC_CD", this.reqInfo.SCRN_WF_PROC_CD);
+	
+	if( Ex.isEmpty(this.wfDsReqWfProc) )
+	{
+		this.wfdsReqWfProc = new Dataset();
+	}
+	this.wfdsReqWfProc.loadXML(this.dsWfProc.saveXML());
+	
+	//trace("SR0040_D01 this.form_onload() " + this.wfdsReqWfProc.saveXML());
+}
+
+this.fnInit = function()
+{
+	var curWfProcCd = this.dsCond.getColumn(0, "WF_PROC_CD");
+	this.baseWfProcCd = this.wfdsReqWfProc.getColumn(0, "WF_PROC_CD");
+
+	//trace("SR0040_D01 this.fnInit() curWfProcCd : " + curWfProcCd + " this.baseWfProcCd : " + this.baseWfProcCd + " this.reqInfo.SCRN_WF_PROC_CD : " + this.reqInfo.SCRN_WF_PROC_CD + " this.reqInfo.WF_PROC_CD : " + this.reqInfo.WF_PROC_CD);
+
+	var rtn = this.wffnGetOptByWfProcCd(this.reqInfo.SCRN_WF_PROC_CD, "CUR");
+	this.nextWfProcCdArr = rtn.NEXT_WF_PROC_CD;
+	
+	var nextWfProcCd = this.nextWfProcCdArr[0];
+	this.dsNextWfProcCd.clearData();
+	this.dsNextWfProcCd.addRow();
+	
+	this.dsNextWfProcCd.setColumn(0, "PROC_USER_ID", Ex.util.getSession('gvUserId'));
+	this.dsNextWfProcCd.setColumn(0, "NEXT_WF_PROC_CD", nextWfProcCd);
+
+	this.wfdsReqCgerDt = this.getOwnerFrame().pDsdWfCger;
+
+	//trace("SR0040_D01 this.fnInit() SCRN_WF_PROC_CD : " + this.reqInfo.SCRN_WF_PROC_CD);
+	//trace("SR0040_D01 this.fnInit() next_wf_proc_cd : " + nextWfProcCd);
+	//trace(SR0040_D01 this.fnCallback() this.wfdsReqCgerDt.saveXML());
+
+	var oParam = {
+		wfProcCd : [this.reqInfo.SCRN_WF_PROC_CD, nextWfProcCd]
+		,optStr: ['NO', 'SEL']
+		,filter	: ['', '']
+		,objDs	: [this.dsProc, this.dsCegr]
+	}
+	this.wffnGetCger(oParam);
+	
+	var fRow = this.dsProc.findRow("USER_ID", Ex.util.getSession('gvUserId'));
+
+	//trace("SR0200_D02 this.fnCallback() gvUserId : " + Ex.util.getSession('gvUserId') + " fRow : " + fRow);
+
+	if(this.getOwnerFrame().pEditYn)
+	{
+		if(this.baseWfProcCd != this.reqInfo.WF_PROC_CD && this.reqInfo.WF_PROC_CD == curWfProcCd && this.reqInfo.WF_PROC_CD != "WF_PROC_9999")
+		{
+			if(fRow == -1)
+			{
+				//접수자에 존재하지 않는 사람이 접근한 경우
+				var param = {id : "pAlertNoRevUserI", msg : "현재 로그인 사용자는 처리 가능 담당자가 아닙니다."};
+				Ex.core.alert(this, param);
+				return false;
+			}
+		}
+	}
+
+	this.CGER_NM = rtn.CGER_NM;
+	this.WF_PROC_NM	= rtn.WF_PROC_NM;
+
+	if(this.baseWfProcCd == this.reqInfo.SCRN_WF_PROC_CD)
+	{
+		this.stcReqDesc.set_top(34);
+		this.stcReqDescBg.set_top(34);
+		this.txaReqDesc.set_top(39);
+		this.stcTitle.set_text(Ex.core.word(this.WF_PROC_NM));
+		this.txaReqDesc.set_validation(Ex.core.word("요청내용") + ";NULL|MAX_LEN_UTF8:4000");
+		this.stcReqDesc.set_text(Ex.core.word("요청내용"));
+	}
+	else
+	{
+		this.stcProcUserNm.set_visible(true);
+		this.edtProcUserNm.set_visible(true);
+		this.stcProcUserNmBg.set_visible(true);
+		this.stcTitle.set_text(Ex.core.word(this.WF_PROC_NM));
+		this.txaReqDesc.set_validation(Ex.core.word("검토의견") + ";NULL|MAX_LEN_UTF8:4000");
+		this.stcReqDesc.set_text(Ex.core.word("검토의견"));
+		this.stcProcUserNm.set_text(this.CGER_NM);
+	}
+	
+	if(this.getOwnerFrame().pEditYn)
+	{
+		this.fn_initDataset();
+	}
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+this.fn_initDataset = function()
+{	
+ 	if( Ex.isEmpty(this.dsCond.getColumn(0, "REQ_ID")) )
+	{
+		var aRow = this.dsSrBasicReq.setInsertRow();
+		this.dsSrBasicReq.setColumn(0, "WF_PROC_CD", this.dsCond.getColumn(0, "WF_PROC_CD"));	//임시저장
+		this.dsSrBasicReq.setColumn(0, "PROC_USER_ID", Ex.util.getSession('gvUserId'));
+		this.dsSrBasicReq.setColumn(0, "PROC_USER_NM", Ex.util.getSession('gvUserNm'));
+		this.dsSrBasicReq.setColumn(0, "PROC_DEPT_CD", Ex.util.getSession('gvDeptCd'));
+		this.dsSrBasicReq.setColumn(0, "PROC_DEPT_NM", Ex.util.getSession('gvDeptNm'));
+		this.dsSrBasicReq.setColumn(0, "BASE_WF_PROC_CD", this.baseWfProcCd);
+		this.dsSrBasicReq.setColumn(0, "GUBUN_NM", this.CGER_NM);
+	}
+}
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	//trace("SR0040_D01 this.fnCallback()");
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			if(this.dsSrBasicReq.rowcount == 0)
+			{
+				if(this.getOwnerFrame().pEditYn)
+				{
+					var aRow = this.dsSrBasicReq.setInsertRow();
+					this.dsSrBasicReq.setColumn(0, "REQ_ID", this.dsCond.getColumn(0, "REQ_ID"));
+					this.dsSrBasicReq.setColumn(0, "WF_PROC_CD", this.dsCond.getColumn(0, "WF_PROC_CD"));
+					this.dsSrBasicReq.setColumn(0, "PROC_USER_ID", Ex.util.getSession('gvUserId'));
+					this.dsSrBasicReq.setColumn(0, "PROC_USER_NM", Ex.util.getSession('gvUserNm'));
+					this.dsSrBasicReq.setColumn(0, "PROC_DEPT_CD", Ex.util.getSession('gvDeptCd'));
+					this.dsSrBasicReq.setColumn(0, "PROC_DEPT_NM", Ex.util.getSession('gvDeptNm'));
+				}
+			}
+			else
+			{
+				this.dsSrBasicReq.set_enableevent(false);
+				this.dsSrBasicReq.set_updatecontrol(false);
+				this.dsSrBasicReq.setColumn(0, "BASE_WF_PROC_CD", this.baseWfProcCd);
+				this.dsSrBasicReq.set_updatecontrol(true);
+				this.dsSrBasicReq.set_enableevent(true);
+			}
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	//trace("pID=" + pID + " varValue=" + varValue);
+
+	if( Ex.isEmpty(varValue) ) return;
+	//this.dsPopRtn.loadXML(varValue);
+
+	switch (pID)
+	{
+		case "" :
+			break;	
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	if(!varValue) return;
+	
+	switch(mID)
+	{	
+		case "pAlertReqDescI" :
+			this.txaReqDesc.setFocus();
+			break;
+
+		case "pAlertNoRevUserI" :
+			Ex.core.pclose(this, "");
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.isUpdateForm = function()
+{
+	if( !Ex.util.isUpdated(this.dsSrBasicReq) ) return false;
+	else return true;
+}
+
+this.fnSaveCheck = function(isReg)
+{
+	if( Ex.isEmpty(this.dsSrBasicReq.getColumn(0, "GUBUN_NM")) )
+	{
+		this.dsSrBasicReq.set_enableevent(false);
+		this.dsSrBasicReq.set_updatecontrol(false);
+		this.dsSrBasicReq.setColumn(0, "GUBUN_NM", this.CGER_NM);
+		this.dsSrBasicReq.set_updatecontrol(true);
+		this.dsSrBasicReq.set_enableevent(true);
+	}
+	
+	//trace("SR0040_D01 this.fnSaveCheck()");
+	return Ex.util.checkValidate(this, "group01");
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// component onclick event. 
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{	
+	// TO DO
+	// 개발자가 컴포넌트 onclick event를 'fnCommOnclick'으로 지정하고 컴포넌트 id로 구분하여 작성
+	switch(obj.name)
+	{
+		case "" :
+			break;
+	}
+}
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};]]></Script>
+  </Form>
+</FDL>

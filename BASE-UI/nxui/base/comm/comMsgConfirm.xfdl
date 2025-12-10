@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comMsgConfirm" left="0" top="0" width="400" height="200" titletext="comMsgConfirm" onload="form_onload" style="background:white;border:1 solid #4e73b6ff ;" background="transparent" onkeyup="comMsgConfirm_onkeyup">
+    <Layouts>
+      <Layout>
+        <Div id="divBg" taborder="0" left="0" top="0" right="0" bottom="0" background="white" borderRadius="0px 0px 5px 5px" text="">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="2" cssclass="sta_POP_msg_btnbg" left="0" right="0" bottom="0" height="60"/>
+              <Static id="stcTitle" taborder="3" text="메시지창" left="0" top="5" right="0" height="40"/>
+              <TextArea id="txaMsg" taborder="4" readonly="true" left="20" top="65" right="20" bottom="70" cssclass="txa_POP_msg_conts" wordwrap="char" border="0px" background="transparent" visible="false" textAlign="left"/>
+              <Button id="btnConfirm" taborder="0" text="확인" onclick="btnConfirm_onclick" bottom="14" width="100" height="32" cssclass="btn_WF_primary_save" right="129"/>
+              <Button id="btnClose" taborder="5" text="X" onclick="btnClose_onclick" visible="false" top="10" right="5" width="20" height="20"/>
+              <Button id="btnCancel" taborder="1" text="취소" bottom="14" width="100" height="32" onclick="btnCancel_onclick" right="24" cssclass="btn_WF_primary_close"/>
+              <Static id="staMsg" taborder="6" left="20" top="65" right="20" bottom="70" visible="false" usedecorate="true" textAlign="left" verticalAlign="top" cssclass="sta_POP_msg_conts"/>
+              <Static id="stcBgLineTop" taborder="7" left="0" top="0" height="5" right="0" background="#4580ff"/>
+              <Static id="stcBgLineTop00" taborder="8" left="20" top="44" height="1" right="20" background="#dfdfdf"/>
+              <Static id="stcBgLineTop00_00" taborder="9" left="20" height="1" right="20" background="#dfdfdf" bottom="59"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 공통 CONFIRM
+* 메뉴(경로)	︰ 공통관리 > 플랫폼 > 공통
+* 화면 설명	︰ 공통 팝업
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.00
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+this.param = {};
+this.isError = false;
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.param = this.getOwnerFrame()._param_;
+	
+	var msgType = this.param.msgType||'';
+	var css = '';
+	
+	switch(msgType)
+	{
+		case "I" :	css = 'sta_POP_msg_info';		break;	// 'i' icon; 일반적인 alert
+		case "W" :	css = 'sta_POP_msg_warning';	break;	// '!' icon; 경고 alert
+		case "S" :	css = 'sta_POP_msg_success';	break;	// 'check' icon; 저장되었습니다. 등 성공 alert
+		default	 : css = 'sta_POP_msg_title'; 		break;	// 아이콘 없는 기본 alert
+	}
+	this.divBg.form.stcTitle.set_cssclass(css);
+	
+	var msg = this.param.msg || '';
+	// decorate 사용하는 경우 static으로 대체
+	if( msg.indexOf('<fc ') >= 0 )
+	{
+		this.divBg.form.staMsg.set_visible(true);
+	}
+	else
+	{
+		this.divBg.form.txaMsg.set_wordWrap('char');
+		this.divBg.form.txaMsg.set_visible(true);
+	}
+	this.isError = this.param.error || false;
+
+	var objStaticSize = nexacro.getTextSize(msg, this.divBg.form.txaMsg._getCurrentStyleInheritValue("font")); // ,310,"char" );
+	var objmax = parseInt(objStaticSize.ny)+14;
+	
+	if( objmax > 80 )
+	{
+		var nH = parseInt(this.getOffsetHeight());
+		var n   = objmax-80;
+		var calc = this.getOwnerFrame().height + n;
+		if( calc > 414 ) calc = 414;
+		
+		this.getOwnerFrame().set_height(calc);
+		var recalc = this.getOwnerFrame().top-n;
+
+		var nTop    =  parseInt( (nexacro.getApplication().mainframe.height / 2) - Math.round(this.getOwnerFrame().height / 2) );
+		this.getOwnerFrame().set_top(nTop);
+	}
+
+	if (this.isError) 
+	{
+		this.divBg.form.stcTitle.set_cssclass("sta_POP_msg_error");
+		var arrMsg = msg.split("::");
+		this.divBg.form.stcTitle.set_text("에러 메시지(" + arrMsg[0] + ")");
+		//this.btnConfirm.set_left(147);
+		this.divBg.form.btnCancel.set_visible(false);
+
+		this.divBg.form.btnConfirm.set_text("확인");
+
+		var arrMsg = msg.split("::");
+		this.divBg.form.txaMsg.set_value(arrMsg[2] || '');
+	}
+	else 
+	{
+		this.divBg.form.txaMsg.set_value(msg);
+		this.divBg.form.staMsg.set_text(msg);
+	}
+}
+
+this.btnConfirm_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	Ex.core.errorCnt = 0;
+	Ex.core.pclose(this, true);
+};
+
+this.btnCancel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.isError) 
+	{
+		Ex.core.errorCnt = 0;
+		return;
+	}
+	else 
+	{
+		Ex.core.errorCnt = 0;
+		Ex.core.pclose(this, false);
+	}
+};
+
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	if (this.isError) 
+	{
+		Ex.core.errorCnt = 0;
+		Ex.core.pclose(this, true);
+	}
+	else 
+	{
+		Ex.core.errorCnt = 0;
+		Ex.core.pclose(this, false);
+	}
+};
+
+this.comMsgConfirm_onkeyup = function(obj:nexacro.Form,e:nexacro.KeyEventInfo)
+{
+	if( e.keycode == 27 )	// esc
+	{
+		//trace("this.comMsgConfirm_onkeyup()");
+		e.stopPropagation();
+		Ex.core.pclose(this);
+	}
+};]]></Script>
+  </Form>
+</FDL>

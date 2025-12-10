@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="ref11_T01" titletext="Ex" onload="form_onload" left="0" top="0" width="970" height="620">
+    <Layouts>
+      <Layout>
+        <Grid id="grdExList" taborder="0" binddataset="dsEx" useinputpanel="false" autofittype="col" left="5" top="15" right="460" bottom="5" domainId="nexa.id;nexa.name;nexa.dspt;nexa.password;nexa.phone;nexa.createdate;nexa.createuser;nexa.updatedate;nexa.updateuser" oncellclick="grdExList_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="110"/>
+                <Column size="320"/>
+                <Column size="50"/>
+              </Columns>
+              <Rows>
+                <Row size="30" band="head"/>
+                <Row size="28"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" text="함수명"/>
+                <Cell col="2"/>
+                <Cell col="3"/>
+              </Band>
+              <Band id="body">
+                <Cell style="align:right middle;" expr="currow+1"/>
+                <Cell col="1" style="align:left middle;" text="bind:name" tooltiptext="bind:title"/>
+                <Cell col="2" style="align:left middle;" text="bind:title" tooltiptext="bind:title"/>
+                <Cell col="3" displaytype="button" edittype="button" style="font:8 arial;" text="excute"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Edit id="Edit00" taborder="1" top="15" right="288" width="163" height="33"/>
+        <Edit id="edtExample" taborder="2" top="15" right="17" width="270" height="33"/>
+        <Edit id="Edit02" taborder="3" top="52" right="17" width="434" height="35"/>
+        <TextArea id="txaNote" taborder="4" top="121" right="15" bottom="5" width="436"/>
+        <Static id="Static01" taborder="5" text="note" top="93" right="331" width="120" height="26"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsEx">
+        <ColumnInfo>
+          <Column id="no" type="string" size="256"/>
+          <Column id="name" type="string" size="256" description="상"/>
+          <Column id="note" type="string" size="256"/>
+          <Column id="exam" type="STRING" size="256"/>
+          <Column id="title" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="no">1</Col>
+            <Col id="name">Ex.isEmpty</Col>
+            <Col id="note">value의 빈값 여부 반환./**</Col>
+            <Col id="exam">Ex.isEmpty({a:'1', b:'2'})</Col>
+            <Col id="title">value의 빈값 여부 반환.</Col>
+          </Row>
+          <Row>
+            <Col id="no">4</Col>
+            <Col id="name">Ex.isBoolean</Col>
+            <Col id="note">/**
+ * value의 boolean 여부 반환.
+ * @param {*} value 확인할 value.
+ * @return {boolean} boolean 여부.
+ * @example
+ * trace(Ex.isBoolean(true));	// output : true
+ * trace(Ex.isBoolean("true"));	// output : false		 
+ * @memberOf Ex
+*/</Col>
+            <Col id="exam">Ex.isBoolean(true)</Col>
+            <Col id="title">value의 boolean 여부 반환.</Col>
+          </Row>
+          <Row>
+            <Col id="no">6</Col>
+            <Col id="name">Ex.isNull</Col>
+            <Col id="note">/**
+ * value의 null 여부 반환.
+ * @param {*} value 확인할 value.
+ * @return {boolean} null 여부.
+ * @example
+ * trace(Ex.isNull(null));	// output : true
+ * var a; // undefined
+ * trace(Ex.isNull(a));	// output : false		
+ * trace(Ex.isNull(""));	// output : false
+ * @memberOf Ex
+**/</Col>
+            <Col id="exam">Ex.isNull(null)</Col>
+            <Col id="title">value의 null 여부 반환.</Col>
+          </Row>
+          <Row>
+            <Col id="no">7</Col>
+            <Col id="name">Ex.isUndefined</Col>
+            <Col id="note">/**
+ * value의 undefined 여부 반환.
+ * @param {*} value 확인할 value.		 
+ * @return {boolean} undefined 여부.
+ * @example
+ * var a;
+ * trace(Ex.isUndefined(a));	// output : true
+ *
+ * var a = "";
+ * trace(Ex.isUndefined(a));	// output : false
+ * @memberOf Ex
+**/</Col>
+            <Col id="exam">Ex.isUndefined(undefined)</Col>
+            <Col id="title">value의 undefined 여부 반환.</Col>
+          </Row>
+          <Row>
+            <Col id="no">8</Col>
+            <Col id="name">Ex.isObject</Col>
+            <Col id="note">/**
+ * value의 Object 여부 반환.
+ * @param {*} value 확인할 value.
+ * @return {boolean} Object 여부.
+ * @example
+ * var o = new Object();
+ * trace(Ex.isObject(o));	// output : true
+ * 
+ * var o = {};
+ * trace(Ex.isObject(o));	// output : true
+ *
+ * var o = {a:1 , b:2 , c:3};
+ * trace(Ex.isObject(o));	// output : true
+ *
+ * var o = [1,2,3];
+ * trace(Ex.isObject(o));	// output : false
+ *
+ * var o = new Button();
+ * trace(Ex.isObject(o));	// output : false
+ *
+ * var o = "123";
+ * trace(Ex.isObject(o));	// output : false
+ *
+ * @memberOf Ex
+**/</Col>
+            <Col id="exam">Ex.isObject( {a:1 , b:2 , c:3} )</Col>
+            <Col id="title">value의 Object 여부 반환.</Col>
+          </Row>
+          <Row>
+            <Col id="no">9</Col>
+            <Col id="name">Ex.isArray</Col>
+            <Col id="note">/**
+ * value의 Array 여부 반환.
+ * @function isArray
+ * @param {*} value 확인할 value.
+ * @return {boolean} Array 여부.
+ * @example
+ * var a = new Array();
+ * trace(Ex.isArray(a));	// output : true
+ *
+ * var a = [1,2,3];
+ * trace(Ex.isArray(a));	// output : true
+ *
+ * var a = "123";
+ * trace(Ex.isArray(a));	// output : false
+ *
+ * @memberOf Ex
+**/</Col>
+            <Col id="exam">Ex.isArray( [1,2,3] )</Col>
+            <Col id="title">value의 Array 여부 반환.</Col>
+          </Row>
+          <Row>
+            <Col id="no">10</Col>
+            <Col id="name">Ex.arrContains</Col>
+            <Col id="note">/**
+ * 지정된 항목이 배열에 포함되어 있는지 확인한다.
+ * @param {array} array 검색 대상 Array
+ * @param {object} item 찾고자 하는 Item
+ * @param {boolean=} strict true: 형변환 없이 비교('==='), false: 형변환 후 비교('==') (default: false)
+ * @return {boolean} 포함되어 있다면 true, 없다면 false를 리턴
+ * @example
+ * var mon = ["Jan","Feb","Mar","Apr"];
+ * var contain = Ex.arrContains(mon, "Mar");
+ * trace("contain==&gt;" + contain);	// output : contain==&gt;true
+ * var contain = Ex.arrContains(mon, "May");
+ * trace("contain==&gt;" + contain);	// output : contain==&gt;false
+ * @memberOf Ex
+**/</Col>
+            <Col id="exam">Ex.arrContains(["Jan","Feb","Mar","Apr"], "Mar")</Col>
+            <Col id="title">지정된 항목이 배열에 포함되어 있는지 여부를 반환</Col>
+          </Row>
+          <Row>
+            <Col id="no">10</Col>
+            <Col id="name">Ex.arrIndexOf</Col>
+            <Col id="note">/**
+ * 지정된 항목이 처음 나오는 배열 위치를 반환한다. 
+ * @param {array} array 검색 대상 Array
+ * @param {object} item 찾고자 하는 Item
+ * @param {number=} from 검색의 시작 위치 (default: 0)
+ * @param {boolean=} strict true: 형변환 없이 비교('==='), false: 형변환 후 비교('==') (default: false)
+ * @return {number} 검색된 배열 위치. 없다면 -1 리턴
+ * @example
+ * var mon = ["Jan","Feb","Mar","Apr"];
+ * var index = Ex.arrIndexOf(mon, "Mar");
+ * trace("index==&gt;" + index);	// output : index==&gt;2
+ * var index = Ex.arrIndexOf(mon, "May");
+ * trace("index==&gt;" + index);	// output : index==&gt;-1
+ * @memberOf Ex
+**/</Col>
+            <Col id="exam">Ex.arrIndexOf(["Jan","Feb","Mar","Apr"], "Mar")</Col>
+            <Col id="title">지정된 항목이 처음 나오는 배열 위치를 반환</Col>
+          </Row>
+          <Row>
+            <Col id="no">10</Col>
+            <Col id="name">Ex.arrRemoveAt</Col>
+            <Col id="note">/**
+ * 원하는 위치의 항목을 배열에서 삭제 처리한다.
+ * @param {array} array remove 대상 Array
+ * @param {number} index remove하고자 하는 item index
+ * @example
+ * var mon = ["Jan","Feb","Mar","Apr"];
+ * Ex.arrRemoveAt(mon, 1);
+ * trace("mon==&gt;" + mon);	// output : mon==&gt;["Jan","Mar","Apr"]
+ * @memberOf Ex
+**/</Col>
+            <Col id="exam">Ex.arrRemoveAt(["Jan","Feb","Mar","Apr"], 1)</Col>
+            <Col id="title">지정된 배열에서 원하는 위치의 항목을 삭제 처리</Col>
+          </Row>
+          <Row>
+            <Col id="no">10</Col>
+            <Col id="name">Ex.isDate</Col>
+            <Col id="note">/**
+ * value의 Date 여부 반환.
+ * @param {date} value 확인할 value.
+ * @return {boolean} Date 여부.
+ * @example
+ * var a = new Date();
+ * trace(Ex.isDate(a));	// output : true
+ *
+ * var a = "20130501";
+ * trace(Ex.isDate(a));	// output : false 	 
+ * @memberOf Ex
+**/</Col>
+            <Col id="exam">Ex.isDate(new Date())</Col>
+            <Col id="title">value의 Date 여부 반환.</Col>
+          </Row>
+          <Row>
+            <Col id="no">11</Col>
+            <Col id="name">Ex.isStringDate</Col>
+            <Col id="note">/**
+ * yyyyMMdd형태의 날짜 문자열 여부.( 예 : "20111231" ).
+ * @param {string} value 확인할 value.
+ * @return {boolean} Date 여부.
+ * @example
+ * var a = "20130501";
+ * trace(Ex.isStringDate(a));	// output : true 	 
+ * @memberOf Ex
+**/</Col>
+            <Col id="exam">Ex.isStringDate("20130501")</Col>
+            <Col id="title">yyyyMMdd형태의 날짜 문자열 여부.</Col>
+          </Row>
+          <Row>
+            <Col id="no">12</Col>
+            <Col id="name">Ex.isFunction</Col>
+            <Col id="note">/**
+ * value의 Function 여부 반환.
+ * @param {*} value 확인할 value.
+ * @return {boolean} Function 여부.
+ * @example
+ * trace(Ex.isFunction(Ex.isFunction));	// output : true
+ *
+ * this.testFunction = function()
+ * {
+ * }
+ * trace(Ex.isFunction(this.testFunction));	// output : true
+ * @memberOf Ex
+**/</Col>
+            <Col id="exam">Ex.isFunction(Ex.isFunction)</Col>
+            <Col id="title">value의 Function 여부 반환.</Col>
+          </Row>
+          <Row>
+            <Col id="no">13</Col>
+            <Col id="name">Ex.decode</Col>
+            <Col id="note">/**
+ * 입력된 값 또는 수식을 검사해 적당한 값을 반환.&lt;br&gt;
+ * decoce(비교값, CASE1, 결과값1 [, CASE2, 결과값2, ... ], 디폴트 값);&lt;br&gt;
+ * 표현식의 값이 기준값1이면 값1을 출력하고, 기준값2이면 값2를 출력한다.&lt;br&gt;
+ * 그리고 기준값이 없으면 디폴트 값을 출력한다.&lt;br&gt;
+ * @param {*} * 1. 비교값
+ * @param {*} * 2. CASE
+ * @param {*} * 3. 결과값 (2,3 반복)
+ * @param {*=} * (2,3 반복)
+ * @param {*=} * 4.디폴트값
+ * @return {*} decode에 의해서 선택된 값.
+ * @example
+ * trace(Ex.decode("1", "1", "One", "2", "Two", "Default")); // output : One;
+ * 
+ * trace(Ex.decode(100, 1, "일", 10, "십", 100, "백"));	// output : 백
+ *
+ * @memberOf Ex
+**/</Col>
+            <Col id="exam">Ex.decode(100, 1, "일", 10, "십", 100, "백")</Col>
+            <Col id="title">입력된 값 또는 수식을 검사해 적당한 값을 반환.</Col>
+          </Row>
+          <Row>
+            <Col id="no">14</Col>
+            <Col id="name">Ex.isNvl</Col>
+            <Col id="note">/**
+ * 입력값이 '' , null , undefined 이면 대체값으로 반환한다.
+ * @param {string/object} val 입력값( 문자열 혹은 객체 )
+ * @param {string/object} val2 대체값( 문자열 혹은 객체 )
+ * @return {string/object} 문자열 혹은 객체
+ * @description 
+ *  	
+ * @example
+ *  var rtnStr = Ex.isNvl(null,'2016');  // output 2016
+ *  
+ *  var object1 = {};
+ *  var rtnObj = Ex.isNvl(object1,object2);  // output object2
+ *  
+ *  var object1 = {a:1,b:2};
+ *  var rtnObj = Ex.isNvl(object1,object2);  // output object1
+ *  
+ * @memberOf Ex
+**/</Col>
+            <Col id="exam">Ex.isNvl(null,'2016')</Col>
+            <Col id="title">입력값이 '' , null , undefined 이면 대체값으로 반환한다.</Col>
+          </Row>
+          <Row>
+            <Col id="no">15</Col>
+            <Col id="name">Ex.isString</Col>
+            <Col id="note">/**
+ * value의 string 여부 반환
+ * @param {*} value 확인할 value.
+ * @return {boolean} string 여부.
+ * @example
+ * trace(Ex.isString("test string!!!"));	// output : true
+ * trace(Ex.isString(1234));	// output : false
+ * @memberOf Ex
+**/</Col>
+            <Col id="exam">Ex.isString("test string!!!")</Col>
+            <Col id="title">value의 string 여부 반환</Col>
+          </Row>
+          <Row>
+            <Col id="no">16</Col>
+            <Col id="name">Ex.isNumber</Col>
+            <Col id="note">/**
+ * value의 number 여부 반환.
+ * @param {*} value 확인할 value.
+ * @return {boolean} number 여부.
+ * @example
+ * trace(Ex.isNumber(1234));	// output : true
+ * trace(Ex.isNumber("1234"));	// output : false		 
+ * @memberOf Ex
+**/</Col>
+            <Col id="exam">Ex.isNumber(1234)</Col>
+            <Col id="title">value의 number 여부 반환.</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="Edit00" propid="value" datasetid="dsEx" columnid="name"/>
+      <BindItem id="item1" compid="edtExample" propid="value" datasetid="dsEx" columnid="exam"/>
+      <BindItem id="item4" compid="Edit02" propid="value" datasetid="dsEx" columnid="title"/>
+      <BindItem id="item2" compid="txaNote" propid="value" datasetid="dsEx" columnid="note"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ Ex Utility
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	trace("ref11_T01 workArea form init call");
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+}
+
+// 저장
+this.fnSave = function()
+{
+	trace("fnSave call");
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "ABOUT" : // 서비스 ID
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+this.grdExList_oncellclick = function(obj:Grid, e:nexacro.GridClickEventInfo)
+{
+	if( e.cell != 3 ) return;
+	var dsObj = obj.getBindDataset();
+		
+	if (e.cell == 3)
+	{
+		var sFunc = dsObj.getColumn(e.row, "exam");
+		var result = eval(sFunc);
+		var param = {id : "pAlertI", msg : "" + result};
+		Ex.core.alert(this, param);
+	}
+}]]></Script>
+  </Form>
+</FDL>

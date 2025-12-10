@@ -1,0 +1,833 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM0251_P02" width="1100" height="399" titletext="게시판 생성 팝업" visible="true" onload="form_onload">
+    <Layouts>
+      <Layout height="399" width="1100">
+        <Div id="divContent" taborder="0" text="Div00" left="0" top="0" right="0" bottom="60" visible="false">
+          <Layouts>
+            <Layout>
+              <Static id="Static00_01" taborder="1" left="0" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Static id="Static00_01_00" taborder="2" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Static id="Static00_01_00_00" taborder="3" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+              <Static id="Static00_01_01" taborder="4" left="0" top="60" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Div id="divSearchArea" taborder="0" left="20.00" top="20" height="40" right="20" cssclass="div_WF_divSearchArea" text="">
+                <Layouts>
+                  <Layout>
+                    <Static id="Static00" taborder="1" left="-1" top="7" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+                    <Static id="stcDeptNm" taborder="2" text="생성 유형" left="19.00" top="7" width="80" height="24" cssclass="sta_WF_schTitle"/>
+                    <Radio id="rdoCreType" taborder="5" left="stcDeptNm:0.00" top="6" width="280" height="26" onitemchanged="fnCreTypeItemChange" innerdataset="dsCreType" datacolumn="CREATE_TYPE_NM" codecolumn="CREATE_TYPE" cssclass="rdo_WF_normal" direction="vertical" readonly="false" text="" validation="생성유형;NULL" validationGroup="fvValiCmp"/>
+                    <Static id="Static00_00" taborder="3" left="rdoCreType:0" top="8" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+                    <Static id="stcUpPostNo" taborder="4" text="상위 부서/게시판" left="Static00_00:0" top="8" width="120" height="24" cssclass="sta_WF_schTitle"/>
+                    <Edit id="edtUpPostNm" taborder="0" left="stcUpPostNo:0.00" top="7" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown" onchanged="divContent_edtDeptId_onchanged" readonly="true" visible="true" width="195"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divTop" taborder="5" text="div00" left="0" top="Static00_01_01:0" right="0" height="101">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcBg01" taborder="0" left="20.00" top="33" height="68" cssclass="sta_WF_inputBg" right="20"/>
+                    <Static id="stcBg02" taborder="1" left="20" top="0" height="34" cssclass="sta_WF_inputBg" right="20"/>
+                    <Static id="stcDeptNm" taborder="8" left="52.08%" top="0" width="110" height="34" cssclass="sta_WF_inputTitle" text="접근부서"/>
+                    <Static id="stcPostTitle" taborder="9" text="게시판명" cssclass="sta_WF_inputTitle_E" left="20.00" top="0" width="110" height="34" style="align:left middle;"/>
+                    <Edit id="edtTitle" taborder="2" left="stcPostTitle:5" top="5" height="24" validate="" validation="게시판/부서명;NULL" cssclass="edt_WF_normal" text="" validationGroup="fvValiCmp" right="stcDeptNm:5"/>
+                    <Static id="stcAdmin" taborder="3" text="관리자" cssclass="sta_WF_inputTitle_E" left="20.00" top="33" width="110" height="68" style="align:left middle;"/>
+                    <Div id="divOutUser" taborder="4" url="fomm::FOMM0000_D01.xfdl" left="stcAdmin:5" top="38" height="24" enableevent="false" width="300" text="" visible="true" enable="true">
+                      <Layouts>
+                        <Layout/>
+                      </Layouts>
+                    </Div>
+                    <Button id="btnAddAdmin" taborder="5" text="추가" left="divOutUser:5" top="38" width="60" height="24" cssclass="btn_WF_add" onclick="btnAddAdmin_onclick"/>
+                    <Static id="stcAdminList" taborder="6" text="관리자 목록" cssclass="sta_WF_inputTitle_E" left="52.08%" top="33" width="110" height="68" style="align:left middle;"/>
+                    <Div id="divOutDept" taborder="7" url="fomm::FOMM0000_D03.xfdl" left="stcDeptNm:5" top="5" height="24" enableevent="false" width="300" text="" visible="true" enable="true">
+                      <Layouts>
+                        <Layout/>
+                      </Layouts>
+                    </Div>
+                    <ListView id="lsv00" taborder="10" top="38" height="58" binddataset="dsUser" bandexpandtype="none" bandinitstatus="collapse" bandindentsize="5" autoenter="select" cellclickbound="cell" oncellclick="lsv_onClick" left="stcAdminList:5" right="51">
+                      <Formats>
+                        <Format id="default">
+                          <Band id="body" width="50%" height="50%" border="1px solid #dbdbdb" borderRadius="3px">
+                            <Cell id="delBtn" top="0" width="15" text="theme://images/btn_TF_Close_O.png" displaytype="imagecontrol" padding="4px 6px 4px 0px" borderRadius="5px" edittype="none" accessibilityrole="button" cursor="pointer" bottom="0" border="1px none #dbdee2" right="5"/>
+                            <Cell id="userNm" left="5.00" top="0" border="1px none #dbdee2" bottom="0" text="expr:USER_NM+&quot;(&quot;+DEPT_NM+&quot;)&quot;" right="delBtn:10" tooltiptext="expr:USER_NM+&quot;(&quot;+DEPT_NM+&quot;)&quot;"/>
+                          </Band>
+                        </Format>
+                      </Formats>
+                    </ListView>
+                    <Button id="btnSearchPop" taborder="11" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommOnclick" top="38" right="24" width="24"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divMid" taborder="6" text="div00" left="0" top="171" right="0" height="132">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcBg04" taborder="0" left="20.00" top="65" cssclass="sta_WF_inputBg" right="20" onclick="divContent_stcBg04_onclick" height="34" text=""/>
+                    <Static id="stcBg06" taborder="1" left="20.00" top="98" height="34" cssclass="sta_WF_inputBg" right="20" text=""/>
+                    <Static id="stcBg05" taborder="2" left="20.00" top="32" cssclass="sta_WF_inputBg" right="20" onclick="Static_onclick" text="" height="34"/>
+                    <Static id="stcAlarm" taborder="3" text="알림 설정" cssclass="sta_WF_inputTitle" left="20" top="65" width="110" height="34" style="align:left middle;" onclick="Static_onclick"/>
+                    <Static id="stcBg03" taborder="4" left="20.00" top="-1" height="34" cssclass="sta_WF_inputBg" right="20" text=""/>
+                    <Static id="stcPostPeriod" taborder="5" text="게시 기간" cssclass="sta_WF_inputTitle_E" left="20.00" top="32" width="110" height="34" style="align:left middle;" onclick="divContents_stcMeetLoc_onclick"/>
+                    <Calendar id="calBeginDate" taborder="6" left="stcPostPeriod:5" top="37" width="150" height="24" cssclass="cal_WF_normal" validation="게시시작일;NULL" text="    -  -  " validationGroup="fvValiCmp"/>
+                    <Static id="Static00" taborder="7" text="~" left="calBeginDate:0" top="37" width="24" height="24" font="12px 'KoPubL'" textAlign="center" verticalAlign="middle"/>
+                    <Calendar id="calEndDate" taborder="8" left="Static00:0" top="37" width="150" height="24" cssclass="cal_WF_normal" validation="게시종료일;NULL" text="    -  -  " validationGroup="fvValiCmp" onchanged="divContent_calEndDate_onchanged"/>
+                    <Static id="stcReadAuth" taborder="9" text="읽기권한" onclick="Static13_onclick" cssclass="sta_WF_inputTitle_E" left="52.08%" top="98" width="110" height="34" style="align:left middle;"/>
+                    <Static id="stcWrite" taborder="10" text="쓰기 설정" cssclass="sta_WF_inputTitle" left="52.08%" top="32" width="110" height="34" style="align:left middle;"/>
+                    <Static id="stcTmpl" taborder="11" text="게시글 템플릿" cssclass="sta_WF_inputTitle" left="52.08%" top="-1" width="110" height="34" style="align:left middle;"/>
+                    <Static id="stcFile" taborder="12" text="파일첨부" onclick="Static13_onclick" cssclass="sta_WF_inputTitle_E" left="20" top="98" width="110" height="34" style="align:left middle;"/>
+                    <MultiCombo id="mcboPostTmpl" text="mcbo00" left="stcTmpl:5" top="4" width="300" height="24" innerdataset="dsTmpl" datacolumn="CMM_CD_NM" codecolumn="CMM_CD" taborder="13"/>
+                    <Radio id="rdoReadAuth" taborder="14" left="stcReadAuth:5" top="103" width="234" height="26" onitemchanged="divContent_rdo00_onitemchanged" innerdataset="dsAuth" datacolumn="AUTH_CD_NM" codecolumn="AUTH_CD" cssclass="rdo_WF_normal" direction="vertical" text=""/>
+                    <CheckBoxSet id="chkSetWrite" left="stcWrite:5" top="36" width="359" height="27" innerdataset="dsGubun" datacolumn="GUBUN_CD_NM" codecolumn="GUBUN_CD" onitemchanged="divContent_chkSetWrite_onitemchanged" taborder="15"/>
+                    <CheckBoxSet id="chkSetAlarm" taborder="16" left="stcAlarm:5" top="69" width="359" height="27" innerdataset="dsGubun" datacolumn="GUBUN_CD_NM" codecolumn="GUBUN_CD"/>
+                    <CheckBox id="chkFileYn" taborder="17" left="stcFile:5" top="103" width="150" height="24" value="true" truevalue="Y" falsevalue="N"/>
+                    <Static id="stcWriteAuth" taborder="19" text="쓰기권한" onclick="Static13_onclick" cssclass="sta_WF_inputTitle_E" left="52.08%" top="65" width="110" height="34" style="align:left middle;"/>
+                    <Radio id="rdoWriteAuth" taborder="18" left="stcWriteAuth:5" top="70" width="234" height="26" onitemchanged="divContent_rdo00_onitemchanged" innerdataset="dsAuth" datacolumn="AUTH_CD_NM" codecolumn="AUTH_CD" cssclass="rdo_WF_normal" direction="vertical" readonly="false" text=""/>
+                    <Static id="stcPostType" taborder="20" left="20.00" top="-1" width="110" height="34" cssclass="sta_WF_inputTitle_E" text="게시판 종류"/>
+                    <Combo id="cboPostTypeCd" taborder="21" text="" left="stcPostType:5" top="4" height="24" cssclass="cbo_WF_normal" right="641" validation="게시판 종류;NULL" validationGroup="fvValiCmp" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsPostMtCd"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="Static00_01_02" taborder="7" left="0" height="36" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBottom" taborder="1" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnSave" taborder="0" text="저장" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="125" width="100" height="32" bottom="14" visible="false"/>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ FOMM0251_P02
+* 화면(명)		︰ 게시판 생성 팝업
+* 메뉴(경로)	︰ 
+* 화면 설명	︰ SPP 게시판 생성 팝업
+* 작성자		︰ 정하림
+* 작성일		︰ 2024.12.16
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2024.12.16	 정하림			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.pPopType = 'R';	// R: read / I: new / U: edit
+this.pPostMtNo = '';	// 부모화면에서 넘겨준 게시판 번호
+this.pUpPostNo = '';	// 부모화면에서 넘겨준 상위 게시판 번호
+this.pUpPostNm = '';	// 부모화면에서 넘겨준 상위 게시판 타이틀
+this.pSelectedDeptNm = '';
+this.pSelectedDeptCd = '';
+this.pSelectedLvl = '';
+
+this.deptFlag = false; 	// 부서/팀 or 게시판
+
+this.orgHeight = nexacro.toNumber(this.getOwnerFrame().height);
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화 
+}
+
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+
+// 조회
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "select02";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0251W/select02pop";               // 서비스명
+    var sInDs = "dsCond=dsCond";                  // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsPostMt=dsPostMt";           // 서버에서 수신할 데이타셋
+    var sArg = "";                   // 서버 @ParamVariable 인자와 맵핑됨
+    
+    /**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+// 공통 저장 func.
+this.fnSave = function()
+{
+	// transaction
+	var sTranId = "save02";                          			// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0251W/save02";                         // 서비스명
+    var sInDs = "dsPostMt=dsPostMt:U dsCond=dsCond";                  // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsPostMt=dsPostMt";           // 서버에서 수신할 데이타셋
+    var sArg = "";                   // 서버 @ParamVariable 인자와 맵핑됨
+    
+    /**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select02" :
+			Ex.core.toast(this, "10002"); 
+			
+			this.deptFlag = (this.dsPostMt.getColumn(this.dsPostMt.rowposition, 'CREATE_TYPE') == 'DEPT') ? true : false;
+			if(this.deptFlag){
+				this.fnCreTypeItemChange(); // 부서/팀 생성이면 숨길 화면 세팅	
+			} else {
+				this.divContent.form.divTop.form.divOutDept.set_enable(false); // 부서 게시판에서 가져오기 때문에 접근x
+			}
+			
+			var managerList = this.dsPostMt.getColumn(this.dsPostMt.rowposition, 'MANAGER');
+			if ( !Ex.isEmpty(managerList) ) {
+				this.jsonToDataSet(managerList); 
+			}
+			
+			// dept DIV 값 세팅(부모 팀 게시판의 DEPT_CD와 DEPT_NM을 가져와야 함)
+			var deptCd    = this.dsPostMt.getColumn(0, "DEPT_CD") || '';
+			var deptNm    = this.dsPostMt.getColumn(0, "DEPT_NM") || '';
+			this.divContent.form.divTop.form.divOutDept.form.setValue(deptCd, deptNm); 
+
+			break;
+			
+		case "save01" :
+		case "save02" :
+			var param = {
+					id : "saveAlert"
+				  , msg : "10004"
+				  , arrparam : ['']
+				  , msgtype : "S"};
+			Ex.core.alert(this, param);
+			break;	
+
+	}
+}
+
+// 관리자 - 직원 DIV 콜백함수
+this.userDeptChangedCallBack = function(compId, dsRtnObj)
+{
+	console.log("this.userDeptChangedCallBack() compId:" + compId + "\n" + dsRtnObj.saveXML());
+	if(compId == "divOutUser")
+	{
+		if( !Ex.isEmpty(dsRtnObj.getColumn(0, "USER_ID")) )
+		{
+			trace("dsRtnObj :: ", dsRtnObj.saveXML());
+			this.dsTemp.setColumn(0, "USER_ID",	dsRtnObj.getColumn(0, "USER_ID"));
+			this.dsTemp.setColumn(0, "USER_NM",	dsRtnObj.getColumn(0, "USER_NM"));
+			this.dsTemp.setColumn(0, "DEPT_NM",	dsRtnObj.getColumn(0, "DEPT_NM"));
+		}
+		else
+		{ 
+			this.dsTemp.setColumn(0, "USER_ID",	"");
+			this.dsTemp.setColumn(0, "USER_NM",	"");
+			this.dsTemp.setColumn(0, "DEPT_NM",	""); 
+		}
+	}
+}
+
+// 관리자 - 부서 DIV 콜백함수
+this.deptChangedCallBack = function(compId, dsRtnObj)
+{
+	console.log("this.deptChangedCallBack() compId:" + compId + "\n" + dsRtnObj.saveXML());
+	if(compId == "divOutDept")
+	{
+		if( !Ex.isEmpty(dsRtnObj.getColumn(0, "DEPT_CD")) )
+		{
+			this.dsPostMt.setColumn(0, "DEPT_CD",	dsRtnObj.getColumn(0, "DEPT_CD"));
+			this.dsPostMt.setColumn(0, "DEPT_NM",	dsRtnObj.getColumn(0, "DEPT_NM"));
+		}
+		else
+		{
+			this.dsPostMt.setColumn(0, "DEPT_CD",	"");
+			this.dsPostMt.setColumn(0, "DEPT_NM",	"");
+		}
+	}
+}
+
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	if( Ex.isEmpty(varValue) )
+		return;
+
+	switch(pID)
+	{
+		case "searchPop" :	
+			//trace("varValue :: ", varValue)
+			this.dsUser.loadJSON(varValue); // 업데이트된 데이터를 현재 팝업에도 적용
+			break;
+		
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+			
+		case "saveAlert" :
+			Ex.core.pclose(this, 'mtSave'); 
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.fnGetCmmCd();		// 공통코드 조회
+	
+	var arrBtn = [this.divBottom.form.btnSave];
+ 	Ex.util.setBtnVisible(this.getOwnerFrame(), 'save', arrBtn);
+	 
+	// 관리자 목록
+	this.divContent.form.divTop.form.lsv00.nodatatext = "관리자를 추가해주세요.";
+ 
+	this.pPopType 	= (this.getOwnerFrame().pPopType||'').toUpperCase();
+	this.pPostMtNo	= this.getOwnerFrame().pPostNo||'';
+	this.pUpPostNo 	= this.getOwnerFrame().pUpPostNo||'';
+	this.pUpPostNm 	= this.getOwnerFrame().pUpPostNm||'';
+	this.pSelectedDeptNm = this.getOwnerFrame().pSelectedDeptNm||'';
+	this.pSelectedDeptCd = this.getOwnerFrame().pSelectedDeptCd||'';
+	this.pSelectedLvl = this.getOwnerFrame().pSelectedLvl||'';
+		
+	//trace("P02 pPopType : ", this.pPopType)
+	switch(this.pPopType)
+	{
+		case "I" : 
+			this.divContent.form.divSearchArea.form.rdoCreType.setFocus();
+			
+			var rowPos = this.dsPostMt.setAddRow();
+
+			this.dsPostMt.setColumn(rowPos, 'CREATE_TYPE', 'POST');
+			this.dsPostMt.setColumn(rowPos, 'BEGIN_DT', Ex.util.today());
+			this.dsPostMt.setColumn(rowPos, 'END_DT', '99991231');
+			this.dsPostMt.setColumn(rowPos, 'AUTH_READ', 'TEAM');
+			this.dsPostMt.setColumn(rowPos, 'AUTH_WRITE', 'TEAM');
+			this.dsPostMt.setColumn(rowPos, 'DEPT_CD', this.pSelectedDeptCd); // 상위 부서로 세팅
+			this.dsPostMt.setColumn(rowPos, 'DEPT_NM', this.pSelectedDeptNm); 
+			
+			if(!Ex.isEmpty(this.pUpPostNo)){
+				this.dsPostMt.setColumn(rowPos, 'UP_POST_MT_NO', this.pUpPostNo); // 상위게시판번호 표시
+				this.dsPostMt.setColumn(rowPos, 'UP_POST_MT_NM', this.pUpPostNm); // 상위게시판이름 표시
+				
+				if(this.pSelectedLvl != '0'){ // 최상위 레벨이 아닌 경우에만(최상위 밑에 부서 만들수도 있으니)
+					this.divContent.form.divTop.form.divOutDept.form.setValue(this.pSelectedDeptCd, this.pSelectedDeptNm);
+					this.divContent.form.divTop.form.divOutDept.set_enable(false); // 상위 부서 게시판에서 가져오기 때문에 접근x
+				}
+				
+			}
+			break;
+			
+		case "U" :
+			this.divBottom.form.btnSave.set_visible(true);
+			this.divContent.form.divSearchArea.form.rdoCreType.readonly = true;
+			this.dsCond.setColumn(this.dsCond.rowposition, 'POST_MT_NO', this.pPostMtNo);  
+			
+			this.fnSearch();
+			break; 
+
+	}
+	
+	this.divContent.set_visible(true);
+}
+
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['POST_MT_TYPE_CD',	'POST_TMPL_CD']			// 조회할 상위코드
+		,codeDiv: ['CMM_CD',			'CMM_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['SEL',				'']			// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',					'Y']				// 사용여부
+		,filter	: ['',					'']				// filterStr
+		,objDs	: [this.dsPostMtCd,		this.dsTmpl]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util;
+}
+
+// validation
+this.fnCheckValidate = function()
+{
+	// component validation
+	if( !Ex.util.checkValidate(this.divContent.form.divSearchArea, "fvValiCmp") )
+		return false;
+	if( !Ex.util.checkValidate(this.divContent, "fvValiCmp") )
+		return false;
+	if( !Ex.util.checkValidate(this.divContent.form.divTop, "fvValiCmp") )
+		return false;
+	if( this.dsPostMt.getColumn(0, 'CREATE_TYPE') == 'POST' && !Ex.util.checkValidate(this.divContent.form.divMid, "fvValiCmp") )
+		return false;
+
+	var rowpos = this.dsPostMt.rowposition;
+	
+	// 게시종료 > 게시시작 validation
+	var BEGIN	= this.dsPostMt.getColumn(rowpos, 'BEGIN_DT');
+	var END 	= this.dsPostMt.getColumn(rowpos, 'END_DT');
+	var sDt	= Ex.util.strToDate(BEGIN+"000000");
+	var eDt	= Ex.util.strToDate(END+"000000");
+	
+	if(sDt > eDt) {
+		var param = {
+				id : "sDtLateAlert"
+			  , msg : "10013"
+			  , arrparam : [Ex.core.word('게시시작일'), Ex.core.word('게시종료일')]
+			  , msgtype : "I"};
+		Ex.core.alert(this, param);
+		return false;
+	}
+
+// 	if( Ex.isEmpty(this.dsPostMt.getColumn(0, 'BEGIN_DT')) || Ex.isEmpty(this.dsPostMt.getColumn(0, 'END_DT')) ){
+// 		var param = {
+// 			  id	: "setDateAlert"				//fnMsgAfter에서 식별자로 사용되는 ID
+// 			, msg	: "게시 기간을 알맞게 지정해주세요."	//메시지 내용
+// 			, arrparam : [""]						//메시지의 변수에 들어갈 실제값
+// 			, msgtype : "W"							//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+// 		};
+// 		Ex.core.alert(this, param);
+// 		return false; 
+// 	}
+
+	// 접근 부서 및 관리자 validation
+	var dept = this.dsPostMt.getColumn(rowpos, 'DEPT_CD');
+	var manager = this.dsUser.getColumn(0, 'USER_ID');
+	
+	//if(Ex.isEmpty(dept) || Ex.isEmpty(manager)){
+	if(Ex.isEmpty(manager)){
+		//var msg = Ex.isEmpty(dept) ? '접근부서' : '관리자';
+		var msg = Ex.isEmpty(manager) ? '관리자' : '관리자';
+		
+		var param = {
+			id : "deptManEmptyAlert"
+		  , msg : "{0}가 선택되지 않았습니다."
+		  , arrparam : [Ex.core.word(msg)]
+		  , msgtype : "I"
+		  };
+
+		Ex.core.alert(this, param);
+		return false;
+	}
+
+	return true;
+}
+
+
+
+
+// 생성 유형 변경할 경우 
+this.fnCreTypeItemChange = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	var isDept = (this.deptFlag != '') ? this.deptFlag : (e.postvalue === "DEPT");
+	this.divContent.form.divMid.set_visible(!isDept); // 아래 내용들 표시 및 숨기기
+	
+	if(isDept) this.divContent.form.divTop.form.stcPostTitle.set_text("부서명");
+	else this.divContent.form.divTop.form.stcPostTitle.set_text("게시판명");
+	
+	if(this.divContent.form.divMid.visible){ // visible 처리가 되어 있다면 각 컴포넌트 위치 동적 변경
+		this.getOwnerFrame().set_height(this.orgHeight+5); // 원래 높이로 변경 
+	}else{
+		this.getOwnerFrame().set_height(this.orgHeight - nexacro.toNumber(this.divContent.form.divMid.height) + 30);
+	}
+}
+
+// 관리자 DataSet --> JSON 변환
+this.dataSetToJson = function(objDs)
+{
+	var jsonArr = [];
+	
+	for(var i=0; i<objDs.rowcount; i++)
+	{
+		var obj =	{
+						"USER_NM": objDs.getColumn(i, 'USER_NM'),
+						"USER_ID": objDs.getColumn(i, 'USER_ID'),
+						"DEPT_NM": objDs.getColumn(i, 'DEPT_NM'),
+					};
+					
+		jsonArr.push(obj);
+	}
+	
+	var result = JSON.stringify(jsonArr);
+	//trace("-- DataSetToJson result :: ", result)
+	return result; 
+}
+
+// JSON --> 관리자 Dataset 변환
+this.jsonToDataSet = function(jsonData)
+{
+	try {
+		var jsonArr = JSON.parse(jsonData); // JSON 문자열을 객체 배열로 변환
+		
+		for(var i=0; i<jsonArr.length; i++)
+		{
+			var userId = jsonArr[i].USER_ID;
+			var userNm = jsonArr[i].USER_NM;
+			var deptNm = jsonArr[i].DEPT_NM;
+			trace("파싱 ) USER_ID : ", userId, " / USER_NM : ", userNm, " / DEPT_NM : ", deptNm);
+			
+			var rowPos = this.dsUser.setAddRow();
+
+			this.dsUser.setColumn(rowPos, 'USER_ID', userId);
+			this.dsUser.setColumn(rowPos, 'USER_NM', userNm);
+			this.dsUser.setColumn(rowPos, 'DEPT_NM', deptNm);
+		}
+		
+	} catch (e) {
+		var param = {id : "ERROR", msg : "JSON 파싱 오류"};
+		Ex.core.error(this, param);
+		return;
+	}
+}
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearchPop" :
+			Ex.core.popup(
+				this,
+				'searchPop',
+				'fomm::FOMM0251_P03.xfdl',             		// <--- 팝업창 오픈 Url
+				{ title			: Ex.core.word('관리자 관리'),
+				  pUserList		: this.dsUser.saveJSON()
+				},     	// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				//sSize                  // <--- width/height/modeless(프레임 처리 옵션)
+				"autosize"
+			);
+			break;
+	
+		case "btnClose" :			// 닫기
+			Ex.core.pclose(this);
+			break;
+			
+		case "btnSave" :		// 저장
+			var managerInfo = '';
+
+			if(this.dsUser.getRowCount() > 0) managerInfo = this.dataSetToJson(this.dsUser);
+			this.dsPostMt.setColumn(this.dsPostMt.rowposition, 'MANAGER', managerInfo);
+
+			if( Ex.util.isUpdated(this.dsPostMt))
+			{
+				if( !this.fnCheckValidate() ) {
+					return;
+				}
+				else {
+					var param = {
+							id : "saveConfirm"
+						  , msg : "10003"
+						  , arrparam : ['']
+						  , msgtype : "I"};
+					Ex.core.confirm(this, param);
+					
+				}
+
+			}
+			break;
+			
+	}
+}
+
+// 공통 oncloumnchanged event : dataset
+this.dsPostMt_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+// 관리자 추가 버튼 클릭 이벤트
+this.btnAddAdmin_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var dataRowCnt = this.divContent.form.divTop.form.divOutUser.form.getDataset().getCount( "USER_ID" );
+
+	if( dataRowCnt == 0 ) { // 관리자를 선택하지 않았을 경우
+		var param = {
+			  id	: "nonValueAlert"					//fnMsgAfter에서 식별자로 사용되는 ID
+			, msg	: "추가할 정보가 존재하지 않습니다.\n관리자를 선택해주세요."
+			, arrparam : [""]
+			, msgtype : "W"						
+		};
+		Ex.core.alert(this, param);
+		return false;
+	}
+	
+	var userId = this.dsTemp.getColumn(0, "USER_ID");
+	var userNm = this.dsTemp.getColumn(0, "USER_NM");
+	var deptNm = this.dsTemp.getColumn(0, "DEPT_NM");
+	
+	var rowPos = this.dsUser.setAddRow();
+	this.dsUser.setColumn(rowPos, 'USER_ID', userId);
+	this.dsUser.setColumn(rowPos, 'USER_NM', userNm); 
+	this.dsUser.setColumn(rowPos, 'DEPT_NM', deptNm); 
+	
+	this.divContent.form.divTop.form.divOutUser.form.resetInput(true); // 리셋
+};
+
+// ListView 클릭 이벤트
+this.lsv_onClick = function(obj:nexacro.ListView,e:nexacro.ListViewClickEventInfo)
+{
+	if (e.cellid == "delBtn"){
+		this.dsUser.deleteRow(e.row);
+	}
+} 
+
+// 동적 DIV 만들 경우 사용 (현재 사용 X)
+this.createManagerForm = function(stcText, rowpos){
+	var parentDiv = this.divContent.form.divTop.form.divManList.form;
+	parentDiv.formscrollbartype = "autoindicator none";
+	trace("parentDiv.formscrollbartype :: ", parentDiv.formscrollbartype)
+	var divId = "divManager" + rowpos;
+	
+	var divWidth = 192;
+	var divHeight = 24;
+	
+	var divManager = new Div(divId, 0+(rowpos * (divWidth+2)), 5, divWidth, null, null, 5); 
+	divManager.borderRadius = "3px";
+	divManager.border = "1px solid #dbdbdb";  
+
+	parentDiv.addChild(divId, divManager);
+	divManager.show();
+	
+	var objStatic = new Static("stcManager", 5, 2, 160, null, null, 2);
+	objStatic.text = stcText;
+	divManager.addChild("stcManager", objStatic);
+	objStatic.show();
+	
+	var objButton = new Button("btnDelete", null, 2, 22, null, 2, 2);
+	objButton.color = "red";
+	objButton.background = "white";
+	objButton.border = "0px solid";
+	objButton.text = "X"; 
+	objButton.addEventHandler("onclick", function(){
+		parentDiv.removeChild(divId);
+		divManager.destroy();
+	})
+	
+	divManager.addChild("btnDelete", objButton); 
+	objButton.show(); 
+
+}
+
+this.preventOverUser = function(){
+	var fRow = this.getOwnerFrame().pCheckDs.findRow(this.getOwnerFrame().pCheckCol, this.dsFommUserMt.getColumn(this.dsFommUserMt.rowposition, "USER_ID"));
+			if(fRow > -1)
+			{
+				var userInfo = this.dsFommUserMt.getColumn(this.dsFommUserMt.rowposition, "USER_NM") + "[" + this.dsFommUserMt.getColumn(this.dsFommUserMt.rowposition, "USER_ID") + "]";
+				var oParam = {id : "alertAddUserI", msg : "{0} 이미 추가한 사용자 입니다.", arrparam : [userInfo], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return false;
+			}
+}]]></Script>
+    <Objects>
+      <Dataset id="dsPostMtCd">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPostMt" oncolumnchanged="dsPostMt_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="LVL" type="STRING" size="256"/>
+          <Column id="UP_POST_MT_NO" type="STRING" size="256"/>
+          <Column id="POST_MT_NO" type="STRING" size="256"/>
+          <Column id="POST_MT_TYPE_CD" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="BEGIN_DT" type="STRING" size="256"/>
+          <Column id="END_DT" type="STRING" size="256"/>
+          <Column id="CHK_NTC_YN" type="STRING" size="256"/>
+          <Column id="NTC_YN" type="STRING" size="256"/>
+          <Column id="POST_MT_TYPE_NM" type="STRING" size="256"/>
+          <Column id="DEL_YN" type="STRING" size="256"/>
+          <Column id="READ_CNT" type="STRING" size="256"/>
+          <Column id="RMK" type="STRING" size="256"/>
+          <Column id="FRID" type="STRING" size="256"/>
+          <Column id="FRNM" type="STRING" size="256"/>
+          <Column id="FRDT" type="STRING" size="256"/>
+          <Column id="LMID" type="STRING" size="256"/>
+          <Column id="LMNM" type="STRING" size="256"/>
+          <Column id="LMDT" type="STRING" size="256"/>
+          <Column id="LMPID" type="STRING" size="256"/>
+          <Column id="POST_TMPL" type="STRING" size="256"/>
+          <Column id="AUTH_READ" type="STRING" size="256"/>
+          <Column id="AUTH_WRITE" type="STRING" size="256"/>
+          <Column id="WRITE_GUBUN" type="STRING" size="256"/>
+          <Column id="ALARM_GUBUN" type="STRING" size="256"/>
+          <Column id="BEGIN_DATE" type="STRING" size="256"/>
+          <Column id="END_DATE" type="STRING" size="256"/>
+          <Column id="DEPT_CD" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="ATTACH_YN" type="STRING" size="256"/>
+          <Column id="CREATE_TYPE" type="STRING" size="256"/>
+          <Column id="UP_POST_MT_NM" type="STRING" size="256"/>
+          <Column id="MANAGER_ID" type="STRING" size="256"/>
+          <Column id="MANAGER_NM" type="STRING" size="256"/>
+          <Column id="MANAGER" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsAuth">
+        <ColumnInfo>
+          <Column id="AUTH_CD" type="STRING" size="256"/>
+          <Column id="AUTH_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="AUTH_CD">TEAM</Col>
+            <Col id="AUTH_CD_NM">부서/팀</Col>
+          </Row>
+          <Row>
+            <Col id="AUTH_CD">ALL</Col>
+            <Col id="AUTH_CD_NM">전체</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsGubun">
+        <ColumnInfo>
+          <Column id="GUBUN_CD" type="STRING" size="256"/>
+          <Column id="GUBUN_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="GUBUN_CD">P</Col>
+            <Col id="GUBUN_CD_NM">게시글</Col>
+          </Row>
+          <Row>
+            <Col id="GUBUN_CD">S</Col>
+            <Col id="GUBUN_CD_NM">답글</Col>
+          </Row>
+          <Row>
+            <Col id="GUBUN_CD">C</Col>
+            <Col id="GUBUN_CD_NM">댓글</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTmpl"/>
+      <Dataset id="dsCreType">
+        <ColumnInfo>
+          <Column id="CREATE_TYPE" type="STRING" size="256"/>
+          <Column id="CREATE_TYPE_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CREATE_TYPE">DEPT</Col>
+            <Col id="CREATE_TYPE_NM">부서/팀 생성</Col>
+          </Row>
+          <Row>
+            <Col id="CREATE_TYPE">POST</Col>
+            <Col id="CREATE_TYPE_NM">게시판 생성</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+          <Column id="POST_MT_NO" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsUser" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsTemp" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divContent.form.divSearchArea.form.rdoCreType" propid="value" datasetid="dsPostMt" columnid="CREATE_TYPE"/>
+      <BindItem id="item1" compid="divContent.form.divSearchArea.form.edtUpPostNm" propid="value" datasetid="dsPostMt" columnid="UP_POST_MT_NM"/>
+      <BindItem id="item2" compid="divContent.form.divTop.form.edtTitle" propid="value" datasetid="dsPostMt" columnid="TITLE"/>
+      <BindItem id="item3" compid="divContent.form.divMid.form.cboPostTypeCd" propid="value" datasetid="dsPostMt" columnid="POST_MT_TYPE_CD"/>
+      <BindItem id="item4" compid="divContent.form.divMid.form.mcboPostTmpl" propid="value" datasetid="dsPostMt" columnid="POST_TMPL"/>
+      <BindItem id="item5" compid="divContent.form.divMid.form.calBeginDate" propid="value" datasetid="dsPostMt" columnid="BEGIN_DT"/>
+      <BindItem id="item6" compid="divContent.form.divMid.form.calEndDate" propid="value" datasetid="dsPostMt" columnid="END_DT"/>
+      <BindItem id="item7" compid="divContent.form.divMid.form.chkSetAlarm" propid="value" datasetid="dsPostMt" columnid="ALARM_GUBUN"/>
+      <BindItem id="item8" compid="divContent.form.divMid.form.chkSetWrite" propid="value" datasetid="dsPostMt" columnid="WRITE_GUBUN"/>
+      <BindItem id="item9" compid="divContent.form.divMid.form.rdoWriteAuth" propid="value" datasetid="dsPostMt" columnid="AUTH_WRITE"/>
+      <BindItem id="item10" compid="divContent.form.divMid.form.rdoReadAuth" propid="value" datasetid="dsPostMt" columnid="AUTH_READ"/>
+      <BindItem id="item11" compid="divContent.form.divMid.form.chkFileYn" propid="value" datasetid="dsPostMt" columnid="ATTACH_YN"/>
+    </Bind>
+  </Form>
+</FDL>

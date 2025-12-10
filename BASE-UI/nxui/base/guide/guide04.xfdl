@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="compGuide" position="absolute" titletext="Grid" onload="form_onload" left="0" top="0" width="1840" height="720">
+    <Layouts>
+      <Layout>
+        <Static id="Static00_00" taborder="0" text="Grid Guide - Basic" left="40" top="15" width="220" height="24" cssclass="sta_WF_gridTitle"/>
+        <TextArea id="TextArea00_00" taborder="1" left="700" top="49" readonly="true" value="Grid 컴포넌트 가이드 (guide::guide04.xfdl)&#10;&#10; - Grid는 기본 Head Height 32px, Body Height 32px, summary Height 32px로 그리도록 한다.&#10; - 일반 Grid의 경우 grd_WF_normal css를 지정하여 사용한다." right="20" onchanged="TextArea00_00_onchanged" height="120"/>
+        <Grid id="Grid00" taborder="2" left="40" top="49" width="561" height="120" binddataset="dsTemp" autofittype="col" cssclass="grd_WF_normal">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="60"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="행상태"/>
+                <Cell col="2" text="COL1"/>
+                <Cell col="3" text="COL2"/>
+                <Cell col="4" text="COL3"/>
+                <Cell col="5" text="COL4"/>
+                <Cell col="6" text="COL5"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:CHK"/>
+                <Cell col="1" text="bind:ROWFLAG"/>
+                <Cell col="2" text="bind:COL1"/>
+                <Cell col="3" text="bind:COL2"/>
+                <Cell col="4" text="bind:COL3"/>
+                <Cell col="5" text="bind:COL4"/>
+                <Cell col="6" text="bind:COL5"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static01" taborder="3" text="H:32" left="5" top="51" width="30" height="32" border="1px dotted red, 0px, 1px dotted red, 1px dotted red"/>
+        <Static id="Static01_00" taborder="4" text="H:32" left="5" top="82" width="30" height="32" border="1px dotted red, 0px, 1px dotted red, 1px dotted red"/>
+        <Grid id="Grid00_00" taborder="5" left="40" top="234" width="561" height="130" binddataset="dsTemp" autofittype="col" cssclass="grd_WF_normal">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="60"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="28" band="head"/>
+                <Row size="28" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell rowspan="2" displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" rowspan="2" text="행상태"/>
+                <Cell col="2" colspan="2" text="COL1"/>
+                <Cell col="4" colspan="3" text="COL3"/>
+                <Cell row="1" col="2" text="COL1"/>
+                <Cell row="1" col="3" text="COL2"/>
+                <Cell row="1" col="4" text="COL3"/>
+                <Cell row="1" col="5" text="COL4"/>
+                <Cell row="1" col="6" text="COL5"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:CHK" displaytype="checkboxcontrol"/>
+                <Cell col="1" text="bind:ROWFLAG"/>
+                <Cell col="2" text="bind:COL1"/>
+                <Cell col="3" text="bind:COL2"/>
+                <Cell col="4" text="bind:COL3"/>
+                <Cell col="5" text="bind:COL4"/>
+                <Cell col="6" text="bind:COL5"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static00_00_00" taborder="6" text="Grid Guide - Head Merge" left="40" top="200" width="220" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="Static01_01" taborder="7" text="H:28" left="5" top="236" width="30" height="28" border="1px dotted red, 0px, 1px dotted red, 1px dotted red"/>
+        <Static id="Static01_00_00" taborder="8" text="H:32" left="5" top="291" width="30" height="32" border="1px dotted red, 0px, 1px dotted red, 1px dotted red"/>
+        <Static id="Static01_01_00" taborder="9" text="H:28" left="5" top="263" width="30" height="28" border="1px dotted red, 0px, 1px dotted red, 1px dotted red"/>
+        <Static id="Static00_00_00_00" taborder="10" text="grd_WF_normal" left="481" top="18" width="120" height="24"/>
+        <Static id="Static00_00_00_00_00" taborder="11" text="grd_WF_normal" left="481" top="203" width="120" height="24"/>
+        <TextArea id="TextArea00_00_00" taborder="12" left="700" top="234" readonly="true" value=" - Head영역을 Merge한 경우, 세로 Head Cell을 Merge한 경우 각 Head의 Height는 28로 그리도록 한다." right="20" onchanged="TextArea00_00_onchanged" height="120"/>
+        <Grid id="grdMenuTreeMt" taborder="13" left="40" top="424" bottom="0" binddataset="dsTree" cssclass="grd_WF_tree" autofittype="col" useSort="true" useCheck="false" width="400" treeusecheckbox="false" treeuseline="false" treeinitstatus="expand,null" treeusebutton="use" treeuseimage="true">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="200"/>
+              </Columns>
+              <Rows>
+                <Row size="32"/>
+              </Rows>
+              <Band id="body">
+                <Cell displaytype="treeitemcontrol" edittype="tree" text="bind:NAME" treelevel="bind:LVL" cssclass=""/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static00_00_00_01" taborder="14" text="Grid Guide - Tree" left="40" top="390" width="220" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="Static01_00_00_00" taborder="15" text="H:32" left="5" top="424" width="30" height="32" border="1px dotted red, 0px, 1px dotted red, 1px dotted red"/>
+        <TextArea id="TextArea00_00_00_00" taborder="16" left="700" top="424" readonly="true" value=" - Tree의 경우 Head, Body의 Height를 32px로 고정한다. (일반적으로 Head는 쓰지 않음)&#10; - css class&#10;   - Grid 자체: grd_WF_tree&#10;   - tree body cell: &#10; " right="20" onchanged="TextArea00_00_onchanged" height="120"/>
+        <Static id="Static00_00_00_00_00_00" taborder="17" text="grd_WF_tree" left="320" top="393" width="120" height="24"/>
+        <Static id="Static00_00_00_00_00_00_00" taborder="18" text="" left="445" top="427" width="130" height="24"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsTemp">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="COL1" type="STRING" size="256"/>
+          <Column id="COL2" type="STRING" size="256"/>
+          <Column id="COL3" type="STRING" size="256"/>
+          <Column id="COL4" type="STRING" size="256"/>
+          <Column id="COL5" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CHK">0</Col>
+            <Col id="ROWFLAG"/>
+            <Col id="COL1">VALUE1</Col>
+            <Col id="COL2">COL2</Col>
+            <Col id="COL3">VALUE3</Col>
+          </Row>
+          <Row>
+            <Col id="CHK">0</Col>
+            <Col id="ROWFLAG"/>
+            <Col id="COL1">VALUE2</Col>
+            <Col id="COL2">COL2</Col>
+            <Col id="COL3">VALUE3</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTree">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="UP_CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+          <Column id="LVL" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">a</Col>
+            <Col id="LVL">0</Col>
+            <Col id="NAME">ROOT</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">b</Col>
+            <Col id="LVL">1</Col>
+            <Col id="NAME">LvA</Col>
+            <Col id="UP_CODE">a</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">c</Col>
+            <Col id="LVL">2</Col>
+            <Col id="NAME">LvA_1</Col>
+            <Col id="UP_CODE">b</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">d</Col>
+            <Col id="LVL">2</Col>
+            <Col id="NAME">LvA_2</Col>
+            <Col id="UP_CODE">b</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">e</Col>
+            <Col id="LVL">3</Col>
+            <Col id="NAME">LvA_2_3</Col>
+            <Col id="UP_CODE">d</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">f</Col>
+            <Col id="LVL">1</Col>
+            <Col id="UP_CODE">a</Col>
+            <Col id="NAME">LvB</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">g</Col>
+            <Col id="LVL">2</Col>
+            <Col id="UP_CODE">f</Col>
+            <Col id="NAME">LvB_1</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">h</Col>
+            <Col id="LVL">2</Col>
+            <Col id="UP_CODE">f</Col>
+            <Col id="NAME">LvB_2</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ Component Guide
+* 메뉴(경로)	︰ Component Guide
+* 화면 설명	︰ Component Guide
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	trace("workArea form init call");
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	this.Tab00.tabpages[this.Tab00.tabindex].fnSearch(op);
+}
+
+// 저장
+this.fnSave = function()
+{
+	
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "ABOUT" : // 서비스 ID
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+
+]]></Script>
+  </Form>
+</FDL>

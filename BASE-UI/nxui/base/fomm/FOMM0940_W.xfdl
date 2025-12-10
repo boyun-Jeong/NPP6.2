@@ -1,0 +1,661 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM0940_W" width="1840" height="720" titletext="쪽지 그룹 관리" onload="form_onload">
+    <Layouts>
+      <Layout height="720" horizontalgap="0" mobileorientation="landscape" spacing="0px" tabletemplate="1* / 1*" verticalgap="0" width="1840">
+        <Div id="div_search" taborder="0" left="0" top="0" height="50" text="" right="51.19%">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="쪽지그룹" cssclass="sta_WF_gridTitle" left="0" top="12" width="90" height="24"/>
+              <Div id="divGrdMtTopBtn00" taborder="1" width="250" visible="true" isButtonGroup="true" top="12" height="24" right="0">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnDelGrp" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+                    <Button id="btnAddGrp" taborder="1" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta_mainListCnt" taborder="1" left="82.00" top="99" width="45" height="24" cssclass="sta_WF_GridCount" countDataset="dsMain" onclick="sta_mainListCnt_onclick"/>
+        <Div id="divGrdBotBtn" taborder="2" width="360" height="32" bottom="0" right="0" visible="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnSave" taborder="0" text="저장" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="0" onclick="fnCommOnclick" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grd_main" taborder="3" left="0" top="div_search:0" autofittype="col" bottom="40" cssclass="grd_WF_normal" cellsizingtype="col" right="51.19%" binddataset="ds_memo_group">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="38"/>
+                <Column size="60"/>
+                <Column size="80"/>
+                <Column size="220"/>
+                <Column size="80"/>
+                <Column size="50"/>
+                <Column size="85"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="40" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No" displaytype="normal"/>
+                <Cell col="1" text="행상태"/>
+                <Cell col="2" text="구분" cssclass="grdHCell_WF_essential"/>
+                <Cell col="3" text="그룹명" cssclass="grdHCell_WF_essential"/>
+                <Cell col="4" text="사용여부" cssclass="grdHCell_WF_essential"/>
+                <Cell col="5" text="인원수"/>
+                <Cell col="6" text="등록자"/>
+                <Cell col="7" text="등록일자"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="expr:currow+1"/>
+                <Cell col="1" text="bind:ROWFLAG"/>
+                <Cell col="2" text="bind:GROUP_TYPE" displaytype="combotext" combodataset="ds_group_type" combocodecol="CODE" combodatacol="NAME" edittype="expr:dataset.parent.fnGirdAuthExprCombo(dataset,currow)" validation="구분;NULL"/>
+                <Cell col="3" text="bind:GROUP_NM" textAlign="left" validation="그룹명;NULL|MAX_LEN_ASC:100" editmaxlength="50" edittype="normal"/>
+                <Cell col="4" displaytype="combotext" edittype="combo" text="bind:USE_YN" combodataset="ds_code_type" combocodecol="CODE" combodatacol="NAME" validation="사용여부;NULL"/>
+                <Cell col="5" displaytype="number" text="bind:USER_CNT" calendardisplaynulltype="nulltext" textAlign="right"/>
+                <Cell col="6" text="bind:REG_USER_NM"/>
+                <Cell col="7" text="bind:REG_STIME" displaytype="date"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="div_search00" taborder="4" left="51.14%" top="0" height="50" text="" right="0.05%">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="사용자" cssclass="sta_WF_gridTitle" left="0" top="12" width="63" height="24"/>
+              <Div id="divGrdMtTopBtn" taborder="1" width="250" visible="true" isButtonGroup="true" top="12" height="24" right="0">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnDelUser" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+                    <Button id="btnAddUser" taborder="1" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grd_sub" taborder="5" left="51.14%" top="div_search00:0" autofittype="col" bottom="40" cssclass="grd_WF_normal" cellsizingtype="col" right="0" binddataset="ds_memo_group_user">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="40"/>
+                <Column size="48"/>
+                <Column size="200"/>
+                <Column size="90"/>
+                <Column size="90"/>
+                <Column size="90"/>
+              </Columns>
+              <Rows>
+                <Row size="40" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="No" displaytype="text"/>
+                <Cell col="2" text="행상태"/>
+                <Cell col="3" text="부서명"/>
+                <Cell col="4" text="사번"/>
+                <Cell col="5" text="이름"/>
+                <Cell col="6" text="직책"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:CHK" color="blue" font="10pt &quot;Malgun Gothic, 맑은 고딕&quot;" cursor="pointer" textDecoration="underline" displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" expr="expr:currow+1"/>
+                <Cell col="2" text="bind:ROWFLAG"/>
+                <Cell col="3" text="bind:DEPT_NM" textAlign="left"/>
+                <Cell col="4" displaytype="combo" edittype="none" text="bind:USER_ID" combodataset="dsUnitCntrYn" combocodecol="CODE" combodatacol="CODE_NAME"/>
+                <Cell col="5" displaytype="normal" text="bind:USER_NM" calendardisplaynulltype="nulltext"/>
+                <Cell col="6" text="bind:POS_NM"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ FOMM0940_W
+* 화면(명)	︰ 쪽지 그룹 관리(개인)
+* 메뉴(경로)	︰ 관리자 > 포털관리 > 쪽지 그룹 관리(개인)
+* 화면 설명	︰ SPP 쪽지 그룹 관리(개인)
+* 작성자		︰ WEMB
+* 작성일		︰ 2024.11.12
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2024.11.12	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.sysAdminYn = 'N';  // 폼변수는 var로 선언하지 말고 this.변수명으로 기술한다.
+this.rowChangeFlag = false;		// true: 행변경 가능
+this.nSelRow = -1;	// 이동하려는 행
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.sysAdminYn = Ex.util.getSession('gvAdminYn');
+	this.grd_main.displayRowType();
+	this.grd_sub.displayRowType();	
+	
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	//trace("workArea form init call");
+	this.fnSearch();
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+
+}
+
+// 조회
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "select01";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0940W/select01";		// 서비스명
+    var sInDs = "";				                // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "ds_memo_group=ds_memo_group";	// 서버에서 수신할 데이타셋
+    var sArg = "admYn='"+this.sysAdminYn+"'";	// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSearch02 = function()
+{
+	// transaction
+	var sTranId = "select02";					            // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0940W/select02";		            // 서비스명
+    var sInDs = "dsCond=dsCond";				            // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "ds_memo_group_user=ds_memo_group_user";	// 서버에서 수신할 데이타셋
+    var sArg = "";								            // 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+};
+
+// 저장
+this.fnSave = function()
+{
+	this.ds_memo_group.set_enableevent(false);
+	var sTranId = "save01";
+    var sService = "FOMM0940W/save01";
+    var sInDs = "ds_memo_group=ds_memo_group ds_memo_group_user=ds_memo_group_user";
+    var sOutDs = "ds_memo_group=ds_memo_group";
+    var sArg = "admYn='"+this.sysAdminYn+"'";	// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+	this.ds_memo_group_user.clearData();
+}
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	for(var i = 0; i < objDs.rowcount; i++)	
+		objDs.setDeleteRow(i);
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	if(sSvcId == "save01" && nErrorCode < 0)
+	{
+		this.ds_memo_group.set_enableevent(true);
+	}
+
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "save01" : // 서비스 ID
+			var fRow = -1;
+			this.ds_memo_group.set_enableevent(true);
+			
+			if(this.ds_memo_group.rowcount > 0)
+			{
+				fRow = Ex.isNvl(this.ds_memo_group.findRow("GROUP_ID", this.dsCond.getColumn(0, 'GROUP_ID'), 0));
+				
+				if(fRow > -1)
+				{
+					this.ds_memo_group.set_rowposition(fRow);
+				}
+				else
+				{
+					this.ds_memo_group.set_rowposition(0);
+				}
+			}
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch(pID)
+	{
+		case "selectUserPop" :		
+			if(!Ex.isEmpty(varValue)) {
+				this.dsSelUser.loadXML(varValue);
+
+				var dupCnt = 0;
+				// 중복 validation
+				var grpId = this.ds_memo_group.getColumn(this.ds_memo_group.rowposition, "GROUP_ID");
+				
+				for(var i = 0 ; i < this.dsSelUser.rowcount ; i++){
+					var selUserId = this.dsSelUser.getColumn(i, 'USER_ID');
+					var duplRow = this.ds_memo_group_user.findRow('USER_ID', selUserId);
+					if( duplRow >= 0) {
+						var param = {
+								id : "alert_selUserDupl"
+							, msg : "이미 등록한 사용자가 포함되어 있습니다."
+							, arrparam : [Ex.core.word('사용자')]
+							, msgtype : "I"};
+						Ex.core.alert(this, param);
+						return;
+					}
+					
+					this.dsSelUser.setColumn(i, 'CHK', '1');
+				
+					var rowPos = this.ds_memo_group_user.setAddRow();
+					this.ds_memo_group_user.setCopyRow(rowPos, this.dsSelUser, i);
+					this.ds_memo_group_user.setColumn(rowPos, "GROUP_ID", grpId);
+				}
+			}
+		break;
+		
+		case "selectUserPop2" :
+			this.dsUser.clearData();			
+			this.dsUser.loadXML(varValue);
+
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue) return;
+	
+	switch(mID)
+	{		
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+			
+		case "rowposChangeConfirm" :		// 행변경 confirm
+			this.rowChangeFlag  = true;
+			this.ds_memo_group.set_rowposition(this.nSelRow);
+			break;	
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+ this.fnGirdAuthExprCombo = function(objDs, vRow)
+ {
+	var rtnVal = 'none';	
+	
+	if(this.sysAdminYn=="Y") {
+//		var rFlag = objDs.getColumn(vRow, "ROWFLAG");			
+//		if(rFlag=="I") {
+			rtnVal = 'combo';
+//		}
+	}
+	
+	return rtnVal;
+ }
+ 
+ this.fnGirdAuthExprNormal = function(objDs, vRow)
+ {
+	var rtnVal = 'none';	
+	
+ 	if(this.sysAdminYn=="Y") {
+		var rFlag = objDs.getColumn(vRow, "ROWFLAG");			
+		if(rFlag=="I") {
+			rtnVal = 'normal';
+		}
+ 	}
+	
+	return rtnVal;
+ }
+ 
+this.fnDelete = function(objDs:Dataset)
+{	
+	if(objDs.name == "ds_memo_group_user") {
+		objDs.set_enableevent(false);
+		objDs.set_filterstr("CHK=='1'");
+		
+		for(var i = objDs.rowcount-1; i >= 0; i--)
+			objDs.setDeleteRow(i);
+			
+		objDs.set_filterstr("");
+		objDs.set_enableevent(true);
+	} else if(objDs.name == "ds_memo_group") {
+		objDs.set_enableevent(false);
+		objDs.setDeleteRow(objDs.rowposition);	
+		objDs.set_enableevent(true);
+	
+		if(objDs.getColumn(objDs.rowposition,"ROWFLAG")=="D") {
+			this.ds_memo_group_user.clearData();
+		} else {
+			this.fnSearch02();
+		}
+	} 
+};
+
+this.fnCheckValidate = function()
+{	
+	var fRow = this.ds_memo_group.findRowExpr("Ex.isEmpty(GROUP_TYPE)");
+			
+	if(fRow > -1) {
+				var param = {
+				    	id : "noSaveAlert"
+				     , msg : "["+(fRow+1)+"행] 구분은(는) 필수 입력 항목입니다." 
+				     , arrparam : ['']
+				     , msgtype : "I"};
+			    Ex.core.alert(this, param);
+				return false
+	}
+	
+	fRow = this.ds_memo_group.findRowExpr("Ex.isEmpty(GROUP_NM)");
+			
+	if(fRow > -1) {
+				var param = {
+				    	id : "noSaveAlert"
+				     , msg : "["+(fRow+1)+"행] 그룹명은(는) 필수 입력 항목입니다." 
+				     , arrparam : ['']
+				     , msgtype : "I"};
+			    Ex.core.alert(this, param);
+				return false
+	}
+
+
+	return true;
+};
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// component onclick event. 
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{	
+	// TO DO
+	// 개발자가 컴포넌트 onclick event를 'fnCommOnclick'으로 지정하고 컴포넌트 id로 구분하여 작성
+	switch(obj.name)
+	{
+		case "btnAddGrp" :		
+				if( Ex.util.isUpdated(this.ds_memo_group) || Ex.util.isUpdated(this.ds_memo_group_user)) 
+				{
+					var param = {	id : "addAlert"
+						, msg :  "변경된 내용이 있습니다.\n변경된 내용을 저장 또는 삭제 후 추가 가능합니다."
+						, arrparam : []
+						, msgtype : "I"};
+					Ex.core.alert(this, param);
+					return;
+				}
+				
+				var rowPos = this.ds_memo_group.setAddRow();
+						// 그리드 편집모드로 변경			
+				this.ds_memo_group.setColumn(rowPos, "USE_YN", 'Y');
+				
+				if(this.sysAdminYn=='Y') {
+					this.ds_memo_group.setColumn(rowPos, "GROUP_TYPE", null);
+				} else {
+					this.ds_memo_group.setColumn(rowPos, "GROUP_TYPE", 'P');
+				}
+				
+				this.ds_memo_group.setColumn(rowPos, "USE_YN", 'Y');
+				this.grd_main.showEditor(true);	
+
+			break;
+			
+		case "btnDelGrp" :		
+			this.fnDelete(this.ds_memo_group);
+			break;	
+			
+		case "btnAddUser" :			
+				if(this.ds_memo_group.rowposition < 0) {
+					return false;
+				}
+			
+				if(this.ds_memo_group.getColumn(this.ds_memo_group.rowposition,"ROWFLAG")=="I") {
+					var param = {	id : "addAlert"
+						, msg :  "추가한 그룹을 저장후 추가하세요."
+						, arrparam : []
+						, msgtype : "I"};
+					Ex.core.alert(this, param);
+					return;
+				}
+				
+				var pSelType = 'M';	// 'S' : single select || 'M' : multi select
+				Ex.core.popup(	this,
+							'selectUserPop',
+							"fomm::FOMM0000_P01.xfdl",             		// <--- 팝업창 오픈 Url
+							{ title:Ex.core.word('사용자 선택') , pSelType:pSelType},     	// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+							"width=900,height=500"                  // <--- width/height/modeless(프레임 처리 옵션)							
+				  );
+			break;
+			
+		case "btnDelUser" :		
+			this.fnDelete(this.ds_memo_group_user);
+			break;	
+			
+		case "btnSave" :		
+
+			if( this.fnCheckValidate() )
+			{
+				var param = {
+					  id : "saveConfirm"
+					, msg : "10003"
+					, arrparam : ['']
+					, msgtype : "I"
+				};
+				Ex.core.confirm(this, param);
+			}
+			break;
+	}
+}
+
+this.ds_memo_group_onrowposchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo)
+{
+	this.ds_memo_group_user.clearData();	
+
+	var rowFlag = obj.getColumn(e.newrow, "ROWFLAG");
+	
+	if(rowFlag != "I")
+	{
+		this.dsCond.setColumn(0, 'GROUP_ID', obj.getColumn(e.newrow,"GROUP_ID"));
+		if(obj.getColumn(e.newrow, "ROWFLAG") != "D")	this.fnSearch02();
+	}
+
+	this.rowChangeFlag = false;		// 행변경 flag 초기화
+	this.nSelRow = -1;				// 이동하려는 행 초기화
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+this.ds_memo_group_canrowposchange = function(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo)
+{
+	if( Ex.util.isUpdated(this.ds_memo_group_user) )
+	{
+		if( !this.rowChangeFlag ) {
+			this.nSelRow = e.newrow;		// 이동하려는 행 저장
+			var param = {	id : "rowposChangeConfirm"
+					  , msg : "10001"
+					  , arrparam : []
+					  , msgtype : "I"};
+			Ex.core.confirm(this, param);
+			return false;
+		}
+	}
+	return true;
+};
+
+
+this.div_search00_btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+
+	Ex.core.popup(
+		this,
+		'selectUserPop2',
+		"fomm::FOMM0900_P01.xfdl",             		// <--- 팝업창 오픈 Url
+		objPrm,											// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+		"width=900,height=680"                  	// <--- width/height/modeless(프레임 처리 옵션)							
+	);
+	
+};
+]]></Script>
+    <Objects>
+      <Dataset id="ds_code_type">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">Y</Col>
+            <Col id="NAME">예</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">N</Col>
+            <Col id="NAME">아니오</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_group_type">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="NAME">- 선택 -</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">S</Col>
+            <Col id="NAME">공통</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">P</Col>
+            <Col id="NAME">개인</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_memo_group" onrowposchanged="ds_memo_group_onrowposchanged" oncolumnchanged="dsOnColumnChanged" canrowposchange="ds_memo_group_canrowposchange">
+        <ColumnInfo>
+          <Column id="GROUP_ID" type="STRING" size="16"/>
+          <Column id="GROUP_NM" type="STRING" size="100"/>
+          <Column id="OWNER_ID" type="STRING" size="9"/>
+          <Column id="USE_YN" type="STRING" size="1"/>
+          <Column id="GROUP_TYPE" type="STRING" size="1"/>
+          <Column id="REG_USER_ID" type="STRING" size="9"/>
+          <Column id="REG_USER_NM" type="STRING" size="20"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="9"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="20"/>
+          <Column id="SYSMODTIME" type="STRING" size="14"/>
+          <Column id="CNT" type="INT" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_memo_group_user" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="GROUP_ID" type="STRING" size="16"/>
+          <Column id="USER_ID" type="STRING" size="9"/>
+          <Column id="REG_USER_ID" type="STRING" size="9"/>
+          <Column id="REG_USER_NM" type="STRING" size="20"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="9"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="20"/>
+          <Column id="SYSMODTIME" type="STRING" size="14"/>
+          <Column id="USER_NAME" type="STRING" size="100"/>
+          <Column id="DEPT_NAME" type="STRING" size="100"/>
+          <Column id="JBC_JNAME" type="STRING" size="100"/>
+          <Column id="CHK" type="STRING" size="1"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_memo_group_cpy">
+        <ColumnInfo>
+          <Column id="GROUP_ID" type="STRING" size="16"/>
+          <Column id="GROUP_NM" type="STRING" size="100"/>
+          <Column id="OWNER_ID" type="STRING" size="9"/>
+          <Column id="USE_YN" type="STRING" size="1"/>
+          <Column id="GROUP_TYPE" type="STRING" size="1"/>
+          <Column id="REG_USER_ID" type="STRING" size="9"/>
+          <Column id="REG_USER_NM" type="STRING" size="20"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="9"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="20"/>
+          <Column id="SYSMODTIME" type="STRING" size="14"/>
+          <Column id="CNT" type="INT" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="GROUP_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSelUser"/>
+      <Dataset id="dsUser" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+          <Column id="DEPT_CD" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

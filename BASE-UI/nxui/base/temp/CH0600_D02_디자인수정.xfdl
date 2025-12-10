@@ -1,0 +1,606 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="CH0600_D02" width="1280" height="600" titletext="계약검수-운영예산" onload="form_onload">
+    <Layouts>
+      <Layout width="1280" height="600">
+        <Static id="stcInfoTitle2" taborder="0" text="검수 확인 내역" left="0" top="0" width="120" height="24" cssclass="sta_WF_gridTitle" onrbuttonup="stOonRbuttonUp"/>
+        <Static id="stcEmpty01_00" taborder="1" left="0" top="stcInfoTitle2:0" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Grid id="grdList" taborder="2" binddataset="dsSrReqCtPayInsptOp" useinputpanel="false" left="0" top="stcEmpty01_00:0" right="0" cssclass="grd_WF_normal" autoenter="select" height="150" autofittype="col" useFilter="false" useSort="false">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40" band="left"/>
+                <Column size="200"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="200"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" text="검수대상기간"/>
+                <Cell col="2" text="지급금액"/>
+                <Cell col="3" text="지급일자"/>
+                <Cell col="4" text="검수자"/>
+                <Cell col="5" text="검수담당팀"/>
+                <Cell col="6" text="첨부파일수"/>
+                <Cell col="7" text="검수확인상태"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="currow+1"/>
+                <Cell col="1" expr="Ex.isEmpty(CONF_START_Y) ? '': CONF_START_Y+ '/' + CONF_START_M + ' ~ ' + CONF_END_Y+ '/' + CONF_END_M"/>
+                <Cell col="2" displaytype="number" text="bind:PAY_AMT"/>
+                <Cell col="3" text="bind:PAY_DATE" displaytype="expr:Ex.isEmpty(PAY_DATE) ? 'none' : 'date'"/>
+                <Cell col="4" text="bind:CONF_CHRG_NM"/>
+                <Cell col="5" text="bind:CONF_CHRG_DEPT_NM"/>
+                <Cell col="6" displaytype="text" expr="ATT+'개'"/>
+                <Cell col="7" text="bind:CONF_STAT_NM"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcEmpty01_00_00_00_00" taborder="3" left="0" top="grdList:0" height="20" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divDown" taborder="4" text="div00" left="0" top="stcEmpty01_00_00_00_00:0" right="0" bottom="0">
+          <Layouts>
+            <Layout>
+              <Static id="stcBg01_00_00_00" taborder="0" left="0" top="136" height="68" cssclass="sta_WF_inputBg" right="0"/>
+              <Static id="stcBg01_00_00" taborder="1" left="0" top="103" height="34" cssclass="sta_WF_inputBg" right="0"/>
+              <Static id="stcBg01_00" taborder="2" left="0" top="70" height="34" cssclass="sta_WF_inputBg" right="0"/>
+              <Static id="stcBg01" taborder="3" left="0" top="37" height="34" cssclass="sta_WF_inputBg" right="0"/>
+              <Static id="stcInfoTitle" taborder="4" text="검수확인 상세정보" left="0" top="3" width="250" height="24" cssclass="sta_WF_gridTitle" onrbuttonup="stOonRbuttonUp"/>
+              <Static id="stcEmpty01" taborder="5" left="0" top="27" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Button id="btnY" taborder="6" text="Y" left="145.00" top="3" width="25" height="24" visible="false" onclick="fnCommOnclick"/>
+              <Button id="btnN" taborder="7" text="N" left="175.00" top="3" width="25" height="24" visible="false" onclick="fnCommOnclick"/>
+              <Static id="stcCntr3" taborder="8" text="계약업체" left="0" top="70" width="114" height="34" cssclass="sta_WF_inputTitle"/>
+              <Static id="stcCntr8" taborder="9" text="계약기간" left="25%" top="103" height="34" width="114" visible="true" cssclass="sta_WF_inputTitle"/>
+              <Static id="stcCntr9" taborder="10" text="검수대상기간" left="0" top="136" width="114" height="68" cssclass="sta_WF_inputTitle_E"/>
+              <Static id="stcBg01_00_03" taborder="11" left="0" top="202" cssclass="sta_WF_inputBg" right="0" height="34"/>
+              <Static id="stcCntr4" taborder="12" text="품의번호" left="25%" top="70" width="114" height="34" cssclass="sta_WF_inputTitle"/>
+              <Edit id="edtCntr3" taborder="13" left="stcCntr3:5" top="75" height="24" enable="true" readonly="true" cssclass="edt_WF_normal" readonlyComp="Y" right="stcCntr4:5" text="" validationCheckReadonly="false"/>
+              <Combo id="cboCntrY1" taborder="14" left="stcCntr9:5.00" top="144" height="24" codecolumn="cntrYY" datacolumn="cntrYY" innerdataset="dsCntrYY" cssclass="cbo_WF_normal" text="" validationCheckEnable="true" width="80" validationGroup="group01" validation="기간;NULL"/>
+              <Static id="stcCntr6" taborder="15" text="대금지급주기" left="75%" top="70" width="114" height="34" cssclass="sta_WF_inputTitle"/>
+              <Combo id="cboCntr5" taborder="16" left="stcCntr6:5" top="75" height="24" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsPayCycleCd" cssclass="cbo_WF_normal" onkeydown="fnCommOnkeydown" onitemchanged="divSearchArea_cboDateType_onitemchanged" text="" validationCheckEnable="true" right="5" readonlyComp="Y" readonly="true"/>
+              <Static id="stcCntr2" taborder="17" text="계약명" left="25%" top="37" width="114" height="34" cssclass="sta_WF_inputTitle"/>
+              <Static id="stcCntr1" taborder="18" text="계약번호" left="0" top="37" width="114" height="34" cssclass="sta_WF_inputTitle"/>
+              <Edit id="edtCntr1" taborder="19" top="42" height="24" cssclass="edt_WF_normal" isChgLang="false" text="" readonly="true" left="stcCntr1:5" right="stcCntr2:5" inputtype="dot,number" readonlyComp="Y"/>
+              <Edit id="edtCntr2" taborder="20" top="42" height="24" cssclass="edt_WF_normal" isChgLang="false" text="" readonly="true" left="stcCntr2:5" inputtype="normal" readonlyComp="Y" right="52.00%"/>
+              <Static id="stcCntr55" taborder="21" text="검수자" left="50%" top="70" width="114" height="34" cssclass="sta_WF_inputTitle"/>
+              <Edit id="edtCntr4" taborder="22" left="stcCntr4:5" top="75" height="24" enable="true" cssclass="edt_WF_normal" readonlyComp="Y" right="stcCntr55:5" text="" validationCheckReadonly="false" readonly="true"/>
+              <Static id="stcCntr7" taborder="28" text="총계약금액" left="0" top="103" width="114" height="34" cssclass="sta_WF_inputTitle"/>
+              <Edit id="edtCntr6" taborder="23" top="108" height="24" cssclass="edt_WF_normal" isChgLang="false" text="" readonly="true" left="stcCntr7:5" right="stcCntr8:5" readonlyComp="Y"/>
+              <Edit id="edtCntr5" taborder="24" left="stcCntr55:5" top="75" height="24" enable="true" cssclass="edt_WF_normal" readonlyComp="Y" right="stcCntr6:5" text="" validationCheckReadonly="false" readonly="true"/>
+              <Static id="stcCntr11" taborder="25" text="비고" left="0" top="202" width="114" cssclass="sta_WF_inputTitle" height="34"/>
+              <Static id="stcCntr10" taborder="26" text="통화/금액/원화" left="50%" top="136" width="114" height="67" cssclass="sta_WF_inputTitle_E"/>
+              <Combo id="cboCntr6" taborder="27" left="stcCntr10:5" top="144" height="24" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsCurrCd" cssclass="cbo_WF_normal" text="" validationCheckEnable="true" width="70" validationGroup="group01" validation="통화;NULL"/>
+              <Static id="stcCntr55_00" taborder="49" text="지급일자" left="50%" top="103" width="114" height="34" cssclass="sta_WF_inputTitle"/>
+              <Edit id="edtCntr9" taborder="29" left="stcCntr11:5.00" top="207" enable="true" readonly="false" cssclass="edt_WF_normal" text="" validationCheckReadonly="false" height="24" right="5"/>
+              <Static id="stcCntr10_00" taborder="30" text="사업번호" left="75%" top="103" width="114" height="34" cssclass="sta_WF_inputTitle_E"/>
+              <Edit id="edtSearchCntr2" taborder="31" left="stcCntr10_00:5" top="108" height="24" enable="true" readonly="true" cssclass="edt_WF_normal" readonlyComp="Y" right="29" validation="사업번호;NULL" text="" validationGroup="group01" validationCheckReadonly="false"/>
+              <Button id="btnSearchPop_RefNo" taborder="32" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommbtnPopOnclick" top="108" left="edtSearchCntr2:0" text="" right="5"/>
+              <Calendar id="calCntr2" taborder="33" left="stcCntr8:5" top="108" height="24" onchanged="doChgWishDt" width="110" validation="계약기간;NULL" validationGroup="group01" cssclass="cal_WF_normal" text="    -  -      " readonly="true" readonlyComp="Y"/>
+              <Static id="Static01" taborder="34" text="~" left="calCntr2:2" top="108" width="15" height="24" textAlign="center" verticalAlign="middle"/>
+              <Calendar id="calCntr3" taborder="35" left="calCntr2:20" top="108" height="24" onchanged="doChgWishDt" width="110" validation="계약기간;NULL" validationGroup="group01" cssclass="cal_WF_normal" text="    -  -      " readonly="true" readonlyComp="Y"/>
+              <Static id="stcCntr82" taborder="37" text="이전 지급금액이 자동조회됩니다." left="stcCntr10:10.00" top="167" height="34" width="338" visible="true" font="bold 12px/normal &quot;KoPubL&quot;"/>
+              <Div id="divFile1" taborder="38" url="comm::comFile.xfdl" top="stcBg01_00_03:20" left="0" right="0" bottom="0"/>
+              <Static id="stcCntr81" taborder="36" left="114" top="167" height="34" visible="true" right="stcCntr10:10" font="bold 12px/normal &quot;KoPubL&quot;" wordSpacing="0.1px" letterSpacing="0.1px" text="* ex) 2017년 1월 분에 대한 검수 진행시 2017.1 ~ 2017.1선택,&#13;&#10;  2017년 2분기 분에 대한 검수 진행시 2017.4 ~ 2017.6 선택" textAlign="right"/>
+              <Combo id="cboCntrM1" taborder="39" left="cboCntrY1:30.00" top="144" height="24" codecolumn="cntrMM" datacolumn="cntrMM" innerdataset="dsCntrMM" cssclass="cbo_WF_normal" text="" validationCheckEnable="true" width="50" validationGroup="group01" validation="기간;NULL"/>
+              <Static id="Static010" taborder="40" text="~" left="cboCntrM1:30" top="143" width="15" height="24" textAlign="center" verticalAlign="middle"/>
+              <Static id="Static011" taborder="41" text="년" left="cboCntrY1:3.00" top="144" width="15" height="24" textAlign="center" verticalAlign="middle"/>
+              <Static id="Static012" taborder="42" text="월" left="cboCntrM1:3.00" top="144" width="15" height="24" textAlign="center" verticalAlign="middle"/>
+              <Combo id="cboCntrY2" taborder="46" left="cboCntrM1:60" top="144" height="24" codecolumn="cntrYY" datacolumn="cntrYY" innerdataset="dsCntrYY" cssclass="cbo_WF_normal" text="" validationCheckEnable="true" width="80" validationGroup="group01" validation="기간;NULL"/>
+              <Combo id="cboCntrM2" taborder="44" left="cboCntrY2:30" top="144" height="24" codecolumn="cntrMM" datacolumn="cntrMM" innerdataset="dsCntrMM" cssclass="cbo_WF_normal" text="" validationCheckEnable="true" width="50" validationGroup="group01" validation="기간;NULL"/>
+              <Static id="Static012_00" taborder="43" text="월" left="cboCntrM2:3.00" top="144" width="15" height="24" textAlign="center" verticalAlign="middle"/>
+              <Static id="Static011_00" taborder="45" text="년" left="cboCntrY2:3.00" top="144" width="15" height="24" textAlign="center" verticalAlign="middle"/>
+              <MaskEdit id="edtCntr6M00" taborder="48" left="cboCntr6:5" top="144" height="24" format="###,###,###,###,###,###" cssclass="edt_WF_normal" validation="총계약금액;NULL" text="" validationGroup="group01" limitbymask="integer" displaynulltext="0" readonly="false" width="150"/>
+              <MaskEdit id="edtCntr6M" taborder="47" left="edtCntr6M00:10" top="144" height="24" format="###,###,###,###,###,###" cssclass="edt_WF_normal" right="74" validation="총계약금액;NULL" text="" validationGroup="group01" limitbymask="integer" displaynulltext="0" readonlyComp="Y" readonly="true"/>
+              <Calendar id="calCntr3_00" taborder="50" left="stcCntr55_00:5" top="108" height="24" onchanged="doChgWishDt" width="115" validation="계약기간;NULL" validationGroup="group01" cssclass="cal_WF_normal" text="    -  -      " readonly="false"/>
+              <Button id="btnCntr" taborder="51" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommbtnPopOnclick" top="42" left="edtCntr2:0" text="" width="24"/>
+              <Static id="stcCntr55_01" taborder="52" text="해외송금여부" left="50.00%" top="37" width="114" height="34" cssclass="sta_WF_inputTitle"/>
+              <Static id="stcCntr6_00" taborder="53" text="종량제여부" left="75.00%" top="37" width="114" height="34" cssclass="sta_WF_inputTitle"/>
+              <Radio id="rdo00" taborder="54" left="765" top="45" width="151" height="19" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">Y</Col>
+                      <Col id="datacolumn">Yes</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">N</Col>
+                      <Col id="datacolumn">No</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Radio id="rdo00_00" taborder="55" left="1086.00" top="45" width="151" height="19" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" direction="vertical">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">Y</Col>
+                      <Col id="datacolumn">Yes</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">N</Col>
+                      <Col id="datacolumn">No</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="REQ_TMPLAT_ID" type="STRING" size="256"/>
+          <Column id="REQ_TMPLAT_VER" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="PRE_REQ_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="REQ_TMPLAT_ID"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCtAstRegiMt"/>
+      <Dataset id="dsPayCycleCd"/>
+      <Dataset id="dsCtCntrMt" oncolumnchanged="dsOnColumnChanged"/>
+      <Dataset id="dsSrReqCtPayInsptOp" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="CNTC_NO" type="STRING" size="256"/>
+          <Column id="PA_SEQ" type="STRING" size="256"/>
+          <Column id="CONF_SEQ" type="STRING" size="256"/>
+          <Column id="CONF_STAT_CD" type="STRING" size="256"/>
+          <Column id="CONF_CHRG_ID" type="STRING" size="256"/>
+          <Column id="CONF_CHRG_DEPT_ID" type="STRING" size="256"/>
+          <Column id="PAY_AMT" type="STRING" size="256"/>
+          <Column id="MGR_APPR_YN" type="STRING" size="256"/>
+          <Column id="MGR_CMNT" type="STRING" size="256"/>
+          <Column id="CONF_DESC" type="STRING" size="256"/>
+          <Column id="CONF_START_Y" type="STRING" size="256"/>
+          <Column id="CONF_START_M" type="STRING" size="256"/>
+          <Column id="CONF_START_YM" type="STRING" size="256"/>
+          <Column id="CONF_END_Y" type="STRING" size="256"/>
+          <Column id="CONF_END_M" type="STRING" size="256"/>
+          <Column id="CONF_END_YM" type="STRING" size="256"/>
+          <Column id="PAY_DATE" type="STRING" size="256"/>
+          <Column id="MGR_CONF_YN" type="STRING" size="256"/>
+          <Column id="CURR_CD" type="STRING" size="256"/>
+          <Column id="CURR_A" type="STRING" size="256"/>
+          <Column id="BUSI_MNG_NO" type="STRING" size="256"/>
+          <Column id="FRID" type="STRING" size="256"/>
+          <Column id="FRDT" type="STRING" size="256"/>
+          <Column id="LMID" type="STRING" size="256"/>
+          <Column id="LMDT" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCntrYY" oncolumnchanged="fnCommOncolumnchanged">
+        <ColumnInfo>
+          <Column id="cntrYY" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSrReqCtCntrPay" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="CNTC_NO" type="STRING" size="256"/>
+          <Column id="PA_SEQ" type="STRING" size="256"/>
+          <Column id="CNTC_TCD_CD" type="STRING" size="256"/>
+          <Column id="PAY_CD" type="STRING" size="256"/>
+          <Column id="TMOD" type="STRING" size="256"/>
+          <Column id="CNTC_AMT" type="STRING" size="256"/>
+          <Column id="REQ_DATE" type="STRING" size="256"/>
+          <Column id="PA_STAT" type="STRING" size="256"/>
+          <Column id="BDGT_ACSJ_CD" type="STRING" size="256"/>
+          <Column id="PA_CHCN_DATE" type="STRING" size="256"/>
+          <Column id="BUSI_MNG_NO" type="STRING" size="256"/>
+          <Column id="FRID" type="STRING" size="256"/>
+          <Column id="FRDT" type="STRING" size="256"/>
+          <Column id="LMID" type="STRING" size="256"/>
+          <Column id="LMDT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCntrMM" oncolumnchanged="fnCommOncolumnchanged">
+        <ColumnInfo>
+          <Column id="cntrMM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCurrCd" oncolumnchanged="fnCommOncolumnchanged"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ CH0600_D02
+* 화면(명)		︰ 검수 요청서 - 운영
+* 메뉴(경로)		︰ 사업계획/계약 > 계약관리 > 계약검수등록(CT0140_W)
+* 화면 설명		︰ 검수 요청서
+* 작성자			︰ WEMB
+* 작성일			︰ 2024.06.28 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2024.06.28 	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_WorkFlow.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.pPopType = (this.getOwnerFrame().pPopType||'').toUpperCase();    // WF: 요청서 / R: 조회
+this.PRE_REQ_ID = this.reqInfo.PRE_REQ_ID;
+this.PAY_RPOS = 0;
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{		
+	// 전처리 SELECT 를 위한 dsCond 설정		
+	this.dsCond.setColumn(0, "PRE_REQ_ID", this.PRE_REQ_ID);	
+	this.gfnFormOnLoad(this, this.fnInit);
+			
+	this.dsCond.setColumn(0, "REQ_ID", this.reqInfo.REQ_ID);
+	
+	if( Ex.isEmpty(this.wfDsReqWfProc) )
+	{
+		this.wfdsReqWfProc = new Dataset();
+	}
+	this.wfdsReqWfProc.loadXML(this.dsWfProc.saveXML());	
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것	
+	
+	this.fnCompInit();		// 컴포넌트 초기화
+	this.fn_initDataset();
+}
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : [		'CURR_CD', 		'PAY_CYCLE_CD', 	]	// 조회할 상위코드
+		,codeDiv: [		'CNTR_CD',		'CNTR_CD',			]			// 조회할 코드의 업무구분
+		,optStr	: [		'SEL',			'SEL',				]				// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: [		'Y',			'Y',				]					// 사용여부
+		,filter	: [		'', 			'', 				]						// filterStr
+		,objDs	: [		this.dsCurrCd,	this.dsPayCycleCd,	]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+
+	//this.dsAttatchPayCd.assign(this.dsAttatchCntcCd);
+	//this.dsAttatchCntcCd.set_filterstr(" ITM_VAL_1=='CNTC' ");
+	//this.dsAttatchPayCd.set_filterstr("ITM_VAL_1=='PAY'");
+}
+
+this.fn_initDataset = function()
+{	
+
+}
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+
+	for(var i = objDs.rowcount-1; i >= 0; i--) objDs.setDeleteRow(i);
+
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+	
+	switch (sSvcId)
+	{
+		case "select01" :
+						
+			break;
+		
+		case "preSelect" :
+			if( Ex.isEmpty(this.dsCond.getColumn(0, "REQ_ID")) )
+			{
+				this.dsSrReqCtPayInsptOp.setInsertRow();
+				// 검수확인 (dsSrReqCtPayInsptOp) 기본값 세팅
+				this.dsSrReqCtPayInsptOp.setColumn(0,'CNTC_NO',this.dsCtCntrMt.getColumn(0,'CNTC_NO'));
+				trace(this.dsSrReqCtPayInsptOp.getColumn(0,'CNTC_NO')+">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+				this.dsSrReqCtPayInsptOp.setColumn(0,'PA_SEQ',0);
+				this.dsSrReqCtPayInsptOp.setColumn(0,"BUSI_MNG_NO", this.dsCtCntrMt.getColumn(0, 'BUSI_NO'));
+				this.dsSrReqCtPayInsptOp.setColumn(0,'PAY_DATE',Ex.util.today());
+				
+				this.dsSrReqCtPayInsptOp.setColumn(0,'CONF_CHRG_ID',Ex.util.getSession('gvUserId')); //검수담당자
+				this.dsSrReqCtPayInsptOp.addColumn('CONF_CHRG_NM','STRING');
+				this.dsSrReqCtPayInsptOp.setColumn(0,'CONF_CHRG_NM',Ex.util.getSession('gvUserNm')); 
+				this.dsSrReqCtPayInsptOp.setColumn(0,'CONF_CHRG_DEPT_ID',Ex.util.getSession('gvDeptCd')); //검수담당자부서
+				this.dsSrReqCtPayInsptOp.addColumn('CONF_CHRG_DEPT_NM','STRING');
+				this.dsSrReqCtPayInsptOp.setColumn(0,'CONF_CHRG_DEPT_NM',Ex.util.getSession('gvDeptNm')); 
+				this.dsSrReqCtPayInsptOp.setColumn(0,'CURR_CD',"KRW");				
+				this.dsSrReqCtPayInsptOp.addColumn('CONF_START_Y','STRING');
+				this.dsSrReqCtPayInsptOp.addColumn('CONF_START_M','STRING');
+				this.dsSrReqCtPayInsptOp.addColumn('CONF_END_Y','STRING');
+				this.dsSrReqCtPayInsptOp.addColumn('CONF_END_M','STRING');
+				
+				if (Ex.isEmpty(this.dsSrReqCtPayInsptOp.getColumn(0,'CONF_START_YM')))
+				{
+					this.dsSrReqCtPayInsptOp.setColumn(0,'CONF_START_Y',this.dsCtCntrMt.getColumn(0,'CNTC_START_DATE').substring(0,4));
+					this.dsSrReqCtPayInsptOp.setColumn(0,'CONF_END_Y',this.dsCtCntrMt.getColumn(0,'CNTC_END_DATE').substring(0,4));
+					this.dsSrReqCtPayInsptOp.setColumn(0,'CONF_START_M',this.dsCtCntrMt.getColumn(0,'CNTC_START_DATE').substring(4,6));
+					this.dsSrReqCtPayInsptOp.setColumn(0,'CONF_END_M',this.dsCtCntrMt.getColumn(0,'CNTC_END_DATE').substring(4,6));
+				}	
+			}
+			break;		
+			
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	if(Ex.isEmpty(varValue))
+		return;		
+		
+	var tempDs = new Dataset();
+	tempDs.loadXML(varValue);
+	
+	switch(pID)
+	{				
+		case "selRefNo" :
+			this.dsSrReqCtCntrPay.setColumn(this.PAY_RPOS,"BUSI_MNG_NO", tempDs.getColumn(0, 'BUSI_NO'));
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue) return;
+	
+	switch(mID)
+	{			
+		case "saveConfirm" :
+			//this.nLastRow = this.dsCmmWordMt.rowposition;	// 마지막 rowposition 저장
+			//this.fnSetDatasetDt();		// 저장용 datset 전처리
+			this.fnSaveCheck();
+			// 물리파일업로드&파일정보 테이블 저장 호출 
+			this.divDown.form.divFile1.form.fnUploadFiles();
+			break;
+	}
+}
+
+// 파일 업로드 default callback
+this.fnUploadCallback = function(sSvcId, nErrorCode, sErrorMsg)
+{
+	// TO DO
+	// 개발자가 지정한 sSvcId(setConfig 옵션에 넣은 파일첨부ID), nErrorCode(에러코드), sErrorMsg(에러메시지)
+	if (nErrorCode < 0) 
+	{
+		Ex.core.error(this,{id:"ERROR",msg:sSvcId+"\n"+Ex.core.msg(sErrorMsg)});
+		return;
+	}
+	
+	switch(sSvcId)
+	{
+		case "fileSvc01" :
+			this.reqInfo.PARENT_FORM.fnCallUploadCompleteDiv(this.reqInfo.SCRN_WF_PROC_CD);
+			break;
+	}
+	
+}
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	this.grdList.displayRowType();
+	
+	// 공통코드 조회
+	this.fnGetCmmCd();
+	
+	// 사업년도 ( -10년/ +6년 )
+	var CNTR_YY_ST = Ex.util.today().substring(0, 4);
+	for(var i=0, j=6; i<6; i++){
+		this.dsCntrYY.addRow();
+		this.dsCntrYY.setColumn(i,"cntrYY",nexacro.toNumber(CNTR_YY_ST)+(j--));
+	}
+	for(var i=0, j=this.dsCntrYY.rowcount;i<=10;i++){
+		this.dsCntrYY.addRow();
+		this.dsCntrYY.setColumn((j++),"cntrYY",nexacro.toNumber(CNTR_YY_ST)-i);
+	}
+	for(var i=0; i<12; i++){
+		this.dsCntrMM.addRow();
+		if(i <= 10 )
+			this.dsCntrMM.setColumn(i,"cntrMM",'0'+(i+1));
+		else 	this.dsCntrMM.setColumn(i,"cntrMM",i+1);
+	}
+	
+	if(this.pPopType == 'WF')
+	{	
+		// 요청서 기본정보 세팅
+		var strTitle = '계약서 검수확인 ( ' + this.dsCtCntrMt.getColumn(0,'TITLE') +')';
+		this.reqInfo.PARENT_FORM.topForm.dsSrBaseInfo.setColumn(0,'TITLE',strTitle );
+		this.reqInfo.PARENT_FORM.topForm.stcReqTitle.set_text("투자예산 검수");
+		
+		// 대금 지급 정보 (dsSrReqCtCntrPay) 진행 값 세팅
+		this.dsSrReqCtCntrPay.setColumn(0,"BUSI_MNG_NO", this.dsCtCntrMt.getColumn(0, 'BUSI_NO'));
+	}
+	
+	var oParam = {
+		 sSvcId		: 'fileSvc01'		// divFile callback 후처리용 서비스 ID
+		,title		: '검수확인서'
+		,limitSize	: 100				// 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+		,folderName	: 'ct'				// 폴더명(업무명)
+		,tableName	: 'SR_REQ_CT_PAY_INSPT_OP'	// 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+		,primaryKey1: this.reqInfo.REQ_ID||''	// 테이블 PK1(ex. 요청서ID 등)
+		,primaryKey2: ''				// 테이블 PK2 (복합 키인 경우 사용)
+		,primaryKey3: ''				// 테이블 PK3 (복합 키인 경우 사용)
+		,extGrid	: ''				// 확장컬럼 입력을 위한 format용 grid
+		,fileDownYn	: 'Y'				// 파일다운권한; 	공백 시 메뉴의 조회 권한
+		,fileUpYn	: 'Y'				// 파일업로드권한; 	공백 시 메뉴의 추가 권한
+		,deleteYn	: 'Y'				// 파일삭제권한; 	공백 시 메뉴의 삭제 권한
+	};
+	this.divDown.form.divFile1.form.setConfig(this, oParam);
+
+	Ex.util.callParentSizeChangeComplete(this, "fnLoadComplete", this.reqInfo.SCRN_WF_PROC_CD);
+}
+
+this.isUpdateForm = function()
+{
+	if( !Ex.util.isUpdated(this.dsSrReqCtPayInsptOp) && !Ex.util.isUpdated(this.dsSrReqCtCntrPay) ) return false;
+	else return true;
+}
+
+this.fnSaveCheck = function(isReg)
+{
+	//TODO 
+	var sYM = this.divDown.form.cboCntrY1.text + this.divDown.form.cboCntrM1.text ;
+	var eYM = this.divDown.form.cboCntrY2.text + this.divDown.form.cboCntrM2.text ;
+	this.dsSrReqCtPayInsptOp.setColumn(0,'CONF_START_YM',sYM);
+	this.dsSrReqCtPayInsptOp.setColumn(0,'CONF_END_YM',eYM);
+
+	return true;
+}
+
+this.isModify = function()
+{
+	if( Ex.util.isUpdated(this.dsSrReqCtPayInsptOp) || Ex.util.isUpdated(this.dsSrReqCtCntrPay) ) return true;
+	else return false;
+}
+
+this.formUploadFiles = function()
+{
+	this.divDown.form.divFile1.form.fnUploadFiles(true);
+}
+
+// REQ_ID 생성 전 tempKey_사번으로 들어간 항목을 REQ_ID로 바꿔주는 작업
+this.formUploadTempKeyChange = function(pk1, pk2, pk3)
+{
+	this.divDown.form.divFile1.form.fnReplaceTempkeyAndSearch(pk1);
+}
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// component onclick event. 
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{	
+	// TO DO
+	// 개발자가 컴포넌트 onclick event를 'fnCommOnclick'으로 지정하고 컴포넌트 id로 구분하여 작성
+	switch(obj.name)
+	{		
+	
+	}
+}
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+	if(obj==this.dsSrReqCtPayInsptOp && e.columnid == 'CURR_A' )
+	{	
+		//TODO CURR_CD 에 값 넣어야함 //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+		var amt = this.dsSrReqCtPayInsptOp.getColumn(e.row,'CURR_A')
+		this.dsSrReqCtPayInsptOp.setColumn(e.row,'PAY_AMT',nexacro.toNumber(amt)*10);
+	}
+}; 
+
+this.fnCommbtnPopOnclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var popId	= '';
+	var url		= '';
+	var oParam	= {};
+	var pPopType= '';
+	switch(obj.name)
+	{
+		case "btnSearchPop_RefNo" :		// 이전사업번호 선택 팝업
+			//TODO 조회 화면에서 선택하면 사업번호 값 가져오기
+			popId	= 'selRefNo';
+			url		= 'iv::IV9110_W.xfdl';
+			oParam	= {
+				title		: Ex.core.word('사업번호') + ' ' + Ex.core.word('선택')
+			  , pSelType	: 'S'
+			  , pPopType	: 'P'
+			};
+			break;
+			
+	}
+	
+	Ex.core.popup(
+		this,
+		popId,
+		url,           		// <--- 팝업창 오픈 Url
+		oParam,
+		"autosize"
+	);
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divDown.form.stcBg01_00_00_00" propid="value" datasetid="dsCtCntrMt" columnid="BUSI_NAME"/>
+      <BindItem id="item1" compid="divDown.form.edtCntr1" propid="value" datasetid="dsCtCntrMt" columnid="CNTC_NO"/>
+      <BindItem id="item2" compid="divDown.form.edtCntr2" propid="value" datasetid="dsCtCntrMt" columnid="TITLE"/>
+      <BindItem id="item3" compid="divDown.form.edtCntr3" propid="value" datasetid="dsCtCntrMt" columnid="ENTP_NM"/>
+      <BindItem id="item4" compid="divDown.form.edtCntr6" propid="value" datasetid="dsCtCntrMt" columnid="TOT_CNTC_AMT"/>
+      <BindItem id="item5" compid="divDown.form.calCntr2" propid="value" datasetid="dsCtCntrMt" columnid="CNTC_START_DATE"/>
+      <BindItem id="item6" compid="divDown.form.calCntr3" propid="value" datasetid="dsCtCntrMt" columnid="CNTC_END_DATE"/>
+      <BindItem id="item7" compid="divDown.form.edtCntr5" propid="value" datasetid="dsSrReqCtPayInsptOp" columnid="CONF_CHRG_NM"/>
+      <BindItem id="item8" compid="divDown.form.edtCntr9" propid="value" datasetid="dsSrReqCtPayInsptOp" columnid="CONF_DESC"/>
+      <BindItem id="item9" compid="divDown.form.cboCntr6" propid="value" datasetid="dsSrReqCtPayInsptOp" columnid="CURR_CD"/>
+      <BindItem id="item10" compid="divDown.form.edtCntr7" propid="value" datasetid="dsSrReqCtPayInsptOp" columnid="CURR_A"/>
+      <BindItem id="item11" compid="divDown.form.cboCntrM2" propid="value" datasetid="dsSrReqCtPayInsptOp" columnid="CONF_END_M"/>
+      <BindItem id="item12" compid="divDown.form.cboCntrY2" propid="value" datasetid="dsSrReqCtPayInsptOp" columnid="CONF_END_Y"/>
+      <BindItem id="item13" compid="divDown.form.cboCntrM1" propid="value" datasetid="dsSrReqCtPayInsptOp" columnid="CONF_START_M"/>
+      <BindItem id="item14" compid="divDown.form.cboCntrY1" propid="value" datasetid="dsSrReqCtPayInsptOp" columnid="CONF_START_Y"/>
+      <BindItem id="item15" compid="divDown.form.edtCntr6M" propid="value" datasetid="dsSrReqCtPayInsptOp" columnid="PAY_AMT"/>
+      <BindItem id="item16" compid="divDown.form.edtCntr6M00" propid="value" datasetid="dsSrReqCtPayInsptOp" columnid="CURR_A"/>
+      <BindItem id="item17" compid="divDown.form.edtSearchCntr2" propid="value" datasetid="dsSrReqCtCntrPay" columnid="BUSI_MNG_NO"/>
+      <BindItem id="item18" compid="divDown.form.cboCntr5" propid="value" datasetid="dsCtCntrMt" columnid="PAY_CYCLE_CD"/>
+      <BindItem id="item19" compid="divDown.form.edtCntr4" propid="value" datasetid="dsCtCntrMt" columnid="CSL_NO"/>
+      <BindItem id="item20" compid="divDown.form.edtCntr5_00" propid="value" datasetid="dsSrReqCtPayInsptOp" columnid="PAY_DATE"/>
+      <BindItem id="item21" compid="divDown.form.calCntr3_00" propid="value" datasetid="dsSrReqCtPayInsptOp" columnid="PAY_DATE"/>
+    </Bind>
+  </Form>
+</FDL>

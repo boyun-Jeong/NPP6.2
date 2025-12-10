@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AppVariables version="2.0">
+  <Datasets>
+    <Dataset id="gdsSession"/>
+    <Dataset id="gdsMenu">
+      <ColumnInfo>
+        <Column id="MENU_ID" type="string" size="256"/>
+        <Column id="MENU_NM" type="string" size="32"/>
+        <Column id="UP_MENU_ID" type="STRING" size="256"/>
+        <Column id="SCREEN_ID" type="string" size="32"/>
+        <Column id="MENU_PATH" type="string" size="32"/>
+        <Column id="MENU_PATH_NM" type="STRING" size="256"/>
+        <Column id="MENU_LVL" type="string" size="32"/>
+        <Column id="MENU_LVL1" type="STRING" size="256"/>
+        <Column id="MENU_LVL2" type="string" size="32"/>
+        <Column id="LVL1_MENU_ID" type="string" size="32"/>
+        <Column id="LVL2_MENU_ID" type="STRING" size="256"/>
+        <Column id="MENU_URL" type="STRING" size="256"/>
+        <Column id="MENU_ARGS" type="STRING" size="256"/>
+        <Column id="READ_YN" type="STRING" size="256"/>
+        <Column id="WRITE_YN" type="STRING" size="256"/>
+        <Column id="UPDATE_YN" type="STRING" size="256"/>
+        <Column id="DELETE_YN" type="STRING" size="256"/>
+        <Column id="ADMIN_YN" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gdsMyMenu"/>
+    <Dataset id="gdsUsedMenu">
+      <ColumnInfo>
+        <Column id="MENU_ID" type="string" size="256"/>
+        <Column id="MENU_NM" type="string" size="32"/>
+        <Column id="UP_MENU_ID" type="STRING" size="256"/>
+        <Column id="SCREEN_ID" type="string" size="32"/>
+        <Column id="MENU_PATH" type="string" size="32"/>
+        <Column id="MENU_PATH_NM" type="STRING" size="256"/>
+        <Column id="MENU_LVL" type="string" size="32"/>
+        <Column id="MENU_LVL1" type="STRING" size="256"/>
+        <Column id="MENU_LVL2" type="string" size="32"/>
+        <Column id="LVL1_MENU_ID" type="string" size="32"/>
+        <Column id="LVL2_MENU_ID" type="STRING" size="256"/>
+        <Column id="MENU_URL" type="STRING" size="256"/>
+        <Column id="MENU_ARGS" type="STRING" size="256"/>
+        <Column id="READ_YN" type="STRING" size="256"/>
+        <Column id="WRITE_YN" type="STRING" size="256"/>
+        <Column id="UPDATE_YN" type="STRING" size="256"/>
+        <Column id="DELETE_YN" type="STRING" size="256"/>
+        <Column id="ADMIN_YN" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gdsMessage"/>
+    <Dataset id="gdsCode">
+      <ColumnInfo>
+        <Column id="CD_NO" type="STRING" size="256"/>
+        <Column id="UP_CD_NO" type="STRING" size="256"/>
+        <Column id="CMM_CD" type="STRING" size="256"/>
+        <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        <Column id="CMM_CD_DESC" type="STRING" size="256"/>
+        <Column id="CODE_DIV" type="STRING" size="256"/>
+        <Column id="SORT_ORDR" type="STRING" size="256"/>
+        <Column id="USE_YN" type="STRING" size="256"/>
+        <Column id="ITM_VAL_1" type="STRING" size="256"/>
+        <Column id="ITM_VAL_2" type="STRING" size="256"/>
+        <Column id="ITM_VAL_3" type="STRING" size="256"/>
+        <Column id="ITM_VAL_4" type="STRING" size="256"/>
+        <Column id="ITM_VAL_5" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gdsReqMenuAuth">
+      <ColumnInfo>
+        <Column id="MENU_ID" type="STRING" size="256"/>
+        <Column id="USER_ID" type="STRING" size="256"/>
+        <Column id="SCREEN_ID" type="STRING" size="256"/>
+        <Column id="READ_YN" type="STRING" size="256"/>
+        <Column id="WRITE_YN" type="STRING" size="256"/>
+        <Column id="DELETE_YN" type="STRING" size="256"/>
+        <Column id="SAVE_YN" type="STRING" size="256"/>
+        <Column id="EXCL_DOWN_YN" type="STRING" size="256"/>
+        <Column id="FILE_UP_YN" type="STRING" size="256"/>
+        <Column id="AUTH_YN" type="STRING" size="256"/>
+        <Column id="AUTH_DIV" type="STRING" size="256"/>
+        <Column id="ADMIN_YN" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gdsWord"/>
+    <Dataset id="gdsFommAgencyInfo">
+      <ColumnInfo>
+        <Column id="USER_ID" type="STRING" size="256"/>
+        <Column id="USER_NM" type="STRING" size="256"/>
+        <Column id="USER_INFO" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+    <Dataset id="gdsInDs"/>
+    <Dataset id="gdsOutDs"/>
+    <Dataset id="gdsSvcInfo">
+      <ColumnInfo>
+        <Column id="CHK" type="STRING" size="256"/>
+        <Column id="SVC_NM" type="STRING" size="256"/>
+        <Column id="IN_DS" type="STRING" size="256"/>
+        <Column id="OUT_DS" type="STRING" size="256"/>
+      </ColumnInfo>
+    </Dataset>
+  </Datasets>
+  <Variables>
+    <Variable id="gvIsDebug" initval="Y"/>
+    <Variable id="gvIsSessionOut" initval="Y"/>
+    <Variable id="gvRtnMsg"/>
+  </Variables>
+  <DataObjects/>
+</AppVariables>

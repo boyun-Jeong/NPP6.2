@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="form" classname="top" left="0" top="0" titletext="요청목록" onload="form_onload" scrolltype="none" cssclass="" height="250" width="675" font="normal 24pt/normal &quot;PretendardR&quot;" color="white" onclick="frHome_D00_onclick" scrollbartype="none">
+    <Layouts>
+      <Layout width="675" height="250" mobileorientation="landscape">
+        <Button id="btnMore" taborder="1" top="10" width="28" height="28" onclick="fnCommOnclick" right="20" border="0px none" cursor="pointer" background="transparent url('theme://NHSB_IMAGE_SET/HOME/main-link.png') no-repeat center center"/>
+        <Grid id="grdData" taborder="0" left="20" top="44" bottom="20" right="20" cssclass="grd_HOME_normal" autofittype="col" binddataset="dsData" oncellclick="grdData_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="200"/>
+                <Column size="80"/>
+                <Column size="90"/>
+                <Column size="70"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="요청번호" cssclass="grdHCell_HOME_fCell"/>
+                <Cell col="1" text="요청제목"/>
+                <Cell col="2" text="요청일자"/>
+                <Cell col="3" text="단계"/>
+                <Cell col="4" text="상태"/>
+                <Cell col="5" text="희망완료일"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:REQ_ID" cursor="pointer" color="#005bc3"/>
+                <Cell col="1" text="bind:TITLE" textAlign="left"/>
+                <Cell col="2" text="bind:REQ_DATE" displaytype="date" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="3" text="bind:WF_PROC_NM"/>
+                <Cell col="4" text="bind:REQ_STAT_NM"/>
+                <Cell col="5" text="bind:REQ_WISH_DT" displaytype="date" calendardateformat="yyyy-MM-dd"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnExcel" taborder="2" top="10" width="28" height="28" onclick="fnCommOnclick" right="52" border="0px none" cursor="pointer" background="transparent url('theme://NHSB_IMAGE_SET/HOME/btn-excel.png') no-repeat center center"/>
+        <Static id="stc00" taborder="3" left="20" top="10" width="110" height="28" background="url('theme://NHSB_IMAGE_SET/HOME/main-titbullet01.png') no-repeat left center" text="요청목록" padding="0px 0px 0px 19px" color="black" font="bold 16px 'KoPubB'"/>
+        <Div id="divCnt" taborder="4" left="110" top="10" width="76" height="28" background="transparent url('theme://NHSB_IMAGE_SET/HOME/grid-label.png') no-repeat left center">
+          <Layouts>
+            <Layout>
+              <Static id="stc00" taborder="0" text="건수: " left="0" top="5" width="34" bottom="5" color="#545a69" font="bold 11px 'KoPubL'" verticalAlign="middle" padding="1px 0px 0px 10px"/>
+              <Static id="stcCnt" taborder="1" text="&lt;fc v='#2c8bf8'&gt;0&lt;/fc&gt; 건" top="5" width="44" font="bold 11px 'KoPubL'" color="#545a69" padding="1px 10px 0px 0px" usedecorate="true" verticalAlign="middle" bottom="5" right="0" textAlign="right"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="PJT_ID">11</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData" onrowsetchanged="dsData_onrowsetchanged"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ frHome_D00
+* 화면(명)		︰ - 
+* 메뉴(경로)	︰ -
+* 화면 설명	︰ 대시보드 우측 내 정보 Div
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.FROMDATE;
+this.ENDDATE;
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();
+	this.fnSearchReset();
+	this.fnSearch();
+}
+
+
+this.fnSearchReset = function()
+{
+
+}
+
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	trace('nhsb_D00 >> fnSearch');
+	var sTranId = "selectReqList";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "nhHome/selectReqList";            // 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData=dsData";       	// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "selectReqList":
+			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch(pID)
+	{
+	
+	}
+}
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	this.fnGetCmmCd();
+}
+
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['DAT_TYPE_CD']			// 조회할 상위코드
+		,codeDiv: ['CMM_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['ALL']			// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y']				// 사용여부
+		,filter	: ['']				// filterStr
+		,objDs	: [this.dsDatTypeCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util;
+}
+
+
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var objApp = nexacro.getApplication();
+	switch(obj.name)
+	{
+		case "btnMore" :	// 요청관리
+			var rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SR0120_W');	
+			if( rowpos >= 0 ) {
+				var fromDate	= Ex.util.addDate(Ex.util.today(), -30);
+				var toDate		= Ex.util.today();
+				Ex.core.openLink(this, objApp.gdsMenu.getColumn(rowpos, 'MENU_ID'), {param : 'ALL', fromDate : fromDate, toDate : toDate});
+			}
+			break;	
+		
+		case "btnExcel" :
+			var oInfo = {
+   				Grid	: [this.grdData],
+   				Sheet	: [''],
+   				FileNm	: ["요청목록"],
+   				ExportType : "XLSX",
+   				ExportId : "excel01"
+   			};
+			this.gfnExportExcel(this, oInfo);
+			break;
+	}
+	
+	
+}
+
+this.dsData_onrowsetchanged = function(obj:nexacro.NormalDataset,e:nexacro.dsData.rowpositionsetChangeEventInfo)
+{
+	var str = "<fc v='#2c8bf8'>" + obj.rowcount + "</fc> 건";
+	this.divCnt.form.stcCnt.set_text(str);
+};
+
+this.grdData_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if( e.cell == obj.getBindCellIndex('body', 'REQ_ID') ) {
+		var svcCd = this.dsData.getColumn(this.dsData.rowposition, "SVC_CD");
+		var reqId = this.dsData.getColumn(this.dsData.rowposition, "REQ_ID");
+		var reqTmplatId = this.dsData.getColumn(this.dsData.rowposition, "REQ_TMPLAT_ID");
+		var reqTmplatVer = this.dsData.getColumn(this.dsData.rowposition, "REQ_TMPLAT_VER");
+
+		var popURL = "";
+		if(svcCd == "SRM")	popURL = "sr::SR0010_W.xfdl";
+		else				popURL = "sr::SR0000_W.xfdl";
+
+		Ex.core.popup(
+			this,									// <--- 팝업 실행 스코프
+			"srReqWritePop",						// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+			popURL,									// <--- 팝업창 오픈 Url
+			{
+				title			: "요청서",
+				//pIsCopy	: true,
+				//pClearKeyColumnArr : ["REQ_ID"],
+				pREQ_ID			: reqId,
+				pREQ_TMPLAT_ID	: reqTmplatId,
+				pREQ_TMPLAT_VER : reqTmplatVer
+			},												// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			//"width=1500,height=817,useCloseButton=false"	// <--- width/height/modeless(프레임 처리 옵션)
+			"autosize,useCloseButton=false"
+		); 
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

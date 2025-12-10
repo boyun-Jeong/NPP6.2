@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM0000_P03" width="1000" height="600" titletext="도움말" onload="form_onload">
+    <Layouts>
+      <Layout height="600" mobileorientation="landscape" width="1000">
+        <Static id="stcBg01_00_00" taborder="7" left="20" top="54" height="34" cssclass="sta_WF_inputBg" right="20"/>
+        <Static id="stcBg01_00" taborder="5" left="20" top="87" cssclass="sta_WF_inputBg" right="20" bottom="80"/>
+        <Static id="stcInfoTitle" taborder="0" text="도움말" left="20" top="20" width="60" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="stcMenuNm" taborder="1" left="20" top="54" width="130" height="34" cssclass="sta_WF_inputTitle" text="메뉴명"/>
+        <Static id="stcConts" taborder="2" left="20" top="87" width="130" cssclass="sta_WF_inputTitle_E" text="도움말" bottom="80"/>
+        <Edit id="edtMenuNm" taborder="3" left="155" top="59" height="24" cssclass="edt_WF_normal" right="26" readonly="true"/>
+        <Static id="Static00_01" taborder="4" left="0" top="44" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divBottom" taborder="6" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg" isButtonGroup="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" width="100" height="32" bottom="13" cssclass="btn_WF_primary_close" right="20" onclick="fnCommOnclick" visible="true"/>
+              <Button id="btnSave" taborder="0" text="저장" width="100" height="32" bottom="13" cssclass="btn_WF_primary_save" right="btnClose:5" onclick="fnCommOnclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divWebEditor" taborder="8" left="stcConts:5" top="93" right="25" bottom="86" url="comm::comWebEditor.xfdl"/>
+        <Static id="stc00" taborder="9" left="stcInfoTitle:10" top="20" width="400" height="24" text="※ 본 내용은 [관리자 &gt; 메뉴관리] 화면에서 수정가능합니다" textAlign="left"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면 ID		︰ ref99
+* 화면(명)		︰ Script 양식 샘플
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.pReadOnly;
+this.pMenuId;
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	trace("workArea form init call");
+	this.pReadOnly  = this.getOwnerFrame().pReadOnly||false;
+	this.pMenuId	= this.getOwnerFrame().pMenuId;
+	this.pMenuNm	= this.getOwnerFrame().pMenuNm;
+	
+	this.divWebEditor.form.initCreate(this.pReadOnly);
+	this.divBottom.form.btnSave.set_visible(!this.pReadOnly);
+	
+	this.dsCond.setColumn(0, 'MENU_ID', this.pMenuId);
+	this.fnSearch();
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+
+}
+
+// 조회
+this.fnSearch = function()
+{
+	var sTranId = "select03";
+    var sService = "FOMM0140W/select03";
+    var sInDs = "dsCond=dsCond";
+    var sOutDs = "dsFommMenuMt=dsData";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 저장
+this.fnSave = function()
+{
+	var MENU_HELP = this.divWebEditor.form.getContent();
+	this.dsFommMenuMt.setColumn(this.dsFommMenuMt.rowposition, 'MENU_HELP', MENU_HELP);
+	
+	var sTranId = "save02";
+    var sService = "FOMM0140W/save02";
+    var sInDs = "dsData=dsFommMenuMt:U dsCond=dsCond";
+    var sOutDs = "";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);	
+	objDs.set_filterstr("CHK=='1'");
+	for(var i = 0; i < objDs.rowcount; i++)	
+		objDs.setDeleteRow(i);
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select03" :
+			if( this.dsFommMenuMt.rowcount == 0 ) {
+				this.dsFommMenuMt.setAddRow();
+				this.dsFommMenuMt.setColumn(0, 'MENU_ID', this.pMenuId);
+				this.dsFommMenuMt.setColumn(0, 'MENU_NM', this.pMenuNm);
+			}
+			else {
+				var MENU_HELP = this.dsFommMenuMt.getColumn(this.dsFommMenuMt.rowposition, 'MENU_HELP')||'';
+				this.divWebEditor.form.setContent(MENU_HELP);
+			}
+			
+			break;
+			
+			
+		case "save02" : // 서비스 ID
+			var oParam = {
+				id : "saveAlert"
+			  , msg : "10004"
+			  , arrparam : []
+			  , msgtype : "S"
+			};
+			Ex.core.alert(this, oParam);
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if( !varValue )
+		return;
+		
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.fnSave();
+			break;	
+			
+		case "saveAlert" :
+			Ex.core.pclose(this);
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCheckValidate  = function()
+{
+	if( !Ex.util.checkValidate(this, "group01") )	
+		return false;
+	
+	var MENU_HELP = this.divWebEditor.form.getContent();
+	if( Ex.isEmpty(MENU_HELP) ) {
+		var oParam = {
+				id : "nullAlert"
+			  , msg : "도움말을 입력해주세요."
+			  , arrparam : []
+			  , msgtype : "I"
+			};
+			Ex.core.alert(this, oParam);
+		return false;
+	}
+	
+	return true;
+}
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// component onclick event. 
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{	
+	// TO DO
+	// 개발자가 컴포넌트 onclick event를 'fnCommOnclick'으로 지정하고 컴포넌트 id로 구분하여 작성
+	switch(obj.name)
+	{
+		case "btnClose" :			// 닫기
+			Ex.core.pclose(this);
+			break;
+			
+		case "btnSave" :
+			if( !this.fnCheckValidate() )
+				return;
+				
+			var param = {id : "saveConfirm", msg : "10003", arrparam : [''], msgtype : "I"};
+			Ex.core.confirm(this, param);
+			break;
+	}
+}
+this.dsFommMenuMt_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item1" compid="edtMenuNm" propid="value" datasetid="dsFommMenuMt" columnid="MENU_NM"/>
+    </Bind>
+    <Objects>
+      <Dataset id="dsFommMenuMt" oncolumnchanged="dsFommMenuMt_oncolumnchanged"/>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="MENU_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

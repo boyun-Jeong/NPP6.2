@@ -1,0 +1,600 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PJ4100_P01" left="0" top="0" width="880" height="701" titletext="어플리케이션 기능 구조 상세" onload="form_onload">
+    <Layouts>
+      <Layout width="880" height="701">
+        <Div id="divContents" taborder="0" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="stcFuncDesc" taborder="25" text="기능 설명" cssclass="sta_WF_inputTitle_E" left="20" top="219" width="130" height="92" style="align:left middle;"/>
+              <Static id="stcContentsBg" taborder="24" cssclass="sta_WF_inputBg" left="stcFuncDesc:-1" top="219" height="92" right="20"/>
+              <Static id="Static06" taborder="8" cssclass="sta_WF_inputBg" left="20" top="87" height="34" right="20"/>
+              <Static id="stcBizId" taborder="9" text="업무" cssclass="sta_WF_inputTitle_E" left="20" top="87" width="130" height="34" style="align:left middle;"/>
+              <Static id="Static10" taborder="2" cssclass="sta_WF_inputBg" left="20" top="54" height="34" right="20"/>
+              <Static id="stcPjtNm" taborder="3" text="프로젝트명" cssclass="sta_WF_inputTitle" left="20" top="54" width="130" height="34" style="align:left middle;"/>
+              <Static id="Static13" taborder="11" cssclass="sta_WF_inputBg" left="20" top="120" height="34" right="20"/>
+              <Static id="stcFuncNo" taborder="12" text="기능ID" onclick="Static13_onclick" cssclass="sta_WF_inputTitle_E" left="20" top="120" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcSubPjtNm" taborder="6" text="서브 프로젝트" cssclass="sta_WF_inputTitle" left="50.00%" top="54" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcFuncLv1" taborder="14" text="Lvl1" cssclass="sta_WF_inputTitle_E" left="50.00%" top="120" width="130" height="34" style="align:left middle;"/>
+              <Edit id="edtFuncNo" taborder="13" cssclass="edt_WF_normal" left="stcFuncNo:5" top="125" height="24" validate="" right="stcFuncLv1:5" validationGroup="input01" validation="기능ID;NULL|MAX_LEN_UTF8:100"/>
+              <TextArea id="txaFuncDesc" taborder="26" left="stcFuncDesc:5" top="224" right="25" height="82" cssclass="txa_WF_normal" validationGroup="input01" validation="기능 설명;NULL|MAX_LEN_UTF8:4000"/>
+              <Combo id="cboBizId" taborder="10" codecolumn="BIZ_ID" datacolumn="BIZ_NAME" left="stcBizId:5" top="92" height="24" cssclass="cbo_WF_normal" validationGroup="input01" validation="업무;NULL" width="170"/>
+              <Static id="stcBackMid2_00" taborder="30" left="20" top="402" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Static id="Static05" taborder="0" text="어플리케이션 기능 구조 상세" cssclass="sta_WF_gridTitle" left="20" top="20" width="207" height="24"/>
+              <Static id="stcBackMid1" taborder="1" left="20" top="44" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Edit id="edtFuncLv1" taborder="15" cssclass="edt_WF_normal" left="stcFuncLv1:5" top="125" height="24" validate="" right="24" validationGroup="input01" validation="Lvl1;NULL|MAX_LEN_UTF8:200"/>
+              <Static id="Static13_00" taborder="16" cssclass="sta_WF_inputBg" left="20" top="153" height="34" right="20"/>
+              <Static id="stcFuncLv2" taborder="17" text="Lvl2" onclick="Static13_onclick" cssclass="sta_WF_inputTitle_E" left="20" top="153" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcFuncName" taborder="19" text="Lvl3(기능명)" cssclass="sta_WF_inputTitle_E" left="50.00%" top="153" width="130" height="34" style="align:left middle;"/>
+              <Edit id="edtFuncLv2" taborder="18" cssclass="edt_WF_normal" left="155" top="158" height="24" validate="" right="stcFuncName:5" validationGroup="input01" validation="Lvl2;NULL|MAX_LEN_UTF8:100"/>
+              <Edit id="edtFuncName" taborder="20" cssclass="edt_WF_normal" left="575" top="158" height="24" validate="" right="24" validationGroup="input01" validation="Lvl3(기능명);NULL|MAX_LEN_UTF8:100"/>
+              <Static id="Static06_00" taborder="21" cssclass="sta_WF_inputBg" left="20" top="186" height="34" right="20"/>
+              <Static id="stcFuncTypeCd" taborder="22" text="처리유형" cssclass="sta_WF_inputTitle_E" left="20" top="186" width="130" height="34" style="align:left middle;"/>
+              <Combo id="cboFuncTypeCd" taborder="23" innerdataset="dsFuncTypeCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" left="155" top="191" height="24" cssclass="cbo_WF_normal" validationGroup="input01" validation="처리유형;NULL" width="170"/>
+              <Static id="stcRefEntity" taborder="28" text="관련 엔티티" cssclass="sta_WF_inputTitle" left="20" top="310" width="130" height="92" style="align:left middle;"/>
+              <Static id="stcContentsBg00" taborder="27" cssclass="sta_WF_inputBg" left="149" top="310" height="92" right="20"/>
+              <TextArea id="txaRefEntity" taborder="29" left="155" top="315" right="25" height="82" cssclass="txa_WF_normal" validationGroup="input01" validation="관련 엔티티;MAX_LEN_UTF8:4000"/>
+              <Static id="Static05_00" taborder="31" text="요구사항" cssclass="sta_WF_gridTitle" left="20" top="412" width="132" height="24"/>
+              <Button id="btnSearchPjtPop" taborder="5" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommOnclick" top="59" width="24" right="stcSubPjtNm:5"/>
+              <Edit id="edtPjtNm" taborder="4" left="stcPjtNm:5" top="59" height="24" cssclass="edt_WF_normal" enable="true" readonly="true" right="btnSearchPjtPop:-1"/>
+              <Combo id="cboSubProject" taborder="7" left="stcSubPjtNm:5" top="59" height="24" cssclass="cbo_WF_normal" codecolumn="PJT_ID" datacolumn="PJT_NAME" onitemchanged="cboOnItemChanged" right="25"/>
+              <Grid id="grdReqMap" taborder="32" binddataset="dsReqMap" useinputpanel="false" cellsizingtype="col" autofittype="col" oncellclick="grdOnCellClick" onsummclick="grdReqMapList_onsummclick" left="20" right="20" height="195" autoupdatetype="itemselect" cssclass="grd_WF_normal" top="446">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="35" band="left"/>
+                      <Column size="40" band="left"/>
+                      <Column size="60" band="left"/>
+                      <Column size="180"/>
+                      <Column size="520"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="No"/>
+                      <Cell col="1" text="선택"/>
+                      <Cell col="2" text="행상태"/>
+                      <Cell col="3" colspan="2" cssclass="CellEssential" text="요구사항"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="expr:currow+1"/>
+                      <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                      <Cell col="2" text="bind:ROWFLAG"/>
+                      <Cell col="3" displaytype="normal" edittype="none" style="align:center;" text="bind:REQ_NO" expandshow="hide" expandsize="30"/>
+                      <Cell col="4" edittype="none" style="align:left;" text="bind:REQ_NAME" textAlign="left"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="stcBackMid2_00_00_00" taborder="33" left="20" top="436" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Div id="divGrdTopBtn" taborder="34" width="155" height="24" visible="true" isButtonGroup="true" top="412" right="20">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnDelete" taborder="1" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+                    <Button id="btnAdd" taborder="0" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtnBottom" taborder="1" height="60" bottom="0" text="" cssclass="div_POP_msg_btnbg" left="20" right="20">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="14"/>
+              <Button id="btnSave" taborder="0" text="저장" width="110" height="32" bottom="14" cssclass="btn_WF_primary_save" right="btnClose:5" onclick="fnCommOnclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsFunction" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="string" size="1"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="FUNC_ID" type="string" size="16"/>
+          <Column id="FUNC_NO" type="string" size="100"/>
+          <Column id="FUNC_NAME" type="string" size="100"/>
+          <Column id="FUNC_TYPE_CD" type="string" size="30"/>
+          <Column id="PJT_ID" type="string" size="16"/>
+          <Column id="FUNC_LV1" type="string" size="100"/>
+          <Column id="FUNC_LV2" type="string" size="100"/>
+          <Column id="FUNC_DESC" type="string" size="4000"/>
+          <Column id="REF_ENTITY" type="string" size="4000"/>
+          <Column id="REG_STIME" type="string" size="14"/>
+          <Column id="REG_USER_ID" type="string" size="10"/>
+          <Column id="REG_USER_NM" type="string" size="100"/>
+          <Column id="REG_USER_DEPT" type="string" size="100"/>
+          <Column id="LMOD_SDATE" type="string" size="14"/>
+          <Column id="LMOD_USER_ID" type="string" size="10"/>
+          <Column id="LMOD_USER_NM" type="string" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="string" size="100"/>
+          <Column id="PJT_NAME" type="string" size="200"/>
+          <Column id="P_PJT_ID" type="string" size="16"/>
+          <Column id="P_PJT_NAME" type="string" size="200"/>
+          <Column id="REQ_NO_INFO" type="string" size="4000"/>
+          <Column id="REQ_NAME_INFO" type="string" size="4000"/>
+          <Column id="BIZ_NAME" type="string" size="100"/>
+          <Column id="BIZ_ID" type="string" size="16"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsReqMap" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="REF_ID" type="string" size="16"/>
+          <Column id="REQ_ID" type="string" size="16"/>
+          <Column id="REQ_NO" type="string" size="100"/>
+          <Column id="REQ_NAME" type="string" size="200"/>
+          <Column id="PJT_ID" type="string" size="16"/>
+          <Column id="REG_STIME" type="string" size="14"/>
+          <Column id="REG_USER_ID" type="string" size="10"/>
+          <Column id="REG_USER_NM" type="string" size="100"/>
+          <Column id="REG_USER_DEPT" type="string" size="100"/>
+          <Column id="CHK" type="string" size="1"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsFuncTypeCd">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="30"/>
+          <Column id="DATA" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="FUNC_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPopRtn"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ PJ4100_P01
+* 화면(명)		︰ 어플리케이션 기능 구조 상세
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.10.31
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.10.31	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_PjComm.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.saveFlg = "N";				//화면 저장 여부
+this.isCloseBtnClick = false;	//닫기 버튼을 눌러 닫는 경우 true
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+	//trace("[PJ4100_P01] this.form_onload() this.getOwnerFrame()._formObj : " + this.getOwnerFrame()._formObj);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	//trace("[PJ4100_P01] this.fnSearch()");
+	var sTranId = "select01";									// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ4100P/select01";							// 서비스명
+    var sInDs = "dsCond=dsCond";								// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsFunction=dsFunction dsReqMap=dsReqMap";		// 서버에서 수신할 데이타셋
+    var sArg = "";												// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSave = function()
+{
+	//trace("[PJ4100_P01] this.fnSave()");
+	var sTranId = "save01";
+    var sService = "PJ4100P/save01";
+    var sInDs = "dsCond=dsCond dsFunction=dsFunction:U dsReqMap=dsReqMap:U";
+	var sOutDs = "dsFunction=dsFunction dsReqMap=dsReqMap dsCond=dsCond";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+this.fnUploadCallback = function(sSvcId, nErrorCode, sErrorMsg)
+{
+	//trace("[PJ4100_P01] this.fnUploadCallback() sSvcId : " + sSvcId + " nErrorCode : " + nErrorCode + " sErrorMsg : " + sErrorMsg);
+	// TO DO
+	// 개발자가 지정한 sSvcId(setConfig 옵션에 넣은 파일첨부ID), nErrorCode(에러코드), sErrorMsg(에러메시지)
+	if (nErrorCode < 0) 
+	{
+		Ex.core.error(this, {id:"ERROR", msg:sSvcId + "\n" + Ex.core.msg(sErrorMsg)});
+		return;
+	}
+	
+	switch(sSvcId)
+	{
+		case "srFileSvc" :
+			this.fnSave();
+			break;
+	}
+};
+
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			this.fnSetSubPjtCombo();	//업무 콤보 셋팅
+			break;
+
+		case "save01" :
+			this.saveFlg = "Y";
+			Ex.core.toast(this, "10004", null, {toastType:'S'});
+			
+			if( !Ex.isEmpty(this.dsCond.getColumn(0, "FUNC_ID")) )
+			{
+				this.getOwnerFrame().pFuncId	= this.dsCond.getColumn(0, "FUNC_ID");
+				this.getOwnerFrame().pMode = "SEARCH";
+			}
+			
+			this.divContents.form.btnSearchPjtPop.set_enable(false);
+			this.divContents.form.cboSubProject.set_enable(false);
+
+			this.fnSetSubPjtCombo();	//업무 콤보 셋팅
+			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "PJ0100_P01" :
+			//trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)	this.dsPopRtn.loadXML(varValue);
+			this.dsFunction.setColumn(0, "P_PJT_ID", this.dsPopRtn.getColumn(0, "PJT_ID"));
+			this.dsFunction.setColumn(0, "P_PJT_NAME", this.dsPopRtn.getColumn(0, "PJT_NAME"));
+			this.fnSetSubPjtCombo();
+			break;
+
+		case "PJ3820_P01" :
+			trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)
+			{
+				this.dsPopRtn.loadXML(varValue);
+				for(var i=0; i<this.dsPopRtn.rowcount; i++)
+				{
+					var aRow = this.dsReqMap.setAddRow();
+					this.dsReqMap.setColumn(aRow, "REQ_ID", this.dsPopRtn.getColumn(i, "REQ_ID"));
+					this.dsReqMap.setColumn(aRow, "REQ_NO", this.dsPopRtn.getColumn(i, "REQ_NO"));
+					this.dsReqMap.setColumn(aRow, "REQ_NAME", this.dsPopRtn.getColumn(i, "REQ_NAME"));
+					this.dsReqMap.setColumn(aRow, "PJT_ID", this.dsPopRtn.getColumn(i, "PJT_ID"));
+					this.dsReqMap.setColumn(aRow, "REF_ID", this.dsFunction.getColumn(0, "FUNC_ID"));
+				}
+			}
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.dsCond.setColumn(0, "FUNC_ID", this.getOwnerFrame().pFuncId);
+
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.divContents.form.grdReqMap.displayRowType();
+
+	// 공통코드 조회
+	this.fnGetCmmCd();
+
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divContents.form.divGrdTopBtn.form.btnAdd];	// 쓰기
+	Ex.util.setBtnVisible(this, 'write', arrBtn);
+
+	arrBtn = [this.divContents.form.divGrdTopBtn.form.btnDelete];	// 삭제
+	Ex.util.setBtnVisible(this, 'delete', arrBtn);
+	
+	arrBtn = [this.divBtnBottom.form.btnSave];	// 저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divBtnBottom, 'right', true);
+
+	if(this.getOwnerFrame().pMode == "NEW")
+	{
+		var nRow = this.dsFunction.setInsertRow();
+		this.dsFunction.setColumn(nRow, "P_PJT_ID",   this.getOwnerFrame().pPjtId);
+		this.dsFunction.setColumn(nRow, "P_PJT_NAME", this.getOwnerFrame().pPjtNm);
+		this.dsFunction.setColumn(nRow, "PJT_ID", this.getOwnerFrame().pSubPjtId);
+		this.divContents.form.cboBizId.setFocus();
+		this.fnSetSubPjtCombo();	//업무 콤보 셋팅
+	}
+	else if(this.getOwnerFrame().pMode == "SEARCH")
+	{
+		this.divContents.form.btnSearchPjtPop.set_enable(false);
+		this.divContents.form.cboSubProject.set_enable(false);
+
+		this.fnSearch();
+	}
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		 upCmmCd : ['APP_PRC_TYP_CD']	// 조회할 상위코드
+		,codeDiv: ['PJT_MNG_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['SEL']				// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y']					// 사용여부
+		,filter	: ['']					// filterStr
+		,objDs	: [this.dsFuncTypeCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+this.fnCheckValidate = function()
+{
+	if( Ex.isEmpty((this.dsFunction.getColumn(0, "P_PJT_ID"))) )
+	{
+		var oParam = {id : "alertNoSelPjtI", msg : "프로젝트를 선택하세요.", arrparam : [], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return;
+	}
+
+	if( Ex.isEmpty((this.dsFunction.getColumn(0, "PJT_ID"))) )
+	{
+		var oParam = {id : "alertNoSelSubPjtI", msg : "서브프로젝트를 선택하세요.", arrparam : [], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return;
+	}
+	
+	// 저장할 dataset에 변경된 data 있는 지 확인
+	if( !Ex.util.isUpdated(this.dsFunction) && !Ex.util.isUpdated(this.dsReqMap))
+	{
+		return false;
+	}
+
+	if( !Ex.util.checkValidate(this.divContents, "input01") ) return false;
+	//if( !this.divContents.form.grdReqMap.checkValidate(true) ) return false;
+	
+	return true;
+} 
+
+//Sub Project Combo 조회
+this.fnSetSubPjtCombo = function()
+{
+	//trace("this.fnSetSubPjtCombo() dsCond FUNC_ID ::: " + this.dsCond.getColumn(0, "FUNC_ID") + " SUB_PJT_ID : " + this.dsFunction.getColumn(0, "PJT_ID"));
+	this.setSubPjtList(this, this.dsFunction.getColumn(0, "P_PJT_ID"), this.divContents.form.cboSubProject, this.searchSubPjtInfoCallBack);
+}
+
+//Sub Project Combo 조회 CallBack
+this.searchSubPjtInfoCallBack = function()
+{
+	//trace("this.searchSubPjtInfoCallBack() dsCond FUNC_ID ::: " + this.dsCond.getColumn(0, "FUNC_ID") + " SUB_PJT_ID : " + this.dsFunction.getColumn(0, "PJT_ID"));
+	var aRow = this.divContents.form.cboSubProject.getInnerDataset().insertRow(0);
+	this.divContents.form.cboSubProject.getInnerDataset().setColumn(0, "PJT_NAME", Ex.core.word("- 선택 -"));
+
+	this.divContents.form.cboSubProject.set_displaynulltext("");
+
+	var fRow = this.divContents.form.cboSubProject.getInnerDataset().findRow("PJT_ID", this.dsFunction.getColumn(0, "PJT_ID"));
+	//trace("fRow:::" + fRow);
+	if(fRow > -1)	this.divContents.form.cboSubProject.set_index(fRow);
+	else			this.divContents.form.cboSubProject.set_index(0);
+	
+	this.dsFunction.setColumn(0, "PJT_ID", this.divContents.form.cboSubProject.value);
+
+	//trace("AF this.searchProjectBizCallBack() DS_COND BIZ_ID : " + this.dsFunction.getColumn(0, "BIZ_ID"));
+	//trace("AF this.searchProjectBizCallBack() COMBO BIZ_ID : " + this.divContents.form.cboBizId.value);
+
+	this.fnSetPjtBizCombo(this.dsFunction.getColumn(0, "PJT_ID"));
+}
+
+//업무 Combo 조회
+this.fnSetPjtBizCombo = function(subPjtId)
+{
+	//trace("this.fnSetPjtBizCombo() dsCond FUNC_ID ::: " + this.dsCond.getColumn(0, "FUNC_ID"));
+	//trace("this.fnSetPjtBizCombo() this:[" + this + "] subPjtId:[" + subPjtId + "]");
+	if( !Ex.isEmpty(this.divContents.form.cboBizId.innerdataset) )
+	{
+		this.divContents.form.cboBizId.getInnerDataset().clearData();
+		var aRow = this.divContents.form.cboBizId.getInnerDataset().insertRow(0);
+		this.divContents.form.cboBizId.getInnerDataset().setColumn(0, "BIZ_NAME", Ex.core.word("- 선택 -"));
+	}
+	else
+	{
+		this.divContents.form.cboBizId.set_displaynulltext(Ex.core.word("- 선택 - "));
+	}
+	this.setProjectBiz(this, subPjtId, this.divContents.form.cboBizId, this.searchProjectBizCallBack);
+}
+
+//업무 Combo 조회 CallBack
+this.searchProjectBizCallBack = function()
+{
+	//trace("this.searchProjectBizCallBack() dsCond FUNC_ID ::: " + this.dsCond.getColumn(0, "FUNC_ID"));
+	//trace("BF this.searchProjectBizCallBack() DS_COND BIZ_ID : " + this.dsCond.getColumn(0, "BIZ_ID"));
+	//trace("BF this.searchProjectBizCallBack() COMBO BIZ_ID : " + this.divSearch.form.cboBizId.value);
+	
+	var aRow = this.divContents.form.cboBizId.getInnerDataset().insertRow(0);
+	this.divContents.form.cboBizId.getInnerDataset().setColumn(0, "BIZ_NAME", Ex.core.word("- 선택 -"));
+
+	var fRow = -1;
+	this.divContents.form.cboBizId.set_displaynulltext("");
+	
+	if(this.divContents.form.cboBizId.getInnerDataset().rowcount > 1)
+	{
+		fRow = this.divContents.form.cboBizId.getInnerDataset().findRow("BIZ_ID", this.dsFunction.getColumn(0, "BIZ_ID"));
+	}
+	else
+	{
+		fRow = 0;
+	}
+
+	if(fRow > -1)	this.divContents.form.cboBizId.set_index(fRow);
+	else			this.divContents.form.cboBizId.set_index(0);
+
+	//trace("this.divContents.form.cboBizId.value : " + this.divContents.form.cboBizId.value);
+	this.dsFunction.setColumn(0, "BIZ_ID", this.divContents.form.cboBizId.value);
+
+	//trace("AF this.searchProjectBizCallBack() DS_COND BIZ_ID : " + this.dsCond.getColumn(0, "BIZ_ID"));
+	//trace("AF this.searchProjectBizCallBack() COMBO BIZ_ID : " + this.divSearch.form.cboBizId.value);
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearchPjtPop" :		// 검색
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ0100_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ0100_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : "프로젝트 검색"
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				//"width=920,height=650"	// <--- width/height/modeless(프레임 처리 옵션)							
+				"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+			);
+			break;
+
+		case "btnAdd" : 	// 저장
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ3820_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ3820_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : "요구사항 검색",
+					pSelType		: "M",
+					pPjtId			: this.dsFunction.getColumn(0, "P_PJT_ID"),
+					pPjtNm			: this.dsFunction.getColumn(0, "P_PJT_NAME"),
+					pSubPjtId		: this.dsFunction.getColumn(0, "PJT_ID"),
+					pBizId			: this.dsFunction.getColumn(0, "BIZ_ID"),
+					pPjtEnable		: false,
+					pSubPjtEnable	: false,
+					pCheckDs		: this.dsReqMap,
+					pCheckCol		: "REQ_ID"
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				//"width=920,height=650"	// <--- width/height/modeless(프레임 처리 옵션)							
+				"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+			);
+			break;
+
+		case "btnDelete" : 	// 삭제
+			this.fnDelete(this.dsReqMap);
+			break;
+
+		case "btnSave" : 	// 저장
+			// validation
+			if( this.fnCheckValidate() )
+			{
+				var param = {
+						id : "saveConfirm"
+					  , msg : "10003"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+			break;
+
+		case "btnClose" : 	// 닫기
+			this.isCloseBtnClick = true;
+			Ex.core.pclose(this, this.saveFlg);
+			break;
+	}
+}
+
+this.cboOnItemChanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if(obj.id == "cboSubProject")
+	{
+		trace("this.cboOnItemChanged() cboSubProject e.postvalue : " + e.postvalue);
+		this.fnSetPjtBizCombo(e.postvalue);
+	}
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+this.onBeforeClose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	if(!this.isCloseBtnClick) if(this.saveFlg == "Y") this.getOwnerFrame()._formObj.fnSearch();
+};]]></Script>
+    <Bind>
+      <BindItem id="item1" compid="divContents.form.edtFuncNo" propid="value" datasetid="dsFunction" columnid="FUNC_NO"/>
+      <BindItem id="item2" compid="divContents.form.txaFuncDesc" propid="value" datasetid="dsFunction" columnid="FUNC_DESC"/>
+      <BindItem id="item6" compid="divContents.form.edtFuncLv1" propid="value" datasetid="dsFunction" columnid="FUNC_LV1"/>
+      <BindItem id="item7" compid="divContents.form.edtFuncLv2" propid="value" datasetid="dsFunction" columnid="FUNC_LV2"/>
+      <BindItem id="item8" compid="divContents.form.edtFuncName" propid="value" datasetid="dsFunction" columnid="FUNC_NAME"/>
+      <BindItem id="item9" compid="divContents.form.cboFuncTypeCd" propid="value" datasetid="dsFunction" columnid="FUNC_TYPE_CD"/>
+      <BindItem id="item11" compid="divContents.form.txaRefEntity" propid="value" datasetid="dsFunction" columnid="REF_ENTITY"/>
+      <BindItem id="item0" compid="divContents.form.edtPjtNm" propid="value" datasetid="dsFunction" columnid="P_PJT_NAME"/>
+      <BindItem id="item4" compid="divContents.form.cboSubProject" propid="value" datasetid="dsFunction" columnid="PJT_ID"/>
+      <BindItem id="item5" compid="divContents.form.cboBizId" propid="value" datasetid="dsFunction" columnid="BIZ_ID"/>
+    </Bind>
+  </Form>
+</FDL>

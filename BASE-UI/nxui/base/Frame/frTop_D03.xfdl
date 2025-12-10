@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="frTop_D03" left="0" top="0" width="300" height="32" titletext="통합검색_검색어입력" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Button id="btnSearch" taborder="1" top="4" width="75" height="24" text="검색" right="5" cssclass="btn_WF_search" onclick="fnCommOnclick" onkeydown="fnCommOnkeydown" tabstop="false"/>
+        <Edit id="edtSearchStr" taborder="0" left="5" top="4" height="24" cssclass="edt_WF_normal" right="btnSearch:5" onkeydown="fnCommOnkeydown"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ frTop_D01
+* 화면(명)		︰ 언어선택 div
+* 메뉴(경로)	︰ Frame
+* 화면 설명	︰ frTop 언어선택 Div
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+* Description
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.curLangCd;
+
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	
+}
+
+
+this.fnSearch = function()
+{
+	trace('통합검색 call');
+}
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		Ex.core.error(this,{id:"ERROR",msg:sSvcId+"\n"+Ex.core.msg(sErrorMsg)});
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		
+	}
+}
+
+
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+
+
+this.fnCommOnkeydown = function(obj:nexacro.Button,e:nexacro.KeyEventInfo)
+{
+	if( e.keycode == 13 )
+		this.btnSearch.setFocus();
+		this.fnSearch();
+		obj.setFocus();
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="SEARCH_STR" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="edtSearchStr" propid="value" datasetid="dsCond" columnid="SEARCH_STR"/>
+    </Bind>
+  </Form>
+</FDL>

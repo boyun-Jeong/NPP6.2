@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="ref14" left="0" top="0" width="1840" height="720" titletext="버튼 권한/align" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <TextArea id="TextArea00" taborder="0" left="5" top="280" bottom="5" right="50.22%" value="- ref::ref15.xfdl &#10;&#10;지정한 권한에 따라 지정한 버튼을 visible처리하는 API : Ex.util.setBtnVisible(scope, authType, arrBtn);&#10;&#9;&#10;1. Parameter&#10;  - scoppe   : 권한 조회할 화면; this; 팝업인 경우 최초 호출한 화면의 권한을 따라간다.&#10;  - authType : 적용할 메뉴권한구분 (대/소문자 구분 X)&#10;&#9;&#9;&quot;&quot; :&#9;&#9;&#9;전부 visible 처리&#10;&#9;&#9;&quot;READ&quot; :&#9;&#9;조회권한&#10;&#9;&#9;&quot;WRITE&quot; :&#9;&#9;쓰기권한&#10;&#9;&#9;&quot;DELETE&quot; :&#9;&#9;삭제권한&#10;&#9;&#9;&quot;SAVE&quot; :&#9;&#9;저장권한&#10;&#9;&#9;&quot;EXCLDOWN&quot; :&#9;엑셀다운권한&#10;&#9;&#9;&quot;REPORTPRNT&quot; :&#9;리포트출력권한&#10;&#9;&#9;&quot;FILEUP&quot; :&#9;&#9;파일첨부권한&#10;  - arrBtn   : 권한을 적용할 Button 객체 배열&#10;2. 기능&#10;  - scope의 메뉴권한을 조회한다.&#10;  - 조회한 권한 중 authType에 지정된 권한에 따라&#10;  - arrBtn 배열 각 버튼의 visible을 처리한다.&#10;  &#10;3. 사용 예시&#10;var arrBtn = [this.divGrdTopBtn.form.btnAdd&#10;&#9;&#9;&#9; ,this.btnAdd&#10;&#9;&#9;&#9;];&#9;// 쓰기권한 매핑&#10;Ex.util.setBtnVisible(this, 'write', arrBtn);"/>
+        <TextArea id="TextArea01" taborder="1" value="- ref::ref15.xfdl &#10;*자세한 처리는 스크립트를 참조" readonly="true" top="11" width="220" height="58" style="color:red;font:bold 9 Gulim;" right="5"/>
+        <TextArea id="TextArea2" taborder="2" left="50.71%" top="280" bottom="5" right="5" value="- ref::ref15.xfdl &#10;&#10;div 안의 button을 visible 여부에 따라 좌/우 정렬하는 API : Ex.util.setBtnAlign(objDiv, align, compVisible);&#10;&#9;&#10;1. Parameter&#10;  - objDiv   : 버튼을 감싸고 있는 Div&#10;  - align    : 적용할 align (대/소문자 무관) (string)&#10;&#9;&#9;&quot;right&quot;: 버튼 오른쪽 정렬(default)&#10;&#9;&#9;&quot;left&quot; : 버튼 왼쪽 정렬 &#10;  - compVisible : 정렬 visible 기준 (bool)&#10;&#9;&#9;true  : visible컴포넌트대상(default)&#10;&#9;&#9;false : visible 상관없이 모든 컴포넌트 대상&#10;2. 기능&#10;  - objDiv 안의 모든 Button을 compVsible에 따라 읽어들인다.&#10;  - 읽어드린 버튼을 align에 따라 재배치한다.&#10;  &#10;3. 사용 예시&#10;Ex.util.setBtnAlign(this.divBtn, 'right', true);"/>
+        <TextArea id="txaAuth" taborder="3" left="5" top="10" width="195" height="230"/>
+        <Div id="divBtn" taborder="4" left="29.89%" top="36" width="620" height="40" border="1px solid black" text="">
+          <Layouts>
+            <Layout>
+              <Button id="btnAdd" taborder="0" text="추가" top="4" width="60" right="448" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24" visible="true"/>
+              <Button id="btnDelete" taborder="1" text="삭제" top="4" width="60" bottom="10" right="383" cssclass="btn_WF_del" onclick="fnCommOnclick" visible="true"/>
+              <Button id="btnSave" taborder="2" text="저장" width="80" height="32" bottom="6" cssclass="btn_WF_primary_save" right="276" onclick="fnCommOnclick" visible="true"/>
+              <Button id="btnExcel" taborder="3" text="엑셀다운" top="4" width="80" right="190" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24" visible="true"/>
+              <Button id="btnREport" taborder="4" text="레포트" top="4" width="70" bottom="10" right="115" cssclass="btn_WF_del" onclick="fnCommOnclick" visible="true"/>
+              <Button id="btnFileup" taborder="5" text="파일첨부" top="4" width="80" bottom="10" right="29" cssclass="btn_WF_del" onclick="fnCommOnclick" visible="true"/>
+              <Button id="btnSearch" taborder="6" top="3" width="75" height="24" text="조회" cssclass="btn_WF_search" onclick="fnCommOnclick" left="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="Button00" taborder="5" text="setBtnVisible" left="220" top="41" width="304" height="32" onclick="Button00_onclick"/>
+        <Button id="Button01" taborder="6" text="setBtnAlign(this.divBtn,  'right', true)" left="66.3%" top="41" width="304" height="32" onclick="fnCommOnclick"/>
+        <Button id="Button02" taborder="7" text="setBtnAlign(this.divBtn,  'right', false)" left="66.3%" top="81" width="304" height="32" onclick="fnCommOnclick"/>
+        <Button id="Button03" taborder="8" text="setBtnAlign(this.divBtn,  'left', true)" left="66.3%" top="121" width="304" height="32" onclick="fnCommOnclick"/>
+        <Button id="Button04" taborder="9" text="setBtnAlign(this.divBtn,  'left', false)" left="66.3%" top="161" width="304" height="32" onclick="fnCommOnclick"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 버튼 권한/align
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것 
+	this.getOwnerFrame().info.deleteYn = 'N';
+	this.getOwnerFrame().info.exclDownYn = 'N';
+	this.getOwnerFrame().info.reportPrntYn = 'N';
+	
+	var oAuth = Ex.util.getMenuAuth(this);
+	var str = '현재 화면 권한\n';
+	for(var key in oAuth)
+		str += key + ': ' + oAuth[key] + '\n';
+		
+	this.txaAuth.set_value(str);
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+}
+
+// 저장
+this.fnSave = function()
+{
+	trace("fnSave call");
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "ABOUT" : // 서비스 ID
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+ 
+ /**
+  * div안의 버튼을 정렬한다.
+  * @param {object} objDiv : 정렬할 div
+  * @param {string} align : 'left', 'right'(default)
+  * @param {bool} compVisible : true-visible버튼 대상(default) / false-visible상관없이 모든 버튼 대상
+  * @return null
+  * @description 
+  *  args
+  * @example
+  * Ex.util.setBtnAlign(this.div01, 'right', true);
+  * @memberOf Ex.util
+  **/ 
+this.fnCommOnclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "Button01" :	Ex.util.setBtnAlign(this.divBtn,  'right', true);	break;
+		case "Button02" :	Ex.util.setBtnAlign(this.divBtn,  'right', false);	break;
+		case "Button03" :	Ex.util.setBtnAlign(this.divBtn,  'left', true);	break;
+		case "Button04" :	Ex.util.setBtnAlign(this.divBtn,  'left', false);	break;
+	}
+};
+
+
+
+
+/**
+  * scope의 메뉴권한을 보고 authDiv에 따라 배열 각 버튼의 visible 처리 api
+  * @param {object} scope : 호출 스코프(this)
+  * @param {string} authType : 적용할 메뉴권한구분 key
+  * @param {array} arrBtn : 메뉴권한 적용할 버튼 객체 배열
+  * @return null
+  * @description 
+  *  1) scope의 메뉴권한을 조회하고
+  *  2) 적용할 메뉴권한구분에 따라
+  *  3) 각 버튼 객체의 visible을 처리한다.
+  * @example
+  * var arrBtn = [this.div01.form.btnSave, this.btnSave];
+  * Ex.util.setBtnVisible(this, 'save', arrBtn);
+  * @memberOf Ex.util
+  **/ 
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	Ex.util.setBtnVisible(this, 'read',			[this.divBtn.form.btnSearch]);
+	Ex.util.setBtnVisible(this, 'write', 		[this.divBtn.form.btnAdd]);
+	Ex.util.setBtnVisible(this, 'delete', 		[this.divBtn.form.btnDelete]);
+	Ex.util.setBtnVisible(this, 'save', 		[this.divBtn.form.btnSave]);
+	Ex.util.setBtnVisible(this, 'exclDown', 	[this.divBtn.form.btnExcel]);
+	Ex.util.setBtnVisible(this, 'reportPrnt',	[this.divBtn.form.btnREport]);
+	Ex.util.setBtnVisible(this, 'fileUp', 		[this.divBtn.form.btnFileup]);
+};
+]]></Script>
+  </Form>
+</FDL>

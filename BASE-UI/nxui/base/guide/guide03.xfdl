@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="compGuide" position="absolute" titletext="Static" onload="form_onload" left="0" top="0" width="1840" height="720">
+    <Layouts>
+      <Layout>
+        <Static id="Static00_00" taborder="0" text="조회조건 영역" left="5" top="15" width="120" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="Static01" taborder="1" text="H:24" left="5" top="70" width="30" height="24" border="1px dotted red, 0px, 1px dotted red, 1px dotted red"/>
+        <TextArea id="TextArea00_00" taborder="2" left="520" top="40" readonly="true" value="Static 컴포넌트 가이드 (guide::guide03.xfdl)&#10;&#10; - Static은 용도에 맞게 css class를 지정하여 사용하도록 한다.&#10; - Static의 Height는 24px로 통일하여 그리도록 한다." right="20" onchanged="TextArea00_00_onchanged" height="140"/>
+        <Static id="Static00_00_00" taborder="3" text="sta_WF_schTitle" left="160" top="70" width="120" height="24"/>
+        <Static id="Static00" taborder="4" text="static Example" left="45" top="40" width="110" height="24"/>
+        <Static id="Static00_00_00_00" taborder="5" text="css class" left="160" top="40" width="120" height="24"/>
+        <Static id="Static00_00_01" taborder="6" text="Grid Title" left="5" top="130" width="245" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="Static01_01_00" taborder="7" text="H:24" left="5" top="160" width="30" height="24" border="1px dotted red, 0px, 1px dotted red, 1px dotted red"/>
+        <Static id="staCoNm" taborder="8" text="검색조건" left="45" top="70" width="85" height="24" cssclass="sta_WF_schTitle"/>
+        <Static id="stcTitle" taborder="9" text="TItle" left="45" top="160" width="85" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="Static00_00_00_01" taborder="10" text="sta_WF_gridTitle" left="160" top="160" width="120" height="24"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Bind/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ Component Guide
+* 메뉴(경로)	︰ Component Guide
+* 화면 설명	︰ Component Guide
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	trace("workArea form init call");
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	this.Tab00.tabpages[this.Tab00.tabindex].fnSearch(op);
+}
+
+// 저장
+this.fnSave = function()
+{
+	
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "ABOUT" : // 서비스 ID
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+
+]]></Script>
+  </Form>
+</FDL>

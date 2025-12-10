@@ -1,0 +1,787 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR5014_D02" left="0" top="0" width="1840" height="720" titletext="위치별 IP대역관리" onload="form_onload">
+    <Layouts>
+      <Layout width="1840" height="720">
+        <Grid id="grdTree" taborder="1" binddataset="dsClassTree" treeusecheckbox="false" treeinitstatus="expand,all" left="0" top="104" cssclass="grd_WF_tree" bottom="0" autofittype="col" useFilter="false" treeuseline="false" width="370" oncellclick="grdOnCellClick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="200"/>
+              </Columns>
+              <Rows>
+                <Row size="32"/>
+              </Rows>
+              <Band id="body" style="cellpadding:0 14 0 8;">
+                <Cell displaytype="treeitemcontrol" edittype="tree" style="line: ;" text="bind:CMM_CD_NM" treestartlevel="0" treelevel="bind:LVL"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static03" taborder="2" text="W20" cssclass="Guide_Color" visible="false" left="grdTree:0" top="0" width="20" bottom="0" background="#e5dbfa"/>
+        <Static id="Static01" taborder="0" text="W20" cssclass="Guide_Color" visible="false" top="0" right="0" width="1.98%" bottom="0"/>
+        <Div id="divGrdBotBtn" taborder="4" width="200" height="32" bottom="0" right="0" visible="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnSave" taborder="0" text="저장" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="0" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdMainList" taborder="3" binddataset="dsClass" scrollbars="autoboth" useinputpanel="false" cellsizingtype="col" autofittype="col" left="grdTree:20" top="104" right="0" bottom="40" cssclass="grd_WF_normal">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40" band="left"/>
+                <Column size="40" band="left"/>
+                <Column size="60" band="left"/>
+                <Column size="98"/>
+                <Column size="48"/>
+                <Column size="135"/>
+                <Column size="128"/>
+                <Column size="119"/>
+                <Column size="394"/>
+                <Column size="252"/>
+                <Column size="80"/>
+                <Column size="91"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="2" text="행상태"/>
+                <Cell col="3" text="상위(건물/층)"/>
+                <Cell col="4" text="레벨"/>
+                <Cell col="5" text="코드"/>
+                <Cell col="6" text="이름"/>
+                <Cell col="7" text="표시"/>
+                <Cell col="8" text="센서 ID"/>
+                <Cell col="9" text="대역"/>
+                <Cell col="10" text="정렬순서"/>
+                <Cell col="11" text="사용여부"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="expr:currow+1"/>
+                <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                <Cell col="2" text="bind:ROWFLAG"/>
+                <Cell col="3" text="bind:UP_CMM_CD"/>
+                <Cell col="4" text="bind:CD_LVL"/>
+                <Cell col="5" text="bind:CMM_CD" edittype="normal"/>
+                <Cell col="6" text="bind:CMM_CD_NM" edittype="normal"/>
+                <Cell col="7" displaytype="combocontrol" edittype="combo" combodataset="dsUse" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" text="bind:ITM_VAL_1"/>
+                <Cell col="8" style="align:center;" text="bind:ITM_VAL_2" editlimit="5" editdisplay="edit" edittype="normal" textAlign="left"/>
+                <Cell col="9" edittype="normal" text="bind:ITM_VAL_3" editdisplay="display" textAlign="left"/>
+                <Cell col="10" text="bind:SORT_ORDR" edittype="normal"/>
+                <Cell col="11" edittype="combo" style="align:center;" text="bind:USE_YN" editlimit="6" editdisplay="display" displaytype="combocontrol" combodataset="dsUseYn" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcGridTitle" taborder="5" text="목록" cssclass="sta_WF_gridTitle" left="390.00" top="70" width="270" height="24" onclick="fnCommOnclick"/>
+        <Static id="Static46" taborder="6" cssclass="sta_WF_DetailLabel2" left="0" top="70" width="243" height="31" style="border:0 none #d3d3d3ff ;"/>
+        <Static id="Static02" taborder="7" text="지역-위치" cssclass="sta_WF_gridTitle" left="0" top="70" width="110" height="24" style="background:transparent URL('img::bg_WT_TreeTitle.png') left middle;padding:0 0 0 20;"/>
+        <Div id="divGrdTopBtn" taborder="8" width="215" height="24" visible="true" isButtonGroup="true" top="70" right="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+              <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static09" taborder="9" text="h10" cssclass="Guide_Color" visible="false" left="0" top="94" right="0" height="12" background="#e5dbfa"/>
+        <Static id="stcCnt" taborder="10" left="stcGridTitle:-60" top="70" width="55" height="24" countDataset="dsClass" text="(0건)"/>
+        <Static id="Static00" taborder="11" left="0" top="50" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Button id="btnTreeExpand" taborder="12" text="+" top="70" width="24" height="24" onclick="fnCommOnclick" right="1500"/>
+        <Button id="btnTreeCollapse" taborder="13" text="-" top="70" height="24" onclick="fnCommOnclick" right="1471" width="24"/>
+        <Div id="divSearch" taborder="14" left="0" top="0" right="0" height="50" scrollbars="none" cssclass="div_WF_divSearchArea">
+          <Layouts>
+            <Layout>
+              <Static id="Static07" taborder="1" text="검색" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="20" top="13" width="65" height="24" visible="false"/>
+              <Combo id="cboSrchCon" taborder="2" codecolumn="codecolumn" datacolumn="datacolumn" left="68" top="13" width="125" height="24" value="1" text="분류명" onitemchanged="divSearch_cboSrchCon_onitemchanged" innerdataset="innerdataset" cssclass="cbo_WF_normal" visible="false">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">1</Col>
+                      <Col id="datacolumn">분류명</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">2</Col>
+                      <Col id="datacolumn">분류코드</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="Static00_00_00" taborder="4" left="378.00" top="13" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="Static05" taborder="5" text="분류" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_00:0.00" top="13" width="55" height="24" visible="false"/>
+              <Edit id="edtSrchWord" taborder="3" onkeyup="onKeyUp" left="cboSrchCon:5.00" top="13" width="180" height="24" tooltiptext="edit" cssclass="edt_WF_normal" visible="false"/>
+              <Static id="Static00_00" taborder="0" left="0" top="13" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+              <Div id="divClass" taborder="6" left="Static05:0.00" top="13" height="24" width="600" url="ms::MS0000_D01.xfdl" visible="false"/>
+              <Button id="btnSearchReset" taborder="7" top="13" width="90" height="24" text="초기화" right="20" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+              <Button id="btnSearch" taborder="8" top="13" width="75" height="24" text="조회" right="115" cssclass="btn_WF_search" onclick="fnCommOnclick" onkeyup="onKeyUp" visible="false"/>
+            </Layout>
+          </Layouts>
+          <InitValue/>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCodeType">
+        <ColumnInfo>
+          <Column id="name" type="STRING" size="256"/>
+          <Column id="value" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="name">Y</Col>
+            <Col id="value">Y</Col>
+          </Row>
+          <Row>
+            <Col id="value">N</Col>
+            <Col id="name">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsClassTree" onrowposchanged="onRowPosChanged" canrowposchange="canrowPosChange">
+        <ColumnInfo>
+          <Column id="CD_NO" type="STRING" size="256"/>
+          <Column id="CMM_CD" type="string" size="256"/>
+          <Column id="CMM_CD_NM" type="string" size="256"/>
+          <Column id="LVL" type="string" size="256"/>
+          <Column id="FULLPATH" type="string" size="256"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="dsClass" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="CD_NO" type="STRING" size="256"/>
+          <Column id="LANG_CD" type="STRING" size="256"/>
+          <Column id="UP_CD_NO" type="STRING" size="256"/>
+          <Column id="CD_LVL" type="STRING" size="256"/>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="UP_CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+          <Column id="CMM_CD_DESC" type="STRING" size="256"/>
+          <Column id="ITM_VAL_1" type="STRING" size="256"/>
+          <Column id="ITM_VAL_2" type="STRING" size="256"/>
+          <Column id="ITM_VAL_3" type="STRING" size="256"/>
+          <Column id="ITM_VAL_4" type="STRING" size="256"/>
+          <Column id="ITM_VAL_5" type="STRING" size="256"/>
+          <Column id="CODE_DIV" type="STRING" size="256"/>
+          <Column id="SORT_ORDR" type="STRING" size="256"/>
+          <Column id="USE_YN" type="STRING" size="256"/>
+          <Column id="RMK" type="STRING" size="256"/>
+          <Column id="FRID" type="STRING" size="256"/>
+          <Column id="FRDT" type="STRING" size="256"/>
+          <Column id="LMID" type="STRING" size="256"/>
+          <Column id="LMDT" type="STRING" size="256"/>
+          <Column id="LMPID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="dsUseYn">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CMM_CD">Y</Col>
+            <Col id="CMM_CD_NM">사용</Col>
+          </Row>
+          <Row>
+            <Col id="CMM_CD">N</Col>
+            <Col id="CMM_CD_NM">미사용</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="UP_CMM_CD" type="STRING" size="256"/>
+          <Column id="SRCH_CON" type="STRING" size="256"/>
+          <Column id="SRCH_WORD" type="STRING" size="256"/>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="nRow" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPopRtn"/>
+      <Dataset id="dsUse">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CMM_CD">IT</Col>
+            <Col id="CMM_CD_NM">IT</Col>
+          </Row>
+          <Row>
+            <Col id="CMM_CD">HU</Col>
+            <Col id="CMM_CD_NM">현업</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item4" compid="stcGridTitle" propid="value" datasetid="ds_prj" columnid="PJT_STD_YN"/>
+      <BindItem id="item2" compid="divSearch.form.cboSrchCon" propid="value" datasetid="dsCond" columnid="SRCH_CON"/>
+      <BindItem id="item3" compid="divSearch.form.edtSrchWord" propid="value" datasetid="dsCond" columnid="SRCH_WORD"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ SR5014_D02
+* 화면(명)	︰ 위치별 IP대역관리
+* 메뉴(경로)	︰ 관리자 > 운영관리자 > 위치별 IP대역관리
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2025.03.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2025.03.06	김호일	최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.essChkRow;			//저장시 입력 항목 validation Check에 걸린 경우 해당 row cell에 포커스를 주기 위해 row 정보를 저장
+this.CLASS_ID = "";		//트리분류 ID
+this.lastClassId;		//저장 시점 트리 class_id
+this.nSelRow;
+this.rowChangeFlag = false;
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+	//this.dsCond.setColumn(0, "SRCH_CON", "1");
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+	this.fnSearch();		// 조회
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+}
+
+// 변경 행 확인
+this.fnSearch = function()
+{
+	/*
+	if( Ex.util.isUpdated(this.dsClass) )
+	{
+		var param = {
+						id : "pSearchConfirm"
+					  , msg : "10001"	//수정된 데이터가 있습니다. 조회 하시겠습니까?
+					  , arrparam : []
+					  , msgtype : "I"};
+		Ex.core.confirm(this, param);
+		return;
+	}
+	*/
+	this.fnSearch01();
+}
+
+// 조회
+this.fnSearch01 = function()
+{
+	// transaction
+	var sTranId = "select01";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "SR5014D/select01";			// 서비스명
+    var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsClassTree=dsClassTree";		// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSearch02 = function()
+{
+	// transaction
+	var sTranId = "select02";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+	var sService = "SR5014D/select02";			// 서비스명
+	var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+	var sOutDs = "dsClass=dsClass";				// 서버에서 수신할 데이타셋
+	var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);	
+}
+
+this.fnSave = function()
+{
+	var sTranId = "save01";
+    var sService = "SR5014D/save01";
+    var sInDs = "dsClass=dsClass:U dsCond=dsCond";
+    var sOutDs = "dsClassTree=dsClassTree dsClass=dsClass";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+// 공통 저장 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	if(sSvcId == "select01_save")
+	{
+		this.dsClassTree.set_enableevent(true);
+	}
+
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;
+
+		case "select02" :
+			this.grdMainList.setCellProperty("Head", this.grdMainList.getBindCellIndex('Body', 'CHK'), "text", "0");
+			break;
+
+		case "select01_save" :
+			var fRow = this.dsClassTree.findRow("CLASS_ID", this.lastClassId);
+			//trace("this.CLASS_ID ::: " + this.lastClassId + " fRow : " + fRow);
+			this.dsClassTree.set_rowposition(fRow);
+			this.lastClassId = "";
+			break;
+
+		case "save01" :
+			Ex.core.toast(this, "10004", null, {toastType:'S'});
+
+			this.dsClassTree.set_enableevent(false);
+			this.lastClassId = this.CLASS_ID;			
+			this.grdTree.setFocus();
+			//var fRow = 1;		
+			var fRow = this.dsClassTree.findRow("CMM_CD",this.dsCond.getColumn(0,"CMM_CD"));
+			this.dsClassTree.set_rowposition(fRow);
+			//this.dsClassTree.rowposition = this.dsClassTree.findRow("CMM_CD",this.dsCond.getColumn(0,CMM_CD));
+			this.dsClassTree.set_enableevent(true);		
+// 			
+// 			if(this.dsS_RowCol.getColumn(0,1) == "CHK_TIME"){
+// 				this.grdMainList.setCellPos(11);
+// 			}
+// 			var sTranId = "select01_save";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+// 			var sService = "MS0100W/select01";			// 서비스명
+// 			var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+// 			var sOutDs = "dsClassTree=dsClassTree";		// 서버에서 수신할 데이타셋
+// 			var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+// 			Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+// 			break;	
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "commSearchUserPopup" :
+			this.dsPopRtn.loadXML(varValue);
+			this.dsClass.setColumn(this.dsClass.rowposition, "CLASS_USER_ID", this.dsPopRtn.getColumn(0, 'USER_ID'));
+			this.dsClass.setColumn(this.dsClass.rowposition, "CLASS_USER_NM", this.dsPopRtn.getColumn(0, 'USER_NM'));
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "searchConfirm" :
+			this.dsClass.clearData();
+			this.fnSearch01();
+			break;
+		
+		case "pSearchConfirm" :
+			this.fnSearch01();
+			break;
+
+		case "saveConfirm" :
+			//this.CLASS_ID = this.dsClassTree.getColumn(e.newrow, "CMM_CD");
+			this.CLASS_ID = this.dsClassTree.getColumn(this.dsClassTree.rowposition, "CMM_CD")
+			this.dsCond.setColumn(0, "CMM_CD", this.CLASS_ID);
+			this.rowChangeFlag = true;		// 행변경 flag
+			
+			this.fnSave();
+			break;
+		
+		case "rowposChangeConfirm" :		// 행변경 confirm
+			this.rowChangeFlag = true;		// 행변경 flag
+			this.dsClassTree.set_rowposition(this.nSelRow);
+			break;
+
+		case "alertSAPEssI" :
+			this.grdMainList.getBindDataset().set_rowposition(this.essChkRow);			// 데이터셋 ROW 포커스 이동
+			this.grdMainList.showEditor(true);											// 그리드 편집모드로 변경
+			var cellIdx = this.grdMainList.getBindCellIndex("Body", "SAP_ITEMCD_NO");
+			this.grdMainList.setCellPos(cellIdx, this.essChkRow);						// 그리드 셀 포커스 이동
+			break;
+
+		case "alertAssetUserEssI" :
+			this.grdMainList.getBindDataset().set_rowposition(this.essChkRow);			// 데이터셋 ROW 포커스 이동
+			this.grdMainList.showEditor(true);											// 그리드 편집모드로 변경
+			var cellIdx = this.grdMainList.getBindCellIndex("Body", "CLASS_USER_NM");
+			this.grdMainList.setCellPos(cellIdx, this.essChkRow);						// 그리드 셀 포커스 이동
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{	
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.grdTree.displayRowType();
+	this.grdMainList.displayRowType();
+
+	// 공통코드 조회
+	//this.fnGetCmmCd();
+	
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divGrdTopBtn.form.btnAdd];	// 쓰기
+	Ex.util.setBtnVisible(this, 'write', arrBtn);
+		arrBtn = [this.divGrdTopBtn.form.btnDelete];	// 삭제
+	Ex.util.setBtnVisible(this, 'delete', arrBtn);
+		arrBtn = [this.divGrdBotBtn.form.btnSave];	// 저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+	
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divGrdTopBtn, 'right', true);
+	Ex.util.setBtnAlign(this.divGrdBotBtn, 'right', true);
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	/*
+	var oParam = {
+		upCmmCd : ['YN_CD']		// 조회할 상위코드
+		,codeDiv: ['CMM_CD']	// 조회할 코드의 업무구분
+		,optStr	: ['ALL']		// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y']			// 사용여부
+		,filter	: ['']			// filterStr
+		,objDs	: [this.dsYnCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+	*/
+}
+
+this.fnCheckValidate = function()
+{
+	// 저장할 dataset에 변경된 data 있는 지 확인
+	if( !Ex.util.isUpdated(this.dsClass) )
+		return false;
+
+	// Grid Validation
+	if( !this.grdMainList.checkValidate() ) return false;
+	/*	
+	for(var i=0; i<this.dsClass.rowcount; i++)
+	{
+		if(this.dsClassTree.getColumn(this.dsClassTree.rowposition, "LVL") == 3)
+		{
+			if( Ex.isEmpty(this.dsClass.getColumn(i,"CLASS_USER_ID")) || Ex.isEmpty(this.dsClass.getColumn(i,"CLASS_USER_NM")) )
+			{
+				this.essChkRow = i;
+				var oParam = {id : "alertAssetUserEssI", msg : "자산담당을 입력 하세요.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return false;
+			}
+		}
+	}
+	*/
+	return true;
+} 
+ 
+this.fnSetDatasetDt = function()
+{
+	this.dsFommAuthUserDt.set_enableevent(false);
+	this.dsFommAuthUserDt.set_filterstr("ROWFLAG=='U'");
+	
+	var userId = this.dsFommUserMt.getColumn(this.dsFommUserMt.rowposition, 'USER_ID');
+	for(var i = 0; i < this.dsFommAuthUserDt.rowcount; i++) {
+		this.dsFommAuthUserDt.setColumn(i, 'USER_ID', userId);
+	}
+	
+	this.dsFommAuthUserDt.set_filterstr('');
+	this.dsFommAuthUserDt.set_enableevent(true);	
+	return;
+}
+
+this.fnAdd = function()
+{
+	var upCdNo 	= this.dsClassTree.getColumn(this.dsClassTree.rowposition, 'CD_NO');		// 상위코드번호
+	var upCmmCd	= this.dsClassTree.getColumn(this.dsClassTree.rowposition, 'CMM_CD');		// 상위코드
+	var cdLvl	= parseInt(this.dsClassTree.getColumn(this.dsClassTree.rowposition, 'LVL')||'0') + 1;	// 코드 레벨
+	trace(this.dsClassTree.getColumn(this.dsClassTree.rowposition, 'LVL'));
+	var codeDiv	= '';	// 코드 업무구분은 저장 전 최종 setting
+		
+	var rowPos = this.dsClass.setInsertRow(this.dsClass.rowposition+1);
+	//this.dsClass.setColumn(rowPos, 'LANG_CD', 'KR');
+	this.dsClass.setColumn(rowPos, 'UP_CD_NO', upCdNo);
+	this.dsClass.setColumn(rowPos, 'UP_CMM_CD', upCmmCd);
+	this.dsClass.setColumn(rowPos, 'CD_LVL', cdLvl);
+	this.dsClass.setColumn(rowPos, 'USE_YN', 'Y');
+}
+ 
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearch" :		// 검색
+			if(Ex.util.isUpdated(this.dsClass))
+			{
+				var param = {
+						id : "searchConfirm"
+					  , msg : "10001"		//수정된 데이터가 있습니다.\n조회 하시겠습니까?
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+			else
+			{
+				this.dsClass.clearData();
+				this.fnSearch01();
+			}
+			break;
+		
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.dsClass.clearData();
+			this.stcGridTitle.set_text("목록");
+			this.fnSearch();//this.fnSearchReset();
+			break;
+			
+		case "btnAdd" : 	// 추가
+			/*
+			var nCurRow = this.dsClassTree.rowposition;
+			if(this.dsClassTree.getColumn(nCurRow, "LVL") == "4")
+			{
+				var oParam = {id : "alertNotAddI", msg : "더이상 하위에 추가할 수 없습니다.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return;
+			}
+			
+			var nRow = this.dsClass.setInsertRow();
+			
+			if(this.dsClassTree.rowcount == 0)
+			{
+				this.dsClass.setColumn(nRow, "CLASS_ID", "ROOT");
+			}
+			*/
+			this.fnAdd();
+			
+			/*
+			var nCurRow = this.dsClassTree.rowposition;
+			if(this.dsClassTree.getColumn(nCurRow, "LVL") == "2")
+			{
+				var nRow = this.dsClass.setInsertRow();
+				this.dsClass.setColumn(nRow,"CMM_CD", this.CLASS_ID);
+				this.dsClass.setColumn(nRow,"USE_YN","Y");
+				
+				this.grdMainList.getBindDataset().set_rowposition(nRow);					// 데이터셋 ROW 포커스 이동
+				this.grdMainList.showEditor(true);											// 그리드 편집모드로 변경
+				
+				var cellIdx = this.grdMainList.getBindCellIndex("Body", "CLASS_ID");
+				this.grdMainList.setCellPos(cellIdx, nRow);									// 그리드 셀 포커스 이동
+			}
+			*/
+			break;
+			
+		case "btnDelete" :	// 삭제
+			/*
+			if(this.dsClassTree.getColumn(this.dsClassTree.rowposition, "LVL") == "1")
+			{
+				this.fnDelete(this.dsClass);
+			}
+			*/
+			this.fnDelete(this.dsClass);
+			break;
+			
+		case "btnExcelDown" :	// 엑셀다운
+			var oInfo = {
+   				Grid	: [this.grdMainList],
+   				Sheet	: ['분류정보목록'],
+   				FileNm	: ["분류정보목록"],
+   				ExportType : "XLSX",
+   				ExportId : "excel01"
+   			};
+			this.gfnExportExcel(this, oInfo);
+			break;
+			
+		case "btnSave" : 	// 저장
+			// validation
+			if( this.fnCheckValidate() )
+			{	
+				var param = {
+						id : "saveConfirm"
+					  , msg : "10003"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+			break;
+		
+		case "btnTreeExpand" :
+			this.grdTree.set_treeinitstatus("expand,all");
+			break;
+
+		case "btnTreeCollapse" :
+			this.grdTree.set_treeinitstatus("collapse,all");
+			break;
+			
+		case "stcGridTitle" :
+			//dsClass의 UP_CLASS_ID가 타이틀 분류의 CLASS_ID이므로 이를 활용하여 식별함
+			//var ind = obj.getDisplayText().substring(1, obj.getDisplayText().length-4);
+			/*
+			var ind = this.dsCond.getColumn(0, "CLASS_ID");
+			this.dsClassTree.set_rowposition(-1);
+			this.dsClassTree.set_rowposition(this.dsClassTree.findRow("CLASS_ID", ind));
+			this.grdTree.setCellPos(this.dsClassTree.findRow("CLASS_ID", ind));
+			this.grdTree.setFocus();
+			*/
+			//this.dsClassTree.set_rowposition(this.dsClassTree.rowposition + 1);
+			break;
+	}
+}
+
+this.canrowPosChange = function(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo)
+{
+	// 오른쪽 grid에 수정사항이 있을경우 confirm 메세지
+	if( Ex.util.isUpdated(this.dsClass) )
+	{
+		if( !this.rowChangeFlag && this.dsClassTree.getColumn(e.newrow, "LVL") == 2)
+		{
+			this.nSelRow = e.newrow;		// 이동하려는 행 저장
+			var param = {
+				  id : "rowposChangeConfirm"
+				, msg : "10001"		//수정된 데이터가 있습니다.\n조회 하시겠습니까?
+				, arrparam : []
+				, msgtype : "I"
+			};
+			Ex.core.confirm(this, param);
+			return false;
+		}
+	}
+	return true;
+};
+
+this.onRowPosChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo)
+{
+	if(obj.id == "dsClassTree")
+	{
+		/*
+		if(this.dsClassTree.getColumn(e.newrow, "LVL") == 2)
+		{
+			//this.grdMainList.setCellProperty("Head", this.grdMainList.getBindCellIndex("Body", "SAP_ITEMCD_NO"), "cssclass", "grdHCell_WF_essential");
+			//this.grdMainList.setCellProperty("Head", this.grdMainList.getBindCellIndex("Body", "CLASS_USER_NM"), "cssclass", "grdHCell_WF_essential");
+			this.grdMainList.setFormatColProperty(this.grdMainList.getBindCellIndex("body", "SAP_ITEMCD_NO"), "size", 100);
+			this.grdMainList.setFormatColProperty(this.grdMainList.getBindCellIndex("body", "CLASS_USER_NM"), "size", 110);
+		}
+		else
+		{
+			//this.grdMainList.setCellProperty("Head", this.grdMainList.getBindCellIndex("Body", "SAP_ITEMCD_NO"), "cssclass", "");
+			//this.grdMainList.setCellProperty("Head", this.grdMainList.getBindCellIndex("Body", "CLASS_USER_NM"), "cssclass", "");
+			this.grdMainList.setFormatColProperty(this.grdMainList.getBindCellIndex("body", "SAP_ITEMCD_NO"), "size", 0);
+			this.grdMainList.setFormatColProperty(this.grdMainList.getBindCellIndex("body", "CLASS_USER_NM"), "size", 0);
+		}
+		*/
+		//select_tree_nRow = e.newrow; //트리에서 선택한 row 번호
+		//if(this.dsClassTree.getColumn(e.newrow, "LVL") == 2){
+			//this.dsCond.clearData();
+			this.stcGridTitle.set_text("[" + this.dsClassTree.getColumn(e.newrow, "CMM_CD_NM") + "]"+" 목록");
+			this.CLASS_ID = this.dsClassTree.getColumn(e.newrow, "CMM_CD");
+			this.dsCond.setColumn(0, "UP_CMM_CD", this.CLASS_ID);
+			this.dsCond.setColumn(0, "nRow", this.dsClassTree.rowposition);
+
+			this.fnSearch02();
+		//}
+		//font size 조절?
+		var objSize = nexacro.getTextSize(this.stcGridTitle.text, this.stcGridTitle._getCurrentStyleInheritValue("font"));
+		var nWidth = parseInt(objSize.nx) + 25;
+		this.stcCnt.set_width(nWidth);
+		this.stcCnt.set_left(this.stcGridTitle.getOffsetLeft() + nWidth);
+		
+		this.rowChangeFlag = false;
+	}
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+/*
+this.onKeyUp = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 13) this.fnSearch();
+};
+*/
+
+this.grdOnCellClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(e.clickitem != "treeitembutton")
+	{
+		var nTreeRow = obj.getTreeRow(e.row);		
+		var nTreeStatus = obj.getTreeStatus(nTreeRow);
+		
+		if(nTreeStatus == 0) obj.setTreeStatus(nTreeRow, 1);
+		else if(nTreeStatus == 1) obj.setTreeStatus(nTreeRow, 0);
+	}
+};]]></Script>
+  </Form>
+</FDL>

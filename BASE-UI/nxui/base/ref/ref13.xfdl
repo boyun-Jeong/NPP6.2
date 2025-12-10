@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="ref12" left="0" top="0" width="1840" height="720" titletext="공통코드 util" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Button id="btnGetCmmCd" taborder="0" text="YN_CD 조회" left="10" top="20" width="150" height="32" onclick="fnCommOnclick"/>
+        <TextArea id="taCmmCd" taborder="1" left="10" top="80" width="565" bottom="0" readonly="true"/>
+        <Static id="Static00" taborder="2" text="코드 조회 datset saveXML()" left="18" top="50" width="162" height="30"/>
+        <Combo id="Combo00" taborder="3" left="190" top="21" width="185" height="31" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsYnCd"/>
+        <TextArea id="taCmmCd00" taborder="4" left="600" top="5" bottom="5" readonly="true" right="5" value="- ref::ref13.xfdl &#10;&#10;공통코드 조회를 위한 API : Ex.util.getCmmCode(oParam);&#10;&#9;&#10;1. Parameter&#10;  - oParam = {&#10;&#9;&#9;upCmmCd&#9;: 공통코드 상위코드명 (Ex: 'YN_CD')&#10;&#9;&#9;codeDiv&#9;: 공통코드 업무구분 // ROOT 제외 최상위코드를 업무구분으로 사용하여 조회한다.&#10;&#9;&#9;optStr&#9;: ''/'NO' : 추가없음;&#10;&#9;&#9;&#9;&#9;  'ALL'   : '- 전체 -' 추가;&#10;&#9;&#9;&#9;&#9;  'SEL'   : '- 선택 -' 추가;&#10;&#9;&#9;useYn&#9;: 'Y'/'N' : 사용여부에 따라 복사&#10;&#9;&#9;&#9;&#9;: ''/'ALL': 사용여부 상관없이 복사&#10;&#9;&#9;filter&#9;: 개발자 정의 filterstr 추가&#9;( Ex: &quot;ITM_VAL_1 == 'Y'&quot; )&#10;&#9;&#9;objDs&#9;: 공통코드를 복사할 datset 객체( Ex: this.dsYnCd )&#10;&#9;}&#10;  &#10;2. 기능&#10;  - global dataset에 담긴 코드 중 설정한 옵션에 맞는 코드를 필터링하여 objDs에 카피한 후 optStr 옵션에 따라 추가 값을 insert함.&#10;  - oParam은 배열로 선언하여 여러 코드를 동시에 불러올 수 있다.&#10;  &#10;3. 사용 예시&#10;3-1) 배열로 여러 코드 조회&#10;&#9;var oParam = {&#10;&#9;&#9;upCmmCd : ['YN_CD', &#9;'LANG_CD']&#9;&#9;&#9;// 조회할 상위코드&#10;&#9;&#9;,codeDiv: ['CMM_CD', &#9;'']&#9;&#9;&#9;&#9;&#9;// 코드 업무구분&#10;&#9;&#9;,optStr&#9;: ['ALL', &#9;&#9;'SEL']&#9;&#9;&#9;&#9;// ALL: '- 전체 -'; SEL: '- 선택 -'&#10;&#9;&#9;,useYn&#9;: ['Y', &#9;&#9;'']&#9;&#9;&#9;&#9;&#9;// 사용여부&#10;&#9;&#9;,filter&#9;: ['', &#9;&#9;&#9;'ITM_VAL_1==&quot;Y&quot;']&#9;// filterStr&#10;&#9;&#9;,objDs&#9;: [this.dsYnCd,&#9;this.dsLangCd]&#9;&#9;// copy dataset&#10;&#9;}&#10;&#9;Ex.util.getCmmCode(oParam);&#9;// 공통코드 dataset copy util;&#10;&#9;&#10;3-2) 단건 조회&#10;&#9;var oParam = {&#10;&#9;&#9;upCmmCd : 'YN_CD'&#9;&#9;// 조회할 상위코드&#10;&#9;&#9;,codeDiv: ''&#9;&#9;&#9;// 코드 업무구분&#10;&#9;&#9;,optStr&#9;: 'ALL'&#9;&#9;&#9;// ALL: '- 전체 -'; SEL: '- 선택 -'&#10;&#9;&#9;,useYn&#9;: 'Y'&#9;&#9;&#9;// 사용여부&#10;&#9;&#9;,filter&#9;: ''&#9;&#9;&#9;// filterStr&#10;&#9;&#9;,objDs&#9;: this.dsYnCd&#9;// copy dataset&#10;&#9;}&#10;&#9;Ex.util.getCmmCode(oParam);&#9;// 공통코드 dataset copy util;"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 공통코드 Util
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	trace("workArea form init call");
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+} 
+ 
+// 조회
+this.fnSearch = function()
+{
+}
+
+// 저장
+this.fnSave = function()
+{
+	trace("fnSave call");
+}
+
+
+// 삭제(행삭제)
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = 0; i < objDs.rowcount; i++)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "ABOUT" : // 서비스 ID
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+
+this.fnCommOnclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		/**
+		  * 공통코드를 조회한다
+		  * @param {object} oParam : 공통코드 copy를 위한 option 객체
+		  * @return null
+		  * @description 
+		  *  oParam = {
+		  *  	upCmmCd	: 공통코드 상위코드명 (Ex: 'YN_CD')
+		  *		codeDiv	: 공통코드 업무구분(ROOT 제외 최상위코드를 해당 코드 하위 코드의 업무구분으로 사용)
+		  *  	optStr	: ''/'NO' : 추가없음;
+						  'ALL'   : '- 전체 -' 추가;
+						  'SEL'   : '- 선택 -' 추가;
+		  *  	useYn	: 'Y'/'N' : 사용여부에 따라 복사
+						: ''/'ALL': 사용여부 상관없이 복사
+		  *  	filter	: 개발자 정의 filterstr 추가	( Ex: "ITM_VAL_1 == 'Y'" )
+		  *  	objDs	: 공통코드를 복사할 datset 객체( Ex: this.dsYnCd )
+		  *	 }
+		  * @example
+		  * Ex.util.getCmmCode(oParam);
+		  * @memberOf Ex.util
+		  **/
+		case "btnGetCmmCd" :
+			var oParam = {
+				upCmmCd : ['YN_CD']		// 조회할 상위코드
+				,codeDiv: ['']			// 조회할 코드의 업무구분
+				,optStr	: ['ALL']		// ALL: '- 전체 -'; SEL: '- 선택 -'
+				,useYn	: ['Y']			// 사용여부
+				,filter	: ['']			// filterStr
+				,objDs	: [this.dsYnCd]	// copy dataset
+			}
+			Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam, 언어코드);
+			
+			this.taCmmCd.set_value(this.dsYnCd.saveXML());
+			break;
+	}
+};]]></Script>
+    <Objects>
+      <Dataset id="dsYnCd"/>
+    </Objects>
+  </Form>
+</FDL>

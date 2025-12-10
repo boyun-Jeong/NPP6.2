@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="commChangePwd" classname="commConfirmPwd" left="0" top="0" width="352" height="188" titletext="비밀번호 변경">
+    <Layouts>
+      <Layout width="352" height="188">
+        <Static id="Static04" taborder="5" text="비밀번호" cssclass="sta_WF_DetailLabel" left="20" top="41" width="108" height="31"/>
+        <Static id="Static06" taborder="6" cssclass="sta_WF_DetailLabel2" left="127" top="41" width="205" height="31"/>
+        <Edit id="edt_passwd" taborder="0" left="133" top="46" width="193" height="21" tooltiptext="edit" cssclass="essential" autoselect="true" validate="title:패스워드,required:true" password="true" imemode="alpha"/>
+        <Static id="Static07" taborder="7" text="새 비밀번호" cssclass="sta_WF_DetailLabel" left="20" top="71" width="108" height="31"/>
+        <Static id="Static10" taborder="8" cssclass="sta_WF_DetailLabel2" left="127" top="71" width="205" height="31"/>
+        <Edit id="edt_newPasswd" taborder="1" left="133" top="76" width="193" height="21" tooltiptext="edit" cssclass="essential" autoselect="true" validate="title:새 패스워드,required:true" password="true" imemode="alpha"/>
+        <Static id="Static11" taborder="9" text="비밀번호 확인" cssclass="sta_WF_DetailLabel" left="20" top="101" width="108" height="31"/>
+        <Static id="Static12" taborder="10" cssclass="sta_WF_DetailLabel2" left="127" top="101" width="205" height="31"/>
+        <Edit id="edt_confirm" taborder="2" left="133" top="106" width="193" height="21" tooltiptext="edit" cssclass="essential" autoselect="true" validate="title:패스워드 확인,required:true" password="true" imemode="alpha"/>
+        <Static id="Static00" taborder="11" text="W20" cssclass="Guide_Color" visible="false" left="0" top="0" bottom="0" width="20"/>
+        <Static id="Static01" taborder="12" text="W20" cssclass="Guide_Color" visible="false" left="332" top="0" width="20" bottom="0"/>
+        <Static id="Static02" taborder="13" text="H15" cssclass="Guide_Color" visible="false" left="0" top="0" right="0" height="15"/>
+        <Static id="Static03" taborder="14" text="H20" cssclass="Guide_Color" visible="false" left="0" height="20" top="168" right="0"/>
+        <Static id="Static09" taborder="15" text="h5" cssclass="Guide_Color" visible="false" left="0" top="36" height="5" right="0"/>
+        <Static id="Static05" taborder="16" text="비밀번호 변경" cssclass="sta_WF_SubTitle" left="20" top="15" width="173" height="21"/>
+        <Static id="Static18" taborder="17" text="h10" cssclass="Guide_Color" visible="false" left="0" top="132" height="10" right="0"/>
+        <Button id="btn_ok" taborder="3" text="수정" cssclass="btn_WF_Popup" left="240" top="142" width="45" height="26" onclick="btn_ok_onclick"/>
+        <Button id="btn_cancel" taborder="4" text="취소" cssclass="btn_WF_Popupclose" left="287" top="142" width="45" height="26" onclick="btn_cancel_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_pwd">
+        <ColumnInfo>
+          <Column id="OLD_PASSWD" type="STRING" size="64"/>
+          <Column id="NH_PASSWD" type="string" size="64"/>
+          <Column id="LMOD_USER_ID" type="string" size="10"/>
+          <Column id="LMOD_USER_NM" type="string" size="100"/>
+          <Column id="SYSMODTIME" type="string" size="14"/>
+          <Column id="LAST_PASSWD_CHG_TIME" type="string" size="14"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="ds_pwdCount">
+        <ColumnInfo>
+          <Column id="PASSWD_COUNT" type="INT" size="39"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="ds_user">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="1"/>
+          <Column id="USER_ID" type="STRING" size="9"/>
+          <Column id="USER_NAME" type="STRING" size="20"/>
+          <Column id="BUSEO_ID" type="STRING" size="6"/>
+          <Column id="BUSEO_NAME" type="STRING" size="50"/>
+          <Column id="DEPT_ID" type="STRING" size="6"/>
+          <Column id="DEPT_NAME" type="STRING" size="50"/>
+          <Column id="JBC_JID" type="STRING" size="4"/>
+          <Column id="JBC_JNAME" type="STRING" size="30"/>
+          <Column id="JBC_POSI_ID" type="STRING" size="4"/>
+          <Column id="JBC_POSI" type="STRING" size="30"/>
+          <Column id="CONTACT_PHONE" type="STRING" size="20"/>
+          <Column id="ADDRESS_1" type="STRING" size="200"/>
+          <Column id="ADDRESS_2" type="STRING" size="100"/>
+          <Column id="POSTCODE" type="STRING" size="7"/>
+          <Column id="NH_GUBUN" type="STRING" size="1"/>
+          <Column id="NH_ACTIVE" type="STRING" size="1"/>
+          <Column id="NH_STATUS" type="STRING" size="3"/>
+          <Column id="BUJAE_YN" type="STRING" size="1"/>
+          <Column id="BUJAE_STIME" type="STRING" size="14"/>
+          <Column id="BUJAE_ETIME" type="STRING" size="14"/>
+          <Column id="BUJAE_SAYU" type="STRING" size="30"/>
+          <Column id="DAEJIC_ID" type="STRING" size="9"/>
+          <Column id="DAEJIC_NM" type="STRING" size="20"/>
+          <Column id="CONTACT_MOBILE" type="STRING" size="20"/>
+          <Column id="CONTACT_OFFICE" type="STRING" size="20"/>
+          <Column id="MY_CHR_ID1" type="STRING" size="9"/>
+          <Column id="MY_CHR_NM1" type="STRING" size="20"/>
+          <Column id="MY_CHR_ID2" type="STRING" size="9"/>
+          <Column id="MY_CHR_NM2" type="STRING" size="20"/>
+          <Column id="MY_MGR_ID" type="STRING" size="9"/>
+          <Column id="MY_MGR_NM" type="STRING" size="20"/>
+          <Column id="LAST_LOGIN_TIME" type="STRING" size="14"/>
+          <Column id="NH_PASSWD" type="STRING" size="28"/>
+          <Column id="SYSMODTIME" type="STRING" size="14"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.0"><![CDATA[/***********************************************************************
+ * 화면ID   : commChangePwd
+ * 화면명   : 패스워드 변경 팝업
+ * 화면설명 : 패스워드를 변경한다.
+ * 작성일   : 2016.12.13
+ * 작성자   : 송금준
+ * 수정이력 : 
+ ***********************************************************************
+ *     수정일     수정자   내용
+ ***********************************************************************
+ *
+ ***********************************************************************
+ */
+
+/***********************************************************************
+ * Include
+ ***********************************************************************/
+include "lib::comInclude.xjs";
+
+/***********************************************************************
+ * Form Variables
+ ***********************************************************************/
+
+/***********************************************************************
+ * Form Event Functions
+ ***********************************************************************/
+
+/***********************************************************************
+ * Form Initialize Functions
+ ***********************************************************************/
+
+/***********************************************************************
+* Data Transaction Functions
+************************************************************************/
+this.fn_getUserInfo = function ()
+{
+	var params = "";
+	params += Iject.Util.setParam("model", "commSearchUser");
+	
+	var svcId = "commSearchUser";
+	var inDatasets = "";
+	var outDatasets = "ds_user=ds_user";
+	var argument = Iject.Util.setParam("userId", nexacro.wrapQuote(application.gv_Logid));
+	var callbackFunc = "fn_callback";
+	
+	Iject.xuptran(this, svcId, params, inDatasets, outDatasets, argument, callbackFunc);
+}
+
+this.fn_getPwdCount = function ()
+{
+	this.ds_pwd.clearData();
+
+	var params = "";
+	params += Iject.Util.setParam("model", "commCheckPasswdDuplicated");
+	
+	var svcId = "commCheckPasswdDuplicated";
+	var inDatasets = "";
+	var outDatasets = "ds_pwdCount=ds_pwdCount";
+	var argument = Iject.Util.setParam("pwd", nexacro.wrapQuote(sha256_digest(this.edt_newPasswd.value)));
+	var callbackFunc = "fn_callback";
+	
+	Iject.xuptran(this, svcId, params, inDatasets, outDatasets, argument, callbackFunc);
+}
+
+this.fn_changePasswd = function ()
+{
+	if(!confirm("비밀번호를 변경하시겠습니까?"))
+	{
+		return;
+	}
+
+	this.ds_pwd.clearData();
+	var row = this.ds_pwd.addRow();
+	this.ds_pwd.setColumn(row, "OLD_PASSWD", sha256_digest(this.edt_passwd.value));
+	this.ds_pwd.setColumn(row, "NH_PASSWD", sha256_digest(this.edt_newPasswd.value));
+
+	var params = "";
+	params += Iject.Util.setParam("model", "commChangePwd");
+	
+	var svcId = "commChangePwd";
+	var inDatasets = "ds_pwd=ds_pwd:U";
+	var outDatasets = "";
+	var argument = "";
+	var callbackFunc = "fn_callback";
+	
+	Iject.xuptran(this, svcId, params, inDatasets, outDatasets, argument, callbackFunc);
+}
+
+this.fn_callback = function (sid, errNo, errMsg)
+{
+	if(errNo < 0) {
+		return;
+	}
+	
+	switch(sid) {
+		case "commCheckPasswdDuplicated" :
+			if(this.ds_pwdCount.getColumn(0, "PASSWD_COUNT") == 0)
+			{
+				var oldPwd = this.edt_passwd.value;
+				var newPwd = this.edt_newPasswd.value;
+				var confirmPwd = this.edt_confirm.value;
+				
+//				if(!Iject.Validate.checkPwd(application.gv_Logid, oldPwd, newPwd, confirmPwd)) return;
+				
+				this.fn_changePasswd();
+			}
+			else
+			{
+				alert("최근에 사용된 비밀번호는 사용하실 수 없습니다. 다시 입력하여 주십시요.");
+				return;
+			}
+			break;
+		case "commChangePwd" :
+// 			alert("비밀번호가 정상적으로 변경되었습니다. 다시 로그인 하십시요.");
+			Iject.logging(this.opener, "비밀번호 변경", "comm::commChangePwd.xfdl", "xfdl");
+			Iject.close(this, true);
+			break;
+		case "commSearchUser" :
+			var oldPwd = sha256_digest(this.edt_passwd.value);
+			var nhPwd = this.ds_user.getColumn(0, "NH_PASSWD");
+			
+			if(oldPwd == nhPwd) {
+				this.fn_getPwdCount();
+			} else {
+				alert("입력하신 비밀번호와 현재 비밀번호가 일치하지 않습니다.");
+			}
+			
+			break;
+		default :
+			break;
+	}
+}
+
+/***********************************************************************
+ * Component Event Functions
+ ***********************************************************************/
+this.btn_cancel_onclick = function(obj:Button,  e:nexacro.ClickEventInfo)
+{
+	Iject.close(this, false);
+}
+
+this.btn_ok_onclick = function(obj:Button,  e:nexacro.ClickEventInfo)
+{
+	var oldPwd = this.edt_passwd.value;
+	var newPwd = this.edt_newPasswd.value;
+	var confirmPwd = this.edt_confirm.value;
+	
+	if(!Iject.Validate.validateCompList(this, this)) return;
+	if(!Iject.Validate.checkPwd(application.gv_Logid, oldPwd, newPwd, confirmPwd)) return;
+	this.fn_getUserInfo();
+}
+
+/***********************************************************************
+ * User Functions
+ ***********************************************************************/
+]]></Script>
+  </Form>
+</FDL>

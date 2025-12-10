@@ -1,0 +1,909 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PPJ0510" left="0" top="0" width="1050" height="730" titletext="실행항목상세" onload="form_onload">
+    <Layouts>
+      <Layout width="1050" height="730">
+        <Div id="divContents" taborder="0" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="Static24_00" taborder="32" cssclass="sta_WF_inputBg" left="20" top="247" height="113" right="20"/>
+              <Static id="Static05" taborder="0" text="실행항목상세" cssclass="sta_WF_gridTitle" left="20" top="20" width="132" height="24"/>
+              <Static id="Static06" taborder="1" cssclass="sta_WF_inputBg" left="20" top="49" height="34" right="20"/>
+              <Static id="Static10" taborder="6" cssclass="sta_WF_inputBg" left="20" top="82" height="34" right="20"/>
+              <Static id="stcPjtName" taborder="2" text="프로젝트명" cssclass="sta_WF_inputTitle" left="20" top="49" width="130" height="34" style="align:left middle;"/>
+              <Static id="Static13" taborder="12" cssclass="sta_WF_inputBg" left="20" top="115" height="34" right="20"/>
+              <Static id="Static14" taborder="13" text="등록일자" onclick="Static13_onclick" cssclass="sta_WF_inputTitle" left="20" top="115" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcActItemNo" taborder="4" text="Item NO" cssclass="sta_WF_inputTitle_E" left="50%" top="49" width="130" height="34" style="align:left middle;"/>
+              <Edit id="edtPjtName" taborder="3" maxlength="80" left="stcPjtName:5" top="54" height="24" enable="false" right="stcActItemNo:5" cssclass="edt_WF_normal"/>
+              <Static id="Static07" taborder="7" text="제목" cssclass="sta_WF_inputTitle_E" left="20" top="82" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcMeetId" taborder="9" text="근거회의" cssclass="sta_WF_inputTitle" left="50%" top="82" width="130" height="34" style="align:left middle;"/>
+              <Edit id="edtTitle" taborder="8" left="Static07:5" top="87" height="24" validate="" right="stcMeetId:5" validation="제목;NULL" validationGroup="input01" cssclass="edt_WF_normal"/>
+              <Static id="Static03" taborder="15" text="요청일자" cssclass="sta_WF_inputTitle_E" left="50%" top="115" width="130" height="34" style="align:left middle;"/>
+              <Static id="Static12" taborder="33" text="내용" cssclass="sta_WF_inputTitle_E" left="20" top="247" width="130" height="112" style="align:left middle;"/>
+              <TextArea id="txaContents" taborder="34" left="Static12:5" top="253" right="25" height="100" validationGroup="input01" validation="내용;NULL" cssclass="txa_WF_normal"/>
+              <Calendar id="calReqDate" taborder="16" cssclass="cal_WF_normal" left="Static03:5" top="120" width="130" height="24" validate="" enable="true" validationGroup="input01" validation="요청일자;NULL|DATETIME:YYYYMMDD"/>
+              <Static id="Static15" taborder="17" cssclass="sta_WF_inputBg" left="20" top="148" height="34" right="20"/>
+              <Static id="stcRegUser" taborder="18" text="등록자" cssclass="sta_WF_inputTitle_E" left="20" top="148" width="130" height="34" style="align:left middle;"/>
+              <Static id="Static17" taborder="22" cssclass="sta_WF_inputBg" left="20" top="181" height="34" right="20"/>
+              <Static id="Static18" taborder="23" text="처리기한" onclick="Static13_onclick" cssclass="sta_WF_inputTitle_E" left="20" top="181" width="130" height="34" style="align:left middle;"/>
+              <Static id="Static20" taborder="25" text="완료일자" cssclass="sta_WF_inputTitle" left="50%" top="181" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcReqUser" taborder="20" text="요청자" cssclass="sta_WF_inputTitle_E" left="50%" top="148" width="130" height="34" style="align:left middle;"/>
+              <Calendar id="calCloseDate" taborder="26" cssclass="cal_WF_normal" enable="true" left="Static20:5" top="186" width="130" height="24" validate=""/>
+              <Calendar id="calRegStime" taborder="14" onchanged="cal_prjStime_onchanged" cssclass="essential" enable="false" left="Static14:5" top="120" width="130" height="24" validate=""/>
+              <Calendar id="calDueDate" taborder="24" cssclass="cal_WF_normal" left="Static18:5" top="186" width="130" height="24" validate="" validationGroup="input01" validation="처리기한;NULL|DATETIME:YYYYMMDD"/>
+              <Static id="Static24" taborder="27" cssclass="sta_WF_inputBg" left="20" top="214" height="34" right="20"/>
+              <Static id="stcActUser" taborder="28" text="실행자" onclick="Static13_onclick" cssclass="sta_WF_inputTitle_E" left="20" top="214" width="130" height="34" style="align:left middle;"/>
+              <Static id="Static27" taborder="30" text="실행상태" cssclass="sta_WF_inputTitle_E" left="50%" top="214" width="130" height="34" style="align:left middle;"/>
+              <Combo id="cboActCd" taborder="31" innerdataset="@dsPjActCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" left="Static27:5" top="219" width="130" height="24" onitemchanged="cboOnItemChanged" validationGroup="input01" validation="실행상태;NULL" cssclass="cbo_WF_normal"/>
+              <Edit id="edtActItemNo" taborder="5" left="stcActItemNo:5" top="54" height="24" validate="" right="25" validationGroup="input01" validation="Item NO;NULL" cssclass="edt_WF_normal"/>
+              <Static id="Static32" taborder="38" text="실행활동 이력" cssclass="sta_WF_gridTitle" left="20" top="573" height="24" width="132"/>
+              <Grid id="grdMain" taborder="41" binddataset="dsPjActAction" useinputpanel="false" cellsizingtype="col" autofittype="col" oncellclick="grdOnCellClick" onsummclick="grdMainList_onsummclick" left="20" top="607" right="20" height="131" autoupdatetype="itemselect" onexpandup="grdOnExpandUp" cssclass="grd_WF_normal">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="74" band="left"/>
+                      <Column size="40" band="left"/>
+                      <Column size="60" band="left"/>
+                      <Column size="130" band="left"/>
+                      <Column size="100"/>
+                      <Column size="250"/>
+                      <Column size="100"/>
+                      <Column size="200"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="No"/>
+                      <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="2" text="행상태"/>
+                      <Cell col="3" cssclass="grdHCell_WF_essential" text="수행일자"/>
+                      <Cell col="4" cssclass="grdHCell_WF_essential" text="담당자"/>
+                      <Cell col="5" cssclass="grdHCell_WF_essential" text="조치내용"/>
+                      <Cell col="6" cssclass="grdHCell_WF_essential" text="처리결과"/>
+                      <Cell col="7" text="첨부파일"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="expr:currow+1" textAlign="center"/>
+                      <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                      <Cell col="2" text="bind:ROWFLAG"/>
+                      <Cell col="3" displaytype="date" edittype="date" style="align:center;" text="bind:ACT_TIME" calendardisplaynulltype="nulltext" validation="수행일자;NULL|DATETIME:YYYYMMDD" calendardateformat="yyyy-MM-dd"/>
+                      <Cell col="4" edittype="expand" style="align:center;" text="bind:ACT_USER_NM" validation="담당자;NULL" expandshow="show" expandsize="24" validationStatus="false"/>
+                      <Cell col="5" edittype="text" style="align:left;cursor: ;" text="bind:ACT_DESC" validation="조치내용;NULL" tooltiptext="bind:ACT_DESC"/>
+                      <Cell col="6" displaytype="combotext" edittype="combo" style="align:center;" text="bind:ACT_STATUS_CD" combodataset="dsActionStatusCd" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" validation="처리결과;NULL"/>
+                      <Cell col="7" displaytype="text" style="align:left;" text="bind:ORG_FILE_NM" expr="expr:FILE_CNT &gt;1 ? ORG_FILE_NM +'외 '+ (FILE_CNT-1) + '건': ORG_FILE_NM" calendardisplaynulltype="default" expandshow="show" expandsize="24" tooltiptext="bind:ORG_FILE_NM"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Div id="divFiles" taborder="36" left="20" top="370" right="20" __USE_MODE="1" _ENABLE_READONLY_ALL_SKIP="Y" url="comm::comFile.xfdl" text="" height="192"/>
+              <Div id="divRegUser" taborder="19" left="stcRegUser:5" top="153" height="24" right="stcReqUser:5" url="fomm::FOMM0000_D02.xfdl"/>
+              <Div id="divReqUser" taborder="21" left="stcReqUser:5" top="153" height="24" right="25" url="fomm::FOMM0000_D02.xfdl"/>
+              <Div id="divActUser" taborder="29" left="stcActUser:5" top="219" height="24" right="Static27:5" url="fomm::FOMM0000_D02.xfdl"/>
+              <Static id="stcBackMid2_00" taborder="35" left="20" top="360" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Static id="stcBackMid2_00_00" taborder="37" left="20" top="563" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Static id="stcBackMid2_00_00_00" taborder="39" left="20" top="597" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Div id="divGrdTopBtn" taborder="40" width="425" height="24" visible="true" isButtonGroup="true" top="573" right="20">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+                    <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Button id="btnMeetSearchPop" taborder="11" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommOnclick" top="87" right="25" width="24"/>
+              <Edit id="edtMeetId" taborder="10" left="stcMeetId:5" top="87" height="24" validate="" right="btnMeetSearchPop:-1" validationGroup="input01" enable="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtnBottom" taborder="1" height="60" bottom="0" text="" cssclass="div_POP_msg_btnbg" left="20" right="20">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="14"/>
+              <Button id="btnSave" taborder="1" text="저장" width="110" height="32" bottom="14" cssclass="btn_WF_primary_save" right="btnClose:5" onclick="fnCommOnclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divFilesAct" taborder="2" left="0" top="735" __USE_MODE="1" _ENABLE_READONLY_ALL_SKIP="Y" url="comm::comFile.xfdl" text="" height="192" width="602" visible="false"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsPjActCd">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="30"/>
+          <Column id="DATA" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPjActionItem" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="16"/>
+          <Column id="ROWFLAG" type="STRING" size="16"/>
+          <Column id="ACT_ITEM_ID" type="STRING" size="16"/>
+          <Column id="ACT_ITEM_NO" type="STRING" size="20"/>
+          <Column id="TITLE" type="STRING" size="200"/>
+          <Column id="PJT_ID" type="STRING" size="16"/>
+          <Column id="PJT_NAME" type="STRING" size="256"/>
+          <Column id="MEET_ID" type="STRING" size="16"/>
+          <Column id="DUE_DATE" type="STRING" size="14"/>
+          <Column id="CONTENTS" type="STRING" size="4000"/>
+          <Column id="ACTION_CD" type="STRING" size="12"/>
+          <Column id="CLOSE_DATE" type="STRING" size="14"/>
+          <Column id="ACT_USER_ID" type="STRING" size="10"/>
+          <Column id="ACT_USER_NM" type="STRING" size="100"/>
+          <Column id="ACT_USER_DEPT" type="STRING" size="100"/>
+          <Column id="REQ_USER_ID" type="STRING" size="10"/>
+          <Column id="REQ_USER_NM" type="STRING" size="100"/>
+          <Column id="REQ_USER_DEPT" type="STRING" size="100"/>
+          <Column id="REQ_DATE" type="STRING" size="14"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="REG_USER_ID" type="STRING" size="10"/>
+          <Column id="REG_USER_NM" type="STRING" size="100"/>
+          <Column id="REG_USER_DEPT" type="STRING" size="100"/>
+          <Column id="LMOD_SDATE" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="10"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="STRING" size="100"/>
+          <Column id="STATUS" type="STRING" size="256"/>
+          <Column id="MEET_NO" type="STRING" size="30"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPjActAction" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="ACT_ID" type="STRING" size="16"/>
+          <Column id="ACT_ITEM_ID" type="STRING" size="20"/>
+          <Column id="ACT_DESC" type="STRING" size="4000"/>
+          <Column id="ACT_STATUS_CD" type="STRING" size="30"/>
+          <Column id="ACT_TIME" type="STRING" size="14"/>
+          <Column id="ACT_USE_ID" type="STRING" size="10"/>
+          <Column id="ACT_USER_NM" type="STRING" size="100"/>
+          <Column id="ACT_USER_DEPT" type="STRING" size="100"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="REG_USER_ID" type="STRING" size="10"/>
+          <Column id="REG_USER_NM" type="STRING" size="100"/>
+          <Column id="REG_USER_DEPT" type="STRING" size="100"/>
+          <Column id="SYSMODTIME" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="10"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="STRING" size="100"/>
+          <Column id="ORG_FILE_NM" type="STRING" size="200"/>
+          <Column id="FILE_CNT" type="INT" size="10"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPjActId">
+        <ColumnInfo>
+          <Column id="ACT_ID" type="STRING" size="16"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="dsActionStatusCd">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="100"/>
+          <Column id="DATA" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="ACT_ITEM_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsFileList" updatecontrol="false" enableevent="false"/>
+      <Dataset id="dsPopRtn"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ PJ0510_P01
+* 화면(명)		︰ Action Item 상세
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.10.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.10.06	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.saveFlg = "N";				//화면 저장 여부
+this.isCloseBtnClick = false;	//닫기 버튼을 눌러 닫는 경우 true
+// 실행활동 이력 첨부파일 setting
+this.actFileParam = {
+	 sSvcId		: 'actFileSvc'			// divFile callback 후처리용 서비스 ID
+	,limitMinCnt: 0					// 파일 최소 갯수; defualt 0
+	,limitCnt	: 3					// 파일 최대 갯수; default 5
+	,limitSize	: 100				// 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+	,folderName	: 'pj'				// 폴더명(업무명)
+	,tableName	: 'PJ_ACT_ACTION'	// 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+	,primaryKey1: ''				// 테이블 PK1(ex. 요청서ID 등)
+	,primaryKey2: ''				// 테이블 PK2 (복합 키인 경우 사용)
+	,primaryKey3: ''				// 테이블 PK3 (복합 키인 경우 사용)
+	,fileDownYn	: ''				// 파일다운권한; 	 공백 시 메뉴의 조회 권한
+	,fileUpYn	: ''				// 파일업로드권한; 공백 시 메뉴의 추가 권한
+	,deleteYn	: ''				// 파일삭제권한; 	 공백 시 메뉴의 삭제 권한
+};
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+	//trace("[PJ0510_P01] this.form_onload() this.getOwnerFrame()._formObj : " + this.getOwnerFrame()._formObj);
+}
+
+this.fnInit = function()
+{
+	trace("this.getOwnerFrame().id : " + this.getOwnerFrame().id);
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	//trace("[PJ0510_P01] this.fnSearch()");
+	var sTranId = "select01";																		// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ0510P/select01";																// 서비스명
+    var sInDs = "dsCond=dsCond";																	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsPjActionItem=dsPjActionItem dsPjActAction=dsPjActAction dsFileList=dsFileList";	// 서버에서 수신할 데이타셋
+    var sArg = "";																					// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSave = function()
+{
+	//trace("[PJ0510_P01] this.fnSave()");
+	var sTranId = "save01";
+    var sService = "PJ0510P/save01";
+    var sInDs = "dsCond=dsCond dsPjActionItem=dsPjActionItem:U dsPjActAction=dsPjActAction:A";
+	var sOutDs = "dsPjActionItem=dsPjActionItem dsPjActAction=dsPjActAction dsFileList=dsFileList dsCond=dsCond";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+	{
+		objDs.setDeleteRow(i);
+	}
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+this.fnUploadCallback = function(sSvcId, nErrorCode, sErrorMsg)
+{
+	//trace("[PJ0510_P01] this.fnUploadCallback() sSvcId : " + sSvcId + " nErrorCode : " + nErrorCode + " sErrorMsg : " + sErrorMsg);
+
+	// TO DO
+	// 개발자가 지정한 sSvcId(setConfig 옵션에 넣은 파일첨부ID), nErrorCode(에러코드), sErrorMsg(에러메시지)
+	if (nErrorCode < 0) 
+	{
+		Ex.core.error(this, {id:"ERROR", msg:sSvcId + "\n" + Ex.core.msg(sErrorMsg)});
+		return;
+	}
+	
+	switch(sSvcId)
+	{
+		case "actItemFileSvc" :
+			this.divFilesAct.form.fnUploadFiles(true);
+			break;
+
+		case "actFileSvc" :
+			this.fnSave();
+			break;
+	}
+};
+
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			
+			var strRegUserId    = this.dsPjActionItem.getColumn(0, "REG_USER_ID");
+			var strRegUserNm    = this.dsPjActionItem.getColumn(0, "REG_USER_NM");
+			var strRegDept      = this.dsPjActionItem.getColumn(0, "REG_USER_DEPT");
+			this.divContents.form.divRegUser.form.setValue(strRegUserId, strRegUserNm, strRegDept);
+			
+			var strReqUserId    = this.dsPjActionItem.getColumn(0, "REQ_USER_ID");
+			var strReqUserNm    = this.dsPjActionItem.getColumn(0, "REQ_USER_NM");
+			var strReqDept      = this.dsPjActionItem.getColumn(0, "REQ_USER_DEPT");
+			this.divContents.form.divReqUser.form.setValue(strReqUserId, strReqUserNm, strReqDept);
+			
+			var strActUserId    = this.dsPjActionItem.getColumn(0, "ACT_USER_ID");
+			var strActUserNm    = this.dsPjActionItem.getColumn(0, "ACT_USER_NM");
+			var strActDept      = this.dsPjActionItem.getColumn(0, "ACT_USER_DEPT");
+			this.divContents.form.divActUser.form.setValue(strActUserId, strActUserNm, strActDept);
+
+			this.setGridFileInfo();
+
+			this.actFileParam.primaryKey1 = this.dsPjActionItem.getColumn(0, "ACT_ITEM_ID")||'';
+			this.divFilesAct.form.setConfig(this, this.actFileParam);
+			this.divFilesAct.form.dsFommFile.loadXML(this.dsFileList.saveXML("dsFommFile", "ALL"));
+			
+			this.fn_setEditMode();
+			
+			this.divContents.form.grdMain.setCellProperty("Head", this.divContents.form.grdMain.getBindCellIndex('Body', 'CHK'), "text", "0");
+			break;
+
+		case "save01" :
+			this.saveFlg = "Y";
+			Ex.core.toast(this, "10004", null, {toastType:'S'});
+			
+			if( !Ex.isEmpty(this.dsCond.getColumn(0, "ACT_ITEM_ID")) )
+			{
+				this.getOwnerFrame().pActItemCd	= this.dsCond.getColumn(0, "ACT_ITEM_ID");
+				this.getOwnerFrame().pNew = "N";
+				this.divContents.form.divFiles.form.fnReplaceTempkeyAndSearch(this.dsCond.getColumn(0, "ACT_ITEM_ID"));
+			}
+			
+			var strRegUserId    = this.dsPjActionItem.getColumn(0, "REG_USER_ID");
+			var strRegUserNm    = this.dsPjActionItem.getColumn(0, "REG_USER_NM");
+			var strRegDept      = this.dsPjActionItem.getColumn(0, "REG_USER_DEPT");
+			this.divContents.form.divRegUser.form.setValue(strRegUserId, strRegUserNm, strRegDept);
+			
+			var strReqUserId    = this.dsPjActionItem.getColumn(0, "REQ_USER_ID");
+			var strReqUserNm    = this.dsPjActionItem.getColumn(0, "REQ_USER_NM");
+			var strReqDept      = this.dsPjActionItem.getColumn(0, "REQ_USER_DEPT");
+			this.divContents.form.divReqUser.form.setValue(strReqUserId, strReqUserNm, strReqDept);
+			
+			var strActUserId    = this.dsPjActionItem.getColumn(0, "ACT_USER_ID");
+			var strActUserNm    = this.dsPjActionItem.getColumn(0, "ACT_USER_NM");
+			var strActDept      = this.dsPjActionItem.getColumn(0, "ACT_USER_DEPT");
+			this.divContents.form.divActUser.form.setValue(strActUserId, strActUserNm, strActDept);
+
+			this.setGridFileInfo();
+
+			this.actFileParam.primaryKey1 = this.dsPjActionItem.getColumn(0, "ACT_ITEM_ID")||'';
+			this.divFilesAct.form.setConfig(this, this.actFileParam);
+			this.divFilesAct.form.dsFommFile.assign(this.dsFileList);
+			
+			this.divContents.form.grdMain.setCellProperty("Head", this.divContents.form.grdMain.getBindCellIndex('Body', 'CHK'), "text", "0");
+			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "comFilePop" :
+			//trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)
+			{
+				this.dsFileList.loadXML(varValue);
+				
+				for(var i=0; i<this.dsFileList.rowcount; i++)	this.dsFileList.setColumn(i, "CHK", "0");
+
+				this.divFilesAct.form.dsFommFile.set_enableevent(false);
+				this.divFilesAct.form.dsFommFile.set_updatecontrol(false);
+				
+				this.divFilesAct.form.dsFommFile.loadXML(this.dsFileList.saveXML("dsFommFile", "ALL"));
+				for(var i=0; i<this.divFilesAct.form.dsFommFile.rowcount; i++)
+				{
+					var rowFlag = this.divFilesAct.form.dsFommFile.getColumn(i, "ROWFLAG");
+					trace("i=" + i + " rowFlag : " + rowFlag);
+
+					if(rowFlag == "I")
+					{
+						this.divFilesAct.form.dsFommFile.setRowType(i, Dataset.ROWTYPE_INSERT);
+					}
+					else if(rowFlag == "D")
+					{
+						this.divFilesAct.form.dsFommFile.setRowType(i, Dataset.ROWTYPE_UPDATE);
+					}
+				}
+				
+				this.setGridFileInfo(this.dsPjActAction.rowposition);				
+				//trace(this.divFilesAct.form.dsFommFile.saveXML());
+			}
+			break;
+
+		case "selectUserPop" :
+			trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)
+			{
+				this.dsPopRtn.loadXML(varValue);
+				this.dsPjActAction.setColumn(this.dsPjActAction.rowposition, "ACT_USER_ID",   this.dsPopRtn.getColumn(0, "USER_ID"));
+				this.dsPjActAction.setColumn(this.dsPjActAction.rowposition, "ACT_USER_NM",   this.dsPopRtn.getColumn(0, "USER_NM"));
+				this.dsPjActAction.setColumn(this.dsPjActAction.rowposition, "ACT_USER_DEPT", this.dsPopRtn.getColumn(0, "DEPT_NM"));
+			}
+			break;
+
+		case "PJ0600_P01" :
+			if(varValue.indexOf("Dataset id=") > -1)
+			{
+				this.dsPopRtn.loadXML(varValue);
+				this.dsPjActionItem.setColumn(0, "MEET_ID", this.dsPopRtn.getColumn(0, "MEET_ID"));
+			}
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			for(var i=this.dsFileList.rowcount-1; i>=0; i--)
+			{
+				var pk2 = this.dsFileList.getColumn(i, "PK2");
+				
+				var fRow = this.dsPjActAction.findRow("ACT_ID", pk2);
+				
+				if(fRow == -1)
+				{
+					this.divFilesAct.form.FileUpTransfer.removeFile(this.dsFileList.getColumn(i, "FILE_NM"));
+					this.dsFileList.setDeleteRow(i);
+				}
+				else
+				{
+					if(this.dsPjActAction.getColumn(fRow, "ROWFLAG") == "D")
+					{
+						this.divFilesAct.form.FileUpTransfer.removeFile(this.dsFileList.getColumn(i, "FILE_NM"));
+						this.dsFileList.setDeleteRow(i);
+					}
+				}
+			}
+			this.divContents.form.divFiles.form.fnUploadFiles(true);
+			break;
+
+		case "alertCboActCdStsI" :
+			this.dsPjActCd.setColumn(0, "ACTION_CD", "AITM_PROC_STS_CD02");
+			this.divContents.form.cboActCd.setFocus();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.divContents.form.grdMain.displayRowType();
+
+	this.divContents.form.divRegUser.form.setEnable(false);
+
+	this.dsCond.setColumn(0, "PJT_ID", this.getOwnerFrame().pPjtId);
+	this.dsCond.setColumn(0, "ACT_ITEM_ID", this.getOwnerFrame().pActItemCd);
+
+	// 공통코드 조회
+	this.fnGetCmmCd();
+	
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divContents.form.divGrdTopBtn.form.btnAdd];	// 쓰기
+	Ex.util.setBtnVisible(this, 'write', arrBtn);
+
+	arrBtn = [this.divContents.form.divGrdTopBtn.form.btnDelete];	// 삭제
+	Ex.util.setBtnVisible(this, 'delete', arrBtn);
+
+	arrBtn = [this.divBtnBottom.form.btnSave];	// 저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+	
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divContents.form.divGrdTopBtn, 'right', true);
+	Ex.util.setBtnAlign(this.divBtnBottom, 'right', true);
+
+	// 첨부파일 setting
+	var oParam = {
+		 sSvcId		: 'actItemFileSvc'										// divFile callback 후처리용 서비스 ID
+		,limitMinCnt: 0												// 파일 최소 갯수; defualt 0
+		,limitCnt	: 3												// 파일 최대 갯수; default 5
+		,limitSize	: 100											// 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+		,folderName	: 'pj'											// 폴더명(업무명)
+		,tableName	: 'PJ_ACTION_ITEM'								// 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+		,primaryKey1: this.dsCond.getColumn(0, "ACT_ITEM_ID")||''	// 테이블 PK1(ex. 요청서ID 등)
+		,primaryKey2: ''											// 테이블 PK2 (복합 키인 경우 사용)
+		,primaryKey3: ''											// 테이블 PK3 (복합 키인 경우 사용)
+		,fileDownYn	: ''											// 파일다운권한; 	 공백 시 메뉴의 조회 권한
+		,fileUpYn	: ''											// 파일업로드권한; 공백 시 메뉴의 추가 권한
+		,deleteYn	: ''											// 파일삭제권한; 	 공백 시 메뉴의 삭제 권한
+	};
+	this.divContents.form.divFiles.form.setConfig(this, oParam);
+
+	this.divFilesAct.form.setConfig(this, this.actFileParam);
+
+	this.divFilesAct.form.dsFommFile.set_enableevent(false);
+	this.divFilesAct.form.dsFommFile.set_updatecontrol(false);
+
+	this.dsFileList.loadXML(this.divFilesAct.form.dsFommFile.saveXML());
+
+	trace("this.divFilesAct.form.dsFommFile.enableevent : " + this.divFilesAct.form.dsFommFile.enableevent);
+	trace("this.divFilesAct.form.dsFommFile.updatecontrol : " + this.divFilesAct.form.dsFommFile.updatecontrol);
+
+	this.fv_today = Ex.util.today();
+
+	//trace("[PJ0510_P01] this.fnCompInit() this.getOwnerFrame().pIsNew : " + this.getOwnerFrame().pIsNew);
+
+	if(this.getOwnerFrame().pNew == "Y")
+	{
+		var nRow = this.dsPjActionItem.setInsertRow();
+		this.dsPjActionItem.setColumn(0, "PJT_ID",   this.getOwnerFrame().pPjtId);
+		this.dsPjActionItem.setColumn(0, "PJT_NAME", this.getOwnerFrame().pPjtNm);
+		this.divContents.form.divRegUser.form.setValue(Ex.util.getSession('gvUserId'), Ex.util.getSession('gvUserNm'), Ex.util.getSession('gvDeptNm'));
+		this.dsPjActionItem.setColumn(0, "ACTION_CD", "AITM_PROC_STS_CD01");
+		this.divContents.form.edtActItemNo.setFocus();
+	}
+	else if( !Ex.isEmpty(this.dsCond.getColumn(0, "ACT_ITEM_ID")) )
+	{
+		this.fnSearch();
+ 	}
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		 upCmmCd : ['AITM_PROC_STS_CD', 'ACT_PROC_STS_CD']	// 조회할 상위코드
+		,codeDiv: ['PJT_MNG_CD', 'PJT_MNG_CD']				// 조회할 코드의 업무구분
+		,optStr	: ['SEL', 'SEL']							// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y', 'Y']								// 사용여부
+		,filter	: ['', '']									// filterStr
+		,objDs	: [this.dsPjActCd, this.dsActionStatusCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+this.fnCheckValidate = function()
+{
+	// 저장할 dataset에 변경된 data 있는 지 확인
+	if( !Ex.util.isUpdated(this.dsPjActionItem) &&
+		!Ex.util.isUpdated(this.dsPjActAction) &&
+		!this.divContents.form.divFiles.form.isUpdateForm() &&
+		!this.divFilesAct.form.isUpdateForm())
+	{
+		return false;
+	}
+
+	if( !Ex.util.checkValidate(this.divContents, "input01") ) return false;
+	
+	var msgNo;
+
+	//등록자 입력 체크
+	var rtnVal = this.divContents.form.divRegUser.form.fnCheckValidate();
+	
+	if(rtnVal == "NO_INPUT")	msgNo = 11001;	//"은(는) 필수 입력 항목입니다.";
+	else if(rtnVal == "NO_ID")	msgNo = 20001;	//"은(는) 입력 후 검색까지 완료해야 합니다.";
+
+	trace("divRegUser rtnVal : " + rtnVal);
+
+	if(rtnVal == "NO_INPUT" || rtnVal == "NO_ID")
+	{
+		var oParam = {id : "alertRegUserI", msg : msgNo, arrparam : [Ex.core.word(this.divContents.form.stcRegUser.text)], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return false;
+	}
+
+	//요청자 입력 체크
+	rtnVal = this.divContents.form.divReqUser.form.fnCheckValidate();
+
+	trace("divReqUser rtnVal : " + rtnVal);
+
+	if(rtnVal == "NO_INPUT")	msgNo = 11001;	//"은(는) 필수 입력 항목입니다.";
+	else if(rtnVal == "NO_ID")	msgNo = 20001;	//"은(는) 입력 후 검색까지 완료해야 합니다.";
+
+	if(rtnVal == "NO_INPUT" || rtnVal == "NO_ID")
+	{
+		var oParam = {id : "alertChkReqUserI", msg : msgNo, arrparam : [Ex.core.word(this.divContents.form.stcReqUser.text)], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return false;
+	}
+
+	//실행자 입력 체크
+	rtnVal = this.divContents.form.divActUser.form.fnCheckValidate();
+
+	trace("divActUser rtnVal : " + rtnVal);
+
+	if(rtnVal == "NO_INPUT")	msgNo = 11001;	//"은(는) 필수 입력 항목입니다.";
+	else if(rtnVal == "NO_ID")	msgNo = 20001;	//"은(는) 입력 후 검색까지 완료해야 합니다.";
+
+	if(rtnVal == "NO_INPUT" || rtnVal == "NO_ID")
+	{
+		var oParam = {id : "alertChkActUserI", msg : msgNo, arrparam : [Ex.core.word(this.divContents.form.stcActUser.text)], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return false;
+	}
+
+	if( !this.divContents.form.grdMain.checkValidate(true) ) return false;
+	return true;
+} 
+
+this.fn_setEditMode = function()
+{
+	if( !Ex.isEmpty(this.getOwnerFrame().pEditMode) && this.getOwnerFrame().pEditMode == "read")
+	{		
+		this.divBtnBottom.form.btnSave.set_visible(false);
+		Ex.util.setCompPropAll(this, this.divContents.form, false, [this.divContents.form.divRegUser]);
+		
+		this.divContents.form.divFiles.form.grdFile.set_readonly(false);
+		this.divContents.form.divFiles.form.divBtn.form.btnDownload.set_enable(true);
+	}
+	else
+	{
+		var strRegUserId = this.dsPjActionItem.getColumn(0, "REG_USER_ID");
+		trace("strRegUserId : " + strRegUserId + " sess : " + Ex.util.getSession('gvUserId'));
+		if(Ex.util.getSession('gvUserId') != strRegUserId)
+		{
+			this.divBtnBottom.form.btnSave.set_visible(false);
+			Ex.util.setCompPropAll(this, this.divContents.form, false, [this.divContents.form.divRegUser]);
+			
+			this.divContents.form.divFiles.form.grdFile.set_readonly(false);
+			this.divContents.form.divFiles.form.divBtn.form.btnDownload.set_enable(true);
+		}
+	}
+}
+
+this.userDeptChangedCallBack = function(compId, dsRtnObj)
+{
+	trace("[PJ0510_P01] this.userDeptChangedCallBack() compId : " + compId);
+	if(compId == "divRegUser")
+	{
+		if( !Ex.isEmpty(dsRtnObj.getColumn(0, "USER_ID")) )
+		{
+			this.dsPjActionItem.setColumn(0, "REG_USER_ID",		dsRtnObj.getColumn(0, "USER_ID"));
+			this.dsPjActionItem.setColumn(0, "REG_USER_NM",		dsRtnObj.getColumn(0, "USER_NM"));
+			this.dsPjActionItem.setColumn(0, "REG_USER_DEPT",	dsRtnObj.getColumn(0, "DEPT_NM"));
+		}
+		else
+		{
+			this.dsPjActionItem.setColumn(0, "REG_USER_ID",   "");
+			this.dsPjActionItem.setColumn(0, "REG_USER_NM",   "");
+			this.dsPjActionItem.setColumn(0, "REG_USER_DEPT", "");
+		}
+	}
+	else if(compId == "divReqUser")
+	{
+		if( !Ex.isEmpty(dsRtnObj.getColumn(0, "USER_ID")) )
+		{
+			this.dsPjActionItem.setColumn(0, "REQ_USER_ID",		dsRtnObj.getColumn(0, "USER_ID"));
+			this.dsPjActionItem.setColumn(0, "REQ_USER_NM",		dsRtnObj.getColumn(0, "USER_NM"));
+			this.dsPjActionItem.setColumn(0, "REQ_USER_DEPT",	dsRtnObj.getColumn(0, "DEPT_NM"));
+		}
+		else
+		{
+			this.dsPjActionItem.setColumn(0, "REQ_USER_ID",   "");
+			this.dsPjActionItem.setColumn(0, "REQ_USER_NM",   "");
+			this.dsPjActionItem.setColumn(0, "REQ_USER_DEPT", "");
+		}
+	}
+	else if(compId == "divActUser")
+	{
+		if( !Ex.isEmpty(dsRtnObj.getColumn(0, "USER_ID")) )
+		{
+			this.dsPjActionItem.setColumn(0, "ACT_USER_ID",		dsRtnObj.getColumn(0, "USER_ID"));
+			this.dsPjActionItem.setColumn(0, "ACT_USER_NM",		dsRtnObj.getColumn(0, "USER_NM"));
+			this.dsPjActionItem.setColumn(0, "ACT_USER_DEPT",	dsRtnObj.getColumn(0, "DEPT_NM"));
+		}
+		else
+		{
+			this.dsPjActionItem.setColumn(0, "ACT_USER_ID",   "");
+			this.dsPjActionItem.setColumn(0, "ACT_USER_NM",   "");
+			this.dsPjActionItem.setColumn(0, "ACT_USER_DEPT", "");
+		}
+	}
+}
+
+this.setGridFileInfo = function(row)
+{
+	var startRow = 0;
+	var endRow	= this.dsPjActAction.rowcount;
+	
+	if( !Ex.isEmpty(row) )
+	{
+		startRow = row;
+		endRow = startRow + 1;
+	}
+
+	trace("this.setGridFileInfo() row : " + row + " startRow : " + startRow + " endRow : " + endRow);
+	
+	this.dsPjActAction.set_enableevent(false);
+	this.dsPjActAction.set_updatecontrol(false);
+
+	for(var i=startRow; i<endRow; i++)
+	{
+		this.dsFileList.set_filterstr("PK1=='" + (this.dsPjActAction.getColumn(i, "ACT_ITEM_ID")||('TEMP_KEY_' + Ex.util.getSession('gvUserId'))) +
+									  "' && PK2=='" + this.dsPjActAction.getColumn(i, "ACT_ID") + "'");
+									  
+		trace("i=" + i + " this.dsFileList.rowcount : " + this.dsFileList.rowcount);
+		if(this.dsFileList.rowcount == 1)
+		{
+			this.dsPjActAction.setColumn(i, "ORG_FILE_NM", this.dsFileList.getColumn(0, "FILE_NM"));
+		}
+		else if(this.dsFileList.rowcount > 1)
+		{
+			this.dsPjActAction.setColumn(i, "ORG_FILE_NM", this.dsFileList.getColumn(0, "FILE_NM") + " 외 " + (this.dsFileList.rowcount-1) + "건");
+		}
+		else
+		{
+			this.dsPjActAction.setColumn(0, "ORG_FILE_NM", "");
+		}		
+	}
+	
+	this.dsPjActAction.set_updatecontrol(true);
+	this.dsPjActAction.set_enableevent(true);
+
+	this.dsFileList.set_filterstr("");
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnMeetSearchPop" :
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ0600_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ0600_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title		: "회의 검색 팝업",
+					pSelType	: 'S',
+					pPjtId		: this.dsCond.getColumn(0, "PJT_ID")
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"autosize"				// <--- width/height/modeless(프레임 처리 옵션)
+			);
+			break;
+
+		case "btnAdd" : 	// 저장
+			var nRow = this.dsPjActAction.setInsertRow();
+			this.dsPjActAction.setColumn(nRow, "ACT_ID", Ex.util.getUniqueId("ACT_ID_"));
+			this.dsPjActAction.setColumn(nRow, "ACT_ITEM_ID", this.dsPjActionItem.getColumn(0, "ACT_ITEM_ID"));
+			break;
+
+		case "btnDelete" : 	// 삭제
+			this.fnDelete(this.dsPjActAction);
+			break;
+
+		case "btnSave" : 	// 저장
+			// validation
+			if( this.fnCheckValidate() )
+			{
+				var param = {
+						id : "saveConfirm"
+					  , msg : "10003"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+			break;
+
+		case "btnClose" : 	// 닫기
+			this.isCloseBtnClick = true;
+			Ex.core.pclose(this, this.saveFlg);
+			break;
+	}
+}
+
+this.cboOnItemChanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if (e.postvalue == "30")
+	{
+		this.divContents.form.calCloseDate.set_value(Ex.util.today());
+	}
+};
+
+this.grdOnCellClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	obj.dropdownCalendar();
+	obj.dropdownCombo();
+};
+
+this.grdOnExpandUp = function(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo)
+{
+	if (e.cell == obj.getBindCellIndex("body","ACT_USER_NM"))
+	{
+		Ex.core.popup(
+			this,
+			'selectUserPop',
+			"fomm::FOMM0000_P01.xfdl",             		// <--- 팝업창 오픈 Url
+			{
+				title		: Ex.core.word('사용자 선택'),
+				pSelType	: 'S',
+				pType		: "name"
+			},											// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			"width=900,height=500"                  	// <--- width/height/modeless(프레임 처리 옵션)							
+		);
+	}
+	else if ( e.cell == obj.getBindCellIndex("body","ORG_FILE_NM"))
+	{
+		this.actFileParam.primaryKey1 = this.dsPjActionItem.getColumn(0, "ACT_ITEM_ID")||('TEMP_KEY_' + Ex.util.getSession('gvUserId'));
+		this.actFileParam.primaryKey2 = this.dsPjActAction.getColumn(this.dsPjActAction.rowposition, "ACT_ID")||'';
+		trace("this.actFileParam.primaryKey1 : " + this.actFileParam.primaryKey1 + "\nthis.actFileParam.primaryKey2 : " + this.actFileParam.primaryKey2);
+
+		Ex.core.popup(
+			this,
+			'comFilePop',
+			"comm::comFilePop.xfdl",             		// <--- 팝업창 오픈 Url
+			{
+				title			: Ex.core.word('실행활동 이력 - 첨부파일'),
+				pTargetFileDiv	: this.divFilesAct,
+				pDsObj			: this.dsFileList,
+				pIsSearch		: false,
+				pBtnConfVisible	: true,
+				pFileCfg		: this.actFileParam,
+				pFilterStr		: "PK1=='" + this.actFileParam.primaryKey1 + "' && PK2=='" + this.actFileParam.primaryKey2 + "'"
+			},											// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			"autosize,bCloseButton=false"				// <--- width/height/modeless(프레임 처리 옵션)
+		);
+	}
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(obj.id == "dsPjActAction")
+	{
+		if(e.columnid == "ACT_STATUS_CD")
+		{
+			if(e.newvalue == "AITM_PROC_STS_CD02" && this.divContents.form.cboActCd.value != "AITM_PROC_STS_CD02" )
+			{
+				var oParam = {id : "alertCboActCdStsI", msg : "활동이력이 진행중이면 실행상태가 진행중으로 변경됩니다.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return false;
+			}
+		}
+	}
+	obj.setUpdateRow(e);
+};
+
+this.onBeforeClose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	if(!this.isCloseBtnClick) if(this.saveFlg == "Y") this.getOwnerFrame()._formObj.fnSearch();
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContents.form.edtPjtName" propid="value" datasetid="dsPjActionItem" columnid="PJT_NAME"/>
+      <BindItem id="item1" compid="divContents.form.edtTitle" propid="value" datasetid="dsPjActionItem" columnid="TITLE"/>
+      <BindItem id="item2" compid="divContents.form.txaContents" propid="value" datasetid="dsPjActionItem" columnid="CONTENTS"/>
+      <BindItem id="item3" compid="divContents.form.calReqDate" propid="value" datasetid="dsPjActionItem" columnid="REQ_DATE"/>
+      <BindItem id="item4" compid="divContents.form.calCloseDate" propid="value" datasetid="dsPjActionItem" columnid="CLOSE_DATE"/>
+      <BindItem id="item5" compid="divContents.form.calRegStime" propid="value" datasetid="dsPjActionItem" columnid="REG_STIME"/>
+      <BindItem id="item6" compid="divContents.form.calDueDate" propid="value" datasetid="dsPjActionItem" columnid="DUE_DATE"/>
+      <BindItem id="item7" compid="divContents.form.cboActCd" propid="value" datasetid="dsPjActionItem" columnid="ACTION_CD"/>
+      <BindItem id="item10" compid="divContents.form.edtActItemNo" propid="value" datasetid="dsPjActionItem" columnid="ACT_ITEM_NO"/>
+      <BindItem id="item8" compid="divContents.form.edtMeetId" propid="value" datasetid="dsPjActionItem" columnid="MEET_ID"/>
+    </Bind>
+  </Form>
+</FDL>

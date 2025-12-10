@@ -1,0 +1,812 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comPop" scrollbars="autoboth" left="0" width="375" top="0" height="283" onload="form_onload" onbeforeclose="form_onbeforeclose" scrollbarsize="20" onsize="comPop_onsize" onkeyup="comPop_onkeyup">
+    <Layouts>
+      <Layout>
+        <Div id="divUrl" taborder="0" left="0" top="50" style="border:0 none #808080ff ;" scrollbars="autovert" right="0" bottom="0" text="">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Static id="stcTitle" taborder="1" left="0" top="5" height="40" right="0" cssclass="sta_POP_msg_title"/>
+        <Static id="stcBgLineTop" taborder="2" left="0" top="0" height="5" right="0" background="#4580ff"/>
+        <Static id="stcBgLineTop00" taborder="3" left="20" top="44" height="1" right="20" background="#dfdfdf"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)	︰ 공통
+* 메뉴(경로)	︰ 공통관리 > 플랫폼 > 공통
+* 화면 설명	︰ 공통 팝업
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.00
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일       	작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.SR_COMM_SCRN_ARR = ["sr::SR0030_P01.xfdl"];	//, "sr::SR0010_D02.xfdl"
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+// 화면 로드 완료 후 동작할 기능 구현
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// title 드래그용 div 생성
+	var divTopDrag = new Div();
+	divTopDrag.init('divTopDrag', 0, 0, null, this.stcTitle.getOffsetBottom(), 0, null);
+	divTopDrag.bringToFront();
+	this.addChild('divTopDrag', divTopDrag);
+	divTopDrag.show();
+	
+	var frame = this.getOwnerFrame();
+
+	if(frame.url == "debugPopup")
+	{
+		Ex.core.popup(
+			this.getOwnerFrame(),					// <--- 팝업 실행 스코프
+			"_pDebugPop",		                   	// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+			"comm::datasetList.xfdl",             	// <--- 팝업창 오픈 Url
+			{
+				title: 'debug',
+				formObj : frame.formObj,
+				parentObj : obj
+			},										// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			"width=1080,height=670,modeless=true"	// <--- width/height/modeless(프레임 처리 옵션)
+		);
+		this.close();
+		return;
+	}
+	else
+	{
+		if(this.divUrl.form.vscrollbar)
+		{
+			this.divUrl.form.vscrollbar.set_scrollbarsize(20);
+		}
+		this.divUrl.form.vscrollbar.trackbar.set_border("6 solid #ffffff, 6 solid #ffffff, 6 solid #ffffff, 10 solid #ffffff");
+		
+		var frame = this.getOwnerFrame();
+		frame.size = {nW : frame.width , nH : frame.height};
+
+		//Ex.util.setWait(this, true);
+		
+		var sTitle = frame.title;
+		var sUrl = frame.url;
+		var screenId = ' - (' + sUrl.substring(sUrl.indexOf('::')+2, sUrl.indexOf('.xfdl')) + ')';
+
+		if( frame._isOpen == true) 
+		{
+			if(screenId == " - (JasperReportViewerPop)")
+			{
+				frame.set_titletext("Report");
+			}
+			else
+			{
+				if( Ex.isEmpty(sTitle) ) sTitle = "Popup";
+				frame.set_titletext(sTitle + screenId);
+				
+				if( system.navigatorname != "nexacro" )
+					frame.popWindow = parent.window;
+			}
+		}
+		else
+		{
+			if(screenId == " - (JasperReportViewerPop)")
+			{
+				frame.set_titletext("Report");
+				this.stcTitle.set_text("Report");
+			}
+			else
+			{
+				if( Ex.isEmpty(sTitle) ) sTitle = "Popup";
+				frame.set_titletext(sTitle + screenId);
+				this.stcTitle.set_text(sTitle + screenId);
+			}
+		}
+
+		this.divUrl._formObj = this;
+		this.divUrl.form.id = "_PopupPageForm";
+		
+		//alert("this.getOwnerFrame().opener.id : " + this.getOwnerFrame().opener.id + " this.getOwnerFrame().opener.parent.id : " + this.getOwnerFrame().opener.parent.id);
+
+		if(!this.getOwnerFrame().opener)
+		{
+			this.getOwnerFrame().opener	= this.opener;
+		}
+		
+		if(this.getOwnerFrame().opener != "[object ChildFrame]")
+		{
+			if(frame.url != "sr::SR0000_W.xfdl")
+			{
+				var wfProcDivForm;
+			
+				if(this.SR_COMM_SCRN_ARR.indexOf(sUrl) == -1)
+				{
+					if(this.getOwnerFrame().opener.parent.id.indexOf("divFormWF_PROC_") > -1)
+					{
+						//alert("333333333 IF " + this.getOwnerFrame().opener.parent.url);
+						if(this.getOwnerFrame().opener.parent == "[object Div]")
+						{
+							if(this.getOwnerFrame().opener.parent.url == sUrl)
+							{
+								wfProcDivForm = this.getOwnerFrame().opener.parent.form;
+							}
+							else
+							{
+								if(this.getOwnerFrame().opener.parent.form.reqInfo)
+								{
+									this.divUrl.form.reqInfo = this.getOwnerFrame().opener.parent.form.reqInfo;
+								}
+							}
+						}
+						
+						this.divUrl.set_async(false);
+					}
+					else if(this.getOwnerFrame().opener.parent.id == "divUrl")
+					{
+						//alert("ELSE IF " + this.getOwnerFrame().opener.parent.url);
+						
+						this.divUrl.set_async(false);
+						
+						//alert("this.getOwnerFrame().opener.parent.url : " + this.getOwnerFrame().opener.parent.url);
+						
+						if(this.getOwnerFrame().opener.parent.url == "sr::SR0000_W.xfdl")
+						{
+							//alert("IF 22222");
+							//alert(this.getOwnerFrame().opener.parent.form.dsFormInfo.saveXML());
+							
+							var wfProcCd = this.getOwnerFrame().opener.parent.form.dsFormInfo.getColumn(0, "WF_PROC_CD");
+							
+							if(this.getOwnerFrame().opener.parent.form.divForm.form["divForm" + wfProcCd])
+							{
+								//alert(this.getOwnerFrame().opener.parent.form.divForm.form["divForm" + wfProcCd].url + " wfProcCd : " + wfProcCd);
+								wfProcDivForm = this.getOwnerFrame().opener.parent.form.divForm.form["divForm" + wfProcCd].form;
+							}
+						}
+						else
+						{
+							//alert("ELSE 22222");
+							if(this.getOwnerFrame().opener.parent.form)
+							{
+								if(this.getOwnerFrame().opener.parent.form.reqInfo)
+								{
+									wfProcDivForm = this.getOwnerFrame().opener.parent.form;
+								}
+							}
+						}
+					}
+				}
+				
+				if(wfProcDivForm)
+				{
+					this.getOwnerFrame().reqInfo	= wfProcDivForm.reqInfo;
+					this.getOwnerFrame().dsWfProc	= wfProcDivForm.dsWfProc;
+					this.divUrl.form.reqInfo		= wfProcDivForm.reqInfo;
+					this.divUrl.form.dsWfProc		= wfProcDivForm.dsWfProc;
+				}
+
+				this.divUrl.set_url(sUrl);
+				
+				if(this.SR_COMM_SCRN_ARR.indexOf(sUrl) == -1)
+				{
+					var wfProcDivForm;
+
+					if(this.getOwnerFrame().opener.parent.id.indexOf("divFormWF_PROC_") > -1)
+					{
+						if(this.getOwnerFrame().opener.parent == "[object Div]")
+						{
+							if(this.getOwnerFrame().opener.parent.url == sUrl)
+							{
+								wfProcDivForm = this.getOwnerFrame().opener.parent.form;
+							}
+						}
+					}
+					else if(this.getOwnerFrame().opener.parent.id == "divUrl")
+					{
+						if(this.getOwnerFrame().opener.parent.url == "sr::SR0000_W.xfdl")
+						{
+							var wfProcCd = this.getOwnerFrame().opener.parent.form.dsFormInfo.getColumn(0, "WF_PROC_CD");
+							
+							if(this.getOwnerFrame().opener.parent.form.divForm.form["divForm" + wfProcCd])
+							{
+								wfProcDivForm = this.getOwnerFrame().opener.parent.form.divForm.form["divForm" + wfProcCd].form;
+
+								if(this.getOwnerFrame().opener.parent.form.divForm.form["divForm" + wfProcCd].url == sUrl)
+								{
+									for(var i = 0; i < wfProcDivForm.all.length; i++)
+									{
+										if(wfProcDivForm.all[i].toString().toUpperCase() == "[OBJECT DATASET]") 
+										{
+											if(!this.divUrl.form[wfProcDivForm.all[i].id])
+											{
+												var dsObj = new Dataset;
+												dsObj.set_name(wfProcDivForm.all[i].id);
+												this.divUrl.form.addChild(wfProcDivForm.all[i].id, dsObj);
+											}
+											trace("wfProcDivForm.all[i].id : " + wfProcDivForm.all[i].id);
+											this.divUrl.form[wfProcDivForm.all[i].id].loadXML(wfProcDivForm.all[i].saveXML());
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+				if(this.SR_COMM_SCRN_ARR.indexOf(sUrl) == -1)
+				{
+					if(this.getOwnerFrame().opener.parent.id == "divUrl")
+					{
+						if(this.getOwnerFrame().opener.parent.url == "sr::SR0000_W.xfdl")
+						{
+							var fileNm		= sUrl.split("::")[1]||'';
+							var scrnType	= (fileNm.split("_")[1]||'').substr(0, 1);
+							
+							if(scrnType == "D")
+							{
+								var formWidth = nexacro.toNumber(this.divUrl.form.getLayoutInfo("default", "width"));
+								var formHeight = nexacro.toNumber(this.divUrl.form.getLayoutInfo("default", "height"));
+								
+								trace("formWidth : " + formWidth + " formHeight : " + formHeight + " this.getOwnerFrame().height : " + this.getOwnerFrame().height);
+
+								this.getOwnerFrame().set_width(formWidth + 40);
+								this.getOwnerFrame().set_height(formHeight + 125);	//topTitle(40) + topEmpty(5) + bottom(60) + space(20)
+								this.divUrl.set_left(20);
+								this.divUrl.set_right(20);
+								this.divUrl.set_height(formHeight);
+								
+								var nTop    =  parseInt( (nexacro.getApplication().mainframe.height / 2) - Math.round(this.getOwnerFrame().height / 2) );
+								var nLeft	=  parseInt( (nexacro.getApplication().mainframe.width / 2) - Math.round(this.getOwnerFrame().width / 2) );
+								this.getOwnerFrame().set_top(nTop);
+								this.getOwnerFrame().set_left(nLeft);
+
+								//Button.init(strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]])
+								var btnClose = new Button("btnClose", null, null, 80, 32, 20, 14);
+								btnClose.set_cssclass("btn_WF_primary_close");
+								btnClose.set_visible(true);
+								btnClose.set_text("취소");
+								btnClose.addEventHandler("onclick", this.btnOpenMenu_onclick, this);
+
+								//저장 버튼
+								//Button.init(strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]])
+								var btnSaveTemp = new Button("btnSaveTemp", null, null, 80, 32, 105, 14);
+								btnSaveTemp.set_cssclass("btn_WF_primary_save");
+								btnSaveTemp.set_text(Ex.isNvl(this.getOwnerFrame().pSaveTempBtnText, "저장"));
+								btnSaveTemp.set_visible(false);
+								if(this.getOwnerFrame().pIsSaveTempBtn)	btnSaveTemp.set_visible(true);
+								
+								//접수 버튼
+								//Button.init(strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]])
+								var btnRev = new Button("btnRev", null, null, 80, 32, 190, 14);
+								btnRev.set_cssclass("btn_WF_primary_save");
+								btnRev.set_text(Ex.isNvl(this.getOwnerFrame().pRevBtnText, "접수"));
+								btnRev.set_visible(false);
+								if(this.getOwnerFrame().pIsRevBtn)	btnRev.set_visible(true);
+
+								//Div.init(strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]])
+								var divBottom = new Div("divBottom", 0, null, null, 60, 0, 0);
+								divBottom.set_cssclass("div_POP_msg_btnbg");
+								
+								var divBtnDiv = new Div("divBtnDiv", 20, null, null, 60, 20, 0);
+								divBtnDiv.show();
+
+								divBtnDiv.addChild("btnClose", btnClose);
+								btnClose.addEventHandler("onclick", this.fnCommOnclick, this);
+								btnClose.show();
+
+								divBtnDiv.addChild("btnSaveTemp", btnSaveTemp);
+								btnSaveTemp.addEventHandler("onclick", this.fnCommOnclick, this);
+								btnSaveTemp.show();
+								
+								divBtnDiv.addChild("btnRev", btnRev);
+								btnRev.addEventHandler("onclick", this.fnCommOnclick, this);
+								btnRev.show();
+								
+								divBottom.addChild("divBtnDiv", divBtnDiv);
+								
+								this.addChild("divBottom", divBottom);
+								divBottom.show();
+								
+								for(var i=0; i<this.divBottom.form.divBtnDiv.form.components.length; i++)
+								{
+									var comp = this.divBottom.form.divBtnDiv.form.components[i];
+									var strType = comp.toString().toUpperCase();
+									
+									if(strType == "[OBJECT BUTTON]")
+									{
+										var objSize = nexacro.getTextSize(comp.text, comp._getCurrentStyleInheritValue("font"));
+										//var nWidth = parseInt(objSize.nx) * 3.3333333333;
+										var nWidth = parseInt(objSize.nx) + 56;
+										//trace("[" + comp.text + "] width:[" + objSize.nx + "] nWidth:[" + nWidth + "]");
+										comp.set_width(nWidth);
+									}
+								}
+								Ex.util.setBtnAlign(this.divBottom.form.divBtnDiv, 'right', true);
+							}
+						}
+					}
+				}
+
+				var wfProcDivForm;
+				
+				if(this.SR_COMM_SCRN_ARR.indexOf(sUrl) == -1)
+				{
+					if(this.getOwnerFrame().opener.parent.id.indexOf("divFormWF_PROC_") > -1)
+					{
+						if(this.getOwnerFrame().opener.parent == "[object Div]")
+						{
+							if(this.getOwnerFrame().opener.parent.url == sUrl)
+							{
+								wfProcDivForm = this.getOwnerFrame().opener.parent.form;
+							}
+						}
+					}
+					else if(this.getOwnerFrame().opener.parent.id == "divUrl")
+					{
+						if(this.getOwnerFrame().opener.parent.url == "sr::SR0000_W.xfdl")
+						{
+							var wfProcCd = this.getOwnerFrame().opener.parent.form.dsFormInfo.getColumn(0, "WF_PROC_CD");
+							if(this.getOwnerFrame().opener.parent.form.divForm.form["divForm" + wfProcCd])
+							{
+								wfProcDivForm = this.getOwnerFrame().opener.parent.form.divForm.form["divForm" + wfProcCd].form;
+							}
+						}
+						else
+						{
+							if(this.getOwnerFrame().opener.parent.form)
+							{
+								if(this.getOwnerFrame().opener.parent.form.reqInfo)
+								{
+									wfProcDivForm = this.getOwnerFrame().opener.parent.form;
+								}
+							}
+						}
+					}
+				}
+				
+				if(wfProcDivForm)
+				{
+					if( !this.getOwnerFrame().opener.parent.form.divForm) {
+						trace('comPop >> divForm null');
+					}
+					else {
+						
+						if(this.getOwnerFrame().opener.parent.form.divForm.form["divForm" + wfProcCd].url == sUrl)
+						//if(this.getOwnerFrame().opener.parent.url == sUrl)
+						{
+							for(var i = 0; i < wfProcDivForm.all.length; i++)
+							{
+								if(wfProcDivForm.all[i].toString().toUpperCase() == "[OBJECT DATASET]") 
+								{
+									trace("wfProcDivForm.all[i].id : " + wfProcDivForm.all[i].id);
+									if(!this.divUrl.form[wfProcDivForm.all[i].id])
+									{
+										var dsObj = new Dataset;
+										dsObj.set_name(wfProcDivForm.all[i].id);
+										this.divUrl.form.addChild(wfProcDivForm.all[i].id, dsObj);
+									}
+									this.divUrl.form[wfProcDivForm.all[i].id].loadXML(wfProcDivForm.all[i].saveXML());
+								}
+							}
+						}
+					}
+					
+				}
+			}
+			else
+			{
+				this.divUrl.set_url(sUrl);
+			}
+		}
+		else
+		{
+			this.divUrl.set_url(sUrl);
+		}
+	}
+
+	if(this.parent.parent.form)
+	{
+		var workFrame = this.parent.parent.form;
+		if(workFrame.name == 'workFrame') {
+			if(workFrame.fnPopOnSize)
+				workFrame.fnPopOnSize(workFrame.getOffsetWidth(), workFrame.getOffsetHeight());
+		}
+	}
+}
+
+this.form_onbeforeclose = function(obj:Form, e:nexacro.CloseEventInfo)
+{
+	this.fn_destroyChart();
+}
+
+this.form_onkeydown = function(obj:Form, e:nexacro.KeyEventInfo)
+{
+	//trace("comPop this.form_onkeydown()~~~~~~~~~~~~~~");	
+	if(e.ctrlKey)
+	{
+		if(e.keycode == 192)  // ~
+		{
+			// 로컬, 개발만 기능허용
+			//var host = nexacro.getApplication().gvHost;
+			var host = nexacro.getApplication().xadl;
+			if( host.indexOf("localhost") > -1 || host.indexOf("127.0.0.1") > -1)
+			{
+				var dsDatasetList = Ex.util.xqueryDataset(this);
+				Ex.core.popup(
+					this,													// <--- 팝업 실행 스코프
+					"_pDebugSearchFormInfo",                         		// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+					"comm::datasetList.xfdl",								// <--- 팝업창 오픈 Url
+					{
+						title : "Dataset List",
+						Datasets : dsDatasetList
+					},														// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+					"width=1080,height=670, modeless=true, resizable=true"	// <--- width/height/modeless(프레임 처리 옵션)
+				);
+			}
+		}
+	}	
+}
+
+/***********************************************************************************
+ * common function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * callback function
+ ***********************************************************************************/
+ /***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "pSaveTempConfirm" :
+		case "pRevConfirm" :	//접수/저장 버튼 확인 후
+			var gubun = "";
+			if(mID == "pSaveTempConfirm")	gubun = "TEMP";
+			else if(mID == "pRevConfirm")	gubun = "REV";
+
+			this.dsRtn.setColumn(0, "SAVE_GUBUN", gubun);
+			this.dsRtn.setColumn(0, "OPINION", undefined);
+			this.dsRtn.setColumn(0, "RESULT", gubun);
+			
+			var wfProcDivForm;
+		
+			if(this.getOwnerFrame().opener.parent.id.indexOf("divFormWF_PROC_") > -1)
+			{
+				if(this.getOwnerFrame().opener.parent == "[object Div]")
+				{
+					if(this.getOwnerFrame().opener.parent.url == sUrl)
+					{
+						wfProcDivForm = this.getOwnerFrame().opener.parent.form;
+					}
+				}
+			}
+			else if(this.getOwnerFrame().opener.parent.id == "divUrl")
+			{
+				if(this.getOwnerFrame().opener.parent.url == "sr::SR0000_W.xfdl")
+				{
+					var wfProcCd = this.getOwnerFrame().opener.parent.form.dsFormInfo.getColumn(0, "WF_PROC_CD");
+
+					if(this.getOwnerFrame().opener.parent.form.divForm.form["divForm" + wfProcCd])
+					{
+						wfProcDivForm = this.getOwnerFrame().opener.parent.form.divForm.form["divForm" + wfProcCd].form;
+					}
+				}
+				else
+				{
+					if(this.getOwnerFrame().opener.parent.form)
+					{
+						if(this.getOwnerFrame().opener.parent.form.reqInfo)
+						{
+							wfProcDivForm = this.getOwnerFrame().opener.parent.form;
+						}
+					}
+				}
+			}
+			
+			if(wfProcDivForm)
+			{
+				for(var i = 0; i < this.divUrl.form.all.length; i++)
+				{
+					if(this.divUrl.form.all[i].toString().toUpperCase() == "[OBJECT DATASET]") 
+					{
+						trace("this.divUrl.form.all[i].id : " + this.divUrl.form.all[i].id);
+						wfProcDivForm.all[i].loadXML(this.divUrl.form[this.divUrl.form.all[i].id].saveXML());
+					}
+				}
+			}
+			Ex.core.pclose(this, this.dsRtn.saveXML());
+			break;
+	}
+}
+
+/***********************************************************************************
+ * user function
+ ***********************************************************************************/
+this.nToastCnt = 0;  // ID 및 Top 처리용
+this.arrToast = []; // Top 처리시 참조용
+
+this.fnSetMsgToast = function(strMsg, optArr)
+{
+	var tID = '';
+	if( Ex.isEmpty(strMsg) ) strMsg = '';
+	if( Ex.isEmpty(tID) ) tID = this.name+'_pToast' + this.nToastCnt;
+	
+	var pToast = this[tID];
+	
+	// option NVL
+	if( Ex.isEmpty(optArr) )	optArr = {};
+	var displaySecond 	= Ex.isNvl(optArr.displaySecond, 2);
+	var usedecorate 	= Ex.isNvl(optArr.usedecorate, true);
+	var toastType 		= Ex.isNvl(optArr.toastType, 'N');
+	
+	// CSS setting
+	var css = '';
+	switch(toastType.toUpperCase())
+	{
+		case "S" :	css = "sta_TOAST_success";	break;		// SUCCESS
+		case "W" :	css = "sta_TOAST_warning";	break;		// WARNING
+		case "E" :	css = "sta_TOAST_error";	break;		// ERROR
+		default	:	css = "sta_TOAST_normal";	break;		// NORMAL
+	}
+	
+	// Toast begin
+	var MIN_DISPLAY_SEC = 2;
+	var MAX_DISPLAY_SEC = 10;
+	var MIN_WIDTH = 250;
+	var MAX_WIDTH = 800;
+	
+	var tempStatic = new Static("tempStatic", 0, 0, 0, 0, null, null);
+	tempStatic.set_cssclass(css);
+	
+	if( usedecorate )
+	{
+		tempStatic.set_usedecorate(true);
+	}
+	
+	tempStatic.set_text(strMsg);
+
+	this.addChild("tempStatic", tempStatic);
+	tempStatic.show();
+	
+	// toast width
+	var objStaticSize = nexacro.getTextSize(tempStatic.getDisplayText(), tempStatic._getCurrentStyleInheritValue("font"));
+	var objmax = parseInt(objStaticSize.nx) + 50;
+	if(objmax <= MIN_WIDTH)	objmax = MIN_WIDTH;
+	if(objmax >= MAX_WIDTH)	objmax = MAX_WIDTH;
+	
+	this.removeChild("tempStatic", tempStatic);
+	tempStatic.destroy();
+	
+	var nLeft = (this.getOffsetWidth() / 2) - (objmax / 2);
+	var nTop = 20 + (this.nToastCnt * 36);
+	this.nToastCnt++;
+	var oDiv = new Div(tID, nLeft, nTop, objmax, 36);
+	oDiv.set_async(false);
+
+	this.addChild(tID, oDiv);
+	oDiv.msg = strMsg;
+	
+	// toast display time
+	displaySecond = nexacro.toNumber(displaySecond, 0);
+	if(displaySecond == MIN_DISPLAY_SEC)	displaySecond = MIN_DISPLAY_SEC;	// defualt 2초
+	if(displaySecond > MAX_DISPLAY_SEC)		displaySecond = MAX_DISPLAY_SEC;	// max 10초
+	
+	oDiv.displaySecond	= displaySecond;	// 표기할 시간(초)
+	oDiv.isDecorate 	= usedecorate;		// default usedecorate true
+	oDiv.toastType 		= toastType;		// defualt Type 'N'	- Normal
+	
+	oDiv.set_url("comm::comMsg.xfdl");
+	oDiv.show();
+	
+	this.arrToast.push(oDiv);
+}
+
+// Toast message 삭제용
+this.fnSetDestroy = function(oDiv)
+{
+	//trace("comPop this.fnSetDestroy()");
+	var rtn = this.removeChild(this.arrToast[0].id);
+	var bSucc = this.arrToast[0].destroy();
+	
+	this.arrToast.splice(0,1);
+	if( this.arrToast.length == 0 ) this.nToastCnt = 0;
+}
+
+this.fn_destroyChart = function()
+{
+	var arrChartInfo = this.getOwnerFrame().form.arrChart;
+	if( arrChartInfo )
+	{
+		for(var i=0;i<arrChartInfo.length;i++)
+		{
+			var funcNm = arrChartInfo[i];
+			if( window[funcNm] ) window[funcNm] = null;
+		}
+	}
+	arrChartInfo = [];
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.id)
+	{
+		case "btnSaveTemp" :
+		case "btnRev" :
+			var rtn = this.divUrl.form.isUpdateForm();
+			
+			var isChg = this.getOwnerFrame().pIS_CHG || false;
+			
+			if(obj.id == "btnSaveTemp")
+			{
+				if(!isChg && !rtn)
+				{
+					 var param = {
+						  id    : "saveTempAlertI"		//fnMsgAfter에서 식별자로 사용되는 ID
+						, msg   : "변경된 내용이 없습니다."	//메시지 내용
+						, arrparam : [""]           	//메시지의 변수에 들어갈 실제값
+						, msgtype : "I"             	//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+					};
+					Ex.core.alert(this, param);
+					return;
+				}
+			}
+
+			var gubun = "";
+			if(obj.id == "btnSaveTemp")	gubun = "SaveTemp";
+			else if(obj.id == "btnRev")	gubun = "Rev";
+
+			rtn = this.divUrl.form.fnSaveCheck(gubun == "Rev" ? true : false);
+			if(!rtn) return false;
+
+			var param =
+			{
+				  id		: "p" + gubun + "Confirm"
+				, msg		: "10008"
+				, arrparam	: [obj.text]
+				, msgtype	: "I"
+			};
+			Ex.core.confirm(this, param);
+			break;
+
+		case "btnClose" :
+			Ex.core.pclose(this, this.getOwnerFrame().saveFlg);
+			break;
+	}
+}
+
+/***********************************************************************************
+ * Ex.maximize 기능추가
+ ***********************************************************************************/
+if( !Ex.maximize )
+{
+	/* 모달창일경우 창 최대화 기능을 지원합니다.  */
+	/* open(modeless=true)창일경우는 팝업 호출시 resizable=true를 사용하도록 가이드하세요.*/
+	Ex.maximize = function(scope)
+	{
+		var frame = scope.getOwnerFrame();
+		if( !frame._isOpen )
+		{
+			frame.isMaxSize = !frame.isMaxSize;
+			if( frame.isMaxSize )
+				frame.move(0,0,nexacro.getApplication().mainframe.width, nexacro.getApplication().mainframe.height);
+			else
+				frame.move(0,0,frame.size.nW,frame.size.nH);
+		}
+	}
+}
+
+this.onClose = function(obj:nexacro.Form, e:nexacro.CloseEventInfo)
+{
+	//trace("this.onClose() this.getOwnerFrame().url : " + this.getOwnerFrame().url);
+	
+	if(this.getOwnerFrame().url == "debugPopup")
+	{
+		Ex.core.popup(
+			this,									// <--- 팝업 실행 스코프
+			"_pDebugPop",		                   	// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+			"comm::datasetList.xfdl",             	// <--- 팝업창 오픈 Url
+			{
+				title: "debug",
+				formObj : this.getOwnerFrame().formObj,
+			},										// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			"width=1080,height=670,modeless=true"	// <--- width/height/modeless(프레임 처리 옵션)
+		);
+	}
+};
+
+this.popupLoadComplete = function(form, divContObj:nexacro.Div, divBtnObj:nexacro.Div)
+{
+	if( Ex.isEmpty(divContObj) )
+	{
+		divContObj = this.divContent;
+	}
+	
+	if( Ex.isEmpty(divBtnObj) )
+	{
+		divContObj = this.divBottom;
+	}
+	
+	//trace("this.divUrl.getOffsetHeight() : " + this.divUrl.getOffsetHeight());
+	//trace("form.divContent.getOffsetHeight() : " + form.divContent.getOffsetHeight());
+	//trace("form.divBtn.getOffsetHeight() : " + form.divBtn.getOffsetHeight());
+
+	var empty = 5;
+	var cacuH = this.divUrl.getOffsetHeight() - divBtnObj.getOffsetHeight() - empty;	//5는 여백
+	//trace("cacuH : " + cacuH);
+	divContObj.set_bottom(null);
+	divContObj.set_height(cacuH);
+	divBtnObj.set_bottom(null);
+	divBtnObj.set_top(divContObj.height + empty);
+	this.divUrl.form.resetScroll();
+	//this.resetScroll();
+	this.getOwnerFrame().form.resetScroll();	
+}
+
+this.comPop_onkeyup = function(obj:nexacro.Form,e:nexacro.KeyEventInfo)
+{
+	//trace("this.comPop_onkeyup()");
+	//로그인 시 팀명이 비어있어 '나의정보관리' 화면으로 넘어온 경우 esc 차단
+	if( this.getOwnerFrame().url == "fomm::FOMM0000_P02.xfdl" && this.getOwnerFrame().pEscYn == 'N' ) return;
+	
+	if(e.keycode == 27)
+	{	// ESC 닫기
+		var confirmby_msgCallback = function(mid , varValue)
+		{
+			if(varValue) {
+				if(this.divUrl.form.fnClose) {
+					this.divUrl.form.fnClose();
+				}
+				else {
+					Ex.core.pclose(this.divUrl);
+				}
+			}
+		};
+		
+		var param  = {
+			id	: "pConfirmby",
+			msg	: "팝업창을 닫으시겠습니까?",  // 혹은 메시지 코드
+			arrparam : [],
+			callbackfunc: confirmby_msgCallback,
+		};				
+		Ex.core.confirmby(this, param);
+		
+		
+	}
+};]]></Script>
+    <Objects>
+      <Dataset id="dsRtn">
+        <ColumnInfo>
+          <Column id="SAVE_GUBUN" type="STRING" size="256"/>
+          <Column id="OPINION" type="STRING" size="256"/>
+          <Column id="RESULT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

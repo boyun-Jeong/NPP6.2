@@ -1,0 +1,552 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM0540_W" left="0" top="0" width="1840" height="720" onload="form_onload" titletext="즉시알림발송">
+    <Layouts>
+      <Layout width="1840" height="720">
+        <Div id="divUser" taborder="0" top="0" right="0" bottom="0" width="22%">
+          <Layouts>
+            <Layout>
+              <Static id="Static21" taborder="0" text="수신자 목록" cssclass="sta_WF_gridTitle" left="0" top="0" width="150" height="24"/>
+              <Static id="Static00_00_00" taborder="1" left="0" top="24" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Grid id="grdUserList" taborder="2" binddataset="dsUserList" cellsizingtype="col" autofittype="col" left="0" top="Static00_00_00:0" right="0" bottom="0" cssclass="grd_WF_normal" autoupdatetype="none" onlbuttondown="grdOnCellClick">
+                <Formats>
+                  <Format id="multiSel">
+                    <Columns>
+                      <Column size="40"/>
+                      <Column size="48"/>
+                      <Column size="100"/>
+                      <Column size="90"/>
+                      <Column size="150"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="No."/>
+                      <Cell col="2" text="사번(ID)"/>
+                      <Cell col="3" text="성명"/>
+                      <Cell col="4" text="부서명"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell displaytype="checkboxcontrol" text="bind:CHK" edittype="checkbox"/>
+                      <Cell col="1" expr="currow+1"/>
+                      <Cell col="2" text="bind:USER_ID" edittype="none"/>
+                      <Cell col="3" text="bind:USER_NM" edittype="none"/>
+                      <Cell col="4" text="bind:DEPT_NM" edittype="none" textAlign="left"/>
+                    </Band>
+                  </Format>
+                  <Format id="singleSel">
+                    <Columns>
+                      <Column size="100"/>
+                      <Column size="90"/>
+                      <Column size="140"/>
+                      <Column size="150"/>
+                      <Column size="100"/>
+                      <Column size="150"/>
+                      <Column size="107"/>
+                      <Column size="70"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="사번(ID)"/>
+                      <Cell col="1" text="성명"/>
+                      <Cell col="2" text="소속명"/>
+                      <Cell col="3" text="부서명"/>
+                      <Cell col="4" text="직급"/>
+                      <Cell col="5" text="직책(역할)"/>
+                      <Cell col="6" text="내선번호"/>
+                      <Cell col="7" text="상태"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:USER_ID" edittype="none"/>
+                      <Cell col="1" text="bind:USER_NM" edittype="none"/>
+                      <Cell col="2" text="bind:CO_NM" edittype="none"/>
+                      <Cell col="3" text="bind:DEPT_NM" edittype="none"/>
+                      <Cell col="4" text="bind:POS_NM" edittype="none"/>
+                      <Cell col="5" text="bind:ROLE_NM" edittype="none"/>
+                      <Cell col="6" text="bind:TELNUM" edittype="none"/>
+                      <Cell col="7" text="bind:USE_YN"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Div id="divGrdTopBtn" taborder="3" height="24" visible="true" isButtonGroup="true" top="0" right="0" width="125">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+                    <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTop" taborder="2" left="0" top="0" height="333" right="divUser:10">
+          <Layouts>
+            <Layout>
+              <Static id="stcMsgBg" taborder="15" cssclass="sta_WF_inputBg" left="0" top="66" height="34" right="0" visible="false"/>
+              <Static id="Static01_01" taborder="10" cssclass="sta_WF_inputBg" left="0" top="33" height="34" right="0"/>
+              <Static id="Static01" taborder="0" cssclass="sta_WF_inputBg" left="0" top="0" height="34" right="0"/>
+              <Static id="stcTitle" taborder="1" text="알림 이름" cssclass="sta_WF_inputTitle_E" left="0" top="0" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcSendUserInfo" taborder="3" text="발신자" cssclass="sta_WF_inputTitle" left="50%" top="0" width="130" height="34" style="align:left middle;"/>
+              <Edit id="edtTitle" taborder="2" left="stcTitle:5" top="5" height="24" cssclass="edt_WF_normal" right="stcSendUserInfo:5" validationGroup="input01" text="" validation="알림이름;NULL"/>
+              <Static id="stcSendTypeCd" taborder="5" text="통보매체" cssclass="sta_WF_inputTitle_E" left="0" top="33" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcSendUserInfoI" taborder="4" left="stcSendUserInfo:5" top="5" height="20" right="5"/>
+              <Static id="stcRecvDiv" taborder="11" text="수신구분" cssclass="sta_WF_inputTitle" left="50%" top="33" width="130" height="34" style="align:left middle;"/>
+              <CheckBoxSet id="chkSetSendTypeCd" taborder="6" left="stcSendTypeCd:5" top="38" height="24" right="stcRecvDiv:5" innerdataset="dsSendTypeCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" direction="horizontal" cssclass="chk_WF_normal"/>
+              <Static id="stcMsgConts" taborder="7" text="알림 내용" cssclass="sta_WF_inputTitle_E" left="0" top="66" width="130" style="align:left middle;" bottom="0"/>
+              <Static id="stcMsgContsBg" taborder="8" cssclass="sta_WF_inputBg" left="129.00" top="66" right="0" bottom="0"/>
+              <TextArea id="txaMsgConts" taborder="9" left="stcMsgConts:5.00" top="71" right="5" bottom="5" validationGroup="input01" text="" validation="알림 내용;NULL"/>
+              <Button id="btnSend" taborder="12" text="발송" top="38" height="24" right="5" onclick="fnCommOnclick" cursor="pointer" width="57"/>
+              <Radio id="rdoRecvDiv" taborder="13" left="stcRecvDiv:5" top="38" height="24" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" columncount="-1" rowcount="-1" cssclass="rdo_WF_normal" right="btnSend:5" index="0" text="수신자 목록" value="USER" onitemchanged="rdoOnItemChanged">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">USER</Col>
+                      <Col id="datacolumn">수신자 목록</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">IT</Col>
+                      <Col id="datacolumn">IT지원부 전체</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Static id="stcMsgKind" taborder="14" text="공통 메세지" cssclass="sta_WF_inputTitle_E" left="0" top="66" width="130" height="34" style="align:left middle;" visible="false"/>
+              <Static id="stcEmpty" taborder="17" cssclass="sta_WF_inputTitle" left="50%" top="66" width="130" height="34" style="align:left middle;" visible="false"/>
+              <Combo id="cboMsgKind" taborder="16" text="" left="stcMsgKind:5.00" top="71" height="24" value="" index="-1" innerdataset="dsMsgKindCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" visible="false" cssclass="cbo_WF_normal" onitemchanged="cboOnItemChanged" width="178"/>
+              <Static id="stcMsgKindDesc" taborder="18" text="※ 공통 메세지 관리 (코드관리 &gt; 기준정보 &gt; 실시간알림발송 메시지 종류)" left="cboMsgKind:10" top="71" height="24" width="405" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBottom" taborder="1" left="0" top="338" right="divUser:10" bottom="0">
+          <Layouts>
+            <Layout>
+              <Static id="Static21" taborder="0" text="문자발송이력" cssclass="sta_WF_gridTitle" left="0" top="20" width="125" height="24"/>
+              <Static id="sta_listCnt" taborder="1" left="Static21:0" top="20" width="55" height="21" countDataset="dsFommNotiSendMtHist"/>
+              <Static id="Static00_00_00" taborder="2" left="0" top="44" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Grid id="grdFommNotiSendMtHist" taborder="3" binddataset="dsFommNotiSendMtHist" cellsizingtype="col" autofittype="col" left="0" top="54" right="0" bottom="0" cssclass="grd_WF_normal" autoupdatetype="none" onexpandup="divTopList_grdFommNotiSendMtHist_onexpandup">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48" band="left"/>
+                      <Column size="220"/>
+                      <Column size="90"/>
+                      <Column size="70"/>
+                      <Column size="150"/>
+                      <Column size="340"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="40" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="No"/>
+                      <Cell col="1" text="알림이름"/>
+                      <Cell col="2" text="발송시간"/>
+                      <Cell col="3" text="발신자"/>
+                      <Cell col="4" text="통보 매체"/>
+                      <Cell col="5" text="알림 내용"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="expr:currow+1"/>
+                      <Cell col="1" text="bind:TITLE" textAlign="left"/>
+                      <Cell col="2" combodataset="dsMNG_Deptcd" combocodecol="DEPT_CD" combodatacol="DEPT_NM" text="bind:SEND_DTIME" calendardateformat="yyyy-MM-dd HH:mm:ss" calendareditformat="yyyy-MM-dd HH:mm:ss" displaytype="date"/>
+                      <Cell col="3" text="bind:SEND_USER_NM" combodataset="dsUse_YN" combocodecol="CARD_STATUS_CD" combodatacol="CARD_STATUS_CD_NM" textAlign="center"/>
+                      <Cell col="4" maskedittype="string" maskeditformat="##:##" text="bind:SEND_TYPE_NM" textAlign="left"/>
+                      <Cell col="5" text="bind:MSG_CONTS" textAlign="left" expandshow="show" expandsize="25"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="Static00_01" taborder="4" left="0" top="0" height="20" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="START_DATE" type="STRING" size="256"/>
+          <Column id="END_DATE" type="STRING" size="256"/>
+          <Column id="DateSearchType" type="STRING" size="256"/>
+          <Column id="SUBJECT" type="STRING" size="256"/>
+          <Column id="CONTENT" type="STRING" size="256"/>
+          <Column id="FROM_ID" type="STRING" size="256"/>
+          <Column id="TO_NAME" type="STRING" size="256"/>
+          <Column id="TO_PHONE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsFommNotiSendMt">
+        <ColumnInfo>
+          <Column id="SEND_NO" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="RECV_DIV_CD" type="STRING" size="256"/>
+          <Column id="SEND_USER_ID" type="STRING" size="256"/>
+          <Column id="SEND_USER_NM" type="STRING" size="256"/>
+          <Column id="SEND_DEPT_CD" type="STRING" size="256"/>
+          <Column id="SEND_DEPT_NM" type="STRING" size="256"/>
+          <Column id="SEND_TYPE_CD" type="STRING" size="256"/>
+          <Column id="MSG_CONTS" type="STRING" size="256"/>
+          <Column id="SEND_DTIME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsFommNotiSendMtHist">
+        <ColumnInfo>
+          <Column id="SEND_NO" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="SEND_USER_ID" type="STRING" size="256"/>
+          <Column id="SEND_USER_NM" type="STRING" size="256"/>
+          <Column id="SEND_DEPT_CD" type="STRING" size="256"/>
+          <Column id="SEND_DEPT_NM" type="STRING" size="256"/>
+          <Column id="SEND_TYPE_CD" type="STRING" size="256"/>
+          <Column id="SEND_TYPE_NM" type="STRING" size="256"/>
+          <Column id="MSG_CONTS" type="STRING" size="256"/>
+          <Column id="SEND_DTIME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsUserList"/>
+      <Dataset id="dsPopRtn"/>
+      <Dataset id="dsSendTypeCd"/>
+      <Dataset id="dsMsgKindCd"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ FOMM0540_W
+* 화면(명)		︰ 즉시알림발송
+* 메뉴(경로)	︰ 관리자 > 통지관리 > 즉시알림발송
+* 화면 설명	︰ 즉시알림발송
+* 작성자		︰ 정보윤
+* 작성일		︰ 2025.03. 13
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일		작성자    		이력
+*------------------------------------------------------------------
+* 2025.03. 13	정보윤			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.menuParam;
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+this.fnSearch = function()
+{
+	var sTranId = "select01";									// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0540W/select01";						// 서비스명
+    var sInDs = "dsCond=dsCond";								// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsFommNotiSendMtHist=dsFommNotiSendMtHist";	// 서버에서 수신할 데이타셋
+    var sArg = "";												// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSend = function()
+{
+	var sTranId = "send";																		// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0540W/save01";															// 서비스명
+    var sInDs = "dsCond=dsCond dsFommNotiSendMt=dsFommNotiSendMt:U dsUserList=dsUserList:A";	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsFommNotiSendMtHist=dsFommNotiSendMtHist";									// 서버에서 수신할 데이타셋
+    var sArg = "";																				// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 공통 저장 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--) objDs.deleteRow(i);
+
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+		case "send" :
+			this.dsFommNotiSendMt.clearData();
+			this.dsFommNotiSendMt.setAddRow();
+			this.dsFommNotiSendMt.setColumn(0, "SEND_USER_ID", Ex.util.getSession('gvUserId'));
+			this.dsFommNotiSendMt.setColumn(0, "SEND_USER_NM", Ex.util.getSession('gvUserNm'));
+			this.dsFommNotiSendMt.setColumn(0, "SEND_DEPT_CD", Ex.util.getSession('gvDeptCd'));
+			this.dsFommNotiSendMt.setColumn(0, "SEND_DEPT_NM", Ex.util.getSession('gvDeptNm'));
+			
+			this.menuParam = nexacro.getApplication().gvTmpMenuParam||'';
+			nexacro.getApplication().gvTmpMenuParam = undefined;
+
+			var recvDivCd = "";
+			
+			if(this.menuParam.indexOf("RECV_DIV_CD") > -1)
+			{
+				recvDivCd = this.menuParam.split("=")[1];
+			}
+			else
+			{
+				recvDivCd = "USER";
+			}
+			this.divTop.form.rdoRecvDiv.set_value(recvDivCd);
+
+			var evt = nexacro.ItemChangeEventInfo;
+			evt.postvalue = this.divTop.form.rdoRecvDiv.value;
+			this.rdoOnItemChanged(this.divTop.form.rdoRecvDiv, evt);
+			this.divTop.form.cboMsgKind.set_value(undefined);
+			this.divTop.form.stcSendUserInfoI.set_text(Ex.util.getSession('gvUserNm') + "(" + Ex.util.getSession('gvUserId') + ")");
+			this.divTop.form.edtTitle.setFocus();
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "sendUserPop" :
+			trace("varValue:\n" + varValue + " val:[" + varValue.indexOf("Dataset id=") + "]");
+			if(varValue.indexOf("Dataset id=") > -1)
+			{
+				this.dsUserList.loadXML(varValue);
+			}
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.fnSend();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.fnGetCmmCd();
+
+	this.fnSearch();		// 조회
+}
+
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['SEND_TYPE_CD',		'MSG_KIND_CD'		]	// 조회할 상위코드
+		,codeDiv: ['BASIS_CD',			'BASIS_CD'			]	// 조회할 코드의 업무구분
+		,optStr	: ['',					'SEL'				]	// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',					'Y'					]	// 사용여부
+		,filter	: ["CMM_CD!='SLIDE'",	""					]	// filterStr
+		,objDs	: [this.dsSendTypeCd,	this.dsMsgKindCd	]	// copy dataset
+	};
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util
+	this.divTop.form.cboMsgKind.set_index(0);
+};
+
+this.fnCheckValidate = function()
+{
+	var rtn = Ex.util.checkValidate(this.divTop, "input01");
+	if(!rtn) return false;
+
+	if( Ex.isEmpty(this.dsFommNotiSendMt.getColumn(0, "SEND_TYPE_CD")) )
+	{
+		var param = {
+			  id	: "essSendTypeCdAlertI"							//fnMsgAfter에서 식별자로 사용되는 ID
+			, msg	: "11001"										//메시지 내용
+			, arrparam : [this.divTop.form.stcSendTypeCd.text]		//메시지의 변수에 들어갈 실제값
+			, msgtype : "I"											//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+		};
+		Ex.core.alert(this, param);
+		return false;
+	}
+
+	if(this.dsFommNotiSendMt.getColumn(0, "RECV_DIV_CD") == "USER")
+	{
+		if(this.dsUserList.rowcount == 0)
+		{
+			var param = {
+				  id	: "essSendTypeCdAlertI"							//fnMsgAfter에서 식별자로 사용되는 ID
+				, msg	: "수신자 목록이 지정되지 않았습니다."		//메시지 내용
+				, arrparam : []											//메시지의 변수에 들어갈 실제값
+				, msgtype : "I"											//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+			};
+			Ex.core.alert(this, param);
+			return false;
+		}
+	}
+	return true;
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSend" :	//발송
+			if( this.fnCheckValidate() )
+			{
+				var param = {
+					  id : "saveConfirm"
+					, msg : "10003"
+					, arrparam : ['']
+					, msgtype : "I"
+				};
+				Ex.core.confirm(this, param);
+			}
+			break;
+
+		case "btnAdd" :		//추가
+			Ex.core.popup(
+				this,						// <--- 팝업 실행 스코프
+				"sendUserPop",				// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"fomm::FOMM0900_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : "수신자 등록",
+					pTgDs : this.dsUserList
+				},							// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"autosize"					// <--- width/height/autosize/modeless(프레임 처리 옵션)
+			);
+			break;
+	
+		case "btnDelete" :	//삭제
+			this.fnDelete(this.dsUserList);
+			break;
+	}
+}
+
+this.divTopList_grdFommNotiSendMtHist_onexpandup = function(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo)
+{
+	var colNm = nexacro.replaceAll(obj.getCellProperty("body", e.cell, "text"), "bind:", "");
+
+	Ex.core.popup(
+		this,								// <--- 팝업 실행 스코프
+		"alarmDetailPop",					// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+		"comm::comTextareaPop.xfdl",		// <--- 팝업창 오픈 Url
+		{
+			pRefDesc		: true,
+			title			: "알림 내용 상세보기",
+			isHeightChange	: false,
+			isEss			: false,
+			subTitle		: "알림 내용",
+			pMsg			: obj.getBindDataset().getColumn(obj.getDatasetRow(e.row), colNm),
+			pBtnConfUseYn	: "N"	//적용버튼 사용여부
+		},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+		//"autosize"				// <--- width/height/modeless(프레임 처리 옵션)
+		"width=600,height=300"
+	);
+};
+
+this.rdoOnItemChanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	if(e.postvalue == "USER")	//수신구분이 수신자 목록인 경우
+	{
+		this.divTop.form.stcMsgKind.set_visible(false);
+		this.divTop.form.cboMsgKind.set_visible(false);
+		this.divTop.form.stcMsgBg.set_visible(false);
+		this.divTop.form.stcMsgKindDesc.set_visible(false);
+		this.divTop.form.stcMsgConts.set_top(66);
+		this.divTop.form.stcMsgContsBg.set_top(66);
+		this.divTop.form.txaMsgConts.set_top(71);
+		//this.divUser.set_visible(true);
+		this.divUser.set_width("22%");
+		this.divTop.set_right("divUser:10");
+		this.divBottom.set_right("divUser:10");
+	}
+	else	//IT지원부 전체인 경우
+	{
+		this.divTop.form.stcMsgKind.set_visible(true);
+		this.divTop.form.cboMsgKind.set_visible(true);
+		this.divTop.form.stcMsgBg.set_visible(true);
+		this.divTop.form.stcMsgKindDesc.set_visible(true);
+		this.divTop.form.stcMsgConts.set_top(66+33);
+		this.divTop.form.stcMsgContsBg.set_top(66+33);
+		this.divTop.form.txaMsgConts.set_top(71+33);
+		//this.divUser.set_visible(false);
+		this.divUser.set_width(0);
+		this.divTop.set_right("divUser:0");
+		this.divBottom.set_right("divUser:0");
+	}
+};
+
+this.cboOnItemChanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if( !Ex.isEmpty(e.postvalue) )
+	{
+		this.dsFommNotiSendMt.setColumn(0, "MSG_CONTS", this.dsMsgKindCd.getColumn(e.postindex, "CMM_CD_DESC"));
+		this.divTop.form.txaMsgConts.setFocus();
+	}
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divTop.form.Static01" propid="value" datasetid="dsFommScheduleJobMt" columnid="TITLE"/>
+      <BindItem id="item1" compid="divTop.form.Static01" propid="text" datasetid="dsFommScheduleJobMt" columnid="REG_USER_INFO"/>
+      <BindItem id="item2" compid="divTop.form.edtTitle" propid="value" datasetid="dsFommNotiSendMt" columnid="TITLE"/>
+      <BindItem id="item3" compid="divTop.form.chkSetSendTypeCd" propid="value" datasetid="dsFommNotiSendMt" columnid="SEND_TYPE_CD"/>
+      <BindItem id="item4" compid="divTop.form.txaMsgConts" propid="value" datasetid="dsFommNotiSendMt" columnid="MSG_CONTS"/>
+      <BindItem id="item5" compid="divTop.form.stcSendUserInfoI" propid="text" datasetid="dsFommNotiSendMt" columnid="SEND_USER_INFO"/>
+      <BindItem id="item6" compid="divTop.form.rdoRecvDiv" propid="value" datasetid="dsFommNotiSendMt" columnid="RECV_DIV_CD"/>
+    </Bind>
+  </Form>
+</FDL>

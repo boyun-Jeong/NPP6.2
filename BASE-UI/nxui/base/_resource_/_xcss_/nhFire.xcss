@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XCSS version="1.1">
+  <CSSData><![CDATA[]]></CSSData>
+  <CSSData type="desktop"><![CDATA[/***************************************************************/
+/***** PROJECT NAME 	: NH손해보험			********/
+/***** XCSSNAME 	: nhFire			********/
+/***** Naming Rule 	: Component_GBN_cssname		********/
+/***** Naming Rule Ex 	: btn_NHFIRE_primary		********/
+/***** USING FRAME 	: FRAME구분 X			********/
+/***** CREATION DATES 	: 2023.04  			********/
+/***** DRAFTER 		: SPP TEAM			********/
+/***** AMENDER 		: SPP TEAM			********/
+/***** MOD DATES 	: 2023.04			********/
+/***************************************************************/
+
+/****************************************************************************************************************************/
+/*****************************************************   BUTTON START   *****************************************************/
+/****************************************************************************************************************************/
+/*
+ * btn_NHFIRE_tabOff
+ * TAB같은 button
+ */
+.Button.btn_NHFIRE_tabOff,
+.Button.btn_NHFIRE_tabOff[status=mouseover],
+.Button.btn_NHFIRE_tabOff[userstatus=pushed],
+.Button.btn_NHFIRE_tabOff[status=focused]
+{
+	background		: #ffffff;
+	-nexa-border 		: 1px solid #dfdfdf, 1px solid #dfdfdf, 2px solid #8a96a8, 1px solid #dfdfdf;
+	-nexa-text-align 	: center;
+	font			: bold 12px "KoPubL";
+	color 			: #383e4b;
+	cursor			: pointer;
+}
+
+
+/*
+ * btn_NHFIRE_tabOn
+ * TAB같은 button
+ */
+.Button.btn_NHFIRE_tabOn,
+.Button.btn_NHFIRE_tabOn[status=mouseover],
+.Button.btn_NHFIRE_tabOn[userstatus=pushed],
+.Button.btn_NHFIRE_tabOn[status=focused]
+{
+	background		: #4d85ec;
+	-nexa-border 		: 1px solid #4d85ec, 1px solid #4d85ec, 2px solid #8a96a8, 1px solid #4d85ec;
+	-nexa-text-align 	: center;
+	font			: bold 12px "KoPubL";
+	color 			: #ffffff;
+	cursor			: pointer;
+}
+
+
+/* 
+ * btn_NHFIRE_dashBoardLink
+ * Top frame 외부링크 버튼
+ */
+.Button.btn_NHFIRE_dashBoardLink,
+.Button.btn_NHFIRE_dashBoardLink[status=mouseover],
+.Button.btn_NHFIRE_dashBoardLink[status=focused],
+.Button.btn_NHFIRE_dashBoardLink[userstatus=pushed]
+{
+	background		: url('theme://MIRAE_IMAGE_SET/TPF/ma-spp-top-myboard.png') no-repeat right center;
+	-nexa-border		: 0px;
+	-nexa-text-align	: center;
+	-nexa-vertical-align	: middle;
+	color			: white;
+	cursor			: pointer;
+	font 			: 11px "KoPubL";
+	-nexa-padding		: 0px 0px 0px 20px;
+}
+
+
+.Button.btn_WF_hyperlink,
+.Button.btn_WF_hyperlink[status=focused],
+.Button.btn_WF_hyperlink[status=disabled]
+{
+	background		: transparent url('theme://MIRAE_IMAGE_SET/HOME/main-link.png') no-repeat left center;
+	-nexa-border		: 0px;
+	cursor			: pointer;
+	font 			: 11px "KoPubL";
+}
+.Button.btn_WF_hyperlink[status=mouseover],
+.Button.btn_WF_hyperlink[userstatus=pushed],
+.Button.btn_WF_hyperlink[userstatus=selected]
+{
+	background		: transparent url('theme://MIRAE_IMAGE_SET/HOME/spp-new_36-hover.png') no-repeat left center;
+}
+
+/* 
+ * btn_NHFIRE_cmtDel
+ * 댓글 삭제 버튼
+ */
+.Button.btn_NHFIRE_cmtDel,
+.Button.btn_NHFIRE_cmtDel[status=disabled],
+.Button.btn_NHFIRE_cmtDel[status=focused],
+.Button.btn_NHFIRE_cmtDel[status=mouseover],
+.Button.btn_NHFIRE_cmtDel[userstatus=pushed],
+.Button.btn_NHFIRE_cmtDel[userstatus=selected]
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/FOMM/bg_FOMM_toastError.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor 			: pointer;
+}
+
+/* 
+ * btn_NHFIRE_cmtSave
+ * 댓글 삭제 버튼
+ */
+.Button.btn_NHFIRE_cmtSave,
+.Button.btn_NHFIRE_cmtSave[status=disabled],
+.Button.btn_NHFIRE_cmtSave[status=focused],
+.Button.btn_NHFIRE_cmtSave[status=mouseover],
+.Button.btn_NHFIRE_cmtSave[userstatus=pushed],
+.Button.btn_NHFIRE_cmtSave[userstatus=selected]
+{
+    background      : transparent url('theme://SPP_IMAGE_SET/FOMM/bg_FOMM_toastSuccess.png') no-repeat center center;
+    -nexa-border        : 0px none;
+    cursor          : pointer;
+}
+
+/* 
+ * btn_NHFIRE_cmtSave
+ * 댓글 삭제 버튼
+ */
+.Button.btn_NHFIRE_cmtSave1,
+.Button.btn_NHFIRE_cmtSave1[status=disabled],
+.Button.btn_NHFIRE_cmtSave1[status=focused],
+.Button.btn_NHFIRE_cmtSave1[status=mouseover],
+.Button.btn_NHFIRE_cmtSave1[userstatus=pushed],
+.Button.btn_NHFIRE_cmtSave1[userstatus=selected]
+{
+    /*background      : transparent url('theme://SPP_IMAGE_SET/FOMM/bg_FOMM_toastSuccess.png') no-repeat center center;*/
+    -nexa-border		: 1px solid #000000;
+    font			: bold 9px 'KoPubL';
+    background			: #ffffff;
+    -nexa-text-align		: center;
+    -nexa-vertical-align	: middle;
+    color			: #000000;
+    cursor          : pointer;
+}
+
+/* 
+ * btn_NHFIRE_cmtConfirm
+ * 댓글 요구 확정 버튼
+ */
+.Button.btn_NHFIRE_cmtConfirm,
+.Button.btn_NHFIRE_cmtConfirm[status=disabled],
+.Button.btn_NHFIRE_cmtConfirm[status=focused],
+.Button.btn_NHFIRE_cmtConfirm[status=mouseover],
+.Button.btn_NHFIRE_cmtConfirm[userstatus=pushed],
+.Button.btn_NHFIRE_cmtConfirm[userstatus=selected]
+{
+    background      : transparent url('theme://SPP_IMAGE_SET/FOMM/bg_FOMM_toastInfo.png') no-repeat center center;
+    -nexa-border        : 0px none;
+    cursor          : pointer;
+}
+/****************************************************************************************************************************/
+/*****************************************************   BUTTON END   *******************************************************/
+/****************************************************************************************************************************/
+
+
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   TAB START    *******************************************************/
+/****************************************************************************************************************************/
+/* 
+ * tab_NHFIRE_mdi
+ * MDI Tab css, MDI tabbuttonitem css, MDI extrabutton css
+ */
+.Tab.tab_NHFIRE_mdi,
+.Tab.tab_NHFIRE_mdi[status=focused],
+.Tab.tab_NHFIRE_mdi[status=mouseover]
+{
+	background		: transparent;
+	/* -nexa-border		: 0px; */
+	-nexa-border		: 1px solid #e5e5e5, 1px solid #e5e5e5, 2px solid #252c43, 1px solid #e5e5e5;
+
+}
+
+.Tab.tab_NHFIRE_mdi .tabbuttonitem,
+.Tab.tab_NHFIRE_mdi .tabbuttonitem[status=mouseover]
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #e5e5e5, 1px solid #e5e5e5, 2px solid #252c43, 1px solid #e5e5e5;
+	-nexa-padding		: 10px 10px 10px 14px;
+	cursor			: pointer;
+	color			: #444444; 
+	font			: bold 14px 'KoPubL';
+
+}
+.Tab.tab_NHFIRE_mdi .tabbuttonitem[status=focused],
+.Tab.tab_NHFIRE_mdi .tabbuttonitem[userstatus=selected],
+.Tab.tab_NHFIRE_mdi .tabbuttonitem[userstatus=selected][status=mouseover],
+.Tab.tab_NHFIRE_mdi .tabbuttonitem[status=focused][userstatus=selected]
+{
+	background		: #252c43;
+	-nexa-border		: 1px solid #252c43, 1px solid #252c43, 2px solid #252c43, 1px solid #252c43;
+	-nexa-padding		: 10px 10px 10px 14px;
+	cursor			: pointer;
+	color			: #ffffff;
+	font			: bold 14px 'KoPubL';
+}
+
+.Tab.tab_NHFIRE_mdi .tabbuttonitem .tabbuttonitemtext
+{
+	-nexa-text-align 	: left;
+	-nexa-vertical-align 	: middle;
+	-nexa-padding		: 0px 10px 0px 0px;
+	font			: bold 14px 'KoPubL';
+}
+
+.Tab.tab_NHFIRE_mdi .tabbuttonitem .extrabutton
+{
+	background		: url(theme://SPP_IMAGE_SET/TBF/btn_TBF_MdiX.png) no-repeat center center;
+	-nexa-padding		: 0px 10px 0px 18px;
+	cursor	 		: pointer;
+}
+.Tab.tab_NHFIRE_mdi .tabbuttonitem .extrabutton[status=focused],
+.Tab.tab_NHFIRE_mdi .tabbuttonitem .extrabutton[userstatus=selected],
+.Tab.tab_NHFIRE_mdi .tabbuttonitem .extrabutton[userstatus=pushed]
+{
+	background		: url(theme://MIRAE_IMAGE_SET/HOME/tab-X.png) no-repeat center center;
+	-nexa-padding		: 0px 10px 0px 18px;
+	cursor	 		: pointer;
+}
+
+.Tab.tab_NHFIRE_mdi .tabpage
+{
+	-nexa-border : 1px solid #252c43;
+}
+/****************************************************************************************************************************/
+/*****************************************************   TAB END    *********************************************************/
+/****************************************************************************************************************************/
+]]></CSSData>
+  <CSSData type="mobile_large"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_small"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_medium"><![CDATA[]]></CSSData>
+</XCSS>

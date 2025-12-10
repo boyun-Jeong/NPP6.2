@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comPopCalendar" left="0" top="0" width="250" height="318" titletext="calendar" onload="form_onload" scrollbars="none">
+    <Layouts>
+      <Layout>
+        <Calendar id="calMonth" taborder="0" left="0" top="0" height="278" type="monthonly" style="padding:0 0 0 0;border:0 none #808080 ;" ondayclick="calMonth_ondayclick" right="0"/>
+        <Static id="Static00" taborder="1" left="0" top="0" height="45" cssclass="sta_WF_calmonthbg" width="250"/>
+        <Static id="Static01" taborder="2" left="0" height="41" cssclass="sta_WF_calbtnbg" top="277" width="250"/>
+        <Button id="btnPrevY" taborder="3" left="11" top="1" height="43" width="25" cssclass="btn_WF_yearprev" onclick="btnPrevY_onclick"/>
+        <Button id="btnPrevM" taborder="4" left="36" top="1" width="25" height="43" cssclass="btn_WF_monthprev" onclick="btnPrevM_onclick"/>
+        <Button id="btnNextM" taborder="5" left="189" top="1" width="25" height="43" cssclass="btn_WF_monthnext" onclick="btnNextM_onclick"/>
+        <Button id="btnNextY" taborder="6" left="214" top="1" width="25" height="43" cssclass="btn_WF_yearnext" onclick="btnNextY_onclick"/>
+        <Combo id="cboYear" taborder="7" text="Feb" left="61" top="1" height="43" style="buttonsize:0;align:right middle;" width="68" codecolumn="cd" datacolumn="cd" index="1" value="1" cssclass="cmb_WF_calendar" displayrowcount="8" onitemchanged="cboMonth_onitemchanged" innerdataset="dsYear"/>
+        <Combo id="cboMonth" taborder="8" left="129" top="1" height="43" style="buttonsize:0;" width="60" codecolumn="code" datacolumn="dataKR" index="-1" cssclass="cmb_WF_calendar" displayrowcount="8" innerdataset="dsMonth" onitemchanged="cboYear_onitemchanged"/>
+        <Button id="btnToday" taborder="9" text="Today" left="1" top="278" width="64" height="39" cssclass="btn_WF_textblue" onclick="btnToday_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsYear">
+        <ColumnInfo>
+          <Column id="cd" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMonth">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="dataKR" type="STRING" size="256"/>
+          <Column id="dataENG" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">01</Col>
+            <Col id="dataKR">1월</Col>
+            <Col id="dataENG">Jan</Col>
+          </Row>
+          <Row>
+            <Col id="code">02</Col>
+            <Col id="dataKR">2월</Col>
+            <Col id="dataENG">Feb</Col>
+          </Row>
+          <Row>
+            <Col id="code">03</Col>
+            <Col id="dataKR">3월</Col>
+            <Col id="dataENG">Mar</Col>
+          </Row>
+          <Row>
+            <Col id="code">04</Col>
+            <Col id="dataKR">4월</Col>
+            <Col id="dataENG">Apr</Col>
+          </Row>
+          <Row>
+            <Col id="code">05</Col>
+            <Col id="dataKR">5월</Col>
+            <Col id="dataENG">May</Col>
+          </Row>
+          <Row>
+            <Col id="code">06</Col>
+            <Col id="dataKR">6월</Col>
+            <Col id="dataENG">Jun</Col>
+          </Row>
+          <Row>
+            <Col id="code">07</Col>
+            <Col id="dataKR">7월</Col>
+            <Col id="dataENG">Jul</Col>
+          </Row>
+          <Row>
+            <Col id="code">08</Col>
+            <Col id="dataKR">8월</Col>
+            <Col id="dataENG">Aug</Col>
+          </Row>
+          <Row>
+            <Col id="code">09</Col>
+            <Col id="dataKR">9월</Col>
+            <Col id="dataENG">Sep</Col>
+          </Row>
+          <Row>
+            <Col id="code">10</Col>
+            <Col id="dataKR">10월</Col>
+            <Col id="dataENG">Oct</Col>
+          </Row>
+          <Row>
+            <Col id="code">11</Col>
+            <Col id="dataKR">11월</Col>
+            <Col id="dataENG">Nov</Col>
+          </Row>
+          <Row>
+            <Col id="code">12</Col>
+            <Col id="dataKR">12월</Col>
+            <Col id="dataENG">Dec</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 공통
+* 메뉴(경로)	︰ 공통관리 > 플랫폼 > 공통
+* 화면 설명	︰ 공통
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.00
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.minYear;
+this.maxYear;
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.fnInit();
+}
+
+this.fnInit = function()
+{
+	var strDate = Ex.util.today();
+	var sYY = parseInt(strDate.substr(0,4));
+	var sMM = strDate.substr(4,2);
+	var sDD = strDate.substr(6,4);
+	
+	var nRow = -1;
+	this.dsYear.set_enableevent(false);
+	this.minYear = 1980;
+	this.maxYear = sYY+20;
+	for(var i=this.minYear; i<=this.maxYear ;i++)
+	{
+		nRow = this.dsYear.addRow();
+		this.dsYear.setColumn(nRow, "cd" , i);
+	}
+	this.dsYear.set_enableevent(true);
+	
+	//trace("strDate="+strDate+",sYY="+sYY+",sMM="+sMM);
+	this.calMonth.set_value(strDate);
+	this.cboMonth.set_value(sMM);
+	this.cboYear.set_value(sYY);
+}
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnSetDate = function(strDate)
+{
+	strDate = strDate||'';
+	strDate = strDate.toString();
+	if( Ex.isEmpty(strDate) ) strDate = Ex.util.today();	
+	var sYY = strDate.substr(0,4);
+	var sMM = strDate.substr(4,2)||'01';
+	var sDD = strDate.substr(6,4)||'01';
+
+	if( sYY < this.minYear ) {
+		
+		var fRow  = this.dsYear.findRow("cd",sYY);
+		if( fRow < 0 ) {
+			this.dsYear.insertRow(0);
+			this.dsYear.setColumn(0, "cd" , sYY);
+		}
+	}
+	if( sYY > this.maxYear ) {
+		
+		var fRow  = this.dsYear.findRow("cd",sYY);
+		if( fRow < 0 ) {
+			var nRow = this.dsYear.addRow();
+			this.dsYear.setColumn(nRow, "cd" , sYY);
+		}
+	}
+	this.calMonth.set_value(strDate);
+	this.cboMonth.set_value(sMM);
+	this.cboYear.set_value(sYY);
+}
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+this.cboMonth_onitemchanged = function(obj:Combo, e:nexacro.ItemChangeEventInfo)
+{
+	var strDate = this.calMonth.value.toString();
+	var sYY = strDate.substr(0,4);
+	var sMM = e.postvalue;
+	var sDD = '01';
+	
+	strDate = sYY+sMM+sDD;
+	
+	this.calMonth.set_value(strDate);
+}
+
+this.cboYear_onitemchanged = function(obj:Combo, e:nexacro.ItemChangeEventInfo)
+{
+	var strDate = this.calMonth.value.toString();
+	var sYY = e.postvalue;
+	var sMM = strDate.substr(4,2);
+	var sDD = '01';
+	
+	strDate = sYY+sMM+sDD;
+	
+	this.calMonth.set_value(strDate);	
+} 
+this.calMonth_ondayclick = function(obj:Calendar, e:nexacro.CalendarDayClickEventInfo)
+{
+	if( this.pCalendar ) this.pCalendar.set_value(e.date);
+	this.closePopup();
+}
+
+this.btnPrevY_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	var strDate = this.calMonth.value.toString();
+	var str = Ex.util.addMonth(strDate, -12);
+	
+	var sYY = str.substr(0,4);
+	var sMM = str.substr(4,2);
+	var sDD = '01';
+	
+	strDate = sYY+sMM+sDD;
+	this.fnSetDate(strDate);
+}
+
+this.btnPrevM_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	var strDate = this.calMonth.value.toString();
+	var str = Ex.util.addMonth(strDate, -1);
+	
+	var sYY = str.substr(0,4);
+	var sMM = str.substr(4,2);
+	var sDD = '01';
+	
+	strDate = sYY+sMM+sDD;
+	this.fnSetDate(strDate);	
+}
+
+this.btnNextM_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	var strDate = this.calMonth.value.toString();
+	var str = Ex.util.addMonth(strDate, 1);
+	
+	var sYY = str.substr(0,4);
+	var sMM = str.substr(4,2);
+	var sDD = '01';
+	
+	strDate = sYY+sMM+sDD;
+	this.fnSetDate(strDate);		
+}
+
+this.btnNextY_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	var strDate = this.calMonth.value.toString();
+	var str = Ex.util.addMonth(strDate, 12);
+	
+	var sYY = str.substr(0,4);
+	var sMM = str.substr(4,2);
+	var sDD = '01';
+	
+	strDate = sYY+sMM+sDD;
+	this.fnSetDate(strDate);	
+}
+
+this.btnToday_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	var strDate = Ex.util.today();
+	this.fnSetDate(strDate);
+}]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="form" classname="top" left="0" top="0" titletext="현업 - 내 요청건" onload="form_onload" scrolltype="none" cssclass="" height="250" width="825" font="normal 24pt/normal &quot;PretendardR&quot;" color="white" onclick="frHome_D00_onclick" scrollbartype="none">
+    <Layouts>
+      <Layout width="825" height="250" mobileorientation="landscape">
+        <Static id="stc00" taborder="2" left="20.00" top="5" width="110" height="28" background="url('theme://NHSB_IMAGE_SET/HOME/main-titbullet01.png') no-repeat left center" text="내 요청 건" padding="0px 0px 0px 19px" color="black" font="bold 16px 'KoPubB'"/>
+        <Static id="stcBottom" taborder="1" left="0" top="182" height="44" background="url('theme://NHSB_IMAGE_SET/HOME/main-todo-bottom-bg.png') no-repeat center center" right="0"/>
+        <Div id="divTodo01" taborder="2" text="div00" left="10" top="82" width="116" height="127" background="url('theme://NHSB_IMAGE_SET/HOME/main-circle.png') no-repeat center center">
+          <Layouts>
+            <Layout>
+              <Static id="stcCnt" taborder="0" text="0" left="15" top="15" width="86" height="87" color="#3453ff" font="bold 32px 'KoPubL'" textAlign="center" verticalAlign="middle" onclick="fnCommOnclick" cursor="pointer"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTodo02" taborder="3" text="div00" left="divTodo01:22" top="82" width="116" height="127" background="url('theme://NHSB_IMAGE_SET/HOME/main-circle.png') no-repeat center center">
+          <Layouts>
+            <Layout>
+              <Static id="stcCnt" taborder="0" text="0" left="15.00" top="15" width="86" height="87" color="#3453ff" font="bold 32px 'KoPubL'" textAlign="center" verticalAlign="middle" onclick="fnCommOnclick" cursor="pointer"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTodo03" taborder="4" text="div00" left="divTodo02:22" top="82" width="116" height="127" background="url('theme://NHSB_IMAGE_SET/HOME/main-circle.png') no-repeat center center">
+          <Layouts>
+            <Layout>
+              <Static id="stcCnt" taborder="0" text="0" left="15.00" top="15" width="86" height="87" color="#3453ff" font="bold 32px 'KoPubL'" textAlign="center" verticalAlign="middle" onclick="fnCommOnclick" cursor="pointer"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTodo04" taborder="5" text="div00" left="divTodo03:22" top="82" width="116" height="127" background="url('theme://NHSB_IMAGE_SET/HOME/main-circle.png') no-repeat center center">
+          <Layouts>
+            <Layout>
+              <Static id="stcCnt" taborder="0" text="0" left="15.00" top="15" width="86" height="87" color="#3453ff" font="bold 32px 'KoPubL'" textAlign="center" verticalAlign="middle" onclick="fnCommOnclick" cursor="pointer"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTodo05" taborder="6" text="div00" left="divTodo04:22" top="82" width="116" height="127" background="url('theme://NHSB_IMAGE_SET/HOME/main-circle.png') no-repeat center center">
+          <Layouts>
+            <Layout>
+              <Static id="stcCnt" taborder="0" text="0" left="15.00" top="15" width="86" height="87" color="#3453ff" font="bold 32px 'KoPubL'" textAlign="center" verticalAlign="middle" onclick="fnCommOnclick" cursor="pointer"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTodo06" taborder="7" text="div00" left="divTodo05:22" top="82" height="127" background="url('theme://NHSB_IMAGE_SET/HOME/main-circle.png') no-repeat center center" width="116">
+          <Layouts>
+            <Layout>
+              <Static id="stcCnt" taborder="0" text="0" left="15.00" top="15" width="86" height="87" color="#3453ff" font="bold 32px 'KoPubL'" textAlign="center" verticalAlign="middle" onclick="fnCommOnclick" cursor="pointer"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTodo01Top" taborder="8" left="19" top="39" width="99" height="41" background="url('theme://NHSB_IMAGE_SET/HOME/label-btn01.png') no-repeat center center">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="결재" left="34" top="5" bottom="7" right="0" color="#32333b" font="bold 13px 'KoPubL'" textAlign="center" verticalAlign="middle"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTodo02Top" taborder="9" left="divTodo01:31" top="39" width="99" height="41" background="url('theme://NHSB_IMAGE_SET/HOME/label-btn02.png') no-repeat center center">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="접수대기" left="34.00" top="6" bottom="6" right="0" color="#32333b" font="bold 13px 'KoPubL'" textAlign="center" verticalAlign="middle"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTodo03Top" taborder="10" left="divTodo02:31" top="39" width="99" height="41" background="url('theme://NHSB_IMAGE_SET/HOME/label-btn03.png') no-repeat center center">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="처리중" left="34.00" top="6" bottom="6" right="0" color="#32333b" font="bold 13px 'KoPubL'" textAlign="center" verticalAlign="middle"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTodo04Top" taborder="11" left="divTodo03:31" top="39" width="99" height="41" background="url('theme://NHSB_IMAGE_SET/HOME/label-btn04.png') no-repeat center center">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="납기임박" left="34.00" top="6" bottom="6" right="0" color="#32333b" font="bold 13px 'KoPubL'" textAlign="center" verticalAlign="middle"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTodo05Top" taborder="12" left="divTodo04:21.00" top="39" width="118" height="41" background="url('theme://NHSB_IMAGE_SET/HOME/label-btn05.png') no-repeat center center">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="테스트만족도" left="33.00" top="6" bottom="6" right="0" color="#32333b" font="bold 13px 'KoPubL'" textAlign="center" verticalAlign="middle" padding="0px 0px 0px 1px"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTodo06Top" taborder="13" left="divTodo05:31" top="39" width="99" height="41" background="url('theme://NHSB_IMAGE_SET/HOME/label-btn06.png') no-repeat center center">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="완료" left="34.00" top="6" bottom="6" right="0" color="#32333b" font="bold 13px 'KoPubL'" textAlign="center" verticalAlign="middle"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="stc01" taborder="14" left="131" top="39" width="13" height="41" background="url('theme://NHSB_IMAGE_SET/HOME/main-arrow01.png') no-repeat center center"/>
+        <Static id="stc01_00" taborder="15" left="269" top="39" width="13" height="41" background="url('theme://NHSB_IMAGE_SET/HOME/main-arrow01.png') no-repeat center center"/>
+        <Static id="stc01_00_00" taborder="16" left="407" top="39" width="13" height="41" background="url('theme://NHSB_IMAGE_SET/HOME/main-arrow01.png') no-repeat center center"/>
+        <Static id="stc01_00_00_00" taborder="17" left="540" top="39" width="13" height="41" background="url('theme://NHSB_IMAGE_SET/HOME/main-arrow01.png') no-repeat center center"/>
+        <Static id="stc01_00_00_00_00" taborder="18" left="688.00" top="39" width="13" height="41" background="url('theme://NHSB_IMAGE_SET/HOME/main-arrow01.png') no-repeat center center"/>
+        <Combo id="cboYear" taborder="19" text="cbo00" top="5" width="60" height="24" innerdataset="dsYear" codecolumn="YEAR" datacolumn="YEAR" onitemchanged="cboOnItemChanged" cssclass="cbo_WF_normal" right="10"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="SVC_CLASS_CD" type="STRING" size="256"/>
+          <Column id="ING_PHASE" type="STRING" size="256"/>
+          <Column id="YEAR" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData" onrowsetchanged="dsData_onrowsetchanged">
+        <ColumnInfo>
+          <Column id="APPR_CNT" type="STRING" size="256"/>
+          <Column id="PROC_WAIT_CNT" type="STRING" size="256"/>
+          <Column id="PROC_CNT" type="STRING" size="256"/>
+          <Column id="CNT_DUE" type="STRING" size="256"/>
+          <Column id="STF_CNT" type="STRING" size="256"/>
+          <Column id="FIN_CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="APPR_CNT">0</Col>
+            <Col id="PROC_WAIT_CNT">0</Col>
+            <Col id="PROC_CNT">0</Col>
+            <Col id="CNT_DUE">0</Col>
+            <Col id="STF_CNT">0</Col>
+            <Col id="FIN_CNT">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsYear">
+        <ColumnInfo>
+          <Column id="YEAR" type="INT" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMinYear">
+        <ColumnInfo>
+          <Column id="MIN_YEAR" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ frHome_D00
+* 화면(명)		︰ - 
+* 메뉴(경로)	︰ -
+* 화면 설명	︰ 대시보드 우측 내 정보 Div
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+ this.fnSearchMinYear = function()
+{
+	//trace('nhsb_D10 >> fnSearch');
+	var sTranId = "selectReqMinYear";			// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "nhHome/selectReqMinYear";	// 서비스명
+    var sInDs = "dsCond=dsCond";                // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsMinYear=dsMinYear";			// 서버에서 수신할 데이타셋
+    var sArg = "";                   			// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 조회
+this.fnSearch = function()
+{
+	//trace('nhsb_D10 >> fnSearch');
+	var sTranId = "selectMyReqCnt";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "nhHome/selectMyReqCnt";            // 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData=dsData";       	// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "selectReqMinYear" :
+			var curYear = Ex.util.today().substring(0, 4);
+			trace("curYear : " + curYear);
+			this.dsYear.clearData();
+			for(var i=curYear; i>=nexacro.toNumber(this.dsMinYear.getColumn(0, "MIN_YEAR")); i--)
+			{
+				var aRow = this.dsYear.addRow();
+				this.dsYear.setColumn(aRow, "YEAR", i);
+			}
+			this.dsCond.setColumn(0, "YEAR", curYear);
+			this.fnSearch();
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	switch(pID)	{}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	this.fnSearchMinYear();
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var objApp = nexacro.getApplication();
+	var rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SR0120_W');	// 요청함
+	var param = '';
+	switch(obj)
+	{
+		case this.divTodo01.form.stcCnt :	// 결재
+			param = 'APPR';
+			break;
+			
+		case this.divTodo02.form.stcCnt :	// 접수대기
+			param = 'PROC_WAIT_CNT';
+			break;
+			
+		case this.divTodo03.form.stcCnt :	// 처리중
+			param = 'ING';
+			break;
+			
+		case this.divTodo04.form.stcCnt :	// 납기임박
+			param = 'DUE_CNT';
+			break;
+			
+		case this.divTodo05.form.stcCnt :	// 테스트 만족도
+			param = 'TEST_SATIS';
+			break;
+			
+		case this.divTodo06.form.stcCnt :	// 완료
+			param = 'COMPL';
+			break;
+	}
+	
+	if( rowpos >= 0 )
+		Ex.core.openLink(this, objApp.gdsMenu.getColumn(rowpos, 'MENU_ID'), {param : param});
+	else
+		trace('해당 메뉴ID가 없어 이동할 수 없습니다');
+}
+
+this.dsData_onrowsetchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSRowsetChangeEventInfo)
+{
+	var str = "<fc v='#2c8bf8'>" + obj.rowcount + "</fc> 건";
+	this.divCnt.form.stcCnt.set_text(str);
+};
+
+this.cboOnItemChanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.fnSearch();
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divTodo01.form.stcCnt" propid="text" datasetid="dsData" columnid="APPR_CNT"/>
+      <BindItem id="item1" compid="divTodo02.form.stcCnt" propid="text" datasetid="dsData" columnid="PROC_WAIT_CNT"/>
+      <BindItem id="item2" compid="divTodo03.form.stcCnt" propid="text" datasetid="dsData" columnid="PROC_CNT"/>
+      <BindItem id="item3" compid="divTodo04.form.stcCnt" propid="text" datasetid="dsData" columnid="CNT_DUE"/>
+      <BindItem id="item4" compid="divTodo05.form.stcCnt" propid="text" datasetid="dsData" columnid="STF_CNT"/>
+      <BindItem id="item5" compid="divTodo06.form.stcCnt" propid="text" datasetid="dsData" columnid="FIN_CNT"/>
+      <BindItem id="item6" compid="cboYear" propid="value" datasetid="dsCond" columnid="YEAR"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,731 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comCheckboxDiv" width="1200" height="400" titletext="공통 댓글 div" onload="form_onload" background="transparent">
+    <Layouts>
+      <Layout height="400" width="1200">
+        <Div id="divInput" taborder="1" left="0" height="50" right="0" background="white" visible="false" bottom="0" border="1px solid #dfdfdf">
+          <Layouts>
+            <Layout>
+              <Button id="btnSave" taborder="1" text="댓글 등록" width="80" cssclass="btn_WF_primary_save" right="5" onclick="fnCommOnclick" visible="true" top="5" bottom="5"/>
+              <TextArea id="txaInput" taborder="0" left="5" cssclass="txa_WF_normal" top="5" right="btnSave:5" wordWrap="char" validationGroup="fvValiCmp" text="" validation="댓글내용;NULL" bottom="5" onkeydown="divInput_txaInput_onkeydown" onchanged="divInput_txaInput_onchanged" tooltiptext="Ctrl+&lt;ENTER&gt; 등록"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divComment" taborder="0" left="0" top="0" right="0" background="white" visible="false" bottom="divInput:0" border="1px solid #dfdfdf"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)	︰ 공통 댓글 div
+* 메뉴(경로)	︰ -
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.00
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+* Description
+* Param
+var oParam = {
+		  tableName		필수		// 댓글 달 업무 테이블명
+		, primaryKey1	필수		// PK1
+		, primaryKey2			// PK2 (복합키인 경우)
+		, primaryKey3			// PK3 (복합키인 경우)
+		, extCol1				// 개발자 구분 값 필요 시
+		, extCol2				// 개발자 구분 값 필요 시
+		, extCol3				// 개발자 구분 값 필요 시
+		, extCol4				// 개발자 구분 값 필요 시
+		, extCol5				// 개발자 구분 값 필요 시
+		, nDispComment			// (integer) 표기할 댓글 수. Ex) nDispComment==3 ? 댓글 3개 표기 + 입력란 표기. 값 세팅 시 해당 값으로 호출한 div 크기 설정; null일 시 개발자가 그린 div 크기 유지
+	};
+	
+* Func
+* void setConfig(this, oParam);			// 호출 시 oParam값에 따라 댓글 조회 && 그리기
+* var rtn = openComment();				// 펼치기; return: 적용한 div height
+* var rtn = closeComment(nDispComment, bInputVisible, bKeepheight);	// 접기; return: 적용한 div height
+	- nDispComment 		필수		// (integer) 접었을 때 표기할 댓글 수( default 0)
+	- bInputVisible				// (boolean) 접었을 때 댓글 입력란 표기여부 true(보이기)/false(숨기기);	default false
+	- bKeepHeight				// (boolean) 댓글 높이 유지하고 입력란만 visible false 처리(true)		default false
+* var rtn = getCommentCount();		// 댓글 수 return;
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.callScope;		// 호출 scope
+this.tablename;		// 파일 관리할 테이블명	(업무구분용)
+this.primaryKey1;	// 파일 관리할 테이블 PK1	(업무구분용)
+this.primaryKey2;	// 파일 관리할 테이블 PK2	(업무구분용)
+this.primaryKey3;	// 파일 관리할 테이블 PK3	(업무구분용)
+this.extCol1;
+this.extCol2;
+this.extCol3;
+this.extCol4;
+this.extCol5;
+
+this.N_DISP_COMMENT;		// 표기 댓글 수	-> div 크기 set
+
+this.nCommentDivHeight = 64;	// 각 댓글 div height
+this.nInputDivHeight = 50;		// 입력란 div height
+this.nMargin = 10;
+
+this.parentHeight;		// 부모 div height; nDispComment 미설정 시 개발자가 그린 div height 유지; 설정 시 부모 높이 재설정 후 값 저장
+this.parengHeightOrg;
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	trace('comCommentDiv init call');
+	if( this.parent )	trace('parent div name :: ' + this.parent.id);
+	if( this.divInput )	this.INPUT_HEIGHT = this.divInput.getOffsetHeight();
+}
+
+
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+}
+
+// 변경 행 확인
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "selectComment";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "fommComment/selectComment";            // 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsComment=dsFommComment";       // 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+    
+    /**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 공통 저장 func.
+this.fnSave = function()
+{
+	// transaction
+	var sTranId = "saveComment";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "fommComment/saveComment";            // 서비스명
+    var sInDs = "dsCond=dsCond dsFommComment=dsComment:U";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsComment=dsFommComment";       // 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 댓글삭제
+this.fnSave01 = function()
+{	
+	if( this.dsSave.rowcount == 0 )
+		return;
+		
+	// transaction
+	var sTranId = "saveComment";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "fommComment/saveComment";            // 서비스명
+    var sInDs = "dsCond=dsCond dsFommComment=dsSave";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsComment=dsFommComment";       // 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "saveComment" :
+		case "deleteComment" :
+			if(this.callScope["dsComment"]){
+				this.callScope.dsComment.copyData(this.dsComment, true); // scope dsComment에 복사
+			}
+				
+			Ex.core.toast(this.callScope, "10004", null, {toastType:'S'});
+		case "selectComment" :
+			this.fnDrawComment();
+			break;
+			
+	}
+	
+}
+
+
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch(pID)
+	{
+		
+	}
+}
+
+
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+	}
+}
+
+
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.setConfig = function(scope, oParam)
+{	
+	// comFile 호출한 scope
+	this.callScope = scope;
+	
+	// set param
+	this.tablename		= oParam.tableName||'';			// 파일 관리할 테이블명	(업무구분용)
+	this.primaryKey1	= oParam.primaryKey1||'';		// 파일 관리할 테이블 PK1	(업무구분용)
+	this.primaryKey2	= oParam.primaryKey2||'';		// 파일 관리할 테이블 PK2	(업무구분용)
+	this.primaryKey3	= oParam.primaryKey3||'';		// 파일 관리할 테이블 PK3	(업무구분용)
+	
+	this.extCol1	= oParam.extCol1||'';	// 확장컬럼 1
+	this.extCol2	= oParam.extCol2||'';	// 확장컬럼 2
+	this.extCol3	= oParam.extCol3||'';	// 확장컬럼 3
+	this.extCol4	= oParam.extCol4||'';	// 확장컬럼 4
+	this.extCol5	= oParam.extCol5||'';	// 확장컬럼 5
+	
+	this.N_DISP_COMMENT	= oParam.nDispComment;		// 표기 댓글 수; 호출 div 크기 설정 & 펼치기 접기 시 크기; null이면 개발자가 그린 크기 유지
+	
+	// parent div height set
+	this.parengHeightOrg = this.parent.getOffsetHeight();
+	if( !Ex.isEmpty(this.N_DISP_COMMENT) )
+	{
+		this.parentHeight = (this.nCommentDivHeight + this.nMargin) * this.N_DISP_COMMENT + this.divInput.getOffsetHeight() + 2;
+		this.parent.set_height(this.parentHeight);
+	}
+	else
+	{
+		this.parentHeight = this.parengHeightOrg;
+	}
+	trace('this.parentHeight :: ' + this.parentHeight);
+	
+	
+	// 필수값 validation
+	if( Ex.isEmpty(this.tablename) ) {
+		trace('divFile table name empty');
+		return;
+	}
+	if( Ex.isEmpty(this.primaryKey1) ) {
+		trace('primaryKey1 empty');
+		return;
+	}
+	
+	
+	// dsCond set
+	this.dsCond.setColumn(this.dsCond.rowposition, 'KEY_TBL', this.tablename);
+	this.dsCond.setColumn(this.dsCond.rowposition, 'PK1', this.primaryKey1);
+	this.dsCond.setColumn(this.dsCond.rowposition, 'PK2', this.primaryKey2);
+	this.dsCond.setColumn(this.dsCond.rowposition, 'PK3', this.primaryKey3);
+	this.dsCond.setColumn(this.dsCond.rowposition, 'EXT_COL1', this.extCol1);
+	this.dsCond.setColumn(this.dsCond.rowposition, 'EXT_COL2', this.extCol2);
+	this.dsCond.setColumn(this.dsCond.rowposition, 'EXT_COL3', this.extCol3);
+	this.dsCond.setColumn(this.dsCond.rowposition, 'EXT_COL4', this.extCol4);
+	this.dsCond.setColumn(this.dsCond.rowposition, 'EXT_COL5', this.extCol5);
+	
+
+	// search
+	this.fnSearch();
+}
+
+
+// 펼치기
+this.openComment = function()
+{
+	// divInput enable
+	this.divInput.set_height(this.nInputDivHeight);
+	this.divInput.set_enable(true);
+	
+	if( !this.divInput.visible ) {
+		this.divComment.set_bottom(this.nInputDivHeight);
+		this.divInput.set_visible(true);
+	}
+	
+	// parent height & scroll
+	this.parent.set_height(this.parentHeight);
+	this.divComment.form.resetScroll();
+	this.divComment.form.scrollTo(0, 99999);
+	
+	return this.parentHeight;
+}
+
+
+// 접기
+this.closeComment = function(nDispComment, bInputVisible, bKeepHeight)
+{
+	if( Ex.isEmpty(bInputVisible) )
+		bInputVisible = true;
+	
+	if( Ex.isEmpty(bKeepHeight) )
+		bKeepHeight = false;
+		
+	var nHeight = 0;
+	// 입력란 처리
+	if( bInputVisible ) {
+		this.divInput.set_height(this.nInputDivHeight);
+		this.divInput.set_enable(true);
+		nHeight += this.divInput.getOffsetHeight();
+	}
+	else {
+		this.divInput.set_height(0);
+		this.divInput.set_enable(false);
+	}
+	
+	if(bKeepHeight) {
+		this.divComment.set_bottom(this.nInputDivHeight);		
+		nHeight = this.parent.getOffsetHeight();
+	}
+	else {
+		// 높이계산
+		nHeight += ((this.nCommentDivHeight + this.nMargin) * nDispComment)+2; 
+	}
+	
+	
+	// 높이 set
+	this.parent.set_height(nHeight);
+	this.divComment.form.resetScroll();
+	this.divComment.form.scrollTo(0, 99999);
+	
+	return nHeight;
+}
+
+
+// 댓글 수 return
+this.getCommentCount = function()
+{
+	return ( this.dsComment.findRow('ROWFLAG', 'I') >= 0 )? this.dsComment.rowcount-1 : this.dsComment.rowcount;
+}
+
+
+
+
+this.fnDrawComment = function()
+{
+	// init
+	this.divComment.set_visible(false);
+	for(var i = this.divComment.form.components.length-1; i >= 0; i--) {
+		this.divComment.form.components[i].destroy();
+	}
+	
+	
+	var nRow = this.dsComment.rowcount;
+	if( nRow == 0 )	{
+		trace('comCommentDiv fnDrawComment >> no comment data');
+	}
+	else
+	{
+		var nTop = 0;
+		for(var i = 0; i < this.dsComment.rowcount; i++)
+		{
+			var COMMENT_NO 		= this.dsComment.getColumn(i, 'COMMENT_NO');
+			var COMMENT_CONTS	= this.dsComment.getColumn(i, 'COMMENT_CONTS');
+			var REG_USER_ID_NM	= this.dsComment.getColumn(i, 'REG_USER_ID_NM');
+			var REG_DT_NM		= this.dsComment.getColumn(i, 'REG_DT_NM');
+			var FRID			= this.dsComment.getColumn(i, 'FRID');
+			var CONFIRM_YN		= this.dsComment.getColumn(i, 'CONFIRM_YN');
+			var scUserId		= Ex.util.getSession('gvUserId');
+			
+			// 각 댓글 container
+			var divComment = new Div();
+			var divId = 'div_'+COMMENT_NO;
+			divComment.init(divId, this.nMargin, nTop, null, this.nCommentDivHeight+20, this.nMargin, null);
+			//divComment.set_border('1px solid blue');
+			divComment.COMMENT_NO = COMMENT_NO;
+			this.divComment.addChild(divId, divComment);
+			divComment.show();
+			
+			
+			// 작성시간
+			var stcRegTime = new Static();
+			var stcId = 'stcRegDt_' + COMMENT_NO;
+			stcRegTime.init(stcId, 0, 0, 130, 24, null, null);
+			stcRegTime.set_text(REG_DT_NM);
+			divComment.addChild(stcId, stcRegTime);
+			stcRegTime.show();
+			
+			
+			// 작성자 이름(사번)
+			var stcRegUser = new Static();
+			var stcId = 'stcRegUser_' + COMMENT_NO;
+			stcRegUser.init(stcId, stcRegTime.getOffsetWidth(), 0, null, 24, 50, null);
+			stcRegUser.set_cssclass('stc_WF_normal');
+			stcRegUser.set_text(REG_USER_ID_NM);
+			var nWidth = nexacro.getTextSize(stcRegUser.text, '12px KoPubL').nx + 20;
+			divComment.addChild(stcId, stcRegUser);
+			stcRegUser.show();
+			
+		
+
+			// 삭제 버튼
+			var btnDelete = new Button();
+			var btnId = 'btnDel_' + COMMENT_NO;
+			btnDelete.init(btnId, null, 0, 20, 20, 0, null);
+ 			btnDelete.set_cssclass('btn_MIRAE_cmtSave1');
+			btnDelete.set_text('삭제')
+			btnDelete.COMMENT_NO = COMMENT_NO;
+			btnDelete.addEventHandler('onclick', this.fnDeleteOnclick, this);
+			divComment.addChild(btnId, btnDelete);
+			// 댓글 삭제 버튼 visible
+			var visible = (FRID == scUserId)?true:false;
+			btnDelete.set_visible( visible );
+			btnDelete.show();
+			
+			// 댓글 저장 버튼
+			var btnSave = new Button();
+			var btnId = 'btnSave_' + COMMENT_NO;
+			btnSave.init(btnId, null, 0, 20, 20, btnDelete.getOffsetWidth()+5, null);
+ 			btnSave.set_cssclass('btn_MIRAE_cmtSave1');
+			btnSave.set_text('저장')
+			btnSave.COMMENT_NO = COMMENT_NO;
+			btnSave.addEventHandler('onclick', this.fnSaveOnclick, this);
+			divComment.addChild(btnId, btnSave);
+			// 댓글 저장 버튼 visible
+			var visible = (FRID == scUserId)?true:false;
+			btnSave.set_visible( visible );
+			btnSave.show();
+			
+			//  요구확정 버튼
+			var btnConfirm = new Button();
+			var btnId = 'btnConfirm_' + COMMENT_NO;
+			btnConfirm.init(btnId, null, 0, 40, 20, btnDelete.getOffsetWidth()+30, null);
+ 			btnConfirm.set_cssclass('btn_MIRAE_cmtSave1');
+			btnConfirm.set_text('요구확정');
+			btnConfirm.COMMENT_NO = COMMENT_NO;
+			btnConfirm.CONFIRM_YN = CONFIRM_YN;
+			btnConfirm.addEventHandler('onclick', this.fnConfirmOnclick, this);
+			divComment.addChild(btnId, btnConfirm);
+			// 요구확정 버튼 visible
+			var visible = (FRID == scUserId)?true:false;
+			btnConfirm.set_visible( visible );
+			
+			if(this.extCol1 == 'btnConfirm_Y'){
+				btnConfirm.show();
+			}else{ 
+				//요구확정 버튼 숨김
+				
+			}
+			// 작성내용
+			var txaComment = new TextArea();
+			var txaId = 'txaComment_' + COMMENT_NO;
+			txaComment.init(txaId, 0, stcRegUser.getOffsetBottom(), null, 60, 0, null);		// height; 두줄만큼
+			
+			
+			if(CONFIRM_YN == 'N' || Ex.isEmpty(CONFIRM_YN)) {
+				txaComment.set_cssclass('txa_WF_normal');
+			}else if(CONFIRM_YN == 'Y') {
+				txaComment.set_cssclass('txa_WF_Confirm');
+				btnConfirm.set_visible(false);
+			}else{
+				txaComment.set_cssclass('txa_WF_normal');	 
+			}
+			
+			
+			txaComment.COMMENT_NO = COMMENT_NO;
+			txaComment.set_tabstop(false);
+			txaComment.set_value(COMMENT_CONTS);
+			txaComment.addEventHandler('onchanged', this.txaComment_onchanged, this);
+			divComment.addChild(txaId, txaComment);
+			// 작성내용 readonly
+			var readonly = (FRID != scUserId)?true:false;
+			txaComment.set_readonly( readonly );
+			txaComment.show();
+			
+			// set nTop
+			nTop += divComment.getOffsetHeight() + this.nMargin;
+		}
+		
+		var divBotMargin = new Div();
+		divBotMargin.init('divBotMargin', 0, nTop - this.nMargin, null, this.nMargin, 0, null);
+		this.divComment.addChild('divBotMargin', divBotMargin);
+		divBotMargin.show();
+	}
+	
+	// 입력란 row
+	var rowpos = this.dsComment.setAddRow();
+	this.dsComment.setColumn(rowpos, 'KEY_TBL', this.tablename);
+	this.dsComment.setColumn(rowpos, 'PK1', this.primaryKey1);
+	this.dsComment.setColumn(rowpos, 'PK2', this.primaryKey2);
+	this.dsComment.setColumn(rowpos, 'PK3', this.primaryKey3);
+	this.dsComment.setColumn(rowpos, 'EXT_COL1', this.extCol1);
+	this.dsComment.setColumn(rowpos, 'EXT_COL2', this.extCol2);
+	this.dsComment.setColumn(rowpos, 'EXT_COL3', this.extCol3);
+	this.dsComment.setColumn(rowpos, 'EXT_COL4', this.extCol4);
+	this.dsComment.setColumn(rowpos, 'EXT_COL5', this.extCol5);
+	
+	this.divComment.set_visible(true);
+	this.divInput.set_visible(true);
+	
+	this.divComment.form.resetScroll();
+	this.divComment.form.scrollTo(0, 99999);
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : []		// 조회할 상위코드
+		,codeDiv: []			// 조회할 코드의 업무구분
+		,optStr	: []				// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: []				// 사용여부
+		,filter	: []					// filterStr
+		,objDs	: []	// copy dataset
+	}
+	//Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+this.fnCheckValidate = function()
+{
+	// 입력란
+	if( !Ex.util.checkValidate(this.divInput, "fvValiCmp") )
+		return false;
+	
+	return true;
+}
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSave" :
+			// validation
+			if( this.fnCheckValidate() ) {	
+				var param = {
+						id : "saveConfirm"
+					  , msg : "10003"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+			break;
+	}
+}
+
+
+this.fnDeleteOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+ 	var confirm_callback = function(mid , varValue)
+	{
+		if(varValue) {
+			this.dsComment.set_enableevent(false);
+			this.dsComment.set_filterstr("COMMENT_NO=='" + obj.COMMENT_NO + "'");
+			this.dsSave.clear();
+			this.dsSave.copyData(this.dsComment, true);
+			this.dsSave.setColumn(0, 'ROWFLAG', 'D');
+			this.dsComment.set_filterstr("");
+			this.dsComment.set_enableevent(true);
+			this.fnSave01();
+		}
+	};
+	
+	var param  = {
+		id	: "delConfirm",
+		msg	: "10008",  // 혹은 메시지 코드
+		arrparam : ['삭제'],
+		callbackfunc: confirm_callback
+	};				
+	Ex.core.confirmby(this, param);
+	return;
+}
+
+
+this.fnOnsize = function()
+{
+	this.set_height(this.parent.getOffsetHeight());
+	this.divInput.set_bottom(0);
+	this.divComment.set_bottom(this.nInputDivHeight);
+}
+
+this.fnSaveOnclick = function(obj:objects, e:nexacro.ClickEventInfo) 
+{	
+	
+ 	var confirm_callback = function(mid , varValue)
+	{
+		if(varValue) {
+			this.dsComment.set_enableevent(false);
+			this.dsComment.set_filterstr("COMMENT_NO=='" + obj.COMMENT_NO + "'");
+			this.dsSave.clear();
+			this.dsSave.copyData(this.dsComment, true);
+			this.dsComment.set_filterstr("");
+			this.dsComment.set_enableevent(true);
+			this.fnSave01();
+		}
+	};
+	
+	var param  = {
+		id	: "modConfirm",
+		msg	: "10008",  // 혹은 메시지 코드
+		arrparam : ['수정'],
+		callbackfunc: confirm_callback
+	};				
+	Ex.core.confirmby(this, param);
+	return;
+}
+
+this.fnConfirmOnclick = function(obj:objects, e:nexacro.ClickEventInfo) 
+{	
+
+  	var confirm_callback = function(mid , varValue)
+ 	{	
+ 		if(varValue) {
+  			this.dsComment.set_enableevent(false);
+  			this.dsComment.set_filterstr("COMMENT_NO=='" + obj.COMMENT_NO + "'");
+			//this.dsComment.setColumn(0, 'EXT_COL1', 'Y');
+  			this.dsSave.clear();
+  			this.dsSave.copyData(this.dsComment, true);
+			if( obj.CONFIRM_YN =='N'|| Ex.isEmpty(obj.CONFIRM_YN)){
+				this.dsSave.setColumn(0, 'CONFIRM_YN', 'Y');
+			}else if ( obj.CONFIRM_YN =='Y'){
+				this.dsSave.setColumn(0, 'CONFIRM_YN', 'N');
+			}
+			this.dsSave.setColumn(0, 'ROWFLAG', 'U');
+			//this.dsSave.setColumn(0, 'CONFIRM_YN', 'Y');
+  			this.dsComment.set_filterstr("");
+  			this.dsComment.set_enableevent(true);
+  			this.fnSave01();
+			//this.divComment.form.div_43.form.txaComment_43.set_cssclass("txa_WF_Confirm");
+			//this.divComment.form["div_" + obj.COMMENT_NO].form["txaComment_" + obj.COMMENT_NO].set_cssclass("txa_WF_Confirm");
+ 		}
+ 	};
+	var msg1 = '';
+ 	if( obj.CONFIRM_YN =='N' || Ex.isEmpty(obj.CONFIRM_YN)){
+		msg1 = "요구 확정하시겠습니까?";  // 혹은 메시지 코드
+	}else if( obj.CONFIRM_YN =='Y'){
+		msg1 = "요구 확정 취소하시겠습니까?";  // 혹은 메시지 코드
+	}
+ 	var param  = {
+ 		id	: "modConfirm",
+ 		msg	: msg1,  // 혹은 메시지 코드
+ 		arrparam : ['수정'],
+ 		callbackfunc: confirm_callback
+ 	};				
+ 	Ex.core.confirmby(this, param);
+ 	return;
+}
+
+// 공통 oncloumnchanged event : dataset
+this.fnCommOncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+
+this.divInput_txaInput_onkeydown = function(obj:nexacro.TextArea,e:nexacro.KeyEventInfo)
+{
+	if( e.ctrlkey) {
+		if( e.keycode == 13 )
+			this.fnCommOnclick(this.divInput.form.btnSave, null);
+	}
+};
+
+this.txaComment_onchanged = function(obj:nexacro.TextArea,e:nexacro.ChangeEventInfo)
+{
+	var rowpos = this.dsComment.findRow('COMMENT_NO', obj.COMMENT_NO);
+	if( rowpos >= 0 ) {
+		this.dsComment.setColumn(rowpos, 'COMMENT_CONTS', e.postvalue);
+		trace('1>>>> ', this.dsComment.enableevent);
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="COMMENT_NO" type="STRING" size="256"/>
+          <Column id="KEY_TBL" type="STRING" size="256"/>
+          <Column id="PK1" type="STRING" size="256"/>
+          <Column id="PK2" type="STRING" size="256"/>
+          <Column id="PK3" type="STRING" size="256"/>
+          <Column id="EXT_COL_1" type="STRING" size="256"/>
+          <Column id="EXT_COL_2" type="STRING" size="256"/>
+          <Column id="EXT_COL_3" type="STRING" size="256"/>
+          <Column id="EXT_COL_4" type="STRING" size="256"/>
+          <Column id="EXT_COL_5" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsComment" oncolumnchanged="fnCommOncolumnchanged"/>
+      <Dataset id="dsSave"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divInput.form.txaInput" propid="value" datasetid="dsComment" columnid="COMMENT_CONTS"/>
+    </Bind>
+  </Form>
+</FDL>

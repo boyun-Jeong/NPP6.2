@@ -1,0 +1,394 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR4100_D05" width="1820" height="158" titletext="이행평가" onload="form_onload">
+    <Layouts>
+      <Layout width="1820" height="158">
+        <Static id="stcBg01_00_00" taborder="6" left="0" top="67" cssclass="sta_WF_inputBg" right="0" height="90"/>
+        <Static id="stcBg01" taborder="5" left="0" top="34" height="34" cssclass="sta_WF_inputBg" right="0"/>
+        <Static id="stcProcExamOpin" taborder="0" text="평가의견" cssclass="sta_WF_inputTitle_E" left="0" top="67" width="130" style="background:#eef3f6ff URL('img::img_WF_Essential_nh.png');" height="90"/>
+        <Static id="stcProcUserNm" taborder="1" text="평가결과" cssclass="sta_WF_inputTitle_E" left="0" top="34" width="130" height="34"/>
+        <Static id="Static04" taborder="2" text="지식등록여부" cssclass="sta_WF_inputTitle" left="66.67%" top="34" width="130" height="34" visible="false"/>
+        <Static id="sta_title" taborder="3" text="이행평가" cssclass="sta_WF_gridTitle" left="0" top="0" right="0" height="24" style="align:left middle;"/>
+        <Static id="stcEmpty01" taborder="4" left="0" top="24" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Combo id="cboResultCode" taborder="7" left="stcProcUserNm:5" top="39" height="24" tooltiptext="담당자가 위엠비 직원인 경우만 선택 가능!!" width="120" onitemchanged="onCboItemChanged" cssclass="cbo_WF_normal" innerdataset="dsResultCode" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" index="0" text="정상" value="1"/>
+        <TextArea id="txaEvalCont" taborder="8" left="stcProcExamOpin:5" top="72" height="81" mask="" validate="" imemode="hangul" cssclass="txa_WF_normal" maxlength="4000" right="5" validationGroup="input01" text="" validation="평가의견;NULL"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRevProc" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+          <Column id="DEPT_CD" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="POS_NM" type="STRING" size="256"/>
+          <Column id="GUBUN_NM" type="STRING" size="256"/>
+          <Column id="CEGR_ID" type="STRING" size="256"/>
+          <Column id="PROC_EXAM_OPIN" type="STRING" size="256"/>
+          <Column id="PROC_DATE" type="STRING" size="256"/>
+          <Column id="PROC_SDTIME" type="STRING" size="256"/>
+          <Column id="PROC_EDTIME" type="STRING" size="256"/>
+          <Column id="RMK" type="STRING" size="256"/>
+          <Column id="FRID" type="STRING" size="256"/>
+          <Column id="FRDT" type="STRING" size="256"/>
+          <Column id="LMID" type="STRING" size="256"/>
+          <Column id="LMDT" type="STRING" size="256"/>
+          <Column id="LMPID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsWfPbm" onvaluechanged="onValueChanged" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="14"/>
+          <Column id="ROWFLAG" type="STRING" size="14"/>
+          <Column id="REQ_ID" type="STRING" size="14"/>
+          <Column id="ING_PHASE" type="STRING" size="10"/>
+          <Column id="REQ_DT" type="STRING" size="10"/>
+          <Column id="REQ_USER_ID" type="STRING" size="10"/>
+          <Column id="REQ_DEPT_ID" type="STRING" size="10"/>
+          <Column id="REQ_USER_JBC_POSI" type="STRING" size="16"/>
+          <Column id="REQ_USER_NM" type="STRING" size="60"/>
+          <Column id="SR_BRIEF" type="STRING" size="3000"/>
+          <Column id="REQ_WISH_SDT" type="STRING" size="256"/>
+          <Column id="REQ_WISH_EDT" type="STRING" size="256"/>
+          <Column id="REQ_WISH_STIME" type="STRING" size="256"/>
+          <Column id="REQ_WISH_ETIME" type="STRING" size="256"/>
+          <Column id="AGREE_COMP_EDT" type="STRING" size="256"/>
+          <Column id="AGREE_COMP_ETIME" type="STRING" size="256"/>
+          <Column id="PBM_CATEGORY" type="STRING" size="256"/>
+          <Column id="UPMU_ID1" type="STRING" size="256"/>
+          <Column id="UPMU_ID2" type="STRING" size="256"/>
+          <Column id="UPMU_ID3" type="STRING" size="256"/>
+          <Column id="CI_ID" type="STRING" size="256"/>
+          <Column id="CI_NAME" type="STRING" size="256"/>
+          <Column id="PRE_CONF_USER_ID" type="STRING" size="256"/>
+          <Column id="PRE_CONF_DEPT_ID" type="STRING" size="256"/>
+          <Column id="PRE_CONF_JBC_POSI" type="STRING" size="256"/>
+          <Column id="PRE_CONF_USER_NM" type="STRING" size="256"/>
+          <Column id="EM_YN" type="STRING" size="256"/>
+          <Column id="RECP_PATH" type="STRING" size="256"/>
+          <Column id="REQ_CONT" type="STRING" size="256"/>
+          <Column id="STAT_CD" type="STRING" size="256"/>
+          <Column id="APPR_USER_ID" type="STRING" size="256"/>
+          <Column id="APPR_DEPT_ID" type="STRING" size="256"/>
+          <Column id="APPR_USER_BJC_POSI" type="STRING" size="256"/>
+          <Column id="APPR_USER_NM" type="STRING" size="256"/>
+          <Column id="APPR_EXAM_OPIN" type="STRING" size="256"/>
+          <Column id="WORK_USER_ID" type="STRING" size="256"/>
+          <Column id="WORK_DEPT_ID" type="STRING" size="256"/>
+          <Column id="WORK_USER_JBC_POSI" type="STRING" size="256"/>
+          <Column id="WORK_USER_NM" type="STRING" size="256"/>
+          <Column id="RECP_ETIME" type="STRING" size="256"/>
+          <Column id="RECP_CONT" type="STRING" size="256"/>
+          <Column id="PLAN_SDT" type="STRING" size="256"/>
+          <Column id="PLAN_EDT" type="STRING" size="256"/>
+          <Column id="PLAN_STIME" type="STRING" size="256"/>
+          <Column id="PLAN_ETIME" type="STRING" size="256"/>
+          <Column id="PLAN_MH" type="STRING" size="256"/>
+          <Column id="PROC_PLAN" type="STRING" size="256"/>
+          <Column id="PROC_SDT" type="STRING" size="256"/>
+          <Column id="PROC_EDT" type="STRING" size="256"/>
+          <Column id="PROC_STIME" type="STRING" size="256"/>
+          <Column id="PROC_ETIME" type="STRING" size="256"/>
+          <Column id="PROC_CONT" type="STRING" size="256"/>
+          <Column id="OUTP_MH" type="STRING" size="256"/>
+          <Column id="KNOW_REG_YN" type="STRING" size="256"/>
+          <Column id="CAUSE_CONT" type="STRING" size="256"/>
+          <Column id="TEST_CONT" type="STRING" size="256"/>
+          <Column id="PROC_COMP_ETIME" type="STRING" size="256"/>
+          <Column id="PROC_RESULT_TYPE" type="STRING" size="256"/>
+          <Column id="CLOSE_ETIME" type="STRING" size="256"/>
+          <Column id="DEL_FLAG" type="STRING" size="256"/>
+          <Column id="SOLVED_CONT" type="STRING" size="256"/>
+          <Column id="REG_USER_ID" type="STRING" size="256"/>
+          <Column id="REG_USER_NM" type="STRING" size="256"/>
+          <Column id="REG_STIME" type="STRING" size="256"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="256"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="256"/>
+          <Column id="SYSMODTIME" type="STRING" size="256"/>
+          <Column id="EVAL_RESULT" type="STRING" size="256"/>
+          <Column id="EVAL_CONT" type="STRING" size="256"/>
+          <Column id="SRL_EXM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResultCode">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CMM_CD">S</Col>
+            <Col id="CMM_CD_NM">정상</Col>
+          </Row>
+          <Row>
+            <Col id="CMM_CD">F</Col>
+            <Col id="CMM_CD_NM">비정상</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <InitValue/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면 ID	︰ SR5100_D05
+* 화면(명)	︰ 이행평가
+* 메뉴(경로)	︰ 
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2024.11.21	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_WorkFlow.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+ 
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.dsCond.setColumn(0, "REQ_ID", this.reqInfo.REQ_ID);
+	this.dsCond.setColumn(0, "WF_PROC_CD", this.reqInfo.WF_PROC_CD);
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();		// 컴포넌트 초기화
+	//this.fn_initDataset();	
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	//trace("SR0200_D02 this.fnCallback() sSvcId:::[" + sSvcId + "]");
+
+	switch(sSvcId)
+	{
+		case "select" :
+			if( this.dsRevProc.rowcount == 0)
+			{
+				var aRow = this.dsRevProc.setInsertRow();
+				this.dsRevProc.setColumn(aRow, "REQ_ID", this.reqInfo.REQ_ID);
+				this.dsRevProc.setColumn(aRow, "WF_PROC_CD", this.reqInfo.WF_PROC_CD);
+
+				if(this.reqInfo.WF_FUNC_CD == "WF_FUNC_04" && (this.reqInfo.SAVE_BTN_YN == "Y" || this.reqInfo.REV_BTN_YN == "Y") )
+				{
+					this.dsRevProc.setColumn(0, "USER_ID", Ex.util.getSession('gvUserId'));
+					this.dsRevProc.setColumn(0, "USER_NM", Ex.util.getSession('gvUserNm'));
+					this.dsWfPbm.setColumn(0, "WORK_USER_NM", Ex.util.getSession('gvUserNm'));
+				}
+			}
+		break;
+		
+		case "select01" :
+			
+			var rtn = this.wffnGetOptByWfProcCd(this.reqInfo.SCRN_WF_PROC_CD, "CUR");
+			this.nextWfProcCdArr = rtn.NEXT_WF_PROC_CD;
+			
+			this.dsNextWfProcCd.clearData();
+			this.dsNextWfProcCd.addRow();
+			
+			this.dsNextWfProcCd.setColumn(0, "PROC_USER_ID", Ex.util.getSession('gvUserId'));
+
+			var nextWfProcCd = "";
+			
+			if(this.nextWfProcCdArr.length == 1)
+			{
+				nextWfProcCd = this.nextWfProcCdArr[0];
+				this.dsNextWfProcCd.setColumn(0, "NEXT_WF_PROC_CD", nextWfProcCd);
+			}
+			else
+			{	/* 다음 워크플로우가 1개를 초과하면 개발자가 판단하여 다음 단계를 지정 */
+				nextWfProcCd = this.nextWfProcCdArr[0];
+				this.dsNextWfProcCd.setColumn(0, "NEXT_WF_PROC_CD", nextWfProcCd);
+			}
+
+			this.wfdsReqCgerDt = this.getOwnerFrame().pDsdWfCger;
+	
+			trace("SR0200_D02 this.fnCallback() SCRN_WF_PROC_CD : " + this.reqInfo.SCRN_WF_PROC_CD);
+			trace("SR0200_D02 this.fnCallback() next_wf_proc_cd : " + nextWfProcCd);
+			//trace(SR0200_D02 this.fnCallback() this.wfdsReqCgerDt.saveXML());
+
+			var oParam = {
+				wfProcCd : [this.reqInfo.SCRN_WF_PROC_CD, nextWfProcCd]
+				,optStr: ['NO', 'SEL']
+				,filter	: ['', '']
+				,objDs	: [this.dsProc, this.dsCegr]
+			}
+			this.wffnGetCger(oParam);
+			
+			//trace("SR0200_D02 this.fnCallback() dsProc:\n" + this.dsProc.saveXML());
+			//trace("SR0200_D02 this.fnCallback() dsCegr:\n" + this.dsCegr.saveXML());
+			//trace("this.reqInfo.REQ_ID : " + this.reqInfo.REQ_ID);
+
+			if( this.dsRevProc.rowcount == 0 )
+			{
+				var aRow = this.dsRevProc.setInsertRow();
+				this.dsRevProc.setColumn(aRow, "REQ_ID", this.reqInfo.REQ_ID);
+				this.dsRevProc.setColumn(aRow, "WF_PROC_CD", this.reqInfo.WF_PROC_CD);
+				
+				var fRow = this.dsProc.findRow("USER_ID", Ex.util.getSession('gvUserId'));
+				
+				//trace("SR0200_D02 this.fnCallback() gvUserId : " + Ex.util.getSession('gvUserId') + " fRow : " + fRow);
+				
+				if(fRow == -1)
+				{
+					//접수자에 존재하지 않는 사람이 접근한 경우
+					//Ex.core.pclose(this, "");
+				}
+				else
+				{
+					this.dsRevProc.setColumn(0, "USER_ID", Ex.util.getSession('gvUserId'));
+					this.dsRevProc.setColumn(0, "USER_NM", Ex.util.getSession('gvUserNm'));
+				}
+				this.dsRevProc.setColumn(aRow, "GUBUN_NM", rtn.CGER_NM);
+				
+				this.cboCegr.set_index(0);
+			}
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	//trace("SR0200_D02 this.fnPopupAfter() pID : " + pID + " varValue : " + varValue);
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "" :	//
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "pAlertCegrI" :
+			this.cboCegr.setFocus();
+			break;
+
+		case "pAlertProcExamOpinI" :
+			this.txaProcExamOpin.setFocus();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+ this.fnCompInit = function()
+{	
+	this.reqInfo.PARENT_FORM.setWfProcDivFormSize(this.parent, this.getOffsetHeight());
+}
+this.fnSaveCheck = function(isRev)
+{
+	this.dsWfPbm.setColumn(0, "EVAL_RESULT", this.cboResultCode.value);
+	//this.dsWfPbm.setColumn(0, "EVAL_CONT", this.txaEvalCont.value);
+	if( !Ex.util.checkValidate(this, "input01") ) return false;
+	
+	/*if (this.dsWfPbm.getColumn(0,"EVAL_RESULT") == null){
+		var param = {
+        	msg	: "평가결과를 확인하시기 바랍니다."	//메시지 내용
+        	, arrparam : []						//메시지의 변수에 들어갈 실제값
+        	, msgtype : "E"						//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        	};
+        Ex.core.alert(this, param);
+		this.cboResultCode.setFocusRed();
+		return false;
+	}*/
+	
+	if (this.dsWfPbm.getColumn(0,"EVAL_CONT") == null){
+		var param = {
+        	msg	: "평가의견 확인하시기 바랍니다."	//메시지 내용
+        	, arrparam : []						//메시지의 변수에 들어갈 실제값
+        	, msgtype : "E"						//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        	};
+        Ex.core.alert(this, param);
+		this.txaEvalCont.setFocusRed();
+		return false;
+	}
+	
+	return true;
+}
+
+this.isUpdateForm = function()
+{
+	return Ex.util.isUpdated(this.dsRevProc);
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// component onclick event. 
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{	
+	// TO DO
+	// 개발자가 컴포넌트 onclick event를 'fnCommOnclick'으로 지정하고 컴포넌트 id로 구분하여 작성
+	switch(obj.name)
+	{
+		case "" :
+			break;
+	}
+}
+
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};]]></Script>
+    <Bind>
+      <BindItem id="item1" compid="cboResultCode" propid="visible" datasetid="dsWfPbm" columnid="EVAL_RESULT"/>
+      <BindItem id="item3" compid="txaEvalCont" propid="value" datasetid="dsWfPbm" columnid="EVAL_CONT"/>
+    </Bind>
+  </Form>
+</FDL>

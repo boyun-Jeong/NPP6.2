@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comHighChart" width="350" height="300" titletext="High Chart div" onload="form_onload" background="transparent">
+    <Layouts>
+      <Layout height="300" width="350">
+        <WebView id="wevChart" taborder="0" left="5.00" top="0" bottom="0" border="0px none" onloadcompleted="wevChart_onloadcompleted" right="0"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ High Chart div
+* 메뉴(경로)	︰ -
+* 화면 설명	︰ HighChart
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.00
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+include "lib::lib_HighChart.xjs";
+include "lib::lib_HighChart_mirae.xjs";
+
+this._loadFlag 	= false;
+this._script 	= '';
+
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo) 
+{
+	//this.wevChart.set_url(nexacro.getProjectPath() + "html/HighChartPage.html");
+	this.wevChart.set_url(nexacro.getProjectPath() + "html/HighChartPage_mirae.html");
+};
+
+
+// 차트 그리기
+// 차트 script 생성은 lib::lib_HighChart.xjs 안에 기술할 것
+this.drawChart = function(strChartScript)
+{
+	if( Ex.isEmpty(strChartScript) ) {
+		trace('하이차트 스크립트가 없습니다.');
+		return;
+	}
+	
+	if( !this._loadFlag) {
+		this._script = strChartScript;
+		return;
+	}
+	
+	this.wevChart.callScript(strChartScript);
+	trace('drawChart call');
+	
+	this._script = '';
+}
+
+
+
+this.addScript = function(strScript)
+{
+	this.wevChart.callScript(strScript);
+	trace('callScript call');
+}	
+
+
+
+
+
+
+
+this.wevChart_onloadcompleted = function(obj:nexacro.WebView,e:nexacro.WebLoadCompEventInfo)
+{
+	this._loadFlag = true;
+	if( !Ex.isEmpty(this._script) ) {
+		this.drawChart(this._script);
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

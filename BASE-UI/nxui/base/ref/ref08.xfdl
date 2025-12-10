@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="ref08" classname="ref08" left="0" top="0" width="1840" height="720" titletext="그리드페이징" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divPage" taborder="1" left="0" height="24" cssclass="div_WF_GridPage" scrollbars="none" top="559" right="612"/>
+        <Grid id="grdPageData" taborder="4" binddataset="dsPage" useinputpanel="false" left="0" top="56" height="501" right="612">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="Column0"/>
+                <Cell col="1" text="Column1"/>
+                <Cell col="2" text="Column2"/>
+                <Cell col="3" text="Column3"/>
+                <Cell col="4" text="Column4"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:Column0"/>
+                <Cell col="1" text="bind:Column1"/>
+                <Cell col="2" text="bind:Column2"/>
+                <Cell col="3" text="bind:Column3"/>
+                <Cell col="4" text="bind:Column4"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <TextArea id="TextArea01" taborder="6" value="- ref::ref08.xfdl &#13;&#10;&#13;&#10;그리드 페이징 처리 기법&#13;&#10;&#13;&#10;1. 대용량 데이터 조회시 그리드 페이징을 적용한다.&#13;&#10;&#13;&#10;2. 적용 방식&#13;&#10;- 그리드 하단에 Div을 배치하고 페이징 처리를 위한 폼을 링크한다.&#13;&#10;  링크할 페이징Url comm::comPaging.xfdl&#13;&#10;&#13;&#10;- 페이징 처리를 위한 푬변수의 선언&#13;&#10;  this.fetchRow = 20;// 최초 페이지당 가져올 레코드 카운트&#13;&#10;  &#13;&#10;- form_onload에 페이징처리를 위한 링크페이지 기본값설정&#13;&#10;  페이징처리용 Div에 내부 setup 인터페이스 함수를 이용한다.&#13;&#10;&#13;&#10;- 조회를 위한 fn_search함수 호출시 &#13;&#10;  무조건 첫페이지를 조회한다.&#13;&#10;  조회조건을 처리하며 transaction을 직접 기술하지 않고,&#13;&#10;  페이징처리용 Div에 내부 searchPage 인터페이스 함수를 이용한다.&#13;&#10;  &#13;&#10;- transaction은 페이징처리용 Div에서 사용자 페이지별 조회함수를 호출한다.&#13;&#10;  setup 인터페이스 함수에서 지정한 설정값을 이용한다.&#13;&#10;  해당함수에서는 페이지 정보를 조회조건에 설정하여 조회를 시도한다.&#13;&#10;  이때 조회조건의 영향을 받지 않도록 기술한다.(페이지 정보만 설정)&#13;&#10;  &#13;&#10;*자세한 처리는 스크립트를 참조" readonly="true" top="57" width="577" height="500" style="color:red;font:bold 9 Gulim;" right="28"/>
+        <Button id="btnSearch" taborder="7" text="조회" left="7" top="19" width="115" height="28" onclick="btnSearch_onclick"/>
+        <Button id="btnCurSearch" taborder="8" text="현재 조회된 페이지 재조회하기" left="134" top="19" width="177" height="28" onclick="btnCurSearch_onclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsPage" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="Column0" type="string" size="255"/>
+          <Column id="Column1" type="string" size="255"/>
+          <Column id="Column2" type="string" size="255"/>
+          <Column id="Column3" type="string" size="255"/>
+          <Column id="Column4" type="string" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="searchType" type="STRING" size="256"/>
+          <Column id="searchText" type="STRING" size="256"/>
+          <Column id="fetchRow" type="STRING" size="256"/>
+          <Column id="pageNum" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 그리드 페이징
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+// 페이징 처리를위한 폼 변수(약속된 폼변수)
+this.fetchRow = 100;	/* <-- 페이지당 가져올 레코드 카운트  */
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	trace("workArea form init call");
+	// 페이징 처리용 Div에 페이징 처리를 위한 기본값 설정
+	this.divPage.setup(this.fetchRow, // 페이지당 가져올 레코드 카운트를 기술한 폼변수
+							this.fnSearchPage, // 페이지 조회 함수
+							[this.dsPage, 'totCnt']// [dsPage:조회결과 데이타셋 , dsPage총레코드카운트결과값을 가진 컬럼명]
+						);
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+}
+
+// 저장
+this.fnSave = function()
+{
+	trace("fnSave call");
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "search" :
+			// 조회페이지 정보갱신및 페이지 디스플레이를 위한 호출(필수)
+			this.divPage.pageDisp();
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	trace("pID="+pID+" ,varValue="+varValue);
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// divPage에서 호출하는 조회함수
+this.fnSearchPage = function (pageNum, fetchRow)
+{
+	// 페이지넘버를 인자로 받는다
+	// 조회함수에서 처리된 조회조건으로 페이징만 처리한다.
+	// 조회를 위한 파라미터는 여기서는 받지 않는다.(fn_search와 같은 조회함수에서만 파라미터 처리)
+	// 페이지 파라미터설정
+	this.dsCond.setColumn(0, "fetchRow", fetchRow);
+	this.dsCond.setColumn(0, "pageNum", pageNum);
+	// "fetchRow='"+this.fetchRow+"' pageNum='"+pageNum+"'"
+	Ex.core.tran(this, "search", "sppHy/html/PagingSample2.jsp", "dsCond=dsCond", "dsPage=dsOutput", "");
+};
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+/*
+그리드 페이징 처리 기법
+ 
+ 1. 대용량 데이터 조회시 그리드 페이징을 적용한다.
+ 
+ 2. 적용 방식
+ - 그리드 하단에 Div을 배치하고 페이징 처리를 위한 폼을 링크한다.
+ 링크할 페이징Url comm::comPaging.xfdl
+ 
+ - 페이징 처리를 위한 푬변수의 선언
+ this.fetchRow = 20;	// 페이지당 가져올 레코드 카운트
+ 
+ - form_onload에 페이징처리를 위한 링크페이지 기본값설정
+ 페이징처리용 Div에 내부 setup 인터페이스 함수를 이용한다.
+ 
+ - 조회를 위한 fn_search함수 호출시
+ 무조건 첫페이지를 조회한다.
+ 조회조건을 처리하며 transaction을 직접 기술하지 않고,
+ 페이징처리용 Div에 내부 searchPage 인터페이스 함수를 이용한다.
+ 
+ - transaction은 페이징처리용 Div에서 사용자 페이지별 조회함수를 호출한다.
+ setup 인터페이스 함수에서 지정한 설정값을 이용한다.
+ 해당함수에서는 페이지 정보를 조회조건에 설정하여 조회를 시도한다.
+ 이때 조회조건의 영향을 받지 않도록 기술한다.(페이지 정보만 설정)
+ 
+ *자세한 처리는 스크립트를 참조
+*/
+// 조회
+this.btnSearch_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	this.dsPage.clearData();
+
+	// 조회 버튼 클릭시 처음페이지로 조회
+	// 조회조건 파라미터처리(페이지 정보처리는 하지 않는다.)
+	this.dsCond.setColumn(0, "param1", "");
+	this.dsCond.setColumn(0, "param2", "");
+
+	// 페이징처리를 위한 함수호출
+	// fn_search와 같은 조회함수에서는 조회조건에 맞게 다시 처음부터 조회한다.
+	// searchPage 함수에서 this.fn_searchPage 함수를 페이정보를 인자로 하여 호출한다.
+	this.divPage.searchPage();
+}
+
+this.btnCurSearch_onclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+	var pageNum = this.divPage.getPage();
+	var fetchRow = this.divPage.getFetchRow();
+	this.fnSearchPage(pageNum, fetchRow);	
+}]]></Script>
+  </Form>
+</FDL>

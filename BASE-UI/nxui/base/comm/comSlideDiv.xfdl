@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="form" classname="top" left="0" top="0" titletext="슬라이드 알림" onload="form_onload" scrolltype="none" cssclass="" width="740" background="transparent" ontimer="form_ontimer" onbeforeclose="form_onbeforeclose" height="52">
+    <Layouts>
+      <Layout width="740" height="52" mobileorientation="landscape">
+        <Static id="stcSlide" taborder="0" left="0" top="6" usedecorate="true" background="#f8fdff" borderRadius="8px" color="black" font="bold 16px 'KoPubL'" padding="10px 10px 0px 10px" textAlign="left" verticalAlign="middle" right="0" border="1px solid #c4c8d7" text="adsfsdaf" height="40"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="AM_ASSET_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ comSlidePop
+* 화면(명)	︰ 슬라이드 알림
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 슬라이드 알림
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+* Description
+	
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.callScope;		// 호출 scope
+this.curSlide;		// 현재 slide
+this.aniObj;	// 슬라이드 처리할 Animation 객체
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+}
+
+this.fnInitSlide = function(scope)
+{
+	this.scrollbartype = 'none';
+	
+	this.callScope = scope;
+	if( Ex.isEmpty(this.callScope) )
+	{
+		//trace('		comSlidePop >> fnInit >> callScope null !!!');
+		return;
+	}
+	this.fnPlaySlide();
+}
+
+// 애니메이션 등록 & play
+this.fnPlaySlide = function()
+{
+	this.curSlide = this.callScope._commArrSlide.shift();
+	//trace('fnPlaySlide >> 슬라이드를 실행합니다. 잔여 슬라이드 :: ' + this.callScope._commArrSlide.length);
+
+	// slide 위치 초기화
+	var nTop = 0 - this.stcSlide.getOffsetHeight() - 5;
+	this.stcSlide.set_top(nTop);
+
+	if( Ex.isEmpty(this.curSlide) )
+	{
+		//trace('fnPlaySlide :: 재생할 슬라이드가 없습니다.');
+		this.stcSlide.set_visible(false);
+		return;
+	}
+	this.stcSlide.set_visible(true);
+
+	// animation init
+	if( Ex.isEmpty(this.aniObj) )
+	{
+		this.aniObj = new nexacro.Animation("aniSlide", this);
+		this.aniObj.set_loopcount(1);			// 타이머 대신 사용
+		this.aniObj.set_loop(false);			// loopcount 숫자만큼 반복
+		this.aniObj.set_direction("normal");
+		this.aniObj.set_duration(1000);
+		this.aniObj.addEventHandler("oncomplete", this.__aniOnComplete, this);
+		this.addChild("aniSlide", this.aniObj);
+	}
+	
+	// slide message setting
+	this.stcSlide.set_text(this.curSlide);
+	//this.stcSlide.set_tooltiptext(this.curSlide);
+	
+	// animation target
+	this.aniObj.addTarget('slideAnimation', this.stcSlide, "top:[6]");	// duration 동안 배열값 step
+
+	// play
+	this.aniObj.play();
+}
+
+// 애니메이션 종료
+this.__aniOnComplete = function(obj:nexacro.Animation, e:nexacro.AnimationEventInfo)
+{
+	switch(obj.name)
+	{
+		case "aniSlide" :
+			// normal animation 삭제
+			var objAniItem  = obj.removeTarget("slideAnimation");
+  			this.removeChild('aniSlide');
+			objAniItem.destroy();
+  			obj.destroy();
+			this.aniObj = null;
+
+			// reverse animation
+ 			this.aniObj = new nexacro.Animation("aniSlideReverse", this);
+ 			this.aniObj.set_loopcount(1);			// 타이머 대신 사용
+ 			this.aniObj.set_loop(false);			// loopcount 숫자만큼 반복
+ 			this.aniObj.set_direction("normal");
+			this.aniObj.delay = 10000;
+ 			this.aniObj.set_duration(1000);
+ 			this.aniObj.addEventHandler("oncomplete", this.__aniOnComplete, this);
+ 			this.addChild("aniSlideReverse", this.aniObj);
+ 			
+ 			// animation target
+ 			this.aniObj.addTarget('slideAnimation', this.stcSlide, "top:[" + (0 - this.stcSlide.getOffsetHeight() - 10) + "]");	// duration 동안 배열값 step
+			
+			// play
+			this.aniObj.play();
+			break;
+			
+		case "aniSlideReverse" :
+			// reverse animation 삭제
+// 			var objAniItem  = obj.removeTarget("slideAnimation");
+//   			this.removeChild('aniSlideReverse');
+// 			objAniItem.destroy();
+//   			obj.destroy();
+// 			this.aniObj = null;
+// 			
+// 			this.fnPlaySlide();
+			
+			this.fnDeleteAniObj();
+			if( this.callScope._commArrSlide.length >= 1 )
+			{
+				this.fnPlaySlide();
+			}
+			else
+			{
+				var comp = this.callScope.components['__divSlide'];
+				this.callScope.removeChild(comp.id);
+				comp.destroy();
+			}
+			break;
+	}
+}
+
+this.fnDeleteAniObj = function()
+{
+	if( this.aniObj )
+	{
+		this.stcSlide.set_visible(false);
+		
+		this.aniObj.stop();
+		var objAniItem  = this.aniObj.removeTarget("slideAnimation");
+		this.removeChild(this.aniObj.id);
+		objAniItem.destroy();
+		this.aniObj.destroy();
+		this.aniObj = null;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name){}
+}]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,4755 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XCSS version="1.1">
+  <CSSData><![CDATA[]]></CSSData>
+  <CSSData type="desktop"><![CDATA[/*******************************************************/
+/***** PROJECT NAME 	: SPP2.0		********/
+/***** XCSSNAME 	: spp_WF(WorkFrame)	********/
+/***** Naming Rule 	: Component_WF_cssname	********/
+/***** Naming Rule Ex 	: btn_WF_primary	********/
+/***** USING FRAME 	: all Frame(SPP 공통)	********/
+/***** CREATION DATES 	: 2023.04  		********/
+/***** DRAFTER 		: SPP TEAM		********/
+/***** AMENDER 		: SPP TEAM		********/
+/***** MOD DATES 	: 2023.04		********/
+/*******************************************************/
+
+/*******************************************************
+ * editable component border rule
+ * normal/readony
+ *	-nexa-border		: 1px solid #dbdbdb;
+ *	border-radious		: 3px 3px;
+ * mouseover/focused
+ *	-nexa-border		: 1px solid #3697f8;
+ *	border-radious		: 3px 3px;
+ * disabled
+ *	-nexa-border		: 1px solid #b8b8b8;
+ *	border-radious		: 3px 3px;
+ *******************************************************/
+ 
+ 
+/****************************************************************************************************************************/
+/*****************************************************   STATIC START   *****************************************************/
+/****************************************************************************************************************************/
+/* 
+ * sta_WF_normal
+ * basic static css
+ */
+.Static.stc_WF_normal
+{
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	background		: transparent;
+	-nexa-border		: 0px;
+	color			: #000000;
+	font			: 12px '돋움';
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+
+.Static.stc_WF_event
+{
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	background		: transparent;
+	-nexa-border		: 0px;
+	color			: blue;
+	font			: 12px '돋움';
+	cursor			: pointger;
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+.Static.stc_WF_event[status=mouseover]
+{
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	background		: transparent;
+	-nexa-border		: 0px;
+	color			: blue;
+	font			: bold 12px '돋움';
+	cursor			: pointger;
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+
+/* 
+ * sta_WF_gridTitle
+ * Grid Title static css
+ */
+.Static.sta_WF_gridTitle
+{
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	background		: transparent URL('theme://MIRAE_IMAGE_SET/HOME/main-titbullet01.png') no-repeat left center;
+	-nexa-border		: 0px;
+	color			: #000000;
+	font			: bold 16px '돋움';
+	-nexa-padding		: 0px 0px 0px 10px;
+}
+
+/* 
+ * sta_WF_grdCnt
+ * Grid Title 옆 count static css
+ */
+.Static.sta_WF_grdCnt
+{
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	color			: #0a5dad;
+	font			: bold 13px '돋움';
+	-nexa-padding		: 1px 0px 0px 0px;
+}
+
+/* 
+ * sta_WF_schTitle
+ * 검색조건 영역 static title css
+ */
+.Static.sta_WF_schTitle
+{
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/sta_WF_schTitle.png') no-repeat left center;
+	-nexa-border		: 0px;
+	color			: #444444;
+	/* font			: bold 12px '돋움'; */
+	font			: bold 12px '돋움';
+	-nexa-padding		: 0px 0px 0px 10px;
+}
+
+/* 
+ * sta_WF_schTitle_E
+ * 검색조건 필수 영역 static title css
+ */
+.Static.sta_WF_schTitle_E
+{
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/sta_WF_schTitle_E.png') no-repeat left center;
+	-nexa-border		: 0px;
+	color			: #444444;
+	font			: bold 12px '돋움';
+	-nexa-padding		: 0px 0px 0px 10px;
+}
+
+/* 
+ * sta_WF_inputBg
+ * 입력 title static Background
+ */
+.Static.sta_WF_inputBg
+{
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	background		: #ffffff;
+	-nexa-border		: 1px solid #d3d3d3;
+	color			: #444444;
+	font			: bold 12px '돋움';
+	-nexa-padding		: 0px 8px 0px 10px;
+}
+
+/* 
+ * sta_WF_inputBg
+ * 입력 title static Background
+ */
+.Static.sta_WF_inputBgOnlyTop
+{
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	background		: #ffffff;
+	-nexa-border		: 1px solid #d3d3d3,0px,0px,0px;
+	color			: #444444;
+	font			: bold 12px '돋움';
+	-nexa-padding		: 0px 8px 0px 10px;
+}
+
+/* 
+ * sta_WF_inputTitle
+ * 입력 title static
+ */
+.Static.sta_WF_inputTitle
+{
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	background		: #fcf5ef;
+	-nexa-border		: 1px solid #d3d3d3;
+	color			: #444444;
+	font			: bold 12px '돋움';
+	-nexa-padding		: 0px 8px 0px 10px;
+}
+
+/* 
+ * sta_WF_inputTitle_E
+ * 입력 title static essential
+ */
+.Static.sta_WF_inputTitle_E
+{
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	background		: #fcf5ef URL('theme://SPP_IMAGE_SET/WF/img_WF_GrdCell_Essential.png') no-repeat left top;
+	-nexa-border		: 1px solid #d3d3d3;
+	color			: #444444;
+	font			: bold 12px '돋움';
+	-nexa-padding		: 0px 8px 0px 10px;
+}
+
+
+/* 
+ * sta_WF_descInfo
+ * static 중요내용 표기(빨강)
+ */
+.Static.sta_WF_descInfo
+{
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	color			: red;
+	font			: bold 12px '돋움';
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+
+/* 
+ * sta_WF_fileDropBg
+ * 첨부파일 Drag&Drop Background
+ */
+.Static.sta_WF_fileDropBg
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align 	: middle;
+	background		: transparent;
+	-nexa-border		: 2px dotted #444444;
+	color			: #444444;
+	font			: bold 14px '돋움';
+	-nexa-padding		: 0px;
+}
+
+
+/*
+ * stc_WF_arrowBody
+ * SPP WorkFlow Field Bg Arrow Body
+ */
+.Static.stc_WF_arrowBody
+{
+	background		: green;
+	-nexa-border		: 0px none;
+	color 			: #ffffff;
+	font 			: bold 12px '돋움';
+}
+
+/*
+ * stc_WF_arrowHead
+ * SPP WorkFlow Field Bg Arrow Head
+ */
+.Static.stc_WF_arrowHead
+{
+	background		: transparent;
+	-nexa-border		: 0px none;
+	color 			: green;
+	-nexa-text-align 	: left;
+	-nexa-vertical-align 	: middle;
+	font 			: bold 25px '돋움';
+}
+
+/*
+ * stc_WF_countBg
+ * SPP WorkFlow count background static css
+ */
+.Static.stc_WF_countBg
+{
+	background		: #656ff2;
+	-nexa-border		: 0px none;
+	border-radius 		: 10px 10px;
+	color 			: #ffffff;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	font 			: bold 13px '돋움';
+	cursor			: pointer;
+}
+
+/*
+ * stc_WF_count
+ * SPP WorkFlow count static css
+ */
+.Static.stc_WF_count
+{
+	background		: transparent;
+	-nexa-border		: 0px none;
+	color 			: #020202;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	font 			: bold 14px '돋움';
+}
+
+
+
+/*
+ * stc_WF_wfNodeDisp
+ * 히스토리맵 단계 명칭 표기용 static css
+ */
+.Static.stc_WF_wfNodeDisp
+{
+	background		: white;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	font			: bold 18px '돋움';
+	color			: #828282;
+	-nexa-border		: 3px solid #6695E8;
+	border-radius 		: 18px 18px 18px 0px;
+}
+
+/*
+ * stc_WF_wfStatDispGrey
+ * 히스토리맵 단계별 진행이력상태(진행중) 표기용 static css
+ */
+.Static.stc_WF_wfStatDispGrey
+{
+	background		: #AABAD4;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	font			: 12px '돋움';
+	color			: white;
+	-nexa-border		: 1px solid #89A0C2;
+	border-radius 		: 30px 30px;
+}
+
+/*
+ * stc_WF_wfStatDispBlue
+ * 히스토리맵 단계별 진행이력상태(등록) 표기용 static css
+ */
+.Static.stc_WF_wfStatDispBlue
+{
+	background		: #75ADE6;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	font			: 12px '돋움';
+	color			: white;
+	-nexa-border		: 1px solid #207ed5;
+	border-radius 		: 30px 30px;
+}
+
+/*
+ * stc_WF_wfStatDispPurple
+ * 히스토리맵 단계별 진행이력상태(승인) 표기용 static css
+ */
+.Static.stc_WF_wfStatDispPurple
+{
+	background		: #8887D3;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	font			: 12px '돋움';
+	color			: white;
+	-nexa-border		: 1px solid #5857BF;
+	border-radius 		: 30px 30px;
+}
+
+/*
+ * stc_WF_wfStatDispRed
+ * 히스토리맵 단계별 진행이력상태(반려) 표기용 static css
+ */
+.Static.stc_WF_wfStatDispRed
+{
+	background		: #FB9598;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	font			: 12px '돋움';
+	color			: white;
+	-nexa-border		: 1px solid #FF6B6A;
+	border-radius 		: 30px 30px;
+}
+
+/*
+ * stc_WF_wfContsDisp
+ * 히스토리맵 단계별 진행이력 내용(이름/시간 등) 표기용 static css
+ */
+.Static.stc_WF_wfContsDisp
+{
+	background		: transparent;
+	-nexa-text-align 	: left;
+	-nexa-vertical-align 	: top;
+	font			: bold 13px '돋움';
+	color			: #020202;
+}
+
+/* workflow 진행단계 표기 CSS 시작 */
+/* workflow 진행 화살표 이미지 */
+.Static.stc_WfAllow_Off
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/maspp-arrow.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+.Static.stc_WfAllow_On
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/maspp-arrow.gif') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+/* 워크플로우 등록 단계 이미지 */
+.Static.stc_WfReqReg_Off
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/Rbox-ico01-off.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+.Static.stc_WfReqReg_On
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/Rbox-ico01-on.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+/* 워크플로우 결재 단계 이미지 */
+.Static.stc_WfReqApv_Off
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/Rbox-ico02-off.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+.Static.stc_WfReqApv_On
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/Rbox-ico02-on.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+/* 워크플로우 접수 단계 이미지 */
+.Static.stc_WfReqRev_Off
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/img_WF_count02.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+.Static.stc_WfReqRev_On
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+/* 워크플로우 PMO결재 단계 이미지 */
+.Static.stc_WfReqPmoApv_Off
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/Rbox-ico07-off.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+.Static.stc_WfReqPmoApv_On
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/Rbox-ico07-on.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+/* 워크플로우 프로젝트 수행 단계 이미지 */
+.Static.stc_WfReqPrj_Off
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/Rbox-ico09-off.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+.Static.stc_WfReqPrj_On
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/Rbox-ico09-on.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+/* 워크플로우 PMO종료 단계 이미지 */
+.Static.stc_WfReqPmoEnd_Off
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/Rbox-ico10-off.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+.Static.stc_WfReqPmoEnd_On
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/Rbox-ico10-on.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+/* 워크플로우 종료 단계 이미지 */
+.Static.stc_WfReqEnd_Off
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/Rbox-ico11-off.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+.Static.stc_WfReqEnd_On
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/Rbox-ico11-on.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+/* workflow 진행단계 표기 CSS 끝 */
+
+/*
+ * stc_WF_legend11
+ * SPP WBS status static css (size 16x16)
+ */
+.Static.stc_WF_legend11
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/ico_WF_legend11.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+/*
+ * stc_WF_legend12
+ * SPP WBS status static css (size 16x16)
+ */
+.Static.stc_WF_legend12
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/ico_WF_legend12.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+/*
+ * stc_WF_legend13
+ * SPP WBS status static css (size 16x16)
+ */
+.Static.stc_WF_legend13
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/ico_WF_legend13.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+/*
+ * stc_WF_legend14
+ * SPP WBS status static css (size 16x16)
+ */
+.Static.stc_WF_legend14
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/WF/ico_WF_legend14.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+
+/*
+ * stc_WF_CalDate
+ * Calendar Date Static
+ */
+.Static.stc_WF_CalDate
+{
+	background		: transparent;
+	-nexa-text-align 	: center;
+	font			: bold 25px '돋움';
+	color			: #030303;
+}
+
+/*
+ * stc_WF_calDateTitle
+ * 달력 요일 타이틀
+ */
+.Static.stc_WF_calDateTitle
+{
+	background		: #f5f5fd;
+	-nexa-border		: 1px solid #8a96a8, 1px solid #8a96a8, 2px solid #6d67e4, 1px solid #8a96a8;
+	-nexa-text-align 	: center;
+	font			: bold 15px '돋움';
+	color			: #020202;
+}
+
+
+/*
+ * stc_WF_timer
+ * timer용 static
+ */
+.Static.stc_WF_timer
+{
+	background		: #f0f4f9;
+	border-radius 		: 3px 3px;
+	-nexa-border		: 1px solid #4f46df;
+	-nexa-text-align 	: center;
+	font			: bold 13px '돋움';
+	color			: #4f46df;
+}
+/****************************************************************************************************************************/
+/*****************************************************   STATIC END   *******************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   EDIT START   *******************************************************/
+/****************************************************************************************************************************/
+/* 
+ * edt_WF_normal
+ * SPP default css - Edit
+ */
+.Edit.edt_WF_normal
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #dbdbdb;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #444444;
+	-nexa-text-align	: left;
+	-nexa-padding		: 0px 18px 0px 6px;
+}
+
+.Edit.edt_WF_normal[status=mouseover],
+.Edit.edt_WF_normal[status=focused]
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #3697f8;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #0a5dad;
+	-nexa-text-align	: left;
+	-nexa-padding		: 0px 18px 0px 6px;
+}
+.Edit.edt_WF_normal[status=readonly]
+{
+	background		: #ededed;
+	-nexa-border		: 1px solid #b8b8b8;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #000000;
+	-nexa-text-align	: left;
+	-nexa-padding		: 0px 18px 0px 6px;
+}
+.Edit.edt_WF_normal[status=disabled]
+{
+	background		: #dddddd;
+	-nexa-border		: 1px solid #b8b8b8;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #888888;
+	-nexa-text-align	: left;
+	-nexa-padding		: 0px 18px 0px 6px;
+}
+.Edit.edt_WF_normal[userstatus=nulltext]
+{
+	background		: ;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #909090;
+	-nexa-text-align	: left;
+	-nexa-padding		: 0px 18px 0px 6px;
+}
+/****************************************************************************************************************************/
+/*****************************************************   EDIT END   *********************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   MASKEDIT START   ***************************************************/
+/****************************************************************************************************************************/
+/* 
+ * msk_WF_normal
+ * SPP default css - MaskEdit
+ */
+.MaskEdit.msk_WF_normal
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #dbdbdb;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #444444;
+	-nexa-text-align	: left;
+	-nexa-padding		: 0px 6px 0px 6px;
+}
+.MaskEdit.msk_WF_normal[status=mouseover],
+.MaskEdit.msk_WF_normal[status=focused]
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #3697f8;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #0a5dad;
+	-nexa-text-align	: left;
+	-nexa-padding		: 0px 6px 0px 6px;
+}
+
+.MaskEdit.msk_WF_normal[status=readonly]
+{
+	background		: #ededed;
+	-nexa-border		: 1px solid #b8b8b8;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #000000;
+	-nexa-text-align	: left;
+	-nexa-padding		: 0px 6px 0px 6px;
+}
+.MaskEdit.msk_WF_normal[status=disabled]
+{
+	background		: #dddddd;
+	-nexa-border		: 1px solid #b8b8b8;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #888888;
+	-nexa-text-align	: left;
+	-nexa-padding		: 0px 6px 0px 6px;
+}
+.MaskEdit.msk_WF_normal[userstatus=nulltext],
+.MaskEdit.msk_WF_normal[userstatus=invalidtext]
+{
+	background		: ;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #909090;
+	-nexa-text-align	: left;
+	-nexa-padding		: 0px 6px 0px 6px;
+}
+
+/****************************************************************************************************************************/
+/*****************************************************   MASKEDIT END   *****************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   TEXTAREA START   ***************************************************/
+/****************************************************************************************************************************/
+/* 
+ * txa_WF_normal
+ * SPP default css - TextArea
+ */
+.TextArea.txa_WF_normal
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #dbdbdb;
+	-nexa-text-align	: left;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #444444;
+	-nexa-padding		: 4px 6px 4px 6px;
+	-nexa-word-wrap 	: char;
+}
+.TextArea.txa_WF_normal[status=mouseover],
+.TextArea.txa_WF_normal[status=focused]
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #3697f8;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #0a5dad;
+	-nexa-text-align	: left;
+	-nexa-padding		: 4px 6px 4px 6px;
+	-nexa-word-wrap 	: char;
+}
+.TextArea.txa_WF_normal[status=readonly]
+{
+	background		: #ededed;
+	-nexa-border		: 1px solid #b8b8b8;
+	-nexa-text-align	: left;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #000000;
+	-nexa-padding		: 4px 6px 4px 6px;
+}
+.TextArea.txa_WF_normal[status=disabled]
+{
+	background		: #dddddd;
+	-nexa-border		: 1px solid #b8b8b8;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #888888;
+	-nexa-text-align	: left;
+	-nexa-padding		: 4px 6px 4px 6px;
+}
+
+/* 
+ * txa_WF_Confirm
+ * SPP default css - TextArea
+ */
+.TextArea.txa_WF_Confirm
+{
+	background		: #89aeeb;
+	-nexa-border		: 1px solid #dbdbdb;
+	-nexa-text-align	: left;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #444444;
+	-nexa-padding		: 4px 6px 4px 6px;
+}
+.TextArea.txa_WF_Confirm[status=mouseover],
+.TextArea.txa_WF_Confirm[status=focused]
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #3697f8;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #0a5dad;
+	-nexa-text-align	: left;
+	-nexa-padding		: 4px 6px 4px 6px;
+}
+.TextArea.txa_WF_Confirm[status=readonly]
+{
+	background		: #89aeeb;
+	-nexa-border		: 1px solid #b8b8b8;
+	-nexa-text-align	: left;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #000000;
+	-nexa-padding		: 4px 6px 4px 6px;
+}
+.TextArea.txa_WF_Confirm[status=disabled]
+{
+	background		: #89aeeb;
+	-nexa-border		: 1px solid #b8b8b8;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #888888;
+	-nexa-text-align	: left;
+	-nexa-padding		: 4px 6px 4px 6px;
+}
+/****************************************************************************************************************************/
+/*****************************************************   TEXTAREA END   *****************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   BUTTON START   *****************************************************/
+/****************************************************************************************************************************/
+/* 
+ * btn_WF_normal
+ * SPP default height 24px용 button
+ */
+.Button.btn_WF_normal,
+.Button.btn_WF_normal[status=mouseover],
+.Button.btn_WF_normal[status=focused],
+.Button.btn_WF_normal[userstatus=pushed],
+.Button.btn_WF_normal[userstatus=selected]
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align	: middle;
+	background		: #e1e1de;
+	-nexa-border		: 0px;
+	border-radius 		: 5px 5px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: pointer;
+}
+.Button.btn_WF_normal[status=disabled]
+{
+	background		: #f5f5f5;
+	-nexa-border		: 1px solid #d9d9d9;
+	color 			: #bbbbbb;
+	cursor			: default;
+}
+
+/* 
+ * btn_WF_favorite_off
+ * SPP 메뉴 즐겨찾기 버튼 off상태 css
+ */
+.Button.btn_WF_favorite_off,
+.Button.btn_WF_favorite_off[status=mouseover],
+.Button.btn_WF_favorite_off[status=focused],
+.Button.btn_WF_favorite_off[userstatus=pushed],
+.Button.btn_WF_favorite_off[userstatus=selected]
+{
+	background		: url('theme://SPP_IMAGE_SET/WF/btn_WF_FavoriteOff.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_favorite_on
+ * SPP 메뉴 즐겨찾기 버튼 on상태 css
+ */
+.Button.btn_WF_favorite_on,
+.Button.btn_WF_favorite_on[status=mouseover],
+.Button.btn_WF_favorite_on[status=focused],
+.Button.btn_WF_favorite_on[userstatus=pushed],
+.Button.btn_WF_favorite_on[userstatus=selected]
+{
+	background		: url('theme://SPP_IMAGE_SET/WF/btn_WF_FavoriteOn.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_search
+ * 검색 버튼 css
+ */
+.Button.btn_WF_search,
+.Button.btn_WF_search[status=mouseover],
+.Button.btn_WF_search[status=focused],
+.Button.btn_WF_search[userstatus=pushed],
+.Button.btn_WF_search[userstatus=selected]
+{
+	background		: #546673;
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/WF/btn_WF_search_white.png');
+	-nexa-icon-position 	: left;
+	-nexa-text-padding 	: 0px 0px 0px 5px;
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	-nexa-border		: 0px;
+	border-radius 		: 5px 5px;
+	font			: 14px '돋움';
+	color			: #ffffff;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 15px;
+}
+.Button.btn_WF_search[status=disabled]
+{
+	background		: #f5f5f5;
+	-nexa-border		: 1px solid #d9d9d9;
+	color 			: #bbbbbb;
+}
+
+/* 
+ * btn_WF_searchReset
+ * 검색조건 초기화 버튼 css
+ */
+.Button.btn_WF_searchReset,
+.Button.btn_WF_searchReset[status=mouseover],
+.Button.btn_WF_searchReset[status=focused],
+.Button.btn_WF_searchReset[userstatus=pushed],
+.Button.btn_WF_searchReset[userstatus=selected]
+{
+	background		: #546673;
+	-nexa-icon		: URL('theme://SPP_IMAGE_SET/WF/btn_WF_reset_white.png');
+	-nexa-icon-position 	: left;
+	-nexa-text-padding 	: 0px 0px 0px 5px;
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	-nexa-border		: 0px;
+	border-radius 		: 5px 5px;
+	font			: 14px '돋움';
+	color			: #ffffff;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 15px;
+}
+.Button.btn_WF_searchReset[status=disabled]
+{
+	background		: #f5f5f5;
+	-nexa-border		: 1px solid #d9d9d9;
+	color 			: #bbbbbb;
+}
+
+
+/* 
+ * btn_WF_primary_save
+ * default 저장 버튼
+ */
+.Button.btn_WF_primary_save,
+.Button.btn_WF_primary_save[userstatus=selected]
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align	: middle;
+	background		: #4774ff;
+	-nexa-border		: 0px;
+	border-radius 		: 5px 5px;
+	color			: #ffffff;
+	font			: bold 14px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: pointer;
+}
+.Button.btn_WF_primary_save[status=mouseover],
+.Button.btn_WF_primary_save[status=focused]
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align	: middle;
+	background		: #4774ff;
+	-nexa-border		: 0px;
+	border-radius 		: 5px 5px;
+	color			: #ffffff;
+	font			: bold 14px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+}
+.Button.btn_WF_primary_save[userstatus=pushed]
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align	: middle;
+	background		: #4774ff;
+	-nexa-border		: 0px;
+	border-radius 		: 5px 5px;
+	color			: #ffffff;
+	font			: bold 14px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+}
+.Button.btn_WF_primary_save[status=disabled]
+{
+	background		: #f5f5f5;
+	-nexa-border		: 0px;
+	color 			: #bbbbbb;
+}
+/* 
+ * btn_WF_primary_save_ex
+ * 
+ */
+.Button.btn_WF_primary_save_ex,
+.Button.btn_WF_primary_save_ex[userstatus=selected]
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align	: middle;
+	background		: #ff7454;
+	-nexa-border		: 0px;
+	border-radius 		: 5px 5px;
+	color			: #ffffff;
+	font			: bold 14px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: pointer;
+}
+.Button.btn_WF_primary_save_ex[status=mouseover],
+.Button.btn_WF_primary_save_ex[status=focused]
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align	: middle;
+	background		: #ff7454;
+	-nexa-border		: 0px;
+	border-radius 		: 5px 5px;
+	color			: #ffffff;
+	font			: bold 14px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+}
+.Button.btn_WF_primary_save_ex[userstatus=pushed]
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align	: middle;
+	background		: #ff7454;
+	-nexa-border		: 0px;
+	border-radius 		: 5px 5px;
+	color			: #ffffff;
+	font			: bold 14px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+}
+.Button.btn_WF_primary_save_ex[status=disabled]
+{
+	background		: #f5f5f5;
+	-nexa-border		: 0px;
+	color 			: #bbbbbb;
+}
+
+/* 
+ * btn_WF_primary_close
+ * default 닫기/취소 버튼
+ */
+.Button.btn_WF_primary_close,
+.Button.btn_WF_primary_close[userstatus=selected]
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align	: middle;
+	background		: #ffffff;
+	-nexa-border		: 1px solid #4774ff;
+	border-radius 		: 5px 5px;
+	color			: #4774ff;
+	font			: bold 14px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: pointer;
+	
+}
+.Button.btn_WF_primary_close[status=mouseover],
+.Button.btn_WF_primary_close[status=focused]
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align	: middle;
+	background		: #ffffff;
+	-nexa-border		: 1px solid #4774ff;
+	border-radius 		: 5px 5px;
+	color			: #4774ff;
+	font			: bold 14px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+}
+.Button.btn_WF_primary_close[userstatus=pushed]
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align	: middle;
+	background		: #ffffff;
+	-nexa-border		: 1px solid #4774ff;
+	border-radius 		: 5px 5px;
+	color			: #4774ff;
+	font			: bold 14px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+}
+.Button.btn_WF_primary_close[status=disabled]
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #4774ff;
+	color 			: #4774ff;
+}
+
+
+/* 
+ * btn_WF_primary_delete
+ * default 삭제 버튼
+ */
+.Button.btn_WF_primary_delete,
+.Button.btn_WF_primary_delete[userstatus=selected]
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align	: middle;
+	background		: #ffffff;
+	-nexa-border		: 1px solid red;
+	border-radius 		: 5px 5px;
+	color			: red;
+	font			: bold 14px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: pointer;
+	
+}
+.Button.btn_WF_primary_delete[status=mouseover],
+.Button.btn_WF_primary_delete[status=focused]
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align	: middle;
+	background		: #ffffff;
+	-nexa-border		: 1px solid red;
+	border-radius 		: 5px 5px;
+	color			: red;
+	font			: bold 14px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+}
+.Button.btn_WF_primary_delete[userstatus=pushed]
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align	: middle;
+	background		: #ffffff;
+	-nexa-border		: 1px solid red;
+	border-radius 		: 5px 5px;
+	color			: red;
+	font			: bold 14px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+}
+.Button.btn_WF_primary_delete[status=disabled]
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid red;
+	color 			: red;
+}
+
+
+/* 
+ * btn_WF_add
+ * default 추가 버튼
+ */
+.Button.btn_WF_add,
+.Button.btn_WF_add[userstatus=selected]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 25px;
+}
+
+.Button.btn_WF_add[status=mouseover],
+.Button.btn_WF_add[status=focused]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 25px;
+}
+.Button.btn_WF_add[userstatus=pushed]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 1px 0px 0px 25px;
+}
+.Button.btn_WF_add[status=disabled]
+{
+	background		: #f5f5f5 URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #d9d9d9;
+	border-radius 		: 3px 3px;
+	color 			: #bbbbbb;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: default;
+	-nexa-padding		: 0px 0px 0px 25px;
+}
+
+/* 
+ * btn_WF_del
+ * default 삭제 버튼
+ */
+.Button.btn_WF_del,
+.Button.btn_WF_del[userstatus=selected]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 25px;
+	
+}
+.Button.btn_WF_del[status=mouseover],
+.Button.btn_WF_del[status=focused]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 25px;
+}
+.Button.btn_WF_del[userstatus=pushed]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 1px 0px 0px 25px;
+}
+.Button.btn_WF_del[status=disabled]
+{
+	background		: #f5f5f5 URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #d9d9d9;
+	border-radius 		: 3px 3px;
+	color			: #bbbbbb;
+	font			: 12px '돋움';
+	cursor			: default;
+	-nexa-text-decoration 	: ;
+	-nexa-padding		: 0px 0px 0px 25px;
+}
+
+/* 
+ * btn_WF_edt
+ * default 수정 버튼
+ */
+.Button.btn_WF_edit,
+.Button.btn_WF_edit[userstatus=selected]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 25px;
+	
+}
+.Button.btn_WF_edit[status=mouseover],
+.Button.btn_WF_edit[status=focused]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 25px;
+}
+.Button.btn_WF_edit[userstatus=pushed]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 1px 0px 0px 25px;
+}
+.Button.btn_WF_edit[status=disabled]
+{
+	background		: #f5f5f5 URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #d9d9d9;
+	border-radius 		: 3px 3px;
+	color			: #bbbbbb;
+	font			: 12px '돋움';
+	cursor			: default;
+	-nexa-text-decoration 	: ;
+	-nexa-padding		: 0px 0px 0px 25px;
+}
+
+/* 
+ * btn_WF_func
+ * 추가기능용 버튼 default css
+ */
+.Button.btn_WF_func,
+.Button.btn_WF_func[userstatus=selected]
+{
+	background		: #fafafa;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 6px;
+	
+}
+.Button.btn_WF_func[status=mouseover],
+.Button.btn_WF_func[status=focused]
+{
+	background		: #fafafa;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+.Button.btn_WF_func[userstatus=pushed]
+{
+	background		: #fafafa;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 1px 0px 0px 6px;
+}
+.Button.btn_WF_func[status=disabled]
+{
+	background		: #f5f5f5;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #d9d9d9;
+	border-radius 		: 3px 3px;
+	color			: #bbbbbb;
+	font			: 12px '돋움';
+	cursor			: default;
+	-nexa-text-decoration 	: ;
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+
+/* 
+ * btn_WF_fileDown
+ * default 파일 다운로드 버튼
+ */
+.Button.btn_WF_fileDown,
+.Button.btn_WF_fileDown[userstatus=selected]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 30px;
+	
+}
+.Button.btn_WF_fileDown[status=mouseover],
+.Button.btn_WF_fileDown[status=focused]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 30px;
+}
+.Button.btn_WF_fileDown[userstatus=pushed]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 1px 0px 0px 30px;
+}
+.Button.btn_WF_fileDown[status=disabled]
+{
+	background		: #f5f5f5 URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #d9d9d9;
+	border-radius 		: 3px 3px;
+	color			: #bbbbbb;
+	font			: 12px '돋움';
+	cursor			: default;
+	-nexa-text-decoration 	: ;
+	-nexa-padding		: 0px 0px 0px 30px;
+}
+
+/* 
+ * btn_WF_excelDown
+ * default 엑셀다운버튼
+ */
+.Button.btn_WF_excelDown,
+.Button.btn_WF_excelDown[userstatus=selected]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 28px;
+	
+}
+.Button.btn_WF_excelDown[status=mouseover],
+.Button.btn_WF_excelDown[status=focused]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 28px;
+}
+.Button.btn_WF_excelDown[userstatus=pushed]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 1px 0px 0px 28px;
+}
+.Button.btn_WF_excelDown[status=disabled]
+{
+	background		: #f5f5f5 URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #d9d9d9;
+	border-radius 		: 3px 3px;
+	color			: #bbbbbb;
+	font			: 12px '돋움';
+	cursor			: default;
+	-nexa-text-decoration 	: ;
+	-nexa-padding		: 0px 0px 0px 28px;
+}
+
+/* 
+ * btn_WF_excelUp
+ * default 엑셀업로드버튼
+ */
+.Button.btn_WF_excelUp,
+.Button.btn_WF_excelUp[userstatus=selected]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 28px;
+	
+}
+.Button.btn_WF_excelUp[status=mouseover],
+.Button.btn_WF_excelUp[status=focused]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 28px;
+}
+.Button.btn_WF_excelUp[userstatus=pushed]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 1px 0px 0px 28px;
+}
+.Button.btn_WF_excelUp[status=disabled]
+{
+	background		: #f5f5f5 URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #d9d9d9;
+	border-radius 		: 3px 3px;
+	color			: #bbbbbb;
+	font			: 12px '돋움';
+	cursor			: default;
+	-nexa-text-decoration 	: ;
+	-nexa-padding		: 0px 0px 0px 28px;
+}
+
+/* 
+ * btn_WF_chart
+ * default 차트 버튼
+ */
+.Button.btn_WF_chart,
+.Button.btn_WF_chart[userstatus=selected]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 28px;
+	
+}
+.Button.btn_WF_chart[status=mouseover],
+.Button.btn_WF_chart[status=focused]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 28px;
+}
+.Button.btn_WF_chart[userstatus=pushed]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 1px 0px 0px 28px;
+}
+.Button.btn_WF_chart[status=disabled]
+{
+	background		: #f5f5f5 URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #d9d9d9;
+	border-radius 		: 3px 3px;
+	color			: #bbbbbb;
+	font			: 12px '돋움';
+	cursor			: default;
+	-nexa-text-decoration 	: ;
+	-nexa-padding		: 0px 0px 0px 28px;
+}
+
+
+/* 
+ * btn_WF_refresh
+ * 새로고침 버튼
+ */
+.Button.btn_WF_refresh,
+.Button.btn_WF_refresh[userstatus=selected],
+.Button.btn_WF_refresh[status=focused],
+.Button.btn_WF_refresh[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_refreshN.png') no-repeat left center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_refresh[status=mouseover],
+.Button.btn_WF_refresh[userstatus=pushed]
+
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_refreshO.png') no-repeat left center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+
+/* 
+ * btn_WF_clear
+ * Edit 초기화 X 버튼 css
+ */
+.Button.btn_WF_clear,
+.Button.btn_WF_clear[userstatus=selected]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_editClear_N.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer;
+}
+.Button.btn_WF_clear[status=mouseover],
+.Button.btn_WF_clear[status=focused]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_editClear_O.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer;
+}
+.Button.btn_WF_clear[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_editClear_O.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer;
+}
+.Button.btn_WF_clear[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_editClear_D.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_SearchIcon
+ * 검색용 돋보기 아이콘 버튼
+ */
+.Button.btn_WF_SearchIcon,
+.Button.btn_WF_SearchIcon[userstatus=selected]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_Search.png') no-repeat center center;
+	-nexa-border		: 1px solid #dbdbdb;
+	border-radius		: 3px 3px;
+	cursor			: pointer;
+}
+.Button.btn_WF_SearchIcon[status=mouseover],
+.Button.btn_WF_SearchIcon[status=focused]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_SearchO.png') no-repeat center center;
+	-nexa-border		: 1px solid #dbdbdb;
+	border-radius		: 3px 3px;
+	cursor			: pointer;
+}
+.Button.btn_WF_SearchIcon[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_SearchP.png') no-repeat center center;
+	-nexa-border		: 1px solid #dbdbdb;
+	border-radius		: 3px 3px;
+	cursor			: pointer;
+}
+.Button.btn_WF_SearchIcon[status=disabled]
+{
+	background		: #f5f5f5 URL('theme://SPP_IMAGE_SET/WF/btn_WF_SearchD.png') no-repeat center center;
+	-nexa-border		: 1px solid #d9d9d9;
+	border-radius		: 3px 3px;
+	cursor			: pointer;
+}
+
+/*
+ * btn_WF_ClearIcon
+ * 검색조건 초기화 버튼 css
+ */
+.Button.btn_WF_ClearIcon,
+.Button.btn_WF_ClearIcon[status=mouseover],
+.Button.btn_WF_ClearIcon[status=focused],
+.Button.btn_WF_ClearIcon[userstatus=pushed],
+.Button.btn_WF_ClearIcon[userstatus=selected]
+{
+	background		: #546673;
+	-nexa-icon		: URL('theme://SPP_IMAGE_SET/WF/btn_WF_reset_white.png');
+	-nexa-text-padding 	: 0px 0px 0px 0px;
+	-nexa-vertical-align 	: middle;
+	-nexa-border		: 0px;
+	border-radius 		: 5px 5px;
+	font			: 14px '돋움';
+	color			: #ffffff;
+	cursor			: pointer;
+	-nexa-padding		: 2px 2px 2px 2px;
+}
+.Button.btn_WF_ClearIcon[status=disabled]
+{
+	background		: #f5f5f5;
+	-nexa-border		: 1px solid #d9d9d9;
+	color 			: #bbbbbb;
+}
+
+/* 
+ * btn_WF_btnPrev
+ * 이전 버튼1
+ */
+.Button.btn_WF_btnPrev,
+.Button.btn_WF_btnPrev[userstatus=selected],
+.Button.btn_WF_btnPrev[status=mouseover],
+.Button.btn_WF_btnPrev[status=focused],
+.Button.btn_WF_btnPrev[userstatus=pushed],
+.Button.btn_WF_btnPrev[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_atchLeft.png') no-repeat center center;
+	-nexa-border		: 1px solid #dbdbdb;
+	border-radius		: 3px 3px;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_btnNext
+ * 다음 버튼1
+ */
+.Button.btn_WF_btnNext,
+.Button.btn_WF_btnNext[userstatus=selected],
+.Button.btn_WF_btnNext[status=mouseover],
+.Button.btn_WF_btnNext[status=focused],
+.Button.btn_WF_btnNext[userstatus=pushed],
+.Button.btn_WF_btnNext[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_atchRight.png') no-repeat center center;
+	-nexa-border		: 1px solid #dbdbdb;
+	border-radius		: 3px 3px;
+	cursor			: pointer;
+}
+
+
+
+
+/* 
+ * btn_WF_btnPrev2
+ * 이전 버튼2
+ */
+.Button.btn_WF_btnPrev2,
+.Button.btn_WF_btnPrev2[userstatus=selected],
+.Button.btn_WF_btnPrev2[status=focused],
+.Button.btn_WF_btnPrev2[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_btnPrev2N.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_btnPrev2[status=mouseover],
+.Button.btn_WF_btnPrev2[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_btnPrev2O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_btnNext2
+ * 다음 버튼2
+ */
+.Button.btn_WF_btnNext2,
+.Button.btn_WF_btnNext2[userstatus=selected],
+.Button.btn_WF_btnNext2[status=focused],
+.Button.btn_WF_btnNext2[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_btnNext2N.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_btnNext2[status=mouseover],
+.Button.btn_WF_btnNext2[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_btnNext2O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_btnPrev3
+ * 이전 버튼3
+ */
+.Button.btn_WF_btnPrev3,
+.Button.btn_WF_btnPrev3[userstatus=selected],
+.Button.btn_WF_btnPrev3[status=focused],
+.Button.btn_WF_btnPrev3[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_btnPrev3N.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_btnPrev3[status=mouseover],
+.Button.btn_WF_btnPrev3[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_btnPrev3O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_btnNext3
+ * 다음 버튼3
+ */
+.Button.btn_WF_btnNext3,
+.Button.btn_WF_btnNext3[userstatus=selected],
+.Button.btn_WF_btnNext3[status=focused],
+.Button.btn_WF_btnNext3[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_btnNext3N.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_btnNext3[status=mouseover],
+.Button.btn_WF_btnNext3[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/btn_WF_btnNext3O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+
+
+
+/* 
+ * btn_WF_count00
+ * WF 단계 아이콘 00
+ */
+.Button.btn_WF_count00,
+.Button.btn_WF_count00[userstatus=selected],
+.Button.btn_WF_count00[status=focused],
+.Button.btn_WF_count00[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count00.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_count00[status=mouseover],
+.Button.btn_WF_count00[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_count01
+ * WF 단계 아이콘 01
+ */
+.Button.btn_WF_count01,
+.Button.btn_WF_count01[userstatus=selected],
+.Button.btn_WF_count01[status=focused],
+.Button.btn_WF_count01[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count01.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_count01[status=mouseover],
+.Button.btn_WF_count01[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_count02
+ * WF 단계 아이콘 02
+ */
+.Button.btn_WF_count02,
+.Button.btn_WF_count02[userstatus=selected],
+.Button.btn_WF_count02[status=focused],
+.Button.btn_WF_count02[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count02.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_count02[status=mouseover],
+.Button.btn_WF_count02[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_count03
+ * WF 단계 아이콘 03
+ */
+.Button.btn_WF_count03,
+.Button.btn_WF_count03[userstatus=selected],
+.Button.btn_WF_count03[status=focused],
+.Button.btn_WF_count03[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count03.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_count03[status=mouseover],
+.Button.btn_WF_count03[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_count04
+ * WF 단계 아이콘 04
+ */
+.Button.btn_WF_count04,
+.Button.btn_WF_count04[userstatus=selected],
+.Button.btn_WF_count04[status=focused],
+.Button.btn_WF_count04[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count04.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_count04[status=mouseover],
+.Button.btn_WF_count04[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_count05
+ * WF 단계 아이콘 05
+ */
+.Button.btn_WF_count05,
+.Button.btn_WF_count05[userstatus=selected],
+.Button.btn_WF_count05[status=focused],
+.Button.btn_WF_count05[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count05.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_count05[status=mouseover],
+.Button.btn_WF_count05[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_count00_on
+ * WF 단계 아이콘 00_on
+ */
+.Button.btn_WF_count00_on,
+.Button.btn_WF_count00_on[userstatus=selected],
+.Button.btn_WF_count00_on[status=focused],
+.Button.btn_WF_count00_on[status=mouseover],
+.Button.btn_WF_count00_on[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_count00_on[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count00.png') no-repeat center center;	
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_count01_on
+ * WF 단계 아이콘 01_on
+ */
+.Button.btn_WF_count01_on,
+.Button.btn_WF_count01_on[userstatus=selected],
+.Button.btn_WF_count01_on[status=focused],
+.Button.btn_WF_count01_on[status=mouseover],
+.Button.btn_WF_count01_on[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_count01_on[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count01.png') no-repeat center center;	
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_count02_on
+ * WF 단계 아이콘 02_on
+ */
+.Button.btn_WF_count02_on,
+.Button.btn_WF_count02_on[userstatus=selected],
+.Button.btn_WF_count02_on[status=focused],
+.Button.btn_WF_count02_on[status=mouseover],
+.Button.btn_WF_count02_on[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_count02_on[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count02.png') no-repeat center center;	
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_count03_on
+ * WF 단계 아이콘 03_on
+ */
+.Button.btn_WF_count03_on,
+.Button.btn_WF_count03_on[userstatus=selected],
+.Button.btn_WF_count03_on[status=focused],
+.Button.btn_WF_count03_on[status=mouseover],
+.Button.btn_WF_count03_on[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_count03_on[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count03.png') no-repeat center center;	
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_count04_on
+ * WF 단계 아이콘 04_on
+ */
+.Button.btn_WF_count04_on,
+.Button.btn_WF_count04_on[userstatus=selected],
+.Button.btn_WF_count04_on[status=focused],
+.Button.btn_WF_count04_on[status=mouseover],
+.Button.btn_WF_count04_on[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_count04_on[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count04.png') no-repeat center center;	
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_count05_on
+ * WF 단계 아이콘 05_on
+ */
+.Button.btn_WF_count05_on,
+.Button.btn_WF_count05_on[userstatus=selected],
+.Button.btn_WF_count05_on[status=focused],
+.Button.btn_WF_count05_on[status=mouseover],
+.Button.btn_WF_count05_on[status=disabled]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+.Button.btn_WF_count05_on[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_count05.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_countArrowRight
+ * WF 단계 오른쪽 화살표 아이콘
+ */
+.Button.btn_WF_countArrowRight,
+.Button.btn_WF_countArrowRight[userstatus=selected],
+.Button.btn_WF_countArrowRight[status=focused],
+.Button.btn_WF_countArrowRight[status=disabled],
+.Button.btn_WF_countArrowRight[status=mouseover],
+.Button.btn_WF_countArrowRight[userstatus=pushed]
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_countArrowRight.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer;
+}
+
+
+/* 
+ * btn_WF_calDayOn
+ * 월달력/달력 팝업 날짜/월 선택 버튼 On
+ */
+.Button.btn_WF_calDayOn,
+.Button.btn_WF_calDayOn[userstatus=selected],
+.Button.btn_WF_calDayOn[status=focused],
+.Button.btn_WF_calDayOn[status=disabled],
+.Button.btn_WF_calDayOn[status=mouseover],
+.Button.btn_WF_calDayOn[userstatus=pushed]
+{
+	background		: #656ff2;
+	-nexa-border		: 1px solid #656ff2;
+	border-radius 		: 5px;
+	color			: #ffffff;
+	font			: bold 13px '돋움';
+	cursor			: pointer;
+}
+
+/* 
+ * btn_WF_calDayOff
+ * 월달력/달력 팝업 날짜/월 선택 버튼 Off
+ */
+.Button.btn_WF_calDayOff,
+.Button.btn_WF_calDayOff[userstatus=selected],
+.Button.btn_WF_calDayOff[status=focused],
+.Button.btn_WF_calDayOff[status=disabled],
+.Button.btn_WF_calDayOff[status=mouseover],
+.Button.btn_WF_calDayOff[userstatus=pushed]
+{
+	background		: #f7f9fa;
+	-nexa-border		: 1px solid #c2c2c2;
+	border-radius 		: 5px;
+	color			: #020202;
+	font			: bold 13px '돋움';
+	cursor			: pointer;
+}
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   BUTTON END   *******************************************************/
+/****************************************************************************************************************************/
+
+
+/****************************************************************************************************************************/
+/*****************************************************   CHECKBOX START   ***************************************************/
+/****************************************************************************************************************************/
+/* 
+ * chk_WF_normal
+ * SPP default css - CheckBox
+ */
+.CheckBox.chk_WF_normal
+{
+	background 		: transparent;
+	-nexa-border 		: 0px none;
+	border-radius 		: 0px;
+	font			: 12px '돋움';
+	color 			: #444444;
+	-nexa-text-align 	: left;
+	-nexa-vertical-align 	: middle;
+	-nexa-text-padding 	: 0px 0px 0px 8px;
+	-nexa-padding		: 0px 0px 0px 0px;
+	-nexa-icon 		: URL("theme://SPP_IMAGE_SET/WF/chk_WF_Box.png");
+	-nexa-icon-position 	: left;
+}
+
+.CheckBox.chk_WF_normal[status=focused]
+{
+	-nexa-icon 		: URL("theme://SPP_IMAGE_SET/WF/chk_WF_Box_O.png");
+	color 			: #444444;
+}
+.CheckBox.chk_WF_normal[userstatus=selected]
+{
+	-nexa-icon 		: URL("theme://SPP_IMAGE_SET/WF/chk_WF_Box_F.png");
+	color 			: #444444;
+}
+
+.CheckBox.chk_WF_normal[status=mouseover]
+{
+	-nexa-icon 		: URL("theme://SPP_IMAGE_SET/WF/chk_WF_Box_O.png");
+	color			: #0a5dad;
+}
+
+.CheckBox.chk_WF_normal[status=mouseover][userstatus=selected]
+{
+	color			: #0a5dad;
+	-nexa-icon 		: URL("theme://SPP_IMAGE_SET/WF/chk_WF_Box_S.png");
+}
+.CheckBox.chk_WF_normal[status=readonly]
+{
+	background 		: transparent;
+	-nexa-border 		: 0px none;
+	border-radius 		: 0px;
+	font			: 12px '돋움';
+	color 			: #000000;
+	-nexa-text-align 	: left;
+	-nexa-vertical-align 	: middle;
+	-nexa-text-padding 	: 0px 0px 0px 8px;
+	-nexa-padding		: 0px 0px 0px 0px;
+	-nexa-icon 		: URL("theme://SPP_IMAGE_SET/WF/chk_WF_Box_D.png");
+	-nexa-icon-position 	: left;
+}
+.CheckBox.chk_WF_normal[status=disabled]
+{
+	-nexa-icon 		: URL("theme://SPP_IMAGE_SET/WF/chk_WF_Box_D.png");
+	color 			: #888888;
+}
+
+.CheckBox.chk_WF_normal[status=disabled][userstatus=selected]
+{
+	-nexa-icon		: URL("theme://SPP_IMAGE_SET/WF/chk_WF_Box_DS.png");
+	color			: #888888;
+}
+
+/****************************************************************************************************************************/
+/*****************************************************   CHECKBOX END   *****************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   RADIO START   ******************************************************/
+/****************************************************************************************************************************/
+/* 
+ * rdo_WF_normal
+ * SPP default css - combo
+ */
+.Radio.rdo_WF_normal
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	color			: #444444;
+	font 			: 12px '돋움';
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+.Radio.rdo_WF_normal[status=mouseover],
+.Radio.rdo_WF_normal[status=focused]
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	color			: #444444;
+	font 			: 12px '돋움';
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+.Radio.rdo_WF_normal[status=readonly]
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	color			: #000000;
+	font 			: 12px '돋움';
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+.Radio.rdo_WF_normal[status=disabled]
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	color			: #888888;
+	font 			: 12px '돋움';
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+
+.Radio.rdo_WF_normal .radioitem,
+.Radio.rdo_WF_normal .radioitem[status=readonly]
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	-nexa-icon 		: url("theme://SPP_IMAGE_SET/WF/rdo_WF_N.png");
+	-nexa-padding 		: 0px 18px 0px 0px;
+}
+.Radio.rdo_WF_normal .radioitem[status=mouseover]
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	-nexa-icon 		: url("theme://SPP_IMAGE_SET/WF/rdo_WF_O.png");
+	-nexa-padding 		: 0px 18px 0px 0px;
+}
+.Radio.rdo_WF_normal .radioitem[userstatus=selected],
+.Radio.rdo_WF_normal .radioitem[status=readonly][userstatus=selected]
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	-nexa-icon 		: url("theme://SPP_IMAGE_SET/WF/rdo_WF_S.png");
+	-nexa-padding 		: 0px 18px 0px 0px;
+}
+
+.Radio.rdo_WF_normal .radioitem[status=disabled]
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	-nexa-icon 		: url("theme://SPP_IMAGE_SET/WF/rdo_WF_D.png");
+	-nexa-padding 		: 0px 18px 0px 0px;
+}
+.Radio.rdo_WF_normal .radioitem[userstatus=selected][status=disabled]
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	-nexa-icon 		: url("theme://SPP_IMAGE_SET/WF/rdo_WF_DS.png");
+	-nexa-padding 		: 0px 18px 0px 0px;
+}
+
+
+
+/* 
+ * rdo_WF_checklist
+ * SPP checklist css - focus 상태 표기
+ */
+.Radio.rdo_WF_checklist,
+.Radio.rdo_WF_checklist[status=mouseover],
+.Radio.rdo_WF_checklist[status=focused]
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	color			: #444444;
+	font 			: 12px '돋움';
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+
+.Radio.rdo_WF_checklist[status=readonly]
+{
+	color			: #000000;
+	font 			: 12px '돋움';
+}
+.Radio.rdo_WF_checklist[status=disabled]
+{
+	color			: #888888;
+	font 			: 12px '돋움';
+}
+
+.Radio.rdo_WF_checklist .radioitem,
+.Radio.rdo_WF_checklist .radioitem[status=readonly]
+{
+	-nexa-icon 		: url("theme://SPP_IMAGE_SET/WF/rdo_WF_N.png");
+	font 			: 12px '돋움';
+	color			: #444444;
+	-nexa-padding 		: 0px 10px 0px 0px;
+	-nexa-text-padding 	: 0px 0px 0px 8px;
+}
+.Radio.rdo_WF_checklist .radioitem[status=mouseover]
+{
+	-nexa-icon 		: url("theme://SPP_IMAGE_SET/WF/rdo_WF_O.png");
+	font 			: bold 12px '돋움';
+	color			: #0a5dad;
+}
+
+.Radio.rdo_WF_checklist .radioitem[status=mouseover][userstatus=selected]
+{
+	-nexa-icon 		: url("theme://SPP_IMAGE_SET/WF/rdo_WF_S.png");
+	font 			: bold 12px '돋움';
+	color			: #0a5dad;
+}
+.Radio.rdo_WF_checklist .radioitem[userstatus=selected],
+.Radio.rdo_WF_checklist .radioitem[status=readonly][userstatus=selected]
+{
+	-nexa-icon 		: url("theme://SPP_IMAGE_SET/WF/rdo_WF_S.png");
+	font 			: 12px '돋움';
+	color			: #444444;
+}
+
+.Radio.rdo_WF_checklist .radioitem[status=disabled]
+{
+	-nexa-icon 		: url("theme://SPP_IMAGE_SET/WF/rdo_WF_D.png");
+	font 			: 12px '돋움';
+	color			: #888888;
+}
+.Radio.rdo_WF_checklist .radioitem[userstatus=selected][status=disabled]
+{
+	-nexa-icon 		: url("theme://SPP_IMAGE_SET/WF/rdo_WF_DS.png");
+	font 			: 12px '돋움';
+	color			: #888888;
+}
+/****************************************************************************************************************************/
+/*****************************************************   RADIO END   ********************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   CALENDAR START   ***************************************************/
+/****************************************************************************************************************************/
+.Calendar.cal_WF_normal
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #dbdbdb;
+	border-radius		: 3px 3px;
+	-nexa-padding		: 0px 2px 0px 0px;
+}
+.Calendar.cal_WF_normal[status=mouseover],
+.Calendar.cal_WF_normal[status=focused]
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #3697f8;
+	border-radius		: 3px 3px;
+	-nexa-padding		: 0px 2px 0px 0px;
+}
+.Calendar.cal_WF_normal[status=readonly]
+{
+	background		: #ededed;
+	-nexa-border		: 1px solid #b8b8b8;
+	border-radius		: 3px 3px;
+	-nexa-padding		: 0px 2px 0px 0px;
+}
+.Calendar.cal_WF_normal[status=disabled]
+{
+	background		: #dddddd;
+	-nexa-border		: 1px solid #b8b8b8;
+	border-radius		: 3px 3px;
+	-nexa-padding		: 0px 2px 0px 0px;
+}
+
+.Calendar.cal_WF_normal .calendaredit
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	font			: 12px "돋움";
+	color			: #444444;
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+
+.Calendar.cal_WF_normal .calendaredit[status=mouseover],
+.Calendar.cal_WF_normal .calendaredit[status=focused]
+{
+	background		: #ffffff;
+	-nexa-border		: 0px;
+	font			: 12px '돋움';
+	color			: #0a5dad;
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+.Calendar.cal_WF_normal .calendaredit[status=readonly]
+{
+	background		: #ededed;
+	-nexa-border		: 0px;
+	font			: 12px '돋움';
+	color			: #000000;
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+.Calendar.cal_WF_normal .calendaredit[status=disabled]
+{
+	background		: #dddddd;
+	-nexa-border		: 0px;
+	font			: 12px '돋움';
+	color			: #888888;
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+
+.Calendar.cal_WF_normal .dropbutton,
+.Calendar.cal_WF_normal .dropbutton[status=mouseover],
+.Calendar.cal_WF_normal .dropbutton[status=focused],
+.Calendar.cal_WF_normal .dropbutton[userstatus=selected]
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	-nexa-icon 		: url('theme://SPP_IMAGE_SET/WF/cal_WF_BtnN.png');
+	-nexa-padding		: 0px 0px 0px 0px;
+	cursor			: pointer;
+}
+.Calendar.cal_WF_normal .dropbutton[userstatus=pushed]
+{
+	-nexa-icon 		: url('theme://SPP_IMAGE_SET/WF/cal_WF_BtnP.png');
+	cursor			: pointer;
+}
+.Calendar.cal_WF_normal .dropbutton[status=disabled]
+{
+	-nexa-icon 		: url('theme://SPP_IMAGE_SET/WF/cal_WF_BtnD.png');
+	cursor 			: default;
+}
+
+
+/****************************************************************************************************************************/
+/*****************************************************   CALENDAR END   *****************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   COMBO START   ******************************************************/
+/****************************************************************************************************************************/
+/* 
+ * cbo_WF_normal
+ * SPP default css - combo
+ */
+.Combo.cbo_WF_normal
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #dbdbdb;
+	border-radius 		: 3px 3px;
+	cursor			: pointer;
+}
+.Combo.cbo_WF_normal[status=mouseover],
+.Combo.cbo_WF_normal[status=focused]
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #3697f8;
+	border-radius 		: 3px 3px;
+	cursor			: pointer;
+}
+.Combo.cbo_WF_normal[status=readonly]
+{
+	background		: #ededed;
+	-nexa-border		: 1px solid #b8b8b8;
+	border-radius 		: 3px 3px;
+	cursor			: default;
+}
+.Combo.cbo_WF_normal[status=disabled]
+{
+	background		: #dddddd;
+	-nexa-border		: 1px solid #b8b8b8;
+	cursor			: default;
+}
+
+.Combo.cbo_WF_normal .comboedit,
+.Combo.cbo_WF_normal .comboedit[status=readonly]
+{
+	background		: transparent;
+	-nexa-text-align	: left;
+	-nexa-border		: 0px;
+	color 			: #444444;
+	font			: 12px '돋움';
+	-nexa-padding 		: 1px 6px 0px 6px;
+}
+.Combo.cbo_WF_normal .comboedit[status=focused],
+.Combo.cbo_WF_normal .comboedit[status=mouseover]
+{
+	background		: transparent;
+	-nexa-text-align	: left;
+	-nexa-border		: 0px;
+	color 			: #3697f8;
+	font			: 12px '돋움';
+	-nexa-padding 		: 1px 6px 0px 6px;
+}
+
+.Combo.cbo_WF_normal .comboedit[status=disabled]
+{
+	background		: transparent;
+	-nexa-text-align	: left;
+	-nexa-border		: 0px;
+	color 			: #888888;
+	font			: 12px '돋움';
+	-nexa-padding 		: 1px 6px 0px 6px;
+}
+.Combo.cbo_WF_normal .comboedit[userstatus=nulltext]
+{
+	background		: transparent;
+	-nexa-text-align	: left;
+	-nexa-border		: 0px;
+	color 			: #888888;
+	font			: 12px '돋움';
+	-nexa-padding 		: 1px 6px 0px 6px;
+}
+
+.Combo.cbo_WF_normal .combolist
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #b8b8b8;
+	border-radius 		: 3px 3px;	
+}
+.Combo.cbo_WF_normal .combolist[status=focused],
+.Combo.cbo_WF_normal .combolist[status=mouseover]
+{
+	background		: #8a96a8;
+	-nexa-border		: 1px solid #b8b8b8;
+	border-radius 		: 3px 3px;	
+}
+.Combo.cbo_WF_normal .combolist .listboxitem,
+.Combo.cbo_WF_normal .combolist .listboxitem[status=readonly]
+{
+	background		: #ffffff;
+	-nexa-text-align 	: left;
+	-nexa-vertical-align 	: middle;
+	-nexa-border		: 0px;
+	color			: #444444;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+	-nexa-padding		: 4px 6px 4px 6px;
+	
+}
+.Combo.cbo_WF_normal .combolist .listboxitem[status=focused],
+.Combo.cbo_WF_normal .combolist .listboxitem[status=mouseover]
+{
+	background		: #ffffff;
+	-nexa-text-align 	: left;
+	-nexa-vertical-align 	: middle;
+	-nexa-border		: 0px;
+	color			: #444444;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	-nexa-padding		: 4px 6px 4px 6px;
+
+}
+.Combo.cbo_WF_normal .combolist .listboxitem[userstatus=selected]
+{
+	background		: #8a96a8;
+	-nexa-text-align 	: left;
+	-nexa-vertical-align 	: middle;
+	-nexa-border		: 0px;
+	color			: #ffffff;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	-nexa-padding		: 4px 6px 4px 6px;
+}
+.Combo.cbo_WF_normal .combolist .listboxitem[status=disabled]
+{
+	background		: #dddddd;
+	-nexa-text-align 	: left;
+	-nexa-vertical-align 	: middle;
+	-nexa-border		: 0px;
+	color			: #909090;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+	-nexa-padding		: 4px 6px 4px 6px;
+}
+
+.Combo.cbo_WF_normal .dropbutton
+{
+	background		: transparent;
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/WF/cbo_WF_BtnN.png');
+	-nexa-icon-position 	: right;
+	-nexa-border		: 0px;
+	-nexa-padding		: 2px 0px 0px 0px;
+	cursor			: pointer;
+}
+.Combo.cbo_WF_normal .dropbutton[status=mouseover],
+.Combo.cbo_WF_normal .dropbutton[status=focused],
+.Combo.cbo_WF_normal .dropbutton[userstatus=selected]
+{	
+	background		: transparent;
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/WF/cbo_WF_BtnM.png');
+	-nexa-icon-position 	: right;
+	-nexa-border		: 0px;
+	-nexa-padding		: 2px 0px 0px 0px;
+	cursor			: pointer;
+}
+.Combo.cbo_WF_normal .dropbutton[userstatus=pushed]
+{
+	background		: transparent;
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/WF/cbo_WF_BtnP.png');
+	-nexa-icon-position 	: right;
+	-nexa-border		: 0px;
+	-nexa-padding		: 2px 0px 0px 0px;
+	cursor			: pointer;
+}
+.Combo.cbo_WF_normal .dropbutton[status=disabled]
+{
+	background		: transparent;
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/WF/cbo_WF_BtnD.png');
+	-nexa-icon-position 	: right;
+	-nexa-border		: 0px;
+	-nexa-padding		: 2px 0px 0px 0px;
+	cursor			: pointer;
+}
+/****************************************************************************************************************************/
+/*****************************************************   COMBO END   ********************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   SPIN START   *******************************************************/
+/****************************************************************************************************************************/
+/* 
+ * spn_WF_normal
+ * SPP default css - spin
+ */
+.Spin.spn_WF_normal
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #dbdbdb;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #444444;
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+.Spin.spn_WF_normal[status=mouseover],
+.Spin.spn_WF_normal[status=focused]
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #3697f8;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #0a5dad;
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+.Spin.spn_WF_normal[status=readonly]
+{
+	background		: #ededed;
+	-nexa-border		: 1px solid #b8b8b8;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #000000;
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+.Spin.spn_WF_normal[status=disabled]
+{
+	background		: #dddddd;
+	-nexa-border		: 1px solid #b8b8b8;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #888888;
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+.Spin.spn_WF_normal[userstatus=invalidtext]
+{
+	background		: ;
+	border-radius		: 3px 3px;
+	font			: 12px '돋움';
+	color			: #909090;
+	-nexa-padding		: 0px 0px 0px 6px;
+}
+
+.Spin.spn_WF_normal .spinedit
+{
+	background		: transparent;
+	font			: 12px '돋움';
+	-nexa-text-align 	: left;
+}
+
+.Spin.spn_WF_normal .spinupbutton
+{
+	background 		: transparent;
+	-nexa-icon		: url('theme://SPP_IMAGE_SET/WF/spn_WF_UpN.png');
+	cursor			: pointer;
+}
+.Spin.spn_WF_normal .spinupbutton[status=mouseover],
+.Spin.spn_WF_normal .spinupbutton[status=focused],
+.Spin.spn_WF_normal .spinupbutton[userstatus=pushed]
+{
+	background 		: transparent;
+	-nexa-icon		: url('theme://SPP_IMAGE_SET/WF/spn_WF_UpP.png');
+	cursor			: pointer;
+}
+.Spin.spn_WF_normal .spinupbutton[status=disabled]
+{
+	background 		: transparent;
+	-nexa-icon		: url('theme://SPP_IMAGE_SET/WF/spn_WF_UpD.png');
+	cursor			: default;
+}
+
+.Spin.spn_WF_normal .spindownbutton
+{
+	background 		: transparent;
+	-nexa-icon 		: url('theme://SPP_IMAGE_SET/WF/spn_WF_DownN.png')
+	cursor			: pointer;
+}
+.Spin.spn_WF_normal .spindownbutton[status=mouseover],
+.Spin.spn_WF_normal .spindownbutton[status=focused],
+.Spin.spn_WF_normal .spindownbutton[userstatus=pushed]
+{
+	background 		: transparent;
+	-nexa-icon		: url('theme://SPP_IMAGE_SET/WF/spn_WF_DownP.png');
+	cursor			: pointer;
+}
+.Spin.spn_WF_normal .spindownbutton[status=disabled]
+{
+	background 		: transparent;
+	-nexa-icon		: url('theme://SPP_IMAGE_SET/WF/spn_WF_DownD.png');
+	cursor			: default;
+}
+/****************************************************************************************************************************/
+/*****************************************************   SPIN END   *********************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   DIV START   ********************************************************/
+/****************************************************************************************************************************/
+/* 
+ * div_WF_divSearchArea
+ * SPP 검색조건 영역 div css
+ */
+.Div.div_WF_divSearchArea,
+.Div.div_WF_divSearchArea[status=mouseover],
+.Div.div_WF_divSearchArea[status=focused],
+.Div.div_WF_divSearchArea[status=disabled]
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #d3d3d3;
+	border-radius 		: 4px 4px;
+}
+
+/*
+ * div_WF_wfFieldN
+ * SPP WorkFlow Field Div Normal
+ */
+.Div.div_WF_wfFieldN
+{
+	background		: transparent;
+	-nexa-border		: 2px solid transparent;
+}
+
+/*
+ * div_WF_wfFieldA
+ * SPP WorkFlow Field Div Active
+ */
+.Div.div_WF_wfFieldA
+{
+	background		: transparent;
+	-nexa-border		: 2px dashed #dfdfdf;
+}
+
+/*
+ * div_WF_wfFieldO
+ * SPP WorkFlow Field Div Over
+ */
+.Div.div_WF_wfFieldO
+{
+	background		: transparent;
+	-nexa-border		: 2px dashed #3697f8;
+}
+
+/*
+ * div_WF_wfFieldDisp
+ * SPP WorkFlow 히스토리맵 표기용 Field css
+ */
+.Div.div_WF_wfFieldDisp
+{
+	background		: transparent;
+	-nexa-border		: 0px none;
+}
+
+/*
+ * div_WF_wfStep01
+ * SPP WorkFlow 히스토리맵 단계 아이콘 표기용 css
+ */
+.Div.div_WF_wfStep01
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_wfStep01.png') no-repeat left center;
+	-nexa-border		: 0px none;
+}
+
+/*
+ * div_WF_wfStep0
+ * SPP WorkFlow 히스토리맵 단계 아이콘 표기용 css
+ */
+.Div.div_WF_wfStep02
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_wfStep02.png') no-repeat left center;
+	-nexa-border		: 0px none;
+}
+
+/*
+ * div_WF_wfStep03
+ * SPP WorkFlow 히스토리맵 단계 아이콘 표기용 css
+ */
+.Div.div_WF_wfStep03
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_wfStep03.png') no-repeat left center;
+	-nexa-border		: 0px none;
+}
+
+/*
+ * div_WF_wfStep04
+ * SPP WorkFlow 히스토리맵 단계 아이콘 표기용 css
+ */
+.Div.div_WF_wfStep04
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_wfStep04.png') no-repeat left center;
+	-nexa-border		: 0px none;
+}
+
+/*
+ * div_WF_wfStep05
+ * SPP WorkFlow 히스토리맵 단계 아이콘 표기용 css
+ */
+.Div.div_WF_wfStep05
+{
+	background		: transparent URL('theme://SPP_IMAGE_SET/WF/img_WF_wfStep05.png') no-repeat left center;
+	-nexa-border		: 0px none;
+}
+
+
+
+
+/*
+ * div_WF_wfContsDisp
+ * SPP WorkFlow 히스토리맵 컨텐츠 표기용 div css
+ */
+.Div.div_WF_wfContsDisp
+{
+	background		: #f6f7fe;
+	-nexa-border		: 2px solid #6b7ace;
+	border-radius 		: 0px 10px 10px 10px;
+}
+
+/*
+ * div_WF_wfArrowRight
+ * SPP WorkFlow 히스토리맵 단계 화살표 표기용 div css
+ */
+.Div.div_WF_wfArrowRight
+{
+	background		: URL('theme://SPP_IMAGE_SET/WF/img_WF_wfArrowNext.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+
+
+/*
+ * div_WF_wfDelFieldN
+ * SPP WorkFlow Delete Field Normal
+ */
+.Div.div_WF_wfDelFieldN
+{
+	background		: transparent;
+	-nexa-border		: 1px solid #d3d3d3, 0px, 0px, 0px;
+}
+
+/*
+ * div_WF_wfDelFieldA
+ * SPP WorkFlow Delete Field Active
+ */
+.Div.div_WF_wfDelFieldA
+{
+	background		: transparent;
+	-nexa-border		: 2px dashed rgba(255, 0, 0, 0.3);
+}
+
+/*
+ * div_WF_wfNodeGuide
+ * SPP WorkFlow Node Guide css
+ */
+.Div.div_WF_wfNodeGuide,
+.Div.div_WF_wfNodeGuide[status=focused],
+.Div.div_WF_wfNodeGuide[status=mouseover]
+{
+	background		: #ffffff;
+	-nexa-border		: 2px dashed #dfdfdf;
+	border-radius 		: 10px 10px;
+	color 			: #dfdfdf;
+	font 			: bold 24px '돋움';
+}
+
+/*
+ * div_WF_wfFuncGuide
+ * SPP WorkFlow Func Guide css
+ */
+.Div.div_WF_wfFuncGuide,
+.Div.div_WF_wfFuncGuide[status=focused],
+.Div.div_WF_wfFuncGuide[status=mouseover]
+{
+	background		: #ffffff;
+	-nexa-border		: 2px dashed #dfdfdf;
+	border-radius 		: 10px 10px;
+	color 			: #dfdfdf;
+	font 			: bold 18px '돋움';
+}
+
+/*
+ * div_WF_wfCgerGuide
+ * SPP WorkFlow Cger Guide css
+ */
+.Div.div_WF_wfCgerGuide,
+.Div.div_WF_wfCgerGuide[status=focused],
+.Div.div_WF_wfCgerGuide[status=mouseover]
+{
+	background		: #ffffff;
+	-nexa-border		: 2px dashed #dfdfdf;
+	border-radius 		: 10px 10px;
+	color 			: #dfdfdf;
+	font 			: bold 18px '돋움';
+}
+
+
+/*
+ * div_WF_wfNode
+ * SPP WorkFlow Node Div css
+ */
+.Div.div_WF_wfNode,
+.Div.div_WF_wfNode[status=focused],
+.Div.div_WF_wfNode[status=mouseover]
+{
+	background		: #355cc5;
+	-nexa-border		: 1px solid #355cc5;
+	border-radius 		: 10px 10px;
+	color 			: #ffffff;
+	font 			: bold 16px '돋움';
+}
+.Div.div_WF_wfNode[status=disabled]
+{
+	background		: #dfdfdf;
+	-nexa-border		: 1px solid #dfdfdf;
+	border-radius 		: 10px 10px;
+	color 			: #aaaaaa;
+	font 			: bold 16px '돋움';
+}
+
+/*
+ * div_WF_wfNodeScreen
+ * SPP WorkFlow Node Div css
+ */
+.Div.div_WF_wfNodeScreen,
+.Div.div_WF_wfNodeScreen[status=focused],
+.Div.div_WF_wfNodeScreen[status=mouseover]
+{
+	background		: #355cc5 url('theme://SPP_IMAGE_SET/WF/ico_WF_screen.png') no-repeat 3px center;
+	-nexa-border		: 1px solid #355cc5;
+	border-radius 		: 10px 10px;
+	color 			: #ffffff;
+	font 			: bold 16px '돋움';
+}
+.Div.div_WF_wfNodeScreen[status=disabled]
+{
+	background		: #dfdfdf url('theme://SPP_IMAGE_SET/WF/ico_WF_screen.png') no-repeat 3px center;
+	-nexa-border		: 1px solid #dfdfdf;
+	border-radius 		: 10px 10px;
+	color 			: #aaaaaa;
+	font 			: bold 16px '돋움';
+}
+
+
+/*
+ * div_WF_wfFunc
+ * SPP WorkFlow Function Div css
+ */
+.Div.div_WF_wfFunc
+{
+	background		: orange;
+	-nexa-border		: 1px solid orange;
+	border-radius 		: 10px 10px;
+	color 			: #ffffff;
+	font 			: bold 12px '돋움';
+}
+.Div.div_WF_wfFunc[status=disabled]
+{
+	background		: #dfdfdf;
+	-nexa-border		: 1px solid #dfdfdf;
+	border-radius 		: 10px 10px;
+	color 			: #aaaaaa;
+	font 			: bold 12px '돋움';
+}
+
+/*
+ * div_WF_wfCger
+ * SPP WorkFlow Cger Div css
+ */
+.Div.div_WF_wfCger
+{
+	background		: green;
+	-nexa-border		: 1px solid green;
+	border-radius 		: 10px 10px;
+	color 			: #ffffff;
+	font 			: bold 12px '돋움';
+}
+.Div.div_WF_wfCger[status=disabled]
+{
+	background		: #dfdfdf;
+	-nexa-border		: 1px solid #dfdfdf;
+	border-radius 		: 10px 10px;
+	color 			: #aaaaaa;
+	font 			: bold 12px '돋움';
+}
+
+
+/*
+ * div_WF_calTopBg
+ * SPP 달력 Top Div Background
+ */
+.Div.div_WF_calTopBg
+{
+	background		: #d9ddec;
+	-nexa-border		: 0px none;
+}
+
+
+/*
+ * div_WF_calDayBg
+ * SPP 달력 날짜 background
+ */
+.Div.div_WF_calDayBg
+{
+	background		: white;
+	border-radius 		: 5px 5px;
+	-nexa-border		: 1px solid #dfdfdf;
+}
+.Div.div_WF_calDayBg[status=mouseover]
+{
+	background		: #e5f5ff;
+	border-radius 		: 5px 5px;
+	-nexa-border		: 1px solid #008bff;
+}
+
+/*
+ * div_WF_calDayBg
+ * SPP 달력 오늘 날짜 background
+ */
+.Div.div_WF_calTodayBg
+{
+	background		: #fefae1;
+	border-radius 		: 5px 5px;
+	-nexa-border		: 1px solid #dfdfdf;
+}
+
+
+
+/*
+ * div_WF_WFHist_Off
+ * 요청서 히스토리맵 off
+ */
+.Div.div_WF_WFHist_Off
+{
+	background		: transparent url('theme://NHSB_IMAGE_SET/WF/card-box-normal.png') no-repeat center center;
+	-nexa-border		: 0px none;
+}
+
+/*
+ * div_WF_WFHist_OffSel
+ * 요청서 히스토리맵 off 선택
+ */
+.Div.div_WF_WFHist_OffSel
+{
+	background		: transparent url('theme://NHSB_IMAGE_SET/WF/card-box-active.png') no-repeat center center /contain;
+	-nexa-border		: 0px none;
+}
+
+/*
+ * div_WF_WFHist_On
+ * 요청서 히스토리맵 on
+ */
+.Div.div_WF_WFHist_On
+{
+	background		: transparent url('theme://NHSB_IMAGE_SET/WF/card-box-now.png') no-repeat center center /contain;
+	-nexa-border		: 0px none;
+}
+
+/*
+ * div_WF_WFHist_OnSel
+ * 요청서 히스토리맵 on 선택
+ */
+.Div.div_WF_WFHist_OnSel
+{
+	background		: transparent url('theme://NHSB_IMAGE_SET/WF/card-box-now-active.png') no-repeat center center /contain;
+	-nexa-border		: 0px none;
+}
+
+
+/****************************************************************************************************************************/
+/*****************************************************   DIV END   **********************************************************/
+/****************************************************************************************************************************/
+
+
+/****************************************************************************************************************************/
+/*****************************************************   GRID START   *******************************************************/
+/****************************************************************************************************************************/
+/* 
+ * grd_WF_normal
+ * SPP grid default css
+ */
+.Grid.grd_WF_normal
+{
+	background 		: transparent;
+	-nexa-border 		: 2px solid #010103, 0px, 1px solid #010103, 0px;
+	color			: #32333b;
+	font 			: 12px '돋움';
+}
+
+/*-----------------------------------head------------------------------------*/
+.Grid.grd_WF_normal .head .row .cell
+{
+	background		: #fcf5ef;
+	-nexa-border 		: 1px solid #9ea7cc;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	color 			: #32333b;
+	font 			: bold 12px '돋움';
+	-nexa-padding 		: 4px 4px 4px 4px;
+	
+}
+
+.Grid.grd_WF_normal .head .row .cell[status=disabled]
+{
+	color 			: #444444;
+}
+
+
+/*-----------------------------------headcellbutton:ButtonControl과 동일------------------------------------*/
+/*-----------------------------------headcellcalendar:CalendarControl과 동일------------------------------------*/
+/*-----------------------------------headcellcheckbox:CheckBoxControl과 동일------------------------------------*/
+/*-----------------------------------headcellcombo:ComboControl과 동일------------------------------------*/
+/*-----------------------------------headcelledit:EditControl과 동일------------------------------------*/
+/*-----------------------------------headcellexpandbutton------------------------------------*/
+/*-----------------------------------headcellimage:별도스타일없음------------------------------------*/
+/*-----------------------------------headcellmaskedit:MaskEditControl과 동일------------------------------------*/
+/*-----------------------------------headcellprogressbar:ProgressBarControl과 동일------------------------------------*/
+/*-----------------------------------headcelltextarea:TextAreaControl과 동일------------------------------------*/
+/*-----------------------------------headcelltreeitem:------------------------------------*/
+
+/*-----------------------------------body------------------------------------*/
+/*-----------------------------------subcell:cell과 동일------------------------------------*/
+.Grid.grd_WF_normal .body .row .cell,
+.Grid.grd_WF_normal .body .row .cell .subcell
+{
+	background		: #ffffff;
+	-nexa-background-odd 	: #ffffff;
+	-nexa-border 		: 1px solid #ced3e5;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	color 			: #32333b;
+	-nexa-color-odd 	: #32333b;
+	font 			: 12px '돋움';
+	-nexa-padding 		: 4px 4px 4px 4px;
+}
+
+.Grid.grd_WF_normal .body .row .cell[status=mouseover],
+.Grid.grd_WF_normal .body .row .cell .subcell[status=mouseover]
+{
+	background 		: #e6ecf5;
+	-nexa-background-odd 	: #e6ecf5;
+	-nexa-border 		: 1px solid #ced3e5;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	color			: #32333b;
+	-nexa-color-odd 	: #32333b;
+	font 			: 12px '돋움';
+	-nexa-padding 		: 4px 4px 4px 4px;
+}
+
+.Grid.grd_WF_normal .body .row .cell[userstatus=selected],
+.Grid.grd_WF_normal .body .row .cell .subcell[userstatus=selected]
+{
+	background 		: #f3f6ff;
+	-nexa-background-odd 	: #f3f6ff;
+	-nexa-border 		: 1px solid #ced3e5;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	color 			: #32333b;
+	-nexa-color-odd 	: #32333b;
+	font 			: 12px '돋움';
+	-nexa-padding 		: 4px 4px 4px 4px;
+}
+
+.Grid.grd_WF_normal .body .row .cell[status=disabled],
+.Grid.grd_WF_normal .body .row .cell .subcell[status=disabled]
+{
+	color 			: #888888;
+}
+.Grid.grd_WF_normal .body .row .cell[status=disabled][userstatus=selected]
+{
+	background 		: #f3f6ff;
+	-nexa-background-odd 	: #f3f6ff;
+}
+
+.Grid.grd_WF_normal .body .row .cell[userstatus=blinked],
+.Grid.grd_WF_normal .body .row .cell .subcell[userstatus=blinked]
+{
+	background 		: #125dae;
+	color 			: #ffffff;
+}
+
+.Grid.grd_WF_normal .body .selection
+{
+	-nexa-border 		: 2px solid #125dae;
+}
+
+.Grid.grd_WF_normal .body .row .cell .cellcheckbox
+{
+	background 		: transparent url('theme://SPP_IMAGE_SET/WF/chk_WF_BtnImage.png') no-repeat center center;
+}
+
+/*-----------------------------------body cellradioitem------------------------------------*/
+.Grid.grd_WF_normal .body .row .cell .cellradioitem,
+.Grid.grd_WF_normal .body .row .cell .cellradioitem[status=readonly]
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	-nexa-icon 		: url("theme://SPP_IMAGE_SET/WF/rdo_WF_N.png");
+	-nexa-padding 		: 0px 0px 0px 0px;
+}
+
+.Grid.grd_WF_normal .body .row .cell .cellradioitem[status=mouseover]
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	-nexa-icon 		: url("theme://SPP_IMAGE_SET/WF/rdo_WF_O.png");
+	-nexa-padding 		: 0px 0px 0px 0px;
+}
+.Grid.grd_WF_normal .body .row .cell .cellradioitem[userstatus=selected],
+.Grid.grd_WF_normal .body .row .cell .cellradioitem[status=readonly][userstatus=selected]
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	-nexa-icon 		: url("theme://SPP_IMAGE_SET/WF/rdo_WF_S.png");
+	-nexa-padding 		: 0px 0px 0px 0px;
+}
+.Grid.grd_WF_normal .body .row .cell .cellradioitem[status=disabled]
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	-nexa-icon 		: url("theme://SPP_IMAGE_SET/WF/rdo_WF_D.png");
+	-nexa-padding 		: 0px 0px 0px 0px;
+}
+
+.Grid.grd_WF_normal .body .row .cell .cellbutton,
+.Grid.grd_WF_normal .body .row .cell .subcell .cellbutton,
+.Grid.grd_WF_normal .body .row .cell .cellcalendar,
+.Grid.grd_WF_normal .body .row .cell .subcell .cellcalendar,
+.Grid.grd_WF_normal .body .row .cell .cellcombo,
+.Grid.grd_WF_normal .body .row .cell .subcell .cellcombo,
+.Grid.grd_WF_normal .body .row .cell .celledit,
+.Grid.grd_WF_normal .body .row .cell .subcell .celledit,
+.Grid.grd_WF_normal .body .row .cell .cellmaskedit,
+.Grid.grd_WF_normal .body .row .cell .subcell .cellmaskedit,
+.Grid.grd_WF_normal .body .row .cell .cellmulticombo,
+.Grid.grd_WF_normal .body .row .cell .subcell .cellmulticombo
+{
+	background		: white;
+	font			: 12px '돋움';
+}
+
+.Grid.grd_WF_normal .body .row .cell .cellcombo .combolist .listboxitem,
+.Grid.grd_WF_normal .body .row .cell .subcell .cellcombo .combolist .listboxitem
+{
+	background		: #ffffff;
+	-nexa-text-align 	: left;
+	-nexa-vertical-align 	: middle;
+	-nexa-border		: 0px;
+	color			: #444444;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+	-nexa-padding		: 4px 6px 4px 6px;
+}
+.Grid.grd_WF_normal .body .row .cell .cellcombo .combolist .listboxitem[status=focused],
+.Grid.grd_WF_normal .body .row .cell .cellcombo .combolist .listboxitem[status=mouseover],
+.Grid.grd_WF_normal .body .row .cell .subcell .cellcombo .combolist .listboxitem[status=focused],
+.Grid.grd_WF_normal .body .row .cell .subcell .cellcombo .combolist .listboxitem[status=mouseover]
+{
+	background		: #ffffff;
+	-nexa-text-align 	: left;
+	-nexa-vertical-align 	: middle;
+	-nexa-border		: 0px;
+	color			: #444444;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	-nexa-padding		: 4px 6px 4px 6px;
+}
+.Grid.grd_WF_normal .body .row .cell .cellcombo .combolist .listboxitem[userstatus=selected],
+.Grid.grd_WF_normal .body .row .cell .subcell .cellcombo .combolist .listboxitem[userstatus=selected]
+{
+	background		: #8a96a8;
+	-nexa-text-align 	: left;
+	-nexa-vertical-align 	: middle;
+	-nexa-border		: 0px;
+	color			: #ffffff;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	-nexa-padding		: 4px 6px 4px 6px;
+}
+
+/* 사용자 Grid Cell Button CSS */
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add .cellbutton,
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add .cellbutton[status=focused],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add .cellbutton[userstatus=selected],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add .cellbutton[status=mouseover]
+{
+	-nexa-text-align : center;
+	-nexa-vertical-align : middle;
+	-nexa-border : 1px solid #c2c2c2;
+	font : 12px '돋움';
+	color : #555555;
+	-nexa-icon : URL('theme://SPP_IMAGE_SET/WF/btn_WF_icoAdd.png');
+}
+
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add .cellbutton[status=disabled]
+{
+	color : #bbbbbb;	
+	-nexa-border : 1px solid #d9d9d9;
+}
+
+/* 
+ * grdBCell_WF_event
+ * SPP grid body 클릭이벤트 cell css
+ */
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event,
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event[status=focused],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event[userstatus=selected],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event[status=mouseover]
+{
+	color 			: blue;
+	-nexa-color-odd 	: blue;
+	/*-nexa-text-decoration 	: underline;*/
+	cursor			: pointer;
+}
+
+/* 
+ * grdBCell_WF_event
+ * SPP grid body cell background 노랑 설정
+ */
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_ntc
+{
+	background : yellow;
+} 
+
+/* 
+ * grdBTreeCell_WF_event
+ * SPP grid body tree cell 클릭이벤트 cell css
+ */
+.Grid.grd_WF_normal .body .row .cell.grdBTreeCell_WF_event .celltreeitem .treeitemtext
+{
+	color 			: blue;
+	/*-nexa-text-decoration 	: underline;*/
+	cursor			: pointer;
+}
+
+/* 
+ * grdBTreeCell_WF_event_sameTreeIcon
+ * SPP grid body tree cell 클릭이벤트 cell css	tree
+ */
+.Grid.grd_WF_normal .body .row .cell.grdBTreeCell_WF_event_sameTreeIcon .celltreeitem .treeitemtext
+{
+	color 			: blue;
+	/*-nexa-text-decoration 	: underline;*/
+	cursor			: pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBTreeCell_WF_event_sameTreeIcon .celltreeitem .treeitembutton[userstatus=expand]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Treeexpand.png');
+}
+
+.Grid.grd_WF_normal .body .row .cell.grdBTreeCell_WF_event_sameTreeIcon .celltreeitem .treeitembutton[userstatus=collapse]
+{
+	-nexa-icon : URL('theme://images/btn_WF_Treecollapse.png');
+}
+
+.Grid.grd_WF_normal .body .row .cell.grdBTreeCell_WF_event_sameTreeIcon .celltreeitem .treeitemimage
+{
+	-nexa-icon : URL('theme://images/img_WF_Treeitem.png');
+}
+
+.Grid.grd_WF_normal .body .row .cell.grdBTreeCell_WF_event_sameTreeIcon .celltreeitem .treeitemimage[userstatus=expand]
+{
+	/*-nexa-icon : URL('theme://images/img_WF_Treeexpand.png');*/
+	-nexa-icon : URL('theme://images/img_WF_Treeitem.png');
+}
+
+ .Grid.grd_WF_normal .body .row .cell.grdBTreeCell_WF_event_sameTreeIcon .celltreeitem .treeitemimage[userstatus=collapse]
+{
+	/*-nexa-icon : URL('theme://images/img_WF_Treecollapse.png');*/
+	-nexa-icon : URL('theme://images/img_WF_Treeitem.png');
+}
+
+
+/* 
+ * grdBCell_WF_bold
+ * SPP grid body cell 기본 bold css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold[status=mouseover]
+{
+	font : bold 13px/normal "돋움";
+}
+
+/* 
+ * grdBCell_WF_boldP
+ * SPP grid body cell 기본 bold, Cursor[Pointer] css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP[status=mouseover]
+{
+	font : bold 13px/normal "돋움";
+	cursor			: pointer;	
+}
+
+/* 
+ * grdBCell_WF_success 
+ * SPP grid body cell 글자 초록 css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_success,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_success[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_success[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_success[status=mouseover]
+{
+	color 			: green;
+	-nexa-color-odd 	: green;
+}
+
+/* 
+ * grdBCell_WF_bold_success 
+ * SPP grid body cell 글자 초록, Bold css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_success,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_success[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_success[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_success[status=mouseover]
+{
+	color 			: green;
+	-nexa-color-odd 	: green;
+	font : bold 13px/normal "돋움";
+}
+
+/* 
+ * grdBCell_WF_boldP_success 
+ * SPP grid body cell 글자 초록, Bold, Cursor[Pointer] css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_success,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_success[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_success[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_success[status=mouseover]
+{
+	color 			: green;
+	-nexa-color-odd 	: green;
+	font : bold 13px/normal "돋움";
+	cursor			: pointer;
+}
+
+/* 
+ * grdBCell_WF_info 
+ * SPP grid body cell 글자 파랑 css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_info,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_info[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_info[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_info[status=mouseover]
+{
+	color 			: blue;
+	-nexa-color-odd 	: blue;
+}
+
+/* 
+ * grdBCell_WF_bold_info 
+ * SPP grid body cell 글자 파랑, bold css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_info,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_info[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_info[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_info[status=mouseover]
+{
+	color 			: blue;
+	-nexa-color-odd 	: blue;
+	font : bold 13px/normal "돋움";
+}
+
+/* 
+ * grdBCell_WF_boldP_info 
+ * SPP grid body cell 글자 파랑, bold Cursor[Pointer] css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_info,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_info[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_info[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_info[status=mouseover]
+{
+	color 			: blue;
+	-nexa-color-odd 	: blue;
+	font : bold 13px/normal "돋움";
+	cursor			: pointer;
+}
+
+/* 
+ * grdBCell_WF_warning
+ * SPP grid body cell 글자 노랑 css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_warning,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_warning[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_warning[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_warning[status=mouseover]
+{
+	color 			: yellow;
+	-nexa-color-odd 	: yellow;
+}
+
+/* 
+ * grdBCell_WF_bold_warning
+ * SPP grid body cell 글자 노랑, Bold css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_warning,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_warning[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_warning[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_warning[status=mouseover]
+{
+	color 			: yellow;
+	-nexa-color-odd 	: yellow;
+	font : bold 13px/normal "돋움";
+}
+
+/* 
+ * grdBCell_WF_boldP_warning
+ * SPP grid body cell 글자 노랑, Bold, Cursor[Pointer] css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_warning,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_warning[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_warning[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_warning[status=mouseover]
+{
+	color 			: yellow;
+	-nexa-color-odd 	: yellow;
+	font : bold 13px/normal "돋움";
+	cursor			: pointer;
+}
+
+/* 
+ * grdBCell_WF_danger
+ * SPP grid body cell 글자 빨강 css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_danger,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_danger[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_danger[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_danger[status=mouseover]
+{
+	color 			: red;
+	-nexa-color-odd 	: red;
+}
+
+/* 
+ * grdBCell_WF_bold_danger
+ * SPP grid body cell 글자 빨강 css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_danger,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_danger[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_danger[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_bold_danger[status=mouseover]
+{
+	color 			: red;
+	-nexa-color-odd 	: red;
+	font : bold 13px/normal "돋움";
+}
+
+/* 
+ * grdBCell_WF_boldP_danger
+ * SPP grid body cell 글자 빨강 Cursor[Pointer] css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_danger,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_danger[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_danger[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_boldP_danger[status=mouseover]
+{
+	color 			: red;
+	-nexa-color-odd 	: red;
+	font : bold 13px/normal "돋움";
+	cursor			: pointer;
+}
+
+/* 
+ * grdBCell_WF_success 
+ * SPP grid body cell 글자 초록 css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_success_evt,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_success_evt[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_success_evt[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_success_evt[status=mouseover]
+{
+	color 			: green;
+	-nexa-color-odd 	: green;
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+}
+
+/* 
+ * grdBCell_WF_info_evt
+ * SPP grid body cell 글자 파랑 css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_info_evt,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_info_evt[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_info_evt[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_info_evt[status=mouseover]
+{
+	color 			: blue;
+	-nexa-color-odd 	: blue;
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+}
+
+/* 
+ * grdBCell_WF_warning_evt
+ * SPP grid body cell 글자 노랑 css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_warning_evt,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_warning_evt[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_warning_evt[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_warning_evt[status=mouseover]
+{
+	color 			: yellow;
+	-nexa-color-odd 	: yellow;
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+}
+
+/* 
+ * grdBCell_WF_danger_evt
+ * SPP grid body cell 글자 빨강 css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_danger_evt,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_danger_evt[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_danger_evt[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_danger_evt[status=mouseover]
+{
+	color 			: red;
+	-nexa-color-odd 	: red;
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+}
+
+/* 
+ * grdBCell_WF_readonly
+ * SPP grid body cell readonly css
+ */
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_readonly,
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_readonly[status=focused],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_readonly[userstatus=selected],
+.Grid.grd_WF_normal  .body .row .cell.grdBCell_WF_readonly[status=mouseover]
+{
+	color 			: #000000;
+	-nexa-color-odd 	: #000000;
+	background 		: rgba(255, 0, 0, 0.3);
+	-nexa-background-odd 	: rgba(255, 0, 0, 0.3);
+}
+
+/* 미래에셋 업무 관련 css 추가 시작 */
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_f9f3f3,
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_f9f3f3[userstatus=selected],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_f9f3f3[status=disabled],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_f9f3f3[status=mouseover],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_f9f3f3[status=focused]
+{
+	background : #f9f3f3; 
+}
+
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow,
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow[userstatus=selected],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow[status=disabled],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow[status=mouseover],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow[status=focused]
+{
+	background 		: yellow;
+	-nexa-background-odd 	: yellow;
+}
+
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_c0dbf7,
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_c0dbf7[userstatus=selected],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_c0dbf7[status=disabled],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_c0dbf7[status=mouseover],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_c0dbf7[status=focused]
+{
+	background : #c0dbf7; 
+}
+
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_e1fcfe,
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_e1fcfe[userstatus=selected],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_e1fcfe[status=disabled],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_e1fcfe[status=mouseover],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_e1fcfe[status=focused]
+{
+	background : #e1fcfe; 
+}
+
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_ffffff,
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_ffffff[userstatus=selected],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_ffffff[status=disabled],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_ffffff[status=mouseover],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_ffffff[status=focused]
+{
+	background : #ffffff; 
+}
+/*-----------------------------------bodycellbutton:ButtonControl과 동일------------------------------------*/
+/*-----------------------------------bodycellcalendar:CalendarControl과 동일------------------------------------*/
+/*-----------------------------------bodycellcheckbox:CheckBoxControl과 동일------------------------------------*/
+/*-----------------------------------bodycellcombo:ComboControl과 동일------------------------------------*/
+/*-----------------------------------bodycelledit:EditControl과 동일------------------------------------*/
+/*-----------------------------------bodycellexpandbutton------------------------------------*/
+/*-----------------------------------bodycellimage:별도스타일없음------------------------------------*/
+/*-----------------------------------bodycellmaskedit:MaskEditControl과 동일------------------------------------*/
+/*-----------------------------------bodycellprogressbar:ProgressBarControl과 동일------------------------------------*/
+/*-----------------------------------bodycelltextarea:TextAreaControl과 동일------------------------------------*/
+/*-----------------------------------bodycelltreeitem:------------------------------------*/
+
+/*-----------------------------------summary------------------------------------*/
+.Grid.grd_WF_normal .summary
+{
+	background		: #fefcf5;
+	-nexa-border 		: 0px;
+}
+.Grid.grd_WF_normal .summary .row .cell
+{
+	background 		: #fdfbe5;
+	-nexa-background-odd 	: #fdfbe5;
+	-nexa-border 		: 1px solid #d3d3d3;
+	color 			: #444444;
+	-nexa-color-odd 	: #444444;
+	font			: 12px '돋움';
+	-nexa-padding 		: 4px 4px 4px 4px;
+}
+
+/*-----------------------------------summarycellbutton:ButtonControl과 동일------------------------------------*/
+/*-----------------------------------summarycellcalendar:CalendarControl과 동일------------------------------------*/
+/*-----------------------------------summarycellcheckbox:CheckBoxControl과 동일------------------------------------*/
+/*-----------------------------------summarycellcombo:ComboControl과 동일------------------------------------*/
+/*-----------------------------------summarycelledit:EditControl과 동일------------------------------------*/
+/*-----------------------------------summarycellexpandbutton------------------------------------*/
+/*-----------------------------------summarycellimage:별도스타일없음------------------------------------*/
+/*-----------------------------------summarycellmaskedit:MaskEditControl과 동일------------------------------------*/
+/*-----------------------------------summarycellprogressbar:ProgressBarControl과 동일------------------------------------*/
+/*-----------------------------------summarycelltextarea:TextAreaControl과 동일------------------------------------*/
+/*-----------------------------------summarycelltreeitem:------------------------------------*/
+
+/*-----------------------------------Grid hscrollbar:------------------------------------*/
+.Grid.grd_WF_normal .hscrollbar
+{
+	-nexa-border : 1px solid #b1b1b1, 0px none, 0px none, 0px none;
+}
+
+/*-----------------------------------Grid vscrollbar:------------------------------------*/
+.Grid.grd_WF_normal .vscrollbar
+{
+	-nexa-border : 0px none, 0px none, 0px none, 1px solid #b1b1b1;
+}
+
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink,
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink[status=focused],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink[userstatus=selected],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink[status=mouseover],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink .subcell,
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink .subcell[status=focused],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink .subcell[userstatus=selected],
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink .subcell[status=mouseover]
+{
+	background		: pink;	
+	-nexa-background-odd	: pink;
+}
+
+/* 
+ * grdBCell_WF_bgOrange
+ */
+.Grid .body .row .cell.grdBCell_WF_bgOrange,
+.Grid .body .row .cell.grdBCell_WF_bgOrange[status=focused],
+.Grid .body .row .cell.grdBCell_WF_bgOrange[userstatus=selected],
+.Grid .body .row .cell.grdBCell_WF_bgOrange[status=mouseover]
+{
+	background 		: peachpuff;
+}
+/*-----------------------------------head------------------------------------*/
+.Grid.grd_WF_noEffect .head .row .cell
+{
+	background		: #eef3f6;
+	-nexa-border 		: 1px solid #d3d3d3;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	color 			: #444444;
+	font 			: bold 12px '돋움';
+	-nexa-padding 		: 4px 4px 4px 4px;
+	
+}
+
+.Grid.grd_WF_noEffect .head .row .cell[status=disabled]
+{
+	color 			: #444444;
+}
+
+
+/*-----------------------------------headcellbutton:ButtonControl과 동일------------------------------------*/
+/*-----------------------------------headcellcalendar:CalendarControl과 동일------------------------------------*/
+/*-----------------------------------headcellcheckbox:CheckBoxControl과 동일------------------------------------*/
+/*-----------------------------------headcellcombo:ComboControl과 동일------------------------------------*/
+/*-----------------------------------headcelledit:EditControl과 동일------------------------------------*/
+/*-----------------------------------headcellexpandbutton------------------------------------*/
+/*-----------------------------------headcellimage:별도스타일없음------------------------------------*/
+/*-----------------------------------headcellmaskedit:MaskEditControl과 동일------------------------------------*/
+/*-----------------------------------headcellprogressbar:ProgressBarControl과 동일------------------------------------*/
+/*-----------------------------------headcelltextarea:TextAreaControl과 동일------------------------------------*/
+/*-----------------------------------headcelltreeitem:------------------------------------*/
+
+/*-----------------------------------body------------------------------------*/
+/*-----------------------------------subcell:cell과 동일------------------------------------*/
+.Grid.grd_WF_noEffect .body .row .cell,
+.Grid.grd_WF_noEffect .body .row .cell .subcell
+{
+	background		: #f7f7f7;
+	-nexa-background-odd 	: #ffffff;
+	-nexa-border 		: 1px solid #d3d3d3;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	color 			: #444444;
+	-nexa-color-odd 	: #444444;
+	font 			: 12px '돋움';
+	-nexa-padding 		: 4px 10px 4px 10px;
+}
+
+.Grid.grd_WF_noEffect .body .row .cell[status=mouseover],
+.Grid.grd_WF_noEffect .body .row .cell .subcell[status=mouseover]
+{
+	background		: #f7f7f7;
+	-nexa-background-odd 	: #ffffff;
+	-nexa-border 		: 1px solid #d3d3d3;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	color			: #333333;
+	-nexa-color-odd 	: #333333;
+	font 			: 12px '돋움';
+	-nexa-padding 		: 4px 10px 4px 10px;
+}
+
+.Grid.grd_WF_noEffect .body .row .cell[userstatus=selected],
+.Grid.grd_WF_noEffect .body .row .cell .subcell[userstatus=selected]
+{
+	background		: #f7f7f7;
+	-nexa-background-odd 	: #ffffff;
+	-nexa-border 		: 1px solid #d3d3d3;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	color 			: #444444;
+	-nexa-color-odd 	: #444444;
+	font 			: 12px '돋움';
+	-nexa-padding 		: 4px 10px 4px 10px;
+}
+
+.Grid.grd_WF_noEffect .body .row .cell[status=disabled],
+.Grid.grd_WF_noEffect .body .row .cell .subcell[status=disabled]
+{
+	color 			: #888888;
+}
+.Grid.grd_WF_noEffect .body .row .cell[status=disabled][userstatus=selected]
+{
+	background 		: #ededed;
+	-nexa-background-odd 	: #ededed;
+}
+
+.Grid.grd_WF_noEffect .body .row .cell[userstatus=blinked],
+.Grid.grd_WF_noEffect .body .row .cell .subcell[userstatus=blinked]
+{
+	background 		: #125dae;
+	color 			: #ffffff;
+}
+
+.Grid.grd_WF_noEffect .body .selection
+{
+	-nexa-border 		: 2px solid #125dae;
+}
+
+.Grid.grd_WF_noEffect .body .row .cell .cellcheckbox
+{
+	background 		: transparent url('theme://SPP_IMAGE_SET/WF/chk_WF_BtnImage.png') no-repeat center center;
+}
+
+/* 
+ * grdBCell_WF_readonly
+ * SPP grid body cell readonly css
+ */
+.Grid.grd_WF_noEffect  .body .row .cell.grdBCell_WF_readonly,
+.Grid.grd_WF_noEffect  .body .row .cell.grdBCell_WF_readonly[status=focused],
+.Grid.grd_WF_noEffect  .body .row .cell.grdBCell_WF_readonly[userstatus=selected],
+.Grid.grd_WF_noEffect  .body .row .cell.grdBCell_WF_readonly[status=mouseover]
+{
+	color 			: #000000;
+	-nexa-color-odd 	: #000000;
+	background 		: rgba(255, 0, 0, 0.3);
+	-nexa-background-odd 	: rgba(255, 0, 0, 0.3);
+}
+/*-----------------------------------bodycellbutton:ButtonControl과 동일------------------------------------*/
+/*-----------------------------------bodycellcalendar:CalendarControl과 동일------------------------------------*/
+/*-----------------------------------bodycellcheckbox:CheckBoxControl과 동일------------------------------------*/
+/*-----------------------------------bodycellcombo:ComboControl과 동일------------------------------------*/
+/*-----------------------------------bodycelledit:EditControl과 동일------------------------------------*/
+/*-----------------------------------bodycellexpandbutton------------------------------------*/
+/*-----------------------------------bodycellimage:별도스타일없음------------------------------------*/
+/*-----------------------------------bodycellmaskedit:MaskEditControl과 동일------------------------------------*/
+/*-----------------------------------bodycellprogressbar:ProgressBarControl과 동일------------------------------------*/
+/*-----------------------------------bodycelltextarea:TextAreaControl과 동일------------------------------------*/
+/*-----------------------------------bodycelltreeitem:------------------------------------*/
+
+/*-----------------------------------summary------------------------------------*/
+.Grid.grd_WF_noEffect .summary
+{
+	background		: #fefcf5;
+	-nexa-border 		: 0px;
+}
+.Grid.grd_WF_noEffect .summary .row .cell
+{
+	background 		: #fdfbe5;
+	-nexa-background-odd 	: #fdfbe5;
+	-nexa-border 		: 1px solid #d3d3d3;
+	color 			: #444444;
+	-nexa-color-odd 	: #444444;
+	font			: 12px '돋움';
+	-nexa-padding 		: 4px 10px 4px 10px;
+}
+
+/* 
+ * grdBCell_WF_bgPink
+ * SPP grid body 클릭 배경 핑크색처리 cell css
+ */
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_bgPink,
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_bgPink[status=focused],
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_bgPink[userstatus=selected],
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_bgPink[status=mouseover]
+{
+	background 		: pink;	
+}
+
+/*-----------------------------------summarycellbutton:ButtonControl과 동일------------------------------------*/
+/*-----------------------------------summarycellcalendar:CalendarControl과 동일------------------------------------*/
+/*-----------------------------------summarycellcheckbox:CheckBoxControl과 동일------------------------------------*/
+/*-----------------------------------summarycellcombo:ComboControl과 동일------------------------------------*/
+/*-----------------------------------summarycelledit:EditControl과 동일------------------------------------*/
+/*-----------------------------------summarycellexpandbutton------------------------------------*/
+/*-----------------------------------summarycellimage:별도스타일없음------------------------------------*/
+/*-----------------------------------summarycellmaskedit:MaskEditControl과 동일------------------------------------*/
+/*-----------------------------------summarycellprogressbar:ProgressBarControl과 동일------------------------------------*/
+/*-----------------------------------summarycelltextarea:TextAreaControl과 동일------------------------------------*/
+/*-----------------------------------summarycelltreeitem:------------------------------------*/
+
+/*-----------------------------------Grid hscrollbar:------------------------------------*/
+.Grid.grd_WF_noEffect .hscrollbar
+{
+	-nexa-border : 1px solid #b1b1b1, 0px none, 0px none, 0px none;
+}
+
+/*-----------------------------------Grid vscrollbar:------------------------------------*/
+.Grid.grd_WF_noEffect .vscrollbar
+{
+	-nexa-border : 0px none, 0px none, 0px none, 1px solid #b1b1b1;
+}
+/* [미래에셋] Grid 추가 CSS 종료 */
+
+/*-----------------------------------cellbutton:ButtonControl과 동일------------------------------------*/
+.GridCellControl .cellbutton.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+	color : #555555;
+	background : linear-gradient(to top,#eaeaea,#ffffff);
+	-nexa-border : 1px solid #c2c2c2;
+}
+.GridCellControl .cellbutton.grdCellCtrl_WF_normal[status=mouseover],
+.GridCellControl .cellbutton.grdCellCtrl_WF_normal[status=focused]
+{
+	background : linear-gradient(to top,#e7e7e7,#fefefe);
+	-nexa-border : 1px solid #a0a0a0;
+}
+
+.GridCellControl .cellbutton.grdCellCtrl_WF_normal[userstatus=pushed],
+.GridCellControl .cellbutton.grdCellCtrl_WF_normal[userstatus=selected]
+{
+	background : linear-gradient(to top,#fefefe,#e9e9e9);
+}
+
+.GridCellControl .cellbutton.grdCellCtrl_WF_normal[status=disabled]
+{
+	color : #bbbbbb;
+	background : #f5f5f5;
+	-nexa-border : 1px solid #d9d9d9;
+}
+
+
+
+
+/*-----------------------------------cellcalendar:CalendarControl과 동일------------------------------------*/
+.GridCellControl .cellcalendar.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+}
+
+/*-----------------------------------cellcheckbox:CheckBoxControl과 동일------------------------------------*/
+.GridCellControl .cellcheckbox.grdCellCtrl_WF_normal
+{
+	font 		: 12px '돋움';
+}
+/*-----------------------------------cellcombo:ComboControl과 동일------------------------------------*/
+.GridCellControl .cellcombo.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+}
+
+.GridCellControl .cellcombo .combolist.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+	color : #555555;
+}
+
+.GridCellControl .cellcombo .combolist .listboxitem.grdCellCtrl_WF_normal[status=mouseover]
+{
+	background : #e8e9ed;
+}
+
+/*-----------------------------------celledit:EditControl과 동일------------------------------------*/
+.GridCellControl .celledit.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+	background : #ffffff;
+	-nexa-border : 1px solid #d5d5d5;
+	-nexa-padding : 1px 9px 0px 9px;
+}
+
+.GridCellControl .celledit.grdCellCtrl_WF_normal[status=mouseover],
+.GridCellControl .celledit.grdCellCtrl_WF_normal[status=focused]
+{
+	-nexa-border : 1px solid #5a86cd;
+}
+
+.GridCellControl .celledit.grdCellCtrl_WF_normal[status=disabled]
+{
+	color : #999999;
+	background : #efefef;
+}
+
+/*-----------------------------------cellexpandbutton------------------------------------*/
+.GridCellControl .cellexpandbutton.grdCellCtrl_WF_normal
+{
+	-nexa-icon : URL('theme://SPP_IMAGE_SET/WF/btn_WF_Grdexpand.png');
+}
+
+/*-----------------------------------cellimage:별도스타일없음------------------------------------*/
+
+/*-----------------------------------cellmaskedit:MaskEditControl과 동일------------------------------------*/
+.GridCellControl .cellmaskedit.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+	background : #ffffff;
+	-nexa-border : 1px solid #d5d5d5;
+	-nexa-padding : 1px 9px 0px 9px;
+}
+
+.GridCellControl .cellmaskedit.grdCellCtrl_WF_normal[status=mouseover],
+.GridCellControl .cellmaskedit.grdCellCtrl_WF_normal[status=focused]
+{
+	-nexa-border : 1px solid #5a86cd;
+}
+
+.GridCellControl .cellmaskedit.grdCellCtrl_WF_normal[status=disabled]
+{
+	color : #999999;
+	background : #efefef;
+}
+
+/*-----------------------------------cellprogressbar:ProgressBarControl과 동일------------------------------------*/
+.GridCellControl .cellprogressbar.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+}
+
+/*-----------------------------------celltextarea:TextAreaControl과 동일------------------------------------*/
+.GridCellControl .celltextarea.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+}
+
+/*-----------------------------------celltreeitem:------------------------------------*/
+.GridCellControl .celltreeitem .treeitemtext.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+	color : #666666;
+}
+
+.GridCellControl .celltreeitem .treeitemtext.grdCellCtrl_WF_normal[status=disabled]
+{
+	color : #999999;
+}
+
+.GridCellControl .celltreeitem .treeitembutton.grdCellCtrl_WF_normal[userstatus=expand]
+{
+	-nexa-icon : URL('theme://SPP_IMAGE_SET/WF/btn_WF_Treeexpand.png');
+}
+
+.GridCellControl .celltreeitem .treeitembutton.grdCellCtrl_WF_normal[userstatus=collapse]
+{
+	-nexa-icon : URL('theme://SPP_IMAGE_SET/WF/btn_WF_Treecollapse.png');
+}
+
+.GridCellControl .celltreeitem .treeitemimage.grdCellCtrl_WF_normal
+{
+	-nexa-icon : URL('theme://SPP_IMAGE_SET/WF/img_WF_Treeitem.png');
+}
+
+.GridCellControl .celltreeitem .treeitemimage.grdCellCtrl_WF_normal[userstatus=expand]
+{
+	-nexa-icon : URL('theme://SPP_IMAGE_SET/WF/img_WF_Treeexpand.png');
+}
+
+.GridCellControl .celltreeitem .treeitemimage[userstatus=].grdCellCtrl_WF_normal
+{
+	-nexa-icon : URL('theme://SPP_IMAGE_SET/WF/img_WF_Treecollapse.png');
+}
+
+.GridCellControl .celltreeline.grdCellCtrl_WF_normal
+{
+	-nexa-border : 1px dotted #909090;
+}
+
+
+
+/* 
+ * grd_WF_tree
+ * SPP tree grid default css
+ */
+.Grid.grd_WF_tree
+{
+	background 		: transparent;
+	-nexa-border 		: 2px solid #010103, 1px solid #aaaaaa, 1px solid #aaaaaa, 1px solid #aaaaaa;
+	color			: #32333b;
+	font 			: 12px '돋움';
+}
+
+/*-----------------------------------head------------------------------------*/
+.Grid.grd_WF_tree .head .row .cell
+{
+	background		: #fcf5ef;
+	-nexa-border 		: 1px solid #9ea7cc;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	color 			: #32333b;
+	font 			: bold 12px '돋움';
+	-nexa-padding 		: 4px 4px 4px 4px;
+	
+}
+
+.Grid.grd_WF_tree .head .row .cell[status=disabled]
+{
+	color 			: #444444;
+}
+
+
+/*-----------------------------------headcellbutton:ButtonControl과 동일------------------------------------*/
+/*-----------------------------------headcellcalendar:CalendarControl과 동일------------------------------------*/
+/*-----------------------------------headcellcheckbox:CheckBoxControl과 동일------------------------------------*/
+/*-----------------------------------headcellcombo:ComboControl과 동일------------------------------------*/
+/*-----------------------------------headcelledit:EditControl과 동일------------------------------------*/
+/*-----------------------------------headcellexpandbutton------------------------------------*/
+/*-----------------------------------headcellimage:별도스타일없음------------------------------------*/
+/*-----------------------------------headcellmaskedit:MaskEditControl과 동일------------------------------------*/
+/*-----------------------------------headcellprogressbar:ProgressBarControl과 동일------------------------------------*/
+/*-----------------------------------headcelltextarea:TextAreaControl과 동일------------------------------------*/
+/*-----------------------------------headcelltreeitem:------------------------------------*/
+
+/*-----------------------------------body------------------------------------*/
+/*-----------------------------------subcell:cell과 동일------------------------------------*/
+.Grid.grd_WF_tree .body .row .cell,
+.Grid.grd_WF_tree .body .row .cell .subcell
+{
+	background		: #ffffff;
+	-nexa-background-odd 	: #ffffff;
+	-nexa-border 		: 1px solid #ced3e5;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	color 			: #32333b;
+	-nexa-color-odd 	: #32333b;
+	font 			: 12px '돋움';
+	-nexa-padding 		: 4px 10px 4px 10px;
+}
+
+.Grid.grd_WF_tree .body .row .cell[userstatus=selected],
+.Grid.grd_WF_tree .body .row .cell .subcell[userstatus=selected]
+{
+	background 		: #f3f6ff;
+	-nexa-background-odd 	: #f3f6ff;
+	-nexa-border 		: 1px solid #ced3e5;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	color 			: #32333b;
+	-nexa-color-odd 	: #32333b;
+	font 			: 12px '돋움';
+	-nexa-padding 		: 4px 10px 4px 10px;
+}
+.Grid.grd_WF_tree .body .row .cell[status=mouseover],
+.Grid.grd_WF_tree .body .row .cell .subcell[status=mouseover]
+{
+	background 		: #e6ecf5;
+	-nexa-background-odd 	: #e6ecf5;
+	-nexa-border 		: 1px solid #ced3e5;
+	-nexa-text-align 	: center;
+	-nexa-vertical-align 	: middle;
+	color			: #32333b;
+	-nexa-color-odd 	: #32333b;
+	font 			: 12px '돋움';
+	-nexa-padding 		: 4px 10px 4px 10px;
+}
+
+.Grid.grd_WF_tree .body .row .cell[status=disabled],
+.Grid.grd_WF_tree .body .row .cell .subcell[status=disabled]
+{
+	color 			: #888888;
+}
+.Grid.grd_WF_tree .body .row .cell[status=disabled][userstatus=selected]
+{
+	background 		: #f3f6ff;
+	-nexa-background-odd 	: #f3f6ff;
+	
+}
+
+.Grid.grd_WF_tree .body .row .cell .celltreeitem
+{
+	background		: transparent;
+}
+
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitemtext
+{
+	font 			: 12px '돋움';
+	color 			: #444444;
+	-nexa-text-decoration 	: ;
+}
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitemtext[status=mouseover]
+{
+	font 			: 12px '돋움';
+	color 			: #32333b;
+	-nexa-text-decoration 	: underline;
+}
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitemtext[status=disabled]
+{
+	font 			: 12px '돋움';
+	color 			: #909090;
+}
+
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitembutton,
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitembutton[userstatus=leaf]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/WF/img_WF_TreeItem.png');
+}
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitembutton[userstatus=expand]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/WF/img_WF_TreeClose.png');
+}
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitembutton[userstatus=collapse]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/WF/img_WF_TreeOpen.png');
+}
+
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitemimage,
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitemimage[userstatus=leaf]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/WF/img_WF_TreeItem.png');
+}
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitemimage[userstatus=expand]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/WF/img_WF_TreeItemWhite.png');
+}
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitemimage[userstatus=collapse]
+{
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/WF/img_WF_TreeItemWhite.png');
+}
+
+
+/*-----------------------------------Grid hscrollbar:------------------------------------*/
+.Grid.grd_WF_tree .hscrollbar
+{
+	-nexa-border : 1px solid #b1b1b1, 0px none, 0px none, 0px none;
+}
+
+/*-----------------------------------Grid vscrollbar:------------------------------------*/
+.Grid.grd_WF_tree .vscrollbar
+{
+	-nexa-border : 0px none, 0px none, 0px none, 1px solid #b1b1b1;
+}
+
+
+
+
+
+
+/* 
+ * grdHCell_WF_essential
+ * SPP tree grid 필수입력 head css
+ */
+.Grid .head .row .cell.grdHCell_WF_essential
+{
+	background		: #fcf5ef url('theme://SPP_IMAGE_SET/WF/img_WF_GrdCell_Essential.png') no-repeat left top;
+	-nexa-background-odd 	: #fcf5ef url('theme://SPP_IMAGE_SET/WF/img_WF_GrdCell_Essential.png') no-repeat left top;
+	
+}
+
+.Grid .body .row .cell.grdHCell_WF_bg_gray,
+.Grid .body .row .cell.grdHCell_WF_bg_gray[status=mouseover],
+.Grid .body .row .cell.grdHCell_WF_bg_gray[status=focused],
+.Grid .body .row .cell.grdHCell_WF_bg_gray[status=disabled],
+.Grid .body .row .cell.grdHCell_WF_bg_gray[userstatus=selected]
+{
+	background		: #d3d3d3;
+	-nexa-background-odd 	: #d3d3d3;
+	
+}
+
+/****************************************************************************************************************************/
+/*****************************************************   GRID END   *********************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   MULTISELECT COMBO START   ******************************************/
+/****************************************************************************************************************************/
+/* 
+ * mcbo_div_WF_normal
+ * SPP multiselect combo background css
+ */
+.Div.mcbo_div_WF_normal
+{
+	background		: transparent;
+	-nexa-border		: 1px solid #dbdbdb;
+	border-radius		: 3px 3px;
+}
+.Div.mcbo_div_WF_normal[status=mouseover],
+.Div.mcbo_div_WF_normal[status=focused]
+{
+	background		: transparent;
+	-nexa-border		: 1px solid #3697f8;
+	border-radius		: 3px 3px;
+}
+.Div.mcbo_div_WF_normal[status=disabled]
+{
+	background		: transparent;
+	-nexa-border		: 1px solid #b8b8b8;
+	border-radius		: 3px 3px;
+}
+
+
+/* 
+ * mcbo_edt_WF_normal
+ * SPP multiselect combo edit영역 css
+ */
+.Edit.mcbo_edt_WF_normal
+{
+	background 		: #ffffff;
+	-nexa-border		: 0px;
+	border-radius 		: 3px 3px;
+	-nexa-text-align	: left;
+	color 			: #444444;
+	font			: 12px '돋움';
+	-nexa-padding		: 0px 3px 0px 6px;
+	cursor			: pointer;
+}
+.Edit.mcbo_edt_WF_normal[status=readonly]
+{
+	background		: #ededed;
+	-nexa-border		: 0px;
+	border-radius 		: 3px 3px;
+	-nexa-text-align	: left;
+	color 			: #000000;
+	font			: 12px '돋움';
+	-nexa-padding		: 0px 3px 0px 6px;
+	cursor			: pointer;
+}
+.Edit.mcbo_edt_WF_normal[status=disabled]
+{
+	background		: #dddddd;
+	-nexa-border		: 0px;
+	border-radius 		: 3px 3px;
+	-nexa-text-align	: left;
+	color 			: #888888;
+	font			: 12px '돋움';
+	-nexa-padding		: 0px 3px 0px 6px;
+	cursor			: default;
+}
+
+/* 
+ * mcbo_btn_WF_normal
+ * SPP multiselect combo button 영역 css
+ */
+.Button.mcbo_btn_WF_normal
+{
+	background		: transparent;
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/WF/cbo_WF_BtnN.png');
+	-nexa-icon-position 	: right;
+	-nexa-border		: 0px;
+	-nexa-padding		: 2px 0px 0px 0px;
+	cursor			: pointer;
+}
+
+.Button.mcbo_btn_WF_normal[status=mouseover],
+.Button.mcbo_btn_WF_normal[status=focused],
+.Button.mcbo_btn_WF_normal[userstatus=selected]
+{
+	background		: transparent;
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/WF/cbo_WF_BtnM.png');
+	-nexa-icon-position 	: right;
+	-nexa-border		: 0px;
+	-nexa-padding		: 2px 0px 0px 0px;
+	cursor			: pointer;
+}
+
+.Button.mcbo_btn_WF_normal[userstatus=pushed]
+{
+	background		: transparent;
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/WF/cbo_WF_BtnP.png');
+	-nexa-icon-position 	: right;
+	-nexa-border		: 0px;
+	-nexa-padding		: 2px 0px 0px 0px;
+	cursor			: pointer;
+}
+.Button.mcbo_btn_WF_normal[status=disabled]
+{
+	background		: transparent;
+	-nexa-icon 		: URL('theme://SPP_IMAGE_SET/WF/cbo_WF_BtnD.png');
+	-nexa-icon-position 	: right;
+	-nexa-border		: 0px;
+	-nexa-padding		: 2px 0px 0px 0px;
+	cursor			: pointer;
+}
+
+/* 
+ * mcbo_sta_WF_bg
+ * SPP multiselect combo list background css
+ */
+.Static.mcbo_sta_WF_bg
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #b8b8b8;
+	border-radius 		: 3px 3px;
+	cursor			: pointer;
+}
+
+
+/* 
+ * mcbo_btn_WF_select
+ * SPP multiselect combo list button 영역 css
+ */
+.Button.mcbo_btn_WF_select,
+.Button.mcbo_btn_WF_select[status=focused],
+.Button.mcbo_btn_WF_select[status=mouseover],
+.Button.mcbo_btn_WF_select[userstatus=pushed],
+.Button.mcbo_btn_WF_select[userstatus=selected]
+{
+	-nexa-text-align	: center;
+	-nexa-vertical-align	: middle;
+	background		: #A8CAE7;
+	-nexa-border		: 0px;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: pointer;
+}	
+
+
+/* 
+ * mcbo_grd_WF_normal
+ * SPP multiselect combo grid(combo list) 영역 css
+ */
+.Grid.mcbo_grd_WF_normal,
+.Grid.mcbo_grd_WF_normal[status=readonly]
+{
+	background		: transparent;
+	-nexa-border		: 1px solid #b8b8b8, 0px, 0px, 0px;
+	cursor			: pointer;
+	color			: #444444;
+	font			: 12px '돋움';
+}
+
+.Grid.mcbo_grd_WF_normal .body .row .cell
+{
+	background		: transparent;
+	-nexa-border		: 0px;
+	color			: #444444;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+}
+.Grid.mcbo_grd_WF_normal .body .row .cell[status=mouseover]
+{
+	background		: #8a96a8;
+	-nexa-border		: 0px;
+	color			: #ffffff;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+}
+/****************************************************************************************************************************/
+/*****************************************************   MULTISELECT COMBO END   ********************************************/
+/****************************************************************************************************************************/
+
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   CHECKSET START	 	 ********************************************/
+/****************************************************************************************************************************/
+.CheckBoxSet.chkset_WF_checklist
+{
+	-nexa-border	: 0px none;
+	background	: transparent;
+	font		: 12px '돋움';
+	-nexa-padding	: 0px 0px 0px 6px;
+}
+
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem
+{
+	background 		: transparent;
+	font			: 12px '돋움';
+	color 			: #444444;
+	-nexa-text-align 	: left;
+	-nexa-vertical-align 	: middle;
+	-nexa-text-padding 	: 0px 0px 0px 8px;
+	-nexa-padding		: 0px 10px 0px 0px;
+	-nexa-icon 		: URL("theme://SPP_IMAGE_SET/WF/chk_WF_Box.png");
+	-nexa-icon-position 	: left;
+}
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem[status=mouseover]
+{
+	-nexa-icon 		: URL("theme://SPP_IMAGE_SET/WF/chk_WF_Box_O.png");
+	font 			: bold 12px '돋움';
+	color 			: #0a5dad;
+}
+
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem[userstatus=selected]
+{
+	-nexa-icon 		: URL("theme://SPP_IMAGE_SET/WF/chk_WF_Box_F.png");
+	font			: 12px '돋움';
+	color 			: #444444;
+}
+
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem[status=mouseover][userstatus=selected]
+{
+	color			: #0a5dad;
+	font 			: bold 12px '돋움';
+	-nexa-icon 		: URL("theme://SPP_IMAGE_SET/WF/chk_WF_Box_S.png");
+}
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem[status=readonly]
+{
+	color 			: #000000;
+	font			: 12px '돋움';
+	-nexa-icon 		: URL("theme://SPP_IMAGE_SET/WF/chk_WF_Box_S.png");
+}
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem[status=disabled]
+{
+	-nexa-icon 		: URL("theme://SPP_IMAGE_SET/WF/chk_WF_Box_D.png");
+	font			: 12px '돋움';
+	color 			: #888888;
+}
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem[status=disabled][userstatus=selected]
+{
+	-nexa-icon		: URL("theme://SPP_IMAGE_SET/WF/chk_WF_Box_DS.png");
+	font			: 12px '돋움';
+	color			: #888888;
+}
+
+
+.Grid .body .row .cell.grdBCell_DayEvent,
+.Grid .body .row .cell.grdBCell_DayEvent[status=mouseover],
+.Grid .body .row .cell.grdBCell_DayEvent[status=focused],
+.Grid .body .row .cell.grdBCell_DayEvent[userstatus=selected]
+{
+  background : lightsteelblue;
+}
+
+
+/* 
+ * btn_WF_mod
+ * default 수정 버튼
+ */
+.Button.btn_WF_mod,
+.Button.btn_WF_mod[userstatus=selected]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: ;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 25px;
+}
+.Button.btn_WF_mod[status=disabled]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #d9d9d9;
+	border-radius 		: 3px 3px;
+	color			: #bbbbbb;
+	font			: 12px '돋움';
+	cursor			: default;
+	-nexa-text-decoration 	: ;
+	-nexa-padding		: 0px 0px 0px 25px;
+}
+.Button.btn_WF_mod[status=mouseover],
+.Button.btn_WF_mod[status=focused]
+{
+
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 0px 0px 0px 25px;
+}.Button.btn_WF_mod[userstatus=pushed]
+{
+	background		: #fafafa URL('theme://SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	-nexa-border		: 1px solid #b3b3b3;
+	border-radius 		: 3px 3px;
+	color			: #333333;
+	font			: 12px '돋움';
+	-nexa-text-decoration 	: underline;
+	cursor			: pointer;
+	-nexa-padding		: 1px 0px 0px 25px;
+}
+
+.Grid .body .row .cell.grdBCell_ReadEvent,
+.Grid .body .row .cell.grdBCell_ReadEvent[status=focused],
+.Grid .body .row .cell.grdBCell_ReadEvent[userstatus=selected]
+{
+	color : #255b9a;
+	cursor : pointer;
+	font : normal bold 12px/normal "돋움";
+}.Grid[status=mouseover]
+{
+}
+.Grid .body .row .cell.grdBCell_ReadEvent[status=mouseover]
+{
+	color : #7f7f7f;
+	cursor : pointer;
+	font : normal bold 12px/normal "돋움";
+}
+
+.Grid .body .row .cell.grdBCell_BgBlueFontWhite,
+.Grid .body .row .cell.grdBCell_BgBlueFontWhite[status=focused],
+.Grid .body .row .cell.grdBCell_BgBlueFontWhite[userstatus=selected]
+{
+	background		: #9ec1ff;
+	-nexa-background-odd 	: #9ec1ff;
+	/*color : white;*/
+	font : normal 12px/normal "돋움";
+}
+.Grid .body .row .cell.grdBCell_BgBlueFontWhite[status=mouseover]
+{
+	background		: #9ec1ff;
+	-nexa-background-odd 	: #9ec1ff;
+	/*color : white; */
+	font : normal 12px/normal "돋움";
+}
+
+/*
+.ProgressBar,.ProgressBarControl
+{
+	background : linear-gradient(to top, #f0f0f0, #e7e7e7);
+	-nexa-border : 1px solid #aeaeae, 1px solid #d2d0d1, 1px solid #d2d0d1, 1px solid #d2d0d1;
+}
+
+.ProgressBar .progressbaritem,.ProgressBarControl .progressbaritem
+{
+	background : #125dae;
+}
+
+.ProgressBar .progressbaritem[status=disabled],.ProgressBarControl .progressbaritem[status=disabled]
+{
+	background : #b5b5b5;
+}
+
+.ProgressBar .progressbartext,.ProgressBarControl .progressbartext
+{
+	color : #ffffff;
+	-nexa-text-align : center;
+}
+*/
+
+.ProgressBar.pg_WF_green .progressbaritem,.ProgressBarControl .progressbaritem
+{
+	background : #1aadbd;
+}
+
+/****************************************************************************************************************************/
+/*****************************************************   CHECKSET END 	 	 ********************************************/
+/****************************************************************************************************************************/]]></CSSData>
+  <CSSData type="mobile_large"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_small"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_medium"><![CDATA[]]></CSSData>
+</XCSS>

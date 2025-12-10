@@ -1,0 +1,421 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR5018_P01" left="0" top="0" width="645" height="350" titletext="업무분류조회팝업" onload="form_onload">
+    <Layouts>
+      <Layout width="645" height="350">
+        <Div id="divPage" taborder="0" left="0" top="0" enableevent="false" async="false" width="645" height="290">
+          <Layouts>
+            <Layout>
+              <Grid id="mainGrid" taborder="0" left="19.00" top="10" width="180" height="270" binddataset="dsMain" useSort="false" autoenter="select" autofittype="col" oncellclick="divPage_mainGrid_oncellclick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="150"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell cssclass="grdHCell_WF" text="업무분류1" background="#fcf5ef" color="#32333b" border="1px solid #9ea7cc" font="normal 700 12px/normal &quot;KoPubL&quot;"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:CMM_CD_NM" textAlign="center"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Grid id="subGrid" taborder="1" left="232.00" top="10" width="180" height="270" binddataset="dsSub" useSort="false" autoenter="select" autofittype="col" oncellclick="divPage_subGrid_oncellclick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="150"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell cssclass="grdHCell_WF" text="업무분류2" background="#fcf5ef" color="#32333b" border="1px solid #9ea7cc" font="normal 700 12px/normal &quot;KoPubL&quot;"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:CMM_CD_NM" textAlign="center"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Button id="btnArrow" taborder="2" left="195" top="121" width="40" height="32" cssclass="btn_WF_countArrowRight" enable="false" enableevent="false"/>
+              <Grid id="thirdGrid" taborder="3" left="442.00" top="10" width="180" height="270" binddataset="dsThird" useSort="false" autoenter="select" autofittype="col" oncelldblclick="divPage_thirdGrid_oncelldblclick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="150"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell cssclass="grdHCell_WF" text="사전협의자" background="#fcf5ef" color="#32333b" border="1px solid #9ea7cc" font="normal 700 12px/normal &quot;KoPubL&quot;"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell textAlign="center" expr="expr:(DEPT_NM ?? '') + '/' + (STAFF_NM ?? '')"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Button id="btnArrow00" taborder="4" left="405.00" top="121" width="40" height="32" cssclass="btn_WF_countArrowRight" enable="false" enableevent="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtnBottom" taborder="1" text="" cssclass="div_POP_msg_btnbg" left="10.00" right="10" height="50" top="divPage:0">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="4"/>
+              <Button id="btnSelect" taborder="1" text="선택" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="110" width="100" height="32" bottom="4"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsSub">
+        <ColumnInfo>
+          <Column id="CD_NO" type="STRING" size="256"/>
+          <Column id="LANG_CD" type="STRING" size="256"/>
+          <Column id="UP_CD_NO" type="STRING" size="256"/>
+          <Column id="CD_LVL" type="STRING" size="256"/>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="UP_CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+          <Column id="CMM_CD_DESC" type="STRING" size="256"/>
+          <Column id="ITM_VAL_1" type="STRING" size="256"/>
+          <Column id="ITM_VAL_2" type="STRING" size="256"/>
+          <Column id="ITM_VAL_3" type="STRING" size="256"/>
+          <Column id="ITM_VAL_4" type="STRING" size="256"/>
+          <Column id="ITM_VAL_5" type="STRING" size="256"/>
+          <Column id="CODE_DIV" type="STRING" size="256"/>
+          <Column id="SORT_ORDR" type="STRING" size="256"/>
+          <Column id="USE_YN" type="STRING" size="256"/>
+          <Column id="RMK" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM_MAIN" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM_SUB" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMain">
+        <ColumnInfo>
+          <Column id="CD_NO" type="STRING" size="256"/>
+          <Column id="LANG_CD" type="STRING" size="256"/>
+          <Column id="UP_CD_NO" type="STRING" size="256"/>
+          <Column id="CD_LVL" type="STRING" size="256"/>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="UP_CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+          <Column id="CMM_CD_DESC" type="STRING" size="256"/>
+          <Column id="ITM_VAL_1" type="STRING" size="256"/>
+          <Column id="ITM_VAL_2" type="STRING" size="256"/>
+          <Column id="ITM_VAL_3" type="STRING" size="256"/>
+          <Column id="ITM_VAL_4" type="STRING" size="256"/>
+          <Column id="ITM_VAL_5" type="STRING" size="256"/>
+          <Column id="CODE_DIV" type="STRING" size="256"/>
+          <Column id="SORT_ORDR" type="STRING" size="256"/>
+          <Column id="USE_YN" type="STRING" size="256"/>
+          <Column id="RMK" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRet"/>
+      <Dataset id="dsThird">
+        <ColumnInfo>
+          <Column id="SVC_CLSS_CD" type="STRING" size="256"/>
+          <Column id="BSE_LVL1_CD" type="STRING" size="256"/>
+          <Column id="BSE_LVL2_CD" type="STRING" size="256"/>
+          <Column id="STAFF_ID" type="STRING" size="256"/>
+          <Column id="STAFF_NM" type="STRING" size="256"/>
+          <Column id="BSE_LVL1_NM" type="STRING" size="256"/>
+          <Column id="BSE_LVL2_NM" type="STRING" size="256"/>
+          <Column id="LVL1_STAFF_YN" type="STRING" size="256"/>
+          <Column id="LVL2_STAFF_YN" type="STRING" size="256"/>
+          <Column id="LVL3_STAFF_YN" type="STRING" size="256"/>
+          <Column id="LVL4_STAFF_YN" type="STRING" size="256"/>
+          <Column id="LVL5_STAFF_YN" type="STRING" size="256"/>
+          <Column id="LVL6_STAFF_YN" type="STRING" size="256"/>
+          <Column id="LVL7_STAFF_YN" type="STRING" size="256"/>
+          <Column id="LVL8_STAFF_YN" type="STRING" size="256"/>
+          <Column id="LVL9_STAFF_YN" type="STRING" size="256"/>
+          <Column id="BIGO" type="STRING" size="256"/>
+          <Column id="DEPT_ID" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="JBC_POSI" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)	︰ 업무분류조회팝업
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2025.02.12
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2025.01.24	WEMB		최초작성
+*------------------------------------------------------------------
+* Description
+	<< Popup param >>
+	pGridFormats	: 선택 목록에 사용될 그리드 포맷
+	pGridInnerDsArr	: 선택 목록 그리드에 콤보 InnerDataset Object Array
+	pDsData			: 선택 목록 그리드 Bind Dataset Object
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+ include "lib::lib_WorkFlow.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function(type)
+{	
+	var sInDs 	= "";
+	var sOutDs 	= "";
+	
+	if(type == 'M'){
+		// 메인그리드
+		this.dsMain.setColumn(0, "UP_CMM_CD", "BIZC0000"); 	// 업무분류1
+		
+		var sTranId = "select06";								// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+		var sService = "SR5000D/select06";						// 서비스명
+		var sInDs = "dsCond=dsMain";							// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+		var sOutDs =  "dsMain=dsComm";							// 서버에서 수신할 데이타셋
+		var sArg = "";											// 서버 @ParamVariable 인자와 맵핑됨
+		Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+	} else if(type == 'S'){
+		// 서브그리드
+		var sTranId = "select06";								// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+		var sService = "SR5000D/select06";						// 서비스명
+		var sInDs = "dsCond=dsSub";									// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+		var sOutDs = "dsSub=dsComm";							// 서버에서 수신할 데이타셋
+		var sArg = "";											// 서버 @ParamVariable 인자와 맵핑됨
+		Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+	} else {
+		// 서드그리드
+		this.dsThird.setColumn(0, "SVC_CLSS_CD", "SR"); 		// 서비스/일반요청
+		this.dsThird.setColumn(0, "BSE_LVL2_CD", this.dsSub.getColumn(this.dsSub.rowposition, "CMM_CD")); // 업무분류2
+	
+		var sTranId = "select03";										// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+		var sService = "SR5000D/select03";								// 서비스명
+		var sInDs = "dsCond=dsThird";									// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+		var sOutDs = "dsThird=dsSvcStaffMng";							// 서버에서 수신할 데이타셋
+		var sArg = "";													// 서버 @ParamVariable 인자와 맵핑됨
+		Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);	
+	}
+	/*
+	var sTranId = "select06";								// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+	var sService = "SR5000D/select06";						// 서비스명
+	var sArg = "";											// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+	*/
+}
+
+// 선택
+this.fnSelect = function(selType)
+{	
+	var nRowCnt = this.dsSub.rowcount;
+	
+	if(nRowCnt == 0){
+		var param = {
+        	msg	: "건물의 해당층을 선택하시기 바랍니다."	//메시지 내용
+        	, arrparam : []						//메시지의 변수에 들어갈 실제값
+        	, msgtype : "E"						//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        	};
+        Ex.core.alert(this, param);
+		return false;
+	} else {
+		this.dsRet.clearData();
+		
+		this.dsThird.addColumn("UP_CMM_CD", "STRING");
+		this.dsThird.addColumn("CMM_CD", "STRING");
+		this.dsThird.addColumn("CMM_CD_NM_MAIN", "STRING")
+		this.dsThird.addColumn("CMM_CD_NM_SUB", "STRING");
+	
+		this.dsThird.setColumn(0,"UP_CMM_CD",this.dsMain.getColumn(this.dsMain.rowposition,"CMM_CD")); 		// 상위코드
+		this.dsThird.setColumn(0,"CMM_CD",this.dsSub.getColumn(this.dsSub.rowposition,"CMM_CD"));		 	// 하위코드
+		this.dsThird.setColumn(0,"CMM_CD_NM_MAIN",this.dsMain.getColumn(this.dsMain.rowposition,"CMM_CD_NM")); // 상위코드명
+		this.dsThird.setColumn(0,"CMM_CD_NM_SUB",this.dsSub.getColumn(this.dsSub.rowposition,"CMM_CD_NM"));	// 하위코드명
+		
+		this.dsRet.assign(this.dsThird);
+		this.dsRet.copyRow(this.dsRet.setAddRow(), this.dsThird, this.dsThird.rowposition);
+		Ex.core.pclose(this, this.dsRet.saveXML());
+	}
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select06" :
+			//Ex.core.toast(this, "10002");
+			/*if(this.dsSub.rowcount == 0){
+				// 최초 로드시
+				this.dsSub.clearData();
+				this.dsSub.setInsertRow();
+				this.dsSub.setColumn(0, "UP_CMM_CD", this.dsMain.getColumn(0, "CMM_CD")); // 메인그리드 상위코드값 매핑
+				this.fnSearch('S');	// 서브그리드검색
+			}*/
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{	
+	this.dsMain.setInsertRow();
+	this.fnGetCmmCd();
+	this.fnSearch('M');	// 메인그리드검색
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearch" :		// 검색
+			this.fnSearch();
+			break;
+
+		case "btnSelect" :			// 선택
+			this.fnSelect();
+			//Ex.core.pclose(this, this.dsList.saveXML());
+			break;
+
+		case "btnClose" :			// 닫기
+			Ex.core.pclose(this);
+			break;
+	}
+}
+
+// 공통 onkeydown event : component
+this.fnCommOnkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == '13')
+	{
+		this.divContent.form.divSearchArea.form.btnSearch.setFocus();
+		this.fnSearch();
+		obj.setFocus();
+	}
+};
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+this.divPage_mainGrid_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{	
+	this.dsSub.clearData();
+	this.dsThird.clearData();
+	this.dsSub.setInsertRow();
+	this.dsSub.setColumn(0, "UP_CMM_CD", this.dsMain.getColumn(e.row, "CMM_CD")); // 메인그리드 상위코드값 매핑
+	this.fnSearch('S');	// 서브그리드검색
+};
+
+this.divPage_subGrid_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.dsThird.clearData();
+	this.dsThird.setInsertRow();
+	this.dsThird.setColumn(0, "UP_CMM_CD", this.dsMain.getColumn(e.row, "CMM_CD")); // 서브그리드 상위코드값 매핑
+	this.fnSearch('T');	// 서브그리드검색
+};
+
+this.divPage_thirdGrid_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(obj.id == "thirdGrid")
+	{	
+		this.dsRet.clearData();
+		
+		this.dsThird.addColumn("UP_CMM_CD", "STRING");
+		this.dsThird.addColumn("CMM_CD", "STRING");
+		this.dsThird.addColumn("CMM_CD_NM_MAIN", "STRING");
+		this.dsThird.addColumn("CMM_CD_NM_SUB", "STRING");
+	
+		this.dsThird.setColumn(0,"UP_CMM_CD",this.dsMain.getColumn(this.dsMain.rowposition,"CMM_CD")); 		// 상위코드
+		this.dsThird.setColumn(0,"CMM_CD",this.dsSub.getColumn(this.dsSub.rowposition,"CMM_CD"));		 	// 하위코드
+		this.dsThird.setColumn(0,"CMM_CD_NM_MAIN",this.dsMain.getColumn(this.dsMain.rowposition,"CMM_CD_NM")); // 상위코드명
+		this.dsThird.setColumn(0,"CMM_CD_NM_SUB",this.dsSub.getColumn(this.dsSub.rowposition,"CMM_CD_NM"));	// 하위코드명
+		
+		this.dsThird.setColumn(0,"STAFF_ID",this.dsThird.getColumn(this.dsThird.rowposition,"STAFF_ID")); 	// 사전협의자ID
+		this.dsThird.setColumn(0,"STAFF_NM",this.dsThird.getColumn(this.dsThird.rowposition,"STAFF_NM"));	// 사전협의자명
+		this.dsThird.setColumn(0,"DEPT_ID",this.dsThird.getColumn(this.dsThird.rowposition,"DEPT_ID")); 	// 사전협의부서ID
+		this.dsThird.setColumn(0,"JBC_POSI",this.dsThird.getColumn(this.dsThird.rowposition,"JBC_POSI"));	// 사전협의자직책
+		
+		this.dsRet.assign(this.dsThird);
+		this.dsRet.copyRow(this.dsRet.setAddRow(), this.dsThird, this.dsThird.rowposition);
+		Ex.core.pclose(this, this.dsRet.saveXML());
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

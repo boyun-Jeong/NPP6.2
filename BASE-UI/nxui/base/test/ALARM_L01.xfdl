@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="ALARM_L01" width="1840" height="720" titletext="New Form" onload="form_onload" scrolltype="both" tooltiptype="inplace">
+    <Layouts>
+      <Layout height="720" horizontalgap="0" mobileorientation="landscape" tabletemplate="1* / 1*" verticalgap="0" width="1840">
+        <Static id="stcTreeTitle" taborder="0" text="알림발송목록" left="0" top="70" width="120" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="stcCnt" taborder="1" left="104.00" top="71" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsData"/>
+        <Grid id="grdAlarm" taborder="2" left="0" top="137" width="1840" cssclass="grd_WF_normal" autofittype="col" binddataset="dsData" oncellclick="grdAlarm_oncellclick" bottom="40" useContext="false">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="30" band="left"/>
+                <Column size="60" band="left"/>
+                <Column size="30"/>
+                <Column size="50"/>
+                <Column size="150"/>
+                <Column size="60"/>
+                <Column size="120"/>
+                <Column size="60"/>
+                <Column size="50"/>
+                <Column size="180"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox" autosizecol="none"/>
+                <Cell col="1" text="행상태"/>
+                <Cell col="2" text="NO"/>
+                <Cell col="3" text="알림일련번호"/>
+                <Cell col="4" text="수신일시"/>
+                <Cell col="5" text="경과"/>
+                <Cell col="6" text="종류"/>
+                <Cell col="7" text="확인여부"/>
+                <Cell col="8" text="링크"/>
+                <Cell col="9" text="알림내용"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox" autosizecol="none" text="bind:CHK"/>
+                <Cell col="1" text="bind:ROWFLAG"/>
+                <Cell col="2" text="expr:currow+1"/>
+                <Cell col="3" text="bind:ALARM_ID"/>
+                <Cell col="4" displaytype="date" calendardateformat="yyyy-MM-dd HH:mm:ss" calendareditformat="yyyy-MM-dd HH:mm:ss" text="bind:RECEIVED_DT"/>
+                <Cell col="5" text="bind:ELAPSEDTIME"/>
+                <Cell col="6" text="bind:ALARM_TYPE"/>
+                <Cell col="7" text="bind:CONFIRM_YN"/>
+                <Cell col="8" text="bind:ALARM_REF" cssclass="grdBCell_WF_event"/>
+                <Cell col="9" text="bind:ALARM_CONTS"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divSearchArea" taborder="3" left="0" top="0" height="50" cssclass="div_WF_divSearchArea" width="1840">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle00" taborder="7" text="알람일시" left="20.00" top="13" width="74" height="24" cssclass="sta_WF_schTitle" onclick="divSearchArea_stcTitle_onclick"/>
+              <Static id="Static00" taborder="3" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+              <Button id="btnSearch" taborder="0" top="13" width="75" height="24" text="조회" right="21" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Button id="btnSearchReset" taborder="2" top="13" width="90" height="24" text="초기화" right="101" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+              <Static id="Static01_00" taborder="4" text="~" left="334.00" top="13" width="15" height="24" textAlign="center" verticalAlign="middle" visible="true"/>
+              <Calendar id="calEndDate" taborder="5" left="289.00" top="13" width="161" height="24" cssclass="cal_WF_normal" readonly="false" onkeydown="fnCommOnkeydown" enable="true" visible="true" dateformat="yyyy-MM-dd HH:mm:ss" editformat="yyyy-MM-dd HH:mm:ss"/>
+              <Calendar id="calBeginDate" taborder="6" left="95.00" top="13" width="161" height="24" cssclass="cal_WF_normal" readonly="false" onkeydown="fnCommOnkeydown" enable="true" visible="true" dateformat="yyyy-MM-dd HH:mm:ss" editformat="yyyy-MM-dd HH:mm:ss"/>
+              <Static id="stcReqTmplatNm00" taborder="8" text="미확인" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="30.14%" top="14" width="69" height="21"/>
+              <CheckBox id="chkConfirmN" taborder="9" left="614" top="13" width="150" height="24" visible="true"/>
+              <Static id="Static00_00" taborder="1" left="0" top="50" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-2"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00" taborder="4" left="0" top="50" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_00" taborder="5" left="0" top="94" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_00_00" taborder="6" left="0" top="127" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divTopBtn" taborder="7" text="div00" left="1537.00" top="104" width="303" isButtonGroup="true" bottom="grdAlarm:8">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="1" right="2" cssclass="btn_WF_del" onclick="fnCommOnclick" visible="false"/>
+              <Button id="btnRead" taborder="1" text="읽음 처리" left="146.00" top="0" width="90" height="24" borderRadius="5px" cursor="pointer" onclick="fnCommOnclick"/>
+              <Button id="btnAllRead" taborder="2" text="모두 읽음" left="51.00" top="0" width="90" height="24" borderRadius="5px" cursor="pointer" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnSave" taborder="8" text="저장" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="0" onclick="fnCommOnclick" visible="true"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ ALARM_L01
+* 화면(명)		︰ 알림수신목록
+* 메뉴(경로)	︰ frTop btnAlarm : 클릭 이벤트 / TEST > 알림수신목록
+* 화면 설명	︰ 알림수신목록 확인
+* 작성자		︰ WEMB
+* 작성일		︰ 2024.11.22  
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2024.11.22  정하림		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.objApp = nexacro.getApplication();   
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+
+	this.fnSearchReset();	// 검색조건 초기화
+	this.fnSearch();		// 조회
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+	
+	var val = Ex.util.getMaskFormatString(new Date(), "yyyyMMdd");
+	
+	this.dsCond.setColumn(this.dsCond.rowposition, 'STIME', Ex.util.addDate(val, -5)+'000000000');
+	this.dsCond.setColumn(this.dsCond.rowposition, 'ETIME', Ex.util.today()+'000000000');
+	
+	this.dsCond.setColumn(0, 'USER_ID', Ex.util.getSession('gvUserId'));
+	
+}
+
+
+// 조회
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "select01";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "ALARM/select01";            	// 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData=dsData";       			// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 저장
+this.fnSave = function()
+{
+	var sTranId = "save01";                       	// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "ALARM/save01";            		// 서비스명
+    var sInDs = "dsCond=dsCond dsData=dsData:U";    // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData=dsData";       			// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	var bAsync = false;								// true(생략) : 비동기 / false : 동기
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg, '', bAsync); // callback : default, bAsync : 동기처리 목적
+	
+	// Top에 존재하는 transaction 함수 호출 (알림 cnt 동기화 목적)
+	this.objApp.MAIN_TOP.form.fnSelectAlarmCnt();
+}
+
+
+// 읽음 처리 
+this.fnRead = function(objDs:Dataset, checked)
+{
+	if(checked && checked == "ALL"){
+		this.grdAlarm.setCellProperty("Head", 0, "text", "1"); // 헤드 체크
+		// 모두 체크 표시
+		for(var i=0; i<objDs.getRowCount();i++){
+			objDs.setColumn(i, "CHK", "1");
+		}
+	}
+
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+
+	if(objDs.getCaseCount("CONFIRM_YN!='확인'") == 0) { // 체크한 알림 전체가 이미 읽은 알림일 경우
+		Ex.core.toast(this, "읽음 처리할 알림이 없습니다.", null, {toastType:'W'});
+	}
+	else { // 체크한 알림 중 읽지 않은 알림이 하나라도 있을 경우
+		for(var i = objDs.rowcount-1; i >= 0; i--) {
+			if(objDs.getColumn(i, "CONFIRM_YN") != '확인') { // 이미 확인 처리된 것들이 체크되었을 경우 / 해당 Row 제외 후 Update
+				this.dsCond.setColumn(0, 'ALARM_ID', objDs.getColumn(i, "ALARM_ID").toString()); // dsCond에 ALARM_ID 추가
+				this.dsData.setColumn(i, 'CONFIRM_YN', '확인'); // 화면에서도 바로 [읽음 처리] 결과 Update
+				this.dsData.setColumn(i, 'ROWFLAG', 'U'); // dsData - ROWFLAG 수동 변경
+			}
+		}
+	}
+	
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+
+}
+
+this.fnCheckValidate = function()
+{
+		if( !Ex.util.isUpdated(this.dsData) )
+		return false;
+	
+	return true;
+}
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;	
+			
+		case "save01" :
+			Ex.core.toast(this, "10004", null, {toastType:'S'});
+			this.grdAlarm.setCellProperty("Head", this.grdAlarm.getBindCellIndex('Body', 'CHK'), "text", "0");
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch(pID)
+	{
+		case "noticePop" :
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{	
+// 		case "searchConfirm" :
+// 			this.fnSearch01();
+// 			break;
+			
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+	}
+}
+
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.grdAlarm.displayRowType();
+
+	// 공통코드 조회
+	this.fnGetCmmCd();
+	
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divTopBtn.form.btnRead];		// 쓰기
+	Ex.util.setBtnVisible(this, 'write', arrBtn);
+// 		arrBtn = [this.divTopBtn.form.btnDelete];	// 삭제
+// 	Ex.util.setBtnVisible(this, 'delete', arrBtn);
+		arrBtn = [this.divTopBtn.form.btnAllRead];		// 저장
+	Ex.util.setBtnVisible(this, 'write', arrBtn);
+
+	
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divTopBtn, 'right', true);
+}
+
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['YN_CD',		'DAT_TYPE_CD']			// 조회할 상위코드
+		,codeDiv: ['CMM_CD',	'CMM_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['ALL',		'ALL']			// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',			'Y']				// 사용여부
+		,filter	: ['',			"ITM_VAL_1=='NTC'||ITM_VAL_1=='ETC'"]				// filterStr
+		,objDs	: [this.dsYnCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util;
+}
+
+// 데이터셋 column 값 변경 후 이벤트
+this.dsData_Oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);	// ROWFLAG컬럼 변경을 위한 함수 호출
+};
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnClose" :
+			Ex.core.pclose(this);
+			break;
+			
+		case 'btnSearch' :	// 조회
+			if(this.divSearchArea.form.chkConfirmN.value){ // 체크가 된 상태여야만
+				var val = 'N';
+			}
+			this.dsCond.setColumn(0, 'CONFIRM_YN', val || null);
+			this.fnSearch();
+			break;
+			
+		case 'btnSearchReset' :	// 조회조건 초기화
+			this.fnSearchReset();
+			break;
+			
+		case 'btnRead' :
+			this.fnRead(this.dsData);
+			break;
+			
+		case 'btnAllRead' :
+			this.fnRead(this.dsData, 'ALL');
+			break;
+			
+		case 'btnSave' : 	// 저장
+			// validation
+			if( this.fnCheckValidate() )
+			{
+				var param = {	id : "saveConfirm"
+					  , msg : "10003"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+			break;
+	}
+}
+
+
+this.grdAlarm_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if( e.cell == obj.getBindCellIndex('body', 'ALARM_REF') )
+	{
+		console.log("알람 링크 연결");
+	}
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="ALARM_ID" type="STRING" size="256"/>
+          <Column id="STIME" type="STRING" size="256"/>
+          <Column id="ETIME" type="STRING" size="256"/>
+          <Column id="CONFIRM_YN" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsData" oncolumnchanged="dsData_Oncolumnchanged" updatecontrol="true"/>
+      <Dataset id="dsYnCd" oncolumnchanged="fnCommOncolumnchanged"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item1" compid="divSearchArea.form.edtSndUsr" propid="value" datasetid="dsCond" columnid="NOTI_CGER_NM"/>
+      <BindItem id="item2" compid="divSearchArea.form.cboDateType" propid="value" datasetid="dsCond" columnid="DATE_TYPE"/>
+      <BindItem id="item3" compid="divSearchArea.form.calBeginDate" propid="value" datasetid="dsCond" columnid="STIME"/>
+      <BindItem id="item4" compid="divSearchArea.form.calEndDate" propid="value" datasetid="dsCond" columnid="ETIME"/>
+      <BindItem id="item6" compid="divSearchArea.form.stcReqTmplatNm00" propid="value" datasetid="dsCond" columnid="REQ_ID"/>
+      <BindItem id="item7" compid="divSearchArea.form.chkConfirmN" propid="value" datasetid="dsCond" columnid="CONFIRM_YN"/>
+    </Bind>
+  </Form>
+</FDL>

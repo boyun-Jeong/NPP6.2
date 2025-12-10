@@ -1,0 +1,637 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="frmWF0120_P02" classname="top" left="0" top="0" titletext="검토자선택 팝업" onload="form_onload" scrolltype="none" cssclass="" height="607" width="600">
+    <Layouts>
+      <Layout width="600" height="607" mobileorientation="landscape">
+        <Div id="divGrdTopBtn" taborder="0" width="425" height="24" bottom="626" visible="true" right="18.48%" isButtonGroup="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+              <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" bottom="0" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBottom" taborder="1" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnSelect" taborder="1" text="적용" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="125" width="100" height="32" bottom="14"/>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divContent" taborder="2" text="Div00" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="stcBg01" taborder="9" left="20.00" top="462" height="34" cssclass="sta_WF_inputBg" right="20"/>
+              <Static id="Static00_01" taborder="0" left="5" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-5"/>
+              <Static id="Static00_01_00" taborder="1" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Static id="Static00_01_00_00" taborder="2" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+              <Static id="Static00_02" taborder="3" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="-1"/>
+              <Div id="divGrdTopBtn" taborder="4" width="161" visible="true" right="20" isButtonGroup="true" top="20" height="24">
+                <Layouts>
+                  <Layout/>
+                </Layouts>
+              </Div>
+              <Tab id="tabFuncType" taborder="5" tabindex="0" left="20.00" top="20" height="388" onchanged="divContent_tabFuncType_onchanged" cssclass="tab_WF_normal" right="20" visible="false">
+                <Tabpages>
+                  <Tabpage id="tab01" text="사용자 선택 지정">
+                    <Layouts>
+                      <Layout>
+                        <Static id="stcUser" taborder="0" text="검토자 목록" left="0" top="10" width="120" height="24" cssclass="sta_WF_gridTitle"/>
+                        <Div id="divGrdTopBtn" taborder="1" width="161" visible="true" right="0" isButtonGroup="true" top="10" height="24">
+                          <Layouts>
+                            <Layout>
+                              <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick" visible="true"/>
+                              <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" visible="true" bottom="0"/>
+                            </Layout>
+                          </Layouts>
+                        </Div>
+                        <Grid id="grdReviewer" taborder="2" top="44" binddataset="dsWfRver" cssclass="grd_WF_normal" autofittype="col" useSort="true" visible="true" oncelldblclick="divContent_grdUserInfo_oncelldblclick" right="0" left="0" height="227">
+                          <Formats>
+                            <Format id="multiSel">
+                              <Columns>
+                                <Column size="40" band="left"/>
+                                <Column size="50" band="left"/>
+                                <Column size="100"/>
+                                <Column size="90"/>
+                                <Column size="100"/>
+                                <Column size="150"/>
+                                <Column size="80"/>
+                              </Columns>
+                              <Rows>
+                                <Row size="32" band="head"/>
+                                <Row size="32"/>
+                              </Rows>
+                              <Band id="head">
+                                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                                <Cell col="1" text="행상태"/>
+                                <Cell col="2" text="사번(ID)"/>
+                                <Cell col="3" text="성명"/>
+                                <Cell col="4" text="직급"/>
+                                <Cell col="5" text="직책(역할)"/>
+                                <Cell col="6" text="필수검토"/>
+                              </Band>
+                              <Band id="body">
+                                <Cell displaytype="checkboxcontrol" text="bind:CHK" edittype="checkbox"/>
+                                <Cell col="1" text="bind:ROWFLAG"/>
+                                <Cell col="2" text="bind:USER_ID" edittype="none"/>
+                                <Cell col="3" text="bind:USER_NM" edittype="none"/>
+                                <Cell col="4" text="bind:POS_NM" edittype="none"/>
+                                <Cell col="5" text="bind:ROLE_NM" edittype="none"/>
+                                <Cell col="6" displaytype="checkboxcontrol" edittype="checkbox" text="bind:ESS_YN"/>
+                              </Band>
+                            </Format>
+                            <Format id="singleSel">
+                              <Columns>
+                                <Column size="100"/>
+                                <Column size="90"/>
+                                <Column size="140"/>
+                                <Column size="150"/>
+                                <Column size="100"/>
+                                <Column size="150"/>
+                              </Columns>
+                              <Rows>
+                                <Row size="32" band="head"/>
+                                <Row size="32"/>
+                              </Rows>
+                              <Band id="head">
+                                <Cell text="사번(ID)"/>
+                                <Cell col="1" text="성명"/>
+                                <Cell col="2" text="소속명"/>
+                                <Cell col="3" text="부서명"/>
+                                <Cell col="4" text="직급"/>
+                                <Cell col="5" text="직책(역할)"/>
+                              </Band>
+                              <Band id="body">
+                                <Cell text="bind:USER_ID" edittype="none"/>
+                                <Cell col="1" text="bind:USER_NM" edittype="none"/>
+                                <Cell col="2" text="bind:CO_NM" edittype="none"/>
+                                <Cell col="3" text="bind:DEPT_NM" edittype="none"/>
+                                <Cell col="4" text="bind:POS_NM" edittype="none"/>
+                                <Cell col="5" text="bind:ROLE_NM" edittype="none"/>
+                              </Band>
+                            </Format>
+                          </Formats>
+                        </Grid>
+                        <Static id="stcUser00" taborder="3" text="검토 조건" left="0" top="grdReviewer:20" width="120" height="24" cssclass="sta_WF_gridTitle"/>
+                        <Static id="stcBg01" taborder="4" left="0" top="325" height="34" cssclass="sta_WF_inputBg" right="0"/>
+                        <Static id="stcRverNum" taborder="5" left="0" top="325" width="130" height="34" cssclass="sta_WF_inputTitle" text="총 검토 수"/>
+                        <Edit id="edtRverNum" taborder="6" left="135.00" top="330" height="24" cssclass="edt_WF_normal" readonly="false" width="100" inputfilter="none" inputtype="digit"/>
+                        <Static id="Static00_00" taborder="7" left="0" top="34" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-40"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                  <Tabpage id="tab02" text="서비스 지정">
+                    <Layouts>
+                      <Layout>
+                        <Static id="stcBg01" taborder="0" left="0" top="44" height="34" cssclass="sta_WF_inputBg" right="0" text=""/>
+                        <Static id="stcSvcNm" taborder="1" left="0" top="44" width="100" height="34" cssclass="sta_WF_inputTitle_E" text="서비스명"/>
+                        <Edit id="edtSvcNm" taborder="2" left="stcSvcNm:5.00" top="49" height="24" right="5" cssclass="edt_WF_normal" validationGroup="fvValiCmp" validation="서비스명;NULL" inputfilter="comma,dot,space,sign" inputtype="alpha,digit,english,symbol"/>
+                        <Static id="stcUser" taborder="3" text="검토자 지정 서비스명" left="0" top="10" width="155" height="24" cssclass="sta_WF_gridTitle"/>
+                      </Layout>
+                    </Layouts>
+                  </Tabpage>
+                </Tabpages>
+              </Tab>
+              <Static id="stcName" taborder="7" left="3.17%" top="461" width="130" height="34" cssclass="sta_WF_inputTitle" text="표기명칭"/>
+              <Static id="stcRtrnNode" taborder="13" left="50.00%" top="462" width="130" height="34" cssclass="sta_WF_inputTitle" text="반려 시 워크플로우"/>
+              <Edit id="edtName" taborder="6" left="stcName:3.00" top="467" height="24" cssclass="edt_WF_normal" readonly="false" inputfilter="none" right="stcRtrnNode:5"/>
+              <Static id="stcUser00" taborder="8" text="검토자 정의" left="20" top="tabFuncType:20" width="120" height="24" cssclass="sta_WF_gridTitle"/>
+              <Static id="stcBg01_00" taborder="10" left="20.00" top="494" height="34" cssclass="sta_WF_inputBg" right="20"/>
+              <Static id="stcScreenRtrn00" taborder="11" left="20.00" top="494" width="130" height="34" cssclass="sta_WF_inputTitle" text="수정가능단계"/>
+              <MultiCombo id="mcboScreenEdit" taborder="12" left="155.00" top="499" height="24" right="25" value="" index="-1" innerdataset="dsEditWfProcCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" cssclass="mcbo_WF_normal"/>
+              <Combo id="cboRtrnWf" taborder="14" left="435.00" top="467" height="24" cssclass="cbo_WF_normal" innerdataset="dsRtrnWfProcCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" right="25"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsWfRver" oncolumnchanged="dsWfRver_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="REQ_TMPLAT_ID" type="STRING" size="256"/>
+          <Column id="REQ_TMPLAT_VER" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="SEQ" type="STRING" size="256"/>
+          <Column id="ESS_YN" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+          <Column id="POS_NM" type="STRING" size="256"/>
+          <Column id="ROLE_NM" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="WF_FUNC_CD" type="STRING" size="256"/>
+          <Column id="WF_FUNC_NM" type="STRING" size="256"/>
+          <Column id="RMK" type="STRING" size="256"/>
+          <Column id="FRID" type="STRING" size="256"/>
+          <Column id="FRDT" type="STRING" size="256"/>
+          <Column id="LMID" type="STRING" size="256"/>
+          <Column id="LMDT" type="STRING" size="256"/>
+          <Column id="LMPID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="STR_USER_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSelUser">
+        <ColumnInfo>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="ESS_YN" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRtrnWfProcCd">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsWfDt"/>
+      <Dataset id="dsFuncTypeCd"/>
+      <Dataset id="dsEditWfProcCd">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ WF0120_P02
+* 화면(명)	︰ 검토자 선택 팝업
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ SPP 워크플로우 검토자 선택 팝업
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.pIU = 'I';
+this.orgFuncTypeCd;			// 원본
+this.funcTypeCd	= '01';		// 01: 사용자선택, 02: 조건지정
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.pIU = this.getOwnerFrame().pIU||'I';
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+}
+
+// 조회
+this.fnSearch = function()
+{	
+}
+
+// 공통 저장 func.
+this.fnSave = function()
+{	
+}
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	if( Ex.isEmpty(varValue) )	return;
+
+	switch(pID)
+	{
+		case "selectUserPop" :	// 사용자선택
+			this.dsSelUser.loadXML(varValue);
+
+			for(var i = 0; i < this.dsSelUser.rowcount; i++)
+			{
+				this.dsSelUser.setColumn(i, 'CHK', '0');
+
+				var userId = this.dsSelUser.getColumn(i, 'USER_ID');
+				var duplRow = this.dsWfRver.findRow('USER_ID', userId);
+				if( duplRow < 0 )
+				{
+					var rowPos = this.dsWfRver.setAddRow();
+					this.dsWfRver.setCopyRow(rowPos, this.dsSelUser, i);
+					this.dsWfRver.setColumn(rowPos, 'FUNC_TYPE_CD', this.funcTypeCd);
+					this.dsWfRver.setColumn(rowPos, 'ESS_YN', '1');
+				}
+			}
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	if(!varValue)	return;
+
+	switch(mID)
+	{
+		case "selectConfirm" :	// 선택 확인
+			this.fnSelect();
+			break;
+
+		case "noCgerTotalRverAlert" :
+			this.divContent.form.tabFuncType.tab01.form.edtRverNum.setFocus();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.divContent.form.tabFuncType.tab01.form.grdReviewer.displayRowType();
+
+	this.fnGetCmmCd();
+
+	this.dsWfDt.loadXML(this.getOwnerFrame().dsWfDt);	// WorkFlow 단계 dataset
+	// 반려단계 선택용 현재 워크플로우 이전 단계 setting
+	var arrWfProcCd = this.getOwnerFrame().prevWfProcCd.split(',');
+
+	for(var i = 0; i < arrWfProcCd.length; i++)
+	{
+		var rowPos = this.dsRtrnWfProcCd.setAddRow();
+		this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD', arrWfProcCd[i]);
+		this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD_NM', this.dsWfDt.getColumn(this.dsWfDt.findRow('WF_PROC_CD', arrWfProcCd[i]), 'WF_PROC_NM')||Ex.core.word('등록') );
+	}
+
+	rowPos = this.dsRtrnWfProcCd.setAddRow();
+	this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD', "WF_PROC_9999");
+	this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD_NM', "완료");
+
+	for(var i = 0; i < arrWfProcCd.length; i++)
+	{
+		var rowPos = this.dsEditWfProcCd.setAddRow();
+		this.dsEditWfProcCd.setColumn(rowPos, 'CMM_CD', arrWfProcCd[i]);
+		this.dsEditWfProcCd.setColumn(rowPos, 'CMM_CD_NM', this.dsWfDt.getColumn(this.dsWfDt.findRow('WF_PROC_CD', arrWfProcCd[i]), 'WF_PROC_NM')||Ex.core.word('등록') );
+	}
+
+	var WF_PROC_CD	= this.getOwnerFrame().WF_PROC_CD||'';
+	var WF_FUNC_CD 	= this.getOwnerFrame().WF_FUNC_CD||'';
+	var WF_FUNC_NM 	= this.getOwnerFrame().WF_FUNC_NM||'';
+	this.funcTypeCd = this.getOwnerFrame().FUNC_TYPE_CD||'01';	// 검토자 지정 유형; 01: 사용자선택, 02:조건지정
+	this.orgFuncTypeCd = this.funcTypeCd;
+	var TOT_RVER	= this.getOwnerFrame().TOT_RVER||1;
+	
+	var dsData;
+	
+	trace("this.pIU.toUpperCase() : " + this.pIU.toUpperCase() + " WF_FUNC_NM : " + WF_FUNC_NM);
+
+	if(this.funcTypeCd == "01")
+	{
+		dsData	= this.getOwnerFrame().dsReqCgerDt||'';
+	}
+	else if(this.funcTypeCd == "02")
+	{
+		dsData	= this.getOwnerFrame().dsReqCgerSvcDt||'';
+	}
+
+	switch(this.pIU.toUpperCase())
+	{
+		case "I" :
+			this.divContent.form.edtName.set_value(Ex.core.word('검토') );	//검토자 명칭
+			this.divContent.form.cboRtrnWf.set_value(WF_PROC_CD);
+			break;
+
+		case "U" :
+			this.divContent.form.edtName.set_value(WF_FUNC_NM);		// 검토자 명칭
+			
+			dsData.set_filterstr("WF_PROC_CD=='" + WF_PROC_CD + "' && WF_FUNC_CD=='" + WF_FUNC_CD + "'");
+
+			if(this.funcTypeCd == "01")
+			{
+				// 검토자 setting
+				this.dsWfRver.set_enableevent(false);				
+
+				for(var i = 0; i < dsData.rowcount; i++)
+				{
+					var rowPos = this.dsWfRver.setAddRow();
+					this.dsWfRver.setCopyRow(rowPos, dsData, i);
+					this.dsWfRver.setColumn(rowPos, 'ROWFLAG', '');
+				}
+				this.dsWfRver.set_enableevent(true);
+			}
+			else if(this.funcTypeCd == "02")
+			{
+				// 기존 담당자 목록 copy
+				trace("dsData.rowcount : " + dsData.rowcount + " JAVA_SVC_NM : " + dsData.getColumn(0, "JAVA_SVC_NM"));
+				this.divContent.form.tabFuncType.tab02.form.edtSvcNm.set_value(dsData.getColumn(0, "JAVA_SVC_NM"));
+			}
+
+			var EDIT = this.getOwnerFrame().EDIT||'';
+			if( !Ex.isEmpty(EDIT) )	this.divContent.form.mcboScreenEdit.set_value(EDIT);
+
+			// 반려 단계 setting
+			var RTRN = this.getOwnerFrame().RTRN||'';
+			if( !Ex.isEmpty(RTRN) )	this.divContent.form.cboRtrnWf.set_value(RTRN);
+			else					this.divContent.form.cboRtrnWf.set_value(WF_PROC_CD);
+
+			// tab index setting
+			switch(this.funcTypeCd)
+			{
+				case "01" :	this.divContent.form.tabFuncType.set_tabindex(0);	break;
+				case "02" :	this.divContent.form.tabFuncType.set_tabindex(1);	break;
+			}
+			break;
+	}
+	
+	if(this.funcTypeCd == "01")
+	{
+		trace("TOT_RVER ::: " + TOT_RVER);
+		// 검토자 수 setting
+		this.divContent.form.tabFuncType.tab01.form.edtRverNum.set_value(TOT_RVER||this.dsWfRver.rowcount||1);
+	}
+	this.divContent.form.tabFuncType.set_visible(true);
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['CGER_TYPE_CD']		// 조회할 상위코드
+		,codeDiv: ['WORKFLOW_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['NO']				// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y']					// 사용여부
+		,filter	: ['']					// filterStr
+		,objDs	: [this.dsFuncTypeCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+this.fnCheckValidate = function()
+{
+	switch(this.funcTypeCd)
+	{
+		case "01" :
+			var nRow = this.dsWfRver.getCaseCount("ROWFLAG != 'D'");	// 적용할 row 수
+			var nRver = this.divContent.form.tabFuncType.tab01.form.edtRverNum.value;	// 총 검토 수
+
+			if(nRow == 0)
+			{	// 검토자수 0이면 error
+				var param = {
+						id : "noCgerZeroAlert"
+					  , msg : "10011"
+					  , arrparam : [Ex.core.word('검토자')]
+					  , msgtype : "I"
+				};
+				Ex.core.alert(this, param);
+				return false;
+			}
+			else
+			{	// 검토자 있을 때
+				if( Ex.isEmpty(nRver) || nRver == 0 )
+				{	// 총 검토수 0 이면 error
+					var param = {
+						id : "noCgerTotalRverAlert"
+					  , msg : "10012"
+					  , arrparam : [Ex.core.word('총 검토 수')]
+					  , msgtype : "I"
+					};
+					Ex.core.alert(this, param);
+					return false;
+				}
+
+				var nRowEssential = this.dsWfRver.getCaseCount("ROWFLAG != 'D' && ESS_YN == '1'");
+				if( nRowEssential > nRow )
+				{	// 필수검토보다 총 검토가 작으면 error
+					var param = {
+						id : "noCgerEssAlert"
+					  , msg : "10012"
+					  , arrparam : [Ex.core.word('검토자')]
+					  , msgtype : "I"
+					};
+					Ex.core.alert(this, param);
+					return false;
+				}
+			}
+
+			if(nRver > nRow)
+			{	// 총 검토가 검토자수보다 많으면 error
+				var param = {
+					id : "rverNumAlert"
+				  , msg : "10012"
+				  , arrparam : [Ex.core.word('총') + ' ' + Ex.core.word('검토') + ' ' + Ex.core.word('수')]
+				  , msgtype : "I"
+				};
+				Ex.core.alert(this, param);
+				return false;
+			}
+			break;
+
+		case "02" :
+			// component validation
+			if( !Ex.util.checkValidate(this.divContent.form.tabFuncType.tab02, "fvValiCmp") )	return false;
+				break;
+	}
+	return true;
+}
+
+// 선택
+this.fnSelect = function()
+{
+	var strRtn =	this.funcTypeCd + ";;";													//검토자 지정 구분
+		strRtn +=	this.divContent.form.edtName.value + ';;';								//표기명칭
+
+	if(this.funcTypeCd == "01")
+	{
+		strRtn +=	this.divContent.form.tabFuncType.tab01.form.edtRverNum.value + ';;' + 	//검토자수
+					this.dsWfRver.saveXML() + ';;';											//검토자 dataset
+	}
+	else if(this.funcTypeCd == "02")
+	{
+		strRtn +=	this.divContent.form.tabFuncType.tab02.form.edtSvcNm.value + ';;';		//JAVA SVC명
+	}
+	
+	strRtn += this.divContent.form.cboRtrnWf.value + ";;";									//반려 시 워크플로우 단계
+	
+	strRtn += this.divContent.form.mcboScreenEdit.value;									//수정 가능 워크플로우 단계
+
+	//trace("strRtn:\n" + strRtn);
+	Ex.core.pclose(this, strRtn);
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnAdd" :
+			var pSelType = 'M';	// 'S' : single select || 'M' : multi select
+			Ex.core.popup(
+				this,
+				'selectUserPop',
+				"fomm::FOMM0000_P01.xfdl",             	// <--- 팝업창 오픈 Url
+				{
+					title		: Ex.core.word('사용자') + ' ' + Ex.core.word('선택'),
+					pSelType	: pSelType
+				},										// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"width=900,height=500"                  // <--- width/height/modeless(프레임 처리 옵션)							
+			);
+			break;
+
+		case "btnDelete" :
+			this.fnDelete(this.dsWfRver);
+			break;
+
+		case "btnClose" :			// 닫기
+			Ex.core.pclose(this);
+			break;
+			
+		case "btnSelect" :		// 선택
+			if( !this.fnCheckValidate() ) return;
+			
+			var msg = "";
+			var strParam = this.dsFuncTypeCd.getColumn(this.dsFuncTypeCd.findRow('CMM_CD', this.funcTypeCd), 'CMM_CD_NM');
+			var strParam2 = this.dsFuncTypeCd.getColumn(this.dsFuncTypeCd.findRow('CMM_CD', (this.funcTypeCd == "01" ? "02" : "01")), 'CMM_CD_NM');
+			
+			if(this.pIU == "U")
+			{
+				if(this.funcTypeCd != this.orgFuncTypeCd)
+				{
+					msg = "기존에 지정한 " + Ex.core.word("검토자") + " " +
+						  "[" + strParam2 + "] 내역은\n삭제하고 " +
+						  Ex.core.word("검토자") + " [" + strParam + "]을 처리합니다.\n\n";
+				}
+			}
+
+			var param = {
+				  id : "selectConfirm"
+				, msg : "10008"
+				, arrparam : [msg + Ex.core.word("검토자") + " " + Ex.core.word(strParam) + " "]
+				, msgtype : "I"
+			};
+			Ex.core.confirm(this, param);
+			//this.fnSelect();
+			break;
+	}
+}
+
+this.divContent_tabFuncType_onchanged = function(obj:nexacro.Tab,e:nexacro.TabIndexChangeEventInfo)
+{
+	switch(e.postindex)
+	{
+		case 0 :	this.funcTypeCd = '01';	break;	// 사용자선택
+		case 1 :	this.funcTypeCd = '02';	break;	// 조건 지정
+	}
+};
+
+this.dsWfRver_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};]]></Script>
+    <Bind>
+      <BindItem id="item1" compid="divContent.form.tabFuncType.tab01.form.stcBg01_00" propid="value" datasetid="dsFommUserMt" columnid="USER_ID"/>
+      <BindItem id="item2" compid="divContent.form.stcBg01_00" propid="value" datasetid="dsFommUserMt" columnid="USER_ID"/>
+    </Bind>
+  </Form>
+</FDL>

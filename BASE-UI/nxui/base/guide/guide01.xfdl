@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="compGuide" position="absolute" titletext="기본 컴포넌트" onload="form_onload" left="0" top="0" width="1840" height="720">
+    <Layouts>
+      <Layout>
+        <Combo id="Combo00" taborder="0" text="Combo00" left="40" top="50" width="120" height="24" cssclass="cbo_WF_normal" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsTemp"/>
+        <Static id="Static00" taborder="1" text="Componenet" left="40" top="15" width="120" height="24"/>
+        <Static id="Static00_00" taborder="2" text="css class" left="345" top="15" width="120" height="24"/>
+        <Static id="Static01" taborder="3" text="H:24" left="5" top="50" width="30" height="24" border="1px dotted red, 0px, 1px dotted red, 1px dotted red"/>
+        <Edit id="Edit00" taborder="4" left="345" top="50" width="150" height="24" readonly="true" cssclass="edt_WF_normal" value="cbo_WF_normal" text="cbo_WF_normal"/>
+        <Static id="Static01_00" taborder="5" text="H:24" left="5" top="80" width="30" height="24" border="1px dotted red, 0px, 1px dotted red, 1px dotted red"/>
+        <Edit id="Edit00_00" taborder="6" left="345" top="80" width="150" height="24" readonly="true" cssclass="edt_WF_normal" value="edt_WF_normal" text="edt_WF_normal"/>
+        <Edit id="Edit01" taborder="7" left="40" top="80" width="120" height="24" cssclass="edt_WF_normal"/>
+        <Static id="Static00_00_00" taborder="8" text="Component Name" left="190" top="15" width="120" height="24"/>
+        <Edit id="Edit00_01" taborder="9" left="190" top="50" width="150" height="24" readonly="true" cssclass="edt_WF_normal" value="Combo" text="Combo"/>
+        <Edit id="Edit00_01_00" taborder="10" left="190" top="80" width="150" height="24" readonly="true" cssclass="edt_WF_normal" value="Edit" text="Edit" visible="true"/>
+        <Static id="Static01_00_00" taborder="11" text="H:24" left="5" top="110" width="30" height="24" border="1px dotted red, 0px, 1px dotted red, 1px dotted red"/>
+        <Edit id="Edit00_00_00" taborder="12" left="345" top="110" width="150" height="24" readonly="true" cssclass="edt_WF_normal" value="msk_WF_normal" text="msk_WF_normal"/>
+        <Edit id="Edit00_01_00_00" taborder="13" left="190" top="110" width="150" height="24" readonly="true" cssclass="edt_WF_normal" value="MaskEdit" text="MaskEdit" visible="true"/>
+        <MaskEdit id="MaskEdit00" taborder="14" left="40" top="110" width="120" height="24" cssclass="msk_WF_normal"/>
+        <TextArea id="TextArea00" taborder="15" left="40" top="140" width="120" height="45" cssclass="txa_WF_normal"/>
+        <Edit id="Edit00_00_00_00" taborder="16" left="345" top="140" width="150" height="24" readonly="true" cssclass="edt_WF_normal" value="txa_WF_normal" text="txa_WF_normal"/>
+        <Edit id="Edit00_01_00_00_00" taborder="17" left="190" top="140" width="150" height="24" readonly="true" cssclass="edt_WF_normal" value="TextArea" text="TextArea" visible="true"/>
+        <Radio id="Radio00" taborder="18" left="40" top="200" width="120" height="24" innerdataset="dsTemp" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" direction="vertical" padding="0px 5px 0px 5px" cssclass="rdo_WF_normal"/>
+        <Static id="Static01_00_00_00" taborder="19" text="H:24" left="5" top="200" width="30" height="24" border="1px dotted red, 0px, 1px dotted red, 1px dotted red"/>
+        <Edit id="Edit00_01_00_00_00_00" taborder="20" left="190" top="200" width="150" height="24" readonly="true" cssclass="edt_WF_normal" value="Radio" text="Radio" visible="true"/>
+        <Edit id="Edit00_00_00_00_00" taborder="21" left="345" top="200" width="150" height="24" readonly="true" cssclass="edt_WF_normal" value="rdo_WF_normal" text="rdo_WF_normal"/>
+        <CheckBox id="CheckBox00" taborder="22" text="CheckBox00" left="40" top="230" width="120" height="24" cssclass="chk_WF_normal"/>
+        <Static id="Static01_00_00_00_00" taborder="23" text="H:24" left="5" top="230" width="30" height="24" border="1px dotted red, 0px, 1px dotted red, 1px dotted red"/>
+        <Edit id="Edit00_01_00_00_00_00_00" taborder="24" left="190" top="230" width="150" height="24" readonly="true" cssclass="edt_WF_normal" value="CheckBox" text="CheckBox" visible="true"/>
+        <Edit id="Edit00_00_00_00_00_00" taborder="25" left="345" top="230" width="150" height="24" readonly="true" cssclass="edt_WF_normal" value="chk_WF_normal" text="chk_WF_normal"/>
+        <Calendar id="Calendar00" taborder="26" left="40" top="260" width="120" height="24" cssclass="cal_WF_normal"/>
+        <Edit id="Edit00_01_00_00_00_00_00_00" taborder="27" left="190" top="260" width="150" height="24" readonly="true" cssclass="edt_WF_normal" value="Calendar" text="Calendar" visible="true"/>
+        <Edit id="Edit00_00_00_00_00_00_00" taborder="28" left="345" top="260" width="150" height="24" readonly="true" cssclass="edt_WF_normal" value="cal_WF_normal" text="cal_WF_normal"/>
+        <Static id="Static01_00_00_00_00_00" taborder="29" text="H:24" left="5" top="260" width="30" height="24" border="1px dotted red, 0px, 1px dotted red, 1px dotted red"/>
+        <TextArea id="TextArea00_00" taborder="30" left="520" top="20" readonly="true" value="기본 컴포넌트 가이드 (guide::guide01.xfdl)&#10;&#10;아래 기본 컴포넌트에 대한 디자인 가이드&#10;- Combo&#10;- Edit&#10;- MaskEdit&#10;- TextArea&#10;- Radio&#10;- CheckBox&#10;- Calendar&#10;&#10;SPP의 컴포넌트는 모두 cssclass를 사용하도록 한다. (컴포넌트 접두어_WF_noraml)&#10;- Ex: edt_WF_normal&#10;&#10;입력 컴포넌트의 경우, textarea 등 높이 설정이 필요한 컴포넌트 제외 일반적인 경우 높이는 24px로 설정한다.&#10;" right="20" bottom="20" onchanged="TextArea00_00_onchanged"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsTemp">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CMM_CD">code01</Col>
+            <Col id="CMM_CD_NM">값1</Col>
+          </Row>
+          <Row>
+            <Col id="CMM_CD">code02</Col>
+            <Col id="CMM_CD_NM">값2</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ Component Guide
+* 메뉴(경로)	︰ Component Guide
+* 화면 설명	︰ Component Guide
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	trace("workArea form init call");
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	this.Tab00.tabpages[this.Tab00.tabindex].fnSearch(op);
+}
+
+// 저장
+this.fnSave = function()
+{
+	
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "ABOUT" : // 서비스 ID
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+
+]]></Script>
+  </Form>
+</FDL>

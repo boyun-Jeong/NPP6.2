@@ -1,0 +1,401 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM0530_W" left="0" top="0" width="1840" height="720" onload="form_onload" titletext="문자발송이력">
+    <Layouts>
+      <Layout width="1840" height="720">
+        <Static id="Static21" taborder="1" text="문자발송이력" cssclass="sta_WF_gridTitle" left="0" top="100" width="130" height="24"/>
+        <Grid id="grdMainList" taborder="3" binddataset="dsFOMM_SMSTRAN_MT" cellsizingtype="col" autofittype="col" left="0" top="134" right="0" bottom="0" cssclass="grd_WF_normal" autoupdatetype="none" onlbuttondown="grdOnCellClick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="48" band="left"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="102"/>
+                <Column size="80"/>
+                <Column size="193"/>
+                <Column size="358"/>
+                <Column size="57"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="40" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" text="전송번호"/>
+                <Cell col="2" text="수신자이름"/>
+                <Cell col="3" text="수신자&#13;&#10;전화번호"/>
+                <Cell col="4" text="발신자사번"/>
+                <Cell col="5" text="메시지제목"/>
+                <Cell col="6" text="메시지내용"/>
+                <Cell col="7" text="메시지&#13;&#10;타입"/>
+                <Cell col="8" text="발송등록일시"/>
+                <Cell col="9" text="발송완료일시"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="expr:currow+1"/>
+                <Cell col="1" text="bind:TRAN_SQNO"/>
+                <Cell col="2" combodataset="dsMNG_Deptcd" combocodecol="DEPT_CD" combodatacol="DEPT_NM" text="bind:TO_NAME"/>
+                <Cell col="3" text="bind:TO_PHONE" combodataset="dsUse_YN" combocodecol="CARD_STATUS_CD" combodatacol="CARD_STATUS_CD_NM" textAlign="center"/>
+                <Cell col="4" maskedittype="number" calendardateformat="yyyy-MM-dd" text="bind:FROM_ID" textAlign="center"/>
+                <Cell col="5" maskedittype="string" maskeditformat="##:##" text="bind:SUBJECT" textAlign="left"/>
+                <Cell col="6" text="bind:CONTENT" textAlign="left"/>
+                <Cell col="7" text="bind:MSG_TYPE"/>
+                <Cell col="8" text="bind:REG_DATE"/>
+                <Cell col="9" text="bind:SEND_TIME"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static00_01" taborder="0" left="0" top="80" height="20" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_00_00" taborder="2" left="0" top="124" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divGrdBotBtn" taborder="4" width="200" height="32" bottom="0" right="0">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Static id="sta_listCnt" taborder="5" left="Static21:5" top="70" width="55" height="21" countDataset="dsVendor"/>
+        <Div id="divSearch" taborder="6" left="0" top="0" right="0" height="80" scrollbars="none" cssclass="div_WF_divSearchArea" text="">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="5" text="메시지제목" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="1.09%" top="39" width="85" height="24"/>
+              <Edit id="edtSUBJECT" taborder="6" left="stcTitle:0.00" top="39" width="283" height="24" cssclass="edt_WF_normal" onkeyup="fnCommOnkeyup"/>
+              <Static id="Static00_00_01" taborder="19" left="edtSUBJECT:0.00" top="0" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" bottom="0"/>
+              <Static id="stcContent" taborder="7" text="메시지내용" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_01:0.00" top="39" width="85" height="24"/>
+              <Edit id="edtContent" taborder="8" left="stcContent:0" top="39" width="200" height="24" cssclass="edt_WF_normal" onkeyup="fnCommOnkeyup"/>
+              <Static id="Static00_00_01_00" taborder="20" left="edtContent:0" top="0" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" bottom="0"/>
+              <Static id="stcTO_NAME" taborder="0" text="수신자이름" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_01_00:0.00" top="39" width="90" height="24"/>
+              <Static id="Static00_00_00" taborder="2" left="407.00" top="13" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="Static00_00" taborder="1" left="0" top="0" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Button id="btnSearchReset" taborder="3" top="13" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+              <Button id="btnSearch" taborder="4" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Edit id="edtTO_NAME" taborder="9" left="stcTO_NAME:0" top="39" width="130" height="24" cssclass="edt_WF_normal" onkeyup="fnCommOnkeyup"/>
+              <Static id="stcTerm" taborder="8" text="기간" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="21.00" top="13" width="85" height="24"/>
+              <Calendar id="calBeginDate" taborder="9" left="stcTerm:0" top="12" width="130" height="24" cssclass="cal_WF_normal" readonly="false" enable="true" visible="true" onkeyup="fnCommOnkeyup"/>
+              <Static id="Static01_00" taborder="10" text="~" left="calBeginDate:0" top="12" width="18" height="24" textAlign="center" verticalAlign="middle" visible="true"/>
+              <Calendar id="calEndDate" taborder="11" left="Static01_00:0" top="12" width="135" height="24" cssclass="cal_WF_normal" readonly="false" enable="true" visible="true" onkeyup="fnCommOnkeyup"/>
+              <Combo id="cboDateSearchType" taborder="12" width="130" height="24" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" cssclass="cbo_WF_normal" left="calEndDate:2" top="12" visible="true" index="-1" text="- 선택 -" value="당일" enable="true" innerdataset="dsDateSearchType"/>
+              <Static id="stcFROM_ID" taborder="15" text="발신자사번" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="Static00_00_01_00:0.00" top="13" width="90" height="24"/>
+              <Edit id="edtFROM_ID" taborder="16" left="stcFROM_ID:0" top="12" width="130" height="24" cssclass="edt_WF_normal" onkeyup="fnCommOnkeyup"/>
+              <Static id="stcTO_PHONE" taborder="18" text="수신자전화번호" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle" left="edtTO_NAME:30" top="40" width="113" height="24"/>
+              <Edit id="edtTO_PHONE" taborder="17" left="stcTO_PHONE:0" top="40" width="130" height="24" cssclass="edt_WF_normal" onkeyup="fnCommOnkeyup"/>
+            </Layout>
+          </Layouts>
+          <InitValue/>
+        </Div>
+        <Div id="divGrdTopBtn" taborder="7" width="425" visible="true" isButtonGroup="true" top="99" right="0" text="" height="24">
+          <Layouts>
+            <Layout>
+              <Button id="btnExcelDown" taborder="1" text="엑셀" top="0" width="60" cssclass="btn_WF_excelDown" onclick="fnCommOnclick" height="24" visible="false" right="3"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="stcFommNotiMngMtCnt" taborder="8" left="Static21:0" top="100" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsFOMM_SMSTRAN_MT"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="START_DATE" type="STRING" size="256"/>
+          <Column id="END_DATE" type="STRING" size="256"/>
+          <Column id="DateSearchType" type="STRING" size="256"/>
+          <Column id="SUBJECT" type="STRING" size="256"/>
+          <Column id="CONTENT" type="STRING" size="256"/>
+          <Column id="FROM_ID" type="STRING" size="256"/>
+          <Column id="TO_NAME" type="STRING" size="256"/>
+          <Column id="TO_PHONE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsFOMM_SMSTRAN_MT" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="TRAN_SQNO" type="STRING" size="256"/>
+          <Column id="TO_NAME" type="STRING" size="256"/>
+          <Column id="TO_PHONE" type="STRING" size="256"/>
+          <Column id="FROM_ID" type="STRING" size="256"/>
+          <Column id="SUBJECT" type="STRING" size="256"/>
+          <Column id="CONTENT" type="STRING" size="256"/>
+          <Column id="MSG_TYPE" type="STRING" size="256"/>
+          <Column id="REG_DATE" type="STRING" size="256"/>
+          <Column id="SEND_TIME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsDateSearchType">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CMM_CD_NM">발송완료일시</Col>
+            <Col id="CMM_CD">S</Col>
+          </Row>
+          <Row>
+            <Col id="CMM_CD_NM">발송등록일시</Col>
+            <Col id="CMM_CD">R</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ FOMM0530_W
+* 화면(명)	︰ 문자발송이력
+* 메뉴(경로)	︰ 관리자 > 통지관리 > 문자발송이력
+* 화면 설명	︰ 문자발송이력 추가 수정 삭제
+* 작성자		︰ 김호일
+* 작성일		︰ 2025.02.26
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일          작성자     		이력
+*------------------------------------------------------------------
+* 2025.02.26	김호일			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화	
+	this.fnSearch();		// 조회
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+	
+	var fromDt = Ex.util.getMaskFormatString(Ex.util.addDate(Ex.util.strToDate(Ex.util.today()), -1), "yyyyMMdd");
+	this.dsCond.setColumn(0, "START_DATE",	fromDt);
+	this.dsCond.setColumn(0, "END_DATE",	Ex.util.today());
+	this.dsCond.setColumn(0, "DateSearchType",	'S');
+	
+	this.divSearch.form.edtSUBJECT.value = "";
+	this.divSearch.form.edtContent.value = "";
+	this.divSearch.form.edtFROM_ID.value = "";
+	this.divSearch.form.edtTO_NAME.value = "";
+	this.divSearch.form.edtTO_PHONE.value = "";
+}
+
+this.fnSearch = function()
+{
+	var sTranId = "select01";				// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0530W/select01";	// 서비스명
+    var sInDs = "dsCond=dsCond";			// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsFOMM_SMSTRAN_MT=dsFOMM_SMSTRAN_MT";	// 서버에서 수신할 데이타셋
+    var sArg = "";							// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+// 공통 저장 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+// this.fnDelete = function(objDs:Dataset)
+// {
+// 	objDs.set_enableevent(false);
+// 	objDs.set_filterstr("CHK=='1'");
+// 	
+// 	for(var i = objDs.rowcount-1; i >= 0; i--) objDs.setDeleteRow(i);
+// 		
+// 	objDs.set_filterstr("");
+// 	objDs.set_enableevent(true);
+// }
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			this.grdMainList.setCellProperty("Head", this.grdMainList.getBindCellIndex('Body', 'CHK'), "text", "0");
+			//alert(this.grdMainList.setCellProperty("body",0,"readonly",true));
+			//alert(this.grdMainList.setCellProperty("body",1,"readonly",true));
+			//this.grdMainList.setFormatRowProperty(0,"readonly",true);
+			break;
+
+// 		case "save01" :
+// 			Ex.core.toast(this, "10004", null, {toastType:'S'});
+// 			this.grdMainList.setCellProperty("Head", this.grdMainList.getBindCellIndex('Body', 'CHK'), "text", "0");
+// 			break;	
+			
+// 		case "select02" :
+// 			
+// 			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "AAAAAA" :
+			trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)	this.dsPopRtn.loadXML(varValue);
+			/*
+			trace("제조업체정보 팝업 선택 리턴");
+			trace("VENDOR_ID : " + rtn.pVENDOR_ID);
+			trace("VENDOR_NM : " + rtn.pVENDOR_NM);
+			trace("VD_M_TEL_NUM : " + rtn.pVD_M_TEL_NUM);
+			trace("VD_DESC : " + rtn.pVD_DESC);
+			trace("USE_YN : " + rtn.pUSE_YN);
+			*/
+		break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO alertCard_No
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "searchConfirm" :
+			this.fnSearch();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.fnSearchReset();
+	
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.grdMainList.displayRowType();
+
+	// 공통코드 조회
+	//this.fnGetCmmCd();
+	
+	// 버튼&권한 mapping && visible 처리
+
+	var	arrBtn = [this.divGrdTopBtn.form.btnExcelDown];	// 엑셀
+	Ex.util.setBtnVisible(this, 'exclDown', arrBtn);
+	
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divGrdTopBtn, 'right', true);
+	Ex.util.setBtnAlign(this.divGrdBotBtn, 'right', true);
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+// 	//cboIMP_LOC_CD 출입장소 코드, cboCARD_INOUT_CD 반납여부
+// 	var oParam = {
+// 		upCmmCd : ['IMP_LOC_CD' ,'CARD_INOUT_CD']		// 조회할 상위코드
+// 		,codeDiv: ['' ,'']							// 조회할 코드의 업무구분
+// 		,optStr	: ['ALL' 		,'ALL']				// ALL: '- 전체 -'; SEL: '- 선택 -'
+// 		,useYn	: ['Y' 			,'Y']				// 사용여부
+// 		,filter	: ['' 			,'']				// filterStr
+// 		,objDs	: [this.dsLmpLocCd,this.dsCardInoutCd]// copy dataset
+// 	}
+// 	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearch" :		// 검색
+			if(Ex.util.isUpdated(this.dsSR_CARD_USE_MT))
+			{
+				var param = {
+						id : "searchConfirm"
+					  , msg : "변경사항을 취소하고 계속 조회를 잔행 하시겠습니까?"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);				
+			}
+			else
+			{
+				this.fnSearch();
+			}
+			break;
+		
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;
+			
+		case "btnExcelDown" :	// 엑셀다운
+			var oInfo = {
+   				Grid	: [this.grdMainList],
+   				Sheet	: [this.getOwnerFrame().info.menuNm],
+   				FileNm	: [this.getOwnerFrame().info.menuNm],
+   				ExportType : "XLSX",
+   				ExportId : "excel01"
+   			};
+			this.gfnExportExcel(this, oInfo);
+			break;
+	}
+}
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+this.cboOnItemChanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	
+};]]></Script>
+    <Bind>
+      <BindItem id="item1" compid="divSearch.form.edtSUBJECT" propid="value" datasetid="dsCond" columnid="SUBJECT"/>
+      <BindItem id="item2" compid="divSearch.form.edtContent" propid="value" datasetid="dsCond" columnid="CONTENT"/>
+      <BindItem id="item3" compid="divSearch.form.edtTO_NAME" propid="value" datasetid="dsCond" columnid="TO_NAME"/>
+      <BindItem id="item4" compid="divSearch.form.cboDateSearchType" propid="value" datasetid="dsCond" columnid="DateSearchType"/>
+      <BindItem id="item7" compid="divSearch.form.calBeginDate" propid="value" datasetid="dsCond" columnid="START_DATE"/>
+      <BindItem id="item8" compid="divSearch.form.calEndDate" propid="value" datasetid="dsCond" columnid="END_DATE"/>
+      <BindItem id="item9" compid="divSearch.form.edtFROM_ID" propid="value" datasetid="dsCond" columnid="FROM_ID"/>
+      <BindItem id="item10" compid="divSearch.form.edtTO_PHONE" propid="value" datasetid="dsCond" columnid="TO_PHONE"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="frHome" classname="" inheritanceid="" left="0" top="0" width="1920" height="800" titletext="농협손보 Home" onload="frHome_onload">
+    <Layouts>
+      <Layout width="1920" height="800">
+        <Static id="Static00_00_00_00_00_00" taborder="8" left="1415" top="0" background="rgba(140, 125, 200, 0.3)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+        <Div id="divMyTask" taborder="0" top="0" bottom="0" url="Frame::frHome_D00.xfdl" left="1435" width="445" text=""/>
+        <Div id="divWidget05" taborder="5" left="885.00" top="270" cssclass="div_HOME_border" height="250" width="530" url="mainWidget::nhsb_D02.xfdl" text=""/>
+        <Static id="Static00_00" taborder="4" left="0" top="260" height="10" background="rgba(140, 125, 200, 0.3)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="485" onclick="Static00_00_onclick"/>
+        <Static id="Static00" taborder="3" left="0" top="0" height="10" background="rgba(140, 125, 200, 0.3)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="485"/>
+        <Div id="divWidget02" taborder="2" left="688.00" top="10" cssclass="div_HOME_border" height="250" width="728" url="mainWidget::nhsb_D00.xfdl"/>
+        <Div id="divHomeLogo" taborder="1" left="40.00" top="10" background="url('theme://NHSB_IMAGE_SET/HOME/main-img03.png') no-repeat left top /contain" borderRadius="10px 10px" height="250" width="628">
+          <Layouts>
+            <Layout>
+              <Static id="stcMainGbn" taborder="0" left="72" top="146" width="80" height="27" text="IT부문" color="white" font="18px 'KoPubL'" textAlign="center" verticalAlign="middle"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00_00_00" taborder="6" left="0" top="0" background="rgba(140, 125, 200, 0.3)" text="40" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="40" bottom="0"/>
+        <Static id="Static00_00_01" taborder="7" left="0" top="520" height="10" background="rgba(140, 125, 200, 0.3)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="485"/>
+        <Static id="Static00_00_00_01" taborder="9" top="0" background="rgba(140, 125, 200, 0.3)" text="40" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="40" bottom="0" right="0"/>
+        <Static id="Static00_00_00_02" taborder="10" left="0" top="780" background="rgba(140, 125, 200, 0.3)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" height="20" right="0"/>
+        <Div id="divWidget" taborder="11" left="40.00" top="530" height="250" text="" width="1375"/>
+        <Div id="divWidget05_01" taborder="12" left="40.00" top="270" height="250" text="" width="825">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Button id="btnSend" taborder="13" text="실시간 알림 발송" width="130" height="32" cssclass="btn_WF_primary_save" onclick="fnCommOnclick" visible="false" left="50" top="218"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsBoardNtcPop"/>
+      <Dataset id="dsCondBoard">
+        <ColumnInfo>
+          <Column id="BOARD_TYPE_CD" type="STRING" size="256"/>
+          <Column id="POST_YN" type="STRING" size="256"/>
+          <Column id="POP_YN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="BOARD_TYPE_CD">NTC</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ Frame Home
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	WEMB		최초작성 - 메인화면은 left, right, bottom의 margin 처리를 공통에서 잡지 않고 별도로 처리함.
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.sendMenuId	= 1033;
+this.objApp = nexacro.getApplication();
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+//Form onload 이벤트
+this.frHome_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	var userId = Ex.util.getSession('gvUserId');
+	if(!userId.startsWith("P") && !userId.startsWith("e"))
+	{
+		if(Ex.util.getSession('gvDeptCd') == "96655")
+		{
+			var fRow = nexacro.getApplication().gdsMenu.findRow("MENU_ID", this.sendMenuId);
+			if(fRow >- 1)
+			{
+				this.btnSend.set_visible(true);
+			}
+		}
+	}
+	
+	// HOME Frame 권한 강제설정
+	if(Ex.isEmpty(this.getOwnerFrame().info) )
+	{
+		this.getOwnerFrame().info = {
+				readYn			: 'Y'
+			  , writeYn			: 'Y'
+			  , deleteYn		: 'Y'
+			  , saveYn			: 'Y'
+			  , exclDownYn		: 'Y'
+			  , reportPrntYn	: 'Y'
+			  , fileUpYn		: 'Y'
+		}
+	};
+	
+	// 메인화면 Div 분기
+	var userFlag = Ex.util.getSession('gvUserFlag');
+	if( userFlag == '1' ) {
+		this.divHomeLogo.form.stcMainGbn.set_text('IT부문');		// 메인 이미지 test
+		
+		// 현업 내 요청건
+		this.divWidget05_01.set_url('mainWidget::nhsb_D20.xfdl');	// 나의 할일
+		
+		// IT부문 Bottom
+		this.divWidget.set_cssclass('div_HOME_border');
+		this.divWidget.set_url('mainWidget::nhsb_D22.xfdl');
+	}
+	else { 
+		this.divHomeLogo.form.stcMainGbn.set_text('현업');	// 메인 이미지 test
+		
+		// 현업 내 요청건
+		this.divWidget05_01.set_url('mainWidget::nhsb_D10.xfdl');	// 내 요청건
+		
+		// 현업 Bottom
+		this.divWidget.set_cssclass('');
+		this.divWidget.set_url('mainWidget::nhsb_D11.xfdl');
+	}
+	
+	this.fnSearch();
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+ // Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0)
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "selectNtcPop" : // 팝업공지조회 callback
+			this.fnOpenNtcPop();
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+    if(!varValue) return;
+    
+    switch(mID)
+    {
+		case "deptNotExistAlert" :
+			Ex.core.popup(
+				this,						// <--- 팝업 실행 스코프
+				"userInfoPop",					// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"fomm::FOMM0000_P02.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					  title 	: "나의 정보 관리"
+					, pUserId	: Ex.util.getSession('gvUserId')
+					, pPopType	: 'U'
+					, pEscYn	: 'N'	// esc 키로 닫는 것 차단
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"autosize"	// <--- width/height/modeless(프레임 처리 옵션)							
+			);
+		break;
+    }
+};
+
+/***********************************************************************************
+* Common Function
+***********************************************************************************/
+this.fnSearch = function()
+{
+	this.fnActiveSearch();
+}
+
+
+// fnActiveSearch :: HOME으로 이동할 떄마다 호출
+this.fnActiveSearch = function()
+{
+	this.fnSearchNtcPop();		// 팝업공지 조회
+	
+	// 우측 div 검색
+	if(this.divMyTask.form.fnSearch)
+		this.divMyTask.form.fnSearch();
+	
+	// 상
+	if(this.divWidget02.form.fnSearch)
+		this.divWidget02.form.fnSearch();
+	
+	// 중-좌
+	if(this.divWidget05_01.form.fnSearch)
+		this.divWidget05_01.form.fnSearch();
+		
+	// 중-우
+	if(this.divWidget05.form.fnSearch)
+		this.divWidget05.form.fnSearch();
+		
+	//하
+	if(this.divWidget.form.fnSearch)
+		this.divWidget.form.fnSearch();
+	
+	if( Ex.isEmpty(Ex.util.getSession('gvDeptCd')) )
+	{
+		var param = {
+			  id    : "deptNotExistAlert"   //fnMsgAfter에서 식별자로 사용되는 ID
+			, msg   : "소속팀이 존재하지 않습니다."//메시지 내용
+			, arrparam : [""]               //메시지의 변수에 들어갈 실제값
+			, msgtype : "I"                 //메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+		};
+		Ex.core.alert(this, param);
+		return false;
+	}
+}
+
+this.fnSearchNtcPop = function()
+{
+	this.dsCondBoard.setColumn(this.dsCondBoard.rowposition, 'BOARD_TYPE_CD', 'NTC');
+	this.dsCondBoard.setColumn(this.dsCondBoard.rowposition, 'POST_YN', 'Y');
+	this.dsCondBoard.setColumn(this.dsCondBoard.rowposition, 'POP_YN', 'Y');
+	
+	var sTranId = "selectNtcPop";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0210W/select01";            // 서비스명
+    var sInDs = "dsCond=dsCondBoard";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsBoardNtcPop=dsBoardMt";       	// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+/***********************************************************************************
+* User Function
+***********************************************************************************/
+this.fnOpenNtcPop = function()
+{
+	for(var i = this.dsBoardNtcPop.rowcount-1; i >= 0; i--) 
+	{
+		var POP_YN = this.dsBoardNtcPop.getColumn(i, 'POP_YN')||'';
+		if( POP_YN != 'Y' )		continue;
+		
+		var BOARD_NO = this.dsBoardNtcPop.getColumn(i, 'BOARD_NO');
+		var USER_ID	= Ex.util.getSession('gvUserId');
+		var key = 'SppNtcPop|'+BOARD_NO+'|'+USER_ID;
+		var value = Ex.util.getStoredItem(key);
+		
+		if( !Ex.isEmpty(value) ) {		// 값이 있으면
+			var today = Ex.util.today();
+			if(Ex.util.getDiffDay(today, value) == 0) {		// 안보기 날짜가 안지났으면 skip
+				continue;
+			}
+			else {			// 안보기 날짜가 지났으면 초기화 후 팝업 호출
+				Ex.util.clearStoredItem(key);
+			}
+		}
+		
+		Ex.core.popup(this,
+			'noticePop_'+BOARD_NO,
+			"fomm::FOMM0210_P01.xfdl",             		// <--- 팝업창 오픈 Url
+			{ title			: '공지사항 상세',
+			  pPopType		: 'R',
+			  pNtcPopYn		: 'Y',
+			  pBoardNo		: BOARD_NO
+			},     	// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			"width=1400,height=750"                  // <--- width/height/modeless(프레임 처리 옵션)							
+		);
+	}
+}
+
+
+/***********************************************************************************
+* Component Event
+***********************************************************************************/
+this.fnCommOnclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSend" :
+			nexacro.getApplication().gvTmpMenuParam = "RECV_DIV_CD=IT";
+			nexacro.getApplication().MAIN_TOP.form.fnOpenMenu({menuId : this.sendMenuId});
+			break;
+	}
+}
+
+this.divHomeLogo_btn00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.divHomeLogo.form.tab00.tabindex = -1;
+};
+
+this.Static00_00_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+};]]></Script>
+  </Form>
+</FDL>

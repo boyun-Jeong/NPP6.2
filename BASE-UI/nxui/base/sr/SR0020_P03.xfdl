@@ -1,0 +1,567 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR0020_P03" left="0" top="0" width="800" height="735" titletext="결재자선택 팝업" onload="form_onload" scrolltype="none" cssclass="" onbeforeclose="formOnBeforeClose">
+    <Layouts>
+      <Layout width="800" height="735">
+        <Div id="divBottom" taborder="0" height="60" bottom="0" text="" cssclass="div_POP_msg_btnbg" left="0" right="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+              <Button id="btnSave" taborder="1" text="저장" width="100" height="32" bottom="14" cssclass="btn_WF_primary_save" right="btnClose:5" onclick="fnCommOnclick" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00_01_00_00" taborder="1" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="60" right="0"/>
+        <Static id="Static00_01" taborder="2" left="5" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_01_00" taborder="3" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="60"/>
+        <Div id="divTop" taborder="5" text="결재선 검색" left="20.00" top="20" height="299" border="0px solid red" right="20">
+          <Layouts>
+            <Layout>
+              <Static id="stcInfoTitle" taborder="0" text="사용자 검색" left="0" top="0" width="120" height="24" cssclass="sta_WF_gridTitle"/>
+              <Static id="stcEmpty01" taborder="1" left="0" top="24" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Div id="divSearchArea" taborder="2" left="0" top="35" height="50" right="0" cssclass="div_WF_divSearchArea" text="">
+                <Layouts>
+                  <Layout>
+                    <Static id="Static00" taborder="0" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+                    <Button id="btnSearch" taborder="4" top="13" width="75" height="24" text="조회" right="5" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+                    <Button id="btnSearchReset" taborder="3" top="13" width="90" height="24" text="초기화" right="btnSearch:5" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+                    <Static id="staUser" taborder="1" text="사번/성명" left="20.00" top="13" width="80" height="24" cssclass="sta_WF_schTitle"/>
+                    <Edit id="edtUser" taborder="2" left="staUser:0.00" top="13" width="110" height="24" cssclass="edt_WF_normal" validationGroup="search" validation="워크플로우ID;MIN_LEN:4" onkeyup="edtOnKeyup"/>
+                    <Static id="staDept" taborder="5" text="부서코드/명" left="edtUser:30.00" top="13" width="90" height="24" cssclass="sta_WF_schTitle"/>
+                    <Edit id="edtDept" taborder="6" left="staDept:0.00" top="13" width="150" height="24" cssclass="edt_WF_normal" validationGroup="search" validation="워크플로우ID;MIN_LEN:4" onkeyup="edtOnKeyup"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Grid id="grdUser" taborder="3" left="0" top="104" cssclass="grd_WF_normal" treeusecheckbox="false" treeuseline="false" treeinitstatus="expand,null" treeusebutton="use" treeuseimage="true" autofittype="col" right="0" bottom="0" oncelldblclick="grdOnCellDblClick" binddataset="dsUser">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48"/>
+                      <Column size="100"/>
+                      <Column size="110"/>
+                      <Column size="120"/>
+                      <Column size="90"/>
+                      <Column size="140"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="사번"/>
+                      <Cell col="2" text="성명"/>
+                      <Cell col="3" text="부서명"/>
+                      <Cell col="4" text="직급"/>
+                      <Cell col="5" text="직책(역할)"/>
+                      <Cell col="6" text="전화번호"/>
+                      <Cell col="7" text="휴대번호"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                      <Cell col="1" text="bind:USER_ID"/>
+                      <Cell col="2" text="bind:USER_NM"/>
+                      <Cell col="3" text="bind:DEPT_NM"/>
+                      <Cell col="4" text="bind:POS_NM"/>
+                      <Cell col="5" text="bind:ROLE_NM"/>
+                      <Cell col="6" text="bind:TELNUM"/>
+                      <Cell col="7" text="bind:MOBILE_NUM"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="Static00_00" taborder="4" left="0" top="84" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="stcEmpty01_00" taborder="6" left="-20" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20" height="10" top="divTop:0"/>
+        <Button id="btnAdd" taborder="7" text="▼" top="stcEmpty01_00:0" height="30" width="27" left="48.38%" onclick="fnCommOnclick" cursor="pointer"/>
+        <Static id="stcEmpty01_00_00" taborder="8" left="0" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" height="10" top="btnAdd:0"/>
+        <Div id="divDown" taborder="4" left="20" right="20" top="stcEmpty01_00_00:0" bottom="divBottom:20">
+          <Layouts>
+            <Layout>
+              <Static id="stcBg01" taborder="0" left="0.00" top="0" height="34" cssclass="sta_WF_inputBg" right="0"/>
+              <Static id="stcReqId" taborder="1" text="결재선 별칭" left="0.00" top="0" width="114" height="34" cssclass="sta_WF_inputTitle_E"/>
+              <Static id="stcEmpty01_00" taborder="2" left="-20" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-20" height="10" top="stcBg01:0"/>
+              <Static id="stcInfoTitle" taborder="3" text="[나의 결재선] 결재자 목록" left="0.00" top="44" width="225" height="24" cssclass="sta_WF_gridTitle"/>
+              <Static id="stcEmpty01" taborder="4" left="0" top="stcEmpty01_00:24" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Grid id="grdWfApprovalBoxD" taborder="5" left="0" top="stcEmpty01:0" binddataset="dsWfApprovalBoxD" cssclass="grd_WF_normal" useCheck="true" treeusecheckbox="false" treeuseline="false" treeinitstatus="expand,null" treeusebutton="use" treeuseimage="true" autofittype="col" right="0" useSort="false" useContext="false" bottom="0" useFilter="false" autosizebandtype="nohead,noleft">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48" band="left"/>
+                      <Column size="48" band="left"/>
+                      <Column size="60" band="left"/>
+                      <Column size="120"/>
+                      <Column size="130"/>
+                      <Column size="150"/>
+                      <Column size="100"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="40" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="No."/>
+                      <Cell col="2" text="상태"/>
+                      <Cell col="3" text="사번"/>
+                      <Cell col="4" text="성명"/>
+                      <Cell col="5" text="부서명"/>
+                      <Cell col="6" text="직급"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                      <Cell col="1" expr="currow+1"/>
+                      <Cell col="2" text="bind:ROWFLAG"/>
+                      <Cell col="3" text="bind:USER_ID"/>
+                      <Cell col="4" text="bind:USER_NM"/>
+                      <Cell col="5" text="bind:DEPT_NM"/>
+                      <Cell col="6" text="bind:POS_NM"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Combo id="cboBoxSeq" taborder="6" left="119.00" top="5" width="280" height="24" innerdataset="dsWfApprovalBoxM" codecolumn="BOX_SEQ" datacolumn="BOX_INFO" value="" index="0" onitemchanged="cboOnItemChanged"/>
+              <Div id="divBtn" taborder="7" top="44" width="365" height="24" right="0">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnDelete" taborder="2" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+                    <Button id="btnMoveDown" taborder="1" text="아래로" top="0" width="60" right="btnDelete:5" onclick="fnCommOnclick" cursor="pointer" height="24"/>
+                    <Button id="btnMoveUp" taborder="0" text="위로" top="0" width="60" right="btnMoveDown:5" onclick="fnCommOnclick" cursor="pointer" height="24"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="SEARCH_USER" type="STRING" size="256"/>
+          <Column id="SEARCH_DEPT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsWfApprovalBoxM">
+        <ColumnInfo>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="BOX_USER_ID" type="STRING" size="256"/>
+          <Column id="BOX_SEQ" type="string" size="32"/>
+          <Column id="BOX_DESC" type="string" size="32"/>
+          <Column id="BOX_INFO" type="STRING" size="256"/>
+          <Column id="DEFAULT_YN" type="string" size="32"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsWfApprovalBoxD" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="BOX_USER_ID" type="STRING" size="256"/>
+          <Column id="BOX_SEQ" type="STRING" size="256"/>
+          <Column id="APPR_SEQ" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+          <Column id="DEPT_CD" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="POS_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsUser"/>
+      <Dataset id="dsWfApprovalBoxDSave" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="BOX_USER_ID" type="STRING" size="256"/>
+          <Column id="BOX_SEQ" type="STRING" size="256"/>
+          <Column id="APPR_SEQ" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+          <Column id="DEPT_CD" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+          <Column id="POS_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ SR0020_P03
+* 화면(명)		︰ 나의 결재선 신규 등록
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 나의 결재선 추가
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.06.20
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.06.20	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	//trace("[SR0020_P03] this.getOwnerFrame().saveYn : " + this.getOwnerFrame().saveYn);
+	if( Ex.isEmpty(this.getOwnerFrame().saveYn) )
+	{
+		this.getOwnerFrame().saveYn = "N";
+	}
+	this.divDown.form.grdWfApprovalBoxD.displayRowType();
+	this.fnSearch();
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 사용자 검색
+this.fnSearchUser = function()
+{
+	var sTranId = "selectUser";						
+    var sService = "SR0020P/select01";		// 서비스명
+    var sInDs = "dsCond=dsCond";			// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsUser=dsUser";			// 서버에서 수신할 데이타셋
+    var sArg = "";							// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 조회
+this.fnSearch = function()
+{
+	var sTranId = "selectAll";															// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "SR0020P/select04";													// 서비스명
+    var sInDs = "dsCond=dsCond";                  										// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsWfApprovalBoxM=dsWfApprovalBoxM dsWfApprovalBoxD=dsWfApprovalBoxD";	// 서버에서 수신할 데이타셋
+    var sArg = "";                   													// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 저장
+this.fnSave = function()
+{
+	this.dsWfApprovalBoxDSave.assign(this.dsWfApprovalBoxD);
+	this.dsWfApprovalBoxDSave.clearData();
+
+	var orgFilter = this.dsWfApprovalBoxD.filterstr;
+	this.dsWfApprovalBoxD.set_filterstr("");
+	
+	for(var i=0; i<this.dsWfApprovalBoxD.rowcount; i++)
+	{
+		if(this.dsWfApprovalBoxD.getColumn(i, "ROWFLAG") != "D")
+		{
+			var aRow = this.dsWfApprovalBoxDSave.setAddRow();
+			this.dsWfApprovalBoxDSave.copyRow(aRow, this.dsWfApprovalBoxD, i);
+		}
+	}
+	this.dsWfApprovalBoxD.set_filterstr(orgFilter);	
+
+	var sTranId = "save01";
+    var sService = "SR0020P/save02";
+    var sInDs = "dsWfApprovalBoxD=dsWfApprovalBoxDSave:U";
+    var sOutDs = "dsWfApprovalBoxD=dsWfApprovalBoxD";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "selectAll" :
+			this.divDown.form.cboBoxSeq.set_value(this.getOwnerFrame().pBoxSeq);
+			var evt = nexacro.ItemChangeEventInfo;
+			evt.postvalue = this.getOwnerFrame().pBoxSeq;
+			this.cboOnItemChanged(this.divDown.form.cboBoxSeq, evt);
+			this.divTop.form.divSearchArea.form.edtUser.setFocus();
+			break;
+
+		case "save01" :
+			this.getOwnerFrame().saveYn = "Y";
+			//this.dsWfApprovalBoxD.set_filterstr("BOX_SEQ=='" + this.divDown.form.cboBoxSeq.value + "' && ROWFLAG != 'D'");
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "" :
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+
+		case "confirmDataChgClose" :
+			Ex.core.pclose(this, this.getOwnerFrame().saveYn);
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+//저장 validation Check
+this.fnCheckValidate = function()
+{
+	// 저장할 dataset에 변경된 data 있는 지 확인
+	if( !Ex.util.isUpdated(this.dsWfApprovalBoxD) )	return false;
+	
+	// Grid Validation
+	if( !this.divDown.form.grdWfApprovalBoxD.checkValidate() ) return false;
+	return true;
+}
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDeleteRow = function(objDs:nexacro.NormalDataset)
+{
+	objDs.set_enableevent(false);
+	var orgFilterStr = objDs.filterstr;
+	objDs.set_filterstr(orgFilterStr + " && CHK=='1'");
+
+	for(var i = objDs.rowcount-1; i >= 0; i--)	objDs.setDeleteRow(i);
+	//for(var i = objDs.rowcount-1; i >= 0; i--)	objDs.deleteRow(i);
+
+	objDs.set_filterstr(orgFilterStr);
+	objDs.set_enableevent(true);
+
+	this.resetGridHeadCheck(objDs);	//그리드 Checkbox 초기화
+}
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnAddRow = function(objDs:nexacro.NormalDataset, fromDs:nexacro.NormalDataset, isRowDbClick)
+{
+	//trace("[SR0020_P03] this.fnAddRow() objDs : " + objDs.id + " fromDs : " + fromDs.id + " objDs.rowcount : " + objDs.rowcount + " isRowDbClick : " + isRowDbClick);
+	var fRow = this.dsWfApprovalBoxM.findRow("BOX_SEQ", this.divDown.form.cboBoxSeq.value);
+	var boxUserId	= this.dsWfApprovalBoxM.getColumn(fRow, "BOX_USER_ID");
+	var boxSeq		= this.dsWfApprovalBoxM.getColumn(fRow, "BOX_SEQ");
+
+	if( !Ex.isEmpty(fromDs) )
+	{
+		if(isRowDbClick)	//Row double click으로 추가하는 경우
+		{
+			if(objDs.findRow("USER_ID", fromDs.getColumn(fromDs.rowposition, "USER_ID")) == -1)
+			{
+				var aRow = objDs.setAddRow();
+				objDs.setColumn(aRow, "BOX_USER_ID",	boxUserId);
+				objDs.setColumn(aRow, "BOX_SEQ",		boxSeq);
+				//trace("[SR0020_P03] this.fnAddRow() rowVal : " + rowVal + " aRow : " + aRow);
+				this.getColumnData(objDs, aRow, fromDs, fromDs.rowposition);
+			}
+			fromDs.setColumn(fromDs.rowposition, "CHK", 0);
+		}
+		else
+		{
+			for(var i=0; i<fromDs.rowcount; i++)
+			{
+				if(fromDs.getColumn(i, "CHK") == 1)
+				{
+					if(objDs.findRow("USER_ID", fromDs.getColumn(i, "USER_ID")) == -1)
+					{
+						var aRow = objDs.setAddRow();
+						objDs.setColumn(aRow, "BOX_USER_ID",	boxUserId);
+						objDs.setColumn(aRow, "BOX_SEQ",		boxSeq);
+						this.getColumnData(objDs, aRow, fromDs, i);
+					}
+				}
+				fromDs.setColumn(i, "CHK", 0);
+			}
+			this.resetGridHeadCheck(fromDs);	//그리드 Checkbox 초기화
+		}
+	}
+}
+
+//추가 버튼 처리에 따른 선택한 로우 데이터 추가할 데이터셋 컬럼값에 삽입
+this.getColumnData = function(recvDs:nexacro.NormalDataset, recvRowIdx, readDs:nexacro.NormalDataset, readRowIdx)
+{
+	var columnInfo = ["USER_ID", "USER_NM", "DEPT_CD", "DEPT_NM", "POS_NM"]
+
+	for(var i=0; i<columnInfo.length ; i++)
+	{
+		if( !Ex.isEmpty(recvDs.colinfos[columnInfo[i]]) && !Ex.isEmpty(readDs.colinfos[columnInfo[i]]) )
+		{
+			recvDs.setColumn(recvRowIdx, columnInfo[i], readDs.getColumn(readRowIdx, columnInfo[i]));
+		}
+	}
+}
+
+this.resetGridHeadCheck = function(objDs)
+{
+	//trace("this.resetGridHeadCheck() objDs : " + objDs);
+	var objType = objDs.toString().toUpperCase();
+	if(objType != "[OBJECT DATASET]")
+	{
+		trace("GRID Head Chebox초기화 Dataset 정보가 올바르지 않습니다.");
+		return;
+	}
+
+	if(objDs.id == "dsUser")				this.divTop.form.grdUser.setCellProperty("Head", 0, "text", 0);
+	else if(objDs.id == "dsWfApprovalBoxD") this.divDown.form.grdWfApprovalBoxD.setCellProperty("Head", 0, "text", "0");
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var divId = obj.parent.parent.parent.parent.id;
+	
+	trace("this.fnCommOnclick() divId ::: " + divId + " obj.name : " + obj.name);
+
+	switch(obj.name)
+	{
+		case "btnAdd" :
+			this.fnAddRow(this.dsWfApprovalBoxD, this.dsUser);
+			break
+
+		case "btnDelete" :
+			this.fnDeleteRow(this.dsWfApprovalBoxD);
+			break
+
+		case "btnMoveUp" :			//위로
+			var rowP = this.dsWfApprovalBoxD.rowposition;
+			if(rowP > 0)
+			{
+				this.dsWfApprovalBoxD.moveRow(rowP, rowP-1);
+			}
+			break;
+
+		case "btnMoveDown" :		//아래로
+			var rowP = this.dsWfApprovalBoxD.rowposition;
+			var rowcnt = this.dsWfApprovalBoxD.rowcount;
+			if(rowP < rowcnt-1)
+			{
+				this.dsWfApprovalBoxD.moveRow(rowP, rowP+1);
+			}
+			break;
+
+		case "btnSave" :			// 저장
+			if( Ex.util.checkValidate(this, "group01") )
+			{
+				var param = {
+						 id : "saveConfirm"
+						,msg : "10003"
+						,arrparam : ['']
+						,msgtype : "I"};
+					Ex.core.confirm(this, param);
+					return;
+			}
+			break;
+
+		case "btnClose" :			// 닫기
+			if( Ex.util.isUpdated(this.dsWfApprovalBoxD) )
+			{
+				var param = {
+					  id : "confirmDataChgClose"
+					, msg : "편집중인 데이터가 존재합니다.\n화면을 닫으시겠습니까?"
+					, arrparam : []
+					, msgtype : "I"
+				};
+				Ex.core.confirm(this, param);
+				return false;
+			}
+			else
+			{
+				Ex.core.pclose(this, this.getOwnerFrame().saveYn);
+			}
+			break;
+	}
+};
+
+this.grdOnCellDblClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(obj.id == "grdUser")
+	{
+		this.fnAddRow(this.dsWfApprovalBoxD, this.dsUser, true);
+	}
+};
+
+this.edtOnKeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 13)	this.fnSearchUser();
+};
+
+this.cboOnItemChanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.dsWfApprovalBoxD.set_filterstr("BOX_SEQ=='" + e.postvalue + "' && ROWFLAG != 'D'");
+	//this.dsWfApprovalBoxD.set_filterstr("BOX_SEQ=='" + e.postvalue + "'");
+	
+	var fRow = this.dsWfApprovalBoxM.findRow("BOX_SEQ", e.postvalue);
+	var boxDesc	= this.dsWfApprovalBoxM.getColumn(fRow, 'BOX_DESC');
+	
+	// Grid title 처리
+	if( Ex.isEmpty(boxDesc) )
+	{
+		this.divDown.form.stcInfoTitle.set_text("결재자 목록" );
+	}
+	else
+	{
+		this.divDown.form.stcInfoTitle.set_text('[' + boxDesc + ']' + " 결재자 목록" );
+	}
+	
+	var objSize = nexacro.getTextSize(this.divDown.form.stcInfoTitle.text, this.divDown.form.stcInfoTitle._getCurrentStyleInheritValue("font"));
+	var nWidth = parseInt(objSize.nx) + 20;
+	this.divDown.form.stcInfoTitle.set_width(nWidth);
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divDown.form.stcBg01" propid="value" datasetid="dsCond" columnid="BOX_SEQ"/>
+      <BindItem id="item1" compid="divTop.form.divSearchArea.form.edtUser" propid="value" datasetid="dsCond" columnid="SEARCH_USER"/>
+      <BindItem id="item2" compid="divTop.form.divSearchArea.form.staDept" propid="value" datasetid="dsCond" columnid="SEARCH_WORD"/>
+      <BindItem id="item4" compid="divTop.form.divSearchArea.form.edtDept" propid="value" datasetid="dsCond" columnid="SEARCH_DEPT"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,573 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PJ1100_P01" left="0" top="0" width="1050" height="804" titletext="교육 상세" onload="form_onload">
+    <Layouts>
+      <Layout width="1050" height="804">
+        <Div id="divContents" taborder="0" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="Static24_00" taborder="20" cssclass="sta_WF_inputBg" left="20" top="181" height="89" right="20"/>
+              <Static id="Static05" taborder="0" text="교육상세" cssclass="sta_WF_gridTitle" left="20" top="20" width="132" height="24"/>
+              <Static id="Static06" taborder="1" cssclass="sta_WF_inputBg" left="20" top="49" height="34" right="20"/>
+              <Static id="Static10" taborder="4" cssclass="sta_WF_inputBg" left="20" top="82" height="34" right="20"/>
+              <Static id="stcPjtNm" taborder="2" text="프로젝트명" cssclass="sta_WF_inputTitle" left="20" top="49" width="130" height="34" style="align:left middle;"/>
+              <Static id="Static13" taborder="7" cssclass="sta_WF_inputBg" left="20" top="115" height="34" right="20"/>
+              <Edit id="edtPjtName" taborder="3" maxlength="80" left="stcPjtNm:5" top="54" height="24" enable="false" right="530" cssclass="edt_WF_normal"/>
+              <Static id="stcTitle" taborder="5" text="교육제목" cssclass="sta_WF_inputTitle_E" left="20" top="82" width="130" height="34" style="align:left middle;"/>
+              <Edit id="edtTitle" taborder="6" left="stcTitle:5" top="87" height="24" validate="" right="25" validation="제목;NULL" validationGroup="input01" cssclass="edt_WF_normal"/>
+              <Static id="Static12" taborder="21" text="내용" cssclass="sta_WF_inputTitle_E" left="20" top="181" width="130" height="89" style="align:left middle;"/>
+              <TextArea id="txaContents" taborder="22" left="Static12:5" top="187" right="25" height="77" validationGroup="input01" validation="내용;NULL" cssclass="txa_WF_normal"/>
+              <Static id="Static15" taborder="14" cssclass="sta_WF_inputBg" left="20" top="148" height="34" right="20"/>
+              <Static id="Static32" taborder="26" text="참석자 목록" cssclass="sta_WF_gridTitle" left="20" top="515" height="24" width="132"/>
+              <Div id="divFiles" taborder="24" left="20" top="313" right="20" __USE_MODE="1" _ENABLE_READONLY_ALL_SKIP="Y" url="comm::comFile.xfdl" text="" height="192"/>
+              <Static id="stcBackMid2_00" taborder="23" left="20" top="303" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Static id="stcBackMid2_00_00" taborder="25" left="20" top="505" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Static id="stcBackMid2_00_00_00" taborder="28" left="20" top="539" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Div id="divGrdTopBtn" taborder="27" width="425" height="24" visible="true" isButtonGroup="true" top="515" right="20">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+                    <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="stcRegDate" taborder="17" text="작성일시" onclick="Static13_onclick" cssclass="sta_WF_inputTitle" left="50%" top="148" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcRegUser" taborder="15" text="작성자" cssclass="sta_WF_inputTitle_E" left="20" top="148" width="130" height="34" style="align:left middle;"/>
+              <Calendar id="calRegDate" taborder="18" onchanged="cal_prjStime_onchanged" cssclass="cal_WF_normal" enable="false" left="stcRegDate:5" top="153" width="130" height="24" validate=""/>
+              <Div id="divRegUser" taborder="16" left="155" top="153" height="24" right="535" url="fomm::FOMM0000_D02.xfdl"/>
+              <Static id="Static28_00" taborder="9" cssclass="sta_WF_inputTitle_E" left="50%" top="115" width="130" height="34" style="align:left middle;" text="교육시간"/>
+              <Static id="stcEduDate" taborder="8" text="교육일자" cssclass="sta_WF_inputTitle_E" left="20" top="115" width="130" height="34" style="align:left middle;"/>
+              <Calendar id="calEduDate" taborder="10" left="stcEduDate:5" top="120" width="130" height="24" validate="" validationGroup="input01" validation="교육일자;NULL|DATETIME:YYYYMMDD" cssclass="cal_WF_normal"/>
+              <MaskEdit id="mskEduStime" taborder="11" type="string" enable="true" left="Static28_00:5" top="120" width="56" height="24" format="##:##" validation="교육시간(시작);NULL|DATETIME:HHMI" validationGroup="input01" cssclass="msk_WF_normal"/>
+              <Static id="Static19" taborder="12" text="~" left="mskEduStime:5" top="120" height="21" width="9"/>
+              <MaskEdit id="mskEduEtime" taborder="13" type="string" mask="##:##" enable="true" left="Static19:5" top="120" width="56" height="24" style="align:center middle;" format="##:##" validation="교육시간(종료);NULL|DATETIME:HHMI" validationGroup="input01" cssclass="msk_WF_normal"/>
+              <MaskEdit id="mskRegTime" taborder="19" type="string" left="calRegDate:5" top="153" width="56" height="24" cssclass="msk_WF_normal" format="##:##" enable="false"/>
+              <Grid id="grdEduAttnd" taborder="29" useinputpanel="false" left="20" right="20" height="195" binddataset="dsPjEduAttnd" autofittype="col" cssclass="grd_WF_normal" top="549">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="40" band="left"/>
+                      <Column size="50" band="left"/>
+                      <Column size="60" band="left"/>
+                      <Column size="330"/>
+                      <Column size="440"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="NO"/>
+                      <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="2" text="행상태"/>
+                      <Cell col="3" text="이름"/>
+                      <Cell col="4" text="부서"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="currow+1"/>
+                      <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                      <Cell col="2" text="bind:ROWFLAG"/>
+                      <Cell col="3" text="bind:ATN_USER_NM"/>
+                      <Cell col="4" style="align:left;" text="bind:ATN_USER_DEPT" textAlign="left"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="Static13_00" taborder="30" cssclass="sta_WF_inputBg" left="20" top="269" height="34" right="20"/>
+              <Static id="stcLectureNm" taborder="32" text="강사" cssclass="sta_WF_inputTitle" left="20" top="269" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcEduLoc" taborder="33" text="교육장소" onclick="Static13_onclick" cssclass="sta_WF_inputTitle" left="50.00%" top="269" width="130" height="34" style="align:left middle;"/>
+              <Edit id="edtLectureNm" taborder="31" left="stcLectureNm:5" top="274" height="24" validate="" right="stcEduLoc:5" cssclass="edt_WF_normal"/>
+              <Edit id="edtEduLoc" taborder="34" left="stcEduLoc:5" top="274" height="24" validate="" right="25" cssclass="edt_WF_normal"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtnBottom" taborder="1" height="60" bottom="0" text="" cssclass="div_POP_msg_btnbg" left="20" right="20">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="14"/>
+              <Button id="btnSave" taborder="1" text="저장" width="110" height="32" bottom="14" cssclass="btn_WF_primary_save" right="btnClose:5" onclick="fnCommOnclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsPjEducation" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="EDU_ID" type="STRING" size="16"/>
+          <Column id="TITLE" type="STRING" size="1000"/>
+          <Column id="PJT_ID" type="STRING" size="16"/>
+          <Column id="EDU_DATE" type="STRING" size="256"/>
+          <Column id="EDU_STIME" type="STRING" size="14"/>
+          <Column id="EDU_ETIME" type="STRING" size="14"/>
+          <Column id="CONTENTS" type="STRING" size="4000"/>
+          <Column id="EDU_LOC" type="STRING" size="200"/>
+          <Column id="LECTURE_NM" type="STRING" size="100"/>
+          <Column id="REG_DATE" type="STRING" size="14"/>
+          <Column id="REG_TIME" type="STRING" size="256"/>
+          <Column id="REG_USER_ID" type="STRING" size="10"/>
+          <Column id="REG_USER_NM" type="STRING" size="100"/>
+          <Column id="REG_USER_DEPT" type="STRING" size="100"/>
+          <Column id="LMOD_SDATE" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="10"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPjEduAttnd" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="1"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="MEET_ATTND_ID" type="STRING" size="20"/>
+          <Column id="MEET_ID" type="STRING" size="16"/>
+          <Column id="ATN_USER_ID" type="STRING" size="10"/>
+          <Column id="ATN_USER_NM" type="STRING" size="100"/>
+          <Column id="ATN_USER_DEPT" type="STRING" size="100"/>
+          <Column id="ATN_USER_CD" type="STRING" size="30"/>
+          <Column id="READ_YN" type="STRING" size="1"/>
+          <Column id="READ_TIME" type="STRING" size="14"/>
+          <Column id="CONF_YN" type="STRING" size="1"/>
+          <Column id="CONF_TIME" type="STRING" size="14"/>
+          <Column id="REG_USER_ID" type="STRING" size="10"/>
+          <Column id="REG_USER_NM" type="STRING" size="100"/>
+          <Column id="REG_STIME" type="STRING" size="14"/>
+          <Column id="REG_USER_DEPT" type="STRING" size="256"/>
+          <Column id="DIS_REASON" type="STRING" size="200"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="EDU_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPopRtn"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ PJ1100_P01
+* 화면(명)		︰ 교육관리 상세
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.10.26
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.10.26	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.saveFlg = "N";				//화면 저장 여부
+this.isCloseBtnClick = false;	//닫기 버튼을 눌러 닫는 경우 true
+this.essChkRow;					//저장시 입력 항목 validation Check에 걸린 경우 해당 row cell에 포커스를 주기 위해 row 정보를 저장
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+	//trace("[PJ1100_P01] this.form_onload() this.getOwnerFrame()._formObj : " + this.getOwnerFrame()._formObj);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	//trace("[PJ1100_P01] this.fnSearch()");
+	var sTranId = "select01";																		// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ1100P/select01";																// 서비스명
+    var sInDs = "dsCond=dsCond";																	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsPjEducation=dsPjEducation dsPjEduAttnd=dsPjEduAttnd";	// 서버에서 수신할 데이타셋
+    var sArg = "";																					// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSave = function()
+{
+	//trace("[PJ1100_P01] this.fnSave()");
+	var sTranId = "save01";
+    var sService = "PJ1100P/save01";
+    var sInDs = "dsCond=dsCond dsPjEducation=dsPjEducation:U dsPjEduAttnd=dsPjEduAttnd:U";
+	var sOutDs = "dsPjEducation=dsPjEducation dsPjEduAttnd=dsPjEduAttnd dsCond=dsCond";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+this.fnUploadCallback = function(sSvcId, nErrorCode, sErrorMsg)
+{
+	//trace("[PJ1100_P01] this.fnUploadCallback() sSvcId : " + sSvcId + " nErrorCode : " + nErrorCode + " sErrorMsg : " + sErrorMsg);
+
+	// TO DO
+	// 개발자가 지정한 sSvcId(setConfig 옵션에 넣은 파일첨부ID), nErrorCode(에러코드), sErrorMsg(에러메시지)
+	if (nErrorCode < 0) 
+	{
+		Ex.core.error(this, {id:"ERROR", msg:sSvcId + "\n" + Ex.core.msg(sErrorMsg)});
+		return;
+	}
+	
+	switch(sSvcId)
+	{
+		case "fileSvc" :
+			this.fnSave();
+			break;
+	}
+};
+
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			
+			var strRegUserId    = this.dsPjEducation.getColumn(0, "REG_USER_ID");
+			var strRegUserNm    = this.dsPjEducation.getColumn(0, "REG_USER_NM");
+			var strRegDept      = this.dsPjEducation.getColumn(0, "REG_USER_DEPT");
+			this.divContents.form.divRegUser.form.setValue(strRegUserId, strRegUserNm, strRegDept);
+				
+			//this.fn_setEditMode();
+			
+			this.divContents.form.grdEduAttnd.setCellProperty("Head", this.divContents.form.grdEduAttnd.getBindCellIndex('Body', 'CHK'), "text", "0");
+			break;
+
+		case "save01" :
+			this.saveFlg = "Y";
+			Ex.core.toast(this, "10004", null, {toastType:'S'});
+			
+			if( !Ex.isEmpty(this.dsCond.getColumn(0, "EDU_ID")) )
+			{
+				this.getOwnerFrame().pEduId	= this.dsCond.getColumn(0, "EDU_ID");
+				this.getOwnerFrame().pNew = "N";
+				this.divContents.form.divFiles.form.fnReplaceTempkeyAndSearch(this.dsCond.getColumn(0, "EDU_ID"));
+			}
+			
+			var strRegUserId    = this.dsPjEducation.getColumn(0, "REG_USER_ID");
+			var strRegUserNm    = this.dsPjEducation.getColumn(0, "REG_USER_NM");
+			var strRegDept      = this.dsPjEducation.getColumn(0, "REG_USER_DEPT");
+			this.divContents.form.divRegUser.form.setValue(strRegUserId, strRegUserNm, strRegDept);
+			
+			this.divContents.form.grdEduAttnd.setCellProperty("Head", this.divContents.form.grdEduAttnd.getBindCellIndex('Body', 'CHK'), "text", "0");
+			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "selectUserPop" :
+			trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)
+			{
+				this.dsPopRtn.loadXML(varValue);
+				for(var i=0; i<this.dsPopRtn.rowcount; i++)
+				{
+					var aRow = this.dsPjEduAttnd.setAddRow();
+					this.dsPjEduAttnd.setColumn(aRow, "EDU_ID", this.dsCond.getColumn(0, "EDU_ID"));
+					this.dsPjEduAttnd.setColumn(aRow, "ATN_USER_ID", this.dsPopRtn.getColumn(i, "USER_ID"));
+					this.dsPjEduAttnd.setColumn(aRow, "ATN_USER_NM", this.dsPopRtn.getColumn(i, "USER_NM"));
+					this.dsPjEduAttnd.setColumn(aRow, "ATN_USER_DEPT", this.dsPopRtn.getColumn(i, "DEPT_NM"));
+				}
+			}
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.divContents.form.divFiles.form.fnUploadFiles(true);			
+			break;
+
+		case "alertEduTimeChkI" :
+			this.divContents.form.mskEduEtime.setFocus();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.divContents.form.grdEduAttnd.displayRowType();
+
+	this.divContents.form.divRegUser.form.setEnable(false);
+	
+	this.dsCond.setColumn(0, "PJT_ID", this.getOwnerFrame().pPjtId);
+	this.dsCond.setColumn(0, "EDU_ID", this.getOwnerFrame().pEduId);
+
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divContents.form.divGrdTopBtn.form.btnAdd];	// 쓰기
+	Ex.util.setBtnVisible(this, 'write', arrBtn);
+
+	arrBtn = [this.divContents.form.divGrdTopBtn.form.btnDelete];	// 삭제
+	Ex.util.setBtnVisible(this, 'delete', arrBtn);
+
+	arrBtn = [this.divBtnBottom.form.btnSave];	// 저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+	
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divContents.form.divGrdTopBtn, 'right', true);
+	Ex.util.setBtnAlign(this.divBtnBottom, 'right', true);
+
+	// 첨부파일 setting
+	var oParam = {
+		 sSvcId		: 'fileSvc'									// divFile callback 후처리용 서비스 ID
+		,limitMinCnt: 0											// 파일 최소 갯수; defualt 0
+		,limitCnt	: 3											// 파일 최대 갯수; default 5
+		,limitSize	: 100										// 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+		,folderName	: 'pj'										// 폴더명(업무명)
+		,tableName	: 'PJ_EDUCATION'							// 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+		,primaryKey1: this.dsCond.getColumn(0, "EDU_ID")||''	// 테이블 PK1(ex. 요청서ID 등)
+		,primaryKey2: ''										// 테이블 PK2 (복합 키인 경우 사용)
+		,primaryKey3: ''										// 테이블 PK3 (복합 키인 경우 사용)
+		,fileDownYn	: ''										// 파일다운권한; 	 공백 시 메뉴의 조회 권한
+		,fileUpYn	: ''										// 파일업로드권한; 공백 시 메뉴의 추가 권한
+		,deleteYn	: ''										// 파일삭제권한; 	 공백 시 메뉴의 삭제 권한
+	};
+	this.divContents.form.divFiles.form.setConfig(this, oParam);
+
+	//trace("[PJ1100_P01] this.fnCompInit() this.getOwnerFrame().pIsNew : " + this.getOwnerFrame().pIsNew);
+
+	if(this.getOwnerFrame().pNew == "Y")
+	{
+		var nRow = this.dsPjEducation.setInsertRow();
+		this.dsPjEducation.setColumn(0, "PJT_ID",   this.getOwnerFrame().pPjtId);
+		this.dsPjEducation.setColumn(0, "PJT_NAME", this.getOwnerFrame().pPjtNm);
+		this.divContents.form.divRegUser.form.setValue(Ex.util.getSession('gvUserId'), Ex.util.getSession('gvUserNm'), Ex.util.getSession('gvDeptNm'));
+		this.divContents.form.edtTitle.setFocus();
+	}
+	else if( !Ex.isEmpty(this.dsCond.getColumn(0, "EDU_ID")) )
+	{
+		this.fnSearch();
+ 	}
+}
+
+this.fnCheckValidate = function()
+{
+	// 저장할 dataset에 변경된 data 있는 지 확인
+	trace(Ex.util.isUpdated(this.dsPjEducation));
+	trace(Ex.util.isUpdated(this.dsPjEduAttnd));
+
+	if( !Ex.util.isUpdated(this.dsPjEducation) &&
+		!Ex.util.isUpdated(this.dsPjEduAttnd) &&
+		!this.divContents.form.divFiles.form.isUpdateForm())
+	{
+		return false;
+	}
+
+	if( !Ex.util.checkValidate(this.divContents, "input01") ) return false;
+
+	var strEduStime = this.divContents.form.mskEduStime.value;
+	var strEduEtime = this.divContents.form.mskEduEtime.value;
+
+	if (strEduStime >= strEduEtime)
+	{
+		var oParam = {id : "alertEduTimeChkI", msg : "교육 시작시간은 종료시간보다 작아야 합니다.", arrparam : [], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return false;
+	}
+
+	if(this.dsPjEducation.getColumn(0, "ROWFLAG") == "I")
+	{
+		var msgNo;
+
+		//등록자 입력 체크
+		var rtnVal = this.divContents.form.divRegUser.form.fnCheckValidate();
+		
+		if(rtnVal == "NO_INPUT")	msgNo = 11001;	//"은(는) 필수 입력 항목입니다.";
+		else if(rtnVal == "NO_ID")	msgNo = 20001;	//"은(는) 입력 후 검색까지 완료해야 합니다.";
+
+		trace("divRegUser rtnVal : " + rtnVal);
+
+		if(rtnVal == "NO_INPUT" || rtnVal == "NO_ID")
+		{
+			var oParam = {id : "alertRegUserI", msg : msgNo, arrparam : [Ex.core.word(this.divContents.form.stcRegUser.text)], msgtype : "I"};
+			Ex.core.alert(this, oParam);
+			return false;
+		}
+	}
+	return true;
+} 
+
+this.fn_setEditMode = function()
+{
+	var strRegUserId = this.dsPjEducation.getColumn(0, "REG_USER_ID");
+
+	if(Ex.util.getSession('gvUserId') != strRegUserId)
+	{
+		Ex.util.setCompPropAll(this, this.divContents.form, false, [this.divContents.form.grdEduAttnd]);
+	}
+
+	var fRow = this.dsPjEduAttnd.findRow("ATN_USER_ID", Ex.util.getSession('gvUserId'));
+	
+	if(Ex.util.getSession('gvUserId') != strRegUserId && fRow == -1)
+	{
+		this.divBtnBottom.form.btnSave.set_visible(false);
+		
+		//첨부파일 영역
+		this.divContents.form.divFiles.form.grdFile.set_readonly(false);
+		this.divContents.form.divFiles.form.divBtn.form.btnDownload.set_enable(true);
+	}
+}
+
+this.userDeptChangedCallBack = function(compId, dsRtnObj)
+{
+	trace("[PJ1100_P01] this.userDeptChangedCallBack() compId : " + compId);
+	if(compId == "divRegUser")
+	{
+		if( !Ex.isEmpty(dsRtnObj.getColumn(0, "USER_ID")) )
+		{
+			this.dsPjEducation.setColumn(0, "REG_USER_ID", dsRtnObj.getColumn(0, "USER_ID"));
+			this.dsPjEducation.setColumn(0, "REG_USER_NM", dsRtnObj.getColumn(0, "USER_NM"));
+			this.dsPjEducation.setColumn(0, "REG_USER_DEPT", dsRtnObj.getColumn(0, "DEPT_NM"));
+		}
+		else
+		{
+			this.dsPjEducation.setColumn(0, "REG_USER_ID", "");
+			this.dsPjEducation.setColumn(0, "REG_USER_NM", "");
+			this.dsPjEducation.setColumn(0, "REG_USER_DEPT", "");
+		}
+	}
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnAdd" : 	// 저장
+			Ex.core.popup(
+				this,
+				'selectUserPop',
+				"fomm::FOMM0000_P01.xfdl",             		// <--- 팝업창 오픈 Url
+				{
+					title		: Ex.core.word('사용자 선택'),
+					pSelType	: 'M',
+					pType		: "name",
+					pCheckDs	: this.dsPjEduAttnd,
+					pCheckCol	: "ATN_USER_ID"
+				},											// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"width=900,height=500"                  	// <--- width/height/modeless(프레임 처리 옵션)							
+			);
+			break;
+
+		case "btnDelete" : 	// 삭제
+			this.fnDelete(this.dsPjEduAttnd);
+			break;
+
+		case "btnSave" : 	// 저장
+			// validation
+			if( this.fnCheckValidate() )
+			{
+				var cnt = this.dsPjEduAttnd.getCaseCount("ROWFLAG!='D'");
+				
+				if(cnt > 0)
+				{
+					var param = {
+							id : "saveConfirm"
+						  , msg : "10003"
+						  , arrparam : ['']
+						  , msgtype : "I"};
+					Ex.core.confirm(this, param);
+				}
+				else
+				{
+					var param = {
+							id : "saveConfirm"
+						  , msg : "참석자 목록이 입력되지 않았습니다.\n저장 하시겠습니까?"
+						  , arrparam : ['']
+						  , msgtype : "I"};
+					Ex.core.confirm(this, param);
+				}
+			}
+			break;
+
+		case "btnClose" : 	// 닫기
+			this.isCloseBtnClick = true;
+			Ex.core.pclose(this, this.saveFlg);
+			break;
+	}
+}
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+this.onBeforeClose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	if(!this.isCloseBtnClick) if(this.saveFlg == "Y") this.getOwnerFrame()._formObj.fnSearch();
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContents.form.edtPjtName" propid="value" datasetid="dsPjEducation" columnid="PJT_NAME"/>
+      <BindItem id="item1" compid="divContents.form.edtTitle" propid="value" datasetid="dsPjEducation" columnid="TITLE"/>
+      <BindItem id="item2" compid="divContents.form.txaContents" propid="value" datasetid="dsPjEducation" columnid="CONTENTS"/>
+      <BindItem id="item4" compid="divContents.form.calRegDate" propid="value" datasetid="dsPjEducation" columnid="REG_DATE"/>
+      <BindItem id="item6" compid="divContents.form.calEduDate" propid="value" datasetid="dsPjEducation" columnid="EDU_DATE"/>
+      <BindItem id="item9" compid="divContents.form.mskEduStime" propid="value" datasetid="dsPjEducation" columnid="EDU_STIME"/>
+      <BindItem id="item11" compid="divContents.form.mskEduEtime" propid="value" datasetid="dsPjEducation" columnid="EDU_ETIME"/>
+      <BindItem id="item12" compid="divContents.form.mskRegTime" propid="value" datasetid="dsPjEducation" columnid="REG_TIME"/>
+      <BindItem id="item3" compid="divContents.form.edtEduLoc" propid="value" datasetid="dsPjEducation" columnid="EDU_LOC"/>
+      <BindItem id="item5" compid="divContents.form.edtLectureNm" propid="value" datasetid="dsPjEducation" columnid="LECTURE_NM"/>
+    </Bind>
+  </Form>
+</FDL>

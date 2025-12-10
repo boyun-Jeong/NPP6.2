@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="contUpdateHis" left="0" top="0" width="1000" height="740" titletext="요청내용 변경이력" onload="form_onload">
+    <Layouts>
+      <Layout width="1000" height="740">
+        <Div id="divPage" taborder="0" left="0" top="0" enableevent="false" async="false" width="1000" height="230">
+          <Layouts>
+            <Layout>
+              <Grid id="mainGrid" taborder="0" left="20.00" top="39" height="190" binddataset="dsContChk" useSort="false" autoenter="select" autofittype="col" right="20" oncellclick="divPage_mainGrid_oncellclick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48" band="left"/>
+                      <Column size="150"/>
+                      <Column size="100"/>
+                      <Column size="400"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell cssclass="grdHCell_WF" text="No" background="#fcf5ef" color="#32333b" border="1px solid #9ea7cc" font="normal 700 12px/normal &quot;KoPubL&quot;"/>
+                      <Cell col="1" cssclass="grdHCell_WF" text="변경 일시" background="#fcf5ef" color="#32333b" border="1px solid #9ea7cc" font="normal 700 12px/normal &quot;KoPubL&quot;"/>
+                      <Cell col="2" cssclass="grdHCell_WF" text="변경자" background="#fcf5ef" color="#32333b" border="1px solid #9ea7cc" font="normal 700 12px/normal &quot;KoPubL&quot;"/>
+                      <Cell col="3" cssclass="grdHCell_WF" text="변경 사유" background="#fcf5ef" color="#32333b" border="1px solid #9ea7cc" font="normal 700 12px/normal &quot;KoPubL&quot;"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="currow+1" textAlign="center" color="#32333b" background="#ffffff" cursor="pointer"/>
+                      <Cell col="1" text="bind:CHG_DT" textAlign="center" color="#32333b" background="#ffffff" displaytype="date" calendareditformat="yyyy-MM-dd HH:mm:ss" calendardateformat="yyyy-MM-dd HH:mm:ss" cursor="pointer"/>
+                      <Cell col="2" text="bind:REG_USER" textAlign="center" color="#32333b" background="#ffffff" cursor="pointer"/>
+                      <Cell col="3" text="bind:CHG_SAYU" color="#32333b" background="#ffffff" cursor="pointer"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtnBottom" taborder="1" text="" cssclass="div_POP_msg_btnbg" left="20.00" right="20" height="60" bottom="1">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="11"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="sta_Before" taborder="2" cssclass="sta_WF_inputTitle" left="20.00" top="281" height="399" width="130" onclick="Static24_onclick" text="변경 전 요청내용&#13;&#10;- No.1"/>
+        <Static id="Static00_01_00_00_00" taborder="3" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="330" right="980"/>
+        <Static id="sta_title" taborder="4" text="변경 이력" cssclass="sta_WF_gridTitle" left="20.00" top="9" right="20" height="24" style="align:left middle;"/>
+        <Static id="Static33_00_00_00" taborder="5" cssclass="Guide_Color" visible="false" left="0" top="33" right="0" height="10" background="#e5dbfa" text=""/>
+        <Static id="Static00_01_00" taborder="6" left="0" top="229" height="20" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="stcInfoTitle3_00" taborder="7" left="20" top="247" height="24" cssclass="sta_WF_gridTitle" width="200" text="변경 전 내용" onclick="stcInfoTitle3_00_onclick"/>
+        <Static id="Static33_00_00" taborder="8" cssclass="Guide_Color" visible="false" left="0" top="271" right="0" height="10" background="#e5dbfa"/>
+        <Static id="Static00_01_00_00_00_00" taborder="9" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="330" right="0"/>
+        <Static id="Static21" taborder="10" cssclass="sta_WF_inputBg" left="149.00" top="281" height="399" right="20" text="" onclick="Static21_onclick"/>
+        <Div id="divWebEditor" taborder="11" left="151" top="283" right="22" url="comm::comWebEditor.xfdl" text="" height="395">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Static id="Static33_00_00_00_00" taborder="12" cssclass="Guide_Color" visible="false" left="0" top="0" right="0" height="10" background="#e5dbfa" text=""/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsSub">
+        <ColumnInfo>
+          <Column id="CD_NO" type="STRING" size="256"/>
+          <Column id="LANG_CD" type="STRING" size="256"/>
+          <Column id="UP_CD_NO" type="STRING" size="256"/>
+          <Column id="CD_LVL" type="STRING" size="256"/>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="UP_CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+          <Column id="CMM_CD_DESC" type="STRING" size="256"/>
+          <Column id="ITM_VAL_1" type="STRING" size="256"/>
+          <Column id="ITM_VAL_2" type="STRING" size="256"/>
+          <Column id="ITM_VAL_3" type="STRING" size="256"/>
+          <Column id="ITM_VAL_4" type="STRING" size="256"/>
+          <Column id="ITM_VAL_5" type="STRING" size="256"/>
+          <Column id="CODE_DIV" type="STRING" size="256"/>
+          <Column id="SORT_ORDR" type="STRING" size="256"/>
+          <Column id="USE_YN" type="STRING" size="256"/>
+          <Column id="RMK" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM_MAIN" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM_SUB" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMain">
+        <ColumnInfo>
+          <Column id="CD_NO" type="STRING" size="256"/>
+          <Column id="LANG_CD" type="STRING" size="256"/>
+          <Column id="UP_CD_NO" type="STRING" size="256"/>
+          <Column id="CD_LVL" type="STRING" size="256"/>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="UP_CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+          <Column id="CMM_CD_DESC" type="STRING" size="256"/>
+          <Column id="ITM_VAL_1" type="STRING" size="256"/>
+          <Column id="ITM_VAL_2" type="STRING" size="256"/>
+          <Column id="ITM_VAL_3" type="STRING" size="256"/>
+          <Column id="ITM_VAL_4" type="STRING" size="256"/>
+          <Column id="ITM_VAL_5" type="STRING" size="256"/>
+          <Column id="CODE_DIV" type="STRING" size="256"/>
+          <Column id="SORT_ORDR" type="STRING" size="256"/>
+          <Column id="USE_YN" type="STRING" size="256"/>
+          <Column id="RMK" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRet"/>
+      <Dataset id="dsContChk">
+        <ColumnInfo>
+          <Column id="REQ_CONT" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="CHG_SAYU" type="STRING" size="256"/>
+          <Column id="BEFORE_CONT" type="STRING" size="256"/>
+          <Column id="ING_PHASE" type="STRING" size="256"/>
+          <Column id="REQ_USER_ID" type="STRING" size="256"/>
+          <Column id="REQ_USER_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)	︰ 요청내용 변경이력
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2025.03.22
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2025.03.22	WEMB		최초작성
+*------------------------------------------------------------------
+* Description
+	<< Popup param >>
+	pGridFormats	: 선택 목록에 사용될 그리드 포맷
+	pGridInnerDsArr	: 선택 목록 그리드에 콤보 InnerDataset Object Array
+	pDsData			: 선택 목록 그리드 Bind Dataset Object
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+ include "lib::lib_WorkFlow.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.dsContChk.setInsertRow();
+	this.dsContChk.setColumn(0,"REQ_ID",this.getOwnerFrame().pDs.getColumn(0,"REQ_ID")); // 요청서ID
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 본문내용 수정이력
+this.fnContUpdate = function()
+{
+	if(!this.dsContChk.getColumnInfo("BEFORE_CONT")){
+		this.dsContChk.addColumn("BEFORE_CONT", "STRING");
+	}
+	var sTranId = "contUpdateCnt";								// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "SR5000D/contUpdateCnt";						// 서비스명
+    var sInDs = "dsWfSrm=dsContChk";							// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsContChk=dsContChk";							// 서버에서 수신할 데이타셋
+    var sArg = "";												// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+// 선택
+this.fnSelect = function(selType)
+{	
+	
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "contUpdateCnt" :
+			
+			if(this.dsContChk.rowcount > 0){
+				var webConts = this.dsContChk.getColumn(this.dsContChk.rowposition, "BEFORE_CONT")||'';
+				this.divWebEditor.form.setContent(webConts, false);
+			};
+			
+			//this.sta_Before
+			Ex.core.toast(this, "10002");
+
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{	
+	//this.dsMain.setInsertRow();
+	this.fnGetCmmCd();
+	this.fnContUpdate();	// 히스토리 검색
+	//this.divWebEditor.height = "399px";
+	//this.reqInfo.PARENT_FORM.setWfProcDivFormSize(this.parent, this.getOffsetHeight());
+	
+	this.divWebEditor.form.initCreate(true);
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSelect" :			// 선택
+			this.fnSelect();
+			break;
+
+		case "btnClose" :			// 닫기
+			Ex.core.pclose(this);
+			break;
+	}
+}
+
+// 공통 onkeydown event : component
+this.fnCommOnkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == '13')
+	{
+		this.divContent.form.divSearchArea.form.btnSearch.setFocus();
+		this.fnSearch();
+		obj.setFocus();
+	}
+};
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+this.divPage_mainGrid_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	var webConts = this.dsContChk.getColumn(this.dsContChk.rowposition, 'BEFORE_CONT')||'';
+	this.divWebEditor.form.setContent(webConts, false);
+				
+	this.sta_Before.set_text("변경 전 요청내용\n- No."+(this.dsContChk.rowposition+1));	
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="Static00_01_00" propid="value" datasetid="dsSrMaPrj" columnid="PRJ_NM"/>
+      <BindItem id="item1" compid="Static00_01_00.form.edtCntr9" propid="value" datasetid="dsSrReqCtPayInsptOp" columnid="CONF_DESC"/>
+      <BindItem id="item2" compid="Static00_01_00.form.txaContents" propid="value" datasetid="dsSrReqIvInfo" columnid="DSUS_RSN"/>
+      <BindItem id="item3" compid="Static00_01_00.form.cboCol1_00" propid="value" datasetid="dsSrReqIvInfo" columnid="PRGS_PARG_MN"/>
+    </Bind>
+  </Form>
+</FDL>

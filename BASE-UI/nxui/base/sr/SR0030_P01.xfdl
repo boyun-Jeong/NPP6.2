@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR0030_P01" left="0" top="0" width="750" height="277" titletext="접수반려의견작성(기본화면)" onload="form_onload" scrolltype="none" cssclass="">
+    <Layouts>
+      <Layout width="750" height="277" mobileorientation="landscape">
+        <Div id="divGrdTopBtn" taborder="0" width="425" height="24" bottom="626" visible="true" right="18.48%" isButtonGroup="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+              <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" bottom="0" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staAuthTitle" taborder="1" text="사용자의 권한그룹" left="1520" top="70" width="200" height="24" cssclass="sta_WF_gridTitle"/>
+        <Div id="divBottom" taborder="2" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnProc" taborder="1" text="" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="125" width="100" height="32" bottom="14"/>
+              <Button id="btnClose" taborder="0" text="취소" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divContent" taborder="3" text="Div00" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="Static00_01_00" taborder="0" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Static id="Static00_01_00_00" taborder="1" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+              <Static id="Static00_02" taborder="2" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="0"/>
+              <Static id="stcBg01_00_00" taborder="4" left="20.00" height="163" cssclass="sta_WF_inputBg" right="20" text="" top="34"/>
+              <Static id="stcOpinion" taborder="3" left="20.00" top="34" width="90" height="163" cssclass="sta_WF_inputTitle"/>
+              <TextArea id="txaOpinion" taborder="5" left="115.00" top="39" height="153" cssclass="txa_WF_normal" right="25" enable="true" validationGroup="fvValiCmp"/>
+              <Static id="stcTitle" taborder="6" text="" cssclass="sta_WF_gridTitle" left="20.00" top="0" width="129" height="24"/>
+              <Static id="stcEmpty01" taborder="7" left="0" top="24" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsRtn">
+        <ColumnInfo>
+          <Column id="SAVE_GUBUN" type="STRING" size="256"/>
+          <Column id="OPINION" type="STRING" size="256"/>
+          <Column id="RESULT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)    ︰ SR0030_P01
+* 화면(명) ︰ 검토의견 공통
+* 메뉴(경로)    ︰ 공통
+* 화면 설명 ︰ SPP 검토의견 작성 팝업
+* 작성자       ︰ WEMB
+* 작성일       ︰ 2023.07.18
+* 수정이력  ︰
+*------------------------------------------------------------------
+* 수정일           작성자 이력
+*------------------------------------------------------------------
+* 2023.07.18    WEMB    최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.isOpinEss = false; //의견 필수 입력 여부
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+    this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	if( Ex.isEmpty(this.getOwnerFrame().pIS_CONFIRM) )	this.getOwnerFrame().pIS_CONFIRM = false;
+
+    if( Ex.isEmpty(this.getOwnerFrame().pIS_OPIN_ESS) )
+    {
+        this.isOpinEss = false;
+    }
+    else
+    {
+        if(this.getOwnerFrame().pIS_OPIN_ESS)   this.isOpinEss = true;
+        else                                    this.isOpinEss = false;
+    }
+    
+    if( Ex.isEmpty(this.getOwnerFrame().pSAVE_GUBUN) )
+    {
+        var param = {id : "pAlertSaveGubunI", msg : "접수/반려/종료에 대한 구분값이 올바르지 않습니다."};
+        Ex.core.alert(this, param);
+        return;
+    }
+    else
+    {
+        var btnText = "";
+        
+        this.dsRtn.setColumn(0, "SAVE_GUBUN", this.getOwnerFrame().pSAVE_GUBUN);
+        
+		if(this.getOwnerFrame().pSAVE_GUBUN == "APV")       btnText = Ex.isNvl(this.getOwnerFrame().pBtnText, "승인");
+        else if(this.getOwnerFrame().pSAVE_GUBUN == "REV")  btnText = Ex.isNvl(this.getOwnerFrame().pBtnText, "접수");
+        else if(this.getOwnerFrame().pSAVE_GUBUN == "RTRN") btnText = Ex.isNvl(this.getOwnerFrame().pBtnText, "반려");
+		else if(this.getOwnerFrame().pSAVE_GUBUN == "EXAM") btnText = Ex.isNvl(this.getOwnerFrame().pBtnText, "검토");
+		else if(this.getOwnerFrame().pSAVE_GUBUN == "END")	btnText = Ex.isNvl(this.getOwnerFrame().pBtnText, "종료");
+
+        this.divBottom.form.btnProc.set_text(btnText);
+        this.divContent.form.stcOpinion.set_text(btnText + " 의견");
+        this.divContent.form.stcTitle.set_text(btnText + " 의견 작성");
+        
+        if(this.isOpinEss)
+        {
+            this.divContent.form.stcOpinion.set_cssclass("sta_WF_inputTitle_E");
+            this.divContent.form.txaOpinion.set_validation(btnText + " 의견;NULL");
+        }
+
+        if(this.getOwnerFrame().pSAVE_GUBUN == "EXAM")
+        {
+            this.divContent.form.stcOpinion.set_text("검토 의견");
+            this.divBottom.form.btnProc.set_text("확정");
+        }
+        else if(this.getOwnerFrame().pSAVE_GUBUN != "REV" && this.getOwnerFrame().pSAVE_GUBUN != "RTRN" &&
+				this.getOwnerFrame().pSAVE_GUBUN != "APV" && this.getOwnerFrame().pSAVE_GUBUN != "EXAM" &&
+				this.getOwnerFrame().pSAVE_GUBUN != "END")
+        {
+            var param = {id : "pAlertSaveGubunI", msg : "접수/승인/반려/종료에 대한 구분값이 올바르지 않습니다."};
+            Ex.core.alert(this, param);
+            return;
+        }
+    }
+    
+    if( !Ex.isEmpty(this.getOwnerFrame().pOPINION) ) this.dsRtn.setColumn(0, "OPINION", this.getOwnerFrame().pOPINION);
+    this.divContent.form.txaOpinion.setFocus();
+}
+
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+    // 에러메세지 처리
+    if (nErrorCode < 0) 
+    {
+        var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+        Ex.core.error(this, param);
+        return;
+    }
+            
+    // 각 Transaction별 CallBack 처리
+    switch (sSvcId)
+    {
+        case "" :
+            break;
+    }
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+    // TO DO
+    // 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+    switch (sSvcId)
+    {
+        case "" :
+            break;
+    }
+    
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+    // TO DO
+    // 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+    // alert/error : 무조건 true 반환
+    // confirm     : true/false 선택적 반환
+    if(!varValue) return;
+    
+    switch(mID)
+    {
+        case "pAlertSaveGubunI" :   // 그냥 닫기
+            this.dsRtn.setColumn(0, "RESULT", "CLOSE");
+            Ex.core.pclose(this, this.dsRtn.saveXML());
+            break;
+            
+        case "pConfirm" :           // 접수/반려 버튼
+            this.dsRtn.setColumn(0, "RESULT", "PROC");
+            Ex.core.pclose(this, this.dsRtn.saveXML());
+            break;
+    }
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCheckValidate = function()
+{
+    if( !Ex.util.checkValidate(this.divContent, "fvValiCmp") ) return false;
+    return true;
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+    switch(obj.name)
+    {       
+        case "btnProc" :
+            if( !this.fnCheckValidate() )   return;
+
+            if( !Ex.isEmpty(this.getOwnerFrame().pIS_CONFIRM) && this.getOwnerFrame().pIS_CONFIRM )
+            {
+                var param = {
+                            id : "pConfirm"
+                          , msg : "10008"
+                          , arrparam : [this.divBottom.form.btnProc.text]
+                          , msgtype : "I"};
+                Ex.core.confirm(this, param);
+			}
+            else
+            {
+                this.fnMsgAfter("pConfirm", true);
+            }
+            break;
+
+        case "btnClose" :
+            Ex.core.pclose(this);
+            break;
+    }
+}]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContent.form.txaOpinion" propid="value" datasetid="dsRtn" columnid="OPINION"/>
+    </Bind>
+  </Form>
+</FDL>

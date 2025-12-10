@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="CreateJAVA_temlplte" left="0" top="0" width="1840" height="550" titletext="JAVA templete 생성" onload="form_onload">
+    <Layouts>
+      <Layout width="1840" height="550">
+        <Static id="Static00_01" taborder="1" text="처리 결과" cssclass="sta_WF_title" left="5" top="315" width="100" height="19"/>
+        <TextArea id="txt_qurey" taborder="0" left="5" top="Static00_01:6" right="5" bottom="5" style="font:10 나눔고딕코딩,맑은 고딕;" readonly="true"/>
+        <Div id="divInput" taborder="2" left="5" top="20" height="28" right="0" border="1px solid black">
+          <Layouts>
+            <Layout>
+              <Static id="Static00_00" taborder="0" text="패키지명" cssclass="sta_WF_SchTitle" left="5.00" top="1" width="61" height="24"/>
+              <Edit id="edtPkgNm" taborder="1" left="Static00_00:0.00" top="1" height="24" width="68" maxlength="4" inputmode="lower" inputtype="alpha"/>
+              <Static id="Static00" taborder="2" text="프로그램ID" cssclass="sta_WF_SchTitle" left="edtPkgNm:10.00" top="1" width="71" height="24" onrbuttonup="divInput_Static00_onrbuttonup"/>
+              <Edit id="edtPgmId" taborder="3" left="Static00:0" top="1" height="24" width="158" inputtype="alpha,digit"/>
+              <Static id="Static00_00_00" taborder="4" text="프로그램 제목" cssclass="sta_WF_SchTitle" left="edtPgmId:10" top="1" width="86" height="24"/>
+              <Edit id="edtPgmTitle" taborder="5" left="Static00_00_00:0" top="1" height="24" width="222" imemode="hangul"/>
+              <Static id="Static00_00_01" taborder="6" text="작성자명" cssclass="sta_WF_SchTitle" left="edtPgmTitle:10" top="1" width="61" height="24"/>
+              <Edit id="edtRegUserNm" taborder="7" left="Static00_00_01:0" top="1" height="24" width="118" imemode="hangul"/>
+              <Static id="Static00_00_01_00" taborder="8" text="작성일" cssclass="sta_WF_SchTitle" left="edtRegUserNm:10" top="1" width="51" height="24"/>
+              <Calendar id="CalRegDate" taborder="9" left="Static00_00_01_00:0" top="1" width="120" height="24" showyearspin="true" showmonthspin="true"/>
+              <Button id="btnExec" taborder="10" text="생성" top="1" height="24" onclick="fnButtonComOnclick" width="77" right="5" cursor="pointer"/>
+              <Button id="btnCheck" taborder="11" text="체크" top="1" height="24" onclick="fnButtonComOnclick" width="77" right="87" cursor="pointer"/>
+              <CheckBox id="chkCreMapper" taborder="12" text="Mapper 포함여부" left="CalRegDate:10" top="3" width="120" height="20" falsevalue="N" truevalue="Y"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00_01_00" taborder="3" text="체크 내용" cssclass="sta_WF_title" left="5" top="55" width="100" height="19"/>
+        <TextArea id="txt_qurey00" taborder="4" left="5" top="79" right="5" bottom="Static00_01:21" style="font:10 나눔고딕코딩,맑은 고딕;" readonly="true"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PKG_NM" type="STRING" size="256"/>
+          <Column id="PGM_ID" type="STRING" size="256"/>
+          <Column id="PGM_TITLE" type="STRING" size="256"/>
+          <Column id="REG_USER_NM" type="STRING" size="256"/>
+          <Column id="REG_DATE" type="STRING" size="256"/>
+          <Column id="CRE_MAPPER_YN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CRE_MAPPER_YN">Y</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsChkResult"/>
+      <Dataset id="dsResult">
+        <ColumnInfo>
+          <Column id="RTN_CD" type="STRING" size="256"/>
+          <Column id="RTN_MSG" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divInput.form.edtPkgNm" propid="value" datasetid="dsCond" columnid="PKG_NM"/>
+      <BindItem id="item1" compid="divInput.form.edtPgmId" propid="value" datasetid="dsCond" columnid="PGM_ID"/>
+      <BindItem id="item2" compid="divInput.form.edtPgmTitle" propid="value" datasetid="dsCond" columnid="PGM_TITLE"/>
+      <BindItem id="item3" compid="divInput.form.edtRegUserNm" propid="value" datasetid="dsCond" columnid="REG_USER_NM"/>
+      <BindItem id="item5" compid="txt_qurey00" propid="value" datasetid="dsChkResult" columnid="RTN_CHK_MSG"/>
+      <BindItem id="item6" compid="txt_qurey" propid="value" datasetid="dsResult" columnid="RTN_MSG"/>
+      <BindItem id="item4" compid="divInput.form.chkCreMapper" propid="value" datasetid="dsCond" columnid="CRE_MAPPER_YN"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ JAVA FILE LOCAL 자동 생성
+* 메뉴(경로)	︰ 공통관리 > 플랫폼 > 공통
+* 화면 설명	︰ 공통 팝업
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.00
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	trace("workArea form init call");
+	this.divInput.form.edtRegUserNm.set_value(Ex.util.getSession("gvUserNm"));
+	this.divInput.form.CalRegDate.set_value(Ex.util.today());
+	this.divInput.form.edtPkgNm.setFocus();
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+}
+
+// 저장
+this.fnSave = function()
+{
+	trace("fnSave call");
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "check" : // 서비스 ID
+			if(this.dsResult.rowcount == 1)
+			{
+				this.dsResult.clearData();
+			}
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	trace("pID="+pID+" ,varValue="+varValue);
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue) return;
+
+	if(mID == "pAlertPkgNmI")
+	{
+		this.divInput.form.edtPkgNm.setFocus();
+	}
+	else if(mID == "pAlertPgmIdI")
+	{
+		this.divInput.form.edtPgmId.setFocus();
+	}
+	else if(mID == "pAlertPgmTitleI")
+	{
+		this.divInput.form.edtPgmTitle.setFocus();
+	}
+	else if(mID == "pAlertRegUserNmI")
+	{
+		this.divInput.form.edtRegUserNm.setFocus();
+	}
+	else if(mID == "pAlertRegDateI")
+	{
+		this.divInput.form.CalRegDate.setFocus();
+	}
+	else if(mID == "pProcConfirmI")
+	{
+		this.dsCond.setColumn(0, "REG_DATE", Ex.util.getMaskFormatString(Ex.util.strToDate(this.divInput.form.CalRegDate.value), "yyyy. MM. dd."));
+		var sTranId = "proc";				// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+		var sService = "JAVACreate/proc";	// 서비스명
+		var sInDs = "dsCond=dsCond";		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+		var sOutDs = "dsResult=dsResult";	// 서버에서 수신할 데이타셋
+		var sArg = "";						// 서버 @ParamVariable 인자와 맵핑됨
+		/**
+		 * 기본문법
+		 * this : transaction 실행스코프 (필수)
+		 */
+		Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+//사용자 정의 함수
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+//공통 버튼 이벤트
+this.fnButtonComOnclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+    var sObjId = obj.name;
+    
+    switch(sObjId)
+	{
+		case "btnCheck" :
+			if(!this.fnValidCheck()) return;
+			
+			var sTranId = "check";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+			var sService = "JAVACreate/check";		// 서비스명
+			var sInDs = "dsCond=dsCond";			// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+			var sOutDs = "dsChkResult=dsChkResult";	// 서버에서 수신할 데이타셋
+			var sArg = "";							// 서버 @ParamVariable 인자와 맵핑됨
+			/**
+			 * 기본문법
+			 * this : transaction 실행스코프 (필수)
+			 */
+			Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+            break;
+			
+        case "btnExec" :
+			if(!this.fnValidCheck()) return;
+		
+			if(this.dsChkResult.rowcount == 0)
+			{
+				var param = {id : "pAlertCheckBtnI", msg : "체크 버튼을 통해 생성 가능여부 체크 후 생성을 진행하시기 바랍니다."};
+				Ex.core.alert(this, param);
+				return false;
+			}
+			else
+			{
+				if(this.dsChkResult.getColumn(0, "RTN_CHK_CD") == 0)
+				{
+					if(this.dsChkResult.getColumn(0, "CHK_PKG_NM") == this.dsCond.getColumn(0, "PKG_NM") &&
+					   this.dsChkResult.getColumn(0, "CHK_PGM_ID") == this.dsCond.getColumn(0, "PGM_ID"))
+					{
+						var param = {id : "pProcConfirmI", msg : "JAVA Templete 파일을 생성하시겠습니까?"};
+						Ex.core.confirm(this, param);
+						return;
+					}
+					else
+					{
+						var param = {id : "pAlertCheckBtnI", msg : "패키지명 [또는] 프로그램ID가 변경되었습니다.\n체크 버튼 실행 후\n다시 생성 버튼을 실행 하시기 바랍니다."};
+						Ex.core.alert(this, param);
+						return false;
+					}
+				}
+				else
+				{
+					var param = {id : "pAlertCheckBtnI", msg : "패키지명 [또는] 프로그램ID를 올바르게 지정 후\n다시 체크 버튼 확인 후\n생성 버튼을 실행 하시기 바랍니다."};
+					Ex.core.alert(this, param);
+					return false;
+				}
+			}
+	}
+}
+
+this.fnValidCheck = function()
+{
+	if( Ex.isEmpty(this.dsCond.getColumn(0, "PKG_NM")))
+	{
+		var param = {id : "pAlertPkgNmI", msg : "생성할 패키지명이 입력되지 않았습니다."};
+		Ex.core.alert(this, param);
+		return false;
+	}
+	else if(Ex.util.getLength(this.dsCond.getColumn(0, "PKG_NM"), "utf8") < 2)
+	{
+		var param = {id : "pAlertPkgNmI", msg : "패키지명은 2자리로 입력해야 합니다."};
+		Ex.core.alert(this, param);
+		return false;
+	}
+
+	if( Ex.isEmpty(this.dsCond.getColumn(0, "PGM_ID")))
+	{
+		var param = {id : "pAlertPgmIdI", msg : "생성할 프로그램ID가 입력되지 않았습니다."};
+		Ex.core.alert(this, param);
+		return false;
+	}
+	else if(Ex.util.getLength(this.dsCond.getColumn(0, "PGM_ID"), "utf8") < 7)
+	{
+		var param = {id : "pAlertPkgNmI", msg : "프로그램ID는 7자리로 입력해야 합니다.\nex) XX0010W"};
+		Ex.core.alert(this, param);
+		return false;
+	}
+	
+	if( Ex.isEmpty(this.dsCond.getColumn(0, "PGM_TITLE")))
+	{
+		var param = {id : "pAlertPkgTitleI", msg : "프로그램 제목이 입력되지 않았습니다."};
+		Ex.core.alert(this, param);
+		return false;
+	}
+	return true;
+}
+
+this.divInput_Static00_onrbuttonup = function(obj:nexacro.Static,e:nexacro.MouseEventInfo)
+{
+	trace("e.ctrlkey : "  + e.ctrlkey + " e.shiftkey : " + e.shiftkey);
+	if(e.ctrlkey && e.shiftkey)
+	{
+		this.divInput.form.edtPgmId.set_inputmode("normal");
+	}
+};]]></Script>
+  </Form>
+</FDL>

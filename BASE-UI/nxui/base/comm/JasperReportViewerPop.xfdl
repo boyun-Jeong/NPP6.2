@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="JasperReportViewerPop" width="1280" height="800" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout height="800" width="1280">
+        <Div id="divBottom" taborder="0" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divViewer" taborder="1" text="div00" left="20" top="20" right="20" bottom="80">
+          <Layouts>
+            <Layout>
+              <WebView id="wevReport" taborder="0" left="0" top="0" bottom="0" right="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Bind>
+      <BindItem id="item0" compid="divBottom.form.divSearchArea.form.edtSearchStr" propid="value" datasetid="dsCond" columnid="SEARCH_STR"/>
+      <BindItem id="item1" compid="divBottom.form.divSearchArea.form.edtCoNm" propid="value" datasetid="dsCond" columnid="CO_NM"/>
+      <BindItem id="item2" compid="divBottom.form.divSearchArea.form.edtDeptNm" propid="value" datasetid="dsCond" columnid="DEPT_NM"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ comJasperReportViewerPop
+* 화면(명)	︰ jasperReport Viewer Popup
+* 메뉴(경로)	︰ 
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2025.01.13
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일			작성자		이력
+*------------------------------------------------------------------
+* 2025.01.13	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnClose" :
+			Ex.core.pclose(this);
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.getOwnerFrame().set_titletext("JasperReports Viewer");
+	
+	trace("this.getOwnerFrame() : ", this.getOwnerFrame())
+	if( Ex.isEmpty(this.getOwnerFrame().pFileNm) )
+	{
+		var param = {id : "ERROR", msg : "출력할 보고서 파일명이 지정되지 않았습니다."};
+		Ex.core.error(this, param);
+		return;
+	}
+	else
+	{
+		if(this.getOwnerFrame().pDsParam == "[object Dataset]")
+		{
+			this.dsParam.loadXML(this.getOwnerFrame().pDsParam.saveXML());
+		}
+		else
+		{
+			var param = {id : "ERROR", msg : "파라미터 [DATASET]이 올바르지 않습니다."};
+			Ex.core.error(this, param);
+			return;
+		}
+		Ex.util.callJasperReport(this, this.divViewer.form.wevReport, this.getOwnerFrame().pDbConn, this.getOwnerFrame().pFileNm, this.dsParam);
+	}
+}]]></Script>
+    <Objects>
+      <Dataset id="dsParam"/>
+    </Objects>
+  </Form>
+</FDL>

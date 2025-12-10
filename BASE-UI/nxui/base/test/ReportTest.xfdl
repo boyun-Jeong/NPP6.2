@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="BoardInsert_P02" width="800" height="800" titletext="New Form" onload="form_onload">
+    <Layouts>
+      <Layout height="800" width="800">
+        <Div id="divBottom" taborder="0" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTest" taborder="1" text="div00" left="0" top="0" width="800" height="740">
+          <Layouts>
+            <Layout>
+              <Button id="btnReport" taborder="0" left="575.00" top="17" width="75" height="26" onclick="fnCommOnclick" cssclass="btn_WF_search" text="조회"/>
+              <Edit id="edtAssetNm" taborder="1" left="255.00" top="19" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown" width="310"/>
+              <Static id="stc00" taborder="2" text="레포트명" left="135.00" top="123" width="120" height="23" cssclass="sta_WF_schTitle"/>
+              <Static id="stc00_00" taborder="3" text="요청서ID" left="135.00" top="20" width="70" height="23" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtAssetNm00" taborder="4" left="255.00" top="119" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown" width="310"/>
+              <Button id="btnReport00" taborder="5" text="조회" left="575.00" top="117" width="75" height="26" onclick="fnCommOnclick" cssclass="btn_WF_search"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Bind>
+      <BindItem id="item0" compid="divBottom.form.divSearchArea.form.edtSearchStr" propid="value" datasetid="dsCond" columnid="SEARCH_STR"/>
+      <BindItem id="item1" compid="divBottom.form.divSearchArea.form.edtCoNm" propid="value" datasetid="dsCond" columnid="CO_NM"/>
+      <BindItem id="item2" compid="divBottom.form.divSearchArea.form.edtDeptNm" propid="value" datasetid="dsCond" columnid="DEPT_NM"/>
+      <BindItem id="item4" compid="divTest.form.edtAssetNm" propid="value" datasetid="dsFormInfo" columnid="REQ_ID"/>
+      <BindItem id="item3" compid="divTest.form.stc00_00" propid="value" datasetid="dsFormInfo" columnid="REQ_ID"/>
+      <BindItem id="item5" compid="divTest.form.edtAssetNm00" propid="value" datasetid="dsFormInfo" columnid="REPORT_NM"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ BoardInsert_P02
+* 화면(명)		︰ 게시판 생성
+* 메뉴(경로)	︰ TEST > TEST-2 > 게시판 모음 POP_UP
+* 화면 설명	︰ TEST 게시판 생성
+* 작성자		︰ WEMB
+* 작성일		︰ 2024.11.19
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2024.11.19	 WEMB			최초작성
+*------------------------------------------------------------------
+* Description
+	<< Popup param >>
+	* pWebViewUrl		WebView에 표시할 url					
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.objApp = nexacro.getApplication();
+this.pWebViewUrl;
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+    //this.dsFormInfo.setColumn(0, "REQ_ID", 'TT202410070112');
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnClose" :
+			Ex.core.pclose(this);
+			break;
+			
+		case "btnReport" : //리포트(pdf 출력) 버튼
+			trace("---report--", this.dsFormInfo.getColumn(0, 'REQ_ID'))
+			this.fnReportPrint();
+			break;
+			
+		case "btnReport00" : //리포트(pdf 출력) 버튼
+			trace("---report--", this.dsFormInfo.getColumn(0, 'REQ_ID'))
+			this.fnReportPrint();
+			break;
+	}
+}
+
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.pWebViewUrl = (this.getOwnerFrame().pWebViewUrl||'');
+
+	if(!Ex.isEmpty(this.pWebViewUrl))
+	{
+		this.divViewer.form.wevReport.set_url(this.pWebViewUrl);
+		this.divViewer.form.wevReport.show();
+	}	
+
+}
+
+this.fnReportPrint = function()
+{
+	console.log("----- REQ_ID : " + this.dsFormInfo.getColumn(0, "REQ_ID"));
+	console.log("REPORT_NM>" , this.dsFormInfo.getColumn(0, 'REPORT_NM'));
+	var fileNm = this.dsFormInfo.getColumn(0, 'REPORT_NM');
+	//var fileNm = "IT_Work"; // 불러올 .jasper 파일명
+
+	// transaction
+// 	var sTranId = "report";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+//     var sService = "report/generate";            	// 서비스명
+//     var sInDs = "";                  				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+//     var sOutDs = "dsCond=dsCond";       			// 서버에서 수신할 데이타셋
+//     var sArg = "reqId="+encodeURIComponent(REQ_ID)+" file=IT_Work";            // 서버 @ParamVariable 인자와 맵핑됨
+// 	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+
+	var pdfUrl = "http://localhost:8090/report/generate";
+	//pdfUrl += "?reqId="+encodeURIComponent(this.dsFormInfo.getColumn(0, 'REQ_ID'));
+	pdfUrl += "?reqId="+encodeURIComponent(this.dsFormInfo.getColumn(0, 'REQ_ID'));
+	pdfUrl += "&file="+encodeURIComponent(fileNm);
+	
+	var pWebViewUrl = pdfUrl;
+	Ex.core.popup(	this,
+				'ReportViewer',
+				"test::ReportViewer.xfdl",             		// <--- 팝업창 오픈 Url
+				{ title:Ex.core.word('REPORT') , pWebViewUrl:pWebViewUrl},     	// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)						
+				"autosize"
+	  );
+	
+// 	var objWebBrowser = new WebBrowser("ReportViewer", "0%", 20, "70%", "90%", null, null);
+// 	objWebBrowser.set_url(pdfUrl);
+// 	this.addChild("ReportViewer", objWebBrowser);
+// 	trace("----생성된 웹브라우저-----" , objWebBrowser);
+// 	objWebBrowser.show();
+}
+
+
+this.fnReportPrint = function()
+{
+	console.log("----- REQ_ID : " + this.dsFormInfo.getColumn(0, "REQ_ID"));
+	console.log("REPORT_NM>" , this.dsFormInfo.getColumn(0, 'REPORT_NM'));
+	var fileNm = this.dsFormInfo.getColumn(0, 'REPORT_NM');
+	//var fileNm = "IT_Work"; // 불러올 .jasper 파일명
+
+	// transaction
+// 	var sTranId = "report";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+//     var sService = "report/generate";            	// 서비스명
+//     var sInDs = "";                  				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+//     var sOutDs = "dsCond=dsCond";       			// 서버에서 수신할 데이타셋
+//     var sArg = "reqId="+encodeURIComponent(REQ_ID)+" file=IT_Work";            // 서버 @ParamVariable 인자와 맵핑됨
+// 	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+
+	var pdfUrl = "http://localhost:8090/report/generate";
+	//pdfUrl += "?reqId="+encodeURIComponent(this.dsFormInfo.getColumn(0, 'REQ_ID'));
+	pdfUrl += "?reqId="+encodeURIComponent(this.dsFormInfo.getColumn(0, 'REQ_ID'));
+	pdfUrl += "&file="+encodeURIComponent(fileNm);
+	
+	var pWebViewUrl = pdfUrl;
+	Ex.core.popup(	this,
+				'ReportViewer',
+				"test::ReportViewer.xfdl",             		// <--- 팝업창 오픈 Url
+				{ title:Ex.core.word('REPORT') , pWebViewUrl:pWebViewUrl},     	// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)						
+				"autosize"
+	  );
+	
+// 	var objWebBrowser = new WebBrowser("ReportViewer", "0%", 20, "70%", "90%", null, null);
+// 	objWebBrowser.set_url(pdfUrl);
+// 	this.addChild("ReportViewer", objWebBrowser);
+// 	trace("----생성된 웹브라우저-----" , objWebBrowser);
+// 	objWebBrowser.show();
+}
+]]></Script>
+    <Objects>
+      <Dataset id="dsFormInfo">
+        <ColumnInfo>
+          <Column id="REQ_ID" type="STRING" size="256" description="요청서ID"/>
+          <Column id="REPORT_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

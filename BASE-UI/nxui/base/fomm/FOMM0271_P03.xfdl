@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM0271_P03" left="0" top="0" width="750" height="263" titletext="승인 화면" onload="form_onload" scrolltype="none" cssclass="">
+    <Layouts>
+      <Layout width="750" height="263" mobileorientation="landscape">
+        <Div id="divGrdTopBtn" taborder="0" width="425" height="24" bottom="626" visible="true" right="18.48%" isButtonGroup="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+              <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" bottom="0" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staAuthTitle" taborder="1" text="사용자의 권한그룹" left="1520" top="70" width="200" height="24" cssclass="sta_WF_gridTitle"/>
+        <Div id="divBottom" taborder="2" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="0" text="취소" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="80" height="32" bottom="14"/>
+              <Button id="btnProc" taborder="1" text="" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="btnClose:5" width="80" height="32" bottom="14" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divContent" taborder="3" text="Div00" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="Static00_01" taborder="0" left="5" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-5"/>
+              <Static id="Static00_01_00" taborder="1" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Static id="Static00_01_00_00" taborder="8" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+              <Static id="Static00_02" taborder="9" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="0"/>
+              <Static id="stcBg01_00_00" taborder="5" left="20" height="133" cssclass="sta_WF_inputBg" right="20" text="" top="53"/>
+              <Static id="stcAppvCont" taborder="6" left="20" top="53" width="100" height="133" cssclass="sta_WF_inputTitle" text=""/>
+              <TextArea id="txaAppvCont" taborder="7" left="stcAppvCont:5" top="58" height="123" cssclass="txa_WF_normal" right="25" enable="true"/>
+              <Static id="Static06" taborder="2" cssclass="sta_WF_inputBg" left="20" top="20" height="34" right="20" text=""/>
+              <Static id="stcScore" taborder="3" text="지식 점수" left="20" top="20" width="100" height="34" cssclass="sta_WF_inputTitle"/>
+              <Spin id="spnScore" taborder="4" left="125" top="25" width="95" height="24" max="100" min="0" value="" cssclass="spn_WF_normal"/>
+              <Button id="btnClear" taborder="10" cssclass="btn_WF_ClearIcon" height="24" onclick="fnCommOnclick" top="25" width="24" text="" left="spnScore:2" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsInput">
+        <ColumnInfo>
+          <Column id="KM_ID" type="STRING" size="256"/>
+          <Column id="PROC_STS_CD" type="STRING" size="256"/>
+          <Column id="SCORE" type="STRING" size="256"/>
+          <Column id="APPV_CONT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsResult">
+        <ColumnInfo>
+          <Column id="RTN_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ FOMM0271_P03
+* 화면(명)	︰ 지식 승인/반려 처리 팝업
+* 메뉴(경로)	︰ 지식관리
+* 화면 설명	︰ 지식 승인/반려 처리 팝업
+* 작성자		︰ WEMB
+* 작성일		︰ 2024.12.16
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2024.12.16	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	if( Ex.isEmpty(this.getOwnerFrame().pKmId) )
+	{
+		var param = {id : "pAlertNoKmIdI", msg : "지식번호가 없습니다."};
+		Ex.core.alert(this, param);
+		return;
+	}
+	else
+	{
+		this.dsInput.setColumn(0, "KM_ID", this.getOwnerFrame().pKmId);
+	}
+
+	if( Ex.isEmpty(this.getOwnerFrame().pGubun) )
+	{
+		var param = {id : "pAlertSaveGubunI", msg : "승인/반려에 대한 구분값이 올바르지 않습니다."};
+		Ex.core.alert(this, param);
+		return;
+	}
+	else
+	{
+		if(this.getOwnerFrame().pGubun == "APPV")
+		{
+			this.divContent.form.btnClear.set_visible(true);
+			this.divContent.form.stcAppvCont.set_text(Ex.core.word("의견작성"));
+			this.divContent.form.stcScore.set_cssclass("sta_WF_inputTitle_E");
+			//this.divContent.form.spnScore.set_validation(Ex.core.word("의견작성") + ";NULL");
+			//this.divContent.form.spnScore.set_validationGroup("input01");
+			this.dsInput.setColumn(0, "PROC_STS_CD", "KNOW_PROC_STS_CD02");
+			this.divBottom.form.btnProc.set_text(Ex.core.word("승인"));
+			this.divBottom.form.btnProc.set_visible(true);
+			this.divContent.form.spnScore.setFocus();
+		}
+		else if(this.getOwnerFrame().pGubun == "REJECT")
+		{
+			this.divContent.form.btnClear.set_visible(true);
+			this.divContent.form.stcAppvCont.set_text(Ex.core.word("반려사유"));
+			this.divContent.form.stcAppvCont.set_cssclass("sta_WF_inputTitle_E");
+			this.divContent.form.txaAppvCont.set_validation(Ex.core.word("반려사유") + ";NULL");
+			this.divContent.form.txaAppvCont.set_validationGroup("input01");
+			this.dsInput.setColumn(0, "PROC_STS_CD", "KNOW_PROC_STS_CD03");
+			this.divBottom.form.btnProc.set_text(Ex.core.word("반려"));
+			this.divBottom.form.btnProc.set_visible(true);
+			this.divContent.form.spnScore.setFocus();
+		}
+		else if(this.getOwnerFrame().pGubun == "VIEW_A" || this.getOwnerFrame().pGubun == "VIEW_R")
+		{
+			if(this.getOwnerFrame().pGubun == "VIEW_A")
+			{
+				this.divContent.form.stcAppvCont.set_text(Ex.core.word("작성의견"));
+			}
+			else if(this.getOwnerFrame().pGubun == "VIEW_R")
+			{
+				this.divContent.form.stcAppvCont.set_text(Ex.core.word("반려사유"));
+			}
+
+			this.divContent.form.spnScore.set_value(this.getOwnerFrame().pScore);
+			this.divContent.form.txaAppvCont.set_value(this.getOwnerFrame().pAppvCont);
+			this.divContent.form.spnScore.set_readonly(true);
+			this.divContent.form.txaAppvCont.set_readonly(true);
+		}
+		else
+		{
+			var param = {id : "pAlertSaveGubunI", msg : "승인/반려에 대한 구분값이 올바르지 않습니다.11"};
+			Ex.core.alert(this, param);
+			return;
+		}
+	}
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+//저장
+this.fnProc = function()
+{
+	trace("this.fnProc()~~~~~~~~~~~~~~~~~~~~~~~");
+	// transaction
+	var sTranId = "proc";				// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "SV0400P/save02";	// 서비스명
+    var sInDs = "dsInput=dsInput:A";	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsResult=dsResult";	// 서버에서 수신할 데이타셋
+    var sArg = "";						// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "proc" :
+			if(this.dsResult.getColumn(0, "RTN_CD") == 0)
+			{
+				Ex.core.pclose(this, "Y");
+			}
+			else if(this.dsResult.getColumn(0, "RTN_CD") == -1)		//등록 상태가 아닌 경우
+			{
+				this.divBottom.form.btnProc.set_visible(false);
+				var oParam = {id : "alertSaveCheckI", msg : "해당 지식 내역은 등록 상태가 아니므로 승인/반려가 불가능합니다.", msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return false;
+			}
+			else if(this.dsResult.getColumn(0, "RTN_CD") == -2)	//등록/반려 상태인 내역만 삭제 가능
+			{
+				this.divBottom.form.btnProc.set_visible(false);
+				var oParam = {id : "alertSaveCheckI", msg : "이미 삭제된 지식 등록 내역입니다.", msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return false;
+			}
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch (pID)
+	{
+		case "" :
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "pAlertNoKmIdI" :
+		case "pAlertSaveGubunI" :		// 그냥 닫기		
+			Ex.core.pclose(this, "N");
+			break;
+			
+		case "pConfirm" :				// 승인 또는 반려 처리
+			this.fnProc();
+			break;
+
+		case "alertScoreI" :
+			this.divContent.form.spnScore.setFocus();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCheckValidate = function()
+{
+	if(this.getOwnerFrame().pGubun == "APPV")
+	{
+		if( Ex.isEmpty(this.dsInput.getColumn(0, "SCORE")) )
+		{
+			var oParam = {id : "alertScoreI", msg : "11001", arrparam : [this.divContent.form.stcScore.text], msgtype : "I"};
+			Ex.core.alert(this, oParam);
+			return false;
+		}
+	}
+	if( !Ex.util.checkValidate(this.divContent, "input01") ) return false;
+	return true;
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnClear" :
+			this.dsInput.setColumn(0, "SCORE", "");
+			break;
+			
+		case "btnProc" :
+			if( !this.fnCheckValidate() )
+				return;
+				
+			var param = {
+						id : "pConfirm"
+					  , msg : "10008"
+					  , arrparam : [this.divBottom.form.btnProc.text]
+					  , msgtype : "I"};
+			Ex.core.confirm(this, param);
+			break;
+
+		case "btnClose" :
+			Ex.core.pclose(this);
+			break;
+	}
+}]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContent.form.txaAppvCont" propid="value" datasetid="dsInput" columnid="APPV_CONT"/>
+      <BindItem id="item1" compid="divContent.form.spnScore" propid="value" datasetid="dsInput" columnid="SCORE"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM0300_D01" width="250" height="84" titletext="캘린더(날짜영역-Display)" onsize="doSize" ontimer="doTimer" onload="form_onload">
+    <Layouts>
+      <Layout height="84" width="250">
+        <Div id="divBox" taborder="0" left="0" top="0" text="" cssclass="div_WF_calDayBg" bottom="0" right="0">
+          <Layouts>
+            <Layout>
+              <Static id="stcDt" taborder="0" text="날짜" left="5" top="5" width="25" height="33" font="bold 11px 'KoPubL'"/>
+              <Static id="stcAll" taborder="1" text="전체" top="5" height="24" width="65" left="20%" visible="false"/>
+              <Static id="stcAllCnt" taborder="2" text="건수" top="5" height="24" left="114" right="25"/>
+              <Static id="stcComp" taborder="3" top="29" height="24" width="16" left="19.76%" cssclass="stc_WF_legend11" visible="false"/>
+              <Static id="stcCompCnt" taborder="4" text="건수" top="29" height="24" left="114" right="25"/>
+              <Static id="stcNoComp" taborder="5" top="53" width="16" height="24" left="20%" cssclass="stc_WF_legend13" visible="false"/>
+              <Static id="stcNoCompCnt" taborder="6" text="건수" top="53" height="24" left="114" right="25"/>
+              <Static id="stcAllInfo01_01" taborder="7" text="" top="-5" height="5" right="126" width="65"/>
+              <Static id="stcAllInfo00_00_01" taborder="8" text="" top="-5" height="5" width="100" right="26"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/*****************************************************************
+ * 프로그램 ID		: FOMM0300_D01.xfdl
+ * 작성자			: 정보윤
+ * 작성일자		: 2022.12.12
+ * 설명				: 캘린더 Day 항목 양식
+ * 서비스(JAVA)		: 
+ * 라이센스        : 본 프로그램 소스는 농협 서면에 의한 사전 승인 없이
+ *                	  타 업체 및 타 회사원에게 누설 되어서는 안됨. 본 프로그램
+ *                	  소스는 농협의 사전 승인 없이 임의로 복제, 복사, 배포할 수 없음
+ * version			: 1.0		
+ * 변경이력		: {변경일자}, {변경자}: {변경내역} 형식으로 매 줄마다 기록.
+ *****************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/ 
+this.form_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.divBox.form.stcDt.set_text("");
+	this.divBox.form.stcAllCnt.set_text("");
+	this.divBox.form.stcCompCnt.set_text("");
+	this.divBox.form.stcNoCompCnt.set_text("");
+};
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	switch(pID)
+	{
+		case "PJ1910_P01" :
+			trace("D02 this.parent.id : " + this.parent.id);
+			trace("D02 this.parent.parent.id : " + this.parent.parent.id);
+			trace("D02 this.parent.parent.parent.id : " + this.parent.parent.parent.id);
+			trace("D02 this.parent.parent.parent.parent.id : " + this.parent.parent.parent.parent.id);
+			break;
+	}
+}]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

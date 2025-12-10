@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="ref37" classname="ref06" left="0" top="0" width="1620" height="720" titletext="요청서 테스트용" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSend" taborder="1" left="0" top="0" height="446" right="0">
+          <Layouts>
+            <Layout>
+              <Grid id="grdSrBaseInfo" taborder="9" left="0" top="44" height="67" binddataset="dsSrBaseInfo" right="0" autosizingtype="col" autosizebandtype="allband" cellsizingtype="col" cellmovingtype="col">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell/>
+                    </Band>
+                    <Band id="body">
+                      <Cell/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="Static01" taborder="0" cssclass="sta_WF_inputBg" left="0" top="grdSrBaseInfo:10" height="34" right="0"/>
+              <Static id="stcSaveGubun" taborder="1" text="SAVE_GUBUN" cssclass="sta_WF_inputTitle_E" left="0" top="121" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcTempSaveYn" taborder="4" text="TEMP_SAVE_YN" cssclass="sta_WF_inputTitle_E" left="255" top="121" width="130" height="34" style="align:left middle;"/>
+              <Combo id="cboTempSaveYn" taborder="3" left="stcTempSaveYn:5" top="126" width="115" height="24" value="N" index="0" cssclass="cbo_WF_normal" validationGroup="input02" text="N" validation="TEMP_SAVE_YN;NULL" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">N</Col>
+                      <Col id="datacolumn">N</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">Y</Col>
+                      <Col id="datacolumn">Y</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="stcWfProcCd" taborder="2" text="WF_PROC_CD" cssclass="sta_WF_inputTitle_E" left="cboTempSaveYn:5" top="121" width="130" height="34" style="align:left middle;"/>
+              <Combo id="cboSaveGubun" taborder="11" left="stcSaveGubun:5.00" top="126" width="115" height="24" value="N" index="0" cssclass="cbo_WF_normal" validationGroup="input02" text="REG" validation="SAVE_GUBUN;NULL" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">REG</Col>
+                      <Col id="datacolumn">REG</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">REV</Col>
+                      <Col id="datacolumn">REV</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">APV</Col>
+                      <Col id="datacolumn">APV</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">SCRN_RTRN</Col>
+                      <Col id="datacolumn">SCRN_RTRN</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">RTRN</Col>
+                      <Col id="datacolumn">RTRN</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">TEMP</Col>
+                      <Col id="datacolumn">TEMP</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Static id="Static01_00" taborder="5" cssclass="sta_WF_inputBg" left="0" top="0" height="34" right="0"/>
+              <Edit id="edtReqId" taborder="6" left="135.00" top="5" height="24" cssclass="edt_WF_normal" validationGroup="input01" text="" validation="요청서ID;NULL" width="158"/>
+              <Static id="stcTitle01" taborder="7" text="요청서ID" cssclass="sta_WF_inputTitle_E" left="0" top="0" width="130" height="34" style="align:left middle;"/>
+              <Button id="btnSearch" taborder="8" text="조회" top="5" width="65" height="24" onclick="fnCommOnclick" left="edtReqId:5.00"/>
+              <Edit id="edtWfProcCd" taborder="10" left="stcWfProcCd:5.00" top="126" height="24" cssclass="edt_WF_normal" validationGroup="input02" text="" validation="WF_PROC_CD;NULL" width="130"/>
+              <Grid id="grdSaveCheck" taborder="12" left="0" top="165" height="67" binddataset="dsSaveCheck" right="0" autosizingtype="col" autosizebandtype="allband" cellsizingtype="col" cellmovingtype="col">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell/>
+                    </Band>
+                    <Band id="body">
+                      <Cell/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Edit id="edtWfProcCd00" taborder="17" left="915" top="126" height="24" cssclass="edt_WF_normal" validationGroup="input02" text="" validation="WF_PROC_CD;NULL" width="130"/>
+              <Button id="btnSaveCheck" taborder="13" text="saveCheck실행" top="125" width="115" height="24" onclick="fnCommOnclick" left="edtWfProcCd00:5"/>
+              <Button id="btnSendTarget" taborder="14" text="발송대상자 확인" top="125" width="115" height="24" onclick="fnCommOnclick" left="btnSaveCheck:5.00"/>
+              <Grid id="grdSendTarget" taborder="15" left="0" top="241" height="195" binddataset="dsRtnSendList" right="0" autosizingtype="col" autosizebandtype="allband" cellsizingtype="col" cellmovingtype="col">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell/>
+                    </Band>
+                    <Band id="body">
+                      <Cell/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Button id="btnProcReq" taborder="16" text="execReqProc" top="125" width="115" height="24" onclick="fnCommOnclick" left="btnSendTarget:5.00"/>
+              <Static id="stcWfProcCd00" taborder="18" text="USER_ID" cssclass="sta_WF_inputTitle_E" left="edtWfProcCd:5" top="121" width="130" height="34" style="align:left middle;"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsFormInfo">
+        <ColumnInfo>
+          <Column id="TEMP_REQ_ID" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256" description="요청서ID"/>
+          <Column id="ENC_REQ_ID" type="STRING" size="256"/>
+          <Column id="SEQ" type="STRING" size="256"/>
+          <Column id="REF_REQ_ID" type="STRING" size="256"/>
+          <Column id="REQ_TMPLAT_ID" type="STRING" size="256" description="요청서양식ID"/>
+          <Column id="REQ_TMPLAT_VER" type="STRING" size="256" description="요청서양식버전"/>
+          <Column id="SR_INFO_URL" type="STRING" size="256"/>
+          <Column id="ATTACH_USE_YN" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256" description="실제 진행단계"/>
+          <Column id="WF_PROC_NM" type="STRING" size="256"/>
+          <Column id="WF_FUNC_CD" type="STRING" size="256"/>
+          <Column id="NEXT_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="NEXT_WF_PROC_NM" type="STRING" size="256"/>
+          <Column id="NEXT_WF_FUNC_CD" type="STRING" size="256"/>
+          <Column id="MAP_PROC_CD" type="STRING" size="256"/>
+          <Column id="MAP_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="NEXT_MAP_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="REQ_STAT_CD" type="STRING" size="256"/>
+          <Column id="ORG_REQ_STAT_CD" type="STRING" size="256"/>
+          <Column id="REQ_USER_ID" type="STRING" size="256"/>
+          <Column id="REQ_USER_NM" type="STRING" size="256"/>
+          <Column id="SAVE_GUBUN" type="STRING" size="256" description="저장구분"/>
+          <Column id="TEMP_SAVE_YN" type="STRING" size="256"/>
+          <Column id="CANCEL_POSS_YN" type="STRING" size="256"/>
+          <Column id="CUR_SCRN_YN" type="STRING" size="256"/>
+          <Column id="LAST_APPROVAL_YN" type="STRING" size="256"/>
+          <Column id="OPINION" type="STRING" size="256"/>
+          <Column id="IN_DATASET" type="STRING" size="256"/>
+          <Column id="OUT_DATASET" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CUR_SCRN_YN">N</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSrBaseInfo">
+        <ColumnInfo>
+          <Column id="TEMP_REQ_ID" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256" description="요청서ID"/>
+          <Column id="ENC_REQ_ID" type="STRING" size="256"/>
+          <Column id="SEQ" type="STRING" size="256"/>
+          <Column id="REF_REQ_ID" type="STRING" size="256"/>
+          <Column id="REQ_TMPLAT_ID" type="STRING" size="256" description="요청서양식ID"/>
+          <Column id="REQ_TMPLAT_VER" type="STRING" size="256" description="요청서양식버전"/>
+          <Column id="SR_INFO_URL" type="STRING" size="256"/>
+          <Column id="ATTACH_USE_YN" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256" description="실제 진행단계"/>
+          <Column id="WF_FUNC_CD" type="STRING" size="256"/>
+          <Column id="NEXT_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="NEXT_WF_FUNC_CD" type="STRING" size="256"/>
+          <Column id="MAP_PROC_CD" type="STRING" size="256"/>
+          <Column id="MAP_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="NEXT_MAP_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="REQ_STAT_CD" type="STRING" size="256"/>
+          <Column id="ORG_REQ_STAT_CD" type="STRING" size="256"/>
+          <Column id="REQ_USER_ID" type="STRING" size="256"/>
+          <Column id="REQ_USER_NM" type="STRING" size="256"/>
+          <Column id="SAVE_GUBUN" type="STRING" size="256" description="저장구분"/>
+          <Column id="TEMP_SAVE_YN" type="STRING" size="256"/>
+          <Column id="CANCEL_POSS_YN" type="STRING" size="256"/>
+          <Column id="CUR_SCRN_YN" type="STRING" size="256"/>
+          <Column id="LAST_APPROVAL_YN" type="STRING" size="256"/>
+          <Column id="OPINION" type="STRING" size="256"/>
+          <Column id="IN_DATASET" type="STRING" size="256"/>
+          <Column id="OUT_DATASET" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="_dsSvcInfo">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="SVC_NM" type="STRING" size="256"/>
+          <Column id="IN_DS" type="STRING" size="256"/>
+          <Column id="OUT_DS" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CHK">1</Col>
+            <Col id="SVC_NM">sr/SR0000D/select01</Col>
+            <Col id="IN_DS">dsCond</Col>
+            <Col id="OUT_DS">dsSrBaseInfo</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSaveCheck">
+        <ColumnInfo>
+          <Column id="TEMP_REQ_ID" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256" description="요청서ID"/>
+          <Column id="ENC_REQ_ID" type="STRING" size="256"/>
+          <Column id="SEQ" type="STRING" size="256"/>
+          <Column id="REF_REQ_ID" type="STRING" size="256"/>
+          <Column id="REQ_TMPLAT_ID" type="STRING" size="256" description="요청서양식ID"/>
+          <Column id="REQ_TMPLAT_VER" type="STRING" size="256" description="요청서양식버전"/>
+          <Column id="SR_INFO_URL" type="STRING" size="256"/>
+          <Column id="ATTACH_USE_YN" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256" description="실제 진행단계"/>
+          <Column id="WF_FUNC_CD" type="STRING" size="256"/>
+          <Column id="NEXT_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="NEXT_WF_FUNC_CD" type="STRING" size="256"/>
+          <Column id="MAP_PROC_CD" type="STRING" size="256"/>
+          <Column id="MAP_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="NEXT_MAP_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="REQ_STAT_CD" type="STRING" size="256"/>
+          <Column id="ORG_REQ_STAT_CD" type="STRING" size="256"/>
+          <Column id="REQ_USER_ID" type="STRING" size="256"/>
+          <Column id="REQ_USER_NM" type="STRING" size="256"/>
+          <Column id="SAVE_GUBUN" type="STRING" size="256" description="저장구분"/>
+          <Column id="TEMP_SAVE_YN" type="STRING" size="256"/>
+          <Column id="CANCEL_POSS_YN" type="STRING" size="256"/>
+          <Column id="CUR_SCRN_YN" type="STRING" size="256"/>
+          <Column id="LAST_APPROVAL_YN" type="STRING" size="256"/>
+          <Column id="OPINION" type="STRING" size="256"/>
+          <Column id="IN_DATASET" type="STRING" size="256"/>
+          <Column id="OUT_DATASET" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsRtnSendList">
+        <ColumnInfo>
+          <Column id="Column0" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 요청서 테스트용
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일		작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	//this.fnGetCmmCd();
+	this.dsFormInfo.setColumn(0, "SAVE_GUBUN", "REG");
+	this.dsFormInfo.setColumn(0, "TEMP_SAVE_YN", "N");
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+this.fnSaveCheck = function()
+{
+	var sTranId = "saveCheck";                      // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+	var sService = "SRComm/saveCheckReq";			// 서비스명
+	var sInDs = "dsCond=dsFormInfo";                // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+	var sOutDs = "dsSaveCheck=dsSaveCheck";     	// 서버에서 수신할 데이타셋
+	var sArg = "";                                  // 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "selectBaseInfo" :
+			this.divSend.form.grdSrBaseInfo.createFormat();
+			
+			for(var i=0; i<this.dsSrBaseInfo.colcount; i++)
+            {
+                if(this.dsFormInfo.colinfos[this.dsSrBaseInfo.getColID(i)] != "[object DSColumnInfo]")
+                {
+                    this.dsFormInfo.addColumn(this.dsSrBaseInfo.getColID(i), "STRING");
+                }
+                this.dsFormInfo.setColumn(0, this.dsSrBaseInfo.getColID(i), this.dsSrBaseInfo.getColumn(0, this.dsSrBaseInfo.getColID(i)));
+            }			
+			break;
+
+		case "saveCheck" :
+			this.dsFormInfo.setColumn(0, "LAST_APPROVAL_YN", 	this.dsSaveCheck.getColumn(0, "LAST_APPROVAL_YN"));
+            this.dsFormInfo.setColumn(0, "NEXT_WF_PROC_CD", 	this.dsSaveCheck.getColumn(0, "NEXT_WF_PROC_CD"));
+			this.dsFormInfo.setColumn(0, "NEXT_WF_PROC_NM",		this.dsSaveCheck.getColumn(0, "NEXT_WF_PROC_NM"));
+            this.dsFormInfo.setColumn(0, "NEXT_WF_FUNC_CD",		this.dsSaveCheck.getColumn(0, "NEXT_WF_FUNC_CD"));
+			this.dsFormInfo.setColumn(0, "MAP_PROC_CD",			this.dsSaveCheck.getColumn(0, "MAP_PROC_CD"));
+			this.dsFormInfo.setColumn(0, "MAP_WF_PROC_CD",		this.dsSaveCheck.getColumn(0, "MAP_WF_PROC_CD"));
+			this.dsFormInfo.setColumn(0, "NEXT_MAP_WF_PROC_CD", this.dsSaveCheck.getColumn(0, "NEXT_MAP_WF_PROC_CD"));
+			this.divSend.form.grdSaveCheck.createFormat();
+			break;
+
+		case "testSendDataCheck" :
+			this.divSend.form.grdSendTarget.createFormat();
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case ""	:
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "" :
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['ALARM_TYPE_CD',		'SEND_TYPE_CD',		'SEND_GUBUN'													]	// 조회할 상위코드
+		,codeDiv: ['CMM_CD',			'BASIS_CD',			'CMM_CD'														]	// 조회할 코드의 업무구분
+		,optStr	: ['SEL',				'',					'SEL'															]	// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',					'Y',				'Y'																]	// 사용여부
+		,filter	: ['',					"CMM_CD!='SLIDE'",	"CMM_CD=='04' || CMM_CD=='05' || CMM_CD=='06' || CMM_CD=='07'"	]	// filterStr
+		,objDs	: [this.dsAlarmTypeCd,	this.dsSendTypeCd,	this.dsSendGubun												]	// copy dataset
+	};
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util
+};
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+ // 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearch" :	// 초기화
+			var rtn = Ex.util.checkValidate(this.divSend, "input01");
+			if(!rtn) return false;
+			nexacro.getApplication().gdsSvcInfo.loadXML(this._dsSvcInfo.saveXML());
+			Ex.core.callByDsService(this, "selectBaseInfo");
+			break;
+
+		case "btnSaveCheck" :
+			var rtn = Ex.util.checkValidate(this.divSend, "input02");
+			if(!rtn) return false;
+			this.fnSaveCheck();
+			break;
+
+		case "btnSendTarget" :
+			if(this.dsSaveCheck.rowcount == 1)
+			{
+				var sTranId = "testSendDataCheck";				// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+				var sService = "SRComm/testSendDataCheck";		// 서비스명
+				var sInDs = "dsFormInfo=dsFormInfo";			// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+				var sOutDs = "dsRtnSendList=dsRtnSendList";     // 서버에서 수신할 데이타셋
+				var sArg = "";                                  // 서버 @ParamVariable 인자와 맵핑됨
+				Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+			}
+			break;
+
+		case "btnProcReq" :
+			if( !Ex.isEmpty(this.dsCond.getColumn(0, "REQ_ID")) )
+			{
+				var sTranId = "execReqProc";			// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+				var sService = "SRComm/execReqProc";	// 서비스명
+				var sInDs = "dsData=dsFormInfo";		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+				var sOutDs = "";     					// 서버에서 수신할 데이타셋
+				var sArg = "";                      	// 서버 @ParamVariable 인자와 맵핑됨
+				Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+			}
+			break;
+	}
+}]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSend.form.Static01" propid="value" datasetid="dsFommScheduleJobMt" columnid="TITLE"/>
+      <BindItem id="item1" compid="divSend.form.Static01" propid="text" datasetid="dsFommScheduleJobMt" columnid="REG_USER_INFO"/>
+      <BindItem id="item6" compid="divSend.form.stcTempSaveYn" propid="value" datasetid="dsFommNotiSendMt" columnid="TITLE"/>
+      <BindItem id="item3" compid="divSend.form.Static01_00" propid="value" datasetid="dsFommNotiSendMt" columnid="TITLE"/>
+      <BindItem id="item4" compid="divSend.form.Static01_00" propid="text" datasetid="dsFommScheduleJobMt" columnid="REG_USER_INFO"/>
+      <BindItem id="item5" compid="divSend.form.edtReqId" propid="value" datasetid="dsCond" columnid="REQ_ID"/>
+      <BindItem id="item7" compid="divSend.form.edtWfProcCd" propid="value" datasetid="dsFormInfo" columnid="WF_PROC_CD"/>
+      <BindItem id="item2" compid="divSend.form.cboSaveGubun" propid="value" datasetid="dsFormInfo" columnid="SAVE_GUBUN"/>
+      <BindItem id="item8" compid="divSend.form.cboTempSaveYn" propid="value" datasetid="dsFormInfo" columnid="TEMP_SAVE_YN"/>
+      <BindItem id="item9" compid="divSend.form.edtWfProcCd00" propid="value" datasetid="dsFormInfo" columnid="WF_PROC_CD"/>
+    </Bind>
+  </Form>
+</FDL>

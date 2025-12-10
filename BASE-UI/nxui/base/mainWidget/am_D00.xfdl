@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="form" classname="top" left="0" top="0" titletext="자산/구성현황" onload="form_onload" scrolltype="none" cssclass="" height="250" width="675" font="normal 24pt/normal &quot;PretendardR&quot;" color="white" onclick="form_onclick">
+    <Layouts>
+      <Layout width="675" height="250" mobileorientation="landscape">
+        <Static id="stcGrdTitle" taborder="1" text="자산/구성현황" left="10" top="10" width="140" height="24" cssclass="sta_WF_gridTitle"/>
+        <Button id="btnMore" taborder="3" top="14" width="20" height="20" onclick="fnCommOnclick" right="358" border="0px none" cursor="pointer" cssclass="btn_WF_hyperlink"/>
+        <Grid id="grdData" taborder="4" left="10" top="73" bottom="10" right="358" cssclass="grd_HOME_normal" autofittype="col" binddataset="dsData">
+          <Formats>
+            <Format id="btnTab01">
+              <Columns>
+                <Column size="150"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="구분" cssclass="grdHCell_HOME_fCell"/>
+                <Cell col="1" text="운영"/>
+                <Cell col="2" text="유휴"/>
+                <Cell col="3" text="중지 외"/>
+              </Band>
+              <Band id="body">
+                <Cell textAlign="left" text="bind:CLASS_NM"/>
+                <Cell col="1" text="bind:RUN_CNT" color="#043b72"/>
+                <Cell col="2" text="bind:IDLE_CNT" color="#043b72"/>
+                <Cell col="3" text="bind:OTHER_CNT" color="#043b72"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcGrdTitle00" taborder="5" text="구성현황(운영)" left="358" top="10" width="140" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="Static00_00" taborder="6" text="Static00" left="358.00" top="73" height="2" right="10" background="#010103"/>
+        <Div id="divServer" taborder="7" left="53.04%" top="86" width="138" height="30" cssclass="div_HOME_myWidgetBg02" text="">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="서버" left="20" top="5" width="50" color="#3d3d3d" font="bold 12px &quot;PretendardR&quot;" bottom="5"/>
+              <Static id="stcCnt" taborder="1" text="0" top="5" width="50" color="#043b72" font="bold 14px &quot;PretendardR&quot;" bottom="5" textAlign="right" right="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divWas" taborder="8" left="77.93%" top="86" width="138" height="30" cssclass="div_HOME_myWidgetBg02">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="WAS" left="20" top="5" width="50" color="#3d3d3d" font="bold 12px &quot;PretendardR&quot;" bottom="5"/>
+              <Static id="stcCnt" taborder="1" text="0" top="5" width="50" color="#043b72" font="bold 14px &quot;PretendardR&quot;" bottom="5" textAlign="right" right="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divSecure" taborder="9" left="53.04%" top="divServer:8" width="138" height="30" cssclass="div_HOME_myWidgetBg02">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="보안" left="20" top="5" width="50" color="#3d3d3d" font="bold 12px &quot;PretendardR&quot;" bottom="5"/>
+              <Static id="stcCnt" taborder="1" text="0" top="5" width="50" color="#043b72" font="bold 14px &quot;PretendardR&quot;" bottom="5" textAlign="right" right="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divNetwork" taborder="11" left="53.04%" top="divSecure:8" width="138" height="30" cssclass="div_HOME_myWidgetBg02">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="통신" left="20" top="5" width="50" color="#3d3d3d" font="bold 12px &quot;PretendardR&quot;" bottom="5"/>
+              <Static id="stcCnt" taborder="1" text="0" top="5" width="50" color="#043b72" font="bold 14px &quot;PretendardR&quot;" bottom="5" textAlign="right" right="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divDbms" taborder="10" left="53.04%" top="divNetwork:8" width="138" height="30" cssclass="div_HOME_myWidgetBg02">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="DBMS" left="20" top="5" width="50" color="#3d3d3d" font="bold 12px &quot;PretendardR&quot;" bottom="5"/>
+              <Static id="stcCnt" taborder="1" text="0" top="5" width="50" color="#043b72" font="bold 14px &quot;PretendardR&quot;" bottom="5" textAlign="right" right="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divWeb" taborder="12" left="77.93%" top="124" width="138" height="30" cssclass="div_HOME_myWidgetBg02">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="WEB" left="20" top="5" width="50" color="#3d3d3d" font="bold 12px &quot;PretendardR&quot;" bottom="5"/>
+              <Static id="stcCnt" taborder="1" text="0" top="5" width="50" color="#043b72" font="bold 14px &quot;PretendardR&quot;" bottom="5" textAlign="right" right="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divEai" taborder="13" left="77.93%" top="162" width="138" height="30" cssclass="div_HOME_myWidgetBg02">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="EAI" left="20" top="5" width="50" color="#3d3d3d" font="bold 12px &quot;PretendardR&quot;" bottom="5"/>
+              <Static id="stcCnt" taborder="1" text="0" top="5" width="50" color="#043b72" font="bold 14px &quot;PretendardR&quot;" bottom="5" textAlign="right" right="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divTp" taborder="14" left="77.93%" top="200" width="138" height="30" cssclass="div_HOME_myWidgetBg02">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" text="TP" left="20" top="5" width="50" color="#3d3d3d" font="bold 12px &quot;PretendardR&quot;" bottom="5"/>
+              <Static id="stcCnt" taborder="1" text="0" top="5" width="50" color="#043b72" font="bold 14px &quot;PretendardR&quot;" bottom="5" textAlign="right" right="20"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnMore2" taborder="15" top="14" width="20" height="20" onclick="fnCommOnclick" right="11" border="0px none" cursor="pointer" cssclass="btn_WF_hyperlink"/>
+        <Button id="btnTab01" taborder="0" text="HW(0)" left="10.00" top="42" width="110" height="31" cssclass="btn_HOME_boardOn" onclick="fnBtnTabOnclick"/>
+        <Button id="btnTab02" taborder="2" text="SW(0)" left="btnTab01:5.00" top="42" width="110" height="31" cssclass="btn_HOME_boardOff" onclick="fnBtnTabOnclick"/>
+        <Static id="Static00" taborder="16" text="Static00" left="50%" top="10" width="1" cssclass="sta_TPF_line" bottom="10" background="url('theme://MIRAE_IMAGE_SET/HOME/main-linedashed.png')"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="LVL1_CLASS_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData"/>
+      <Dataset id="dsDataCnt"/>
+      <Dataset id="dsDataCi"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ am_D00
+* 화면(명)		︰ 자산/구성 현황
+* 메뉴(경로)	︰ -
+* 화면 설명	︰ Home Widget
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.curBtn = this.btnTab01;
+
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnSearchCnt();				// HW/SW 토탈
+	this.fnSearch(this.curBtn);		// HW/SW 분류별 현황
+	this.fnSearchCi();				// 구성현황(운영)
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// HW/SW 수 조회
+this.fnSearchCnt = function()
+{
+	var sTranId = "select01";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "widgetAM/select01";			// 서비스명
+    var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsDataCnt=dsDataCnt";				// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+ 
+ 
+// 조회
+this.fnSearch = function(obj)
+{
+	switch(obj.name) 
+	{
+		case "btnTab01" :	this.dsCond.setColumn(0, 'LVL1_CLASS_ID', '10000000');		break;
+		case "btnTab02" :	this.dsCond.setColumn(0, 'LVL1_CLASS_ID', '20000000');		break;
+	}
+	var sTranId = "select02";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "widgetAM/select02";			// 서비스명
+    var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData=dsData";				// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+// 구성현황(운영( 조회
+this.fnSearchCi = function()
+{
+	var sTranId = "select03";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "widgetAM/select03";			// 서비스명
+    var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsDataCi=dsDataCi";				// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :		// HW / SW 버튼 갯수 표기용 count 조회
+			var HW_CNT	=	this.dsDataCnt.getColumn(0, 'HW_CNT')||0;
+			this.btnTab01.set_text('HW(' + HW_CNT + ')');
+			var SW_CNT	=	this.dsDataCnt.getColumn(0, 'SW_CNT')||0;
+			this.btnTab02.set_text('SW(' + SW_CNT + ')');
+			break;
+			
+		case "select02" :
+		
+			break;
+			
+		case "select03" :
+			for(var i = 0; i < this.dsDataCi.rowcount; i++)
+			{
+				var CI_TYPE_CD 	= this.dsDataCi.getColumn(i, 'CMM_CD');
+				var CNT 		= this.dsDataCi.getColumn(i, 'CNT')||0;
+				switch(CI_TYPE_CD)
+				{
+					case "10SV0000" :	// 서버
+						this.divServer.form.stcCnt.set_text(CNT);
+						break;
+						
+					case "10SE0000" :	// 보안장비
+						this.divSecure.form.stcCnt.set_text(CNT);
+						break;
+					case "10NW0000" :	// 통신장비
+						this.divNetwork.form.stcCnt.set_text(CNT);
+						break;
+					case "20SI0100" :	// DBMS
+						this.divDbms.form.stcCnt.set_text(CNT);
+						break;
+						
+					case "20SI0204" :	// EAI
+						this.divEai.form.stcCnt.set_text(CNT);
+						break;
+						
+					case "20SI0202" :	// WAS
+						this.divWas.form.stcCnt.set_text(CNT);
+						break;
+						
+					case "20SI0201" :	// WEB
+						this.divWeb.form.stcCnt.set_text(CNT);
+						break;
+						
+					case "20SI0203" :	// TP/FEP
+						this.divTp.form.stcCnt.set_text(CNT);
+						break;
+				}
+			}	
+			break;
+	}
+}
+
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch(pID)
+	{
+	
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+	
+	}
+}
+
+
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+
+}
+
+
+this.fnGetCmmCd = function()
+{
+	
+}
+
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var objApp = nexacro.getApplication();
+	var rowpos = -1;
+	
+	switch(obj.name)
+	{
+		case "btnMore" :	rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'AM0110_W');	break;	// HW/SW
+		case "btnMore2" :	rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SV0110_W');	break;	// 구성현황(운영)
+	}
+	
+	if( rowpos >= 0 )
+		Ex.core.openLink(this, objApp.gdsMenu.getColumn(rowpos, 'MENU_ID'), '');
+}
+
+
+this.fnBtnTabOnclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.dsData.clearData();
+	
+	var arrBtn = 	[this.btnTab01, this.btnTab02];
+
+	// set css
+	for(var i = 0; i < arrBtn.length; i++)
+		arrBtn[i].set_cssclass('btn_HOME_boardOff');
+	obj.set_cssclass('btn_HOME_boardOn');
+	
+	// 마지막 선택 버튼 저장
+	this.curBtn = obj;
+	
+	// search
+	this.fnSearch(obj);
+};
+
+]]></Script>
+  </Form>
+</FDL>

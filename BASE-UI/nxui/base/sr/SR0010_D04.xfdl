@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR0010_D04" left="0" top="0" width="750" height="365" titletext="접수의견(처리)" onload="form_onload" scrolltype="none" cssclass="">
+    <Layouts>
+      <Layout width="750" height="365" mobileorientation="landscape">
+        <Div id="divGrdTopBtn" taborder="0" width="425" height="24" bottom="626" visible="true" right="18.48%" isButtonGroup="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+              <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" bottom="0" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staAuthTitle" taborder="1" text="사용자의 권한그룹" left="1520" top="70" width="200" height="24" cssclass="sta_WF_gridTitle"/>
+        <Div id="divContent" taborder="2" text="Div00" left="0" top="34" right="0" bottom="0">
+          <Layouts>
+            <Layout>
+              <Static id="stcBg00_00" taborder="0" left="0" height="34" cssclass="sta_WF_inputBg" right="0" text="" top="0"/>
+              <Static id="stcProcUserNm00" taborder="1" text="처리예정시작" cssclass="sta_WF_inputTitle" left="0" top="0" width="90" height="34"/>
+              <Calendar id="calProcPlanSdt" taborder="14" left="stcProcUserNm00:5" top="5" width="150" height="24" cssclass="cal_WF_normal"/>
+              <Static id="stcProcUserNm00_00" taborder="2" text="처리예정종료" cssclass="sta_WF_inputTitle" left="calProcPlanSdt:5" top="0" width="90" height="34"/>
+              <Calendar id="calProcPlanEdt" taborder="15" left="stcProcUserNm00_00:5" top="5" width="150" height="24" cssclass="cal_WF_normal"/>
+              <Static id="stcProcUserNm00_00_00" taborder="4" text="처리일자" cssclass="sta_WF_inputTitle" left="calProcPlanEdt:5" top="0" width="90" height="34"/>
+              <MaskEdit id="mskProcDate" taborder="3" type="string" mask="@@@@-@@-@@ @@:@@:@@" maskchar="_" top="5" height="24" readonly="true" style=":disabled {align:center middle;}" format="####-##-##" readonlyComp="Y" width="150" left="stcProcUserNm00_00_00:5.00" cssclass="msk_WF_normal"/>
+              <Static id="stcBg01" taborder="5" left="0" cssclass="sta_WF_inputBg" right="0" text="" top="stcBg00_00:-1" height="100"/>
+              <Static id="stcOpinion00" taborder="6" left="0" top="stcProcUserNm00:-1" width="90" height="100" cssclass="sta_WF_inputTitle_E" text="작업계획"/>
+              <TextArea id="txaPlanEdt" taborder="7" left="stcOpinion00:5.00" top="stcBg00_00:4" height="90" cssclass="txa_WF_normal" right="5" enable="true" validationGroup="fvValiCmp" validation="작업계획;NULL|MAX_LEN_UTF8:4000" text=""/>
+              <Static id="stcBg01_00" taborder="8" left="0" cssclass="sta_WF_inputBg" right="0" text="" top="stcBg01:-1" height="100"/>
+              <Static id="stcOpinion00_00" taborder="9" left="0" top="stcOpinion00:-1" width="90" height="100" cssclass="sta_WF_inputTitle_E" text="업무보고서&#13;&#10;(수행내역)"/>
+              <TextArea id="txaProcDesc" taborder="10" left="stcOpinion00:5.00" top="stcBg01:4" height="90" cssclass="txa_WF_normal" right="5" enable="true" validationGroup="fvValiCmp" validation="업무보고서(수행내역);NULL|MAX_LEN_UTF8:4000" text=""/>
+              <Static id="stcBg01_00_00" taborder="11" left="0" cssclass="sta_WF_inputBg" right="0" text="" top="stcBg01_00:-1" height="100"/>
+              <Static id="stcOpinion00_00_00" taborder="12" left="0" top="stcOpinion00_00:-1" width="90" height="100" cssclass="sta_WF_inputTitle_E" text="업무보고서&#13;&#10;(산출내역)"/>
+              <TextArea id="txaOutDesc" taborder="13" left="stcOpinion00:5.00" top="stcBg01_00:4" height="90" cssclass="txa_WF_normal" right="5" enable="true" validationGroup="fvValiCmp" validation="업무보고서(산출내역);NULL|MAX_LEN_UTF8:4000" text=""/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="stcTitle" taborder="3" text="작업 처리 내역" cssclass="sta_WF_gridTitle" left="2.00" top="0" width="120" height="24" fittocontents="width"/>
+        <Static id="stcEmpty01" taborder="4" left="0" top="24" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" height="10"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMain" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="COMPANY_ID" type="STRING" size="256"/>
+          <Column id="CONTRACT_NO" type="STRING" size="256"/>
+          <Column id="IMPORTANT_CD" type="STRING" size="256"/>
+          <Column id="REQ_TYPE_CD" type="STRING" size="256"/>
+          <Column id="CLOSE_DIV_CD" type="STRING" size="256"/>
+          <Column id="REQ_DESC" type="STRING" size="256"/>
+          <Column id="EFF_CONTENTS" type="STRING" size="256"/>
+          <Column id="APEND_DESC" type="STRING" size="256"/>
+          <Column id="PROC_PLAN_SDT" type="STRING" size="256"/>
+          <Column id="PROC_PLAN_EDT" type="STRING" size="256"/>
+          <Column id="PROC_DATE" type="STRING" size="256"/>
+          <Column id="PROC_PLAN_DESC" type="STRING" size="256"/>
+          <Column id="PROC_DESC" type="STRING" size="256"/>
+          <Column id="OUT_DESC" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ SR0010_D04
+* 화면(명)	︰ 처리
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ SPP 처리
+* 작성자		︰ WEMB
+* 작성일		︰ 2024.06.27
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        	작성자		이력
+*------------------------------------------------------------------
+* 2024.06.27	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_WorkFlow.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.nextWfProcCdArr;
+/*
+this.selectServiceInfo = {
+	CALLBACK_ID		: ["select01"],
+	CALL_SVC		: ["sr/SRComm/selectRevProc"],
+
+	IN_DS_WHERE		: [this.dsCond],
+	OUT_DS_OBJ		: [this.dsRevProc]
+};
+
+this.saveServiceInfo = {
+	CALLBACK_ID		: ["save01"],
+	CALL_SVC		: ["sr/SRComm/callPrSrRevProc"],
+
+	IN_DS_OBJ		: [new Array(this.dsRevProc)],
+	OUT_DS_OBJ		: []
+};
+*/
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+
+	this.dsCond.setColumn(0, "REQ_ID", this.reqInfo.REQ_ID);
+	//this.dsCond.setColumn(0, "WF_PROC_CD", this.reqInfo.SCRN_WF_PROC_CD);
+							
+	if( Ex.isEmpty(this.wfDsReqWfProc) )
+	{
+		this.wfdsReqWfProc = new Dataset();
+	}
+	this.wfdsReqWfProc.loadXML(this.dsWfProc.saveXML());
+}
+
+this.fnInit = function()
+{	
+	this.divContent.form.txaPlanEdt.setFocus();
+
+	var aRow = this.dsMain.setInsertRow();
+	this.dsMain.setColumn(0, "REQ_ID", this.reqInfo.REQ_ID);
+	
+	this.reqInfo.PARENT_FORM.setWfProcDivFormSize(this.parent, this.getOffsetHeight());
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch (pID)
+	{
+		case "" :
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue) return;
+	
+	switch(mID)
+	{		
+		case "pAlertGubunI" :
+			break;
+			
+		case "saveConfirm" :
+			//this.nLastRow = this.dsCmmWordMt.rowposition;	// 마지막 rowposition 저장
+			//this.fnSetDatasetDt();		// 저장용 datset 전처리
+			this.fnCheckValidate();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.isUpdateForm = function()
+{
+	if( !Ex.util.isUpdated(this.dsMain) ) return false;
+	else return true;
+}
+
+this.fnSaveCheck = function()
+{
+	if( !this.fnCheckValidate() ) return false;
+	return true;
+}
+
+this.fnCheckValidate = function()
+{
+	if( !Ex.util.checkValidate(this.divContent, "fvValiCmp") ) return false;
+	return true;
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{		
+		case "" :
+			break;
+	}
+}
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	//obj.setUpdateRow(e);
+	this.dsMain.setColumn(e, "ROWFLAG", "U");
+	//this.dsRevProc.setColumn(e, "ROWFLAG", "I");
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContent.form.txaOpinion" propid="value" datasetid="dsMain" columnid="PROC_EXAM_OPIN"/>
+      <BindItem id="item1" compid="divContent.form.stcProcUserNm" propid="value" datasetid="dsMain" columnid="PROC_DATE"/>
+      <BindItem id="item2" compid="divContent.form.edtUserNm" propid="value" datasetid="dsMain" columnid="USER_NM"/>
+      <BindItem id="item3" compid="divContent.form.mskProcDate" propid="value" datasetid="dsMain" columnid="PROC_DATE"/>
+      <BindItem id="item4" compid="divContent.form.mskProcDate00" propid="value" datasetid="dsMain" columnid="PROC_PLAN_SDT"/>
+      <BindItem id="item5" compid="divContent.form.mskProcDate00_00" propid="value" datasetid="dsMain" columnid="PROC_PLAN_EDT"/>
+      <BindItem id="item6" compid="divContent.form.mskProcDate" propid="value" datasetid="dsMain" columnid="PROC_DATE"/>
+      <BindItem id="item7" compid="divContent.form.txaPlanEdt" propid="value" datasetid="dsMain" columnid="PROC_PLAN_DESC"/>
+      <BindItem id="item8" compid="divContent.form.txaProcDesc" propid="value" datasetid="dsMain" columnid="PROC_DESC"/>
+      <BindItem id="item9" compid="divContent.form.txaOutDesc" propid="value" datasetid="dsMain" columnid="OUT_DESC"/>
+      <BindItem id="item10" compid="divContent.form.calProcPlanSdt" propid="value" datasetid="dsMain" columnid="PROC_PLAN_SDT"/>
+      <BindItem id="item11" compid="divContent.form.calProcPlanEdt" propid="value" datasetid="dsMain" columnid="PROC_PLAN_EDT"/>
+    </Bind>
+  </Form>
+</FDL>

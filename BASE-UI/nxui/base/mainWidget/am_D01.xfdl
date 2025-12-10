@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="form" classname="top" left="0" top="0" titletext="자산종료(예정)" onload="form_onload" scrolltype="none" cssclass="" height="250" width="910" font="normal 24pt/normal &quot;PretendardR&quot;" color="white">
+    <Layouts>
+      <Layout width="910" height="250" mobileorientation="landscape">
+        <Static id="stcGrdTitle" taborder="0" text="자산종료(예정)" left="10" top="10" width="140" height="24" cssclass="sta_WF_gridTitle"/>
+        <Button id="btnTab01" taborder="1" text="무상종료(0)" left="10.00" top="42" width="110" height="31" cssclass="btn_HOME_boardOn" onclick="fnBtnTabOnclick"/>
+        <Button id="btnTab02" taborder="2" text="유지보수(0)" left="125.00" top="42" width="110" height="31" cssclass="btn_HOME_boardOff" onclick="fnBtnTabOnclick"/>
+        <Grid id="grdData" taborder="3" left="10" top="73" bottom="10" right="10" cssclass="grd_HOME_normal" autofittype="col" binddataset="dsData">
+          <Formats>
+            <Format id="btnTab01">
+              <Columns>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="200"/>
+                <Column size="150"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="분류(중)" cssclass="grdHCell_HOME_fCell"/>
+                <Cell col="1" text="분류(소)"/>
+                <Cell col="2" text="자산명"/>
+                <Cell col="3" text="제조사"/>
+                <Cell col="4" text="위치명"/>
+                <Cell col="5" text="취득일자"/>
+                <Cell col="6" text="무상시작일"/>
+                <Cell col="7" text="무상종료일"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:PJT_NAME" textAlign="left" tooltiptext="bind:PJT_NAME"/>
+                <Cell col="1" text="bind:PLAN_CMPL_RATE"/>
+                <Cell col="2" text="bind:ACTL_CMPL_RATE"/>
+                <Cell col="3" text="bind:ACTL_CMPL_RATE"/>
+                <Cell col="4"/>
+                <Cell col="5" text="bind:CALC_DATE" displaytype="normal" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="6"/>
+                <Cell col="7"/>
+              </Band>
+            </Format>
+            <Format id="btnTab02">
+              <Columns>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="200"/>
+                <Column size="150"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="분류(중)" cssclass="grdHCell_HOME_fCell"/>
+                <Cell col="1" text="분류(소)"/>
+                <Cell col="2" text="자산명"/>
+                <Cell col="3" text="제조사"/>
+                <Cell col="4" text="위치명"/>
+                <Cell col="5" text="취득일자"/>
+                <Cell col="6" text="무상시작일"/>
+                <Cell col="7" text="무상종료일"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:PJT_NAME" textAlign="left" tooltiptext="bind:PJT_NAME"/>
+                <Cell col="1" text="bind:PLAN_CMPL_RATE"/>
+                <Cell col="2" text="bind:ACTL_CMPL_RATE"/>
+                <Cell col="3" text="bind:ACTL_CMPL_RATE"/>
+                <Cell col="4"/>
+                <Cell col="5" text="bind:CALC_DATE" displaytype="normal" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="6"/>
+                <Cell col="7"/>
+              </Band>
+            </Format>
+            <Format id="btnTab03">
+              <Columns>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="200"/>
+                <Column size="150"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="분류(중)" cssclass="grdHCell_HOME_fCell"/>
+                <Cell col="1" text="분류(소)"/>
+                <Cell col="2" text="자산명"/>
+                <Cell col="3" text="제조사"/>
+                <Cell col="4" text="위치명"/>
+                <Cell col="5" text="취득일자"/>
+                <Cell col="6" text="무상시작일"/>
+                <Cell col="7" text="무상종료일"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:PJT_NAME" textAlign="left" tooltiptext="bind:PJT_NAME"/>
+                <Cell col="1" text="bind:PLAN_CMPL_RATE"/>
+                <Cell col="2" text="bind:ACTL_CMPL_RATE"/>
+                <Cell col="3" text="bind:ACTL_CMPL_RATE"/>
+                <Cell col="4"/>
+                <Cell col="5" text="bind:CALC_DATE" displaytype="normal" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="6"/>
+                <Cell col="7"/>
+              </Band>
+            </Format>
+            <Format id="btnTab04">
+              <Columns>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="200"/>
+                <Column size="150"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="분류(중)" cssclass="grdHCell_HOME_fCell"/>
+                <Cell col="1" text="분류(소)"/>
+                <Cell col="2" text="자산명"/>
+                <Cell col="3" text="제조사"/>
+                <Cell col="4" text="위치명"/>
+                <Cell col="5" text="취득일자"/>
+                <Cell col="6" text="무상시작일"/>
+                <Cell col="7" text="무상종료일"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:PJT_NAME" textAlign="left" tooltiptext="bind:PJT_NAME"/>
+                <Cell col="1" text="bind:PLAN_CMPL_RATE"/>
+                <Cell col="2" text="bind:ACTL_CMPL_RATE"/>
+                <Cell col="3" text="bind:ACTL_CMPL_RATE"/>
+                <Cell col="4"/>
+                <Cell col="5" text="bind:CALC_DATE" displaytype="normal" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="6"/>
+                <Cell col="7"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnTab04" taborder="4" text="EOS(21)" left="355.00" top="42" width="110" height="31" cssclass="btn_HOME_boardOff" onclick="fnBtnTabOnclick"/>
+        <Button id="btnTab03" taborder="5" text="내용년수(15)" left="240.00" top="42" width="110" height="31" cssclass="btn_HOME_boardOff" onclick="fnBtnTabOnclick"/>
+        <Button id="btnMore" taborder="6" top="14" width="20" height="20" onclick="fnCommOnclick" right="10" border="0px none" cursor="pointer" cssclass="btn_WF_hyperlink"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ am_D01
+* 화면(명)		︰ 자산종료(예정)
+* 메뉴(경로)	︰ -
+* 화면 설명	︰ Home Widget
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.curBtn = this.btnTab01;
+
+
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();
+	this.fnSearch(this.curBtn);
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 최초 전체 조회
+this.fnSearch = function(obj)
+{
+	return;
+	
+}
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+	
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch(pID)
+	{
+	
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+	
+	}
+}
+
+
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	
+}
+
+
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['DAT_TYPE_CD']			// 조회할 상위코드
+		,codeDiv: ['CMM_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['ALL']			// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y']				// 사용여부
+		,filter	: ['']				// filterStr
+		,objDs	: [this.dsDatTypeCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util;
+}
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var objApp = nexacro.getApplication();
+	var rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'AM0110_W');
+	
+	if( rowpos >= 0 )
+		Ex.core.openLink(this, objApp.gdsMenu.getColumn(rowpos, 'MENU_ID'), '');
+}
+
+
+
+this.fnBtnTabOnclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var arrBtn = 	[this.btnTab01, this.btnTab02, this.btnTab03, this.btnTab04];
+
+	// set css
+	for(var i = 0; i < arrBtn.length; i++)
+		arrBtn[i].set_cssclass('btn_HOME_boardOff');
+	obj.set_cssclass('btn_HOME_boardOn');
+	
+	// 마지막 선택 버튼 저장
+	this.curBtn = obj;
+	
+	// grid 
+	this.grdData.set_formatid(obj.name);
+	
+	// search
+	this.fnSearch(obj);
+};
+]]></Script>
+  </Form>
+</FDL>

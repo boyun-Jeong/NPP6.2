@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM1300_P01" left="0" top="0" width="900" height="500" titletext="담당자목록 조회" onload="form_onload" scrolltype="none" cssclass="">
+    <Layouts>
+      <Layout width="900" height="500">
+        <Div id="divGrdTopBtn" taborder="0" width="425" height="24" bottom="626" visible="true" right="18.48%" isButtonGroup="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+              <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" bottom="0" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBottom" taborder="1" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnSelect" taborder="1" text="선택" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="125" width="100" height="32" bottom="14"/>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divContent" taborder="2" text="Div00" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" left="0" top="70" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Div id="divSearchArea" taborder="1" left="20" top="20" height="50" right="20" cssclass="div_WF_divSearchArea" text="">
+                <Layouts>
+                  <Layout>
+                    <Static id="staSearchStr" taborder="1" text="요청분류명" left="20" top="13" width="89" height="24" cssclass="sta_WF_schTitle"/>
+                    <Static id="Static00" taborder="2" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+                    <Button id="btnSearch" taborder="0" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+                    <Button id="btnSearchReset" taborder="3" top="13" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+                    <Static id="Static00_01" taborder="4" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24" right="0"/>
+                    <Combo id="cboDevNm" taborder="5" left="staSearchStr:0" top="13" width="80" height="24" cssclass="cbo_WF_normal" codecolumn="codecolumn" datacolumn="datacolumn" innerdataset="innerdataset" displayrowcount="20" index="0" text="이름" value="NM" onkeyup="fnCommOnkeydown">
+                      <Dataset id="innerdataset">
+                        <ColumnInfo>
+                          <Column id="codecolumn" size="256"/>
+                          <Column id="datacolumn" size="256"/>
+                        </ColumnInfo>
+                        <Rows>
+                          <Row>
+                            <Col id="codecolumn">NM</Col>
+                            <Col id="datacolumn">이름</Col>
+                          </Row>
+                          <Row>
+                            <Col id="codecolumn">ID</Col>
+                            <Col id="datacolumn">ID</Col>
+                          </Row>
+                        </Rows>
+                      </Dataset>
+                    </Combo>
+                    <Edit id="edtSearchStr" taborder="6" left="cboDevNm:5" top="13" width="120" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="staUserInfo" taborder="2" text="담당자 조회" left="20" top="90" width="110" height="24" cssclass="sta_WF_gridTitle"/>
+              <Static id="Static00_00" taborder="3" left="0" top="staUserInfo:0" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Static id="Static00_01" taborder="4" left="5" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-5"/>
+              <Static id="Static00_01_00" taborder="5" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Static id="Static00_01_00_00" taborder="6" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+              <Static id="Static00_02" taborder="7" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="0"/>
+              <Static id="stcCnt" taborder="8" left="staUserInfo:5" top="90" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsData"/>
+              <Grid id="grdUserInfo" taborder="9" left="20.00" top="Static00_00:0" bottom="20" binddataset="dsData" cssclass="grd_WF_normal" autofittype="col" right="20" useSort="true" visible="true" oncelldblclick="divContent_grdUserInfo_oncelldblclick">
+                <Formats>
+                  <Format id="multiSel">
+                    <Columns>
+                      <Column size="40"/>
+                      <Column size="100"/>
+                      <Column size="90"/>
+                      <Column size="150"/>
+                      <Column size="100"/>
+                      <Column size="133"/>
+                      <Column size="120"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="사번(ID)"/>
+                      <Cell col="2" text="성명"/>
+                      <Cell col="3" text="부서명"/>
+                      <Cell col="4" text="직위"/>
+                      <Cell col="5" text="직책(역할)"/>
+                      <Cell col="6" text="내선번호"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell displaytype="checkboxcontrol" text="bind:CHK" edittype="checkbox"/>
+                      <Cell col="1" text="bind:USER_ID" edittype="none"/>
+                      <Cell col="2" text="bind:USER_NM" edittype="none"/>
+                      <Cell col="3" text="bind:DEPT_NM" edittype="none" textAlign="left"/>
+                      <Cell col="4" text="bind:POS_NM" edittype="none"/>
+                      <Cell col="5" text="bind:ROLE_NM" edittype="none"/>
+                      <Cell col="6" text="bind:TELNUM"/>
+                    </Band>
+                  </Format>
+                  <Format id="singleSel">
+                    <Columns>
+                      <Column size="100"/>
+                      <Column size="90"/>
+                      <Column size="150"/>
+                      <Column size="100"/>
+                      <Column size="133"/>
+                      <Column size="120"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="사번(ID)"/>
+                      <Cell col="1" text="성명"/>
+                      <Cell col="2" text="부서명"/>
+                      <Cell col="3" text="직위"/>
+                      <Cell col="4" text="직책(역할)"/>
+                      <Cell col="5" text="내선번호"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:USER_ID" edittype="none"/>
+                      <Cell col="1" text="bind:USER_NM" edittype="none"/>
+                      <Cell col="2" text="bind:DEPT_NM" edittype="none" textAlign="left"/>
+                      <Cell col="3" text="bind:POS_NM" edittype="none"/>
+                      <Cell col="4" text="bind:ROLE_NM" edittype="none"/>
+                      <Cell col="5" text="bind:TELNUM"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsData" onrowposchanged="dsFommUserMt_onrowposchanged" oncolumnchanged="fnCommOncolumnchanged" canrowposchange="dsFommUserMt_canrowposchange"/>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="USER_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRet"/>
+      <Dataset id="dsSrType">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CMM_CD_NM">전체</Col>
+          </Row>
+          <Row>
+            <Col id="CMM_CD">SR</Col>
+            <Col id="CMM_CD_NM">서비스요청</Col>
+          </Row>
+          <Row>
+            <Col id="CMM_CD">CAT</Col>
+            <Col id="CMM_CD_NM">요청서</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ FOMM1100_P02
+* 화면(명)		︰ 요청분류 조회
+* 메뉴(경로)	    ︰ 관리자 > 사용자권한관리 > 서비스별 담당자관리
+* 화면 설명	    ︰ 요청분류 조회
+* 작성자	    	︰ WEMB
+* 작성일	    	︰ 2025.02.12
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2025.02.12	 WEMB			최초작성
+*------------------------------------------------------------------
+* Description
+
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.objFrame = this.getOwnerFrame();
+this.pSelType = 'M';	
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	 
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+}
+
+// 조회
+this.fnSearch = function()
+{
+	if(this.divContent.form.divSearchArea.form.cboDevNm.value == 'NM')
+	{
+		this.dsCond.setColumn(0,"USER_NM",this.divContent.form.divSearchArea.form.edtSearchStr.value);
+	} else {
+		this.dsCond.setColumn(0,"USER_ID",this.divContent.form.divSearchArea.form.edtSearchStr.value);
+	}
+
+	// transaction
+	var sTranId = "selectDevprRegPopList";                          // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM1300W/selectDevprRegPopList";                         // 서비스명
+    var sInDs = "dsCond=dsCond";                  // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData=dsData";           // 서버에서 수신할 데이타셋
+    var sArg = "";                   // 서버 @ParamVariable 인자와 맵핑됨
+    
+    /**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+// 공통 저장 func.
+this.fnSave = function()
+{
+	
+}
+
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "selectSvcType" :
+			Ex.core.toast(this, "10002");
+		
+			this.divContent.form.divSearchArea.form.edtSearchStr.setFocus();
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{	
+	this.pSelType = this.objFrame.pSelType;
+
+	if(this.pSelType == "S") {
+		this.divContent.form.grdUserInfo.formatid = "singleSel";
+	} else {
+		this.divContent.form.grdUserInfo.formatid = "multiSel";
+	}
+
+	this.fnSearchReset();	// 검색조건 초기화	
+	this.fnSearch();		// 검색
+}
+
+// 선택
+this.fnSelect = function(strPopType)
+{
+	var dRow = 	-1;	
+
+	if(strPopType=="M") {
+		this.dsRet.clearData();		
+		this.dsData.set_enableevent(false);
+		this.dsData.set_filterstr("CHK == '1'");
+		this.dsRet.copyData(this.dsData, true);
+		this.dsData.set_filterstr("");
+		this.dsData.set_enableevent(true);
+	} else {
+			this.dsRet.assign(this.dsData);
+			this.dsRet.clearData();
+			this.dsRet.copyRow(this.dsRet.setAddRow(), this.dsData, this.dsData.rowposition);
+	
+	}
+	
+	for(var i=0;i<this.dsRet.rowcount;i++) {
+		dRow = this.getOwnerFrame().opener.dsData.findRow("DEVPR_ID",this.dsRet.getColumn(i,"USER_ID"));
+		if(dRow>-1) {			
+			var param = {
+			        	id : "noUpdateAlert"
+			         , msg : "이미 담당자로 선택된 사용자가 포함되어 있습니다."
+			         , arrparam : ['']
+			         , msgtype : "I"};
+		            Ex.core.alert(this, param);
+	        return false;	
+		}
+	}
+	
+	Ex.core.pclose(this, this.dsRet.saveXML());
+}
+
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearch" :		// 검색
+			this.fnSearch();
+			break;
+		
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;
+		
+		case "btnClose" :			// 닫기
+			Ex.core.pclose(this);
+			break;
+			
+		case "btnSelect" :		// 선택
+			this.fnSelect(this.pSelType);
+			break;
+	}
+}
+
+// 공통 onkeydown event : component
+this.fnCommOnkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == '13')
+	{
+		this.divContent.form.divSearchArea.form.btnSearch.setFocus();
+		this.fnSearch();
+		obj.setFocus();
+	}
+};
+
+
+this.divContent_grdUserInfo_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.fnSelect("S");
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item1" compid="divContent.form.divSearchArea.form.edtCoNm" propid="value" datasetid="dsCond" columnid="CO_NM"/>
+      <BindItem id="item3" compid="divContent.form.divSearchArea.form.staCoNm" propid="value" datasetid="dsCond" columnid="CO_NM"/>
+    </Bind>
+  </Form>
+</FDL>

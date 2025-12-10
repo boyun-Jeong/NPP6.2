@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="ref01" left="0" top="0" width="1840" height="720" titletext="Synap" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Button id="btnUpload" taborder="0" text="파일업로드" left="20" top="16" width="90" height="31" onclick="fnCommOnclick"/>
+        <Div id="divFiles" taborder="1" left="20.00" top="60" right="2" __USE_MODE="1" _ENABLE_READONLY_ALL_SKIP="Y" url="comm::comFile.xfdl" text="" height="187"/>
+        <Button id="btnViewer" taborder="2" text="뷰어호출" left="115.00" top="16" width="90" height="31" onclick="fnCommOnclick"/>
+        <Button id="Button00" taborder="3" text="Button00" left="208" top="16" width="80" height="30" onclick="fnCommOnclick"/>
+        <WebBrowser id="WebBrowser00" taborder="4" left="20" top="302" right="20" bottom="20"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Bind/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 팝업 처리
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.00
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.formObj;	//전역변수 설정
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(obj, this.fnInit);
+	this.formObj = obj;
+}
+
+this.fnInit = function()
+{
+	// 첨부파일 setting
+	var oParam = {
+		 sSvcId		: 'fileSvc'									// divFile callback 후처리용 서비스 ID
+		,limitMinCnt: 0											// 파일 최소 갯수; defualt 0
+		,limitCnt	: 3											// 파일 최대 갯수; default 5
+		,limitSize	: 100										// 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+		,folderName	: 'test'									// 폴더명(업무명)
+		,tableName	: 'TEST'									// 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+		,primaryKey1: "TEST1001"								// 테이블 PK1(ex. 요청서ID 등)
+		,primaryKey2: ''										// 테이블 PK2 (복합 키인 경우 사용)
+		,primaryKey3: ''										// 테이블 PK3 (복합 키인 경우 사용)
+		,fileDownYn	: ''										// 파일다운권한; 	 공백 시 메뉴의 조회 권한
+		,fileUpYn	: ''										// 파일업로드권한; 공백 시 메뉴의 추가 권한
+		,deleteYn	: ''										// 파일삭제권한; 	 공백 시 메뉴의 삭제 권한
+	};
+	this.divFiles.form.setConfig(this, oParam);
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+this.fnUploadCallback = function(sSvcId, nErrorCode, sErrorMsg)
+{
+	//trace("[PJ0410_P01] this.fnUploadCallback() sSvcId : " + sSvcId + " nErrorCode : " + nErrorCode + " sErrorMsg : " + sErrorMsg);
+
+	// TO DO
+	// 개발자가 지정한 sSvcId(setConfig 옵션에 넣은 파일첨부ID), nErrorCode(에러코드), sErrorMsg(에러메시지)
+	if (nErrorCode < 0) 
+	{
+		Ex.core.error(this, {id:"ERROR", msg:sSvcId + "\n" + Ex.core.msg(sErrorMsg)});
+		return;
+	}
+	
+	switch(sSvcId)
+	{
+		case "fileSvc" :
+			this.fnSave();
+			break;
+	}
+};
+
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "" : // 서비스 ID
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	trace("pID="+pID+" ,varValue="+varValue);
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "Button00" :
+			trace("FILE_PATH : " + this.divFiles.form.dsFommFile.getColumn(this.divFiles.form.dsFommFile.rowposition, "FILE_PATH"));
+			trace("FILE_SAVE_NM : " + this.divFiles.form.dsFommFile.getColumn(this.divFiles.form.dsFommFile.rowposition, "FILE_SAVE_NM"));
+			break;
+
+		case "btnUpload" :
+			this.divFiles.form.fnUploadFiles(true);
+			break;
+
+		case "btnViewer" :
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"synapPop",				// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"ref::ref28.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : "Synap Viewer"
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"width=1280,height=768"	// <--- width/height/autosize/modeless(프레임 처리 옵션)							
+			);
+			break;
+	}
+};]]></Script>
+  </Form>
+</FDL>

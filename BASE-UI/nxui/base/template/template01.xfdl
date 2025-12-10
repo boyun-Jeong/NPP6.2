@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="template" width="1840" height="720" titletext="검색/좌우그리드" onload="form_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1840">
+        <Static id="Static00_00" taborder="0" left="130" top="840" height="100" background="rgba(72,156,255,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20"/>
+        <Static id="Static00_01" taborder="1" left="0" top="50" height="20" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divSearchArea" taborder="2" left="0" top="0" height="50" right="0" cssclass="div_WF_divSearchArea" text="">
+          <Layouts>
+            <Layout>
+              <Static id="stc01" taborder="4" text="조건1" left="20" top="13" width="60" height="24" cssclass="sta_WF_schTitle"/>
+              <Static id="Static00" taborder="5" left="0" top="13" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+              <Edit id="edt01" taborder="0" left="77" top="13" width="140" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown"/>
+              <Static id="stc02" taborder="6" text="조건2" left="247" top="13" width="60" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edt02" taborder="1" left="304" top="13" width="140" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown"/>
+              <Static id="Static00_00" taborder="7" left="217" top="13" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="Static00_00_00" taborder="8" left="444" top="13" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="stc03" taborder="9" text="조건3" left="474" top="13" width="60" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edt03" taborder="2" left="519" top="13" width="140" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown"/>
+              <Static id="Static00_00_00_00" taborder="10" left="659" top="13" background="rgba(173,142,219,0.4)" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Button id="btnSearch" taborder="3" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Button id="btnSearchReset" taborder="11" top="13" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdLeft" taborder="3" left="0" top="104" bottom="40" cssclass="grd_WF_normal" autofittype="col" right="37.50%" useSort="true">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="50"/>
+                <Column size="140"/>
+                <Column size="120"/>
+                <Column size="100"/>
+                <Column size="90"/>
+                <Column size="100"/>
+                <Column size="150"/>
+                <Column size="100"/>
+                <Column size="120"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="행상태"/>
+                <Cell col="2" text="COL1"/>
+                <Cell col="3" text="COL2"/>
+                <Cell col="4" text="COL3" cssclass="grdHCell_WF_essential"/>
+                <Cell col="5" text="COL4" cssclass="grdHCell_WF_essential"/>
+                <Cell col="6" text="COL5"/>
+                <Cell col="7" text="COL6"/>
+                <Cell col="8" text="COL7"/>
+                <Cell col="9" text="COL8"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="checkboxcontrol" text="bind:CHK" edittype="checkbox"/>
+                <Cell col="1" text="bind:ROWFLAG"/>
+                <Cell col="2" edittype="text"/>
+                <Cell col="3" edittype="text"/>
+                <Cell col="4" validation="사번;NULL"/>
+                <Cell col="5" edittype="text" validation="이름;NULL"/>
+                <Cell col="6" edittype="text"/>
+                <Cell col="7" edittype="text"/>
+                <Cell col="8" edittype="text"/>
+                <Cell col="9" edittype="text"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcGrdLeft" taborder="4" text="Grid Left" left="0" top="70" width="120" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="Static00_00_00" taborder="5" left="0" top="94" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divGrdLeftBtn" taborder="6" width="200" height="24" visible="true" right="37.50%" isButtonGroup="true" top="70">
+          <Layouts>
+            <Layout>
+              <Button id="btnDeleteLeft" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick" visible="true"/>
+              <Button id="btnAddLeft" taborder="1" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdRight" taborder="7" left="grdLeft:20" top="104" bottom="40" cssclass="grd_WF_normal" autofittype="col" right="0">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="48"/>
+                <Column size="150"/>
+                <Column size="150"/>
+                <Column size="140"/>
+                <Column size="140"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="상태"/>
+                <Cell col="2" text="COL1"/>
+                <Cell col="3" text="COL2"/>
+                <Cell col="4" text="COL3"/>
+                <Cell col="5" text="COL4"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="checkboxcontrol" text="bind:AUTH_YN" edittype="checkbox"/>
+                <Cell col="1" text="bind:ROWFLAG"/>
+                <Cell col="2" text="bind:AUTH_NM" textAlign="left"/>
+                <Cell col="3"/>
+                <Cell col="4"/>
+                <Cell col="5"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static00_01_00" taborder="8" left="grdLeft:0" top="50" background="rgba(72,156,255,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+        <Static id="stcGrdRight" taborder="9" text="Grid Right" left="grdLeft:20" top="70" width="200" height="24" cssclass="sta_WF_gridTitle"/>
+        <Div id="divGrdBotBtn" taborder="10" width="200" height="32" bottom="0" right="0" isButtonGroup="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnSave" taborder="0" text="저장" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="0" onclick="fnCommOnclick" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divGrdLeftBtn00" taborder="11" width="200" height="24" visible="true" right="0" isButtonGroup="true" top="70">
+          <Layouts>
+            <Layout>
+              <Button id="btnDeleteRight" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick" visible="true"/>
+              <Button id="btnAddRight" taborder="1" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00_01_01" taborder="12" left="0" background="rgba(173,142,219,0.4)" text="40" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="200" bottom="0" height="40"/>
+        <Static id="Static00_01_01_00" taborder="13" background="rgba(173,142,219,0.4)" text="8" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" height="8" bottom="32" width="200" right="0"/>
+        <TextArea id="TextArea00" taborder="14" left="171" top="198" width="454" height="102" background="rgba(166,166,166,0.4)" cssclass="ta_WF_normal" value="** 화면 design template **&#10;&#10;검색영역, 그리드 타이틀, 버튼영역 Div, 그리드의&#10;left/top/width/height/right/bottom position 및 margin 참조할 것."/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ 화면 디자인 Template
+* 화면(명)		︰ 화면 디자인 Template
+* 메뉴(경로)	︰ 화면 디자인 Template
+* 화면 설명	︰ 화면 디자인 Template
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/ 
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	
+}
+
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	
+}
+
+
+this.fnSearch = function()
+{
+	
+}
+
+
+
+// 저장
+this.fnSave = function()
+{
+	
+	
+}
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = 0; i < objDs.rowcount; i++)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		Ex.core.error(this,{id:"ERROR",msg:sSvcId+"\n"+Ex.core.msg(sErrorMsg)});
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch(pID)
+	{
+		
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{	
+
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		
+	}
+}
+
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearchArea.form.edt01" propid="value" datasetid="dsCond" columnid="CO_NM"/>
+      <BindItem id="item1" compid="divSearchArea.form.edt02" propid="value" datasetid="dsCond" columnid="DEPT_NM"/>
+      <BindItem id="item2" compid="divSearchArea.form.edt03" propid="value" datasetid="dsCond" columnid="USER_NM"/>
+    </Bind>
+  </Form>
+</FDL>

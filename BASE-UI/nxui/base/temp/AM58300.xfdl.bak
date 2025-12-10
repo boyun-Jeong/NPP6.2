@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="MAM58300" classname="MAM01600" left="0" top="0" width="1012" height="640" titletext="RACK운영등록" onload="MAM58300_onload">
+    <Layouts>
+      <Layout>
+        <Div id="div_search" taborder="64" text="Div00" left="0" top="0" right="20" height="80" cssclass="div_WF_SearchBg">
+          <Layouts>
+            <Layout>
+              <Button id="btn_search" taborder="34" text="조회" onclick="div_search_btn_search_onclick" cssclass="btn_WF_SchArea" right="20" bottom="12" width="71" height="24"/>
+              <Static id="Static07" taborder="35" text="위치명" cssclass="sta_WF_SchTitle" left="19" top="12" width="90" height="24"/>
+              <Div id="div_ITSys" taborder="36" url="comm::commSearchBranch.xfdl" left="122" top="12" width="165" height="24"/>
+              <Static id="Static03" taborder="37" text="FIX h12" cssclass="Guide_Color" visible="false" left="0" right="0" bottom="0" height="12"/>
+              <Static id="Static05" taborder="38" text="FIX h12" cssclass="Guide_Color" visible="false" left="0" top="0" right="0" height="12"/>
+              <Static id="Static30" taborder="39" text="FIX h6" cssclass="Guide_Color" visible="false" left="0" top="36" right="0" height="6"/>
+              <Static id="Static06" taborder="40" text="FIX w20" cssclass="Guide_Color" visible="false" left="0" top="0" bottom="0" width="20"/>
+              <Static id="Static04" taborder="41" text="FIX w20" cssclass="Guide_Color" visible="false" left="101" top="0" bottom="0" width="20"/>
+              <Static id="Static12" taborder="42" text="FIX w30" cssclass="Guide_Color" visible="false" left="286" top="0" bottom="0" width="30"/>
+              <Static id="Static00" taborder="43" text="FIX w30" cssclass="Guide_Color" visible="false" left="621" top="0" bottom="0" width="30"/>
+              <Static id="Static01" taborder="44" text="FIX w20" cssclass="Guide_Color" visible="false" left="437" top="0" bottom="0" width="20"/>
+              <Static id="Static09" taborder="47" text="FIX w31" cssclass="Guide_Color" visible="false" left="771" top="0" bottom="0" width="20"/>
+              <Edit id="txtReqCont03" taborder="48" onkeyup="edt_onkeyup" left="122" top="42" width="165" height="24" tooltiptext="edit"/>
+              <Static id="Static10" taborder="49" text="상면번호" cssclass="sta_WF_SchTitle" left="21" top="41" width="110" height="24"/>
+              <Edit id="txtReqCont02" taborder="50" onkeyup="edt_onkeyup" left="457" top="42" width="165" height="24" tooltiptext="edit"/>
+              <Static id="Static08" taborder="51" text="RACK자산명" cssclass="sta_WF_SchTitle" left="317" top="41" width="120" height="24"/>
+              <Static id="Static02" taborder="52" text="도입유형" cssclass="sta_WF_SchTitle" left="651" top="42" width="75" height="21"/>
+              <Combo id="cmb_inbCateCd" taborder="53" innerdataset="@ds_inbCateCd" codecolumn="CODE" datacolumn="CODE_NAME" left="790" top="42" width="165" height="24"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00" taborder="6" text="FIX w20" cssclass="Guide_Color" visible="false" top="0" right="0" width="20" bottom="0" onclick="Static00_onclick"/>
+        <Static id="sta_listCnt" taborder="2" left="43" top="102" width="300" height="28" cssclass="sta_WF_GridCount"/>
+        <Static id="Static11" taborder="18" text="h15" cssclass="Guide_Color" visible="false" left="0" right="20" height="30" bottom="0"/>
+        <Div id="div_comBtn" taborder="37" top="100" right="20" width="300" style="background:transparent;border:0 solid #808080ff ;" gridName="grd_list01" height="28">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="div_comBtn00" taborder="42" top="603" right="20" width="300" height="23" style="background:transparent;border:0 solid #808080ff ;" gridName="grd_list01"/>
+        <Edit id="txtReqCont00" taborder="50" onkeyup="edt_onkeyup" left="457" top="13" width="165" height="24" tooltiptext="edit"/>
+        <Static id="Static07" taborder="51" text="RACK자산번호" cssclass="sta_WF_SchTitle" left="317" top="12" width="120" height="24"/>
+        <Static id="sta_statis" taborder="39" text="목록" cssclass="sta_WF_SubTitle" left="0" top="100" width="45" height="28"/>
+        <Static id="Static02" taborder="58" text="h12" cssclass="Guide_Color" visible="false" left="-1" top="122" right="20" height="12"/>
+        <Grid id="grd_list" taborder="59" binddataset="ds_list" useinputpanel="false" autofittype="col" oncellclick="grd_list_oncellclick" left="0" top="134" right="20" bottom="30">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="30"/>
+                <Column size="0"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="110"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell rowspan="2" text="No"/>
+                <Cell col="1" rowspan="2" text="지점/센터명"/>
+                <Cell col="2" rowspan="2" text="위치명"/>
+                <Cell col="3" rowspan="2" text="상면번호"/>
+                <Cell col="4" rowspan="2" text="RACK&#13;&#10;자산번호"/>
+                <Cell col="5" rowspan="2" text="RACK&#13;&#10;자산명"/>
+                <Cell col="6" rowspan="2" text="RACK&#13;&#10;시리얼번호"/>
+                <Cell col="7" rowspan="2" text="자산&#13;&#10;상태"/>
+                <Cell col="8" rowspan="2" text="도입&#13;&#10;유형"/>
+                <Cell col="9" rowspan="2" text="RACK&#13;&#10;제조사"/>
+                <Cell col="10" colspan="4" text="RACK UNIT 현황"/>
+                <Cell row="1" col="10" text="전체"/>
+                <Cell row="1" col="11" text="사용"/>
+                <Cell row="1" col="12" text="미사용"/>
+                <Cell row="1" col="13" text="사용율(%)"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="expr:currow + 1"/>
+                <Cell col="1" text="bind:BRANCH_NM"/>
+                <Cell col="2" text="bind:LOCATION_NM"/>
+                <Cell col="3" edittype="expand" style="cursor: ;" text="bind:LOC_SURF_NM"/>
+                <Cell col="4" style="cursor: ;" cssclass="cell_event" text="bind:ASSET_NO"/>
+                <Cell col="5" text="bind:ASSET_NM"/>
+                <Cell col="6" text="bind:SERIAL_NO"/>
+                <Cell col="7" displaytype="combo" text="bind:ASSET_STAT_CD" combodataset="ds_assetStatCd" combocodecol="CODE" combodatacol="CODE_NAME"/>
+                <Cell col="8" displaytype="combo" text="bind:INB_CATE_CD" combodataset="ds_inbCateCd" combocodecol="CODE" combodatacol="CODE_NAME"/>
+                <Cell col="9" text="bind:VENDOR_NM"/>
+                <Cell col="10" style="color:#1955b8ff;color2:#1955b8ff;font:underline antialias 9 맑은 고딕;cursor:hand;selectcolor:#1955b8ff;selectfont:underline antialias 9 맑은 고딕;" text="bind:MAX_UNIT_QTY"/>
+                <Cell col="11" text="bind:UNIT_USE_QTY"/>
+                <Cell col="12" text="bind:UNIT_NOT_USE_QTY"/>
+                <Cell col="13" text="bind:UNIT_USE_QTY_RATE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Edit id="txtReqCont01" taborder="60" onkeyup="edt_onkeyup" left="792" top="13" width="165" height="24" tooltiptext="edit"/>
+        <Static id="Static03" taborder="61" text="RACK시리얼번호" cssclass="sta_WF_SchTitle" left="652" top="12" width="120" height="24"/>
+        <Static id="Static01" taborder="65" text="h30" cssclass="Guide_Color" visible="false" left="0" top="80" right="20" height="30"/>
+      </Layout>
+    </Layouts>
+    <Bind>
+      <BindItem id="item0" compid="txtReqCont00" propid="value" datasetid="ds_cond" columnid="ASSET_NO"/>
+      <BindItem id="item1" compid="txtReqCont01" propid="value" datasetid="ds_cond" columnid="SERIAL_NO"/>
+      <BindItem id="item3" compid="div_search.txtReqCont03" propid="value" datasetid="ds_cond" columnid="LOC_SURF_NM"/>
+      <BindItem id="item2" compid="div_search.txtReqCont02" propid="value" datasetid="ds_cond" columnid="ASSET_NM"/>
+      <BindItem id="item4" compid="div_search.cmb_inbCateCd" propid="value" datasetid="ds_cond" columnid="INB_CATE_CD"/>
+    </Bind>
+    <Objects>
+      <Dataset id="ds_cond">
+        <ColumnInfo>
+          <Column id="BRANCH_ID" type="STRING" size="8"/>
+          <Column id="BRANCH_NM" type="STRING" size="100"/>
+          <Column id="LOCATION_ID" type="STRING" size="8"/>
+          <Column id="LOCATION_NM" type="STRING" size="200"/>
+          <Column id="LOC_SURF_ID" type="STRING" size="10"/>
+          <Column id="LOC_SURF_NM" type="STRING" size="100"/>
+          <Column id="AM_ASSET_ID" type="STRING" size="12"/>
+          <Column id="ASSET_NO" type="STRING" size="10"/>
+          <Column id="ASSET_NM" type="STRING" size="500"/>
+          <Column id="SERIAL_NO" type="STRING" size="500"/>
+          <Column id="ASSET_STAT_CD" type="STRING" size="10"/>
+          <Column id="ASSET_STAT_NM" type="STRING" size="100"/>
+          <Column id="INB_CATE_CD" type="STRING" size="10"/>
+          <Column id="INB_CATE_NM" type="STRING" size="100"/>
+          <Column id="VENDOR_NM" type="STRING" size="200"/>
+          <Column id="MAX_UNIT_QTY" type="BIGDECIMAL" size="11"/>
+          <Column id="RACK_YN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_list">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="BRANCH_ID" type="STRING" size="8"/>
+          <Column id="BRANCH_NM" type="STRING" size="100"/>
+          <Column id="LOCATION_ID" type="STRING" size="8"/>
+          <Column id="LOCATION_NM" type="STRING" size="200"/>
+          <Column id="LOC_SURF_ID" type="STRING" size="10"/>
+          <Column id="LOC_SURF_NM" type="STRING" size="100"/>
+          <Column id="AM_ASSET_ID" type="STRING" size="12"/>
+          <Column id="ASSET_NO" type="STRING" size="10"/>
+          <Column id="ASSET_NM" type="STRING" size="500"/>
+          <Column id="SERIAL_NO" type="STRING" size="500"/>
+          <Column id="ASSET_STAT_CD" type="STRING" size="10"/>
+          <Column id="ASSET_STAT_NM" type="STRING" size="100"/>
+          <Column id="INB_CATE_CD" type="STRING" size="10"/>
+          <Column id="INB_CATE_NM" type="STRING" size="100"/>
+          <Column id="VENDOR_NM" type="STRING" size="200"/>
+          <Column id="MAX_UNIT_QTY" type="BIGDECIMAL" size="11"/>
+          <Column id="UNIT_USE_QTY" type="BIGDECIMAL" size="39"/>
+          <Column id="UNIT_NOT_USE_QTY" type="BIGDECIMAL" size="39"/>
+          <Column id="UNIT_USE_QTY_RATE" type="BIGDECIMAL" size="39"/>
+          <Column id="RACK_ASSET_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="RESULT0">
+        <ColumnInfo>
+          <Column id="ROWINDEX" type="INT" size="255"/>
+          <Column id="STATUS" type="STRING" size="255"/>
+          <Column id="RESULT" type="INT" size="255"/>
+          <Column id="ERROR" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_inbCateCd">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="CODE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_assetStatCd">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="CODE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">1</Col>
+            <Col id="CODE_NAME">운영</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2</Col>
+            <Col id="CODE_NAME">유휴</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">3</Col>
+            <Col id="CODE_NAME">중지</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">4</Col>
+            <Col id="CODE_NAME">불명</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">5</Col>
+            <Col id="CODE_NAME">임시</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">6</Col>
+            <Col id="CODE_NAME">폐기</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_statis">
+        <ColumnInfo>
+          <Column id="BRANCH_ID" type="STRING" size="8"/>
+          <Column id="BRANCH_NM" type="STRING" size="100"/>
+          <Column id="LOCATION_ID" type="STRING" size="8"/>
+          <Column id="LOCATION_NM" type="STRING" size="200"/>
+          <Column id="LOCATION_SURF_NM" type="STRING" size="50"/>
+          <Column id="SURF_TOT_CNT" type="BIGDECIMAL" size="39"/>
+          <Column id="SURF_RACK_Y_CNT" type="BIGDECIMAL" size="39"/>
+          <Column id="SURF_RACK_N_CNT" type="BIGDECIMAL" size="39"/>
+          <Column id="SURF_RACK_RATE" type="BIGDECIMAL" size="39"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.0"><![CDATA[/***********************************************************************
+ * 화면ID   : MAM58300
+ * 화면명   : RACK운영등록
+ * 화면설명 : RACK운영등록 화면
+ * 작성일   : 2018.04.20
+ * 작성자   : 김성균
+ * 수정이력 : 
+ ***********************************************************************
+ *     수정일     수정자   내용
+ ***********************************************************************
+ ***********************************************************************
+ */
+ 
+ /***********************************************************************
+ * Include
+ ***********************************************************************/
+ include "lib::comInclude.xjs";
+/***********************************************************************
+ * Form Variables
+ ***********************************************************************/
+var _lastPosition		= -1;
+var _lastScrollPosition	= -1;
+ 
+ /***********************************************************************
+ * Form Event Functions
+ ***********************************************************************/
+this.MAM58300_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// OnLoad 공통 함수 (필수)
+	this.gfn_init(obj);
+	
+	// Form Initialize 함수
+	this.fn_initForm(); // Init Form
+	this.fn_initDataset(); // Init Dataset
+}
+
+/***********************************************************************
+ * Form Initialize Functions
+ ***********************************************************************/
+/*
+ * 함수명  	: fn_initForm
+ * 설명 		: Form을 초기화한다.
+ * params  		: None
+ * return Type 	: None
+ */
+this.fn_initForm = function()
+{
+	//권한 안타는 부분만 뒤에 0붙인다.
+// 	var args = {
+// 		count 	: 2,
+// 		id 		: ["btn_delete:0", "btn_excel:0"],
+// 		text 	: ["삭제", "엑셀"],
+// 		css 	: ["btn_WF_CRUD", "btn_WF_CRUD"],
+// 		func 	: ["btn_delete_onclick", "btn_excel_onclick"]
+// 	};
+// 	
+// 	var mustAuth = "YYYY";
+// 	Iject.initAuthButton(this, this.div_comBtn, args, mustAuth);
+	
+	this.gfn_getCommCode2("INB_CATE_CD", this.div_search.cmb_inbCateCd, "A", "CODE", "CODE_NAME");		// 도입유형 공통코드 조회
+	this.gfn_getCommCode2("ASSET_STAT_CD", this.ds_assetStatCd, "1", "CODE", "CODE_NAME");				// 자산상태 공통코드 조회
+}
+
+/*
+ * 함수명  	: fn_initDataset
+ * 설명 		: Dataset을 초기화한다.
+ *                주로, 조건 Dataset들(ds_cond, ds_cond_00, ds_cond_01, ...) 을 초기화한다.
+ * params  		: None
+ * return Type 	: None
+ */
+this.fn_initDataset = function()
+{
+	
+}
+
+// 트랜젝션 후 처리
+this.fn_callback = function (sid, errNo, errMsg)
+{
+	if(errNo < 0) {
+		return;
+	}
+	
+	switch(sid) {
+		case "MAM58300Select01" :
+			this.sta_listCnt.set_text("(" + this.ds_list.getRowCount() + "건)" );
+			
+			if(_lastPosition >= 0)
+			{
+				this.ds_list.set_rowposition(_lastPosition);
+				this.grd_list.vscrollbar.set_pos(_lastScrollPosition);
+				
+				_lastPosition	= -1;
+			}
+		break;
+		
+		default :
+		break;
+	}
+}
+ 
+/***********************************************************************
+ * Component Event Functions
+ ***********************************************************************/
+// 조회 버튼 클릭
+this.div_search_btn_search_onclick = function(obj:Button,  e:nexacro.ClickEventInfo)
+{
+	this.fn_search_list();
+}
+
+//조회 - 리스트
+this.fn_search_list = function()
+{
+	var objITSys = this.div_search.div_ITSys.getValue();
+	
+	this.ds_cond.setColumn(0, "LOCATION_ID", objITSys.pLOCATION_ID);
+	
+	var params = "";
+	params += Iject.Util.setParam("model", "MAM58300Select01");
+	
+	var svcId = "MAM58300Select01";
+	var inDatasets	= "ds_cond=ds_cond";
+	var outDatasets = "ds_list=ds_list";
+	var argument = "";
+	var callbackFunc = "fn_callback";
+
+	Iject.xuptran(this, svcId, params, inDatasets, outDatasets, argument, callbackFunc);
+}
+
+// 엑셀
+this.btn_excel_onclick = function(obj:Button,  e:nexacro.ClickEventInfo)
+{
+	/*
+	* @param  {XaComp} this(현재폼)
+	* @param  {object} Grid
+	* @param  {string} 파일명
+	* @param  {string} sheet명 (생략 가능함 : 생략 시, sheet1 으로 생성됨)
+	*/
+	Iject.exportExcel(this, this.grd_list, "MAM58300_Excel", "RACK운영등록내역");
+} 
+
+//팝업 콜백
+this.popupCallback = function(sid, rtn)
+{
+	if(this.gfn_isNull(rtn))
+		return;
+}
+
+this.grd_list_oncellclick = function(obj:Grid, e:nexacro.GridClickEventInfo)
+{
+	var ds = obj.getBindDataset();
+	var rackAssetId = ds.getColumn(e.row, "RACK_ASSET_ID");
+	var rackAssetNo = ds.getColumn(e.row, "ASSET_NO");
+	
+	if(e.cell == 10 && !Eco.isEmpty(rackAssetId)) {
+		var oData = {
+			sId				: "PAM58400",   //callback id
+			sUrl			: "am::PAM58400.xfdl",   //url
+			bshowtitlebar	: true, //title bar
+			bAutoSize		: true,    //autosize
+			bResize			: false,   //resize
+			bShowtatusbar	: false,  //statusbar
+			sOpenalign		: "center middle",  //align
+			oArgs			:
+				{
+					rackAssetId: rackAssetId
+				}
+		};
+		
+		_lastPosition		= this.ds_list.rowposition;
+		_lastScrollPosition	= this.grd_list.vscrollbar.pos;
+		
+		Iject.showModal(this, oData, this.popup_callback);
+	} else if(e.cell == obj.getBindCellIndex("body", "ASSET_NO") && !Eco.isEmpty(rackAssetNo)) {
+		var oData = {
+			sId				: "PAM00100",   //callback id
+			sUrl			: "am::PAM00100.xfdl",   //url
+			bshowtitlebar	: true, //title bar
+			bAutoSize		: true,    //autosize
+			bResize			: false,   //resize
+			bShowtatusbar	: false,  //statusbar
+			sOpenalign		: "center middle",  //align
+			oArgs			:
+				{
+					am_asset_id: rackAssetId,
+					asset_no: rackAssetNo
+				}
+		};
+		
+		Iject.showModal(this, oData, this.popup_callback);
+	}
+}
+
+this.popup_callback = function(sid, rtn)
+{
+// 	if(this.gfn_isNull(rtn))
+// 		return;
+	
+	this.fn_search_list();
+}]]></Script>
+  </Form>
+</FDL>

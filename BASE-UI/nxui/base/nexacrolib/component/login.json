@@ -1,0 +1,11 @@
+﻿{
+	"name": "login",
+	"version": "24.0.0.100",
+	"description": "login.js",
+	"license": "",
+	"scripts": [        
+        "login/login.js"        
+	]
+}
+//@ sourceURL=login.json
+

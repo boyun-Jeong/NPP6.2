@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM1100_P03" left="0" top="0" width="750" height="350" titletext="변경이력 등록(일괄)" onload="form_onload" scrolltype="none" cssclass="">
+    <Layouts>
+      <Layout width="750" height="350">
+        <Static id="staAuthTitle" taborder="1" text="사용자의 권한그룹" left="1520" top="70" width="200" height="24" cssclass="sta_WF_gridTitle"/>
+        <Div id="divBottom" taborder="0" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+              <Button id="btnSave" taborder="0" text="등록" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="btnClose:5" width="100" height="32" bottom="14" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divContent" taborder="2" text="Div00" left="0" top="0" right="0" bottom="divBottom:0">
+          <Layouts>
+            <Layout>
+              <Static id="Static00_01" taborder="1" left="5" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-5"/>
+              <Static id="Static00_02" taborder="2" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="0"/>
+              <Static id="stcBg01_00_00" taborder="4" left="20.00" top="20" cssclass="sta_WF_inputBg" right="20" text="" bottom="Static00_02:0"/>
+              <Static id="stcOpDesc" taborder="3" left="20.00" top="20" width="110" cssclass="sta_WF_inputTitle_E" text="변경사유" bottom="Static00_02:0"/>
+              <TextArea id="txaApprDesc" taborder="0" left="stcOpDesc:5.00" top="25" cssclass="txa_WF_normal" right="25" enable="true" validationGroup="fvValiCmp" text="" bottom="Static00_02:5" validation="변경사유;NULL|MAX_LEN_ASC :512"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsExpt">
+        <ColumnInfo>
+          <Column id="RQS_RSN" type="STRING" size="256"/>
+          <Column id="PRC_SCD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSaveList"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ FOMM1100_P03
+* 화면(명)	︰ 변경사유등록
+* 메뉴(경로)	︰ 관리자 > 사용자권한관리 > 서비스별 담당자관리
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2025.02.13
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2025.02.13	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+};
+
+this.fnInit = function()
+{	
+	var popupType = this.getOwnerFrame().pPopupType;
+	
+// 	if(popupType =='S')
+// 	{
+// 		var objBindItem = new BindItem(); 	
+// 		objBindItem.init("item14","divContent.form.txaApprDesc","value","dsData","CHG_REASON");		
+// 		this.addChild("item14",objBindItem);		
+// 		objBindItem.bind();
+// 	}
+// 	else
+// 	{
+// 		this.divBottom.form.btnSave.visible = true;
+// 	}
+	this.divBottom.form.btnSave.visible = true;
+};
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+//저장
+this.fnSave = function()
+{	
+};
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{	
+		case "reqExpt" :
+			break;	
+	}
+};
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	if(!varValue)	return;
+
+	switch(mID)
+	{
+		case "reqConfirm" :
+			break;
+			
+		case "saveAlert" :		
+			break;
+		
+	}
+};
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCheckValidate = function()
+{
+	if( !Ex.util.checkValidate(this.divContent, "fvValiCmp") )	return false;		
+	return true;
+};
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSave" :		// 저장
+			if(this.fnCheckValidate())
+			{
+				var rtnVal = this.divContent.form.txaApprDesc.value;
+				Ex.core.pclose(this, rtnVal);
+			}
+			break;
+
+		case "btnClose" :
+			Ex.core.pclose(this);
+			break;
+	}
+};
+
+this.dsMethodTmpl_oncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	 obj.setUpdateRow(e);	// ROWFLAG컬럼 변경을 위한 함수 호출
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContent.form.edtGrpId" propid="value" datasetid="dsMethodGrp" columnid="METHOD_ID"/>
+      <BindItem id="item2" compid="divContent.form.edtTitle" propid="value" datasetid="dsWfApprovalMt" columnid="TITLE"/>
+      <BindItem id="item1" compid="divContent.form.edtReqDt" propid="value" datasetid="dsWfApprovalMt" columnid="REQ_DATE_NM"/>
+      <BindItem id="item3" compid="divContent.form.edtReqId" propid="value" datasetid="dsWfApprovalMt" columnid="REQ_ID"/>
+      <BindItem id="item4" compid="divContent.form.stcBg01_00_01" propid="value" datasetid="dsWfApprovalMt" columnid="TITLE"/>
+      <BindItem id="item7" compid="divContent.form.chkGreA" propid="value" datasetid="dsMethodItem" columnid="GRDA_ESSN_YN"/>
+      <BindItem id="item8" compid="divContent.form.chkGreB" propid="value" datasetid="dsMethodItem" columnid="GRDB_ESSN_YN"/>
+      <BindItem id="item9" compid="divContent.form.chkGreC" propid="value" datasetid="dsMethodItem" columnid="GRDC_ESSN_YN"/>
+      <BindItem id="item10" compid="divContent.form.chkGreD" propid="value" datasetid="dsMethodItem" columnid="GRDD_ESSN_YN"/>
+      <BindItem id="item11" compid="divContent.form.chkPrj" propid="value" datasetid="dsMethodItem" columnid="PRJ_ESSN_YN"/>
+      <BindItem id="item12" compid="divContent.form.chkEss" propid="value" datasetid="dsMethodItem" columnid="MUST_ESSN_YN"/>
+      <BindItem id="item5" compid="divContent.form.cboOpStep" propid="value" datasetid="dsMethodItem" columnid="ACT_STEP_CD"/>
+      <BindItem id="item6" compid="divContent.form.cboOpStepDet" propid="value" datasetid="dsMethodItem" columnid="ACT_STEP_SUB_CD"/>
+      <BindItem id="item13" compid="divContent.form.edtOpType" propid="value" datasetid="dsMethodItem" columnid="METHODITEM_NM"/>
+      <BindItem id="item15" compid="divContent.form.edtGrpNm" propid="value" datasetid="dsMethodGrp" columnid="METHOD_NM"/>
+    </Bind>
+  </Form>
+</FDL>

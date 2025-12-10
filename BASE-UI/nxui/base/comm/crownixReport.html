@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html style="margin:0;height:100%">
+<head>
+<meta charset="utf-8">
+<title>Crownix HTML5 Viewer</title>
+<script src="https://nitsmdev.wemb.co.kr/spp/nexacrolib/component/jquery/jquery.min.js"></script>
+<!-- <script src="https://crownixdev.wemb.co.kr:1443/reporting/html5/js/jquery-1.11.0.min.js"></script> -->
+<script type="text/javascript">
+
+    function funcRpt(pUrl, pRdName, rptData) {
+        $("#mrdName").val(pRdName);
+        $("#reportData").val(rptData);
+        $("#rptFrm").attr("action", pUrl).submit();
+    }
+
+</script>
+</head>
+<body style="margin:0;height:100%">
+    <form name="rptFrm" id="rptFrm" method="post">
+        <input type="hidden" name="mrdName"  id="mrdName">
+        <input type="hidden" name="reportData" id="reportData">
+    </form>
+    <script>
+        window.onload = function() {
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="ref19_D" left="0" top="0" width="1840" height="720" titletext="화면전환(서브페이지)" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <TextArea id="TextArea01" taborder="0" left="850" top="20" readonly="true" value="- ref::ref19_D.xfdl&#10;호출된 상세화면의 script 처리 (자세한 처리는 스크립트 참조)&#10;&#10;1) 파라미터 전달받기&#10;- var oParam = this.getOwnerFrame().subpageParam;&#10;&#10;2) 서브페이지 닫기 &amp; 원 화면 callback으로 파라미터 전달&#10;- Ex.core.clolseSubpage(scope, oParam);&#10;- 서브페이지를 닫고 원 화면으로 돌아간다.&#10;- @private&#10;- @param {form} scope&#10;- @param {object} param 원 화면 callback으로 던져줄 param&#10;- @return N/A" right="20" bottom="20"/>
+        <Static id="Static00" taborder="1" text="상세 화면 :: ref19_D.xfdl" left="29" top="19" width="181" height="24"/>
+        <TextArea id="TextArea00" taborder="2" left="30" top="60" width="250" height="80" readonly="true"/>
+        <Button id="btnClose" taborder="3" left="30" top="158" width="180" height="32" onclick="fnCommOnclick" text="원 화면으로 돌아가기" tabstop="true"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		: 상세페이지 처리 가이드
+* 메뉴(경로)	: 공통관리 > 플랫폼 > 공통
+* 화면 설명	: 상세페이지 처리 가이드
+* 작성자		: WEMB
+* 작성일		: 
+* 수정이력		:
+*------------------------------------------------------------------
+* 수정일			작성자			이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	var subpageParam = this.getOwnerFrame().subpageParam;
+	
+	var paramStr = '원 화면으로부터 전달받은 파라미터\n';
+	for(var key in subpageParam){
+		paramStr += key + ' :: ' + subpageParam[key] + '\n';
+	}
+	this.TextArea00.set_value(paramStr);
+}
+
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+
+
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+this.fnCommOnclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnClose" :
+			/**
+			  * Ex.core.closeSubpage
+			  *  서브페이지를 닫고 원 화면으로 돌아간다.
+			  * @private
+			  * @param {form} scope
+			  * @param {object} param 원 화면 callback으로 던져줄 param
+			  * @return N/A
+			  * @description 
+			  *
+			  * @example
+			  *  Ex.core.closeSubpage(this, oParam);
+			  * @memberOf Ex.core
+			  **/
+			Ex.core.closeSubpage(this, {p3:'p3', p4:'p4'});
+			break;
+	}
+};
+]]></Script>
+  </Form>
+</FDL>

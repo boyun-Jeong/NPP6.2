@@ -1,0 +1,637 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="frmWF0120_P01" classname="top" left="0" top="0" titletext="결재상세정의 팝업" onload="form_onload" scrolltype="none" cssclass="" height="660" width="800">
+    <Layouts>
+      <Layout width="800" height="660" mobileorientation="landscape">
+        <Div id="divBottom" taborder="0" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnSelect" taborder="1" text="적용" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="125" width="100" height="32" bottom="14"/>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divContent" taborder="1" text="Div00" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="stcBg01_01_00_00_00" taborder="35" left="20.00" top="285" height="34" cssclass="sta_WF_inputBg" right="20"/>
+              <Static id="stcBg01_01_00_00" taborder="16" left="20.00" top="252" height="34" cssclass="sta_WF_inputBg" right="20"/>
+              <Static id="stcBg01_01" taborder="10" left="20.00" top="54" height="34" cssclass="sta_WF_inputBg" right="20"/>
+              <Static id="Static00_01" taborder="0" left="5" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-5"/>
+              <Static id="Static00_01_00" taborder="1" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Static id="Static00_01_00_00" taborder="2" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+              <Static id="Static00_02" taborder="3" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="1"/>
+              <Static id="stcUser00" taborder="4" text="결재" left="20.00" top="20" width="50" height="24" cssclass="sta_WF_gridTitle"/>
+              <Static id="stcBg01" taborder="5" left="20.00" top="153" height="34" cssclass="sta_WF_inputBg" right="20"/>
+              <Static id="stcRtrnNode" taborder="6" left="20.00" top="153" width="155" height="34" cssclass="sta_WF_inputTitle_E" text="반려 시 단계"/>
+              <Combo id="cboRtrnWf" taborder="7" left="stcRtrnNode:5.00" top="158" height="24" cssclass="cbo_WF_normal" right="405" innerdataset="dsRtrnWfProcCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM"/>
+              <Static id="stcName" taborder="8" left="20.00" top="54" width="155" height="34" cssclass="sta_WF_inputTitle_E" text="표기명칭"/>
+              <Static id="stcApprNm" taborder="29" left="400.00" top="54" width="150" height="34" cssclass="sta_WF_inputTitle_E" text="워크플로우 표기명칭"/>
+              <Edit id="edtName" taborder="9" left="stcName:5.00" top="59" height="24" cssclass="edt_WF_normal" right="stcApprNm:5"/>
+              <Static id="stcBg01_01_00" taborder="11" left="20.00" top="186" height="34" cssclass="sta_WF_inputBg" right="20"/>
+              <Static id="stcApprProcDivCd" taborder="12" left="20.00" top="186" width="155" height="34" cssclass="sta_WF_inputTitle_E" text="결재처리/진행구분"/>
+              <Static id="Static00_00" taborder="20" left="0" top="320" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Static id="stcTitle01_00" taborder="13" text="추가 결재 단계" left="20.00" top="Static00_00:0" width="145" height="24" cssclass="sta_WF_gridTitle"/>
+              <Static id="Static00_00_00" taborder="21" left="0" top="Static00_00:24" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Grid id="grdWfReqAppvDt" taborder="14" binddataset="dsWfReqAppvDt" autofittype="col" cssclass="grd_WF_normal" left="20.00" right="20" useFilter="false" oncellclick="grdOnCellClick" top="Static00_00_00:0" height="203">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="30" band="left"/>
+                      <Column size="40" band="left"/>
+                      <Column size="40" band="left"/>
+                      <Column size="70" band="left"/>
+                      <Column size="70" band="left"/>
+                      <Column size="115"/>
+                      <Column size="250"/>
+                      <Column size="150"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="40" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="상태"/>
+                      <Cell col="2" text="결재&#13;&#10;단계" cssclass="grdHCell_WF_essential"/>
+                      <Cell col="3" text="결재처리&#13;&#10;구분" cssclass="grdHCell_WF_essential"/>
+                      <Cell col="4" text="결재진행&#13;&#10;구분"/>
+                      <Cell col="5" text="워크플로우 표기명칭" cssclass="grdHCell_WF_essential"/>
+                      <Cell col="6" text="서비스명"/>
+                      <Cell col="7" text="진행단계매핑"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:CHK" displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="bind:ROWFLAG"/>
+                      <Cell col="2" edittype="normal" editinputtype="number" text="bind:APPR_LVL_SEQ" validation="순번;NULL"/>
+                      <Cell col="3" displaytype="combotext" edittype="combo" text="bind:APPR_PROC_DIV_CD" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" validation="결재처리구분;NULL" combodataset="dsApprProcCd"/>
+                      <Cell col="4" edittype="expr:APPR_PROC_DIV_CD == &quot;01&quot; ? &quot;combo&quot; : &quot;none&quot;" text="bind:APPR_PROG_DIV_CD" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" validation="결재진행구분;NULL" combodataset="dsApprProgCd" displaytype="expr:APPR_PROC_DIV_CD == &quot;01&quot; ? &quot;combotext&quot; : &quot;none&quot;"/>
+                      <Cell col="5" text="bind:APPR_NM" validation="워크플로우 표기명칭;NULL" textAlign="left" edittype="text"/>
+                      <Cell col="6" text="bind:SVC_NM" editinputtype="digit,alpha,english,symbol" editimemode="alpha" validation="서비스명;NULL" textAlign="left" edittype="expr:APPR_PROC_DIV_CD == '99' ? 'normal' : 'none'" displaytype="expr:APPR_PROC_DIV_CD == '99' ? 'normal' : 'none'"/>
+                      <Cell col="7" displaytype="combocontrol" edittype="combo" text="bind:MAP_WF_PROC_CD" combodataset="dsMapWfProcCd" combodatacol="CMM_CD_NM" combocodecol="CMM_CD"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="stcSvcNm" taborder="15" left="20.00" top="252" width="155" height="34" cssclass="sta_WF_inputTitle" text="결재선 지정 서비스"/>
+              <Edit id="edtSvcNm" taborder="17" left="stcSvcNm:5.00" top="257" height="24" cssclass="edt_WF_normal" inputfilter="none" right="25" readonly="true"/>
+              <Combo id="cboApprProcDivCd" taborder="18" left="stcApprProcDivCd:5.00" top="191" width="150" height="24" value="" index="-1" cssclass="cbo_WF_normal" onitemchanged="cboOnItemChanged" innerdataset="dsApprProcCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM"/>
+              <Div id="divGrdTopRBtn" taborder="19" height="24" top="Static00_00:0" right="20" width="125" isButtonGroup="true">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+                    <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="stcBg01_01_00_01" taborder="22" left="20.00" top="219" height="34" cssclass="sta_WF_inputBg" right="20"/>
+              <Static id="stcApprDirectYn" taborder="23" left="20.00" top="219" width="155" height="34" cssclass="sta_WF_inputTitle" text="결재선직접지정가능여부"/>
+              <Combo id="cboApprProgDivCd" taborder="24" left="cboApprProcDivCd:2" top="191" width="150" height="24" value="" index="-1" cssclass="cbo_WF_normal" innerdataset="dsApprProgCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM"/>
+              <Static id="stcBg01_01_00_02" taborder="25" left="20.00" top="120" height="34" cssclass="sta_WF_inputBg" right="20"/>
+              <Static id="stcScreenRtrn00" taborder="27" left="20.00" top="120" width="155" height="34" cssclass="sta_WF_inputTitle" text="수정가능단계"/>
+              <MultiCombo id="mcboScreenEdit" taborder="26" left="stcScreenRtrn00:5.00" top="125" height="24" right="405" value="" index="-1" innerdataset="dsEditWfProcCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" cssclass="mcbo_WF_normal" text=""/>
+              <Static id="stcBg01_01_01" taborder="28" left="20.00" top="87" height="34" cssclass="sta_WF_inputBg" right="20"/>
+              <Edit id="edtApprNm" taborder="30" left="stcApprNm:5.00" top="59" height="24" cssclass="edt_WF_normal" readonly="false" inputfilter="none" right="25"/>
+              <CheckBox id="chkApprDirectYn" taborder="31" left="stcApprDirectYn:5.00" top="224" width="20" height="24" truevalue="Y" falsevalue="N"/>
+              <Static id="stcName00" taborder="32" left="20.00" top="285" width="156" height="34" cssclass="sta_WF_inputTitle" text="의견작성 필수단계"/>
+              <CheckBox id="chkBtnYn01" taborder="33" text="승인" left="stcName00:5" top="292" width="70" height="20" cssclass="chk_WF_normal" onchanged="chkBtn_onchanged" truevalue="Y" falsevalue="N"/>
+              <CheckBox id="chkBtnYn02" taborder="34" text="반려" left="chkBtnYn01:10" top="292" width="70" height="20" cssclass="chk_WF_normal" onchanged="chkBtn_onchanged" falsevalue="N" truevalue="Y"/>
+              <Static id="stcMapWfProcCd" taborder="36" left="20.00" top="87" width="155" height="34" cssclass="sta_WF_inputTitle" text="진행단계매핑"/>
+              <Combo id="cboMapWfProcCd" taborder="37" left="stcMapWfProcCd:5.00" top="92" height="24" cssclass="cbo_WF_normal" right="405" innerdataset="dsMapWfProcCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM"/>
+              <Static id="stcApprNm00" taborder="38" left="400.00" top="87" width="150" height="34" cssclass="sta_WF_inputTitle" text="" visible="false"/>
+              <Static id="stcApprNm00_00" taborder="39" left="400.00" top="120" width="150" height="34" cssclass="sta_WF_inputTitle" text="" visible="false"/>
+              <Static id="stcApprNm00_01" taborder="40" left="400.00" top="153" width="150" height="34" cssclass="sta_WF_inputTitle" text="" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsRtrnWfProcCd">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsWfDt"/>
+      <Dataset id="dsApprProcCd"/>
+      <Dataset id="dsWfReqAppvDt" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="REQ_TMPLAT_ID" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="APPR_LVL_SEQ" type="STRING" size="256"/>
+          <Column id="APPR_NM" type="STRING" size="256"/>
+          <Column id="APPR_DIRECT_YN" type="STRING" size="256"/>
+          <Column id="APPR_PROC_DIV_CD" type="STRING" size="256"/>
+          <Column id="APPR_PROG_DIV_CD" type="STRING" size="256"/>
+          <Column id="SVC_NM" type="STRING" size="256"/>
+          <Column id="MAP_WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="RMK" type="STRING" size="256"/>
+          <Column id="FRID" type="STRING" size="256"/>
+          <Column id="FRDT" type="STRING" size="256"/>
+          <Column id="LMID" type="STRING" size="256"/>
+          <Column id="LMDT" type="STRING" size="256"/>
+          <Column id="LMPID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsApprProgCd"/>
+      <Dataset id="dsEditWfProcCd">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMapWfProcCd"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ WF0120_P01
+* 화면(명)	︰ 결재승인상세정의 팝업
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ SPP 워크플로우 결재 승인 상세 처리에 대한 정의 팝업
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.pIU = 'I';
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.pIU = this.getOwnerFrame().pIU||'I';
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function(){}
+
+// 조회
+this.fnSearch = function(){}
+
+// 공통 저장 func.
+this.fnSave = function(){}
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	var filterStr = objDs.filterstr;
+
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr(filterStr);
+	objDs.set_enableevent(true);
+	
+	for(var i=0; i<objDs.rowcount; i++)
+	{
+		objDs.setColumn(i, "APPR_LVL_SEQ", (i+2));
+	}
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	if( Ex.isEmpty(varValue) )	return;
+
+	switch(pID) {}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	if(!varValue) return;
+
+	switch(mID)
+	{
+		case "AlertEssApprProcDivCdI" :
+			this.divContent.form.cboApprProcDivCd.setFocusRed();
+			break;
+
+		case "AlertEssApprProgDivCdI" :
+			this.divContent.form.cboApprProgDivCd.setFocusRed();
+			break;
+
+		case "AlertEssSvcNmI" :
+			this.divContent.form.edtSvcNm.setFocusRed();
+			break;
+
+		case "AlertEssRtrnWfI" :
+			this.divContent.form.cboRtrnWf.setFocusRed();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.divContent.form.grdWfReqAppvDt.displayRowType();
+
+	this.fnGetCmmCd();
+	
+	this.dsWfDt.loadXML(this.getOwnerFrame().dsWfDt);	// WorkFlow 단계 dataset
+
+	// 반려단계 선택용 현재 워크플로우 이전 단계 setting
+	var arrWfProc = this.getOwnerFrame().prevWfProcCd.split(',');
+	
+	var rowPos = this.dsRtrnWfProcCd.setAddRow();
+	this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD', '');
+	this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD_NM', '없음');
+	
+	for(var i = 0; i < arrWfProc.length; i++)
+	{
+		var arrWfProcCd = arrWfProc[i].split('|');
+		var rowPos = this.dsRtrnWfProcCd.setAddRow();
+		this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD', arrWfProcCd[0]);
+		this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD_NM', this.dsWfDt.getColumn(this.dsWfDt.findRow('WF_PROC_CD', arrWfProcCd[0]), 'WF_PROC_NM') || '등록' );
+	}
+	
+	rowPos = this.dsRtrnWfProcCd.setAddRow();
+	this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD', "WF_PROC_9999");
+	this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD_NM', "완료");
+
+	rowPos = this.dsEditWfProcCd.setAddRow();
+	this.dsEditWfProcCd.setColumn(rowPos, 'CMM_CD', "TOP");
+	this.dsEditWfProcCd.setColumn(rowPos, 'CMM_CD_NM', '기본정보');
+
+	for(var i = 0; i < arrWfProc.length; i++)
+	{
+		var arrWfProcCd = arrWfProc[i].split('|');
+		var rowPos = this.dsEditWfProcCd.setAddRow();
+		this.dsEditWfProcCd.setColumn(rowPos, 'CMM_CD', arrWfProcCd[0]);
+		this.dsEditWfProcCd.setColumn(rowPos, 'CMM_CD_NM', this.dsWfDt.getColumn(this.dsWfDt.findRow('WF_PROC_CD', arrWfProcCd[0]), 'WF_PROC_NM') || '등록' );
+	}
+
+	var WF_PROC_CD	= this.getOwnerFrame().WF_PROC_CD||'';
+	var WF_FUNC_CD 	= this.getOwnerFrame().WF_FUNC_CD||'';
+	var WF_FUNC_NM 	= this.getOwnerFrame().WF_FUNC_NM;
+	var RTRN		= this.getOwnerFrame().RTRN||'';
+
+	trace("WF_PROC_CD : " + WF_PROC_CD);
+	trace("WF_FUNC_CD : " + WF_FUNC_CD);
+	trace("WF_FUNC_NM : " + WF_FUNC_NM);
+			
+	this.divContent.form.edtName.set_value(WF_FUNC_NM);
+	
+	this.dsMapWfProcCd.loadXML(this.getOwnerFrame().dsMapWfProcCd);
+	this.dsMapWfProcCd.set_filterstr(" Ex.isEmpty(ITM_VAL_1) || ITM_VAL_1 == '"+ WF_PROC_CD +"' ");
+	
+	switch(this.pIU.toUpperCase())
+	{
+		case "I" :
+			this.divContent.form.grdWfReqAppvDt.set_binddataset("");
+			this.dsWfReqAppvDt.assign(this.getOwnerFrame().dsWfReqAppvDt);
+			this.dsWfReqAppvDt.set_filterstr("WF_PROC_CD=='" + WF_PROC_CD + "'");
+
+			this.divContent.form.cboRtrnWf.set_value(WF_PROC_CD);
+			this.divContent.form.cboApprProcDivCd.set_value("01");
+			this.divContent.form.cboApprProgDivCd.set_value("02");
+			this.divContent.form.chkApprDirectYn.set_value("N");
+			
+			this.divContent.form.edtApprNm.set_value("결재");
+			this.divContent.form.grdWfReqAppvDt.set_binddataset(this.dsWfReqAppvDt);
+			
+			this.divContent.form.chkBtnYn01.set_value("Y");
+			this.divContent.form.chkBtnYn02.set_value("N");
+			this.divContent.form.cboMapCd.set_value("");
+			break;
+			
+		case "U" :
+			this.divContent.form.grdWfReqAppvDt.set_binddataset("");
+			this.dsWfReqAppvDt.assign(this.getOwnerFrame().dsWfReqAppvDt);
+			this.dsWfReqAppvDt.set_filterstr("WF_PROC_CD=='" + WF_PROC_CD + "'");
+
+			this.divContent.form.chkBtnYn01.set_value(this.getOwnerFrame().APV_ESS_YN);
+			this.divContent.form.chkBtnYn02.set_value(this.getOwnerFrame().RTRN_ESS_YN);
+			//this.divContent.form.cboMapCd.set_value(this.getOwnerFrame().MAP_WF_PROC_CD);
+			this.divContent.form.cboMapWfProcCd.set_value(this.dsWfReqAppvDt.getColumn(0,"MAP_WF_PROC_CD")||"");
+			
+			trace("filter rowcount : " + this.dsWfReqAppvDt.rowcount + "\n" +
+				this.dsWfReqAppvDt.saveXML());
+			
+			var fRow = this.dsWfReqAppvDt.findRow("APPR_LVL_SEQ", "1");
+
+			trace("fRow ::: " + fRow);
+
+			if(fRow > -1)
+			{
+				var APPR_NM = this.dsWfReqAppvDt.getColumn(fRow, "APPR_NM");
+				this.divContent.form.edtApprNm.set_value(APPR_NM);
+
+				var APPR_PROC_DIV_CD = this.dsWfReqAppvDt.getColumn(fRow, "APPR_PROC_DIV_CD");
+				this.divContent.form.cboApprProcDivCd.set_value(APPR_PROC_DIV_CD);
+
+				var evt = nexacro.ItemChangeEventInfo;
+				evt.postvalue = APPR_PROC_DIV_CD;
+				this.cboOnItemChanged(this.divContent.form.cboApprProcDivCd, evt);
+
+				if(APPR_PROC_DIV_CD == "01")
+				{
+					var APPR_PROG_DIV_CD = this.dsWfReqAppvDt.getColumn(fRow, "APPR_PROG_DIV_CD");
+					this.divContent.form.cboApprProgDivCd.set_value(APPR_PROG_DIV_CD);
+				}
+				else
+				{
+					this.divContent.form.cboApprProgDivCd.set_index(0);
+				}
+				
+				var APPR_DIRECT_YN = this.dsWfReqAppvDt.getColumn(fRow, "APPR_DIRECT_YN");
+				this.divContent.form.chkApprDirectYn.set_value(Ex.isNvl(APPR_DIRECT_YN, "N"));
+
+				var SVC_NM = this.dsWfReqAppvDt.getColumn(fRow, "SVC_NM");
+				this.divContent.form.edtSvcNm.set_value(SVC_NM);
+
+				this.dsWfReqAppvDt.set_enableevent(false);
+				this.dsWfReqAppvDt.set_updatecontrol(false);
+				this.dsWfReqAppvDt.deleteRow(fRow);
+				this.dsWfReqAppvDt.set_enableevent(true);
+				this.dsWfReqAppvDt.set_updatecontrol(true);
+			}
+			else
+			{
+				//this.divContent.form.cboApprProcDivCd.set_value("01");
+				//this.divContent.form.cboApprProgDivCd.set_value("02");
+				this.divContent.form.cboApprProcDivCd.set_value(undefined);
+				this.divContent.form.cboApprProgDivCd.set_value(undefined);
+			}
+			
+			var EDIT = this.getOwnerFrame().EDIT||'';
+			if( !Ex.isEmpty(EDIT) )	this.divContent.form.mcboScreenEdit.set_value(EDIT);
+			
+			var RTRN = this.getOwnerFrame().RTRN||'';
+			this.divContent.form.cboRtrnWf.set_value(RTRN);
+			//else					this.divContent.form.cboRtrnWf.set_value(WF_PROC_CD);
+
+			this.divContent.form.grdWfReqAppvDt.set_binddataset(this.dsWfReqAppvDt);
+			
+			break;
+	}	
+}
+
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['APPR_PROC_CD',		'APPR_PROG_CD'		]	// 조회할 상위코드
+		,codeDiv: ['WORKFLOW_CD',		'WORKFLOW_CD'		]	// 조회할 코드의 업무구분
+		,optStr	: ['SEL',				'SEL'				]	// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',					'Y'					]	// 사용여부
+		,filter	: ['',					''					]	// filterStr
+		,objDs	: [this.dsApprProcCd,	this.dsApprProgCd	]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+this.fnCheckValidate = function()
+{
+	var msgId = "";
+	var labelText = "";
+	
+// 	if( Ex.isEmpty(this.divContent.form.cboRtrnWf.value) )
+// 	{
+// 		msgId = "AlertEssRtrnWfI";
+// 		labelText = this.divContent.form.stcRtrnNode.text;
+// 	}
+	
+	if( Ex.isEmpty(msgId) )
+	{
+		if( Ex.isEmpty(this.divContent.form.cboApprProcDivCd.value) )
+		{
+			msgId = "AlertEssApprProcDivCdI";
+			labelText = this.divContent.form.stcApprProcDivCd.text;
+		}
+	}
+
+	if( Ex.isEmpty(msgId) )
+	{
+		if(this.divContent.form.cboApprProcDivCd.value == "99")
+		{
+			if( Ex.isEmpty(this.divContent.form.edtSvcNm.value) )
+			{
+				msgId = "AlertEssSvcNmI";
+				labelText = this.divContent.form.stcSvcNm.text;
+			}
+		}
+	}
+	
+	if( Ex.isEmpty(msgId) )
+	{
+		if( this.divContent.form.cboApprProcDivCd.value == "01" && Ex.isEmpty(this.divContent.form.cboApprProgDivCd.value) )
+		{
+			msgId = "AlertEssApprProgDivCdI";
+			labelText = this.divContent.form.stcApprProcDivCd.text;
+		}
+	}
+
+	if( !Ex.isEmpty(msgId) )
+	{
+		var param = {
+				  id	: msgId							//fnMsgAfter에서 식별자로 사용되는 ID
+				, msg	: "11001"						//메시지 내용
+				, arrparam : [labelText]	//메시지의 변수에 들어갈 실제값
+				, msgtype : "I"							//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+			};
+			Ex.core.alert(this, param);
+			return false;
+	}
+	
+	if( !this.divContent.form.grdWfReqAppvDt.checkValidate(true) ) return false;
+
+	var msg = "";
+	for(var i=0; i<this.dsWfReqAppvDt.rowcount; i++)
+	{
+		if(this.dsWfReqAppvDt.getColumn(i, "APPR_PROC_DIV_CD") == "99")
+		{
+			if( Ex.isEmpty(this.dsWfReqAppvDt.getColumn(i, "SVC_NM")) )
+			{
+				msg += (Ex.isEmpty(msg) ? "" : "\n") + "[" + (i+1) + "행] [결재처리구분]이 서비스 지정인 경우 서비스명은 필수 입력항목입니다.";
+			}
+		}
+	}
+	
+	if( !Ex.isEmpty(msg) )
+	{
+		Ex.core.popup(
+			this,								// <--- 팝업 실행 스코프
+			"validCheckInfoPop",				// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+			"comm::comTextareaPop.xfdl",		// <--- 팝업창 오픈 Url
+			{
+				title		: "입력 체크",
+				subTitle	: "[추가 결재 단계]입력 체크",
+				pMsg		: msg
+			},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			"autosize"				// <--- width/height/modeless(프레임 처리 옵션)
+		);
+		return false;
+	}
+	return true;
+}
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnAdd" :
+			var apprLvlSeq = nexacro.toNumber(this.dsWfReqAppvDt.getMax("APPR_LVL_SEQ"), 1);
+				apprLvlSeq++;
+
+			var rowPos = this.dsWfReqAppvDt.setAddRow();
+			this.dsWfReqAppvDt.setColumn(rowPos, "WF_PROC_CD", this.getOwnerFrame().WF_PROC_CD);
+			this.dsWfReqAppvDt.setColumn(rowPos, "APPR_LVL_SEQ", apprLvlSeq);
+			this.dsWfReqAppvDt.setColumn(rowPos, "APPR_PROC_DIV_CD", "01");
+			this.dsWfReqAppvDt.setColumn(rowPos, "APPR_PROG_DIV_CD", "02");
+			break;
+
+		case "btnDelete" :
+			this.fnDelete(this.dsWfReqAppvDt);
+			break;
+			
+		case "btnSelect" :
+			var rtn = this.fnCheckValidate();
+			trace("rtn ::: " + rtn);
+			if( !rtn ) return;
+			
+			this.dsWfReqAppvDt.setInsertRow(0);
+			this.dsWfReqAppvDt.setColumn(0, "WF_PROC_CD", this.getOwnerFrame().WF_PROC_CD);
+			this.dsWfReqAppvDt.setColumn(0, "APPR_LVL_SEQ", 1);
+			this.dsWfReqAppvDt.setColumn(0, "APPR_NM", (this.divContent.form.edtApprNm.value||''));
+			this.dsWfReqAppvDt.setColumn(0, "APPR_DIRECT_YN", (this.divContent.form.chkApprDirectYn.value||''));
+			this.dsWfReqAppvDt.setColumn(0, "APPR_PROC_DIV_CD", (this.divContent.form.cboApprProcDivCd.value||''));
+			this.dsWfReqAppvDt.setColumn(0, "APPR_PROG_DIV_CD",  (this.divContent.form.cboApprProgDivCd.value||''));
+			this.dsWfReqAppvDt.setColumn(0, "SVC_NM", (this.divContent.form.edtSvcNm.value||''));
+			this.dsWfReqAppvDt.setColumn(0, "MAP_WF_PROC_CD", (this.divContent.form.cboMapWfProcCd.value||''));
+
+			this.dsWfReqAppvDt.set_filterstr("");
+			
+			for(var i=0; i<this.dsWfReqAppvDt.rowcount; i++)
+			{
+				if(this.dsWfReqAppvDt.getColumn(i, "APPR_PROC_DIV_CD") != "01")
+				{
+					this.dsWfReqAppvDt.setColumn(i, "APPR_PROG_DIV_CD", "");
+				}
+			}
+
+			Ex.core.pclose(this, (this.divContent.form.edtName.value||'') + ";;" +
+								 (this.divContent.form.mcboScreenEdit.value||'') + ";;" +
+								 (this.divContent.form.cboRtrnWf.value||'') + ";;" +
+								 
+								(this.divContent.form.chkBtnYn01.value||'') + ";;" +
+								(this.divContent.form.chkBtnYn02.value||'') + ";;" +
+
+								 this.dsWfReqAppvDt.saveXML()
+			);
+			break;
+
+		case "btnClose" :
+			Ex.core.pclose(this);
+			break;
+	}
+}
+
+this.grdOnCellClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	obj.dropdownCombo();
+};
+
+this.cboOnItemChanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if(e.postvalue == "01")	//직접지정
+	{
+		this.divContent.form.cboApprProgDivCd.set_enable(true);
+		this.divContent.form.chkApprDirectYn.set_value("Y");
+		this.divContent.form.chkApprDirectYn.set_enable(false);
+	}
+	else
+	{
+		if( Ex.isEmpty(this.divContent.form.chkApprDirectYn.value) )
+		{
+			this.divContent.form.chkApprDirectYn.set_value("N");
+		}
+		this.divContent.form.chkApprDirectYn.set_enable(true);
+		this.divContent.form.cboApprProgDivCd.set_enable(false);
+	}
+
+	this.divContent.form.edtSvcNm.set_readonly(e.postvalue == "99" ? false : true);
+	if(!this.divContent.form.edtSvcNm.readonly)
+	{
+		this.divContent.form.stcSvcNm.set_cssclass("sta_WF_inputTitle_E");
+		this.divContent.form.edtSvcNm.setFocus();
+	}
+	else
+	{
+		this.divContent.form.stcSvcNm.set_cssclass("sta_WF_inputTitle");
+	}
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(e.columnid == "APPR_PROC_DIV_CD")
+	{
+		if(e.newvalue != "01")
+		{
+			obj.setColumn(e.row, "APPR_PROG_DIV_CD", undefined);
+		}
+	}
+	obj.setUpdateRow(e);
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContent.form.stcBg01_01_00_02" propid="value" datasetid="dsRtn" columnid="SCREEN_EDIT"/>
+      <BindItem id="item1" compid="divContent.form.stcName00" propid="value" datasetid="dsRtn" columnid="SCREEN_RTRN_BTN_YN"/>
+    </Bind>
+  </Form>
+</FDL>

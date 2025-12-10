@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmFOMM0252_W" left="0" top="0" width="1840" height="720" titletext="시스템링크페이지관리" onload="form_onload" scrolltype="none" cssclass="">
+    <Layouts>
+      <Layout width="1840" height="720">
+        <Static id="Static00" taborder="1" left="0" top="50" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divSearchArea" taborder="0" left="0" top="0" height="50" right="0" cssclass="div_WF_divSearchArea">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="3" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+              <Button id="btnSearch" taborder="1" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Button id="btnSearchReset" taborder="2" top="13" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+              <Static id="stcTitle" taborder="4" text="분류명" left="20" top="13" width="60" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtClssNM" taborder="0" left="stcTitle:0" top="13" width="160" height="24" cssclass="edt_WF_normal" onkeyup="fnCommOnkeyup"/>
+              <Static id="Static00_00" taborder="6" left="edtClssNM:0" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="stcDatTypeCd" taborder="5" text="페이지설명" left="Static00_00:0.00" top="13" width="85" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtPageCont" taborder="7" left="stcDatTypeCd:0" top="13" width="160" height="24" cssclass="edt_WF_normal" onkeyup="fnCommOnkeyup"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdSysLinkPageManagement" taborder="2" left="0" top="104" bottom="40" binddataset="dsData" cssclass="grd_WF_normal" useCheck="true" treeusecheckbox="false" treeuseline="false" treeinitstatus="expand,null" treeusebutton="use" treeuseimage="true" right="0" useSort="true" useContext="false" formatid="default" readonly="true" autosizingtype="col" autosizebandtype="allband" oncellclick="grdSysLinkPageManagement_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="48"/>
+                <Column size="60"/>
+                <Column size="48"/>
+                <Column size="80"/>
+                <Column size="222"/>
+                <Column size="50"/>
+                <Column size="442"/>
+                <Column size="90"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                <Cell col="1" text="번호"/>
+                <Cell col="2" text="행상태"/>
+                <Cell col="3" text="분류명"/>
+                <Cell col="4" text="페이지설명"/>
+                <Cell col="5" text="링크"/>
+                <Cell col="6" text="페이지URL"/>
+                <Cell col="7" text="정렬순번"/>
+                <Cell col="8" text="사용여부"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:CHK" edittype="checkbox" displaytype="checkboxcontrol"/>
+                <Cell col="1" text="expr:currow+1"/>
+                <Cell col="2" text="bind:ROWFLAG"/>
+                <Cell col="3" displaytype="normal" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" combodataset="dsDatTypeCd" text="bind:CLSSF" edittype="text" validation="분류명;NULL"/>
+                <Cell col="4" cssclass="grdBCell_WF_info" text="bind:PAGE_DESC" edittype="text" validation="페이지설명;NULL" textAlign="left" expandimage="url('theme://img_bak/ico_TF_Itsm.png')"/>
+                <Cell col="5" text="theme://img_bak/ico_TF_Itsm.png" displaytype="imagecontrol" cursor="pointer"/>
+                <Cell col="6" displaytype="normal" text="bind:PAGE_URL" edittype="text" textAlign="left"/>
+                <Cell col="7" displaytype="number" calendardateformat="yyyy-MM-dd HH:mm:ss" calendareditformat="yyyy-MM-dd HH:mm:ss" text="bind:ORD_SEQ" edittype="text"/>
+                <Cell col="8" displaytype="checkboxcontrol" text="bind:USE_YN" edittype="checkbox"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcGridTitle" taborder="3" text="시스템링크페이지관리" left="0" top="70" width="196" height="24" cssclass="sta_WF_gridTitle" visible="true"/>
+        <Static id="Static00_00" taborder="4" left="0" top="94" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divGrdMtTopBtn" taborder="5" width="250" visible="false" isButtonGroup="true" top="70" height="24" right="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="1" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick" visible="false"/>
+              <Button id="btnAdd" taborder="0" text="추가" top="0" width="60" bottom="0" right="btnDelete:5" cssclass="btn_WF_add" onclick="fnCommOnclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divGrdBotBtn" taborder="6" width="200" height="32" bottom="0" right="0" isButtonGroup="true" visible="false">
+          <Layouts>
+            <Layout>
+              <Button id="btnSave" taborder="0" text="저장" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="0" onclick="fnCommOnclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="stcCnt01" taborder="7" left="stcGridTitle:0" top="70" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsData"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="CLSSF" type="STRING" size="50"/>
+          <Column id="PAGE_DESC" type="STRING" size="60"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsData" oncolumnchanged="fnCommOncolumnchanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="CLSSF" type="STRING" size="50"/>
+          <Column id="PAGE_DESC" type="STRING" size="60"/>
+          <Column id="PAGE_URL" type="STRING" size="300"/>
+          <Column id="ORD_SEQ" type="INT" size="5"/>
+          <Column id="USE_YN" type="STRING" size="1"/>
+          <Column id="REG_DT" type="STRING" size="32"/>
+          <Column id="CHG_DT" type="STRING" size="32"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();		// 컴포넌트 초기화
+
+	this.fnSearchReset();	// 검색조건 초기화
+	this.fnSearch();		// 조회
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+}
+
+// 변경 행 확인
+this.fnSearch = function()
+{
+	if( Ex.util.isUpdated(this.dsData) )
+	{
+		var param = {	id : "searchConfirm"
+					  , msg : "10001"
+					  , arrparam : []
+					  , msgtype : "I"};
+		Ex.core.confirm(this, param);
+		return;
+	}
+	this.fnSearch01();
+}
+
+// 조회
+this.fnSearch01 = function()
+{
+	// transaction
+	var sTranId = "select01";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0270W/select01";            // 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData=dsData";       			// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 저장
+this.fnSave = function()
+{
+	var sTranId = "save01";
+    var sService = "FOMM0270W/save01";
+    var sInDs = "dsCond=dsCond dsData=dsData:U";
+    var sOutDs = "dsData=dsData";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 공통 삭제
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;
+			
+		case "save01" :
+			Ex.core.toast(this, "10004", null, {toastType:'S'});
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	switch(pID)
+	{
+// 		case "noticePop" :
+// 			if( (varValue||'').toUpperCase() == 'SAVE' )
+// 				this.fnSearch();
+// 			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{	
+		case "searchConfirm" :
+			this.fnSearch01();
+			break;
+			
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.grdSysLinkPageManagement.displayRowType();
+
+	if(Ex.util.getSession('gvAdminYn') == "Y")
+	{
+		var arrBtn = [this.divGrdMtTopBtn.form.btnAdd];		// 쓰기	
+		Ex.util.setBtnVisible(this, 'write', arrBtn);
+		arrBtn = [this.divGrdMtTopBtn.form.btnDelete];	// 삭제
+		Ex.util.setBtnVisible(this, 'delete', arrBtn);
+		arrBtn = [this.divGrdBotBtn.form.btnSave];		// 저장
+		Ex.util.setBtnVisible(this, 'save', arrBtn);
+		
+		// 버튼 영역 div align 처리
+		Ex.util.setBtnAlign(this.divGrdMtTopBtn, 'right', true);
+		Ex.util.setBtnAlign(this.divGrdBotBtn, 'right', true);
+		
+		this.grdSysLinkPageManagement.set_readonly(false);
+		
+		this.divGrdMtTopBtn.set_visible(true);
+		this.divGrdBotBtn.set_visible(true);
+	}
+}
+
+this.fnCheckValidate = function()
+{
+	// 저장할 dataset에 변경된 data 있는 지 확인
+	if( !Ex.util.isUpdated(this.dsData) )	return false;
+
+	// Grid Validation
+	if( !this.grdSysLinkPageManagement.checkValidate()) return false; // return t or f
+// 	for(var i = this.dsData.rowcount-1; i >= 0; i--)
+// 		if( this.dsData.getColumn(i, "CLSSF") == NULL )
+// 			var oParam = {id : "alertSelectLvl1", msg : "분류명이 입력되어야 합니다.", arrparam : [], msgtype : "I"};
+// 			this.dsData.getColumn(i, "CLSSF").setFocus();
+// 			Ex.core.alert(this, oParam);
+// 			return false
+// 		
+	return true;
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case 'btnSearch' :	// 조회
+			this.fnSearch();
+			break;
+			
+		case 'btnSearchReset' :	// 조회조건 초기화
+			this.fnSearchReset();
+			break;
+			
+		case 'btnDelete' :
+			this.fnDelete(this.dsData);
+			break;
+			
+		case "btnAdd" : 			// 등록
+			//this.dsData.setAddRow();
+ 			var aRow = this.dsData.setAddRow();
+ 			this.dsSg.setColumn(aRow, "CLSSF", "결재");
+			this.dsSg.setColumn(aRow, "PAGE_DESC", "페이지설명(입력필요)");
+			
+			
+			break;
+			
+		case 'btnSave' : 	// 저장
+			// validation
+			if( this.fnCheckValidate() )
+			{	
+				var param = {
+						id : "saveConfirm"
+					  , msg : "10003"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+			break;
+	}
+}
+
+this.grdSysLinkPageManagement_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(obj.getCellProperty("body", e.cell, "displaytype") == "imagecontrol" && obj.getCellProperty("body", e.cell, "text") == "theme://img_bak/ico_TF_Itsm.png")
+	{
+		if( !Ex.isEmpty(this.dsData.getColumn(obj.getDatasetRow(e.row), "PAGE_URL")) )
+		{
+			system.execBrowser(this.dsData.getColumn(obj.getDatasetRow(e.row),"PAGE_URL"));
+		}
+	}
+};
+
+this.onexpandup = function(obj:nexacro.Grid,e:nexacro.GridMouseEventInfo)
+{
+	
+};
+
+this.fnCommOnkeyup = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == '13') this.fnSearch();
+};
+
+this.fnCommOncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	var var_CLSSF = this.dsData.getColumn(this.dsData.rowposition, "CLSSF");
+	var var_PAGE_DESC = this.dsData.getColumn(this.dsData.rowposition, "PAGE_DESC");
+// 	if( Ex.isEmpty(var_CLSSF) || Ex.isEmpty(var_PAGE_DESC) ){
+// 		var oParam = {id : "alertSelectLvl1", msg : "분류명과 페이지설명이 입력되어야 합니다.", arrparam : [], msgtype : "I"};
+//  		Ex.core.alert(this, oParam);
+// 		this.dsData.rowposition.setFocus();
+// 	}
+	obj.setUpdateRow(e);
+};]]></Script>
+    <Bind>
+      <BindItem id="item2" compid="divSearchArea.form.edtClssNM" propid="value" datasetid="dsCond" columnid="CLSSF"/>
+      <BindItem id="item0" compid="divSearchArea.form.edtPageCont" propid="value" datasetid="dsCond" columnid="PAGE_DESC"/>
+    </Bind>
+  </Form>
+</FDL>

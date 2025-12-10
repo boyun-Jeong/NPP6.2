@@ -1,0 +1,621 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="PAM58400" classname="PMA0100" left="0" top="0" width="1100" height="700" titletext="RACK운영/실장등록(팝업)" onload="PAM00300_onload">
+    <Layouts>
+      <Layout>
+        <Div id="div_comBtn" taborder="3" top="126" right="430" width="300" height="28" style="background:transparent;border:0 solid #808080ff ;" gridName="grd_list01"/>
+        <Static id="txt_total" taborder="7" left="6" top="131" width="35" height="21" style="font:bold 10 돋움;"/>
+        <Static id="Static05" taborder="18" text="h20" cssclass="Guide_Color" visible="false" left="0" right="0" height="20" bottom="64"/>
+        <Static id="Static07" taborder="19" text="W30" cssclass="Guide_Color" visible="false" top="0" right="0" bottom="0" width="30"/>
+        <Static id="Static08" taborder="20" text="FIX w30" cssclass="Guide_Color" visible="false" left="0" top="0" width="30" height="633"/>
+        <Static id="Static10" taborder="23" text="h20" cssclass="Guide_Color" visible="false" left="0" right="0" bottom="0" height="30"/>
+        <Static id="Static11" taborder="24" text="h20" cssclass="Guide_Color" visible="false" left="0" top="0" right="0" height="20"/>
+        <Div id="div_comBtnP" taborder="25" left="30" top="636" right="30" height="34" style="background:transparent;border:0 solid #808080ff ;" gridName="grd_list01" sqlId="deleteScrnList,insertScrnList,updateScrnList" svcId="saveScreenList">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Grid id="grd_list" taborder="26" binddataset="ds_mainList" useinputpanel="false" autofittype="col" left="30" top="20" right="29" bottom="581" oncellclick="grd_assetNo_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="110"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell rowspan="2" text="지점/센터명"/>
+                <Cell col="1" rowspan="2" text="위치명"/>
+                <Cell col="2" rowspan="2" text="상면번호"/>
+                <Cell col="3" rowspan="2" text="RACK&#13;&#10;자산번호"/>
+                <Cell col="4" rowspan="2" text="RACK&#13;&#10;자산명"/>
+                <Cell col="5" rowspan="2" text="RACK&#13;&#10;시리얼번호"/>
+                <Cell col="6" rowspan="2" text="자산&#13;&#10;상태"/>
+                <Cell col="7" rowspan="2" text="도입&#13;&#10;유형"/>
+                <Cell col="8" rowspan="2" text="RACK&#13;&#10;제조사"/>
+                <Cell col="9" colspan="4" text="RACK UNIT 현황"/>
+                <Cell row="1" col="9" text="전체"/>
+                <Cell row="1" col="10" text="사용"/>
+                <Cell row="1" col="11" text="미사용"/>
+                <Cell row="1" col="12" text="사용율(%)"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:BRANCH_NM"/>
+                <Cell col="1" text="bind:LOCATION_NM"/>
+                <Cell col="2" edittype="expand" style="cursor: ;" text="bind:LOC_SURF_NM"/>
+                <Cell col="3" style="cursor: ;" cssclass="cell_event" text="bind:ASSET_NO"/>
+                <Cell col="4" text="bind:ASSET_NM"/>
+                <Cell col="5" text="bind:SERIAL_NO"/>
+                <Cell col="6" displaytype="combo" text="bind:ASSET_STAT_CD" combodataset="ds_assetStatCd" combocodecol="CODE" combodatacol="CODE_NAME"/>
+                <Cell col="7" displaytype="combo" text="bind:INB_CATE_CD" combodataset="ds_inbCateCd" combocodecol="CODE" combodatacol="CODE_NAME"/>
+                <Cell col="8" text="bind:VENDOR_NM"/>
+                <Cell col="9" style="selectfont: ;" text="bind:MAX_UNIT_QTY"/>
+                <Cell col="10" text="bind:UNIT_USE_QTY"/>
+                <Cell col="11" text="bind:UNIT_NOT_USE_QTY"/>
+                <Cell col="12" text="bind:UNIT_USE_QTY_RATE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grd_amOpRack" taborder="27" useinputpanel="false" autofittype="col" left="30" top="162" right="430" bottom="84" binddataset="ds_amOpRackList" oncellclick="grd_assetNo_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="45"/>
+                <Column size="40"/>
+                <Column size="100"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell displaytype="checkbox" edittype="checkbox"/>
+                <Cell col="1" text="No"/>
+                <Cell col="2" text="자산번호"/>
+                <Cell col="3" text="자산명"/>
+                <Cell col="4" text="시리얼번호"/>
+                <Cell col="5" text="상태"/>
+                <Cell col="6" text="도입유형"/>
+                <Cell col="7" text="제조사"/>
+                <Cell col="8" cssclass="CellEssential" text="시작번호"/>
+                <Cell col="9" cssclass="CellEssential" text="종료번호"/>
+                <Cell col="10" cssclass="CellEssential" text="사용개수"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="checkbox" edittype="checkbox" text="bind:CHK"/>
+                <Cell col="1" expr="expr:currow + 1"/>
+                <Cell col="2" style="cursor: ;" cssclass="cell_event" text="bind:ASSET_NO" tooltiptext="bind:ASSET_NO"/>
+                <Cell col="3" text="bind:ASSET_NM" tooltiptext="bind:ASSET_NM"/>
+                <Cell col="4" text="bind:SERIAL_NO" tooltiptext="bind:SERIAL_NO"/>
+                <Cell col="5" displaytype="combo" text="bind:ASSET_STAT_CD" combodataset="ds_assetStatCd" combocodecol="CODE" combodatacol="CODE_NAME"/>
+                <Cell col="6" displaytype="combo" text="bind:INB_CATE_CD" combodataset="ds_inbCateCd" combocodecol="CODE" combodatacol="CODE_NAME"/>
+                <Cell col="7" text="bind:VENDOR_NM" tooltiptext="bind:VENDOR_NM"/>
+                <Cell col="8" displaytype="number" edittype="text" editfilter="number" style="align:center;" text="bind:UNIT_START_NO" editdisplay="display"/>
+                <Cell col="9" displaytype="number" edittype="text" editfilter="number" style="align:center;" text="bind:UNIT_END_NO" editdisplay="display"/>
+                <Cell col="10" displaytype="number" edittype="text" editfilter="number" style="align:center;" text="bind:UNIT_USE_QTY" editdisplay="display"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="grd_amOpRackDisp" taborder="28" useinputpanel="false" autofittype="col" left="680" top="162" right="30" bottom="84" binddataset="ds_inOutList" oncellclick="grd_assetNo_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="100"/>
+                <Column size="124"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" text="자산번호"/>
+                <Cell col="2" text="자산명"/>
+                <Cell col="3" text="제조사"/>
+              </Band>
+              <Band id="body">
+                <Cell style="background:EXPR(!Eco.isEmpty(ASSET_NO) ? '#ffff00ff' : null);background2:EXPR(!Eco.isEmpty(ASSET_NO) ? '#ffff00ff' : null);selectbackground:EXPR(!Eco.isEmpty(ASSET_NO) ? '#ffff00ff' : null);" text="bind:ROW"/>
+                <Cell col="1" style="cursor: ;" cssclass="cell_event" text="bind:ASSET_NO" suppress="1" suppressalign="first"/>
+                <Cell col="2" text="bind:ASSET_NM" suppress="2"/>
+                <Cell col="3" text="bind:VENDOR_NM" suppress="3" suppressalign="first"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static00" taborder="29" left="1004" top="134" width="20" height="20" style="background:#ffff00ff;"/>
+        <Static id="Static01" taborder="30" left="1024" top="133" width="40" height="20" text="실장" style="align:center middle;"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_mainList">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="BRANCH_ID" type="STRING" size="8"/>
+          <Column id="BRANCH_NM" type="STRING" size="100"/>
+          <Column id="LOCATION_ID" type="STRING" size="8"/>
+          <Column id="LOCATION_NM" type="STRING" size="200"/>
+          <Column id="LOC_SURF_ID" type="STRING" size="10"/>
+          <Column id="LOC_SURF_NM" type="STRING" size="100"/>
+          <Column id="AM_ASSET_ID" type="STRING" size="12"/>
+          <Column id="ASSET_NO" type="STRING" size="10"/>
+          <Column id="ASSET_NM" type="STRING" size="500"/>
+          <Column id="SERIAL_NO" type="STRING" size="500"/>
+          <Column id="ASSET_STAT_CD" type="STRING" size="10"/>
+          <Column id="ASSET_STAT_NM" type="STRING" size="100"/>
+          <Column id="INB_CATE_CD" type="STRING" size="10"/>
+          <Column id="INB_CATE_NM" type="STRING" size="100"/>
+          <Column id="VENDOR_NM" type="STRING" size="200"/>
+          <Column id="MAX_UNIT_QTY" type="BIGDECIMAL" size="11"/>
+          <Column id="UNIT_USE_QTY" type="BIGDECIMAL" size="39"/>
+          <Column id="UNIT_NOT_USE_QTY" type="BIGDECIMAL" size="39"/>
+          <Column id="UNIT_USE_QTY_RATE" type="BIGDECIMAL" size="39"/>
+          <Column id="RACK_ASSET_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_inbCateCd">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="CODE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_assetStatCd">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="CODE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">1</Col>
+            <Col id="CODE_NAME">운영</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2</Col>
+            <Col id="CODE_NAME">유휴</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">3</Col>
+            <Col id="CODE_NAME">중지</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">4</Col>
+            <Col id="CODE_NAME">불명</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">5</Col>
+            <Col id="CODE_NAME">임시</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">6</Col>
+            <Col id="CODE_NAME">폐기</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_mainCond">
+        <ColumnInfo>
+          <Column id="BRANCH_ID" type="STRING" size="8"/>
+          <Column id="BRANCH_NM" type="STRING" size="100"/>
+          <Column id="LOCATION_ID" type="STRING" size="8"/>
+          <Column id="LOCATION_NM" type="STRING" size="200"/>
+          <Column id="LOC_SURF_ID" type="STRING" size="10"/>
+          <Column id="LOC_SURF_NM" type="STRING" size="100"/>
+          <Column id="AM_ASSET_ID" type="STRING" size="12"/>
+          <Column id="ASSET_NO" type="STRING" size="10"/>
+          <Column id="ASSET_NM" type="STRING" size="500"/>
+          <Column id="SERIAL_NO" type="STRING" size="500"/>
+          <Column id="ASSET_STAT_CD" type="STRING" size="10"/>
+          <Column id="ASSET_STAT_NM" type="STRING" size="100"/>
+          <Column id="INB_CATE_CD" type="STRING" size="10"/>
+          <Column id="INB_CATE_NM" type="STRING" size="100"/>
+          <Column id="VENDOR_NM" type="STRING" size="200"/>
+          <Column id="MAX_UNIT_QTY" type="BIGDECIMAL" size="11"/>
+          <Column id="RACK_YN" type="STRING" size="256"/>
+          <Column id="RACK_ASSET_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_amOpRackList" cancolumnchange="ds_amOpRackList_cancolumnchange">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="1"/>
+          <Column id="RACK_ASSET_ID" type="STRING" size="12"/>
+          <Column id="RACK_ASSET_NO" type="STRING" size="10"/>
+          <Column id="UNIT_START_NO" type="STRING" size="3"/>
+          <Column id="UNIT_END_NO" type="STRING" size="3"/>
+          <Column id="UNIT_USE_QTY" type="BIGDECIMAL" size="39"/>
+          <Column id="AM_ASSET_ID" type="STRING" size="12"/>
+          <Column id="INB_CATE_CD" type="STRING" size="10"/>
+          <Column id="ASSET_NO" type="STRING" size="10"/>
+          <Column id="SERIAL_NO" type="STRING" size="500"/>
+          <Column id="ASSET_NM" type="STRING" size="500"/>
+          <Column id="ASSET_STAT_CD" type="STRING" size="10"/>
+          <Column id="OPENV_CATE_CD" type="STRING" size="10"/>
+          <Column id="ITEM_ID" type="STRING" size="10"/>
+          <Column id="ITEM_NM" type="STRING" size="200"/>
+          <Column id="VENDOR_ID" type="STRING" size="8"/>
+          <Column id="VENDOR_NM" type="STRING" size="200"/>
+          <Column id="ORG_AM_ASSET_ID" type="STRING" size="12"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="RESULT0">
+        <ColumnInfo>
+          <Column id="ROWINDEX" type="INT" size="255"/>
+          <Column id="STATUS" type="STRING" size="255"/>
+          <Column id="RESULT" type="INT" size="255"/>
+          <Column id="ERROR" type="STRING" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_inOutList">
+        <ColumnInfo>
+          <Column id="ROW" type="STRING" size="256"/>
+          <Column id="AM_ASSET_ID" type="STRING" size="256"/>
+          <Column id="ASSET_NO" type="STRING" size="256"/>
+          <Column id="ASSET_NM" type="STRING" size="256"/>
+          <Column id="VENDOR_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind/>
+    <Script type="xscript5.0"><![CDATA[/***********************************************************************
+ * 화면ID   : PAM58400
+ * 화면명   : RACK운영/실장등록(팝업)
+ * 화면설명 : RACK운영/실장등록(팝업)
+ * 작성일   : 2018.04.20
+ * 작성자   : 김성균
+ * 수정이력 : 
+ ***********************************************************************
+ *     수정일     수정자   내용
+ ***********************************************************************
+ ***********************************************************************
+ */
+
+/***********************************************************************
+ * Include
+ ***********************************************************************/
+ include "lib::comInclude.xjs";
+/***********************************************************************
+ * Form Variables
+ ***********************************************************************/
+var fv_oArgs;
+var fv_oParent; // 팝업을 호출한 부모 폼
+
+/***********************************************************************
+ * Form Event Functions
+ ***********************************************************************/
+this.PAM00300_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// OnLoad 공통 함수 (필수)
+	this.gfn_init(obj);
+	
+	// Form Initialize 함수
+	this.fn_initForm(); // Init Form
+	this.fn_initDataset(); // Init Dataset
+}
+
+
+
+/***********************************************************************
+ * Form Initialize Functions
+ ***********************************************************************/
+/*
+ * 함수명  	: fn_initForm
+ * 설명 		: Form을 초기화한다.
+ * params  		: None
+ * return Type 	: None
+ */
+this.fn_initForm = function()
+{
+	//권한 안타는 부분만 뒤에 0붙인다.
+	var args = {
+		count 	: 2,
+		id 		: ["btn_add:1", "btn_delete:2"],
+		text 	: ["추가", "삭제"],
+		css 	: ["btn_WF_Add", "btn_WF_Del"],
+		func 	: ["btn_add_onclick", "btn_delete_onclick"],
+	};
+	
+	var mustAuth = "YYYY";
+	Iject.initAuthButton(this, this.div_comBtn, args, mustAuth, "B");
+	
+	//권한 안타는 부분만 뒤에 0붙인다.
+	var args = {
+		count 	: 2,
+		id 		: ["btn_save:3", "btn_close:0"],
+		text 	: ["저장", "닫기"],
+		css 	: ["btn_WF_Popup", "btn_WF_Popupclose"],
+		func 	: ["btn_save_onclick", "btn_close_onclick"],
+	};
+	Iject.initAuthButton(this, this.div_comBtnP, args, mustAuth, "A");
+	
+	this.gfn_getCommCode2("INB_CATE_CD", this.ds_inbCateCd, "1", "CODE", "CODE_NAME");					// 도입유형 공통코드 조회
+	this.gfn_getCommCode2("ASSET_STAT_CD", this.ds_assetStatCd, "1", "CODE", "CODE_NAME");				// 자산상태 공통코드 조회
+
+	fv_oArgs = this.getOwnerFrame().arguments["popup_oArg"];
+	fv_oParent = this.getOwnerFrame().arguments["fObj"]; // 팝업을 호출한 부모 폼
+	
+	// 수정가능 모드
+	if(fv_oArgs.editAble == false) {
+		// 팝업 타이틀 변경
+		this.set_titletext("RACK운영/실장(팝업)");
+		
+		this.div_comBtn.set_visible(false);
+		this.div_comBtnP.btn_save.set_visible(false);
+		this.grd_amOpRack.set_readonly(true);
+		
+		this.grd_amOpRack.setFormatColProperty(0, "size", 0);	// 그리드 체크박스 제거
+		this.grd_amOpRack.setFormatColProperty(5, "size", 0);	// 그리드 상태표시 제거
+		
+		// 그리드 시작번호, 종료번호, 사용개수를 Edit가 불가능한것으로 변경
+		// 시작번호 변경
+		this.grd_amOpRack.setCellProperty("body", 8, "editdisplay", "edit");	this.grd_amOpRack.setCellProperty("body", 8, "edittype", "none");
+		// 종료번호 변경
+		this.grd_amOpRack.setCellProperty("body", 9, "editdisplay", "edit");	this.grd_amOpRack.setCellProperty("body", 9, "edittype", "none");
+		// 사용개수 변경
+		this.grd_amOpRack.setCellProperty("body", 10, "editdisplay", "edit");	this.grd_amOpRack.setCellProperty("body", 10, "edittype", "none");
+	}
+}
+
+/*
+ * 함수명  	: fn_initDataset
+ * 설명 		: Dataset을 초기화한다.
+ *                주로, 조건 Dataset들(ds_cond, ds_cond_00, ds_cond_01, ...) 을 초기화한다.
+ * params  		: None
+ * return Type 	: None
+ */
+this.fn_initDataset = function()
+{
+	this.fn_search();
+}
+
+/***********************************************************************
+* Data Transaction Functions
+************************************************************************/
+this.fn_search = function() {
+	
+	this.ds_mainCond.setColumn(0, "RACK_ASSET_ID", fv_oArgs.rackAssetId);
+	
+	var params = "";
+	params += Iject.Util.setParam("model", "PAM58400Select01");
+	
+	var svcId = "PAM58400Select01";
+	var inDatasets	= "ds_cond=ds_mainCond";
+	var outDatasets = "ds_mainList=ds_list ds_amOpRackList=ds_amOpRackList";
+	var argument = "";
+	var callbackFunc = "fn_callback";
+
+	Iject.xuptran(this, svcId, params, inDatasets, outDatasets, argument, callbackFunc);
+}
+
+// 트랜젝션 후 처리
+this.fn_callback = function (sid, errNo, errMsg)
+{
+	if(errNo < 0) {
+		return;
+	}
+	
+	switch(sid) {
+		case "PAM58400Select01" :
+			this.initInOut();
+		break;
+		case "PAM58400Modify01" :
+			alert("저장되었습니다.");
+			this.fn_search();
+		break;
+	}
+}
+
+/***********************************************************************
+ * Component Event Functions
+ ***********************************************************************/
+// 닫기
+this.btn_close_onclick = function(obj:Button,  e:nexacro.ClickEventInfo)
+{
+	Iject.close(this, null);
+}
+
+this.popupCallback = function(sid, rtn)
+{
+	if(this.gfn_isNull(rtn))
+		return;
+}
+
+/***********************************************************************
+ * User Functions
+ ***********************************************************************/
+this.btn_add_onclick = function() {
+	var oData = {
+		sId				: "PAM00300",   //callback id
+		sUrl			: "am::PAM00300.xfdl",   //url
+		bshowtitlebar	: true, //title bar
+		bAutoSize		: true,    //autosize
+		bResize			: false,   //resize
+		bShowtatusbar	: false,  //statusbar
+		sOpenalign		: "center middle",  //align
+		oArgs			:
+			{
+				select: "single",
+ 				lClassId: "H0000",
+// 				mClassId: "HGD00",
+// 				sClassId: "HGDRA",
+ 				isLClassComboEnable: false,
+// 				isMClassComboEnable: false,
+// 				isSClassComboEnable: false,
+				filterAssetStatCd: "02"
+			}
+	};
+	
+	Iject.showModal(this, oData, this.PAM00300Popup);
+}
+
+this.PAM00300Popup = function(sid, rtn)
+{
+	if(this.gfn_isNull(rtn))
+		return;
+	
+	var rackAssetNo = this.ds_mainList.getColumn(0, "ASSET_NO");
+	
+	var newRow = this.ds_amOpRackList.addRow();
+	this.ds_amOpRackList.setColumn(newRow, "RACK_ASSET_ID", fv_oArgs.rackAssetId);
+	this.ds_amOpRackList.setColumn(newRow, "RACK_ASSET_NO", rackAssetNo);
+	this.ds_amOpRackList.setColumn(newRow, "AM_ASSET_ID", rtn.getColumn(0, "AM_ASSET_ID"));
+	this.ds_amOpRackList.setColumn(newRow, "ASSET_NO", rtn.getColumn(0, "ASSET_NO"));
+	this.ds_amOpRackList.setColumn(newRow, "ASSET_NM", rtn.getColumn(0, "ASSET_NM"));
+	this.ds_amOpRackList.setColumn(newRow, "ITEM_ID", rtn.getColumn(0, "ITEM_ID"));
+	this.ds_amOpRackList.setColumn(newRow, "ITEM_NM", rtn.getColumn(0, "ITEM_NM"));
+	this.ds_amOpRackList.setColumn(newRow, "SERIAL_NO", rtn.getColumn(0, "SERIAL_NO"));
+	this.ds_amOpRackList.setColumn(newRow, "ASSET_STAT_CD", rtn.getColumn(0, "ASSET_STAT_CD"));
+	this.ds_amOpRackList.setColumn(newRow, "INB_CATE_CD", rtn.getColumn(0, "INB_CATE_CD"));
+	this.ds_amOpRackList.setColumn(newRow, "VENDOR_NM", rtn.getColumn(0, "VENDOR_NM"));
+}
+
+this.btn_delete_onclick = function() {
+	var rowposition = this.ds_amOpRackList.rowposition;
+	this.ds_amOpRackList.deleteRow(rowposition);
+}
+
+this.btn_save_onclick = function() {
+	
+	if(!this.gfn_isUpdate(this.ds_amOpRackList)) {
+		alert("변경 사항이 없습니다.");
+		return;
+	}
+
+	var rackAssetNo = this.ds_mainList.getColumn(0, "ASSET_NO");
+	var locSurfId = this.ds_mainList.getColumn(0, "LOC_SURF_ID");
+	var amOpRackRowCount = this.ds_amOpRackList.getRowCount();
+	
+	for(var i=0; i<amOpRackRowCount; i++) {
+		this.ds_amOpRackList.set_rowposition(i);
+	
+		var unitStartNo = this.ds_amOpRackList.getColumn(i, "UNIT_START_NO");
+		var unitEndNo = this.ds_amOpRackList.getColumn(i, "UNIT_END_NO");
+		var unitUseQty = this.ds_amOpRackList.getColumn(i, "UNIT_USE_QTY");
+		
+		if(Eco.isEmpty(unitStartNo)) {
+			alert("시작번호는 필수 입력 값입니다.");
+			var cell = this.grd_amOpRack.getBindCellIndex("Body", "UNIT_START_NO");
+			this.grd_amOpRack.setCellPos(cell);
+			this.grd_amOpRack.setFocus();
+			return;
+		} else if(Eco.isEmpty(unitEndNo)) {
+			alert("종료번호는 필수 입력 값입니다.");
+			var cell = this.grd_amOpRack.getBindCellIndex("Body", "UNIT_END_NO");
+			this.grd_amOpRack.setCellPos(cell);
+			this.grd_amOpRack.setFocus();
+			return;
+		} else if(Eco.isEmpty(unitUseQty)) {
+			alert("사용개수는 필수 입력 값입니다.");
+			var cell = this.grd_amOpRack.getBindCellIndex("Body", "UNIT_USE_QTY");
+			this.grd_amOpRack.setCellPos(cell);
+			this.grd_amOpRack.setFocus();
+			return;
+		}
+	}
+	
+	var params = "";
+	params += Iject.Util.setParam("model", "PAM58400Modify01");
+	
+	var svcId = "PAM58400Modify01";
+	var inDatasets	= "ds_amOpRackList=ds_amOpRackList:U";
+	var outDatasets = "RESULT0=RESULT0";
+	var argument = Iject.Util.setParam("locSurfId", nexacro.wrapQuote(locSurfId));
+	
+	var callbackFunc = "fn_callback";
+
+	Iject.xuptran(this, svcId, params, inDatasets, outDatasets, argument, callbackFunc);
+}
+
+this.initInOut = function() {
+	// 기존 실장 정보 제거
+	this.ds_inOutList.deleteAll();
+	
+	// 신규 실장 정보 추가
+	var maxUnitQty = this.ds_mainList.getColumn(0, "MAX_UNIT_QTY");
+	
+	for(var i=0; i<maxUnitQty; i++) {
+		var row = this.ds_inOutList.addRow();
+		this.ds_inOutList.setColumn(i, "ROW", maxUnitQty - row);
+	}
+	
+	// 신규 실장 정보 설정
+	var amOpRackRowCount = this.ds_amOpRackList.getRowCount();
+	
+	for(var i=0; i<amOpRackRowCount; i++) {
+		var amAssetId = this.ds_amOpRackList.getColumn(i, "AM_ASSET_ID");
+		var assetNo = this.ds_amOpRackList.getColumn(i, "ASSET_NO");
+		var assetNm = this.ds_amOpRackList.getColumn(i, "ASSET_NM");
+		var vendorNm = this.ds_amOpRackList.getColumn(i, "VENDOR_NM");
+		var unitStartNo = this.ds_amOpRackList.getColumn(i, "UNIT_START_NO");
+		var unitEndNo = this.ds_amOpRackList.getColumn(i, "UNIT_END_NO");
+		
+		var maxRow   = maxUnitQty;
+		var startRow = maxRow-unitEndNo;
+		var endRow   = maxRow-unitStartNo;
+				
+		for(var j=startRow; j<=endRow; j++) {
+			this.ds_inOutList.setColumn(j, "AM_ASSET_ID", amAssetId);
+			this.ds_inOutList.setColumn(j, "ASSET_NO", assetNo);
+			this.ds_inOutList.setColumn(j, "ASSET_NM", assetNm);
+			this.ds_inOutList.setColumn(j, "VENDOR_NM", vendorNm);
+		}
+	}
+	
+	this.ds_inOutList.set_rowposition(0);
+}
+
+this.grd_assetNo_oncellclick = function(obj:Grid, e:nexacro.GridClickEventInfo)
+{
+	var ds = obj.getBindDataset();
+	var amAssetId = ds.getColumn(e.row, "AM_ASSET_ID");
+	var assetNo = ds.getColumn(e.row, "ASSET_NO");
+
+	if(e.cell == obj.getBindCellIndex("body", "ASSET_NO") && amAssetId) {
+		var oData = {
+			sId				: "PAM00100",   //callback id
+			sUrl			: "am::PAM00100.xfdl",   //url
+			bshowtitlebar	: true, //title bar
+			bAutoSize		: true,    //autosize
+			bResize			: false,   //resize
+			bShowtatusbar	: false,  //statusbar
+			sOpenalign		: "center middle",  //align
+			oArgs			:
+				{
+					am_asset_id: amAssetId,
+					asset_no: assetNo
+				}
+		};
+		
+		Iject.showModal(this, oData, this.popupCallback);
+	}
+}
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,737 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="ref14" left="0" top="0" width="1840" height="720" titletext="Component Validation" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="Div00" taborder="17" text="Div00" left="5" top="629" width="745" border="1px solid blue" height="80">
+          <Layouts>
+            <Layout>
+              <Edit id="edtInput21" taborder="7" left="199" top="7" width="141" height="20" validationGroup="sample1" validation="EDIT 빈값 항목;NULL" cssclass="edt_WF_normal" validationCompStatus="E|V|R"/>
+              <Static id="Static00_01" taborder="0" text="EDIT" left="5" top="4" width="85" height="24" border="1px solid black"/>
+              <Static id="Static00_01_00" taborder="10" text="MASKEDIT" left="5" top="27" width="85" height="24" border="1px solid black"/>
+              <Static id="Static00_01_00_00" taborder="20" text="COMBO" left="5" top="50" width="85" height="24" border="1px solid black"/>
+              <Combo id="edtInput23" taborder="27" left="199" top="53" width="141" height="20" validation="COMBO빈값 항목;NULL" validationGroup="sample1" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" index="0" text="- 선택 -" value="">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="datacolumn">- 선택 -</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">1</Col>
+                      <Col id="datacolumn">1</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <MaskEdit id="edtInput22" taborder="17" left="199" top="30" width="141" height="20" validation="MASKEDIT 빈값 항목;NULL" validationGroup="sample1"/>
+              <Button id="btnenable21" taborder="1" text="E" left="95" top="7" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+              <Button id="btnreadonly21" taborder="2" text="R" left="112" top="7" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+              <Button id="btnvisible21" taborder="3" text="V" left="129" top="7" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+              <Button id="btnvalidationCheckEnable21" taborder="4" text="E" left="146" top="7" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+              <Button id="btnvalidationCheckReadonly21" taborder="5" text="R" left="163" top="7" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+              <Button id="btnvalidationCheckVisible21" taborder="6" text="V" left="180" top="7" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+              <Button id="btnenable22" taborder="11" text="E" left="95" top="30" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+              <Button id="btnreadonly22" taborder="12" text="R" left="112" top="30" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+              <Button id="btnvisible22" taborder="13" text="V" left="129" top="30" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+              <Button id="btnvalidationCheckEnable22" taborder="14" text="E" left="146" top="30" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+              <Button id="btnvalidationCheckReadonly22" taborder="15" text="R" left="163" top="30" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+              <Button id="btnvalidationCheckVisible22" taborder="16" text="V" left="180" top="30" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+              <Button id="btnenable23" taborder="21" text="E" left="95" top="53" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+              <Button id="btnreadonly23" taborder="22" text="R" left="112" top="53" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+              <Button id="btnvisible23" taborder="23" text="V" left="129" top="53" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+              <Button id="btnvalidationCheckEnable23" taborder="24" text="E" left="146" top="53" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+              <Button id="btnvalidationCheckReadonly23" taborder="25" text="R" left="163" top="53" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+              <Button id="btnvalidationCheckVisible23" taborder="26" text="V" left="180" top="53" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+              <Edit id="edtPropValidaion21" taborder="8" left="344" top="7" width="362" height="20" text="NULL|MOBILE" inputmode="upper"/>
+              <Button id="btnConf21" taborder="9" text="적용" left="709" top="7" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+              <Edit id="edtPropValidaion22" taborder="18" left="344" top="30" width="362" height="20" text="NULL|MOBILE" inputmode="upper"/>
+              <Button id="btnConf22" taborder="19" text="적용" left="709" top="30" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+              <Edit id="edtPropValidaion23" taborder="28" left="344" top="53" width="362" height="20" text="NULL|MOBILE" inputmode="upper"/>
+              <Button id="btnConf23" taborder="29" text="적용" left="709" top="53" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Button id="btnValidationCheck01" taborder="18" text="validCheck-group[sample1]" left="5" top="20" width="170" height="26" onclick="fnButtonComOnclick" border="1px solid red"/>
+        <Static id="Static00" taborder="19" text="최소/최대" left="5" top="73" width="170" height="24" border="1px solid black"/>
+        <Static id="Static00_00" taborder="20" text="최소/최대길이(문자당길이1)" left="5" top="96" width="170" height="24" border="1px solid black"/>
+        <Static id="Static00_00_00" taborder="21" text="최소/최대길이(한글3byte)" left="5" top="142" width="170" height="24" border="1px solid black"/>
+        <Static id="Static00_00_00_00" taborder="22" text="URL" left="5" top="165" width="170" height="24" border="1px solid black"/>
+        <Static id="Static00_00_00_00_00" taborder="23" text="IPADDRESS" left="5" top="188" width="170" height="24" border="1px solid black"/>
+        <Static id="Static00_00_00_00_00_00" taborder="24" text="전화번호" left="5" top="211" width="170" height="24" border="1px solid black"/>
+        <Static id="Static00_00_00_00_00_00_00" taborder="25" text="핸드폰번호" left="5" top="270" width="170" height="24" border="1px solid black"/>
+        <Static id="Static00_00_00_00_00_00_00_00" taborder="26" text="EMAIL" left="5" top="293" width="170" height="24" border="1px solid black"/>
+        <Static id="Static00_01" taborder="27" text="NULL" left="5" top="50" width="170" height="24" border="1px solid black"/>
+        <Static id="Static00_00_01" taborder="28" text="최소/최대길이(한글2byte)" left="5" top="119" width="170" height="24" border="1px solid black"/>
+        <Edit id="edtPropValidaion01" taborder="29" left="411" top="53" width="304" height="19" text="NULL" inputmode="upper"/>
+        <Static id="Static01" taborder="30" text="적용된 Vaildation 옵션값(validation Property 값에 셋팅)" left="285" top="20" width="465" height="26" border="1px solid blue" textAlign="center" font="bold 14px/normal &quot;Verdana&quot;"/>
+        <Edit id="edtPropValidaion02" taborder="31" left="411" top="76" width="304" height="20" text="NUMBER|MIN:5|MAX:10|MAX_LEN:2" inputmode="upper"/>
+        <Edit id="edtPropValidaion03" taborder="32" left="411" top="99" width="304" height="20" text="MIN_LEN:3|MAX_LEN:5" inputmode="upper"/>
+        <Edit id="edtPropValidaion04" taborder="33" left="411" top="122" width="304" height="20" text="MIN_LEN_ASC:3|MAX_LEN_ASC:5" inputmode="upper"/>
+        <Edit id="edtPropValidaion05" taborder="34" left="411" top="145" width="304" height="20" text="MIN_LEN_UTF8:3|MAX_LEN_UTF8:10" inputmode="upper"/>
+        <Edit id="edtPropValidaion06" taborder="35" left="411" top="168" width="304" height="20" text="NULL|URL" inputmode="upper"/>
+        <Edit id="edtPropValidaion07" taborder="36" left="411" top="191" width="304" height="20" text="NULL|IPADDR" inputmode="upper"/>
+        <Edit id="edtPropValidaion08" taborder="37" left="411" top="214" width="304" height="20" text="NULL|PHONE" inputmode="upper"/>
+        <Edit id="edtPropValidaion09" taborder="38" left="411" top="273" width="304" height="20" text="NULL|MOBILE" inputmode="upper"/>
+        <Edit id="edtPropValidaion10" taborder="39" left="411" top="296" width="304" height="20" text="NULL|EMAIL" inputmode="upper"/>
+        <Static id="Static00_00_00_00_00_00_00_00_00" taborder="40" text="날짜" left="5" top="316" width="170" height="24" border="1px solid black"/>
+        <Edit id="edtPropValidaion11" taborder="41" left="411" top="319" width="304" height="20" text="NULL|DATETIME:YYYYMMDD" inputmode="upper"/>
+        <Static id="Static00_00_00_00_00_00_00_00_00_00" taborder="42" text="날짜/시간" left="5" top="339" width="170" height="24" border="1px solid black"/>
+        <Edit id="edtPropValidaion12" taborder="43" left="411" top="342" width="304" height="20" text="NULL|DATETIME:YYYYMMDDHH" inputmode="upper"/>
+        <Static id="Static00_00_00_00_00_00_00_00_00_00_00" taborder="44" text="날짜/시분" left="5" top="362" width="170" height="24" border="1px solid black"/>
+        <Edit id="edtPropValidaion13" taborder="45" left="411" top="365" width="304" height="20" text="NULL|DATETIME:YYYYMMDDHHMI" inputmode="upper"/>
+        <Static id="Static00_00_00_00_00_00_00_00_00_00_00_00" taborder="46" text="날짜/시분초" left="5" top="385" width="170" height="24" border="1px solid black"/>
+        <Edit id="edtPropValidaion14" taborder="47" left="411" top="388" width="304" height="20" text="NULL|DATETIME:YYYYMMDDHHMISS" inputmode="upper"/>
+        <Static id="Static00_00_00_00_00_00_00_00_00_00_00_00_00" taborder="48" text="시간" left="5" top="408" width="170" height="24" border="1px solid black"/>
+        <Edit id="edtPropValidaion15" taborder="49" left="411" top="411" width="304" height="20" text="NULL|DATETIME:HH" inputmode="upper"/>
+        <Static id="Static00_00_00_00_00_00_00_00_00_00_00_00_00_00" taborder="50" text="시분" left="5" top="431" width="170" height="24" border="1px solid black"/>
+        <Edit id="edtPropValidaion16" taborder="51" left="411" top="434" width="304" height="20" text="NULL|DATETIME:HHMI" inputmode="upper"/>
+        <Static id="Static00_00_00_00_00_00_00_00_00_00_00_00_00_00_00" taborder="52" text="시분초" left="5" top="454" width="170" height="24" border="1px solid black"/>
+        <Edit id="edtPropValidaion17" taborder="53" left="411" top="457" width="304" height="20" text="NULL|DATETIME:HHMISS" inputmode="upper"/>
+        <TextArea id="TextArea00" taborder="54" left="755" top="21" readonly="true" value="※ Validation Check 처리 순서는 Component의 TabOrder 순서로 처리됩니다.&#10;&#10;Component Validation 사용되는 속성&#10;validationGroup : Validation Check Group을 설정합니다.&#10;validation : Edit의 Validation Check 로직을 설정하는 속성입니다.&#10;validationCheckEnable : true로 설정하면 Enable 상태가 true인 경우만 Validation Check를 수행합니다.(false인 경우 Enable 상태와 무관하게 무조건 Validation Check를 수행)&#10;validationCheckVisible : true로 설정하면 visible 상태가 true인 경우만 Validation Check를 수행합니다.(false인 경우 visible 상태와 무관하게 무조건 Validation Check를 수행)&#10;validationCheckReadonly : true로 설정하면 Readonly 상태가 false인 경우만 Validation Check를 수행합니다.(false인 경우 Readonly 상태와 무관하게 무조건 Validation Check를 수행)&#10;&#10;Validtion Check 함수 호출 예시&#10;ex) Ex.util.checkValidate(this, &quot;sample1&quot;); --Form내의 sample1이라는 group에 대해서만 체크를 진행합니다.&#10;&#10;Validation Check 종류&#10;NULL - 필수 입력 항목 설정시 사용&#10;NUMBER - 입력된 문자열이 모두 숫자인지 체크합니다.&#10;MIN - 숫자로 입력되어야 하는 입력 항목인 경우 숫자값으로 입력 가능한 최소 숫자값을 셋팅합니다. ex) MIN:5 (5이상이면 Vaildation 충족)&#10;MAX - 숫자로 입력되어야 하는 입력 항목인 경우 숫자값으로 입력 가능한 최대 숫자값을 셋팅합니다. ex) MIN:100 (100까지만 Vaildation 충족)&#10;MIN_LEN - 모든 문자 1글자로 인식하며 최소로 입력해야 하는 글자 수를 설정할 때 사용 ex) MIN_LEN:5 (최소 5글자를 입력하면 Vaildation 충족)&#10;MAX_LEN - 모든 문자 1글자로 인식하며 최대로 입력해야 하는 글자 수를 설정할 때 사용 ex) MAX_LEN:10 (최대 10글자 까지만 입력하면 Vaildation 충족)&#10;MIN_LEN_ASC - 한글은 2Byte 그외는 1Byte(ASCII)로 인식하며 최소로 입력해야 하는 byte수를 설정할 때 사용 ex) MIN_LEN_ASC:5 (최소 5byte 입력하면 Vaildation 충족)&#10;MAX_LEN_ASC - 한글은 2Byte 그외는 1Byte(ASCII)로 인식하며 최대로 입력해야 하는 byte수를 설정할 때 사용 ex) MAX_LEN_ASC:10 (최대 10byte 까지만 Vaildation 충족)&#10;MIN_LEN_UTF8 - 한글은 3Byte 그외는 1Byte(UTF-8)로 인식하며 최소로 입력해야 하는 byte수를 설정할 때 사용 ex) MIN_LEN_ASC:5 (최소 5byte 입력하면 Vaildation 충족)&#10;MAX_LEN_UTF8 - 한글은 3Byte 그외는 1Byte(UTF-8)로 인식하며 최대로 입력해야 하는 byte수를 설정할 때 사용 ex) MAX_LEN_ASC:10 (최대 10byte 까지만 Vaildation 충족)&#10;URL - 입력값이 URL 형식인지를 체크&#10;IPADDR - 입력값이 IP주소 형식인지를 체크&#10;PHONE - 입력값이 전화번호 형식인지를 체크&#10;MOBILE - 입력값이 핸드폰번호 형식인지를 체크&#10;EMAIL - 입력값이 E-MAIL 형식인지를 체크&#10;JUMINNO - 입력값이 주민등록번호 형식인지를 체크&#10;BIZNO - 입력값이 사업자번호 형식인지를 체크&#10;CORPNO - 입력값이 법인번호 형식인지를 체크&#10;DATETIME : 입력값이 일시/날짜/시간인 경우 유효성이 맞는지 체크&#10;종류 : YYYY/YYYYMM/YYYYMMDDHH/YYYYMMDDHHMI/YYYYMMDDHHMISS/HH/MI/SS/HHMI/HHMISS&#10;ex) DATETIME:YYYY 입력값이 년도 형식인지 체크&#10;ex) DATETIME:YYYYMM 입력값이 년월 형식인지 체크&#10;ex) DATETIME:YYYYMMDD 입력값이 년월일 형식인지 체크&#10;&#10;validation 입력 방법 예시&#10;1. 최초 입력값은 메시지에 뿌려질 항목값(라벨)을 입력 후 항목 입력 마지막에 ;를 입력&#10;2. 이후 해당 입력 항목에 필요한 validation Check 속성값을 입력 (다중 사용 가능) '|' 문자를 붙여 추가 옵션을 사용한다.&#10;ex) validation 신청사유;MIN_LEN_UTF8:100|MAX_LEN_UTF8:1000&#10;→ 신청사유 라는 입력 항목에 대한 최소 입력 내용은UTF-8 문자셋 기준 100Byte로 최대입력 제한 Byte는 UTF-8 문자셋 기준 1000Byte까지 처리한다는 예시임" right="5" bottom="5" tooltiptext="※ 실제 적용된 자세한 내용은 ref14.xfdl 파일 내 script를 참조하세요."/>
+        <Tab id="Tab00" taborder="55" tabindex="0" left="5" top="488" width="745" height="111" border="1px solid blue">
+          <Tabpages>
+            <Tabpage id="Tabpage1" text="Tabpage1">
+              <Layouts>
+                <Layout>
+                  <Edit id="edtInput18" taborder="6" left="199" top="7" width="141" height="20" validationGroup="sample1" validation="EDIT 빈값 항목;NULL" cssclass="edt_WF_normal" validationCompStatus="E|V|R"/>
+                  <Static id="Static00_01" taborder="29" text="EDIT" left="5" top="4" width="85" height="24" border="1px solid black"/>
+                  <Static id="Static00_01_00" taborder="9" text="MASKEDIT" left="5" top="27" width="85" height="24" border="1px solid black"/>
+                  <Static id="Static00_01_00_00" taborder="19" text="COMBO" left="5" top="50" width="85" height="24" border="1px solid black"/>
+                  <Combo id="edtInput20" taborder="26" left="199" top="53" width="141" height="20" validation="COMBO빈값 항목;NULL" validationGroup="sample1" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" index="0" text="- 선택 -" value="">
+                    <Dataset id="innerdataset">
+                      <ColumnInfo>
+                        <Column id="codecolumn" size="256"/>
+                        <Column id="datacolumn" size="256"/>
+                      </ColumnInfo>
+                      <Rows>
+                        <Row>
+                          <Col id="datacolumn">- 선택 -</Col>
+                        </Row>
+                        <Row>
+                          <Col id="codecolumn">1</Col>
+                          <Col id="datacolumn">1</Col>
+                        </Row>
+                      </Rows>
+                    </Dataset>
+                  </Combo>
+                  <MaskEdit id="edtInput19" taborder="16" left="199" top="30" width="141" height="20" validation="MASKEDIT 빈값 항목;NULL" validationGroup="sample1"/>
+                  <Edit id="edtPropValidaion18" taborder="7" left="344" top="7" width="362" height="20" text="NULL|MOBILE" inputmode="upper"/>
+                  <Button id="btnConf18" taborder="8" text="적용" left="709" top="7" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+                  <Button id="btnenable18" taborder="0" text="E" left="95" top="7" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+                  <Button id="btnreadonly18" taborder="1" text="R" left="112" top="7" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+                  <Button id="btnvisible18" taborder="2" text="V" left="129" top="7" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+                  <Button id="btnvalidationCheckEnable18" taborder="3" text="E" left="146" top="7" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+                  <Button id="btnvalidationCheckReadonly18" taborder="4" text="R" left="163" top="7" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+                  <Button id="btnvalidationCheckVisible18" taborder="5" text="V" left="180" top="7" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+                  <Button id="btnenable19" taborder="10" text="E" left="95" top="30" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+                  <Button id="btnreadonly19" taborder="11" text="R" left="112" top="30" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+                  <Button id="btnvisible19" taborder="12" text="V" left="129" top="30" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+                  <Button id="btnvalidationCheckEnable19" taborder="13" text="E" left="146" top="30" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+                  <Button id="btnvalidationCheckReadonly19" taborder="14" text="R" left="163" top="30" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+                  <Button id="btnvalidationCheckVisible19" taborder="15" text="V" left="180" top="30" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+                  <Button id="btnenable20" taborder="20" text="E" left="95" top="53" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+                  <Button id="btnreadonly20" taborder="21" text="R" left="112" top="53" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+                  <Button id="btnvisible20" taborder="22" text="V" left="129" top="53" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+                  <Button id="btnvalidationCheckEnable20" taborder="23" text="E" left="146" top="53" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+                  <Button id="btnvalidationCheckReadonly20" taborder="24" text="R" left="163" top="53" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+                  <Button id="btnvalidationCheckVisible20" taborder="25" text="V" left="180" top="53" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+                  <Edit id="edtPropValidaion19" taborder="17" left="344" top="30" width="362" height="20" text="NULL|MOBILE" inputmode="upper"/>
+                  <Button id="btnConf19" taborder="18" text="적용" left="709" top="30" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+                  <Edit id="edtPropValidaion20" taborder="27" left="344" top="53" width="362" height="20" text="NULL|MOBILE" inputmode="upper"/>
+                  <Button id="btnConf20" taborder="28" text="적용" left="709" top="53" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+          </Tabpages>
+        </Tab>
+        <Button id="btnValidationCheck03" taborder="56" text="ValidCheck" left="655" top="493" width="90" height="20" onclick="fnButtonComOnclick"/>
+        <Button id="btnValidationCheck02" taborder="57" text="validCheck-group[sample2]" left="5" top="240" width="170" height="26" onclick="fnButtonComOnclick" border="1px solid red"/>
+        <Button id="btnenable01" taborder="58" text="E" left="180" top="53" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly01" taborder="59" text="R" left="197" top="53" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible01" taborder="60" text="V" left="214" top="53" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable01" taborder="61" text="E" left="231" top="53" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly01" taborder="62" text="R" left="248" top="53" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible01" taborder="63" text="V" left="265" top="53" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable02" taborder="64" text="E" left="180" top="76" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly02" taborder="65" text="R" left="197" top="76" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible02" taborder="66" text="V" left="214" top="76" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable02" taborder="67" text="E" left="231" top="76" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly02" taborder="68" text="R" left="248" top="76" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible02" taborder="69" text="V" left="265" top="76" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable03" taborder="70" text="E" left="180" top="99" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly03" taborder="71" text="R" left="197" top="99" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible03" taborder="72" text="V" left="214" top="99" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable03" taborder="73" text="E" left="231" top="99" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly03" taborder="74" text="R" left="248" top="99" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible03" taborder="75" text="V" left="265" top="99" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable04" taborder="76" text="E" left="180" top="122" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly04" taborder="77" text="R" left="197" top="122" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible04" taborder="78" text="V" left="214" top="122" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable04" taborder="79" text="E" left="231" top="122" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly04" taborder="80" text="R" left="248" top="122" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible04" taborder="81" text="V" left="265" top="122" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable05" taborder="82" text="E" left="180" top="145" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly05" taborder="83" text="R" left="197" top="145" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible05" taborder="84" text="V" left="214" top="145" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable05" taborder="85" text="E" left="231" top="145" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly05" taborder="86" text="R" left="248" top="145" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible05" taborder="87" text="V" left="265" top="145" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable06" taborder="88" text="E" left="180" top="168" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly06" taborder="89" text="R" left="197" top="168" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible06" taborder="90" text="V" left="214" top="168" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable06" taborder="91" text="E" left="231" top="168" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly06" taborder="92" text="R" left="248" top="168" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible06" taborder="93" text="V" left="265" top="168" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable07" taborder="94" text="E" left="180" top="191" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly07" taborder="95" text="R" left="197" top="191" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible07" taborder="96" text="V" left="214" top="191" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable07" taborder="97" text="E" left="231" top="191" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly07" taborder="98" text="R" left="248" top="191" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible07" taborder="99" text="V" left="265" top="191" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable08" taborder="100" text="E" left="180" top="214" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly08" taborder="101" text="R" left="197" top="214" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible08" taborder="102" text="V" left="214" top="214" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable08" taborder="103" text="E" left="231" top="214" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly08" taborder="104" text="R" left="248" top="214" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible08" taborder="105" text="V" left="265" top="214" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable09" taborder="106" text="E" left="180" top="273" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly09" taborder="107" text="R" left="197" top="273" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible09" taborder="108" text="V" left="214" top="273" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable09" taborder="109" text="E" left="231" top="273" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly09" taborder="110" text="R" left="248" top="273" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible09" taborder="111" text="V" left="265" top="273" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable10" taborder="112" text="E" left="180" top="296" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly10" taborder="113" text="R" left="197" top="296" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible10" taborder="114" text="V" left="214" top="296" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable10" taborder="115" text="E" left="231" top="296" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly10" taborder="116" text="R" left="248" top="296" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible10" taborder="117" text="V" left="265" top="296" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable11" taborder="118" text="E" left="180" top="319" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly11" taborder="119" text="R" left="197" top="319" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible11" taborder="120" text="V" left="214" top="319" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable11" taborder="121" text="E" left="231" top="319" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly11" taborder="122" text="R" left="248" top="319" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible11" taborder="123" text="V" left="265" top="319" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable12" taborder="124" text="E" left="180" top="342" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly12" taborder="125" text="R" left="197" top="342" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible12" taborder="126" text="V" left="214" top="342" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable12" taborder="127" text="E" left="231" top="342" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly12" taborder="128" text="R" left="248" top="342" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible12" taborder="129" text="V" left="265" top="342" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable13" taborder="130" text="E" left="180" top="365" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly13" taborder="131" text="R" left="197" top="365" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible13" taborder="132" text="V" left="214" top="365" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable13" taborder="133" text="E" left="231" top="365" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly13" taborder="134" text="R" left="248" top="365" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible13" taborder="135" text="V" left="265" top="365" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable14" taborder="136" text="E" left="180" top="388" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly14" taborder="137" text="R" left="197" top="388" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible14" taborder="138" text="V" left="214" top="388" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable14" taborder="139" text="E" left="231" top="388" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly14" taborder="140" text="R" left="248" top="388" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible14" taborder="141" text="V" left="265" top="388" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable15" taborder="142" text="E" left="180" top="411" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly15" taborder="143" text="R" left="197" top="411" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible15" taborder="144" text="V" left="214" top="411" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable15" taborder="145" text="E" left="231" top="411" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly15" taborder="146" text="R" left="248" top="411" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible15" taborder="147" text="V" left="265" top="411" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable16" taborder="148" text="E" left="180" top="434" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly16" taborder="149" text="R" left="197" top="434" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible16" taborder="150" text="V" left="214" top="434" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable16" taborder="151" text="E" left="231" top="434" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly16" taborder="152" text="R" left="248" top="434" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible16" taborder="153" text="V" left="265" top="434" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Button id="btnenable17" taborder="154" text="E" left="180" top="457" width="15" height="20" onclick="btnEnable_onclick" tooltiptext="입력EDIT Enable 속성 설정 변경"/>
+        <Button id="btnreadonly17" taborder="155" text="R" left="197" top="457" width="15" height="20" onclick="btnReadonly_onclick" tooltiptext="입력EDIT ReadOnly 속성 설정 변경"/>
+        <Button id="btnvisible17" taborder="156" text="V" left="214" top="457" width="15" height="20" onclick="btnVisible_onclick" tooltiptext="입력EDIT Visible 속성 설정 변경"/>
+        <Button id="btnvalidationCheckEnable17" taborder="157" text="E" left="231" top="457" width="15" height="20" onclick="btnValidationCheckEnable_onclick" tooltiptext="validationCheckEnable 설정 속성 변경"/>
+        <Button id="btnvalidationCheckReadonly17" taborder="158" text="R" left="248" top="457" width="15" height="20" onclick="btnValidationCheckReadonly_onclick" tooltiptext="입력EDIT validationCheckReadonly 설정 속성 변경"/>
+        <Button id="btnvalidationCheckVisible17" taborder="159" text="V" left="265" top="457" width="15" height="20" onclick="btnValidationCheckVisible_onclick" tooltiptext="입력EDIT validationCheckVisible 속성 설정 변경"/>
+        <Edit id="edtInput02" taborder="1" left="285" top="76" width="121" height="20" validationGroup="sample1" validation="최소/최대 항목;NULL|NUMBER|MIN:5|MAX:10|MAX_LEN:2" cssclass="edt_WF_normal"/>
+        <Edit id="edtInput03" taborder="2" left="285" top="99" width="121" height="20" validationGroup="sample1" validation="최소/최대길이(문자당길이1) 항목;NULL|MIN_LEN:3|MAX_LEN:5" cssclass="edt_WF_normal" maxlength="10"/>
+        <Edit id="edtInput05" taborder="4" left="285" top="145" width="121" height="20" validationGroup="sample1" validation="최소/최대길이(한글3byte) 항목;NULL|MIN_LEN_UTF8:3|MAX_LEN_UTF8:10" cssclass="edt_WF_normal" maxlength="10"/>
+        <Edit id="edtInput06" taborder="5" left="285" top="168" width="121" height="20" validationGroup="sample1" validation="URL형식체크 항목;NULL|URL" cssclass="edt_WF_normal"/>
+        <Edit id="edtInput07" taborder="6" left="285" top="191" width="121" height="20" validationGroup="sample1" validation="IPADDRESS형식체크 항목;NULL|IPADDR" cssclass="edt_WF_normal" validationCheckEnable="false"/>
+        <Edit id="edtInput08" taborder="7" left="285" top="214" width="121" height="20" validationGroup="sample1" validation="전화번호형식체크 항목;NULL|PHONE" cssclass="edt_WF_normal" validationCheckVisible="false"/>
+        <Edit id="edtInput09" taborder="8" left="285" top="273" width="121" height="20" validationGroup="sample2" validation="핸드폰번호형식체크 항목;NULL|MOBILE" cssclass="edt_WF_normal" validationCheckReadonly="false"/>
+        <Edit id="edtInput10" taborder="9" left="285" top="296" width="121" height="20" validationGroup="sample2" validation="EMAIL형식체크 항목;NULL|EMAIL" cssclass="edt_WF_normal"/>
+        <Edit id="edtInput01" taborder="0" left="285" top="53" width="121" height="20" validationGroup="sample1" validation="빈값 항목;NULL" cssclass="edt_WF_normal"/>
+        <Edit id="edtInput04" taborder="3" left="285" top="122" width="121" height="20" validationGroup="sample1" validation="최소/최대길이(한글2byte)항목;NULL|MIN_LEN_ASC:3|MAX_LEN_ASC:5" cssclass="edt_WF_normal" maxlength="10"/>
+        <Edit id="edtInput11" taborder="10" left="285" top="319" width="121" height="20" validationGroup="sample2" validation="YYYYMMDD형식체크 항목;NULL|DATETIME:YYYYMMDD" cssclass="edt_WF_normal"/>
+        <Edit id="edtInput12" taborder="11" left="285" top="342" width="121" height="20" validationGroup="sample2" validation="YYYYMMDDHH형식체크 항목;NULL|DATETIME:YYYYMMDDHH" cssclass="edt_WF_normal"/>
+        <Edit id="edtInput13" taborder="12" left="285" top="365" width="121" height="20" validationGroup="sample2" validation="YYYYMMDDHHMI형식체크 항목;NULL|DATETIME:YYYYMMDDHHMI" cssclass="edt_WF_normal"/>
+        <Edit id="edtInput14" taborder="13" left="285" top="388" width="121" height="20" validationGroup="sample2" validation="YYYYMMDDHHMISS형식체크 항목;NULL|DATETIME:YYYYMMDDHHMISS" cssclass="edt_WF_normal"/>
+        <Edit id="edtInput15" taborder="14" left="285" top="411" width="121" height="20" validationGroup="sample2" validation="시간(HH)형식체크 항목;NULL|DATETIME:HH" cssclass="edt_WF_normal"/>
+        <Edit id="edtInput16" taborder="15" left="285" top="434" width="121" height="20" validationGroup="sample2" validation="시분(HHMI)형식체크 항목;NULL|DATETIME:HHMI" cssclass="edt_WF_normal"/>
+        <Edit id="edtInput17" taborder="16" left="285" top="457" width="121" height="20" validationGroup="sample2" validation="시분초(HHMI)형식체크 항목;NULL|DATETIME:HHMISS" cssclass="edt_WF_normal"/>
+        <Static id="Static01_00" taborder="160" text="COMP" left="179" top="20" width="50" height="26" border="1px solid blue" textAlign="center" font="12px/normal &quot;Verdana&quot;"/>
+        <Static id="Static01_00_00" taborder="161" text="PROP" left="231" top="20" width="50" height="26" border="1px solid blue" textAlign="center" font="12px/normal &quot;Verdana&quot;"/>
+        <Button id="btnConf01" taborder="162" text="적용" left="719" top="53" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf02" taborder="163" text="적용" left="719" top="76" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf04" taborder="164" text="적용" left="719" top="122" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf03" taborder="165" text="적용" left="719" top="99" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf05" taborder="166" text="적용" left="719" top="145" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf06" taborder="167" text="적용" left="719" top="168" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf08" taborder="168" text="적용" left="719" top="214" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf07" taborder="169" text="적용" left="719" top="191" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf09" taborder="170" text="적용" left="719" top="273" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf10" taborder="171" text="적용" left="719" top="296" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf12" taborder="172" text="적용" left="719" top="342" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf11" taborder="173" text="적용" left="719" top="319" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf13" taborder="174" text="적용" left="719" top="365" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf14" taborder="175" text="적용" left="719" top="388" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf16" taborder="176" text="적용" left="719" top="434" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf15" taborder="177" text="적용" left="719" top="411" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnConf17" taborder="178" text="적용" left="719" top="457" width="31" height="20" onclick="btnConf_onclick" tooltiptext="Enable 변경"/>
+        <Button id="btnValidationCheck04" taborder="179" text="ValidCheck" left="660" top="604" width="90" height="20" onclick="fnButtonComOnclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCombo00">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="name" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">1</Col>
+            <Col id="name">A</Col>
+          </Row>
+          <Row>
+            <Col id="code">2</Col>
+            <Col id="name">B</Col>
+          </Row>
+          <Row>
+            <Col id="code">3</Col>
+            <Col id="name">C</Col>
+          </Row>
+          <Row>
+            <Col id="code">4</Col>
+            <Col id="name">D</Col>
+          </Row>
+          <Row>
+            <Col id="code">5</Col>
+            <Col id="name">E</Col>
+          </Row>
+          <Row>
+            <Col id="code">6</Col>
+            <Col id="name">F</Col>
+          </Row>
+          <Row>
+            <Col id="code">7</Col>
+            <Col id="name">G</Col>
+          </Row>
+          <Row>
+            <Col id="code">8</Col>
+            <Col id="name">H</Col>
+          </Row>
+          <Row>
+            <Col id="code">9</Col>
+            <Col id="name">I</Col>
+          </Row>
+          <Row>
+            <Col id="code">10</Col>
+            <Col id="name">J</Col>
+          </Row>
+          <Row>
+            <Col id="code">11</Col>
+            <Col id="name">K</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		: Component Valdation
+* 메뉴(경로)	: 공통관리 > 플랫폼 > 공통
+* 화면 설명	: Component Valdation Check
+* 작성자		: WEMB
+* 작성일		: 
+* 수정이력		:
+*------------------------------------------------------------------
+* 수정일			작성자			이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	var scopeArr = [this.all, this.Tab00.Tabpage1.form.components, this.Div00.form.components];
+	
+	for(var a=0; a<scopeArr.length ; a++)
+	{
+		scope = scopeArr[a];
+
+		for(var i=0; i<scope.length ; i++)
+		{
+			if(scope[i].id.indexOf("edtInput") > -1)
+			{
+				var seq = Ex.util.getRightStr(scope[i].id, 2);
+				var validationStr = scope[i].validation || "";
+
+				//trace("i=" + i + " Comp ID : " + scope[i].id + " validationStr : " + validationStr);
+
+				if(validationStr.split(";").length > 1)
+				{
+					if(scope["edtInput" + seq].enable) scope["btnenable" + seq].set_border("1px solid red");
+					else scope["btnenable" + seq].set_border("");
+					
+					if(scope["edtInput" + seq].readonly) scope["btnreadonly" + seq].set_border("");
+					else scope["btnreadonly" + seq].set_border("1px solid red");
+					
+					if(scope["edtInput" + seq].visible) scope["btnvisible" + seq].set_border("1px solid red");
+					else scope["btnvisible" + seq].set_border("");
+					
+					if(scope["edtInput" + seq].validationCheckEnable) scope["btnvalidationCheckEnable" + seq].set_border("1px solid red");
+					else scope["btnvalidationCheckEnable" + seq].set_border("");
+					
+					if(scope["edtInput" + seq].validationCheckReadonly) scope["btnvalidationCheckReadonly" + seq].set_border("1px solid red");
+					else scope["btnvalidationCheckReadonly" + seq].set_border("");
+					
+					if(scope["edtInput" + seq].validationCheckVisible) scope["btnvalidationCheckVisible" + seq].set_border("1px solid red");
+					else scope["btnvalidationCheckVisible" + seq].set_border("");
+					
+					scope["edtPropValidaion" + seq].set_value(validationStr.split(";")[1]);
+					
+					this.SetInputCompToolTipText(scope["edtInput" + seq]);
+				}
+			}
+		}
+	}
+}
+
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+}
+
+// 저장
+this.fnSave = function()
+{
+	trace("fnSave call");
+}
+
+// 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = 0; i < objDs.rowcount; i++)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "" : // 서비스 ID
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	trace("pID="+pID+" ,varValue="+varValue);
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+//사용자 정의 함수
+this.SetInputCompToolTipText = function(inputObj : nexacro.Edit)
+{
+	inputObj.set_tooltiptext(
+		"enable=[" + inputObj.enable + "]" +
+		"\nreadonly=[" + inputObj.readonly + "]" +
+		"\nvisible=[" + inputObj.visible + "]" +
+		"\nvalidationCheckEnable=[" + inputObj.validationCheckEnable + "]" +
+		"\nvalidationCheckReadonly=[" + inputObj.validationCheckReadonly + "]" +
+		"\nvalidationCheckVisible=[" + inputObj.validationCheckVisible + "]" +
+		"\nvalidation=[" + inputObj.validation + "]"
+	);
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+//공통 버튼 이벤트
+this.fnButtonComOnclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+    var sObjId = obj.name;
+    switch(sObjId)
+	{
+        case "btnValidationCheck01" :
+			var rtn = Ex.util.checkValidate(this, "sample1");
+			trace("rtn Value : " + rtn);
+            break;
+
+        case "btnValidationCheck02" :
+			var rtn = Ex.util.checkValidate(this, "sample2");
+			trace("rtn Value : " + rtn);
+            break;
+
+        case "btnValidationCheck03" : 
+			var rtn = Ex.util.checkValidate(this.Tab00.Tabpage1, "sample1");
+			trace("rtn Value : " + rtn);
+            break;
+
+		case "btnValidationCheck04" : 
+			var rtn = Ex.util.checkValidate(this.Div00, "sample1");
+			trace("rtn Value : " + rtn);
+            break;
+    }
+}
+
+this.btnEnable_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var seq = Ex.util.getRightStr(obj.id, 2);
+	var seqNum = nexacro.toNumber(seq);
+	
+	var scope;
+	
+	if(seqNum >= 1 && seqNum <= 17)
+	{
+		scope = this.all;
+	}
+	else if(seqNum >= 18 && seqNum <= 20)
+	{
+		scope = this.Tab00.Tabpage1.form.components;
+	}
+	else if(seqNum >= 21 && seqNum <= 23)
+	{
+		scope = this.Div00.form.components;
+	}
+
+	scope["edtInput" + seq].set_enable(!scope["edtInput" + seq].enable);
+		
+	if(this.all["edtInput" + seq].enable) this.all["btnenable" + seq].set_border("1px solid red");
+	else this.all["btnenable" + seq].set_border("");
+	
+	this.SetInputCompToolTipText(this.all["edtInput" + seq]);
+};
+
+this.btnReadonly_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var seq = Ex.util.getRightStr(obj.id, 2);
+	var seqNum = nexacro.toNumber(seq);
+	
+	var scope;
+	
+	if(seqNum >= 1 && seqNum <= 17)
+	{
+		scope = this.all;
+	}
+	else if(seqNum >= 18 && seqNum <= 20)
+	{
+		scope = this.Tab00.Tabpage1.form.components;
+	}
+	else if(seqNum >= 21 && seqNum <= 23)
+	{
+		scope = this.Div00.form.components;
+	}
+	
+	scope["edtInput" + seq].set_readonly(!scope["edtInput" + seq].readonly);
+	
+	if(scope["edtInput" + seq].readonly) scope["btnreadonly" + seq].set_border("");
+	else scope["btnreadonly" + seq].set_border("1px solid red");
+	
+	this.SetInputCompToolTipText(scope["edtInput" + seq]);
+};
+
+this.btnVisible_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var seq = Ex.util.getRightStr(obj.id, 2);
+	var seqNum = nexacro.toNumber(seq);
+	
+	var scope;
+	
+	if(seqNum >= 1 && seqNum <= 17)
+	{
+		scope = this.all;
+	}
+	else if(seqNum >= 18 && seqNum <= 20)
+	{
+		scope = this.Tab00.Tabpage1.form.components;
+	}
+	else if(seqNum >= 21 && seqNum <= 23)
+	{
+		scope = this.Div00.form.components;
+	}
+	
+	scope["edtInput" + seq].set_visible(!scope["edtInput" + seq].visible);
+	
+	if(scope["edtInput" + seq].visible) scope["btnvisible" + seq].set_border("1px solid red");
+	else scope["btnvisible" + seq].set_border("");
+	
+	this.SetInputCompToolTipText(scope["edtInput" + seq]);
+};
+
+this.btnValidationCheckEnable_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var seq = Ex.util.getRightStr(obj.id, 2);
+	var seqNum = nexacro.toNumber(seq);
+	
+	var scope;
+	
+	if(seqNum >= 1 && seqNum <= 17)
+	{
+		scope = this.all;
+	}
+	else if(seqNum >= 18 && seqNum <= 20)
+	{
+		scope = this.Tab00.Tabpage1.form.components;
+	}
+	else if(seqNum >= 21 && seqNum <= 23)
+	{
+		scope = this.Div00.form.components;
+	}
+	
+	scope["edtInput" + seq].set_validationCheckEnable(!scope["edtInput" + seq].validationCheckEnable);
+	
+	if(scope["edtInput" + seq].validationCheckEnable) scope["btnvalidationCheckEnable" + seq].set_border("1px solid red");
+	else scope["btnvalidationCheckEnable" + seq].set_border("");
+	
+	this.SetInputCompToolTipText(scope["edtInput" + seq]);
+};
+
+this.btnValidationCheckReadonly_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var seq = Ex.util.getRightStr(obj.id, 2);
+	var seqNum = nexacro.toNumber(seq);
+	
+	var scope;
+	
+	if(seqNum >= 1 && seqNum <= 17)
+	{
+		scope = this.all;
+	}
+	else if(seqNum >= 18 && seqNum <= 20)
+	{
+		scope = this.Tab00.Tabpage1.form.components;
+	}
+	else if(seqNum >= 21 && seqNum <= 23)
+	{
+		scope = this.Div00.form.components;
+	}
+	
+	scope["edtInput" + seq].set_validationCheckReadonly(!scope["edtInput" + seq].validationCheckReadonly);
+	
+	if(scope["edtInput" + seq].validationCheckReadonly) scope["btnvalidationCheckReadonly" + seq].set_border("1px solid red");
+	else scope["btnvalidationCheckReadonly" + seq].set_border("");
+	
+	this.SetInputCompToolTipText(scope["edtInput" + seq]);
+};
+
+this.btnValidationCheckVisible_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var seq = Ex.util.getRightStr(obj.id, 2);
+	var seqNum = nexacro.toNumber(seq);
+	
+	var scope;
+	
+	if(seqNum >= 1 && seqNum <= 17)
+	{
+		scope = this.all;
+	}
+	else if(seqNum >= 18 && seqNum <= 20)
+	{
+		scope = this.Tab00.Tabpage1.form.components;
+	}
+	else if(seqNum >= 21 && seqNum <= 23)
+	{
+		scope = this.Div00.form.components;
+	}
+	
+	scope["edtInput" + seq].set_validationCheckVisible(!scope["edtInput" + seq].validationCheckVisible);
+	
+	if(scope["edtInput" + seq].validationCheckVisible) scope["btnvalidationCheckVisible" + seq].set_border("1px solid red");
+	else scope["btnvalidationCheckVisible" + seq].set_border("");
+	
+	this.SetInputCompToolTipText(scope["edtInput" + seq]);
+};
+
+this.btnConf_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var seq = Ex.util.getRightStr(obj.id, 2);
+	var seqNum = nexacro.toNumber(seq);
+	
+	var scope;
+	
+	if(seqNum >= 1 && seqNum <= 17)
+	{
+		scope = this.all;
+	}
+	else if(seqNum >= 18 && seqNum <= 20)
+	{
+		scope = this.Tab00.Tabpage1.form.components;
+	}
+	else if(seqNum >= 21 && seqNum <= 23)
+	{
+		scope = this.Div00.form.components;
+	}
+	
+	var valdation = scope["edtInput" + seq].validation || "";
+	
+	scope["edtInput" + seq].set_validation(valdation.split(";")[0] + ";" + scope["edtPropValidaion" + seq].value);
+	this.SetInputCompToolTipText(scope["edtInput" + seq]);
+};]]></Script>
+  </Form>
+</FDL>

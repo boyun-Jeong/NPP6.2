@@ -1,0 +1,720 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM0300_P01" left="0" top="0" width="880" height="767" titletext="작업 캘린더 팝업" onload="form_onload">
+    <Layouts>
+      <Layout width="880" height="767">
+        <Div id="divContents" taborder="0" left="0" top="0" right="0" bottom="60" text="">
+          <Layouts>
+            <Layout>
+              <Static id="Static10" taborder="0" cssclass="sta_WF_inputBg" left="20" top="19" height="34" right="20"/>
+              <Static id="stcBackMid2_00" taborder="3" left="20" top="54" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Static id="Static05_00" taborder="4" text="작업 목록" cssclass="sta_WF_gridTitle" left="20" top="64" width="82" height="24"/>
+              <Grid id="grdSchedule" taborder="8" binddataset="dsWorkList" useinputpanel="false" cellsizingtype="col" autofittype="col" oncellclick="grdOnCellClick" onsummclick="grdScheduleList_onsummclick" left="20" right="20" height="195" autoupdatetype="itemselect" cssclass="grd_WF_normal" top="98">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="30" band="left"/>
+                      <Column size="40" band="left"/>
+                      <Column size="60" band="left"/>
+                      <Column size="180"/>
+                      <Column size="120"/>
+                      <Column size="120"/>
+                      <Column size="500"/>
+                      <Column size="120"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="No"/>
+                      <Cell col="1" text="선택"/>
+                      <Cell col="2" text="행상태"/>
+                      <Cell col="3" cssclass="CellEssential" text="시작일시"/>
+                      <Cell col="4" text="업무구분"/>
+                      <Cell col="5" text="작업번호"/>
+                      <Cell col="6" text="제목"/>
+                      <Cell col="7" text="상태"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="expr:currow+1"/>
+                      <Cell col="1" displaytype="expr:WORK_USER_ID==Ex.util.getSession('gvUserId') &amp;&amp; (ROWFLAG == 'I' || CHK != '') ? 'checkboxcontrol' : 'none'" edittype="expr:WORK_USER_ID==Ex.util.getSession('gvUserId') &amp;&amp; (ROWFLAG == 'I' || CHK != '') ? 'checkbox' : 'none'" text="bind:CHK"/>
+                      <Cell col="2" text="bind:ROWFLAG"/>
+                      <Cell col="3" displaytype="date" edittype="none" style="align:center;" expandshow="hide" expandsize="30" expandimage="URL('img::pmnu_WF_Expand.png')" expr="WORK_SDT + WORK_STIME" maskeditformat="####-##-## ##:##" calendardateformat="yyyy-MM-dd HH:mm" calendareditformat="yyyy-MM-dd HH:mm"/>
+                      <Cell col="4" text="bind:BZSYS_CAT_CD" combodataset="dsSvcCdGrid" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" displaytype="combotext"/>
+                      <Cell col="5" text="bind:WORK_NO"/>
+                      <Cell col="6" edittype="none" style="align:left;" text="bind:WORK_BRIEF" textAlign="left" validation="제목;NULL" validationStatus="false"/>
+                      <Cell col="7" combodataset="dsCompYnGrid" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" displaytype="combotext" text="bind:WORK_END_YN" validationStatus="false" validation="상태;NULL"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="stcBackMid2_00_00_00" taborder="7" left="20" top="88" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Div id="divGrdTopBtn" taborder="6" width="155" height="24" visible="true" isButtonGroup="true" top="64" right="20">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnDelete" taborder="1" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+                    <Button id="btnAdd" taborder="0" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="stcToday" taborder="1" text="작업일자" cssclass="sta_WF_inputTitle" left="20" top="20" width="130" height="34" style="align:left middle;"/>
+              <Calendar id="calToday" taborder="2" cssclass="cal_WF_normal" left="stcToday:5" top="24" width="130" height="24" validate="" readonly="true"/>
+              <Static id="Static05_01" taborder="10" text="작업 상세 내용" cssclass="sta_WF_gridTitle" left="20" top="309" width="202" height="24"/>
+              <Static id="stcBackMid1_00" taborder="11" left="20" top="333" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Static id="stcBackMid1_01" taborder="9" left="20" top="293" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Static id="stcCnt" taborder="5" left="Static05_00:5" top="64" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsWorkList"/>
+              <Div id="divInput" taborder="12" text="Div00" left="20" top="343" right="20" height="364" formscrollbartype="none none">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcContentsBg" taborder="0" cssclass="sta_WF_inputBg" left="0" top="132" height="232" right="0"/>
+                    <Static id="Static13" taborder="1" cssclass="sta_WF_inputBg" left="0" top="0" height="34" right="0"/>
+                    <Static id="WorkDtTime" taborder="2" text="작업기간" onclick="Static13_onclick" cssclass="sta_WF_inputTitle_E" left="0" top="0" width="130" height="34" style="align:left middle;"/>
+                    <TextArea id="txaWorkCont" taborder="3" left="135" top="137" right="5" height="222" cssclass="txa_WF_normal"/>
+                    <Static id="Static06_00" taborder="4" cssclass="sta_WF_inputBg" left="0" top="66" height="34" right="0"/>
+                    <Static id="stcWorkEndYn" taborder="19" text="상태" cssclass="sta_WF_inputTitle_E" left="50.00%" top="66" width="130" height="34" style="align:left middle;"/>
+                    <Div id="divWorkUser" taborder="5" left="135" top="71" height="24" right="stcWorkEndYn:5" url="fomm::FOMM0000_D02.xfdl" text="" enable="false" enableevent="false"/>
+                    <Calendar id="calWorkSdt" taborder="6" cssclass="cal_WF_normal" left="135" top="5" width="120" height="24" validate="" readonly="true" dateformat="yyyy-MM-dd ddd"/>
+                    <MaskEdit id="mskWorkStime" taborder="7" left="calWorkSdt:2" top="5" width="55" height="24" format="##:##" trimtype="both" type="string"/>
+                    <Static id="Static13_00" taborder="8" cssclass="sta_WF_inputBg" left="0" top="33" height="34" right="0"/>
+                    <Static id="Static00" taborder="9" text="~" left="mskWorkStime:5" top="5" width="10" height="24"/>
+                    <Calendar id="calWorkEdt" taborder="10" cssclass="cal_WF_normal" left="Static00:5" top="5" width="120" height="24" validate="" dateformat="yyyy-MM-dd ddd"/>
+                    <MaskEdit id="mskWorkEtime" taborder="11" left="calWorkEdt:2" top="5" width="55" height="24" format="##:##" trimtype="both" type="string"/>
+                    <Static id="stcWorkUser" taborder="12" text="작업자" cssclass="sta_WF_inputTitle_E" left="0" top="66" width="130" height="34" style="align:left middle;"/>
+                    <Static id="Static13_00_00" taborder="13" cssclass="sta_WF_inputBg" left="0" top="99" height="34" right="0"/>
+                    <Static id="stcTitle" taborder="14" text="제목" cssclass="sta_WF_inputTitle_E" left="0" top="99" width="130" height="34" style="align:left middle;"/>
+                    <Edit id="edtTitle" taborder="15" cssclass="edt_WF_normal" left="135" top="104" height="24" validate="" right="5"/>
+                    <Edit id="edtWorkNo" taborder="16" cssclass="edt_WF_normal" left="135" top="38" height="24" validate="" validationGroup="input01" width="150" readonly="true"/>
+                    <Static id="stcSysType" taborder="17" text="업무구분" cssclass="sta_WF_inputTitle" left="50.00%" top="33" width="130" height="34" style="align:left middle;"/>
+                    <Combo id="cboSysType" taborder="18" innerdataset="dsSvcCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" left="stcSysType:5" top="38" height="24" cssclass="cbo_WF_normal" width="170"/>
+                    <Combo id="cboWorkEndYn" taborder="20" innerdataset="dsCompYn" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" left="stcWorkEndYn:5" top="71" height="24" cssclass="cbo_WF_normal" width="170"/>
+                    <Static id="stcWorkNo" taborder="21" text="작업번호" cssclass="sta_WF_inputTitle" left="0" top="33" width="130" height="34" style="align:left middle;"/>
+                    <Static id="stcWorkCont" taborder="22" text="작업내용" cssclass="sta_WF_inputTitle_E" left="0" width="130" height="232" style="align:left middle;" top="132"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtnBottom" taborder="1" height="60" bottom="0" text="" cssclass="div_POP_msg_btnbg" left="20" right="20">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="14"/>
+              <Button id="btnSave" taborder="0" text="저장" width="110" height="32" bottom="14" cssclass="btn_WF_primary_save" right="btnClose:5" onclick="fnCommOnclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsWorkList" oncolumnchanged="dsOnColumnChanged" onrowposchanged="dsOnRowposChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="WORK_CAL_ID" type="STRING" size="20"/>
+          <Column id="WORK_REG_DT" type="STRING" size="8"/>
+          <Column id="BZSYS_CAT_CD" type="STRING" size="10"/>
+          <Column id="WORK_NO" type="STRING" size="20"/>
+          <Column id="WORK_SDT" type="STRING" size="8"/>
+          <Column id="WORK_STIME" type="STRING" size="4"/>
+          <Column id="WORK_EDT" type="STRING" size="8"/>
+          <Column id="WORK_ETIME" type="STRING" size="4"/>
+          <Column id="WORK_END_YN" type="STRING" size="1"/>
+          <Column id="WORK_USER_ID" type="STRING" size="10"/>
+          <Column id="WORK_USER_NM" type="STRING" size="50"/>
+          <Column id="WORK_DEPT_NM" type="STRING" size="100"/>
+          <Column id="DISPLAY_YN" type="STRING" size="1"/>
+          <Column id="WORK_BRIEF" type="STRING" size="200"/>
+          <Column id="WORK_CONT" type="STRING" size="4000"/>
+          <Column id="REG_DATETIME" type="STRING" size="14"/>
+          <Column id="REG_USER_ID" type="STRING" size="10"/>
+          <Column id="REG_USER_NM" type="STRING" size="100"/>
+          <Column id="REG_DEPT_NM" type="STRING" size="100"/>
+          <Column id="LMOD_DATETIME" type="STRING" size="14"/>
+          <Column id="LMOD_USER_ID" type="STRING" size="10"/>
+          <Column id="LMOD_USER_NM" type="STRING" size="100"/>
+          <Column id="LMOD_DEPT_NM" type="STRING" size="100"/>
+        </ColumnInfo>
+        <Rows/>
+      </Dataset>
+      <Dataset id="dsCompYn">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="30"/>
+          <Column id="DATA" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSvcCd"/>
+      <Dataset id="dsSvcCdGrid">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="30"/>
+          <Column id="DATA" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCompYnGrid">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="30"/>
+          <Column id="DATA" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="WORK_DT" type="STRING" size="256"/>
+          <Column id="WORK_USER_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPopRtn"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ FOMM0300_P01
+* 화면(명)		︰ 작업 캘린더 팝업
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.12.15
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.11.01	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_PjComm.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.chkRow;					//Validation 체크시 row값 설정(포커스 이동용)
+this.saveFlg = "N";				//화면 저장 여부
+this.isCloseBtnClick = false;	//닫기 버튼을 눌러 닫는 경우 true
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+	//trace("[FOMM0300_P01] this.form_onload() this.getOwnerFrame()._formObj : " + this.getOwnerFrame()._formObj);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	//trace("[FOMM0300_P01] this.fnSearch()");
+	var sTranId = "select01";									// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0300P/select01";							// 서비스명
+    var sInDs = "dsCond=dsCond";								// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsWorkList=dsWorkList";		// 서버에서 수신할 데이타셋
+    var sArg = "";												// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSave = function()
+{
+	//trace("[FOMM0300_P01] this.fnSave()");
+	var sTranId = "save01";
+    var sService = "FOMM0300P/save01";
+    var sInDs = "dsCond=dsCond dsWorkList=dsWorkList:U";
+	var sOutDs = "dsWorkList=dsWorkList";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			
+			var strWorkUserId    = this.dsWorkList.getColumn(this.dsWorkList.rowposition, "WORK_USER_ID");
+			var strWorkUserNm    = this.dsWorkList.getColumn(this.dsWorkList.rowposition, "WORK_USER_NM");
+			var strWorkDeptNm      = this.dsWorkList.getColumn(this.dsWorkList.rowposition, "WORK_DEPT_NM");
+			this.divContents.form.divInput.form.divWorkUser.form.setValue(strWorkUserId, strWorkUserNm, strWorkDeptNm);
+			break;
+
+		case "save01" :
+			this.saveFlg = "Y";
+			Ex.core.toast(this, "10004", null, {toastType:'S'});
+			
+			var strWorkUserId    = this.dsWorkList.getColumn(this.dsWorkList.rowposition, "WORK_USER_ID");
+			var strWorkUserNm    = this.dsWorkList.getColumn(this.dsWorkList.rowposition, "WORK_USER_NM");
+			var strWorkDeptNm      = this.dsWorkList.getColumn(this.dsWorkList.rowposition, "WORK_DEPT_NM");
+			this.divContents.form.divInput.form.divWorkUser.form.setValue(strWorkUserId, strWorkUserNm, strWorkDeptNm);
+			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "" :
+			//trace("varValue:\n" + varValue);
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+
+		case "alertChkWorkStime" :
+			if(this.dsWorkList.rowposition == this.chkRow)
+			{
+				this.divContents.form.divInput.form.mskWorkStime.setFocus();
+			}
+			break;
+
+		case "alertChkWorkEdt" :
+			if(this.dsWorkList.rowposition == this.chkRow)
+			{
+				this.divContents.form.divInput.form.calWorkEdt.setFocus();
+			}
+			break;
+
+		case "alertChkWorkETime" :
+			if(this.dsWorkList.rowposition == this.chkRow)
+			{
+				this.divContents.form.divInput.form.mskWorkEtime.setFocus();
+			}
+			break;
+
+		case "alertChkWorkEndYn" :
+			if(this.dsWorkList.rowposition == this.chkRow)
+			{
+				this.divContents.form.divInput.form.cboWorkEndYn.setFocus();
+			}
+			break;
+
+		case "alertChkWorkUser" :
+			break;
+
+		case "alertChkWorkTitle" :
+			if(this.dsWorkList.rowposition == this.chkRow)
+			{
+				this.divContents.form.divInput.form.edtTitle.setFocus();
+			}
+			break;
+
+		case "alertChkWorkDtI" :
+			if(this.dsWorkList.rowposition == this.chkRow)
+			{
+				this.divContents.form.mskWorkStime.setFocus();
+			}
+			break;
+
+		case "alertWorkDtimeI" :
+			if(this.dsWorkList.rowposition == this.chkRow)
+			{
+				this.divContents.form.mskWorkStime.setFocus();
+			}
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	Ex.util.setCompPropAll(
+						this,
+						this.divContents.form.divInput.form,
+						false,
+						[this.divContents.form.divInput.form.calWorkSdt,
+						 this.divContents.form.divInput.form.edtWorkNo,
+						 //this.divContents.form.divInput.form.divWorkUser,
+						]
+	);
+	
+	this.dsCond.setColumn(0, "WORK_DT", this.getOwnerFrame().pWorkDt);
+	this.dsCond.setColumn(0, "WORK_USER_ID", this.getOwnerFrame().pWorkUserId);
+
+	//this.divContents.form.divInput.form.edtWorkNo.set_displaynulltext(Ex.core.word("자동생성"));
+
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.divContents.form.grdSchedule.displayRowType();
+
+	// 공통코드 조회
+	this.fnGetCmmCd();
+
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divContents.form.divGrdTopBtn.form.btnAdd];	// 쓰기
+	Ex.util.setBtnVisible(this, 'write', arrBtn);
+
+	arrBtn = [this.divContents.form.divGrdTopBtn.form.btnDelete];	// 삭제
+	Ex.util.setBtnVisible(this, 'delete', arrBtn);
+	
+	arrBtn = [this.divBtnBottom.form.btnSave];	// 저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divBtnBottom, 'right', true);
+
+	this.fnSearch();
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		 upCmmCd	: ['COMP_YN',		'COMP_YN',			'SVC_CD',		'SVC_CD']			// 조회할 상위코드
+		,codeDiv	: ['CMM_CD',		'CMM_CD',			'WORKFLOW_CD',	'WORKFLOW_CD']		// 조회할 코드의 업무구분
+		,optStr		: ['SEL',			'',					'SEL',			'']					// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn		: ['Y',				'Y',				'Y',			'Y']				// 사용여부
+		,filter		: ['',				'',					'',				'']					// filterStr
+		,objDs		: [this.dsCompYn,	this.dsCompYnGrid,	this.dsSvcCd,	this.dsSvcCdGrid]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+this.fnCheckValidate = function()
+{
+	// 저장할 dataset에 변경된 data 있는 지 확인
+	if( !Ex.util.isUpdated(this.dsWorkList))	return false;
+
+	for(var i=0; i<this.dsWorkList.rowcount; i++)
+	{
+		var rowVal = i+1;
+		var rowStr = Ex.core.word("행");
+		var rowInfo = "[" + rowVal + rowStr + "] ";
+										
+		if( Ex.isEmpty(this.dsWorkList.getColumn(i, "WORK_STIME")) )
+		{
+			//"은(는) 필수 입력 항목입니다.";
+			this.chkRow = i;
+			var msgStr = rowInfo + Ex.core.msgMapping(Ex.core.msg(11001), [Ex.core.word("작업기간[작업시간(FROM)]")]);
+			var oParam = {id : "alertChkWorkStime", msg : msgStr, arrparam : [], msgtype : "I"};
+			Ex.core.alert(this, oParam);
+			return false;
+		}
+		else
+		{
+			rtn = Ex.util.checkType(this.dsWorkList.getColumn(i, "WORK_STIME"), "HHMI");
+			if(!rtn)
+			{
+				//"은(는) [시간/분] 입력 형식이 올바르지 않습니다."
+				this.chkRow = i;
+				var msgStr = rowInfo + Ex.core.msgMapping(Ex.core.msg(11024), [Ex.core.word("작업기간[작업시간(FROM)]")]);
+				var oParam = {id : "alertChkWorkStime", msg : msgStr, arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return false;
+			}
+		}
+
+		if( Ex.isEmpty(this.dsWorkList.getColumn(i, "WORK_EDT")) )
+		{
+			//"은(는) 필수 입력 항목입니다.";
+			this.chkRow = i;
+			var msgStr = rowInfo + Ex.core.msgMapping(Ex.core.msg(11001), [Ex.core.word("작업기간[작업일(TO)]")]);
+			var oParam = {id : "alertChkWorkEdt", msg : msgStr, arrparam : [], msgtype : "I"};
+			Ex.core.alert(this, oParam);
+			return false;
+		}
+		else
+		{
+			rtn = Ex.util.checkType(this.dsWorkList.getColumn(i, "WORK_EDT"), "YYYYMMDD");
+			if(!rtn)
+			{
+				//"은(는) [날짜] 입력 형식이 올바르지 않습니다.";
+				this.chkRow = i;
+				var msgStr = rowInfo + Ex.core.msgMapping(Ex.core.msg(11019), [Ex.core.word("작업기간[작업일(TO)]")]);
+				var oParam = {id : "alertChkWorkStime", msg : msgStr, arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return false;
+			}
+		}
+		
+		if( Ex.isEmpty(this.dsWorkList.getColumn(i, "WORK_ETIME")) )
+		{
+			//"은(는) 필수 입력 항목입니다.";
+			this.chkRow = i;
+			var msgStr = rowInfo + Ex.core.msgMapping(Ex.core.msg(11001), [Ex.core.word("작업기간[작업시간(TO)]")]);
+			var oParam = {id : "alertChkWorkETime", msg : msgStr, arrparam : [], msgtype : "I"};
+			Ex.core.alert(this, oParam);
+			return false;
+		}
+		else
+		{
+			rtn = Ex.util.checkType(this.dsWorkList.getColumn(i, "WORK_ETIME"), "HHMI");
+			if(!rtn)
+			{
+				//"은(는) [시간/분] 입력 형식이 올바르지 않습니다."
+				this.chkRow = i;
+				var msgStr = rowInfo + Ex.core.msgMapping(Ex.core.msg(11024), [Ex.core.word("작업기간[작업시간(TO)]")]);
+				var oParam = {id : "alertChkWorkETime", msg : msgStr, arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return false;
+			}
+		}
+
+		if( Ex.isEmpty(this.dsWorkList.getColumn(i, "WORK_END_YN")) )
+		{
+			//"은(는) 필수 입력 항목입니다.";
+			this.chkRow = i;
+			var msgStr = rowInfo + Ex.core.msgMapping(Ex.core.msg(11001), [Ex.core.word(divContents.form.divInput.form.stcWorkEndYn.text)]);
+			var oParam = {id : "alertChkWorkEndYn", msg : msgStr, arrparam : [], msgtype : "I"};
+			Ex.core.alert(this, oParam);
+			return false;
+		}
+		
+		if( !Ex.isEmpty(this.dsWorkList.getColumn(i, "ROWFLAG")) &&
+			( Ex.isEmpty(this.dsWorkList.getColumn(i, "WORK_USER_ID")) ||
+			  Ex.isEmpty(this.dsWorkList.getColumn(i, "WORK_USER_NM")) ))
+		{
+			//"은(는) 필수 입력 항목입니다.";
+			this.chkRow = i;
+			var msgStr = rowInfo + Ex.core.msgMapping(Ex.core.msg(11001), [Ex.core.word(divContents.form.divInput.form.stcWorkUser.text)]);
+			var oParam = {id : "alertChkWorkUser", msg : msgStr, arrparam : [], msgtype : "I"};
+			Ex.core.alert(this, oParam);
+			return false;
+		}
+		
+		if( Ex.isEmpty(this.dsWorkList.getColumn(i, "WORK_BRIEF")) )
+		{
+			//"은(는) 필수 입력 항목입니다.";
+			this.chkRow = i;			
+			var msgStr = rowInfo + Ex.core.msgMapping(Ex.core.msg(11001), [Ex.core.word(this.divContents.form.divInput.form.stcTitle.text)]);
+			var oParam = {id : "alertChkWorkTitle", msg : msgStr, arrparam : [], msgtype : "I"};
+			Ex.core.alert(this, oParam);
+			return false;
+		}
+		
+		//기간체크
+		if( !Ex.isEmpty(this.dsWorkList.getColumn(i, "WORK_SDT")) && !Ex.isEmpty(this.dsWorkList.getColumn(i, "WORK_EDT")) )
+		{
+			if(this.dsWorkList.getColumn(i, "WORK_SDT") > this.dsWorkList.getColumn(0, "WORK_EDT"))
+			{
+				this.chkRow = i;
+				var msgStr = rowInfo + Ex.core.msgMapping(rowInfo + "작업기간 종료일은(는) 시작일보다 커야 합니다.", []);
+				var oParam = {id : "alertChkWorkDtI", msg : msgStr, arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return false;
+			}
+		}
+		
+		var workSdTime = nexacro.toNumber( (this.dsWorkList.getColumn(i, "WORK_SDT") + this.dsWorkList.getColumn(i, "WORK_STIME")) );
+		var workEdTime = nexacro.toNumber( (this.dsWorkList.getColumn(i, "WORK_EDT") + this.dsWorkList.getColumn(i, "WORK_ETIME")) );
+
+		if(workSdTime > workEdTime)
+		{
+			this.chkRow = i;
+			var msgStr = rowInfo + Ex.core.msgMapping(rowInfo + "작업기간 [FROM~TO] 기간 설정이 올바르지 않습니다.", []);
+			var oParam = {id : "alertWorkDtimeI", msg : msgStr, arrparam : [], msgtype : "I"};
+			Ex.core.alert(this, oParam);
+			return false;
+		}
+	}
+
+	//if( !this.divContents.form.grdSchedule.checkValidate(true) ) return false;
+	return true;
+}
+
+this.userDeptChangedCallBack = function(compId, dsRtnObj)
+{
+	trace("[FOMM0300_P01] this.userDeptChangedCallBack() compId : " + compId);
+
+	if(compId == "divWorkUser")
+	{
+		if( !Ex.isEmpty(dsRtnObj.getColumn(0, "USER_ID")) )
+		{
+			this.dsWorkList.setColumn(this.dsWorkList.rowposition, "WORK_USER_ID", dsRtnObj.getColumn(0, "USER_ID"));
+			this.dsWorkList.setColumn(this.dsWorkList.rowposition, "WORK_DEPT_NM", dsRtnObj.getColumn(0, "USER_NM"));
+			this.dsWorkList.setColumn(this.dsWorkList.rowposition, "WORK_DEPT_NM",	dsRtnObj.getColumn(0, "DEPT_NM"));
+		}
+		else
+		{
+			this.dsWorkList.setColumn(this.dsWorkList.rowposition, "WORK_USER_ID", "");
+			this.dsWorkList.setColumn(this.dsWorkList.rowposition, "WORK_DEPT_NM", "");
+			this.dsWorkList.setColumn(this.dsWorkList.rowposition, "WORK_DEPT_NM", "");
+		}
+	}
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnAdd" : 	// 저장
+			this.dsWorkList.set_enableevent(false);
+			var rowPos = this.dsWorkList.setInsertRow(this.dsWorkList.rowposition+1);
+			
+			this.dsWorkList.setColumn(rowPos, "WORK_SDT", this.dsCond.getColumn(0, "WORK_DT"));
+			this.dsWorkList.setColumn(rowPos, "WORK_STIME", "0900");
+			this.dsWorkList.setColumn(rowPos, "WORK_EDT", this.dsCond.getColumn(0, "WORK_DT"));
+			this.dsWorkList.setColumn(rowPos, "WORK_ETIME", "1800");
+			this.dsWorkList.setColumn(rowPos, "WORK_END_YN", "N");
+			this.dsWorkList.setColumn(rowPos, "WORK_USER_ID", Ex.util.getSession('gvUserId'));
+			this.dsWorkList.setColumn(rowPos, "WORK_USER_NM", Ex.util.getSession('gvUserNm'));
+			this.dsWorkList.setColumn(rowPos, "WORK_DEPT_NM", Ex.util.getSession('gvDeptNm'));
+			this.dsWorkList.set_enableevent(true);
+			
+			var strWorkUserId    = this.dsWorkList.getColumn(rowPos, "WORK_USER_ID");
+			var strWorkUserNm    = this.dsWorkList.getColumn(rowPos, "WORK_USER_NM");
+			var strWorkDeptNm      = this.dsWorkList.getColumn(rowPos, "WORK_DEPT_NM");
+			this.divContents.form.divInput.form.divWorkUser.form.setValue(strWorkUserId, strWorkUserNm, strWorkDeptNm);
+			
+			var evt = nexacro.DSRowPosChangeEventInfo;
+			evt.newrow = rowPos;
+
+			this.dsOnRowposChanged(this.dsWorkList, evt);
+			//this.dsWorkList.setColumn(rowPos, 'UP_MENU_ID', upMenuId);
+			break;
+
+		case "btnDelete" : 	// 삭제
+			var delete_chk;
+			for(var i=0; i<this.dsWorkList.rowcount; i++)
+			{
+				var chk = this.dsWorkList.getColumn(i, "CHK");
+				if(chk == "1") delete_chk = true;
+			}
+			if(delete_chk) this.fnDelete(this.dsWorkList);
+			break;
+
+		case "btnSave" : 	// 저장
+			// validation
+			if( this.fnCheckValidate() )
+			{
+				var param = {
+						id : "saveConfirm"
+					  , msg : "10003"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+			break;
+
+		case "btnClose" : 	// 닫기
+			this.isCloseBtnClick = true;
+			trace("this.saveFlg ::: " + this.saveFlg);
+			Ex.core.pclose(this, this.saveFlg);
+			break;
+	}
+}
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+this.dsOnRowposChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo)
+{
+	var rowFlag = obj.getColumn(e.newrow, "ROWFLAG");
+	
+	trace("this.dsOnRowposChanged() e.newrow : " + e.newrow + " rowFlag : " + rowFlag);
+	
+	var isEdit = false;
+
+	if(rowFlag == "I" || obj.getColumn(e.newrow, "WORK_USER_ID") == Ex.util.getSession('gvUserId'))
+	{
+		isEdit = true;
+	}
+	
+	trace("this.dsOnRowposChanged() isEdit : " + isEdit);
+
+	Ex.util.setCompPropAll(
+						this,
+						this.divContents.form.divInput.form,
+						isEdit,
+						[this.divContents.form.divInput.form.calWorkSdt,
+						 this.divContents.form.divInput.form.edtWorkNo,
+						 this.divContents.form.divInput.form.divWorkUser
+						]
+	);
+
+	if(isEdit)
+	{
+		if( !Ex.isEmpty(this.divContents.form.divInput.form.divWorkUser.form.edtUserId.value) )
+		{
+			this.divContents.form.divInput.form.divWorkUser.form.edtUserNm.set_readonly(true);
+			this.divContents.form.divInput.form.divWorkUser.form.btnSearchPop.set_enable(false);
+		}
+		else
+		{
+			this.divContents.form.divInput.form.divWorkUser.form.edtUserNm.set_readonly(false);
+			this.divContents.form.divInput.form.divWorkUser.form.btnSearchPop.set_enable(true);
+		}
+		this.divContents.form.divInput.form.divWorkUser.form.btnClear.set_enable(true);
+	}
+	else
+	{
+		this.divContents.form.divInput.form.divWorkUser.form.edtUserNm.set_readonly(true);
+		this.divContents.form.divInput.form.divWorkUser.form.btnSearchPop.set_enable(false);
+		this.divContents.form.divInput.form.divWorkUser.form.btnClear.set_enable(false);
+	}
+
+	if(rowFlag == "I")
+	{
+		this.divContents.form.divInput.form.edtTitle.setFocus();
+	}
+};
+
+this.onBeforeClose = function(obj:nexacro.Form,e:nexacro.CloseEventInfo)
+{
+	if(!this.isCloseBtnClick) if(this.saveFlg == "Y") this.getOwnerFrame()._formObj.fnSearch();
+};]]></Script>
+    <Bind>
+      <BindItem id="item9" compid="divContents.form.calToday" propid="value" datasetid="dsCond" columnid="WORK_DT"/>
+      <BindItem id="item0" compid="divContents.form.divInput.form.txaWorkCont" propid="value" datasetid="dsWorkList" columnid="WORK_CONT"/>
+      <BindItem id="item1" compid="divContents.form.divInput.form.calWorkSdt" propid="value" datasetid="dsWorkList" columnid="WORK_SDT"/>
+      <BindItem id="item2" compid="divContents.form.divInput.form.mskWorkStime" propid="value" datasetid="dsWorkList" columnid="WORK_STIME"/>
+      <BindItem id="item3" compid="divContents.form.divInput.form.calWorkEdt" propid="value" datasetid="dsWorkList" columnid="WORK_EDT"/>
+      <BindItem id="item4" compid="divContents.form.divInput.form.mskWorkEtime" propid="value" datasetid="dsWorkList" columnid="WORK_ETIME"/>
+      <BindItem id="item5" compid="divContents.form.divInput.form.edtTitle" propid="value" datasetid="dsWorkList" columnid="WORK_BRIEF"/>
+      <BindItem id="item6" compid="divContents.form.divInput.form.edtWorkNo" propid="value" datasetid="dsWorkList" columnid="WORK_NO"/>
+      <BindItem id="item7" compid="divContents.form.divInput.form.cboSysType" propid="value" datasetid="dsWorkList" columnid="BZSYS_CAT_CD"/>
+      <BindItem id="item8" compid="divContents.form.divInput.form.cboWorkEndYn" propid="value" datasetid="dsWorkList" columnid="WORK_END_YN"/>
+    </Bind>
+  </Form>
+</FDL>

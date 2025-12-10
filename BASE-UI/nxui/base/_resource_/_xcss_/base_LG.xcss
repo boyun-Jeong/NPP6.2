@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XCSS version="1.1">
+  <CSSData><![CDATA[]]></CSSData>
+  <CSSData type="desktop"><![CDATA[/*******************************************************/
+/***** PROJECT NAME 	: SPP2.0		********/
+/***** XCSSNAME 	: spp_LG(LoGin)		********/
+/***** Naming Rule 	: Component_LG_cssname	********/
+/***** Naming Rule Ex 	: div_LG_bg		********/
+/***** USING FRAME 	: Login Frame		********/
+/***** CREATION DATES 	: 2023.04  		********/
+/***** DRAFTER 		: SPP TEAM		********/
+/***** AMENDER 		: SPP TEAM		********/
+/***** MOD DATES 	: 2023.04		********/
+/*******************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   DIV START   ********************************************************/
+/****************************************************************************************************************************/
+/* 
+ * div_LG_bg
+ * 로그인창 로그인 div background
+ * 사용처 Ex) frLogin -> 로그인화면(div) 배경
+ */
+.Div.div_LG_bg
+{
+	background		: #ffffff;
+	border-radius 		: 15px;
+	box-shadow 		: 5px 5px 30px #dfdfdf;
+}
+
+/* 
+ * div_LG_bg
+ * 로그인창 로그인 이미지 div
+ * 사용처 Ex) frLogin -> 로그인화면 이미지
+ */
+.Div.div_LG_loginImg
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/LG/bg_LG_login.png') no-repeat center;
+	-nexa-border		: 0px;
+}
+
+/* 
+ * div_LG_bg
+ * 로그인창 로그인 이미지 div
+ * 사용처 Ex) frLogin -> 로그인화면 이미지
+ */
+.Div.div_LG_loginImg_MIRAE
+{
+	background		: transparent url('theme://MIRAE_IMAGE_SET/LG/bg_LG_login.png') no-repeat center;
+	-nexa-border		: 0px;
+}
+
+/****************************************************************************************************************************/
+/*****************************************************   DIV END   **********************************************************/
+/****************************************************************************************************************************/
+
+
+/****************************************************************************************************************************/
+/*****************************************************   BUTTON START   *****************************************************/
+/****************************************************************************************************************************/
+/* 
+ * btn_LG_login
+ * 로그인창 로그인 버튼용 css
+ * 사용처 Ex) frLogin -> 로그인 버튼
+ */
+.Button.btn_LG_login,
+.Button.btn_LG_login[status=focused],
+.Button.btn_LG_login[status=mouseover],
+.Button.btn_LG_login[userstatus=pushed],
+.Button.btn_LG_login[userstatus=selected]
+{
+	background 		: #355cc5;
+	border-radius 		: 10px;
+	font 			: bold 26px "KoPubL";
+	color 			: #ffffff;
+	-nexa-text-align 	: center;
+	cursor 			: pointer;
+}
+
+/* 
+ * btn_LG_login_MIRAE
+ * 로그인창 로그인 버튼용 css
+ * 사용처 Ex) frLogin -> 로그인 버튼
+ */
+.Button.btn_LG_login_MIRAE,
+.Button.btn_LG_login_MIRAE[status=focused],
+.Button.btn_LG_login_MIRAE[status=mouseover],
+.Button.btn_LG_login_MIRAE[userstatus=pushed],
+.Button.btn_LG_login_MIRAE[userstatus=selected]
+{
+	background 		: #4674fe;
+	border-radius 		: 14px;
+	font 			: 16pt "kop","KoPub돋움체_Pro Medium";
+	color 			: #ffffff;
+	-nexa-text-align 	: center;
+	cursor 			: pointer;
+}
+
+/* 
+ * btn_LG_login_MIRAE_T
+ * 로그인창 로그인 버튼용 css 통합인증
+ * 사용처 Ex) frLogin -> 로그인 버튼
+ */
+.Button.btn_LG_login_MIRAE_T,
+.Button.btn_LG_login_MIRAE_T[status=focused],
+.Button.btn_LG_login_MIRAE_T[status=mouseover],
+.Button.btn_LG_login_MIRAE_T[userstatus=pushed],
+.Button.btn_LG_login_MIRAE_T[userstatus=selected]
+{
+	background 		: transparent url('theme://MIRAE_IMAGE_SET/LG/login-btn-01.png') no-repeat center;
+	border-radius 		: 10px;
+	font 			: 14pt "kop","KoPub돋움체_Pro Medium";
+	color 			: #ffffff;
+	-nexa-text-align 	: center;
+	cursor 			: pointer;
+}
+
+/****************************************************************************************************************************/
+/*****************************************************   BUTTON END   *******************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   STATIC START   *****************************************************/
+/****************************************************************************************************************************/
+.Static.sta_LG_welcome
+{
+	-nexa-edge		: url('theme://SPP_IMAGE_SET/LG/bg_LG_loginText.png') 0px 0px;
+	-nexa-border		: 0px;
+}
+
+/****************************************************************************************************************************/
+/*****************************************************   STATIC END   *******************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   EDIT START   *******************************************************/
+/****************************************************************************************************************************/
+/* 
+ * edt_LG_input
+ * 로그인창 아이디 비번 입력 edit
+ */
+.Edit.edt_LG_input
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #b5b5c4;
+	border-radius 		: 10px;
+	font			: bold 16px "KoPubL";
+	color			: #444444;
+	-nexa-text-align	: left;
+	-nexa-padding		: 0px 10px 0px 10px;
+	
+}
+.Edit.edt_LG_input[userstatus=nulltext]
+{
+	color 			: #c1ccdf;
+	font			: bold 16px "KoPubL";
+	color			: #c1ccdf;
+	-nexa-text-align	: left;
+	-nexa-padding		: 0px 10px 0px 10px;
+}
+
+
+
+.Edit.edt_LG_input_MIRAE
+{
+	font 			: 10pt "kop","KoPub돋움체_Pro Medium";
+	color			: #333333;
+	-nexa-text-align	: left;
+	-nexa-padding		: 0px 10px 0px 10px;
+}
+
+/****************************************************************************************************************************/
+/*****************************************************   EDIT END   *********************************************************/
+/****************************************************************************************************************************/]]></CSSData>
+  <CSSData type="mobile_large"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_small"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_medium"><![CDATA[]]></CSSData>
+</XCSS>

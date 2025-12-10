@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="template" width="1840" height="720" titletext="입력폼" onload="form_onload">
+    <Layouts>
+      <Layout height="720" mobileorientation="landscape" width="1840">
+        <Static id="stcBg01" taborder="1" left="0" top="34" height="34" cssclass="sta_WF_inputBg" right="0"/>
+        <Static id="stcInfoTitle" taborder="2" text="기본정보" left="0" top="0" width="120" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="stcReqId" taborder="0" left="0" top="34" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="요청ID"/>
+        <Static id="stcReqstr" taborder="4" left="25%" top="34" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="요청자"/>
+        <Edit id="edtReqId" taborder="3" left="stcReqId:5" top="39" height="24" cssclass="edt_WF_normal" right="stcReqstr:5"/>
+        <Static id="stcReqDate" taborder="6" left="50%" top="34" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="요청일"/>
+        <Edit id="edtReqstr" taborder="5" left="stcReqstr:5" top="39" height="24" cssclass="edt_WF_normal" right="stcReqDate:5"/>
+        <Static id="stcRecptNm" taborder="8" left="75%" top="34" width="7.61%" height="34" cssclass="sta_WF_inputTitle" text="접수자"/>
+        <Edit id="edtReqDate" taborder="7" left="stcReqDate:5" top="39" height="24" cssclass="edt_WF_normal" right="stcRecptNm:5"/>
+        <Edit id="edtRecptNm" taborder="9" left="stcRecptNm:5" top="39" height="24" cssclass="edt_WF_normal" right="5"/>
+        <Static id="stcBg01_00" taborder="10" left="0" top="67" height="34" cssclass="sta_WF_inputBg" right="0"/>
+        <Static id="stcReqType" taborder="11" left="0" top="67" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="요청구분"/>
+        <Static id="stcRecptDate" taborder="12" left="75%" top="67" width="7.61%" height="34" cssclass="sta_WF_inputTitle" text="접수일"/>
+        <Combo id="cboReqTypeL" taborder="14" text="Combo00" left="50%" top="72" height="24" cssclass="cbo_WF_normal" right="stcRecptDate:5"/>
+        <Combo id="cboReqTypeM" taborder="13" text="Combo00" left="25%" top="72" height="24" cssclass="cbo_WF_normal" right="cboReqTypeL:5"/>
+        <Combo id="cboReqTypeH" taborder="15" text="Combo00" left="stcReqType:5" top="72" height="24" cssclass="cbo_WF_normal" right="cboReqTypeM:5"/>
+        <Static id="stcBg01_00_00" taborder="16" left="0" top="100" height="34" cssclass="sta_WF_inputBg" right="0"/>
+        <Static id="stcHopeDt" taborder="17" left="0" top="100" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="완료희망일시"/>
+        <Static id="stcReqDt" taborder="18" left="25%" top="100" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="요청작업일시"/>
+        <Calendar id="calHopeDate" taborder="20" left="stcHopeDt:5" top="105" height="24" cssclass="cal_WF_normal" width="10.87%"/>
+        <MaskEdit id="mskHopeTime" taborder="21" left="calHopeDate:5" top="105" height="24" cssclass="msk_WF_normal" format="@@:@@" right="stcReqDt:5"/>
+        <Calendar id="calRecptDate" taborder="19" left="stcRecptDate:5" top="72" height="24" cssclass="cal_WF_normal" right="5"/>
+        <Static id="stcPreRvwer" taborder="24" left="50%" top="100" width="7.61%" height="34" cssclass="sta_WF_inputTitle" text="사전검토자"/>
+        <Calendar id="calReqDate" taborder="22" left="stcReqDt:5" top="105" height="24" cssclass="cal_WF_normal" width="10.87%"/>
+        <MaskEdit id="mskReqTime" taborder="23" left="calReqDate:5" top="105" height="24" cssclass="msk_WF_normal" format="@@:@@" right="stcPreRvwer:5"/>
+        <Static id="stcPostRvwr" taborder="25" left="75%" top="100" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="사후검토자"/>
+        <Edit id="edtPreRvwer" taborder="26" left="stcPreRvwer:5" top="105" height="24" cssclass="edt_WF_normal" right="stcPostRvwr:5"/>
+        <Edit id="edtPostRvwer" taborder="27" left="stcPostRvwr:5" top="105" height="24" cssclass="edt_WF_normal" right="5"/>
+        <Static id="stcInfoTitle00" taborder="28" text="요청정보" left="0" top="154" width="120" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="Static00_01" taborder="29" left="0" top="24" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_01_00" taborder="30" left="0" top="134" height="20" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_01_00_00" taborder="31" left="0" top="178" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Grid id="Grid00" taborder="32" left="0" top="408" width="41.85%" cssclass="grd_WF_normal" autofittype="col" bottom="40">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="60"/>
+                <Column size="400"/>
+                <Column size="120"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell edittype="checkbox" displaytype="checkboxcontrol"/>
+                <Cell col="1" text="행상태"/>
+                <Cell col="2" text="파일명"/>
+                <Cell col="3" text="최종수정일"/>
+              </Band>
+              <Band id="body">
+                <Cell/>
+                <Cell col="1"/>
+                <Cell col="2"/>
+                <Cell col="3"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcBg01_01" taborder="33" left="0" top="188" height="34" cssclass="sta_WF_inputBg" right="0"/>
+        <Static id="stcReqId00" taborder="34" left="0" top="188" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="요청ID"/>
+        <Static id="stcReqstr00" taborder="35" left="25%" top="188" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="요청자"/>
+        <Edit id="edtReqId00" taborder="36" left="stcReqId00:5" top="193" height="24" cssclass="edt_WF_normal" right="stcReqstr00:5"/>
+        <Static id="stcReqDate00" taborder="37" left="50%" top="188" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="요청일"/>
+        <Edit id="edtReqstr00" taborder="38" left="stcReqstr00:5" top="193" height="24" cssclass="edt_WF_normal" right="stcReqDate00:5"/>
+        <Static id="stcRecptNm00" taborder="39" left="75%" top="188" width="7.61%" height="34" cssclass="sta_WF_inputTitle" text="접수자"/>
+        <Edit id="edtReqDate00" taborder="40" left="stcReqDate00:5" top="193" height="24" cssclass="edt_WF_normal" right="stcRecptNm00:5"/>
+        <Edit id="edtRecptNm00" taborder="41" left="stcRecptNm00:5" top="193" height="24" cssclass="edt_WF_normal" right="5"/>
+        <Static id="stcBg01_00_01" taborder="42" left="0" top="221" height="34" cssclass="sta_WF_inputBg" right="0"/>
+        <Static id="stcReqType00" taborder="43" left="0" top="221" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="요청구분"/>
+        <Static id="stcRecptDate00" taborder="44" left="75%" top="221" width="7.61%" height="34" cssclass="sta_WF_inputTitle" text="접수일"/>
+        <Combo id="cboReqTypeL00" taborder="45" text="Combo00" left="49.95%" top="226" height="24" cssclass="cbo_WF_normal" right="stcRecptDate00:5"/>
+        <Combo id="cboReqTypeM00" taborder="46" text="Combo00" left="25%" top="226" height="24" cssclass="cbo_WF_normal" right="cboReqTypeL00:5"/>
+        <Combo id="cboReqTypeH00" taborder="47" text="Combo00" left="stcReqType00:5" top="226" height="24" cssclass="cbo_WF_normal" right="cboReqTypeM00:5"/>
+        <Static id="stcBg01_00_00_00" taborder="48" left="0" top="254" height="34" cssclass="sta_WF_inputBg" right="0"/>
+        <Static id="stcHopeDt00" taborder="49" left="0" top="254" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="완료희망일시"/>
+        <Static id="stcReqDt00" taborder="50" left="25%" top="254" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="요청작업일시"/>
+        <Calendar id="calHopeDate00" taborder="51" left="stcHopeDt00:5" top="259" height="24" cssclass="cal_WF_normal" width="10.87%"/>
+        <MaskEdit id="mskHopeTime00" taborder="52" left="calHopeDate00:5" top="259" height="24" cssclass="msk_WF_normal" format="@@:@@" right="stcReqDt00:5"/>
+        <Calendar id="calRecptDate00" taborder="53" left="stcRecptDate00:5" top="226" height="24" cssclass="cal_WF_normal" right="5"/>
+        <Static id="stcPreRvwer00" taborder="54" left="50%" top="254" width="7.61%" height="34" cssclass="sta_WF_inputTitle" text="사전검토자"/>
+        <Calendar id="calReqDate00" taborder="55" left="stcReqDt00:5" top="259" height="24" cssclass="cal_WF_normal" width="10.87%"/>
+        <MaskEdit id="mskReqTime00" taborder="56" left="calReqDate00:5" top="259" height="24" cssclass="msk_WF_normal" format="@@:@@" right="stcPreRvwer00:5"/>
+        <Static id="stcPostRvwr00" taborder="57" left="75%" top="254" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="사후검토자"/>
+        <Edit id="edtPreRvwer00" taborder="58" left="stcPreRvwer00:5" top="259" height="24" cssclass="edt_WF_normal" right="stcPostRvwr00:5"/>
+        <Edit id="edtPostRvwer00" taborder="59" left="stcPostRvwr00:5" top="259" height="24" cssclass="edt_WF_normal" right="5"/>
+        <Static id="stcBg01_00_01_00" taborder="60" left="0" top="287" height="34" cssclass="sta_WF_inputBg" right="0"/>
+        <Static id="stcReqType00_00" taborder="61" left="0" top="287" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="요청구분"/>
+        <Static id="stcRecptDate00_00" taborder="62" left="75%" top="287" width="7.61%" height="34" cssclass="sta_WF_inputTitle" text="접수일"/>
+        <Combo id="cboReqTypeL00_00" taborder="63" text="Combo00" left="49.95%" top="292" height="24" cssclass="cbo_WF_normal" right="stcRecptDate00_00:5"/>
+        <Combo id="cboReqTypeM00_00" taborder="64" text="Combo00" left="25%" top="292" height="24" cssclass="cbo_WF_normal" right="cboReqTypeL00_00:5"/>
+        <Combo id="cboReqTypeH00_00" taborder="65" text="Combo00" left="stcReqType00_00:5" top="292" height="24" cssclass="cbo_WF_normal" right="cboReqTypeM00_00:5"/>
+        <Static id="stcBg01_00_00_00_00" taborder="66" left="0" top="320" height="34" cssclass="sta_WF_inputBg" right="0"/>
+        <Static id="stcHopeDt00_00" taborder="67" left="0" top="320" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="완료희망일시"/>
+        <Static id="stcReqDt00_00" taborder="68" left="25%" top="320" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="요청작업일시"/>
+        <Calendar id="calHopeDate00_00" taborder="69" left="stcHopeDt00_00:5" top="325" height="24" cssclass="cal_WF_normal" width="10.87%"/>
+        <MaskEdit id="mskHopeTime00_00" taborder="70" left="calHopeDate00_00:5" top="325" height="24" cssclass="msk_WF_normal" format="@@:@@" right="stcReqDt00_00:5"/>
+        <Calendar id="calRecptDate00_00" taborder="71" left="stcRecptDate00_00:5" top="292" height="24" cssclass="cal_WF_normal" right="5"/>
+        <Static id="stcPreRvwer00_00" taborder="72" left="50%" top="320" width="7.61%" height="34" cssclass="sta_WF_inputTitle" text="사전검토자"/>
+        <Calendar id="calReqDate00_00" taborder="73" left="stcReqDt00_00:5" top="325" height="24" cssclass="cal_WF_normal" width="10.87%"/>
+        <MaskEdit id="mskReqTime00_00" taborder="74" left="calReqDate00_00:5" top="325" height="24" cssclass="msk_WF_normal" format="@@:@@" right="stcPreRvwer00_00:5"/>
+        <Static id="stcPostRvwr00_00" taborder="75" left="75%" top="320" width="7.61%" height="34" cssclass="sta_WF_inputTitle_E" text="사후검토자"/>
+        <Edit id="edtPreRvwer00_00" taborder="76" left="stcPreRvwer00_00:5" top="325" height="24" cssclass="edt_WF_normal" right="stcPostRvwr00_00:5"/>
+        <Edit id="edtPostRvwer00_00" taborder="77" left="stcPostRvwr00_00:5" top="325" height="24" cssclass="edt_WF_normal" right="5"/>
+        <Static id="Static00_01_00_00_00" taborder="78" left="0" top="398" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="stcInfoTitle00_00" taborder="79" text="첨부파일" left="0" top="374" width="120" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="Static00_01_00_01" taborder="80" left="0" top="354" height="20" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_01_00_02" taborder="81" left="Grid00:0" top="374" background="rgba(72,156,255,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+        <Static id="stcInfoTitle00_00_00" taborder="82" text="결재선" left="Grid00:20" top="374" width="120" height="24" cssclass="sta_WF_gridTitle"/>
+        <Grid id="Grid00_00" taborder="83" left="Grid00:20" top="408" cssclass="grd_WF_normal" autofittype="col" right="0" bottom="40">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="48"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="200"/>
+                <Column size="120"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" text="이름"/>
+                <Cell col="2" text="사번"/>
+                <Cell col="3" text="직급"/>
+                <Cell col="4" text="부서"/>
+                <Cell col="5" text="결재상태"/>
+              </Band>
+              <Band id="body">
+                <Cell/>
+                <Cell col="1"/>
+                <Cell col="2"/>
+                <Cell col="3"/>
+                <Cell col="4"/>
+                <Cell col="5"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Div id="divGrdBotBtn" taborder="84" width="200" height="32" bottom="0" right="0" isButtonGroup="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnSave" taborder="0" text="저장" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="0" onclick="fnCommOnclick" visible="true"/>
+              <Button id="btnSave00" taborder="1" text="임시저장" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="85" onclick="fnCommOnclick" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00_01_00_01_00" taborder="85" left="0" height="40" background="rgba(173,142,219,0.4)" text="40" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="325" bottom="0"/>
+        <Div id="divGrdTopBtn" taborder="86" width="425" height="24" visible="true" right="stcInfoTitle00_00_00:20" isButtonGroup="true" top="374">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick" visible="true"/>
+              <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <TextArea id="TextArea00" taborder="87" left="40" top="454" width="454" height="102" background="rgba(166,166,166,0.4)" cssclass="ta_WF_normal" value="** 화면 design template **&#10;&#10;화면 가로/세로 리사이징 처리를 위한 각 컴포넌트의&#10;left/top/width/height/right/bottom position 및 margin 참조할 것."/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ 화면 디자인 Template
+* 화면(명)		︰ 화면 디자인 Template
+* 메뉴(경로)	︰ 화면 디자인 Template
+* 화면 설명	︰ 화면 디자인 Template
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/ 
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	
+}
+
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	
+}
+
+
+this.fnSearch = function()
+{
+	
+}
+
+
+
+// 저장
+this.fnSave = function()
+{
+	
+	
+}
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = 0; i < objDs.rowcount; i++)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		Ex.core.error(this,{id:"ERROR",msg:sSvcId+"\n"+Ex.core.msg(sErrorMsg)});
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch(pID)
+	{
+		
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{	
+
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		
+	}
+}
+
+]]></Script>
+  </Form>
+</FDL>

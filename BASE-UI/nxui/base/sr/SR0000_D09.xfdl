@@ -1,0 +1,537 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR0000_D09" width="1280" height="202" titletext="요청정보-기본-비상" onload="form_onload">
+    <Layouts>
+      <Layout width="1280" height="202">
+        <Static id="stcBg04" taborder="19" left="0" top="100" cssclass="sta_WF_inputBg" right="0" height="102"/>
+        <Static id="stcBg02" taborder="14" left="0" top="67" height="34" cssclass="sta_WF_inputBg" right="0"/>
+        <Static id="stcBg01" taborder="11" left="0" top="34" height="34" cssclass="sta_WF_inputBg" right="0"/>
+        <Static id="stcReqId" text="요청서 번호" left="25%" top="34" width="114" height="34" cssclass="sta_WF_inputTitle" taborder="5"/>
+        <Static id="stcReqUserNm" taborder="7" text="작성자" left="75.00%" top="34" height="34" cssclass="sta_WF_inputTitle" width="114"/>
+        <Static id="stcReqDt" taborder="9" text="요청일자" left="50.00%" top="34" height="34" cssclass="sta_WF_inputTitle_E" width="114" visible="true"/>
+        <Static id="stcLabel06" taborder="12" text="요청서 종류" left="0.00%" top="34" height="34" cssclass="sta_WF_inputTitle" width="114" onclick="stcLabel06_onclick"/>
+        <Static id="stcReqTitle" taborder="15" text="제목" left="0" top="67" height="34" cssclass="sta_WF_inputTitle_E" width="114"/>
+        <Div id="divRefReqId" taborder="22" left="75.00%" top="67" height="34" right="0">
+          <Layouts>
+            <Layout>
+              <Static id="stcRefReqId" taborder="2" text="관련 요청번호" left="0" top="0" height="34" cssclass="sta_WF_inputTitle" width="114"/>
+              <Div id="divForm" taborder="1" left="stcRefReqId:5" top="5" right="5" height="24" skipComp="Y">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnSearchReqPop" taborder="0" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommOnclick" top="0" right="24" width="24" tabstop="false"/>
+                    <Button id="btnReqClear" taborder="1" cssclass="btn_WF_ClearIcon" height="24" onclick="fnCommOnclick" top="0" right="1" width="24" tabstop="false"/>
+                    <Edit id="edtRefReqId" taborder="4" left="0" top="0" height="24" enable="true" readonly="false" right="47" cssclass="edt_WF_normal" readonlyComp="Y"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="stcEdocu" taborder="23" text="전자결재 문서" left="50%" top="67" width="114" height="34" cssclass="sta_WF_inputTitle"/>
+        <Edit id="edtReqTitle" taborder="1" left="stcReqTitle:5.00" top="72" height="24" right="stcEdocu:5" validationGroup="group01" validation="요청제목;NULL" cssclass="edt_WF_normal" isChgLang="false" imemode="hangul"/>
+        <Static id="stcReqDesc" taborder="17" text="작성요령" top="100" cssclass="sta_WF_inputTitle" left="50.00%" width="114" height="102"/>
+        <Static id="stcReqReason" taborder="16" text="신청사유" left="0" top="100" cssclass="sta_WF_inputTitle_E" width="114" height="102"/>
+        <TextArea id="txaContents" taborder="2" left="stcReqReason:5.00" top="105" right="stcReqDesc:5" cssclass="txa_WF_normal" validationGroup="group01" validation="신청사유;NULL" wordWrap="char" height="93" text="" imemode="hangul"/>
+        <Edit id="edtReqId" taborder="6" left="stcReqId:5.00" top="39" height="24" enable="true" readonly="true" right="stcReqDt:5" cssclass="edt_WF_normal" readonlyComp="Y" tabstop="false"/>
+        <Edit id="edtReqTmplatNm" taborder="13" left="stcLabel06:5" top="39" height="24" enable="true" readonly="true" right="stcReqId:5" cssclass="edt_WF_normal" readonlyComp="Y" tabstop="false"/>
+        <Static id="stcInfoTitle" taborder="0" text="기본정보" left="0" top="0" width="120" height="24" cssclass="sta_WF_gridTitle" onrbuttonup="stOonRbuttonUp"/>
+        <Static id="stcEmpty01" taborder="4" left="0" top="24" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Calendar id="calReqDt" taborder="10" left="stcReqDt:5" top="39" height="24" onchanged="doChgWishDt" validation="요청일자;NULL" validationGroup="group01" cssclass="cal_WF_normal" readonly="true" readonlyComp="Y" dateformat="yyyy-MM-dd" right="stcReqUserNm:5" tabstop="false"/>
+        <WebView id="wevReqDesc" taborder="18" left="stcReqDesc:5.00" top="105" onloadcompleted="wevReqDesc_onloadcompleted" right="5" height="93" tabstop="false"/>
+        <Edit id="edtReqUserNm" taborder="8" left="stcReqUserNm:5.00" top="39" height="24" enable="true" readonly="true" right="5" cssclass="edt_WF_normal" readonlyComp="Y" tabstop="false"/>
+        <Button id="btnY" taborder="20" text="Y" left="stcInfoTitle:5.00" top="0" width="25" height="24" visible="false" onclick="fnCommOnclick"/>
+        <Button id="btnN" taborder="21" text="N" left="btnY:5.00" top="0" width="25" height="24" visible="false" onclick="fnCommOnclick"/>
+        <Edit id="edtEdocu" taborder="3" left="stcEdocu:5.00" top="72" height="24" enable="true" right="divRefReqId:5" cssclass="edt_WF_normal" readonlyComp="N" imemode="hangul"/>
+        <Button id="btnHelp" taborder="24" text="도움말" left="stcReqDesc:-109" top="stcReqDesc:-42" width="55" height="24" cssclass="btn_WF_primary_save" onclick="fnCommOnclick" skipComp="Y" tabstop="false"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="REQ_TMPLAT_ID" type="STRING" size="256"/>
+          <Column id="REQ_TMPLAT_VER" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="IS_COPY" type="STRING" size="256"/>
+          <Column id="WF_FUNC_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="REQ_TMPLAT_ID"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsSrBaseInfo" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="bigdecimal" size="16"/>
+          <Column id="ROWFLAG" type="string" size="32"/>
+          <Column id="REQ_DEPT_NM" type="STRING" size="256"/>
+          <Column id="REQ_TMPLAT_VER" type="bigdecimal" size="16"/>
+          <Column id="WF_PROC_CD" type="string" size="32"/>
+          <Column id="WF_PROC_NM" type="STRING" size="256"/>
+          <Column id="REQ_STAT_CD" type="STRING" size="256"/>
+          <Column id="FR_DEPT_NM" type="string" size="32"/>
+          <Column id="REQ_USER_ID" type="STRING" size="256"/>
+          <Column id="FRID" type="string" size="32"/>
+          <Column id="PRE_CONF_DEPT_CD" type="STRING" size="256"/>
+          <Column id="REQ_EM_YN" type="STRING" size="256"/>
+          <Column id="LM_USER_NM" type="string" size="32"/>
+          <Column id="PROC_COMP_DATE" type="STRING" size="256"/>
+          <Column id="REQ_DATE" type="STRING" size="256"/>
+          <Column id="CONTENTS" type="string" size="32"/>
+          <Column id="DEL_YN" type="string" size="32"/>
+          <Column id="REQ_TMPLAT_ID" type="string" size="32"/>
+          <Column id="PRE_CONF_USER_NM" type="STRING" size="256"/>
+          <Column id="FR_USER_NM" type="string" size="32"/>
+          <Column id="LMPID" type="string" size="32"/>
+          <Column id="JOB_REQ_TIME" type="STRING" size="256"/>
+          <Column id="SVC_DTL_CD" type="string" size="32"/>
+          <Column id="LM_DEPT_NM" type="string" size="32"/>
+          <Column id="SVC_NM_INFO" type="string" size="32"/>
+          <Column id="REQ_WISH_DT" type="STRING" size="256"/>
+          <Column id="TEMP_REQ_ID" type="STRING" size="256"/>
+          <Column id="REQ_ID" type="string" size="32"/>
+          <Column id="JOB_REQ_DT" type="STRING" size="256"/>
+          <Column id="FR_DEPT_CD" type="string" size="32"/>
+          <Column id="PRE_CONF_DEPT_NM" type="STRING" size="256"/>
+          <Column id="REQ_DEPT_CD" type="STRING" size="256"/>
+          <Column id="LM_DEPT_CD" type="string" size="32"/>
+          <Column id="REQ_TMPLAT_NM" type="string" size="32"/>
+          <Column id="RMK" type="STRING" size="256"/>
+          <Column id="PRE_CONF_USER_ID" type="STRING" size="256"/>
+          <Column id="LMDT" type="datetime" size="17"/>
+          <Column id="REQ_DESC" type="string" size="32"/>
+          <Column id="REQ_WISH_TIME" type="STRING" size="256"/>
+          <Column id="REQ_USER_NM" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="FRDT" type="datetime" size="17"/>
+          <Column id="SVC_CD" type="string" size="32"/>
+          <Column id="LMID" type="string" size="32"/>
+          <Column id="FRNM" type="STRING" size="256"/>
+          <Column id="REF_REQ_ID" type="STRING" size="256"/>
+          <Column id="E_DOCU_NO" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPopRtn"/>
+      <Dataset id="dsWfReqTmplatMtHelp"/>
+      <Dataset id="dsTmplatList"/>
+    </Objects>
+    <Bind>
+      <BindItem id="reqUserNmView" compid="edtReqUserNm" propid="value" datasetid="dsSrBaseInfo" columnid="REQ_USER_NM"/>
+      <BindItem id="srCatName" compid="edtReqTmplatNm" propid="value" datasetid="dsSrBaseInfo" columnid="REQ_TMPLAT_NM"/>
+      <BindItem id="recUserNm" compid="txRecUser" propid="value" datasetid="dtSrReqInfo" columnid="recUserNm"/>
+      <BindItem id="srBrief" compid="edtReqTitle" propid="value" datasetid="dsSrBaseInfo" columnid="TITLE"/>
+      <BindItem id="reqSayu" compid="txaContents" propid="value" datasetid="dsSrBaseInfo" columnid="CONTENTS"/>
+      <BindItem id="item0" compid="calReqDt" propid="value" datasetid="dsSrBaseInfo" columnid="REQ_DATE"/>
+      <BindItem id="item1" compid="stcEdocu" propid="value" datasetid="dsSrBaseInfo" columnid="REQ_ID"/>
+      <BindItem id="item2" compid="divRefReqId.form.edtRefReqId" propid="value" datasetid="dsSrBaseInfo" columnid="REF_REQ_ID"/>
+      <BindItem id="item3" compid="edtEdocu" propid="value" datasetid="dsSrBaseInfo" columnid="E_DOCU_NO"/>
+      <BindItem id="item4" compid="divRefReqId.form.divForm.form.btnSearchReqPop" propid="value" datasetid="dsSrBaseInfo" columnid="REF_REQ_ID"/>
+      <BindItem id="item5" compid="divRefReqId.form.divForm.form.edtRefReqId" propid="value" datasetid="dsSrBaseInfo" columnid="REF_REQ_ID"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면 ID	︰ SR0000_D04
+* 화면(명)	︰ 요청서 기본정보(미래에셋 기본)
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일			작성자		이력
+*------------------------------------------------------------------
+* 2024.05.30	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.isLoadHtmlView = false;	//htmlView Load 완료여부
+this.selectServiceInfo = {
+	CALLBACK_ID		: ["select01"],
+	CALL_SVC		: ["sr/SR0000D/select01"],
+
+	IN_DS_WHERE		: [this.dsCond],
+	OUT_DS_OBJ		: [new Array(this.dsSrBaseInfo)]
+};
+
+this.saveServiceInfo = {
+	CALLBACK_ID		: ["save01"],
+	CALL_SVC		: ["sr/SR0000D/save01"],
+
+	IN_DS_OBJ		: [new Array(this.dsSrBaseInfo)],
+	OUT_DS_OBJ		: []
+};
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.wevReqDesc.set_url(nexacro.getProjectPath() + "html/htmlViewer.html");
+
+	this.gfnFormOnLoad(obj, this.fnInit);
+
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : [''	]	// 조회할 상위코드
+		,codeDiv: [''	]	// 조회할 코드의 업무구분
+		,optStr	: ['ALL']	// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y'	]	// 사용여부
+		,filter	: [''	]	// filterStr
+		,objDs	: [		]	// copy dataset
+	}
+	//Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	//trace("[SR0000_D01]-this.fnCallback() sSvcId : " + sSvcId);
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "selectWfReqTmplatAll" :
+			var fRow = this.dsTmplatList.findRow("REQ_TMPLAT_ID", this.dsSrBaseInfo.getColumn(0, "REQ_TMPLAT_ID"));
+			
+			var svcCd		= this.dsTmplatList.getColumn(fRow, "SVC_CD");
+			//var svcDtlCd	= this.dsTmplatList.getColumn(fRow, "SVC_DTL_CD");
+			
+			if(this.reqInfo.WF_PROC_CD == "WF_PROC_1000" && this.reqInfo.WF_FUNC_CD == "WF_FUNC_00")
+			{
+				this.divRefReqId.form.divForm.set_enable(true);
+		
+				if( svcCd == "SRM")	// && (svcDtlCd.indexOf("WFSR0") > -1 || svcDtlCd.indexOf("WFSR1") > -1) 
+				{
+					this.divRefReqId.form.divForm.set_enable(false);
+				}
+			}
+			else
+			{
+				this.divRefReqId.form.divForm.set_enable(false);
+			}
+			break;
+
+		case "select01" :
+			this.dsSrBaseInfo.set_enableevent(false);
+			this.dsSrBaseInfo.set_updatecontrol(false);
+
+			if(this.dsSrBaseInfo.getColumn(0, "ROWFLAG") == "I")
+			{
+				this.dsSrBaseInfo.setRowType(0, Dataset.ROWTYPE_INSERT);
+				this.dsSrBaseInfo.setColumn(0, "REQ_TMPLAT_ID", this.reqInfo.REQ_TMPLAT_ID);
+				this.dsSrBaseInfo.setColumn(0, "REQ_TMPLAT_VER", this.reqInfo.REQ_TMPLAT_VER);
+				this.dsSrBaseInfo.setColumn(0, "WF_PROC_CD", this.dsWfProc.getColumn(0, "WF_PROC_CD"));
+				this.dsSrBaseInfo.setColumn(0, "REQ_STAT_CD", "RQST00");	//임시저장
+				this.dsSrBaseInfo.setColumn(0, "REQ_USER_ID", Ex.util.getSession('gvUserId'));
+				this.dsSrBaseInfo.setColumn(0, "REQ_USER_NM", Ex.util.getSession('gvUserNm'));
+				this.dsSrBaseInfo.setColumn(0, "REQ_DEPT_CD", Ex.util.getSession('gvDeptCd'));
+				this.dsSrBaseInfo.setColumn(0, "REQ_DEPT_NM", Ex.util.getSession('gvDeptNm'));
+				this.dsSrBaseInfo.setColumn(0, "REQ_WISH_DT", Ex.util.today());
+				this.dsSrBaseInfo.setColumn(0, "FR_NM", Ex.util.getSession('gvUserNm'));
+				//this.dsSrBaseInfo.setColumn(0, "REQ_DATE", Ex.util.today());
+				
+				if(this.reqInfo.REQ_TMPLAT_ID == "WFT240117")
+				{
+					this.dsSrBaseInfo.setColumn(0, "TITLE", "프로젝트 종료 요청");
+				}
+				else if(this.reqInfo.REQ_TMPLAT_ID == "WFT240118")
+				{
+					this.dsSrBaseInfo.setColumn(0, "TITLE", "프로젝트 중단 요청");
+				}
+				if(!Ex.isEmpty(this.dsSrBaseInfo.getColumn(0,'SVC_CD')))
+				{
+					if(this.dsSrBaseInfo.getColumn(0,'SVC_CD') =='CHM'||this.dsSrBaseInfo.getColumn(0,'SVC_CD') =='CHK')
+					{
+						this.dsSrBaseInfo.setColumn(0,"TITLE","[" + Ex.util.getSession('gvDeptNm') + "/" + Ex.util.getSession('gvUserNm')+"] ");
+					}
+				}				
+			}
+			else
+			{
+				if( Ex.isEmpty(this.dsSrBaseInfo.getColumn(0, "TEMP_REQ_ID")) )
+				{
+					this.edtReqId.set_value(this.dsSrBaseInfo.getColumn(0, "REQ_ID"));
+				}
+
+				if( Ex.isEmpty(this.dsSrBaseInfo.getColumn(0, "REQ_WISH_TIME")) )
+				{
+					this.dsSrBaseInfo.setColumn(0, "REQ_WISH_TIME", "");
+				}
+				
+				/*
+				this.edtWfProcNm.set_value(
+					this.dsSrBaseInfo.getColumn(0, "WF_PROC_NM") + 
+					(!Ex.isEmpty(this.dsSrBaseInfo.getColumn(0, "REQ_STAT_NM")) ? " [" + this.dsSrBaseInfo.getColumn(0, "REQ_STAT_NM") + "]" : "")
+				);
+				*/
+			}
+			
+			this.dsSrBaseInfo.set_updatecontrol(true);
+			this.dsSrBaseInfo.set_enableevent(true);
+			
+			if(this.dsSrBaseInfo.getColumn(0, "REQ_REF_YN") == "Y")
+			{
+				Ex.util.getWfReqTmplatListDs(this, "dsTmplatList");
+
+				//참조요청서
+				this.divRefReqId.set_visible(true);
+				
+				//전자결재문서
+				this.stcEdocu.set_left("50%");
+				this.edtEdocu.set_left("stcEdocu:5");
+				this.edtEdocu.set_right("divRefReqId:5");
+				
+				//제목
+				this.edtReqTitle.set_right("stcEdocu:5");
+				
+				if( !Ex.isEmpty(this.reqInfo.REF_REQ_ID) )
+				{
+					this.dsSrBaseInfo.setColumn(0, "REF_REQ_ID", this.reqInfo.REF_REQ_ID);
+				}
+			}
+			else
+			{
+				//참조요청서
+				this.divRefReqId.set_visible(false);
+				this.divRefReqId.form.divForm.set_enable(false);
+				
+				//전자결재문서
+				this.stcEdocu.set_left("75%");
+				this.edtEdocu.set_left("stcEdocu:5");
+				this.edtEdocu.set_right(5);
+				
+				//제목
+				this.edtReqTitle.set_right("stcEdocu:5");
+			}
+
+			if(this.isLoadHtmlView)
+			{
+				if(!Ex.isEmpty(this.dsSrBaseInfo.getColumn(0, "REQ_DESC")))
+				{
+					var reqDesc = btoa(encodeURIComponent(this.dsSrBaseInfo.getColumn(0, "REQ_DESC")));
+					this.wevReqDesc.callScript("setContent(\"" + reqDesc + "\")");
+				}
+			}
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	if(!varValue) return;
+	
+	switch(pID)
+	{	
+		case "SR0000_P01" :
+			if(varValue.indexOf("Dataset id=") > -1)
+			{
+				this.dsPopRtn.loadXML(varValue);
+				this.dsSrBaseInfo.setColumn(0, "REF_REQ_ID", this.dsPopRtn.getColumn(0, "REQ_ID"));
+			}
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue) return;
+	
+	switch(mID)
+	{	
+		case "pAlertTitleI" :	//임시저장
+			this.edtReqTitle.setFocus();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	this.wevReqDesc.set_url(nexacro.getProjectPath() + "html/htmlViewer.html");
+
+	// 공통코드 조회
+	//this.fnGetCmmCd();
+}
+
+this.isUpdateForm = function()
+{
+	return Ex.util.isUpdated(this.dsSrBaseInfo);
+}
+
+this.fnSaveCheck = function(isReg)
+{
+	//trace("SR0000_D01 this.fnSaveCheck() isReg : " + isReg);
+	if(isReg)
+	{
+		return Ex.util.checkValidate(this, "group01");
+	}
+	else
+	{
+		if( Ex.isEmpty(this.dsSrBaseInfo.getColumn(0, "TITLE")) )
+		{
+			var param = {id : "pAlertTitleI", msg : "요청제목은(는) 필수입력 항목입니다.."};
+			Ex.core.alert(this, param);
+			return false;
+		}
+	}
+	return true;
+}
+
+this.fnPagePreView = function(strReqDesc)
+{
+	if(this.dsSrBaseInfo.rowcount == 0)	this.dsSrBaseInfo.addRow();
+	this.dsSrBaseInfo.setColumn(0, "REQ_DESC", strReqDesc);
+	
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// component onclick event. 
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnHelp" :
+			if( !Ex.isEmpty(this.dsWfReqTmplatMtHelp.getColumn(0,'BOARD_NO')) )
+			{
+				Ex.core.popup(
+					this,
+					'요청서 도움말',
+					"fomm::FOMM0220_P01.xfdl",             		// <--- 팝업창 오픈 Url
+					{
+						title		: Ex.core.word('자료실') + ' ' + Ex.core.word('상세'),
+						pPopType	: 'R',
+						pBoardNo	: this.dsWfReqTmplatMtHelp.getColumn(0,'BOARD_NO')
+					},							// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+					"autosize"					// <--- width/height/modeless(프레임 처리 옵션)							
+				);
+			}
+			else
+			{
+				var param = {id : "pAlertNoHelpI", msg : "등록된 도움말이 존재하지 않습니다."};
+				Ex.core.alert(this, param);
+				return false;
+			}
+			break;
+
+		case "btnSearchReqPop":
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"SR0000_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"sr::SR0000_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title			: "요청서 선택",
+					pSelType		: "S",
+					
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"autosize"				// <--- width/height/modeless(프레임 처리 옵션)
+			);
+			break;
+
+		case "btnReqClear" :
+			this.dsSrBaseInfo.setColumn(0, "REF_REQ_ID", "");
+			break;
+
+		case "btnY" :
+			//참조요청서
+			this.divRefReqId.set_visible(true);
+			
+			//전자결재문서
+			this.stcEdocu.set_left("50%");
+			this.edtEdocu.set_left("stcEdocu:5");
+			this.edtEdocu.set_right("divRefReqId:5");
+			
+			//제목
+			this.edtReqTitle.set_right("stcEdocu:5");
+			break;
+
+		case "btnN" :
+			//참조요청서
+			this.divRefReqId.set_visible(false);
+			
+			//전자결재문서
+			this.stcEdocu.set_left("75%");
+			this.edtEdocu.set_left("stcEdocu:5");
+			this.edtEdocu.set_right(5);
+			
+			//제목
+			this.edtReqTitle.set_right("stcEdocu:5");
+			break;
+
+	}
+}
+
+this.wevReqDesc_onloadcompleted = function(obj:nexacro.WebView,e:nexacro.WebLoadCompEventInfo)
+{	//trace("SR0000_D01 this.wevReqDesc_onloadcompleted()");
+	if(this.dsSrBaseInfo.rowcount > 0)
+	{
+		if(!Ex.isEmpty(this.dsSrBaseInfo.getColumn(0, "REQ_DESC")))
+		{
+			var reqDesc = btoa(encodeURIComponent(this.dsSrBaseInfo.getColumn(0, "REQ_DESC")));
+			this.wevReqDesc.callScript("setContent(\"" + reqDesc + "\")");
+		}
+	}
+	this.isLoadHtmlView = true;
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+this.stOonRbuttonUp = function(obj:nexacro.Static,e:nexacro.MouseEventInfo)
+{
+	if(e.ctrlkey && e.shiftkey)
+	{
+		this.btnY.set_visible(!this.btnY.visible);
+		this.btnN.set_visible(!this.btnN.visible);
+	}
+};
+this.stcLabel06_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	
+};
+]]></Script>
+  </Form>
+</FDL>

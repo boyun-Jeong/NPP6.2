@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="frmWF0120_P06" classname="top" left="0" top="0" titletext="등록화면 - 서브화면URL지정 팝업" onload="form_onload" scrolltype="none" cssclass="" height="350" width="400">
+    <Layouts>
+      <Layout width="400" height="350" mobileorientation="landscape">
+        <Div id="divBottom" taborder="0" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnSelect" taborder="1" text="적용" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="125" width="100" height="32" bottom="14"/>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divContent" taborder="1" text="Div00" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="Static00_01" taborder="0" left="5" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-5"/>
+              <Static id="Static00_01_00" taborder="1" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Static id="Static00_01_00_00" taborder="2" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+              <Static id="Static00_02" taborder="3" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="0"/>
+              <Static id="stcTitle" taborder="4" text="서브화면 정보" left="20.00" top="20" width="115" height="24" cssclass="sta_WF_gridTitle"/>
+              <Static id="stcBg01" taborder="5" left="20.00" top="83" height="34" cssclass="sta_WF_inputBg" right="20"/>
+              <Static id="stcUrl" taborder="6" left="20.00" top="83" width="110" height="34" cssclass="sta_WF_inputTitle" text="화면URL"/>
+              <Edit id="edtUrl" taborder="7" left="stcUrl:5.00" top="88" height="24" right="25" cssclass="edt_WF_normal" enable="true"/>
+              <Static id="stcBg01_00_01" taborder="8" left="20.00" top="50" height="34" cssclass="sta_WF_inputBg" right="20"/>
+              <Static id="stcName" taborder="10" left="20.00" top="50" width="110" height="34" cssclass="sta_WF_inputTitle" text="화면 표기명칭"/>
+              <Edit id="edtName" taborder="9" left="stcName:5.00" top="55" height="24" cssclass="edt_WF_normal" readonly="false" inputfilter="none" right="25"/>
+              <Static id="stcBg04_00" taborder="11" left="20.00" top="199" height="34" cssclass="sta_WF_inputBg" right="20" text=""/>
+              <Static id="stcYn03_00" taborder="12" left="20.00" top="199" width="110" height="34" cssclass="sta_WF_inputTitle" text="사용가능버튼"/>
+              <CheckBox id="chkBtnYn11" taborder="13" text="승인" left="135.00" top="207" width="70" height="20" cssclass="chk_WF_normal" onchanged="chkBtn_onchanged" truevalue="Y" falsevalue="N"/>
+              <CheckBox id="chkBtnYn12" taborder="14" text="반려" left="215.00" top="207" width="70" height="20" cssclass="chk_WF_normal" onchanged="chkBtn_onchanged" falsevalue="N" truevalue="Y"/>
+              <CheckBox id="chkBtnYn13" taborder="15" text="저장" left="295.00" top="207" width="70" height="20" cssclass="chk_WF_normal" onchanged="chkBtn_onchanged" falsevalue="N" truevalue="Y"/>
+              <Static id="stcTitle01_00" taborder="16" text="결재자 정의" left="20" top="170" width="170" height="24" cssclass="sta_WF_gridTitle"/>
+              <Static id="stcBg05_00" taborder="17" left="20.00" top="232" height="34" cssclass="sta_WF_inputBg" right="20"/>
+              <Static id="stcText01_00" taborder="18" left="20.00" top="232" width="110" height="34" cssclass="sta_WF_inputTitle" text="버튼 텍스트"/>
+              <Edit id="edtText11" taborder="19" left="135.00" top="237" height="24" cssclass="edt_WF_normal" readonly="false" inputfilter="none" width="75" enable="false"/>
+              <Edit id="edtText12" taborder="20" left="215.00" top="237" height="24" cssclass="edt_WF_normal" readonly="false" inputfilter="none" width="75" enable="false"/>
+              <Edit id="edtText13" taborder="21" left="295.00" top="237" height="24" cssclass="edt_WF_normal" readonly="false" inputfilter="none" width="75" enable="false"/>
+              <Static id="stcBg01_02" taborder="22" left="20.00" top="116" height="34" cssclass="sta_WF_inputBg" right="20"/>
+              <Combo id="cboMapWfProcCd" taborder="23" left="135.00" top="121" height="24" cssclass="cbo_WF_normal" right="25" innerdataset="dsMapWfProcCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM"/>
+              <Static id="stcMapWfProcCd" taborder="24" left="20.00" top="116" width="110" height="34" cssclass="sta_WF_inputTitle" text="진행단계매핑"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsRtn">
+        <ColumnInfo>
+          <Column id="WF_PROC_NM" type="STRING" size="256"/>
+          <Column id="URL" type="STRING" size="256"/>
+          <Column id="SKIP_YN" type="STRING" size="256"/>
+          <Column id="SKIP_OPT" type="STRING" size="256"/>
+          <Column id="SCREEN_RTRN" type="STRING" size="256"/>
+          <Column id="SCREEN_EDIT" type="STRING" size="256"/>
+          <Column id="SCREEN_APV_BTN_YN" type="STRING" size="256"/>
+          <Column id="SCREEN_RTRN_BTN_YN" type="STRING" size="256"/>
+          <Column id="SCREEN_SAVE_BTN_YN" type="STRING" size="256"/>
+          <Column id="APV_BTN_YN" type="STRING" size="256"/>
+          <Column id="RTRN_BTN_YN" type="STRING" size="256"/>
+          <Column id="SAVE_BTN_YN" type="STRING" size="256"/>
+          <Column id="SCREEN_APV_BTN_TEXT" type="STRING" size="256"/>
+          <Column id="SCREEN_RTRN_BTN_TEXT" type="STRING" size="256"/>
+          <Column id="SCREEN_SAVE_BTN_TEXT" type="STRING" size="256"/>
+          <Column id="APV_BTN_TEXT" type="STRING" size="256"/>
+          <Column id="RTRN_BTN_TEXT" type="STRING" size="256"/>
+          <Column id="SAVE_BTN_TEXT" type="STRING" size="256"/>
+          <Column id="SCRN_TYPE" type="STRING" size="256"/>
+          <Column id="MAP_WF_PROC_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRtrnWfProcCd">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+          <Column id="CGER" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsWfDt"/>
+      <Dataset id="dsEditWfProcCd">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMapWfProcCd"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ WF0120_P04
+* 화면(명)	︰ 서브화면URL지정 팝업
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ SPP 워크플로우 노드별 서브화면 URL 지정 팝업
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+}
+
+// 조회
+this.fnSearch = function()
+{
+}
+
+// 공통 저장 func.
+this.fnSave = function()
+{	
+}
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+
+	for(var i = objDs.rowcount-1; i >= 0; i--)	objDs.setDeleteRow(i);
+
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	if( Ex.isEmpty(varValue) )	return;
+
+	switch(pID)
+	{
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	if(!varValue)	return;
+
+	switch(mID)
+	{
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.dsRtn.clearData();
+	this.dsRtn.setAddRow();
+	this.dsRtn.setColumn(0, 'SCREEN_RTRN', '');
+	this.dsRtn.setColumn(0, 'SCREEN_EDIT', '');
+	
+	//var bReadOnly 	= this.getOwnerFrame().bReadOnly;
+	var CMM_CD		= this.getOwnerFrame().WF_PROC_CD;
+	var CMM_CD_NM	= this.getOwnerFrame().WF_PROC_NM;
+	var URL			= this.getOwnerFrame().URL;
+	
+	var APV_BTN_YN         		= this.getOwnerFrame().APV_BTN_YN||"Y";
+	var RTRN_BTN_YN        		= this.getOwnerFrame().RTRN_BTN_YN||"Y";
+	var SAVE_BTN_YN        		= this.getOwnerFrame().SAVE_BTN_YN||"N";
+	
+	var APV_BTN_TEXT      	 	= this.getOwnerFrame().APV_BTN_TEXT||"승인";
+	var RTRN_BTN_TEXT    	  	= this.getOwnerFrame().RTRN_BTN_TEXT||"반려";
+	var SAVE_BTN_TEXT			= this.getOwnerFrame().SAVE_BTN_TEXT||"저장";
+	
+	var SCRN_TYPE				= this.getOwnerFrame().SCRN_TYPE;
+	
+	if( APV_BTN_YN         == 'Y')	this.divContent.form.edtText11.set_enable(true);
+	if( RTRN_BTN_YN        == 'Y')	this.divContent.form.edtText12.set_enable(true);
+	if( SAVE_BTN_YN        == 'Y')	this.divContent.form.edtText13.set_enable(true);
+	
+	var MAP_WF_PROC_CD 	= this.getOwnerFrame().MAP_WF_PROC_CD||'';
+	
+	this.dsMapWfProcCd.loadXML(this.getOwnerFrame().dsMapWfProcCd);
+	this.dsMapWfProcCd.set_filterstr(" Ex.isEmpty(ITM_VAL_1) || ITM_VAL_1 == '"+ CMM_CD +"' ");
+
+	// 반려단계 선택용 현재 워크플로우 이전 단계 setting
+	this.dsWfDt.loadXML(this.getOwnerFrame().dsWfDt);
+	
+	var rowPos = this.dsRtrnWfProcCd.setAddRow();
+	this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD',		'');
+	this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD_NM', 	Ex.core.word('없음') );
+
+	var arrPrevWfProc = this.getOwnerFrame().prevWfProcCd.split(',');
+	
+	for(var i = 0; i < arrPrevWfProc.length-1; i++)
+	{
+		var arrPrevWfProcCd = arrPrevWfProc[i].split('|');
+		rowPos = this.dsRtrnWfProcCd.setAddRow();
+		this.dsRtrnWfProcCd.setColumn(rowPos, 'CGER', arrPrevWfProcCd[1]);
+		this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD', arrPrevWfProcCd[0]);
+		this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD_NM', this.dsWfDt.getColumn(this.dsWfDt.findRow('WF_PROC_CD', arrPrevWfProcCd[0]), 'WF_PROC_NM')|| '등록' );
+	}
+
+	rowPos = this.dsRtrnWfProcCd.setAddRow();
+	this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD', "WF_PROC_9999");
+	this.dsRtrnWfProcCd.setColumn(rowPos, 'CMM_CD_NM', "완료");
+	this.dsRtrnWfProcCd.setColumn(rowPos, 'CGER', 'T');
+
+	this.dsRtrnWfProcCd.set_filterstr( "CGER == 'T' " );
+
+	rowPos = this.dsEditWfProcCd.setAddRow();
+	this.dsEditWfProcCd.setColumn(rowPos, 'CMM_CD', "");
+	this.dsEditWfProcCd.setColumn(rowPos, 'CMM_CD_NM', '없음');
+	this.dsEditWfProcCd.setColumn(rowPos, 'CMM_CD', "TOP");
+	this.dsEditWfProcCd.setColumn(rowPos, 'CMM_CD_NM', '기본정보');
+		
+	for(var i = 0; i < arrPrevWfProc.length-1; i++)
+	{
+		var arrPrevWfProcCd = arrPrevWfProc[i].split('|');
+		rowPos = this.dsEditWfProcCd.setAddRow();
+		this.dsEditWfProcCd.setColumn(rowPos, 'CMM_CD', arrPrevWfProcCd[0]);
+		this.dsEditWfProcCd.setColumn(rowPos, 'CMM_CD_NM', this.dsWfDt.getColumn(this.dsWfDt.findRow('WF_PROC_CD', arrPrevWfProcCd[0]), 'WF_PROC_NM') || '등록' );
+	}
+
+	//this.divContent.form.stcTitle.set_text('[' + CMM_CD_NM + '] ' + this.divContent.form.stcTitle.text);	// title setting
+	this.divContent.form.edtName.set_value(CMM_CD_NM);	//화면명칭 셋팅
+
+	this.dsRtn.setColumn(0, 'URL', 		URL);
+	
+	this.dsRtn.setColumn(0, 'APV_BTN_YN', APV_BTN_YN);
+	this.dsRtn.setColumn(0, 'RTRN_BTN_YN', RTRN_BTN_YN);
+	this.dsRtn.setColumn(0, 'SAVE_BTN_YN', SAVE_BTN_YN);
+	
+	this.dsRtn.setColumn(0, 'APV_BTN_TEXT', APV_BTN_TEXT);
+	this.dsRtn.setColumn(0, 'RTRN_BTN_TEXT', RTRN_BTN_TEXT);
+	this.dsRtn.setColumn(0, 'SAVE_BTN_TEXT', SAVE_BTN_TEXT);
+	this.dsRtn.setColumn(0, 'SCRN_TYPE', SCRN_TYPE);
+	
+	this.dsRtn.setColumn(0, 'MAP_WF_PROC_CD', MAP_WF_PROC_CD);
+	
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnClose" :		// 닫기
+			Ex.core.pclose(this);
+			break;
+			
+		case "btnSelect" :		// 선택
+			this.dsRtn.setColumn(0, 'WF_PROC_NM', 		this.divContent.form.edtName.value);
+			this.dsRtn.setColumn(0, 'URL', 				this.divContent.form.edtUrl.value);
+		
+			var dsStr = this.dsRtn.saveXML();
+			//trace(dsStr);
+			Ex.core.pclose(this, dsStr);
+			break;
+	}
+}
+
+this.divContent_cboSkip_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	this.divContent.form.edtSkipCond.set_enable(e.postvalue);
+};
+
+this.chkBtn_onchanged = function(obj:nexacro.CheckBox,e:nexacro.CheckBoxChangedEventInfo)
+{
+	var val = (e.postvalue == 'Y' ? true : false);
+	
+	if(obj.id == "chkBtnYn01")			this.divContent.form.edtText01.set_enable(val);
+	else if(obj.id == "chkBtnYn02")
+	{
+		this.divContent.form.edtText02.set_enable(val);
+		//this.divContent.form.cboScreenRtrn.set_enable(val);
+	}	
+	else if(obj.id == "chkBtnYn03")
+	{
+		this.divContent.form.edtText03.set_enable(val);
+		//this.divContent.form.mcboScreenEdit.set_enable(val);
+	}	
+	else if(obj.id == "chkBtnYn11")		this.divContent.form.edtText11.set_enable(val);
+	else if(obj.id == "chkBtnYn12")	
+	{
+		this.divContent.form.edtText12.set_enable(val);
+		//this.divContent.form.cboScreenRtrn.set_enable(val);
+	}
+	else if(obj.id == "chkBtnYn13")
+	{
+		this.divContent.form.edtText13.set_enable(val);
+		//this.divContent.form.mcboScreenEdit.set_enable(val);
+	}	
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContent.form.cboScreenRtrn" propid="value" datasetid="dsRtn" columnid="SCREEN_RTRN"/>
+      <BindItem id="item1" compid="divContent.form.txaSkipCond" propid="value" datasetid="dsRtn" columnid="SKIP_OPT"/>
+      <BindItem id="item2" compid="divContent.form.edtUrl" propid="value" datasetid="dsRtn" columnid="URL"/>
+      <BindItem id="item3" compid="divContent.form.stcBg01_00_01" propid="value" datasetid="dsFommUserMt" columnid="USER_ID"/>
+      <BindItem id="item4" compid="divContent.form.edtSkipCond" propid="value" datasetid="dsRtn" columnid="SKIP_OPT"/>
+      <BindItem id="item5" compid="divContent.form.stcBg01_01_00" propid="value" datasetid="dsRtn" columnid="SCREEN_RTRN"/>
+      <BindItem id="item6" compid="divContent.form.mcboScreenEdit" propid="value" datasetid="dsRtn" columnid="SCREEN_EDIT"/>
+      <BindItem id="item7" compid="divContent.form.stcBg04" propid="value" datasetid="dsReqProcDt" columnid="SCREEN_SAVE_BTN_YN"/>
+      <BindItem id="item8" compid="divContent.form.stcBg05" propid="value" datasetid="dsReqProcDt" columnid="SCREEN_SAVE_BTN_TEXT"/>
+      <BindItem id="item9" compid="divContent.form.stcBg04_00" propid="value" datasetid="dsReqProcDt" columnid="SCREEN_SAVE_BTN_TEXT"/>
+      <BindItem id="item10" compid="divContent.form.chkBtnYn01" propid="value" datasetid="dsRtn" columnid="SCREEN_APV_BTN_YN"/>
+      <BindItem id="item11" compid="divContent.form.chkBtnYn02" propid="value" datasetid="dsRtn" columnid="SCREEN_RTRN_BTN_YN"/>
+      <BindItem id="item12" compid="divContent.form.chkBtnYn03" propid="value" datasetid="dsRtn" columnid="SCREEN_SAVE_BTN_YN"/>
+      <BindItem id="item13" compid="divContent.form.edtText01" propid="value" datasetid="dsRtn" columnid="SCREEN_APV_BTN_TEXT"/>
+      <BindItem id="item14" compid="divContent.form.edtText02" propid="value" datasetid="dsRtn" columnid="SCREEN_RTRN_BTN_TEXT"/>
+      <BindItem id="item15" compid="divContent.form.edtText03" propid="value" datasetid="dsRtn" columnid="SCREEN_SAVE_BTN_TEXT"/>
+      <BindItem id="item16" compid="divContent.form.edtText13" propid="value" datasetid="dsRtn" columnid="SAVE_BTN_TEXT"/>
+      <BindItem id="item17" compid="divContent.form.edtText12" propid="value" datasetid="dsRtn" columnid="RTRN_BTN_TEXT"/>
+      <BindItem id="item18" compid="divContent.form.edtText11" propid="value" datasetid="dsRtn" columnid="APV_BTN_TEXT"/>
+      <BindItem id="item19" compid="divContent.form.chkBtnYn13" propid="value" datasetid="dsRtn" columnid="SAVE_BTN_YN"/>
+      <BindItem id="item20" compid="divContent.form.chkBtnYn12" propid="value" datasetid="dsRtn" columnid="RTRN_BTN_YN"/>
+      <BindItem id="item21" compid="divContent.form.chkBtnYn11" propid="value" datasetid="dsRtn" columnid="APV_BTN_YN"/>
+      <BindItem id="item22" compid="divContent.form.chkBtnEssYn02" propid="value" datasetid="dsRtn" columnid="RTRN_ESS_YN"/>
+      <BindItem id="item23" compid="divContent.form.stcBg05_01" propid="value" datasetid="dsReqProcDt" columnid="SCREEN_SAVE_BTN_TEXT"/>
+      <BindItem id="item24" compid="divContent.form.chkBtnEssYn01" propid="value" datasetid="dsRtn" columnid="APV_ESS_YN"/>
+      <BindItem id="item25" compid="divContent.form.rdoScrType" propid="value" datasetid="dsRtn" columnid="SCRN_TYPE"/>
+      <BindItem id="item26" compid="divContent.form.cboMapWfProcCd" propid="value" datasetid="dsRtn" columnid="MAP_WF_PROC_CD"/>
+    </Bind>
+  </Form>
+</FDL>

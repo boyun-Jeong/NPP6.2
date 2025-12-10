@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comMsgAlert" width="400" height="200" titletext="" onload="comMsgAlert_onload" background="transparent" onkeyup="comMsgAlert_onkeyup">
+    <Layouts>
+      <Layout width="400" height="200">
+        <Div id="divBg" taborder="0" left="0" top="0" right="0" bottom="0" background="white" borderRadius="0px 0px 5px 5px">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="1" left="0" top="5" height="40" right="0" text="메시지창"/>
+              <Static id="stcBottom" taborder="2" left="0" height="60" right="0" background="white" bottom="0" cssclass="sta_POP_msg_btnbg"/>
+              <Button id="btnClose" taborder="0" text="확인" width="100" height="32" right="20" bottom="14" onclick="btnClose_onclick" cssclass="btn_WF_primary_save"/>
+              <TextArea id="txaMsg" taborder="3" left="20" top="65" right="20" readonly="true" cssclass="txa_POP_msg_conts" wordwrap="char" bottom="70" background="transparent" border="0px" visible="false" textAlign="left" color="#637195"/>
+              <Static id="staMsg" taborder="4" left="20" top="65" visible="false" right="20" bottom="70" usedecorate="true" border="0px" onclick="staMsg_onclick" textAlign="left" verticalAlign="top" wordWrap="char" cssclass="sta_POP_msg_conts"/>
+              <Static id="stcBgLineTop" taborder="5" left="0" top="0" height="5" right="0" background="#4580ff"/>
+              <Static id="stcBgLineTop00" taborder="6" left="20" top="44" height="1" right="20" background="#dfdfdf"/>
+              <Static id="stcBgLineTop00_00" taborder="7" left="20" height="1" right="20" background="#dfdfdf" bottom="59"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 공통 ALERT
+* 메뉴(경로)	︰ 공통관리 > 플랫폼 > 공통
+* 화면 설명	︰ 공통 팝업
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.00
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+this.param = {};
+
+this.comMsgAlert_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{
+	this.param = this.getOwnerFrame()._param_;
+	this.set_background('transparent');
+	var msgType = this.param.msgType||'';
+	//trace('msgType :: ' + msgType);
+	var css = '';
+
+	switch(msgType)
+	{
+		case "I" :	css = 'sta_POP_msg_info';		break;	// 'i' icon; 일반적인 alert
+		case "W" :	css = 'sta_POP_msg_warning';	break;	// '!' icon; 경고 alert
+		case "S" :	css = 'sta_POP_msg_success';	break;	// 'check' icon; 저장되었습니다. 등 성공 alert
+		case "E" :	css = 'sta_POP_msg_error';		break;	// 'X' icon; Error alert
+		default	 : css = 'sta_POP_msg_title'; 		break;	// 아이콘 없는 기본 alert
+	}
+	this.divBg.form.stcTitle.set_cssclass(css);
+
+	var msg = this.param.msg || '';
+	// decorate 사용하는 경우 static으로 대체
+	if( msg.indexOf('<fc ') >= 0 )
+	{
+		this.divBg.form.staMsg.set_visible(true);
+	}
+	else
+	{
+		this.divBg.form.txaMsg.set_wordWrap('char');
+		this.divBg.form.txaMsg.set_visible(true);
+	}
+
+	var objStaticSize = nexacro.getTextSize(msg, this.divBg.form.txaMsg._getCurrentStyleInheritValue("font")); //,310,"char" );
+	var objmax = parseInt(objStaticSize.ny) + 14;
+
+	if( objmax > 80 )
+	{
+		var nH = parseInt(this.getOffsetHeight());
+		var n   = objmax-80;
+		var calc = this.getOwnerFrame().height + n;
+		if( calc > 414 ) calc = 414;
+		
+		this.getOwnerFrame().set_height(calc);
+
+		var nTop    =  parseInt( (application.mainframe.height / 2) - Math.round(this.getOwnerFrame().height / 2) );
+		this.getOwnerFrame().set_top(nTop);
+	}
+	this.divBg.form.txaMsg.set_value(msg);
+	this.divBg.form.staMsg.set_text(msg);
+};
+
+this.btnConfirm_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	Ex.core.errorCnt = 0;
+	Ex.core.pclose(this, "true");
+};
+
+this.btnClose_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	Ex.core.errorCnt = 0;
+	Ex.core.pclose(this, "true");
+};
+
+this.comMsgAlert_onkeyup = function(obj:nexacro.Form,e:nexacro.KeyEventInfo)
+{
+	if( e.keycode == 27 )	// esc
+	{
+		//trace("this.comMsgConfirm_onkeyup()");
+		e.stopPropagation();
+		Ex.core.pclose(this);
+	}
+};]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,907 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM0510_P01" left="0" top="0" width="1090" height="800" titletext="통보배치관리상세 팝업" onload="form_onload" scrolltype="none" cssclass="" onrbuttonup="FOMM0510_P01_onrbuttonup" oninit="form_oninit">
+    <Layouts>
+      <Layout width="1090" height="800">
+        <Static id="Static00_04_00" taborder="3" top="10" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" bottom="50" width="20" right="0"/>
+        <Static id="Static00_01" taborder="1" left="0" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" onclick="divContent_Static00_01_onclick"/>
+        <Static id="Static00_03" taborder="2" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="60"/>
+        <Static id="Static00_03_00" taborder="5" left="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="60" height="20"/>
+        <Div id="divContents" taborder="4" left="20" top="20" right="20" bottom="Static00_03_00:0">
+          <Layouts>
+            <Layout>
+              <Static id="StaticBg" taborder="39" cssclass="sta_WF_inputBg" left="369.00" top="330" height="34" right="0"/>
+              <Static id="Static01_01_00_00_00_00_00_00" taborder="34" cssclass="sta_WF_inputBg" left="369.00" top="297" height="34" right="0"/>
+              <Static id="Static01_00_00" taborder="9" cssclass="sta_WF_inputBg" left="0" top="99" height="34" right="0"/>
+              <Static id="Static01_00" taborder="5" cssclass="sta_WF_inputBg" left="0" top="33" height="34" right="0"/>
+              <Static id="Static01" taborder="0" cssclass="sta_WF_inputBg" left="0" top="0" height="34" right="0"/>
+              <Static id="stcTitle" taborder="1" text="알림 이름" cssclass="sta_WF_inputTitle_E" left="0" top="0" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcRegUserInfo" taborder="3" text="등록자" cssclass="sta_WF_inputTitle" left="49.43%" top="0" width="140" height="34" style="align:left middle;"/>
+              <Static id="stcUseYn" taborder="6" text="사용여부" cssclass="sta_WF_inputTitle_E" left="0" top="33" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcSendTypeCd" taborder="8" text="통보매체" cssclass="sta_WF_inputTitle_E" left="49.43%" top="33" width="140" height="34" style="align:left middle;"/>
+              <Static id="stcCronExpr" taborder="10" text="스케쥴링 설정&#13;&#10;(CRON식 작성)" cssclass="sta_WF_inputTitle_E" left="0" top="132" width="130" height="232" style="align:left middle;"/>
+              <Static id="Static01_00_00_00" taborder="32" cssclass="sta_WF_inputBg" left="stcCronExpr:239.00" top="132" height="166" right="0"/>
+              <Static id="Static01_01" taborder="14" cssclass="sta_WF_inputBg" left="129.00" top="165" height="34" width="241"/>
+              <Static id="Static01_01_00" taborder="17" cssclass="sta_WF_inputBg" left="129.00" top="198" height="34" width="241"/>
+              <Static id="Static01_01_00_00" taborder="20" cssclass="sta_WF_inputBg" left="129.00" top="231" height="34" width="241"/>
+              <Static id="Static01_01_00_00_00" taborder="23" cssclass="sta_WF_inputBg" left="129.00" top="264" height="34" width="241"/>
+              <Static id="Static01_01_00_00_00_00" taborder="26" cssclass="sta_WF_inputBg" left="129.00" top="297" height="34" width="241"/>
+              <Static id="Static01_01_00_00_00_00_00" taborder="29" cssclass="sta_WF_inputBg" left="129.00" top="330" height="34" right="680"/>
+              <Static id="stc00" taborder="15" text="초(0~59) :" left="stcCronExpr:5.00" top="170" width="75" height="24"/>
+              <Static id="stc00_00" taborder="18" text="분(0~59) :" left="135.00" top="stc00:9" width="75" height="24"/>
+              <Static id="stc00_00_00" taborder="21" text="시(0~24, *) :" left="135.00" top="stc00_00:9" width="75" height="24"/>
+              <Static id="stc00_00_00_00" taborder="24" text="일(1~31, *) :" left="135.00" top="stc00_00_00:9" width="75" height="24"/>
+              <Static id="stc00_00_00_00_00" taborder="27" text="월(1~12, *) :" left="135.00" top="stc00_00_00_00:9" width="75" height="24"/>
+              <Static id="stc00_00_00_00_00_00" taborder="30" text="요일(0~6, ?) :" left="135.00" top="stc00_00_00_00_00:9" width="75" height="24"/>
+              <Edit id="edtCronExprSec" taborder="16" left="stc00:5.00" top="170" width="150" height="24" cssclass="edt_WF_normal" validationGroup="input01" text="" validation="스케쥴링 설정(초);NULL" inputtype="alpha,digit,symbol,sign" inputmode="upper" inputfilter="space,dot"/>
+              <Edit id="edtCronExprMin" taborder="19" left="215.00" top="203" width="150" height="24" cssclass="edt_WF_normal" validationGroup="input01" text="" validation="스케쥴링 설정(분);NULL" inputtype="alpha,digit,symbol,sign" inputmode="upper" inputfilter="space,dot"/>
+              <Edit id="edtCronExprHour" taborder="22" left="215.00" top="edtCronExprMin:9" width="150" height="24" cssclass="edt_WF_normal" validationGroup="input01" text="" validation="스케쥴링 설정(시);NULL" inputtype="alpha,digit,symbol,sign" inputmode="upper" inputfilter="space,dot"/>
+              <Edit id="edtCronExprDay" taborder="25" left="215.00" top="edtCronExprHour:9" width="150" height="24" cssclass="edt_WF_normal" validationGroup="input01" text="" validation="스케쥴링 설정(일);NULL" inputtype="alpha,digit,symbol,sign" inputmode="upper" inputfilter="space,dot"/>
+              <Edit id="edtCronExprMon" taborder="28" left="215.00" top="edtCronExprDay:9" width="150" height="24" cssclass="edt_WF_normal" validationGroup="input01" text="" validation="스케쥴링 설정(월);NULL" inputtype="alpha,digit,symbol,sign" inputmode="upper" inputfilter="space,dot"/>
+              <Edit id="edtCronExprDow" taborder="31" left="215.00" top="edtCronExprMon:9" width="150" height="24" cssclass="edt_WF_normal" validationGroup="input01" text="" validation="스케쥴링 설정(요일);NULL" inputtype="alpha,digit,symbol,sign" inputmode="upper" inputfilter="space,dot"/>
+              <Static id="stc01" taborder="33" text="도움말 기호&#13;&#10;&#13;&#10;- : 범위&#13;&#10;* : 어떤 값이나&#13;&#10;/ : 스텝&#13;&#10;, : 여러 값&#13;&#10;? : 미지정, 일/요일 중 한 군데는 ?로 표시" left="Static01_01:10.00" top="145" width="299" height="130" verticalAlign="top" font="bold 14px/normal &quot;KoPubL&quot;"/>
+              <Static id="stcExpectExecDtime" taborder="35" text="예상 실행 시각&#13;&#10;     (TOP 5)" cssclass="sta_WF_inputTitle" left="Static01_01_00_00_00_00_00:-1.00" top="297" width="130" height="67" style="align:left middle;"/>
+              <Edit id="edtExpectExecDtime1" taborder="36" left="stcExpectExecDtime:5.00" top="302" height="24" cssclass="edt_WF_normal" readonly="true" skipComp="Y" width="177"/>
+              <Edit id="edtExpectExecDtime2" taborder="37" left="edtExpectExecDtime1:5.00" top="302" height="24" cssclass="edt_WF_normal" readonly="true" skipComp="Y" width="177"/>
+              <Edit id="edtExpectExecDtime3" taborder="38" left="edtExpectExecDtime2:5.00" top="302" height="24" cssclass="edt_WF_normal" readonly="true" skipComp="Y" right="5"/>
+              <Edit id="edtExpectExecDtime4" taborder="40" left="504.00" top="335" height="24" cssclass="edt_WF_normal" readonly="true" skipComp="Y" width="177"/>
+              <Edit id="edtExpectExecDtime5" taborder="41" left="686.00" top="335" height="24" cssclass="edt_WF_normal" readonly="true" skipComp="Y" width="177"/>
+              <Radio id="rdoUseYn" taborder="7" left="stcUseYn:5.00" top="38" height="24" right="stcSendTypeCd:5" innerdataset="dsUse" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" cssclass="rdo_WF_normal" columncount="-1" rowcount="-1" validationGroup="input01" text="" validation="사용여부;NULL"/>
+              <Static id="stcContDesc" taborder="43" text="알림 내용" cssclass="sta_WF_inputTitle_E" left="0" top="stcCronExpr:-1" width="130" style="align:left middle;" bottom="0"/>
+              <Edit id="edtTitle" taborder="2" left="stcTitle:5.00" top="5" height="24" cssclass="edt_WF_normal" right="stcRegUserInfo:5" validationGroup="input01" text="" validation="알림이름;NULL"/>
+              <Static id="stcRegUserInfoI" taborder="4" left="stcRegUserInfo:5.00" top="5" height="20" right="5"/>
+              <Static id="stcJavaSvcNm" taborder="55" text="실행 JAVA 서비스명" cssclass="sta_WF_inputTitle_E" left="520.00" top="99" width="140" height="34" style="align:left middle;"/>
+              <Static id="stcExecGubun" taborder="59" text="실행구분" cssclass="sta_WF_inputTitle_E" left="0" top="99" width="130" height="34" style="align:left middle;"/>
+              <Static id="StaticBg00" taborder="42" cssclass="sta_WF_inputBg" left="129" top="StaticBg:-1" right="0" bottom="0"/>
+              <Static id="Static01_01_01" taborder="11" cssclass="sta_WF_inputBg" left="129.00" top="132" height="34" width="241"/>
+              <Button id="btnClear" taborder="13" text="CLEAR" left="320.00" top="137" height="24" right="Static01_00_00_00:5" onclick="fnCommOnclick" tooltiptext="입력된 Cron표현식 초기화" cursor="pointer"/>
+              <Button id="btnCheckCron" taborder="44" text="CHECK" left="271.00" top="137" height="24" right="btnClear:2" tooltiptext="Cron식 유효성 체크" onclick="fnCommOnclick" cursor="pointer"/>
+              <Edit id="edtCronExpr" taborder="12" left="stcCronExpr:5.00" top="137" height="24" cssclass="edt_WF_normal" validationGroup="input01" text="" validation="스케쥴링 설정(초);NULL" inputtype="alpha,digit,symbol,sign,space,comma" inputmode="upper" inputfilter="dot" right="btnCheckCron:2"/>
+              <Button id="btnTest" taborder="45" text="btn00" left="76.00" top="5" width="50" height="24" onclick="fnCommOnclick" visible="false"/>
+              <Static id="Static01_00_00_01" taborder="46" cssclass="sta_WF_inputBg" left="0" top="66" height="34" right="0"/>
+              <Static id="stcDateTermUseYn" taborder="47" text="알림기간설정여부" cssclass="sta_WF_inputTitle_E" left="0" top="66" width="130" height="34" style="align:left middle;"/>
+              <Static id="stcSendTerm" taborder="49" text="알림설정기간" cssclass="sta_WF_inputTitle" left="520.00" top="66" width="140" height="34" style="align:left middle;"/>
+              <Static id="stcHolidaySendYn" taborder="61" text="휴일실행여부" cssclass="sta_WF_inputTitle_E" left="27.5%" top="66" width="95" height="34" style="align:left middle;"/>
+              <Radio id="rdoDateTermUseYn" taborder="48" left="stcDateTermUseYn:5.00" top="71" height="24" right="stcHolidaySendYn:5" innerdataset="dsYn" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" cssclass="rdo_WF_normal" columncount="-1" rowcount="-1" validationGroup="input01" text="" validation="휴일실행여부;NULL"/>
+              <Calendar id="calStrDate" taborder="50" left="stcSendTerm:5" top="71" width="110" height="24" dateformat="yyyy-MM-dd " onkeydown="Common_onkeydown" cssclass="cal_WF_normal" initvalueid="알림설정기간(시작일);DATETIME:YYYYMMDD" validationGroup="input01" text="    -  -   " enable="false"/>
+              <MaskEdit id="mskStrTime" taborder="51" left="calStrDate:2" top="71" width="65" height="24" format="##:##" textAlign="center" type="string" validation="알림설정기간(시작시간);DATETIME:HHMI" text="__:__" validationGroup="input01" cssclass="msk_WF_normal" enable="false"/>
+              <Static id="st00" taborder="52" text="~" left="mskStrTime:3" top="71" width="20" height="24" textAlign="center"/>
+              <Calendar id="calEndDate" taborder="53" left="st00:3" top="71" width="110" height="24" dateformat="yyyy-MM-dd " onkeydown="Common_onkeydown" cssclass="cal_WF_normal" validationGroup="input01" text="    -  -   " validation="알림설정기간(종료일);DATETIME:YYYYMMDD" enable="false"/>
+              <MaskEdit id="mskEndTime" taborder="54" left="calEndDate:2" top="71" width="65" height="24" format="##:##" validation="알림설정기간(종료시간);DATETIME:HHMI" text="__:__" cssclass="msk_WF_normal" type="string" textAlign="center" validationGroup="input01" enable="false"/>
+              <Edit id="edtJavaSvcNm" taborder="56" left="stcJavaSvcNm:5" top="104" height="24" cssclass="edt_WF_normal" right="5" validationGroup="input01" text="" validation="실행 JAVA 서비스명;NULL" inputtype="alpha,symbol,digit,dot" inputfilter="sign,space,comma"/>
+              <CheckBoxSet id="chkSetSendTypeCd" taborder="57" left="stcSendTypeCd:5" top="38" height="24" right="5" innerdataset="dsSendTypeCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" readonly="true" enable="false" direction="horizontal" cssclass="chk_WF_normal"/>
+              <Static id="stcBatchStatusNm" taborder="58" text=" &lt;fc v='green'&gt;●&lt;/fc&gt; 작동중" top="38" height="24" usedecorate="true" visible="false" border="1px solid darkgray" width="60" right="925" textAlign="center"/>
+              <Radio id="rdoExecGubun" taborder="60" left="stcExecGubun:5" top="105" height="24" codecolumn="codecolumn" datacolumn="datacolumn" cssclass="rdo_WF_normal" columncount="-1" rowcount="-1" validationGroup="input01" text="" validation="실행구분;NULL" right="stcJavaSvcNm:5" innerdataset="innerdataset" onitemchanged="rdoOnItemChanged">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">01</Col>
+                      <Col id="datacolumn">JAVA 서비스 실행</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">02</Col>
+                      <Col id="datacolumn">QUERY</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Radio>
+              <Radio id="rdoHolidaySendYn" taborder="62" left="stcHolidaySendYn:5" top="72" height="24" innerdataset="dsYn" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" cssclass="rdo_WF_normal" columncount="-1" rowcount="-1" validationGroup="input01" text="" validation="휴일실행여부;NULL" right="stcSendTerm:5"/>
+              <Button id="btnQuery" taborder="63" text="QUERY 작성/편집" left="stcJavaSvcNm:5.00" top="104" width="130" height="24" visible="false" onclick="fnCommOnclick" cursor="pointer"/>
+              <Button id="btnHist" taborder="64" text="스케쥴러 실행 이력" left="390" top="38" height="24" onclick="fnCommOnclick" cursor="pointer" right="stcSendTypeCd:5" visible="false"/>
+            </Layout>
+          </Layouts>
+          <InitValue/>
+        </Div>
+        <Div id="divBottom" taborder="0" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="2" text="삭제" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="125" width="100" height="32" bottom="14" cursor="pointer"/>
+              <Button id="btnSave" taborder="0" text="저장" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="btnDelete:5" width="100" height="32" bottom="14" cursor="pointer"/>
+              <Button id="btnClose" taborder="70" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14" cursor="pointer"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="JOB_NO" type="STRING" size="256"/>
+          <Column id="DETAIL_PAGE_YN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="DETAIL_PAGE_YN">Y</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsUse"/>
+      <Dataset id="dsYn"/>
+      <Dataset id="dsFommScheduleJobMt" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="256"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="JOB_NO" type="STRING" size="256"/>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="CONT_DESC" type="STRING" size="256"/>
+          <Column id="SEND_TYPE_CD" type="STRING" size="256"/>
+          <Column id="DATE_TERM_USE_YN" type="STRING" size="256"/>
+          <Column id="STR_DT" type="STRING" size="256"/>
+          <Column id="STR_TIME" type="STRING" size="256"/>
+          <Column id="END_DT" type="STRING" size="256"/>
+          <Column id="END_TIME" type="STRING" size="256"/>
+          <Column id="EXEC_GUBUN" type="STRING" size="256"/>
+          <Column id="JAVA_SVC_NM" type="STRING" size="256"/>
+          <Column id="QUERY_DESC" type="STRING" size="256"/>
+          <Column id="HOLIDAY_SEND_YN" type="STRING" size="256"/>
+          <Column id="CRON_EXPR_SEC" type="STRING" size="256"/>
+          <Column id="CRON_EXPR_MIN" type="STRING" size="256"/>
+          <Column id="CRON_EXPR_HOUR" type="STRING" size="256"/>
+          <Column id="CRON_EXPR_DAY" type="STRING" size="256"/>
+          <Column id="CRON_EXPR_MON" type="STRING" size="256"/>
+          <Column id="CRON_EXPR_DOW" type="STRING" size="256"/>
+          <Column id="CRON_EXPR" type="STRING" size="256"/>
+          <Column id="USE_YN" type="STRING" size="256"/>
+          <Column id="EXPECT_EXEC_DTIME1" type="STRING" size="256"/>
+          <Column id="EXPECT_EXEC_DTIME2" type="STRING" size="256"/>
+          <Column id="EXPECT_EXEC_DTIME3" type="STRING" size="256"/>
+          <Column id="EXPECT_EXEC_DTIME4" type="STRING" size="256"/>
+          <Column id="EXPECT_EXEC_DTIME5" type="STRING" size="256"/>
+          <Column id="EXPECT_EXEC_DTIME" type="STRING" size="256"/>
+          <Column id="STATUS" type="STRING" size="256"/>
+          <Column id="REG_USER_INFO" type="STRING" size="256"/>
+          <Column id="FRID" type="STRING" size="256"/>
+          <Column id="FRDT" type="STRING" size="256"/>
+          <Column id="LMID" type="STRING" size="256"/>
+          <Column id="LMDT" type="STRING" size="256"/>
+          <Column id="LMPID" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCheck" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK_YN" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSendTypeCd"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ FOMM0510_P01
+* 화면(명)		︰ 슬라이드알림 관리
+* 메뉴(경로)	︰ 관리자 > 통지관리 > 슬라이드알림 관리
+* 화면 설명	︰ SPP 공지사항 관리
+* 작성자		︰ WEMB
+* 작성일		︰ 2025.02.25
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2025.02.25	 정보윤		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+//Cron 설정 컬럼
+this.divWebEditorObj;	//웹에디터 div객체를 설정할 변수
+this.orgExprCron = "";
+this.cronColNm = ["CRON_EXPR_SEC", "CRON_EXPR_MIN", "CRON_EXPR_HOUR", "CRON_EXPR_DAY", "CRON_EXPR_MON", "CRON_EXPR_DOW"];
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_oninit = function(obj:nexacro.Form,e:nexacro.EventInfo)
+{
+	if(this.getOwnerFrame().pSendType == "1")			//슬라이드
+	{
+		//Div.init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]] )
+		this.divWebEditorObj = new Div("divWebEditor", 135, "StaticBg:5", null, null, 5, 5);
+		this.divContents.addChild("divWebEditor", this.divWebEditorObj);
+		this.divContents.form.rdoExecGubun.set_enable(false);
+		this.divWebEditorObj.set_async(false);
+		this.divWebEditorObj.set_url("comm::comWebEditor.xfdl");
+		this.divWebEditorObj.show();
+	}
+	else if(this.getOwnerFrame().pSendType == "2")
+	{
+		//Div.init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]] )
+		var textareaObj = new TextArea("txaContDesc", 135, "StaticBg:5", null, null, 5, 5);
+		textareaObj.set_taborder(99);
+		this.divContents.addChild("txaContDesc", textareaObj);
+
+		textareaObj.set_cssclass("txa_WF_normal");
+		textareaObj.set_validationGroup("input01");
+		textareaObj.set_validation(this.divContents.form.stcContDesc.text + ";NULL");
+		textareaObj.show();
+		var bindObj = new BindItem();
+		bindObj.init("itemContDesc", "divContents.form.txaContDesc", "value", "dsFommScheduleJobMt", "CONT_DESC");
+		this.addChild("itemContDesc", bindObj);
+	}
+};
+
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);	
+}
+
+this.fnInit = function()
+{
+	if( !Ex.isEmpty(this.getOwnerFrame().pJOB_NO) )	this.dsCond.setColumn(0, "JOB_NO", this.getOwnerFrame().pJOB_NO);
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+this.fnCheckCronValidation = function()
+{
+	if( Ex.isEmpty(this.dsFommScheduleJobMt.getColumn(0, "CRON_EXPR")) )
+	{
+		var param = {
+			  id	: "noInputCronAlertI"										//fnMsgAfter에서 식별자로 사용되는 ID
+			, msg	: "[스케쥴링 설정] CRON표현식이 입력되지 않았습니다."	//메시지 내용
+			, arrparam : [""]													//메시지의 변수에 들어갈 실제값
+			, msgtype : "I"														//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+		};
+		Ex.core.alert(this, param);
+		return false;
+	}
+	// transaction
+	var sTranId = "selectCheckCronValidation";				// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0510P/checkCronValidation";			// 서비스명
+    var sInDs = "dsCond=dsFommScheduleJobMt:A";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsCheck=dsCheck";							// 서버에서 수신할 데이타셋
+    var sArg = "";											// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 조회
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "select01";								// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0510P/select01";                    // 서비스명
+    var sInDs = "dsCond=dsCond";							// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsFommScheduleJobMt=dsFommScheduleJobMt"; // 서버에서 수신할 데이타셋
+    var sArg = "";											// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 공통 저장 func.
+this.fnSave = function(gubun)
+{
+	var sTranId = "";		                          							// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+	
+	if(gubun == "SAVE")			sTranId = "save01";
+	else if(gubun == "DELETE")
+	{
+		sTranId = "delete01";
+		this.dsFommScheduleJobMt.setColumn(0, "ROWFLAG", "D");
+	}
+	
+ 	// transaction
+	var sService = "FOMM0510P/save01";                         					// 서비스명
+    var sInDs = "dsFommScheduleJobMt=dsFommScheduleJobMt:A dsCond=dsCond";		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsCond=dsCond dsFommScheduleJobMt=dsFommScheduleJobMt";		// 서버에서 수신할 데이타셋
+    var sArg = "";                   											// 서버 @ParamVariable 인자와 맵핑됨
+ 	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "selectCheckCronValidation" :
+			if(this.dsCheck.getColumn(0, "CHK_YN") == "Y")
+			{
+				this.orgExprCron = this.dsFommScheduleJobMt.getColumn(0, "CRON_EXPR");
+				this.divContents.form.btnCheckCron.set_enable(false);
+			}
+			else
+			{
+				var cronExpr = this.dsFommScheduleJobMt.getColumn(0, "CRON_EXPR") || '';
+				var param = {id : "inValidCronExprAlert", msg : "[" + cronExpr + "] CRON 표현식이\n유효하지 않습니다."};
+				Ex.core.error(this, param);
+				return;
+			}
+			break;
+
+		case "select01" :
+			this.setEditChkSetSendTypeCd();
+			this.divContents.form.stcBatchStatusNm.set_visible(false);
+
+			//alert("this.getOwnerFrame().pPopType : " + this.getOwnerFrame().pPopType);
+
+			if(this.getOwnerFrame().pPopType == "U")
+			{
+				this.divContents.form.btnHist.set_visible(true);
+				Ex.core.toast(this, "10002");
+				
+				this.setExecProc(this.dsFommScheduleJobMt.getColumn(0, "EXEC_GUBUN"));
+				this.orgExprCron = this.dsFommScheduleJobMt.getColumn(0, "CRON_EXPR") ||'';
+				this.divContents.form.btnCheckCron.set_enable(false);
+				if(this.dsFommScheduleJobMt.rowcount == 0)
+				{
+					var param = {id : "noSearchDataAlert", msg : "알림 상세 내역을 조회할 수 없습니다."};
+					Ex.core.error(this, param);
+					return;
+				}
+				this.getStatusLabelVisible();
+
+				if(this.divWebEditorObj)
+				{
+					this.divContents.form["divWebEditor"].form.setContent(this.dsFommScheduleJobMt.getColumn(0, "CONT_DESC") || '');
+				}
+				this.divContents.form.edtCronExpr.setFocus();
+			}
+			else
+			{
+				this.divContents.form.btnHist.set_visible(false);
+				this.divContents.form.btnCheckCron.set_enable(true);
+				this.dsFommScheduleJobMt.clearData();
+				this.dsFommScheduleJobMt.setAddRow();
+				this.dsFommScheduleJobMt.setColumn(0, "DATE_TERM_USE_YN", "Y");
+				this.dsFommScheduleJobMt.setColumn(0, "REG_USER_INFO", Ex.util.getSession('gvUserNm') + "(" + Ex.util.getSession('gvUserId') + ")");
+
+				this.dsFommScheduleJobMt.setColumn(0, "EXEC_GUBUN", "01");
+				this.setExecProc("01");
+
+				if(this.getOwnerFrame().pSendType == "1")
+				{
+					this.divContents.form.rdoExecGubun.set_enable(false);
+					this.dsFommScheduleJobMt.setColumn(0, "SEND_TYPE_CD", "SLIDE");
+					this.dsFommScheduleJobMt.setColumn(0, "JAVA_SVC_NM", "com/FommScheduleCommon/sendWebsocketDefaultService");
+				}
+
+				this.dsFommScheduleJobMt.setColumn(0, "USE_YN", "Y");
+				this.dsFommScheduleJobMt.setColumn(0, "HOLIDAY_SEND_YN", "N");
+
+				 var dTime = new Date();
+				 dTime.setHours(dTime.getHours() + 1);
+				 //trace("dTime : " + dTime);
+				 var dTimeStr = Ex.util.getMaskFormatString(dTime, 'yyyyMMddHHmmss');
+				 
+				 //trace("STR_DATE : " + dTimeStr.substr(0, 8));
+				 this.dsFommScheduleJobMt.setColumn(0, "STR_DT", dTimeStr.substr(0, 8));
+				 var hour = dTimeStr.substr(8, 2);
+				 //trace("STR_TIME : " + hour);
+				 this.dsFommScheduleJobMt.setColumn(0, "STR_TIME", hour + "00");
+				this.divContents.form.edtTitle.setFocus();
+			}
+			this.setDateTermUseYn();
+			break;
+
+		case "save01" :
+			this.divContents.form.btnHist.set_visible(true);
+			this.getOwnerFrame().saveYn	= "Y";
+			Ex.core.toast(this, "10004");
+			this.getOwnerFrame().pJOB_NO = this.dsCond.getColumn(0, "JOB_NO");
+			this.getOwnerFrame().pPopType = "U";
+			this.divContents.form.stcBatchStatusNm.set_visible(false);
+			this.getStatusLabelVisible();
+			this.orgExprCron = this.dsFommScheduleJobMt.getColumn(0, "CRON_EXPR") ||'';
+			if(this.divWebEditorObj)
+			{
+				this.divContents.form["divWebEditor"].form.setContent(this.dsFommScheduleJobMt.getColumn(0, "CONT_DESC") || '');
+				//this.divWebEditorObj.form.setContent(this.dsFommScheduleJobMt.getColumn(0, "CONT_DESC"), false);
+			}
+			this.setDateTermUseYn();
+			break;
+
+		case "delete01" :
+			this.getOwnerFrame().saveYn	= "Y";
+			Ex.core.pclose(this, this.getOwnerFrame().saveYn||'N');
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch (pID) 
+	{
+		case "queryDescPop" :
+			if( Ex.isEmpty(varValue) || varValue == "NO_CHANGE") return;
+			this.dsFommScheduleJobMt.setColumn(this.dsFommScheduleJobMt.rowposition, "QUERY_DESC", varValue);
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	if(!varValue)	return;
+
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.fnSave("SAVE");
+			break;
+
+		case "deleteConfirm" :
+			this.fnSave("DELETE");
+			break;
+
+// 		case "saveAlert" :
+// 			Ex.core.pclose(this, 'save');
+// 			break;
+
+		case "noSearchDataAlert" :
+			Ex.core.pclose(this, 'save');
+			break;
+
+		case "noInputCronAlertI" :
+			this.divContents.form.edtCronExpr.setFocus();
+			break;
+
+		case "inValidCronExprAlert" :
+			this.divContents.form.btnCheckCron.set_enable(true);
+			break;
+
+		case "pStrDtCheckAlert" :
+			this.divContents.form.calStrDt.setFocus();
+			break;
+
+		case "pStrTimeCheckAlert" :
+			this.divContents.form.mskStrTime.setFocus();
+			break;
+
+		case "pEndDtCheckAlert" :
+			this.divContents.form.calEndDt.setFocus();
+			break;
+
+		case "pEndTimeCheckAlert" :
+			this.divContents.form.mskEndTime.setFocus();
+			break;
+
+		case "essContDescAlertI" :
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	this.fnGetCmmCd();		// 공통코드 조회
+
+	if(this.getOwnerFrame().pSendType == "1")
+	{
+		this.divWebEditorObj.form.initCreate();
+	}
+	this.fnSearch();
+}
+
+this.fnGetCmmCd = function()
+{
+	var sendTypeFilter = "";
+	
+	if(this.getOwnerFrame().pSendType == "1")
+	{
+		sendTypeFilter = "CMM_CD=='SLIDE'";
+	}
+	else
+	{
+		this.divContents.form.chkSetSendTypeCd.set_enable(true);
+		sendTypeFilter = "CMM_CD!='SLIDE'";
+	}
+	var oParam = {
+		upCmmCd : [	'USE_CD',	'YN_CD2',	'SEND_TYPE_CD'		]	// 조회할 상위코드
+		,codeDiv: [	'CMM_CD',	'CMM_CD',	'BASIS_CD'			]	// 조회할 코드의 업무구분
+		,optStr	: [	'',			'',			''					]	// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: [	'Y',		'Y',		'Y'					]	// 사용여부
+		,filter	: [	'',			'',			sendTypeFilter		]	// filterStr
+		,objDs	: [	this.dsUse,	this.dsYn,	this.dsSendTypeCd	]	// copy dataset
+	};
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util
+};
+
+this.fnCheckValidate = function()
+{
+	trace("this.fnCheckValidate()~~~~~~~~~~~~~~");
+	var rtn = Ex.util.checkValidate(this.divContents, "input01");
+	if(!rtn) return false;
+
+	if( Ex.isEmpty(this.dsFommScheduleJobMt.getColumn(0, "SEND_TYPE_CD")) )
+	{
+		var param = {
+			  id	: "essSendTypeCdAlertI"							//fnMsgAfter에서 식별자로 사용되는 ID
+			, msg	: "11001"										//메시지 내용
+			, arrparam : [this.divContents.form.stcSendTypeCd.text]	//메시지의 변수에 들어갈 실제값
+			, msgtype : "I"											//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+		};
+		Ex.core.alert(this, param);
+		return false;
+	}
+
+	if( this.dsFommScheduleJobMt.getColumn(0, "EXEC_GUBUN") == "02" )
+	{
+		if( Ex.isEmpty(this.dsFommScheduleJobMt.getColumn(0, "QUERY_DESC")) )
+		{
+			var param = {
+				  id	: "essQueryDescAlertI"							//fnMsgAfter에서 식별자로 사용되는 ID
+				, msg	: "실행 QUERY가 작성되지 않았습니다."		//메시지 내용
+				, arrparam : [this.divContents.form.stcContDesc.text]	//메시지의 변수에 들어갈 실제값
+				, msgtype : "I"											//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+			};
+			Ex.core.alert(this, param);
+			return false;
+		}
+	}
+
+	if( Ex.isEmpty(this.dsFommScheduleJobMt.getColumn(0, "CONT_DESC")) )
+	{
+		var param = {
+			  id	: "essContDescAlertI"							//fnMsgAfter에서 식별자로 사용되는 ID
+			, msg	: "11001"										//메시지 내용
+			, arrparam : [this.divContents.form.stcContDesc.text]	//메시지의 변수에 들어갈 실제값
+			, msgtype : "I"											//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+		};
+		Ex.core.alert(this, param);
+		return false;
+	}
+	
+	var dateTermUseYn = this.dsFommScheduleJobMt.getColumn(0,"DATE_TERM_USE_YN");
+	var strDt = this.dsFommScheduleJobMt.getColumn(0,"STR_DT");
+	var strTime = this.dsFommScheduleJobMt.getColumn(0,"STR_TIME");
+	var endDt = this.dsFommScheduleJobMt.getColumn(0,"END_DT");
+	var endTime = this.dsFommScheduleJobMt.getColumn(0,"END_TIME");
+
+	if(dateTermUseYn == "Y")
+	{
+		if( Ex.isEmpty(strDt) && Ex.isEmpty(strTime) && Ex.isEmpty(endDt) && Ex.isEmpty(endTime) )
+		{
+			var param = {id : "pStrTimeCheckAlert", msg : "[알림설정기간] 알람기간설정여부가 \"Y\"인 경우 [알람설정기간] 시작/종료 기간 중 한가지는 반드시 지정해야 합니다."};
+			Ex.core.alert(this, param);
+			return false;
+		}
+		
+		if( !Ex.isEmpty(strDt) && Ex.isEmpty(strTime) )
+		{
+			var param = {id : "pStrTimeCheckAlert", msg : "[알림설정기간] 시작일자 입력시 시작일시도 함께 입력해야 합니다."};
+			Ex.core.alert(this, param);
+			return false;
+		}
+		else if( Ex.isEmpty(strDt) && !Ex.isEmpty(strTime) )
+		{
+			var param = {id : "pStrDtCheckAlert", msg : "[알림설정기간] 시작일시 입력시 시작일자도 함께 입력해야 합니다."};
+			Ex.core.alert(this, param);
+			return false;
+		}
+		
+		if( !Ex.isEmpty(endDt) && Ex.isEmpty(endTime) )
+		{
+			var param = {id : "pEndTimeCheckAlert", msg : "[알림설정기간] 종료일자 입력시 종료일시도 함께 입력해야 합니다."};
+			Ex.core.alert(this, param);
+			return false;
+		}
+		else if( Ex.isEmpty(endDt) && !Ex.isEmpty(endTime) )
+		{
+			var param = {id : "pEndDtCheckAlert", msg : "[알림설정기간] 종료일시 입력시 종료일자도 함께 입력해야 합니다."};
+			Ex.core.alert(this, param);
+			return false;
+		}
+		
+		var strDtTime = nexacro.toNumber(strDt + strTime + "00");
+		var endDtTime = nexacro.toNumber(endDt + endTime + "00");
+
+		if(strDtTime > endDtTime)
+		{
+			var param = {id : "pAlertNoti", msg : "[알림설정기간] 시작일시는 종료일시보다 이후일 수 없습니다."};
+			Ex.core.alert(this, param);
+			return false;
+		}
+	}
+
+	if(this.divContents.form.btnCheckCron.enable)
+	{
+		var param = {
+			  id	: "noCheckCropExprAlertI"																			//fnMsgAfter에서 식별자로 사용되는 ID
+			, msg	: "[스케쥴링 설정] CHECK 버튼을 클릭하여\nCRON 표현식 유효성 체크 후 저장이 가능합니다."	//메시지 내용
+			, arrparam : []																								//메시지의 변수에 들어갈 실제값
+			, msgtype : "I"																								//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+		};
+		Ex.core.alert(this, param);
+		return false;
+	}
+	return true;
+}
+
+//배치 상태를 라벨에 표기한다.
+this.getStatusLabelVisible = function()
+{
+	this.divContents.form.stcBatchStatusNm.set_visible(true);
+	
+	if(this.dsFommScheduleJobMt.getColumn(0, "STATUS") == "1")
+	{
+		this.divContents.form.stcBatchStatusNm.set_text("<fc v='green'>●</fc> 작동중");
+	}
+	else
+	{
+		this.divContents.form.stcBatchStatusNm.set_text("<fc v='red'>●</fc> 중단");
+	}
+}
+
+//알림구분에 따른 통보매체 입력폼 제어 이벤트
+this.setEditChkSetSendTypeCd = function()
+{
+	this.divContents.form.chkSetSendTypeCd.set_readonly(this.getOwnerFrame().pSendType == "SLIDE" ? true : false);
+}
+
+//알림기간설정여부 값 변경에 대한 처리 이벤트
+this.setDateTermUseYn = function(val)
+{
+	if( Ex.isEmpty(val) )	val = this.dsFommScheduleJobMt.getColumn(0, "DATE_TERM_USE_YN");
+	
+	this.divContents.form.calStrDate.set_enable(val == "Y" ? true : false);
+	this.divContents.form.mskStrTime.set_enable(val == "Y" ? true : false);
+	this.divContents.form.calEndDate.set_enable(val == "Y" ? true : false);
+	this.divContents.form.mskEndTime.set_enable(val == "Y" ? true : false);
+}
+
+this.setExecProc = function(val)
+{
+	if(val == "01")
+	{
+		this.divContents.form.edtJavaSvcNm.set_visible(true);
+		this.divContents.form.btnQuery.set_visible(false);
+		this.divContents.form.stcJavaSvcNm.set_text("실행 JAVA 서비스명");
+		this.divContents.form.stcJavaSvcNm.set_cssclass("sta_WF_inputTitle_E");
+		this.divContents.form.edtJavaSvcNm.set_validation("실행 JAVA 서비스명;NULL");
+	}
+	else if(val == "02")
+	{
+		this.divContents.form.edtJavaSvcNm.set_visible(false);
+		this.divContents.form.btnQuery.set_visible(true);
+		this.divContents.form.stcJavaSvcNm.set_text("실행QUERY");
+		this.divContents.form.stcJavaSvcNm.set_cssclass("sta_WF_inputTitle");
+		this.divContents.form.edtJavaSvcNm.set_validation("");
+	}
+}
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnTest" :
+			var sTranId = "test01";                          							// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+			var sService = "FOMM0510P/test01";                         					// 서비스명
+			var sInDs = "dsFommScheduleJobMt=dsFommScheduleJobMt:A dsCond=dsCond";		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+			var sOutDs = "";           													// 서버에서 수신할 데이타셋
+			var sArg = "";                   											// 서버 @ParamVariable 인자와 맵핑됨
+			Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+			break;
+
+		case "btnCheckCron" :
+			this.fnCheckCronValidation();
+			break;
+
+		case "btnClear" :
+			this.dsFommScheduleJobMt.setColumn(0, "CRON_EXPR", undefined);
+			this.divContents.form.edtCronExpr.setFocus();
+			break;
+
+		case "btnSave" :		// 저장
+			if(this.dsFommScheduleJobMt.getColumn(0, "SEND_TYPE_CD") == "SLIDE")
+			{
+				var webConts = this.divWebEditorObj.form.getContent() || '';
+				this.dsFommScheduleJobMt.setColumn(0, "CONT_DESC", webConts);				
+			}
+			
+			var rtn = Ex.util.isUpdated(this.dsFommScheduleJobMt);
+			trace("btnSave isUpdated:" + rtn);
+
+			if( rtn )
+			{
+				if( this.fnCheckValidate() )
+				{
+					var param = {
+						  id : "saveConfirm"
+						, msg : "10003"
+						, arrparam : ['']
+						, msgtype : "I"
+					};
+					Ex.core.confirm(this, param);
+				}
+			}
+			break;
+
+		case 'btnDelete' :
+			var param = {
+				  id : "deleteConfirm"
+				, msg : "10008"
+				, arrparam : ['삭제']
+				, msgtype : "I"
+			};
+			Ex.core.confirm(this, param);
+			break;
+
+		case "btnQuery" :
+			Ex.core.popup(
+				this,								// <--- 팝업 실행 스코프
+				"queryDescPop",						// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"comm::comTextareaPop.xfdl",		// <--- 팝업창 오픈 Url
+				{
+					pRefDesc		: true,
+					title			: "QUERY 편집",
+					isHeightChange	: false,
+					isEss			: true,
+					subTitle		: "통지 대상자 조회 QUERY 편집 (※알림 전송할 사용자 사번 컬럼 Alias명은 [USER_ID]로 지정해야 합니다.)",
+					pMsg			: this.dsFommScheduleJobMt.getColumn(0, "QUERY_DESC"),
+					pBtnConfUseYn	: "Y"	//적용버튼 사용여부
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				//"autosize"				// <--- width/height/modeless(프레임 처리 옵션)
+				"width=1500,height=817"
+			);
+			return false;
+			break;
+
+		case "btnHist" :
+			Ex.core.popup(
+				this,								// <--- 팝업 실행 스코프
+				"histPop",							// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"fomm::FOMM0510_P02.xfdl",			// <--- 팝업창 오픈 Url
+				{
+					title	: "스케쥴러 실행 이력",
+					pJobNo	: this.dsCond.getColumn(0, "JOB_NO"),
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"autosize"				// <--- width/height/modeless(프레임 처리 옵션)
+			);
+			return false;
+			break;
+
+		case "btnClose" :			// 닫기
+			Ex.core.pclose(this, this.getOwnerFrame().saveYn||'N');
+			break;
+	}
+}
+
+this.FOMM0510_P01_onrbuttonup = function(obj:nexacro.Form,e:nexacro.MouseEventInfo)
+{
+	if(e.ctrlkey && e.shiftkey)
+	{
+		this.divContents.form.btnTest.set_visible(!this.divContents.form.btnTest.visible);
+	}
+};
+
+this.rdoOnItemChanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	this.setExecProc(e.postvalue);
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	trace("this.dsOnColumnChanged() START e.columnid + " + e.columnid + " e.oldvalue : " + e.oldvalue + " e.newvalue : " + e.newvalue);
+	
+	if(e.columnid == "CRON_EXPR_SEC" || e.columnid == "CRON_EXPR_MIN" || e.columnid == "CRON_EXPR_HOUR" ||
+	   e.columnid == "CRON_EXPR_DAY" || e.columnid == "CRON_EXPR_MON" || e.columnid == "CRON_EXPR_DOW")
+	{
+		var cronValArr = new Array();
+		
+		for(var i=0; i<this.cronColNm.length; i++)
+		{
+			if(e.columnid == this.cronColNm[i])
+			{
+				cronValArr[i] = e.newvalue || '';
+			}
+			else
+			{
+				cronValArr[i] = obj.getColumn(0, this.cronColNm[i]) || '';
+			}
+		}
+		
+		var cronExpr = "";
+		
+		for(var i=0; i<this.cronColNm.length; i++)
+		{
+			cronExpr += (i==0 ? "" : " ") + cronValArr[i];
+		}
+		trace("cronExpr:[" + cronExpr + "]");
+		obj.setColumn(0, "CRON_EXPR", cronExpr);
+		
+		if(this.orgExprCron != cronExpr)
+		{
+			this.divContents.form.btnCheckCron.set_enable(true);
+		}
+		else
+		{
+			this.divContents.form.btnCheckCron.set_enable(false);
+		}
+	}
+	else if(e.columnid == "CRON_EXPR")
+	{
+		trace("[CRON_EXPR COLUMN] orgVal:[" + this.orgExprCron + "] e.newvalue:[" + e.newvalue + "]");
+
+		if(this.orgExprCron != e.newvalue)
+		{
+			this.divContents.form.btnCheckCron.set_enable(true);
+		}
+		else
+		{
+			this.divContents.form.btnCheckCron.set_enable(false);
+		}
+		
+		for(var i=0; i<this.cronColNm.length; i++)
+		{
+			obj.setColumn(0, this.cronColNm[i], "");
+		}
+		
+		var cronExpr = (e.newvalue || '').split(" ");
+		
+		trace("cronExpr.length==========>" + cronExpr.length);
+		
+		for(var i=0; i<cronExpr.length; i++)
+		{
+			trace("i=" + i + " expr:[" + (cronExpr[i] || '') + "]");
+			obj.setColumn(0, this.cronColNm[i], cronExpr[i] || '');
+		}
+	}
+	else if(e.columnid == "DATE_TERM_USE_YN")
+	{
+		this.setDateTermUseYn(e.newvalue);
+	}	
+	else if(e.columnid == "EXEC_GUBUN")
+	{
+		this.setExecProc(e.newvalue);
+	}
+	obj.setUpdateRow(e);
+	trace("this.dsOnColumnChanged() END");
+}]]></Script>
+    <InitValue/>
+    <Bind>
+      <BindItem id="item3" compid="divContents.form.edtCronExprSec" propid="value" datasetid="dsFommScheduleJobMt" columnid="CRON_EXPR_SEC"/>
+      <BindItem id="item4" compid="divContents.form.edtTitle" propid="value" datasetid="dsFommScheduleJobMt" columnid="TITLE"/>
+      <BindItem id="item5" compid="divContents.form.rdoUseYn" propid="value" datasetid="dsFommScheduleJobMt" columnid="USE_YN"/>
+      <BindItem id="item9" compid="divContents.form.edtExpectExecDtime1" propid="value" datasetid="dsFommScheduleJobMt" columnid="EXPECT_EXEC_DTIME1"/>
+      <BindItem id="item10" compid="divContents.form.edtExpectExecDtime2" propid="value" datasetid="dsFommScheduleJobMt" columnid="EXPECT_EXEC_DTIME2"/>
+      <BindItem id="item11" compid="divContents.form.edtExpectExecDtime3" propid="value" datasetid="dsFommScheduleJobMt" columnid="EXPECT_EXEC_DTIME3"/>
+      <BindItem id="item12" compid="divContents.form.edtExpectExecDtime4" propid="value" datasetid="dsFommScheduleJobMt" columnid="EXPECT_EXEC_DTIME4"/>
+      <BindItem id="item13" compid="divContents.form.edtExpectExecDtime5" propid="value" datasetid="dsFommScheduleJobMt" columnid="EXPECT_EXEC_DTIME5"/>
+      <BindItem id="item14" compid="divContents.form.edtCronExprMin" propid="value" datasetid="dsFommScheduleJobMt" columnid="CRON_EXPR_MIN"/>
+      <BindItem id="item15" compid="divContents.form.edtCronExprHour" propid="value" datasetid="dsFommScheduleJobMt" columnid="CRON_EXPR_HOUR"/>
+      <BindItem id="item16" compid="divContents.form.edtCronExprDay" propid="value" datasetid="dsFommScheduleJobMt" columnid="CRON_EXPR_DAY"/>
+      <BindItem id="item17" compid="divContents.form.edtCronExprMon" propid="value" datasetid="dsFommScheduleJobMt" columnid="CRON_EXPR_MON"/>
+      <BindItem id="item18" compid="divContents.form.edtCronExprDow" propid="value" datasetid="dsFommScheduleJobMt" columnid="CRON_EXPR_DOW"/>
+      <BindItem id="item19" compid="divContents.form.edtCronExpr" propid="value" datasetid="dsFommScheduleJobMt" columnid="CRON_EXPR"/>
+      <BindItem id="item20" compid="divContents.form.stcRegUserInfoI" propid="text" datasetid="dsFommScheduleJobMt" columnid="REG_USER_INFO"/>
+      <BindItem id="item21" compid="divContents.form.Static01_00_00_01" propid="value" datasetid="dsFommScheduleJobMt" columnid="HOLIDAY_SEND_YN"/>
+      <BindItem id="item22" compid="divContents.form.rdoDateTermUseYn" propid="value" datasetid="dsFommScheduleJobMt" columnid="DATE_TERM_USE_YN"/>
+      <BindItem id="item0" compid="divContents.form.stcSendTerm" propid="value" datasetid="dsFommScheduleJobMt" columnid="END_TIME"/>
+      <BindItem id="item1" compid="divContents.form.stcJavaSvcNm" propid="value" datasetid="dsFommScheduleJobMt" columnid="END_TIME"/>
+      <BindItem id="item2" compid="divContents.form.edtJavaSvcNm" propid="value" datasetid="dsFommScheduleJobMt" columnid="JAVA_SVC_NM"/>
+      <BindItem id="item7" compid="divContents.form.calStrDate" propid="value" datasetid="dsFommScheduleJobMt" columnid="STR_DT"/>
+      <BindItem id="item8" compid="divContents.form.mskStrTime" propid="value" datasetid="dsFommScheduleJobMt" columnid="STR_TIME"/>
+      <BindItem id="item23" compid="divContents.form.calEndDate" propid="value" datasetid="dsFommScheduleJobMt" columnid="END_DT"/>
+      <BindItem id="item24" compid="divContents.form.mskEndTime" propid="value" datasetid="dsFommScheduleJobMt" columnid="END_TIME"/>
+      <BindItem id="item25" compid="divContents.form.chkSetSendTypeCd" propid="value" datasetid="dsFommScheduleJobMt" columnid="SEND_TYPE_CD"/>
+      <BindItem id="item26" compid="divContents.form.rdoExecGubun" propid="value" datasetid="dsFommScheduleJobMt" columnid="EXEC_GUBUN"/>
+      <BindItem id="item6" compid="divContents.form.stcHolidaySendYn" propid="value" datasetid="dsFommScheduleJobMt" columnid="HOLIDAY_SEND_YN"/>
+      <BindItem id="item27" compid="divContents.form.rdoHolidaySendYn" propid="value" datasetid="dsFommScheduleJobMt" columnid="HOLIDAY_SEND_YN"/>
+    </Bind>
+  </Form>
+</FDL>

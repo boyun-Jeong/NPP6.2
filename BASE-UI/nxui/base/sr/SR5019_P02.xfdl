@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="SR5018_P01" left="0" top="0" width="645" height="350" titletext="출입카드조회팝업" onload="form_onload">
+    <Layouts>
+      <Layout width="645" height="350">
+        <Div id="divPage" taborder="0" left="20" top="0" enableevent="false" async="false" text="" right="20" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="Static21" taborder="2" text="출입카드 목록" cssclass="sta_WF_gridTitle" left="0" top="20" width="150" height="24"/>
+              <Static id="Static00_00_00" taborder="1" left="0" top="Static21:0" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Grid id="grdMainList" taborder="0" binddataset="dsMain" cellsizingtype="col" autofittype="col" left="0" right="0" bottom="0" cssclass="grd_WF_normal" autoupdatetype="none" top="Static00_00_00:0" oncelldblclick="divPage_grdMainList_oncelldblclick">
+                <Formats>
+                  <Format id="multiSel">
+                    <Columns>
+                      <Column size="48"/>
+                      <Column size="48"/>
+                      <Column size="180"/>
+                      <Column size="240"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="40" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="No"/>
+                      <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                      <Cell col="2" text="카드번호"/>
+                      <Cell col="3" text="관리팀"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="expr:currow+1"/>
+                      <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                      <Cell col="2" text="bind:CARD_NO" validation="카드번호;NULL" mask="0000" maskedittype="string" maskeditformat="####" maskeditmaskchar=" "/>
+                      <Cell col="3" text="bind:MNG_DEPT_CD" combodataset="dsMNG_Deptcd" combocodecol="DEPT_CD" combodatacol="DEPT_NM" validation="관리팀;NULL"/>
+                    </Band>
+                  </Format>
+                  <Format id="singleSel">
+                    <Columns>
+                      <Column size="48"/>
+                      <Column size="180"/>
+                      <Column size="240"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="40" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="No"/>
+                      <Cell col="1" text="카드번호"/>
+                      <Cell col="2" text="관리팀"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="expr:currow+1"/>
+                      <Cell col="1" text="bind:CARD_NO" validation="카드번호;NULL" mask="0000" maskedittype="string" maskeditformat="####" maskeditmaskchar=" "/>
+                      <Cell col="2" text="bind:MNG_DEPT_NM" combodataset="dsMNG_Deptcd" combocodecol="DEPT_CD" combodatacol="DEPT_NM" validation="관리팀;NULL"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtnBottom" taborder="1" text="" cssclass="div_POP_msg_btnbg" left="20" right="20" top="divPage:0" bottom="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="14"/>
+              <Button id="btnSelect" taborder="1" text="선택" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="110" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsMain"/>
+      <Dataset id="dsRet"/>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="CARD_STATUS_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)	︰ 업무분류조회팝업
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2025.02.12
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2025.01.24	WEMB		최초작성
+*------------------------------------------------------------------
+* Description
+	<< Popup param >>
+	pGridFormats	: 선택 목록에 사용될 그리드 포맷
+	pGridInnerDsArr	: 선택 목록 그리드에 콤보 InnerDataset Object Array
+	pDsData			: 선택 목록 그리드 Bind Dataset Object
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+ include "lib::lib_WorkFlow.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.pSelType = '';
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function(type)
+{
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+	this.dsCond.setColumn(0, "CARD_STATUS_CD", "CARD_STATUS_CD_01");
+	
+	var sTranId = "select01";			// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+	var sService = "OM0510W/select01";	// 서비스명
+	var sInDs = "dsCond=dsCond";		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+	var sOutDs = "dsMain=dsData";		// 서버에서 수신할 데이타셋
+	var sArg = "";						// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 선택
+this.fnSelect = function(selType)
+{
+	this.dsRet.clear();
+	switch(selType)
+	{
+		case "M" :	// 멀티 선택 시 체크된 모든 행 복사 & return
+			this.dsMain.set_enableevent(false);
+			this.dsMain.set_filterstr("CHK == '1'");
+			this.dsRet.copyData(this.dsMain, true);
+			this.dsMain.set_filterstr("");
+			this.dsMain.set_enableevent(false);
+			break;
+			
+		case "S" :	// 단일 선택 시 현재 rowposion 기준 복사 & return
+		default :
+			this.dsRet.assign(this.dsMain);
+			this.dsRet.clearData();
+			this.dsRet.copyRow(this.dsRet.setAddRow(), this.dsMain, this.dsMain.rowposition);
+			break;
+	}
+	
+	Ex.core.pclose(this, this.dsRet.saveXML());
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select06" :
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{	
+	this.dsMain.setInsertRow();
+	this.fnGetCmmCd();
+	this.fnSearch();	// 메인그리드검색
+	
+	this.pSelType = (this.getOwnerFrame().pSelType||'').toUpperCase();
+	switch(this.pSelType)
+	{
+		case "M" :				this.divPage.form.grdMainList.set_formatid('multiSel');	break;
+		case "S" :	default :	this.divPage.form.grdMainList.set_formatid('singleSel'); break;
+	}
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+// 	var oParam = {
+// 		upCmmCd : ['CARD_STATUS_CD'	]	// 조회할 상위코드
+// 		,codeDiv: ['NHFIRE'			]	// 조회할 코드의 업무구분
+// 		,optStr	: [''				]	// ALL: '- 전체 -'; SEL: '- 선택 -'
+// 		,useYn	: ['Y'				]	// 사용여부
+// 		,filter	: [''				]	// filterStr
+// 		,objDs	: [this.dsCdStatCd	]	// copy dataset
+// 	}
+// 	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearch" :		// 검색
+			this.fnSearch();
+			break;
+
+		case "btnSelect" :			// 선택
+			this.fnSelect();
+			//Ex.core.pclose(this, this.dsList.saveXML());
+			break;
+
+		case "btnClose" :			// 닫기
+			Ex.core.pclose(this);
+			break;
+	}
+}
+
+// 공통 onkeydown event : component
+this.fnCommOnkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == '13')
+	{
+		this.divContent.form.divSearchArea.form.btnSearch.setFocus();
+		this.fnSearch();
+		obj.setFocus();
+	}
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+this.divPage_grdMainList_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.fnSelect('S');
+};
+]]></Script>
+  </Form>
+</FDL>

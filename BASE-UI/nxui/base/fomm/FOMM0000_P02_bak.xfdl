@@ -1,0 +1,385 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmFOMM0000_P02" left="0" top="0" width="800" height="200" onload="form_onload" scrollbars="autoboth" visible="true" titletext="나의정보관리">
+    <Layouts>
+      <Layout width="800" height="200">
+        <Static id="stcBg01" taborder="4" left="20" top="54" height="34" cssclass="sta_WF_inputBg" right="20"/>
+        <Static id="stcInfoTitle" taborder="0" text="기본정보" left="20" top="20" width="120" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="Static00_01" taborder="1" left="0" top="44" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="stcUserId" taborder="2" left="20" top="54" width="130" height="34" cssclass="sta_WF_inputTitle" text="사번"/>
+        <Static id="stcUserNm" taborder="5" left="50.00%" top="54" width="130" height="34" cssclass="sta_WF_inputTitle" text="성명"/>
+        <Edit id="edtUserId" taborder="3" left="stcUserId:5" top="59" height="24" cssclass="edt_WF_normal" right="stcUserNm:5" readonly="true"/>
+        <Edit id="edtUserNm" taborder="6" left="stcUserNm:5" top="59" height="24" cssclass="edt_WF_normal" right="26" readonly="true"/>
+        <Static id="stcBg01_00" taborder="7" left="20" top="87" height="34" cssclass="sta_WF_inputBg" right="20"/>
+        <Static id="stcReqId01" taborder="8" left="20" top="87" width="130" height="34" cssclass="sta_WF_inputTitle_E" text="언어코드"/>
+        <Static id="stcReqId00_00" taborder="9" left="50.00%" top="87" width="130" height="34" cssclass="sta_WF_inputTitle_E" text="" visible="false"/>
+        <Combo id="cboLangCd" taborder="10" left="stcReqId01:5" top="92" height="24" right="stcReqId00_00:5" validation="언어코드;NULL" validationGroup="group01" innerdataset="dsLangCd" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" cssclass="cbo_WF_normal"/>
+        <Div id="divBottom" taborder="11" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg" isButtonGroup="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" width="100" height="32" bottom="13" cssclass="btn_WF_primary_close" right="20" onclick="fnCommOnclick" visible="true"/>
+              <Button id="btnSave" taborder="0" text="저장" width="100" height="32" bottom="13" cssclass="btn_WF_primary_save" right="btnClose:5" onclick="fnCommOnclick" visible="true"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Bind>
+      <BindItem id="item7" compid="edt_upmuNm" propid="value" datasetid="ds_userInfo" columnid="UPMU_NM"/>
+      <BindItem id="item0" compid="edtUserId" propid="value" datasetid="dsFommUserMt" columnid="USER_ID"/>
+      <BindItem id="item1" compid="edtUserNm" propid="value" datasetid="dsFommUserMt" columnid="USER_NM"/>
+      <BindItem id="item2" compid="cboLangCd" propid="value" datasetid="dsFommUserMt" columnid="LANG_CD"/>
+    </Bind>
+    <Objects>
+      <Dataset id="dsFommUserMt" oncolumnchanged="onColumnChanged"/>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="USER_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsLangCd"/>
+      <Dataset id="dsYnCd"/>
+    </Objects>
+    <InitValue/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ FOMM0000_P02
+* 화면(명)		︰ 나의 정보 관리
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ SPP 기본 사용자 정보 관리 팝업
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.05.16
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.05.16	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.objApp = nexacro.getApplication();
+this.pSelType = '';		// 선택구분; 'S':single:단건선택; 'M':multi:다건선택
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.dsCond.setColumn(0, "USER_ID",  Ex.util.getSession('gvUserId'));
+	
+	this.fnCompInit();		// 컴포넌트 초기화
+	this.fnSearch();		// 검색
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "select01";                          // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0000P/select01";                         // 서비스명
+    var sInDs = "dsCond=dsCond";                  // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsFommUserMt=dsFommUserMt";           // 서버에서 수신할 데이타셋
+    var sArg = "";                   // 서버 @ParamVariable 인자와 맵핑됨
+    
+    /**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+// 공통 저장 func.
+this.fnSave = function()
+{
+	// transaction
+	var sTranId = "save01";									// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+	var sService = "FOMM0000P/save01";						// 서비스명
+	var sInDs = "dsCond=dsCond dsFommUserMt=dsFommUserMt";	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+	var sOutDs = "dsFommUserMt=dsFommUserMt";				// 서버에서 수신할 데이타셋
+	var sArg = "";											// 서버 @ParamVariable 인자와 맵핑됨
+	
+	/**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			// 대직기간 setting
+			var BUJAE_STIME = this.dsFommUserMt.getColumn(this.dsFommUserMt.rowposition, 'BUJAE_STIME');
+			if( !Ex.isEmpty(BUJAE_STIME) ) {
+				var date = BUJAE_STIME.substr(0, 8);
+				var time = BUJAE_STIME.substr(8, 4);
+				this.divDaejic.form.calBeginDate.set_value(date);
+				this.divDaejic.form.mskBeginTime.set_value(time);
+			}
+			var BUJAE_ETIME = this.dsFommUserMt.getColumn(this.dsFommUserMt.rowposition, 'BUJAE_ETIME');
+			if( !Ex.isEmpty(BUJAE_ETIME) ) {
+				var date = BUJAE_ETIME.substr(0, 8);
+				var time = BUJAE_ETIME.substr(8, 4);
+				this.divDaejic.form.calEndDate.set_value(date);
+				this.divDaejic.form.mskEndTime.set_value(time);
+			}
+			
+			// 대직자 setting
+			var DAEJIC_ID = this.dsFommUserMt.getColumn(this.dsFommUserMt.rowposition, 'DAEJIC_ID');
+			var DAEJIC_NM = this.dsFommUserMt.getColumn(this.dsFommUserMt.rowposition, 'DAEJIC_NM');
+			if( !Ex.isEmpty(DAEJIC_ID) ) {
+				this.divDaejic.form.divDaejicUser.setValue(DAEJIC_ID, DAEJIC_NM);
+			}
+			
+			// 대직 div disable setting
+			var ABSNCE_YN = this.dsFommUserMt.getColumn(this.dsFommUserMt.rowposition, 'ABSNCE_YN');
+			if(ABSNCE_YN != 'Y') {
+				this.rdoDaejicYn_onitemchanged(this.rdoDaejicYn, {postvalue:'N'});
+			}
+			break;
+
+		case "save01" :
+			if(this.dsFommUserMt.getColumn(0, "LANG_CD") != Ex.util.getSession('gvLangCd'))
+			{
+				Ex.core.toast(this, "10004");
+				var param = {id : "pConfirmRefreshI", msg : "10014", arrparam : [''], msgtype : "I"};
+				Ex.core.confirm(this, param);
+				return;
+			}
+			else
+			{
+				var param = {
+						id : "saveAlert"
+					  , msg : "10004"
+					  , arrparam : ['']
+					  , msgtype : "S"};
+				Ex.core.alert(this, param);
+			}
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+	{
+		if(mID == "pConfirmRefreshI")
+		{
+			nexacro.getApplication().gdsSession.setColumn(0, "LANG_CD", this.dsFommUserMt.getColumn(0, "LANG_CD"));
+			var o = Ex.util.makeSessionObject(nexacro.getApplication().gdsSession);
+			Ex.util.setSession(o);
+		}
+		else
+		{
+			return;
+		}
+	}
+	else
+	{
+		switch(mID)
+		{
+			case "pConfirmSaveI" :
+				this.fnSetDataset();
+				this.fnSave();
+				break;
+
+			case "pConfirmRefreshI" :
+				document.location.href = "/";
+				break;
+				
+			case "saveAlert" :
+				Ex.core.pclose(this, 'save');
+				break;
+		}
+	}
+}
+
+
+// 대직자 div change callback
+this.userDeptChangedCallBack = function(compId, dsRtnObj)
+{
+	if(compId == "divDaejicUser")	// 대직자 setting
+	{
+		if( !Ex.isEmpty(dsRtnObj.getColumn(0, "USER_ID")) )
+		{
+			this.dsFommUserMt.setColumn(0, "DAEJIC_ID",	dsRtnObj.getColumn(0, "USER_ID"));
+			this.dsFommUserMt.setColumn(0, "DAEJIC_NM",	dsRtnObj.getColumn(0, "USER_NM"));
+		}
+		else
+		{
+			this.dsFommUserMt.setColumn(0, "DAEJIC_ID",	"");
+			this.dsFommUserMt.setColumn(0, "DAEJIC_NM",	"");
+		}
+	}
+}
+
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// 공통코드 조회
+	this.fnGetCmmCd();
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['LANG_CD',		'YN_CD']	// 조회할 상위코드
+		,codeDiv: ['CMM_CD',		'CMM_CD']	// 조회할 코드의 업무구분
+		,optStr	: ['SEL',			'']		// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',				'Y']			// 사용여부
+		,filter	: ['',				'']			// filterStr
+		,objDs	: [this.dsLangCd,	this.dsYnCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+	
+	this.cboLangCd.set_index(0);
+}
+
+
+
+// 저장 validation
+this.fnCheckValidate = function()
+{
+	if( !Ex.util.isUpdated(this.dsFommUserMt) )
+		return false;
+	trace('111');
+	if( !Ex.util.checkValidate(this, "group01") )
+		return false;
+	trace('222');
+	// 대직 validation
+	var DAEJIC_YN = this.rdoDaejicYn.value;
+	if(DAEJIC_YN == 'Y') {
+		if( this.divDaejic.form.divDaejicUser.form.fnCheckValidate() != 'OK') {		// 대직자 div
+			var oParam = {id : "daejicUserAlert", msg : "10011", arrparam : ['대직자'], msgtype : "I"};
+			Ex.core.alert(this, oParam);
+			return false;
+		}
+		trace('2222_1');
+		if( !Ex.util.checkValidate(this.divDaejic, "fvValiDaejic") )
+			return false;
+	}
+	trace('333');
+	return true;
+}
+
+
+// 저장 전 data setting
+this.fnSetDataset = function()
+{
+	if( this.rdoDaejicYn.value == 'Y' )
+	{
+		// 대직기간
+		var sDate = this.divDaejic.form.calBeginDate.value;
+		var sTime = this.divDaejic.form.mskBeginTime.value;
+		var eDate = this.divDaejic.form.calEndDate.value;
+		var eTime = this.divDaejic.form.mskEndTime.value;
+		
+		this.dsFommUserMt.setColumn(this.dsFommUserMt.rowposition, 'BUJAE_STIME', (sDate + sTime + '00') );
+		this.dsFommUserMt.setColumn(this.dsFommUserMt.rowposition, 'BUJAE_ETIME', (eDate + eTime + '00') );
+	}
+	
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearch" :			// 검색
+			this.fnSearch();
+			break;
+
+		case "btnSave" :			// 저장
+			if( !this.fnCheckValidate() )
+				return;
+				
+			var param = {id : "pConfirmSaveI", msg : "10003", arrparam : [''], msgtype : "I"};
+			Ex.core.confirm(this, param);
+			break;
+
+		case "btnClose" :			// 닫기
+			Ex.core.pclose(this);
+			break;
+	}
+}
+
+this.onColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);	// ROWFLAG컬럼 변경을 위한 함수 호출
+};
+
+
+
+this.rdoDaejicYn_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	switch(e.postvalue)
+	{
+		case "Y" :
+			this.divDaejic.set_enable(true);
+			break;
+			
+		case "N" :
+			this.divDaejic.set_enable(false);
+			break;
+	}
+	
+};
+]]></Script>
+  </Form>
+</FDL>

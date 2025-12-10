@@ -1,0 +1,879 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM1400_W" left="0" top="0" width="1840" height="720" titletext="난이도 관리" onload="form_onload" scrolltype="none" cssclass="">
+    <Layouts>
+      <Layout width="1840" height="720">
+        <Static id="Static00" taborder="1" left="0" top="50" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divSearchArea" taborder="0" left="0" top="0" height="50" right="0" cssclass="div_WF_divSearchArea">
+          <Layouts>
+            <Layout>
+              <Button id="btnSearch" taborder="0" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Button id="btnSearchReset" taborder="1" top="13" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divGrdBotBtn" taborder="2" width="200" height="32" bottom="0" right="0" isButtonGroup="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnSave" taborder="0" text="저장" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="0" onclick="fnCommOnclick" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00_00" taborder="4" left="0" top="40%" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divUp" taborder="3" text="Div00" left="0" top="70" right="0" bottom="Static00_00:0">
+          <Layouts>
+            <Layout>
+              <Grid id="grdMainList" taborder="0" left="0" top="34" bottom="0" binddataset="dsSrlMng" cssclass="grd_WF_normal" useCheck="true" treeusecheckbox="false" treeuseline="false" treeinitstatus="expand,null" treeusebutton="use" treeuseimage="true" right="0" autofittype="col" useSort="true" useContext="false" oncellclick="grdOnCellClick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48" band="left"/>
+                      <Column size="60" band="left"/>
+                      <Column size="120" band="left"/>
+                      <Column size="150" band="left"/>
+                      <Column size="80" band="left"/>
+                      <Column size="80" band="left"/>
+                      <Column size="80" band="left"/>
+                      <Column size="80" band="left"/>
+                      <Column size="80" band="left"/>
+                      <Column size="100" band="left"/>
+                      <Column size="400"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="NO"/>
+                      <Cell col="1" text="행상태"/>
+                      <Cell col="2" text="난이도 ID"/>
+                      <Cell col="3" cssclass="grdHCell_WF_essential" text="적용일자"/>
+                      <Cell col="4" text="최상"/>
+                      <Cell col="5" text="상"/>
+                      <Cell col="6" text="중"/>
+                      <Cell col="7" text="하"/>
+                      <Cell col="8" text="단순"/>
+                      <Cell col="9" cssclass="grdHCell_WF_essential" text="사용여부"/>
+                      <Cell col="10" text="비고"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="currow+1"/>
+                      <Cell col="1" text="bind:ROWFLAG"/>
+                      <Cell col="2" text="bind:SRL_QST_ID"/>
+                      <Cell col="3" displaytype="date" edittype="date" text="bind:APP_DATE" calendardateformat="yyyy-MM-dd" validation="적용일자;NULL|DATETIME :YYYYMMDD"/>
+                      <Cell col="4" text="bind:SCORE_LV1" edittype="normal" editinputfilter="alpha,comma,dot,sign,space,symbol"/>
+                      <Cell col="5" text="bind:SCORE_LV2" edittype="normal" editinputfilter="alpha,comma,dot,sign,space,symbol"/>
+                      <Cell col="6" text="bind:SCORE_LV3" edittype="normal" editinputfilter="alpha,comma,dot,sign,space,symbol"/>
+                      <Cell col="7" text="bind:SCORE_LV4" edittype="normal" editinputfilter="alpha,comma,dot,sign,space,symbol"/>
+                      <Cell col="8" text="bind:SCORE_LV5" edittype="normal" editinputfilter="alpha,comma,dot,sign,space,symbol"/>
+                      <Cell col="9" displaytype="combotext" edittype="combo" text="bind:USE_YN" combodataset="dsUseYnGrid" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" combodisplayrowcount="0" validation="사용여부;NULL"/>
+                      <Cell col="10" edittype="text" style="align:left;" text="bind:BIGO" textAlign="left" editmaxlength="500"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="stcTreeTitle" taborder="1" text="난이도 관리" left="0" top="0" width="110" height="24" cssclass="sta_WF_gridTitle"/>
+              <Static id="Static00_00" taborder="2" left="0" top="24" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Div id="divGrdMtTopBtn" taborder="3" width="250" visible="true" isButtonGroup="true" top="0" height="24" right="0">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+                    <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="stcCnt" taborder="4" left="stcTreeTitle:5" top="0" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsSrlMng"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divDown" taborder="5" text="Div00" left="0" top="Static00_00:0" right="0" bottom="40">
+          <Layouts>
+            <Layout>
+              <Grid id="grdMainList" taborder="0" left="0" top="34" bottom="0" binddataset="dsSrlItem" cssclass="grd_WF_normal" useCheck="true" treeusecheckbox="false" treeuseline="false" treeinitstatus="expand,null" treeusebutton="use" treeuseimage="true" right="0" autofittype="col" useSort="true" useContext="false" oncellclick="grdOnCellClick">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="40" band="left"/>
+                      <Column size="60" band="left"/>
+                      <Column size="50" band="left"/>
+                      <Column size="274"/>
+                      <Column size="78"/>
+                      <Column size="55"/>
+                      <Column size="55"/>
+                      <Column size="55"/>
+                      <Column size="55"/>
+                      <Column size="55"/>
+                      <Column size="55"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                      <Row size="24" band="summ"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="행상태"/>
+                      <Cell col="2" text="순서"/>
+                      <Cell col="3" cssclass="grdHCell_WF_essential" text="난이도 항목내용"/>
+                      <Cell col="4" cssclass="grdHCell_WF_essential" text="항목유형"/>
+                      <Cell col="5" text="점수1"/>
+                      <Cell col="6" text="점수2"/>
+                      <Cell col="7" text="점수3"/>
+                      <Cell col="8" text="점수4"/>
+                      <Cell col="9" text="점수5"/>
+                      <Cell col="10" text="점수6"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox" text="bind:CHK"/>
+                      <Cell col="1" text="bind:ROWFLAG"/>
+                      <Cell col="2" text="bind:SEQ"/>
+                      <Cell col="3" edittype="normal" style="align:left;" text="bind:QST_ITEM_DESC" textAlign="left"/>
+                      <Cell col="4" displaytype="combotext" edittype="combo" text="bind:QST_ITEM_TYPE" combodataset="dsCommCd" combocodecol="CODE" combodatacol="NAME" validation="항목유형;NULL"/>
+                      <Cell col="5" text="bind:QST_ITEM_GRD1" combodataset="dsGrd" combodatacol="NAME" combocodecol="CODE" displaytype="combotext" edittype="combo"/>
+                      <Cell col="6" displaytype="combotext" edittype="expr:QST_ITEM_TYPE == '02' ? 'none' : 'combo'" text="bind:QST_ITEM_GRD2" combodataset="dsGrd" combocodecol="CODE" combodatacol="NAME"/>
+                      <Cell col="7" displaytype="combotext" edittype="expr:QST_ITEM_TYPE == '02' ? 'none' : 'combo'" text="bind:QST_ITEM_GRD3" combodataset="dsGrd" combocodecol="CODE" combodatacol="NAME"/>
+                      <Cell col="8" displaytype="combotext" edittype="expr:QST_ITEM_TYPE == '02' ? 'none' : 'combo'" text="bind:QST_ITEM_GRD4" combodataset="dsGrd" combocodecol="CODE" combodatacol="NAME"/>
+                      <Cell col="9" displaytype="combotext" edittype="expr:QST_ITEM_TYPE == '02' ? 'none' : 'combo'" text="bind:QST_ITEM_GRD5" combodataset="dsGrd" combocodecol="CODE" combodatacol="NAME"/>
+                      <Cell col="10" displaytype="combotext" edittype="combo" text="bind:QST_ITEM_GRD6" combodataset="dsGrd" combocodecol="CODE" combodatacol="NAME"/>
+                    </Band>
+                    <Band id="summary">
+                      <Cell/>
+                      <Cell col="1"/>
+                      <Cell col="2"/>
+                      <Cell col="3"/>
+                      <Cell col="4"/>
+                      <Cell col="5" text="expr:dataset.getSum(&quot;nexacro.toNumber(QST_ITEM_GRD1)&quot;)"/>
+                      <Cell col="6"/>
+                      <Cell col="7"/>
+                      <Cell col="8"/>
+                      <Cell col="9"/>
+                      <Cell col="10"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="stcTreeTitle" taborder="1" text="난이도 항목" left="0" top="0" width="110" height="24" cssclass="sta_WF_gridTitle"/>
+              <Static id="Static00_00" taborder="2" left="0" top="24" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Div id="divGrdMtTopBtn" taborder="3" width="250" visible="true" isButtonGroup="true" top="0" height="24" right="0">
+                <Layouts>
+                  <Layout>
+                    <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+                    <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick" height="24"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="stcCnt" taborder="4" left="stcTreeTitle:5" top="0" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsSrlItem"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsSrlMng" oncolumnchanged="dsOnColumnChanged" canrowposchange="dsCanRowposChange" onrowposchanged="dsOnRowposChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="10"/>
+          <Column id="ROWFLAG" type="STRING" size="10"/>
+          <Column id="SATI_QST_ID" type="STRING" size="10"/>
+          <Column id="APP_DATE" type="STRING" size="10"/>
+          <Column id="USE_YN" type="STRING" size="1"/>
+          <Column id="TITLE" type="STRING" size="200"/>
+          <Column id="REMARK" type="STRING" size="256"/>
+          <Column id="FRID" type="STRING" size="9"/>
+          <Column id="FRDT" type="STRING" size="14"/>
+          <Column id="LMID" type="STRING" size="9"/>
+          <Column id="LMDT" type="STRING" size="14"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsSrlItem" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="10"/>
+          <Column id="ROWFLAG" type="STRING" size="10"/>
+          <Column id="SATI_QST_ID" type="STRING" size="10"/>
+          <Column id="SEQ" type="STRING" size="2"/>
+          <Column id="QST_ITEM_DESC" type="STRING" size="200"/>
+          <Column id="QST_ITEM_TYPE" type="STRING" size="2"/>
+          <Column id="QST_ITEM_RSP1" type="STRING" size="20"/>
+          <Column id="QST_ITEM_RSP2" type="STRING" size="20"/>
+          <Column id="QST_ITEM_RSP3" type="STRING" size="20"/>
+          <Column id="QST_ITEM_RSP4" type="STRING" size="20"/>
+          <Column id="QST_ITEM_RSP5" type="STRING" size="20"/>
+          <Column id="QST_ITEM_GRD1" type="STRING" size="3"/>
+          <Column id="QST_ITEM_GRD2" type="STRING" size="3"/>
+          <Column id="QST_ITEM_GRD3" type="STRING" size="3"/>
+          <Column id="QST_ITEM_GRD4" type="STRING" size="3"/>
+          <Column id="QST_ITEM_GRD5" type="STRING" size="3"/>
+          <Column id="FRID" type="STRING" size="9"/>
+          <Column id="FRDT" type="STRING" size="14"/>
+          <Column id="LMID" type="STRING" size="9"/>
+          <Column id="LMDT" type="STRING" size="14"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="TITLE" type="STRING" size="256"/>
+          <Column id="USE_YN" type="STRING" size="256"/>
+          <Column id="SRL_QST_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCommCd">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsUseYn"/>
+      <Dataset id="dsGrd">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="NAME">NONE</Col>
+            <Col id="CODE">N</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">33</Col>
+            <Col id="NAME">33</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">32</Col>
+            <Col id="NAME">32</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">31</Col>
+            <Col id="NAME">31</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">30</Col>
+            <Col id="NAME">30</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">29</Col>
+            <Col id="NAME">29</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">28</Col>
+            <Col id="NAME">28</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">27</Col>
+            <Col id="NAME">27</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">26</Col>
+            <Col id="NAME">26</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">25</Col>
+            <Col id="NAME">25</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">24</Col>
+            <Col id="NAME">24</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">23</Col>
+            <Col id="NAME">23</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">22</Col>
+            <Col id="NAME">22</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">21</Col>
+            <Col id="NAME">21</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">20</Col>
+            <Col id="NAME">20</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">19</Col>
+            <Col id="NAME">19</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">18</Col>
+            <Col id="NAME">18</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">17</Col>
+            <Col id="NAME">17</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">16</Col>
+            <Col id="NAME">16</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">15</Col>
+            <Col id="NAME">15</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">14</Col>
+            <Col id="NAME">14</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">13</Col>
+            <Col id="NAME">13</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">12</Col>
+            <Col id="NAME">12</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">11</Col>
+            <Col id="NAME">11</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">10</Col>
+            <Col id="NAME">10</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">9</Col>
+            <Col id="NAME">9</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">8</Col>
+            <Col id="NAME">8</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">7</Col>
+            <Col id="NAME">7</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">6</Col>
+            <Col id="NAME">6</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">5</Col>
+            <Col id="NAME">5</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">4</Col>
+            <Col id="NAME">4</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">3</Col>
+            <Col id="NAME">3</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">2</Col>
+            <Col id="NAME">2</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">1</Col>
+            <Col id="NAME">1</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">0</Col>
+            <Col id="NAME">0</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsUseYnGrid"/>
+      <Dataset id="dsData"/>
+      <Dataset id="dsDataItem"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ FOMM1400_W
+* 화면(명)		︰ 난이도 관리
+* 메뉴(경로)	︰ 관리자 > 만족도관리 > 난이도 관리
+* 화면 설명	︰ 난이도 관리
+* 작성자		︰ WEMB
+* 작성일		︰ 2025.02.24
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2025.02.24	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.selectRow;	//저장 전 마지막 로우 위치를 보관했다가 저장 후 조회시 셋팅하기 위한 변수
+this.nSelRow = -1;	// 이동하려는 행
+this.rowChangeFlag = false;		// true: 행변경 가능
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/ 
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+};
+
+this.fnInit = function()
+{
+	this.fnCompInit();		// 컴포넌트 초기화
+};
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	
+};
+
+// 변경 행 확인
+this.fnSearchM = function()
+{
+	if( Ex.util.isUpdated(this.dsSatiqstMng) || Ex.util.isUpdated(this.dsSatiQstItem) )
+	{
+		var param = {	id : "searchConfirmM"
+					  , msg : "10001"
+					  , arrparam : []
+					  , msgtype : "I"};
+		Ex.core.confirm(this, param);
+		return;
+	}
+	this.fnSearch01();
+};
+
+// 조회
+this.fnSearch01 = function()
+{
+	// transaction
+	var sTranId = "select01";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM1400W/select01";		// 서비스명
+    var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsSrlMng=dsSrlMng";	// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+};
+
+// 변경 행 확인
+this.fnSearchD = function()
+{
+	if( Ex.util.isUpdated(this.dsSatiQstItem) )
+	{
+		var param = {	id : "searchConfirmD"
+					  , msg : "10001"
+					  , arrparam : []
+					  , msgtype : "I"};
+		Ex.core.confirm(this, param);
+		return;
+	}
+	this.fnSearch02();
+};
+
+// 조회
+this.fnSearch02 = function()
+{
+	//this.dsCond.setColumn(0, "SRL_QST_ID", this.dsSrlMng.getColumn(this.dsSrlMng.rowposition, "SRL_QST_ID"));
+
+	// transaction
+	var sTranId = "select02";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM1400W/select02";		// 서비스명
+    var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsSrlItem=dsSrlItem";	// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+};
+
+// 저장
+this.fnSave = function()
+{
+	//this.selectRow = this.dsSatiqstMng.rowposition;
+	this.dsData.clearData();
+	this.dsDataItem.clearData();
+	
+	this.selectRow = this.dsSrlMng.rowposition;
+
+    this.dsSrlMng.enableevent = false;
+	this.dsSrlMng.filter("!Ex.isEmpty(ROWFLAG)");
+	this.dsData.copyData(this.dsSrlMng,true);
+	this.dsSrlMng.filter("");
+	this.dsSrlMng.enableevent = true;
+	
+	this.dsSrlItem.enableevent = false;
+	this.dsSrlItem.filter("!Ex.isEmpty(ROWFLAG)");
+	this.dsDataItem.copyData(this.dsSrlItem,true);
+	this.dsSrlItem.filter("");
+	this.dsSrlItem.enableevent = true;	
+	
+	for(var i=0;i<this.dsDataItem.rowcount;i++) {
+		for(var j=1;j<=9;j++) {
+			if(this.dsDataItem.getColumn(i,"QST_ITEM_GRD"+j)=='N')
+			{
+				this.dsDataItem.setColumn(i,"QST_ITEM_GRD"+j,'0');
+			}
+		}
+	}
+
+	var sTranId = "save01";
+    var sService = "FOMM1400W/save01";
+    var sInDs = "dsCond=dsCond dsData=dsData dsDataItem=dsDataItem";
+    var sOutDs = "dsSrlMng=dsSrlMng";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+};
+
+// MNG 삭제
+this.fnDelMng = function()
+{
+	this.dsCond.setColumn(0, "SRL_QST_ID", this.dsSrlMng.getColumn(this.dsSrlMng.rowposition, "SRL_QST_ID"));
+
+	// transaction
+	var sTranId = "delMng";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM1400W/delMng";		// 서비스명
+    var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsSrlMng=dsSrlMng";	// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+};
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{	
+	if(objDs.name == "dsSrlItem") {
+		objDs.set_enableevent(false);
+		objDs.set_filterstr("CHK=='1'");
+		
+		for(var i = objDs.rowcount-1; i >= 0; i--)
+			objDs.setDeleteRow(i);
+			
+		objDs.set_filterstr("");
+		objDs.set_enableevent(true);
+	} else if(objDs.name == "dsSrlMng") {
+		objDs.set_enableevent(false);
+		objDs.setDeleteRow(objDs.rowposition);	
+		objDs.set_enableevent(true);
+	
+		if(objDs.getColumn(objDs.rowposition,"ROWFLAG")=="D") {
+			this.dsSrlItem.clearData();
+		} else {
+			this.fnSearch02();
+		}
+	} 
+};
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			//this.divUp.form.grdMainList.setCellProperty("Head", this.divUp.form.grdMainList.getBindCellIndex('Body', 'CHK'), "text", "0");
+			//this.divDown.form.grdMainList.setCellProperty("Head", this.divDown.form.grdMainList.getBindCellIndex('Body', 'CHK'), "text", "0");
+			break;
+
+		case "save01" :
+			Ex.core.toast(this, "10004", null, {toastType:'S'});
+			//this.divUp.form.grdMainList.setCellProperty("Head", this.divUp.form.grdMainList.getBindCellIndex('Body', 'CHK'), "text", "0");
+			//this.divDown.form.grdMainList.setCellProperty("Head", this.divDown.form.grdMainList.getBindCellIndex('Body', 'CHK'), "text", "0");
+			this.dsSrlMng.set_rowposition(this.selectRow);
+			this.selectRow = -1;
+			break;	
+			
+		case "select02" :
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	switch(pID)
+	{
+		case "" :
+			break;
+	}
+};
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	if(!varValue) return;
+	
+	switch(mID)
+	{	
+		case "searchConfirmM" :
+			this.fnSearch01();
+			break;
+
+		case "searchConfirmD" :
+			this.fnSearch02();
+			break;
+			
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+
+		case "rowposChangeConfirm" :		// 행변경 confirm
+			this.rowChangeFlag  = true;
+			this.dsSrlMng.set_rowposition(this.nSelRow);
+			break;
+	}
+};
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.divUp.form.grdMainList.displayRowType();
+	this.divDown.form.grdMainList.displayRowType();
+
+	// 공통코드 조회
+	this.fnGetCmmCd();
+
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divUp.form.divGrdMtTopBtn.form.btnAdd];		// 쓰기	,	this.divGrdDtTopBtn.form.btnAddDt
+	Ex.util.setBtnVisible(this, 'write', arrBtn);
+		arrBtn = [this.divUp.form.divGrdMtTopBtn.form.btnDelete];	// 삭제
+	Ex.util.setBtnVisible(this, 'delete', arrBtn);
+
+	arrBtn = [this.divDown.form.divGrdMtTopBtn.form.btnAdd];		// 쓰기	,	this.divGrdDtTopBtn.form.btnAddDt
+	Ex.util.setBtnVisible(this, 'write', arrBtn);
+		arrBtn = [this.divDown.form.divGrdMtTopBtn.form.btnDelete];	// 삭제
+	Ex.util.setBtnVisible(this, 'delete', arrBtn);
+
+	arrBtn = [this.divGrdBotBtn.form.btnSave];		// 저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+	
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divUp.form.divGrdMtTopBtn, 'right', true);
+	Ex.util.setBtnAlign(this.divDown.form.divGrdMtTopBtn, 'right', true);
+	Ex.util.setBtnAlign(this.divGrdBotBtn, 'right', true);
+	
+	this.fnSearchReset();	// 검색조건 초기화
+
+	this.fnSearchM();		// 조회
+};
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['USE_CD',		'USE_CD'			]	// 조회할 상위코드
+		,codeDiv: ['CMM_CD',		'CMM_CD'			]	// 조회할 코드의 업무구분
+		,optStr	: ['ALL',			'SEL'				]	// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',				'Y'					]	// 사용여부
+		,filter	: ['',				''					]	// filterStr
+		,objDs	: [this.dsUseYn,	this.dsUseYnGrid	]	// copy dataset
+	};
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util
+	
+	var aRow = this.dsCommCd.addRow();
+	this.dsCommCd.setColumn(aRow, "CODE", "01");
+	this.dsCommCd.setColumn(aRow, "NAME", Ex.core.word("선택형"));
+
+	aRow = this.dsCommCd.addRow();
+	this.dsCommCd.setColumn(aRow, "CODE", "02");
+	this.dsCommCd.setColumn(aRow, "NAME", Ex.core.word("입력형"));
+	
+	/*
+	var addCnt = 34;
+	this.dsGrd.addRow();
+	this.dsGrd.setColumn(0,"CODE",'N');
+	this.dsGrd.setColumn(0,"NAME",'NONE');
+	
+	for(var i=addCnt-1;i>=0;i--) {
+		var nRow = this.dsGrd.addRow();
+		this.dsGrd.setColumn(nRow,"CODE",i);
+		this.dsGrd.setColumn(nRow,"NAME",i);
+	}
+	*/
+	
+};
+
+this.fnCheckValidate = function()
+{
+	
+	return true;
+};
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var pDivId = obj.parent.parent.parent.parent.id;
+
+	switch(obj.name)
+	{
+		case 'btnSearch' :	// 조회
+			this.fnSearchM();
+			break;
+			
+		case 'btnSearchReset' :	// 조회조건 초기화
+			this.fnSearchReset();
+			break;
+		
+		case 'btnAdd' :
+			if(pDivId == "divUp")
+			{				
+				if( Ex.util.isUpdated(this.dsSrlItem) || Ex.util.isUpdated(this.dsSrlMng)) 
+				{
+					var param = {	id : "addAlert"
+						, msg :  "변경된 내용이 있습니다.\n변경된 내용을 저장 또는 삭제 후 추가 가능합니다."
+						, arrparam : []
+						, msgtype : "I"};
+					Ex.core.alert(this, param);
+					return;
+				}
+				
+				var rowPos = this.dsSrlMng.setAddRow();
+				this.divUp.form.grdMainList.showEditor(true);			// 그리드 편집모드로 변경			
+				this.dsSrlMng.setColumn(rowPos, "USE_YN", 'Y');
+			}
+			else if(pDivId == "divDown")
+			{
+				if(this.dsSrlMng.rowposition < 0) {
+					return false;
+				}
+			
+				if(this.dsSrlMng.getColumn(this.dsSrlMng.rowposition,"ROWFLAG")=="I") {
+					var param = {	id : "addAlert"
+						, msg :  "신규 추가한 난이도 관리 내용을 저장후 추가하세요."
+						, arrparam : []
+						, msgtype : "I"};
+					Ex.core.alert(this, param);
+					return;
+				}
+			
+				var strSrlQstId = this.dsSrlMng.getColumn(this.dsSrlMng.rowposition, "SRL_QST_ID");
+				
+				var nRow = this.dsSrlItem.setAddRow();
+				
+				this.dsSrlItem.setColumn(nRow, "SRL_QST_ID", strSrlQstId);
+				this.dsSrlItem.setColumn(nRow, "QST_ITEM_TYPE", "01");	
+				this.dsSrlItem.setColumn(nRow, "QST_ITEM_GRD6", "0");	
+    			this.divDown.form.grdMainList.showEditor(true);			// 그리드 편집모드로 변경
+			
+			}
+			break;
+			
+		case 'btnDelete' :
+			if(pDivId == "divUp")
+			{
+				this.fnDelete(this.dsSrlMng);
+			}
+			else if(pDivId == "divDown")
+			{
+				this.fnDelete(this.dsSrlItem);
+			}
+			break;
+
+		case 'btnSave' : 	// 저장
+			// validation
+			if( !this.divUp.form.grdMainList.checkValidate() ) {
+				return false;
+			}
+			
+			if( this.fnCheckValidate() )
+			{
+				var param = {
+					  id : "saveConfirm"
+					, msg : "10003"
+					, arrparam : ['']
+					, msgtype : "I"
+				};
+				Ex.core.confirm(this, param);
+			}
+			break;
+	}
+};
+
+// 공통 onkeydown event : component
+this.fnCommOnkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == '13')	this.fnSearch();
+};
+
+this.dsCanRowposChange = function(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo)
+{
+	if( Ex.util.isUpdated(this.dsSrlItem) )
+	{
+		if( !this.rowChangeFlag ) {
+			this.nSelRow = e.newrow;		// 이동하려는 행 저장
+			var param = {	id : "rowposChangeConfirm"
+					  , msg : "10001"
+					  , arrparam : []
+					  , msgtype : "I"};
+			Ex.core.confirm(this, param);
+			return false;
+		}
+	}
+	return true;
+};
+
+this.grdOnCellClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	obj.dropdownCombo();
+	obj.dropdownCalendar();
+	obj.showEditor();
+};
+
+this.dsOnRowposChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo)
+{
+	this.dsSrlItem.clearData();	
+
+	var srlQstId = obj.getColumn(e.newrow, 'SRL_QST_ID') || '';
+
+	// Grid title 처리
+	//this.stcGrdTitle.set_text('[' + msgNo + '] ' + Ex.core.word("언어코드별 단어"));
+
+	var rowFlag = obj.getColumn(e.newrow, "ROWFLAG");
+	//trace("obj.id : " + obj.id + " e.newrow : " + e.newrow + " rowFlag : " + rowFlag);
+
+	if(rowFlag != "I")
+	{
+		this.dsCond.setColumn(0, 'SRL_QST_ID', srlQstId);
+		if(obj.getColumn(e.newrow, "ROWFLAG") != "D")	this.fnSearch02();
+	}
+
+	this.rowChangeFlag = false;		// 행변경 flag 초기화
+	this.nSelRow = -1;				// 이동하려는 행 초기화
+};
+
+// 공통 oncloumnchanged event : dataset
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	if(obj.name == "dsSrlItem") {
+		if(e.columnid.indexOf("QST_ITEM_TYPE")!=-1) {		
+			if(e.newvalue == '02') {
+				for(var i = 6; i > 0;i--){				
+					obj.setColumn(e.row, "QST_ITEM_GRD"+i, null);
+				}
+			}
+		}
+		
+		if(e.columnid.indexOf("QST_ITEM_GRD")!=-1) {		
+			if(e.newvalue == 'N') {							
+				//obj.setColumn(e.row, e.columnid, null);				
+			}
+		}
+	}
+	
+	obj.setUpdateRow(e);
+};]]></Script>
+  </Form>
+</FDL>

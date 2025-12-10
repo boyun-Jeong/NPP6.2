@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="datasetList" width="1600" height="800" titletext="Debug" onload="DatasetList_onload" name="DatasetList">
+    <Layouts>
+      <Layout width="1600" height="800">
+        <Tab id="dbTab" taborder="0" tabindex="0" left="0" top="0" right="0" bottom="0" tabbuttonheight="35" showextrabutton="true" onextrabuttonclick="dbTab_onextrabuttonclick" font="bold 14px/normal &quot;돋움&quot;">
+          <Tabpages>
+            <Tabpage id="tabEditor1" text="에디터1" url="comm::dbEditor.xfdl"/>
+          </Tabpages>
+        </Tab>
+        <Button id="btnTabClose" taborder="1" text="전체 탭닫기" top="0" width="120" height="28" right="0" cssclass="btn_WF_primary_save" onclick="fnCommOnclick"/>
+        <Button id="btnAddTab" taborder="2" text="에디터 추가" top="0" width="120" height="28" right="btnTabClose:5" cssclass="btn_WF_primary_save" onclick="fnCommOnclick"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="STR" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData"/>
+      <Dataset id="dsErr"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ DEBUG/UTIL
+* 메뉴(경로)	︰ 공통관리 > 플랫폼 > 공통
+* 화면 설명	︰ 공통
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.00
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include
+ ***********************************************************************************/
+this.editorIdx = 1;
+this.tabpageIdx = -1;
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.DatasetList_onload = function (obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "" : // 서비스 ID
+			break;
+	}
+}
+
+this.fnMsgAfter = function(mID, varValue)
+{
+	if(!varValue)
+	{
+		if(mID == "editorCloseConfirm")	this.tabpageIdx = -1;
+		return;
+	}
+	
+	switch(mID)
+	{
+		case "editorCloseConfirm" :
+			this.dbTab.removeTabpage(this.tabpageIdx);
+			this.tabpageIdx = -1;
+			break;
+
+		case "editorAllCloseConfirm" :
+			for(var i=this.dbTab.getTabpageCount()-1; i>=0; i--)
+			{
+				this.dbTab.removeTabpage(i);
+			}
+			break;
+		
+	}
+}
+
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.id)
+	{
+		case "btnAddTab" :	//에디터 추가
+			if(this.dbTab.getTabpageCount() == 10)
+			{
+				var param = {
+						id : "limitTabAlert"
+					  , msg : "editor Tab은 최대 10개까지만 열 수 있습니다."
+					  , arrparam : ['']
+					  , msgtype : "S"
+				};
+				Ex.core.alert(this, param);
+				return;
+			}
+			else
+			{
+				this.editorIdx++;
+				this.dbTab.insertTabpage("editor" + this.editorIdx, this.dbTab.getTabpageCount() ,"comm::dbEditor.xfdl", " 에디터" + this.editorIdx + " ");
+			}
+			break;
+
+		case "btnTabClose" :
+			if(this.dbTab.getTabpageCount() > 0)
+			{
+				var param = {
+						id : "editorAllCloseConfirm"
+					  , msg : "※[전체] Editor를 닫으시겠습니까?"
+					  , arrparam : ['']
+					  , msgtype : "I"
+				};
+				Ex.core.confirm(this, param);
+				this.tabpageIdx = e.index;
+				return;
+			}
+			break;
+	}
+}
+
+this.txaQueryEditor_onkeydown = function(obj:nexacro.TextArea,e:nexacro.KeyEventInfo)
+{
+	if( e.ctrlkey ) 
+	{
+		if( e.keycode == 13 )
+		{
+			var STR = this.txaQueryEditor.value;
+			if( !Ex.isEmpty(STR) )
+			{
+				this.dsCond.setColumn(0, 'STR', STR);
+				this.fnExec();
+				if(this.stcCenterLine.left != "50%")
+				{
+					this.btnSize_onclick(this.btnEditorSize);
+				}
+			}
+		}
+	}
+};
+
+this.dbTab_onextrabuttonclick = function(obj:nexacro.Tab,e:nexacro.TabMouseEventInfo)
+{
+ 	if( Ex.isEmpty(this.dbTab.tabpages[e.index].form.txaQueryEditor.value) )
+	{
+		this.dbTab.removeTabpage(e.index);
+	}
+	else
+	{
+		var param = {
+				id : "editorCloseConfirm"
+			  , msg : "선택한 Editor 를 닫으시겠습니까?"
+			  , arrparam : ['']
+			  , msgtype : "I"
+		};
+		Ex.core.confirm(this, param);
+		this.tabpageIdx = e.index;
+		return;
+	}
+};]]></Script>
+  </Form>
+</FDL>

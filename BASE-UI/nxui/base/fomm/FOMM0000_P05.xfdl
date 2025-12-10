@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmFOMM0000_P01" left="0" top="0" width="600" height="500" titletext="사용자선택 팝업(공통)" onload="form_onload" scrolltype="none" cssclass="">
+    <Layouts>
+      <Layout width="600" height="500">
+        <Div id="divBottom" taborder="0" left="0" height="60" bottom="0" right="0" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnSelect" taborder="1" text="선택" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="125" width="100" height="32" bottom="14"/>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="20" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divContent" taborder="1" text="Div00" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" left="0" top="70" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Div id="divSearchArea" taborder="1" left="20" top="20" height="50" right="20" cssclass="div_WF_divSearchArea" text="">
+                <Layouts>
+                  <Layout>
+                    <Static id="staSearchStr" taborder="2" text="확장권한명" left="20" top="13" width="89" height="24" cssclass="sta_WF_schTitle"/>
+                    <Static id="Static00" taborder="3" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+                    <Edit id="edtSearchStr" taborder="0" left="107" top="13" width="120" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown"/>
+                    <Static id="Static00_00" taborder="4" left="227" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+                    <Button id="btnSearch" taborder="1" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+                    <Button id="btnSearchReset" taborder="5" top="13" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+                    <Static id="Static00_01" taborder="6" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24" right="0"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Static id="staExtdAuthLst" taborder="3" text="확장권한 목록" left="20" top="90" width="98" height="24" cssclass="sta_WF_gridTitle"/>
+              <Static id="Static00_00" taborder="4" left="0" top="staExtdAuthLst:0" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Grid id="grdExtdInfo" taborder="2" left="20" top="staExtdAuthLst:10" bottom="20" binddataset="dsExtdAuthMt" cssclass="grd_WF_normal" autofittype="col" right="20" useSort="true" visible="false" oncelldblclick="divContent_grdExtdInfo_oncelldblclick">
+                <Formats>
+                  <Format id="singleSel">
+                    <Columns>
+                      <Column size="40"/>
+                      <Column size="180"/>
+                      <Column size="300"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell displaytype="checkboxcontrol" edittype="checkbox"/>
+                      <Cell col="1" text="확장권한코드"/>
+                      <Cell col="2" text="확장권한명"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell displaytype="checkboxcontrol" text="bind:CHK" edittype="checkbox"/>
+                      <Cell col="1" text="bind:EXTD_ID" edittype="none"/>
+                      <Cell col="2" text="bind:EXTD_NM" edittype="none"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="Static00_01" taborder="5" left="5" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-5"/>
+              <Static id="Static00_01_00" taborder="6" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Static id="Static00_01_00_00" taborder="7" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+              <Static id="Static00_02" taborder="8" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="0"/>
+              <Static id="stcCnt" taborder="9" left="115" top="90" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsExtdAuthMt"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsExtdAuthMt" onrowposchanged="dsExtdAuthMt_onrowposchanged" oncolumnchanged="fnCommOncolumnchanged" canrowposchange="dsExtdAuthMt_canrowposchange"/>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="EXTD_GB" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="EXTD_GB">00</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsRet"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ FOMM0000_P01
+* 화면(명)		︰ 사용자 선택 팝업
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ SPP 기본 사용자 선택 팝업
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+* Description
+	<< Popup param >>
+	* pSelType			선택 타입					S:단일선택 M:다중선택
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.objApp = nexacro.getApplication();
+this.pSelType = '';		// 선택구분; 'S':single:단건선택; 'M':multi:다건선택
+
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+	
+	this.fnSearchReset();	// 검색조건 초기화
+	this.fnSearch();		// 검색
+}
+
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.setColumn(this.dsCond.rowposition, 'EXTD_GB', '00');
+	this.dsCond.setColumn(this.dsCond.rowposition, 'EXTD_NM', '');
+}
+
+// 조회
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "select01";                  // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0121W/select01";       // 서비스명
+    var sInDs = "dsCond=dsCond";               // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsExtdAuthMt=dsExtdAuthMt";  // 서버에서 수신할 데이타셋
+    var sArg = "";                   // 서버 @ParamVariable 인자와 맵핑됨
+    
+    /**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+// 공통 저장 func.
+this.fnSave = function()
+{
+	
+}
+
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			this.divContent.form.grdExtdInfo.setCellProperty("Head", this.divContent.form.grdExtdInfo.getBindCellIndex('Body', 'CHK'), "text", "0");
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.pSelType = (this.getOwnerFrame().pSelType||'').toUpperCase();
+	switch(this.pSelType)
+	{
+		case "M" :				//this.divContent.form.grdExtdInfo.set_formatid('multiSel');	break;
+		case "S" :	default :	this.divContent.form.grdExtdInfo.set_formatid('singleSel');	break;
+	}
+	this.divContent.form.grdExtdInfo.set_visible(true);
+}
+
+
+// 선택
+this.fnSelect = function(selType)
+{
+	if( !Ex.isEmpty(this.getOwnerFrame().pCheckDs) && !Ex.isEmpty(this.getOwnerFrame().pCheckCol) )
+	{
+		if(selType == "S")
+		{
+			var fRow = this.getOwnerFrame().pCheckDs.findRow(this.getOwnerFrame().pCheckCol, this.dsExtdAuthMt.getColumn(this.dsExtdAuthMt.rowposition, "EXTD_ID"));
+			if(fRow > -1)
+			{
+				var userInfo = this.dsExtdAuthMt.getColumn(this.dsExtdAuthMt.rowposition, "EXTD_NM") + "[" + this.dsExtdAuthMt.getColumn(this.dsExtdAuthMt.rowposition, "EXTD_ID") + "]";
+				var oParam = {id : "alertAddExtdI", msg : "{0} 이미 추가한 확장권한 입니다.", arrparam : [userInfo], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return false;
+			}
+		}
+		else if(selType == "M")
+		{
+			this.dsExtdAuthMt.set_enableevent(false);
+			this.dsExtdAuthMt.set_filterstr("CHK == '1'");
+			
+			for(var i=0; i<this.dsExtdAuthMt.rowcount; i++)
+			{
+				var fRow = this.getOwnerFrame().pCheckDs.findRow(this.getOwnerFrame().pCheckCol, this.dsExtdAuthMt.getColumn(i, "EXTD_ID"));
+				if(fRow > -1)
+				{
+					var userInfo = this.dsExtdAuthMt.getColumn(i, "EXTD_NM") + "[" + this.dsExtdAuthMt.getColumn(i, "EXTD_ID") + "]";
+					var oParam = {id : "alertAddExtdI", msg : "{0} 이미 추가한 확장권한 입니다.", arrparam : [userInfo], msgtype : "I"};
+					Ex.core.alert(this, oParam);
+					this.dsExtdAuthMt.set_filterstr("");
+					this.dsExtdAuthMt.set_enableevent(true);
+					return false;
+				}
+			}
+			this.dsExtdAuthMt.set_filterstr("");
+			this.dsExtdAuthMt.set_enableevent(true);
+		}
+	}
+	
+	this.dsRet.clear();
+	switch(selType)
+	{
+		case "M" :	// 멀티 선택 시 체크된 모든 행 복사 & return
+			this.dsExtdAuthMt.set_enableevent(false);
+			this.dsExtdAuthMt.set_filterstr("CHK == '1'");
+			this.dsRet.copyData(this.dsExtdAuthMt, true);
+			this.dsExtdAuthMt.set_filterstr("");
+			this.dsExtdAuthMt.set_enableevent(true);
+			break;
+			
+		case "S" :	// 단일 선택 시 현재 rowposion 기준 복사 & return
+		default :
+			this.dsRet.assign(this.dsExtdAuthMt);
+			this.dsRet.clearData();
+			this.dsRet.copyRow(this.dsRet.setAddRow(), this.dsExtdAuthMt, this.dsExtdAuthMt.rowposition);
+			break;
+	}
+	
+	Ex.core.pclose(this, this.dsRet.saveXML());
+}
+
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearch" :		// 검색
+			this.fnSearch();
+			break;
+		
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;
+		
+		case "btnClose" :			// 닫기
+			Ex.core.pclose(this);
+			break;
+			
+		case "btnSelect" :		// 선택
+			this.fnSelect(this.pSelType);
+			break;
+	}
+}
+
+// 공통 onkeydown event : component
+this.fnCommOnkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == '13')
+	{
+		this.divContent.form.divSearchArea.form.btnSearch.setFocus();
+		this.fnSearch();
+		obj.setFocus();
+	}
+};
+
+this.divContent_grdExtdInfo_oncelldblclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	this.fnSelect('S');
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContent.form.divSearchArea.form.edtSearchStr" propid="value" datasetid="dsCond" columnid="SEARCH_STR"/>
+    </Bind>
+  </Form>
+</FDL>

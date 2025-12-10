@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="form" classname="top" left="0" top="0" titletext="IT부문 월달력" onload="form_onload" scrolltype="none" cssclass="" height="146" width="147" font="normal 24pt/normal &quot;PretendardR&quot;" color="white" onclick="frHome_D00_onclick" scrollbartype="none" background="white">
+    <Layouts>
+      <Layout width="147" height="146" mobileorientation="landscape">
+        <Div id="divTop" taborder="0" left="0" top="0" height="20" right="0" border="1px solid #c4c8d7" background="#ecf5fe">
+          <Layouts>
+            <Layout>
+              <Static id="stcTitle" taborder="0" left="40" top="0" right="40" bottom="0" background="transparent" color="#005bc3" font="bold 12px 'KoPubL'" text="2025" textAlign="center" verticalAlign="middle"/>
+              <Static id="stcBefMonth" taborder="1" left="5" top="3" width="13" height="13" text="&lt;" background="#dfdfdf" borderRadius="20px" color="#666666" font="bold 8px 'KoPubL'" textAlign="center" verticalAlign="middle" cursor="pointer" onclick="divTop_stcBefMonth_onclick"/>
+              <Static id="stcAftMonth" taborder="2" top="3" width="13" height="13" text="&gt;" background="#dfdfdf" borderRadius="20px" color="#666666" font="bold 8px 'KoPubL'" textAlign="center" verticalAlign="middle" cursor="pointer" right="5" onclick="divTop_stcAftMonth_onclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divMonthCal" taborder="1" left="0" top="divTop:-1" right="0" bottom="0" border="1px solid #c4c8d7" background="white">
+          <Layouts>
+            <Layout>
+              <Div id="divMonth01" taborder="0" left="5.00" width="30" height="35" border="1px solid #c4c8d7" borderRadius="3px" top="5" cursor="pointer" onclick="fnCommOnclick">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcMonth" taborder="0" left="0" top="0" bottom="15" background="transparent" color="#005bc3" font="bold 13px 'KoPubL'" text="1" textAlign="center" verticalAlign="bottom" right="0" cursor="pointer" onclick="fnCommOnclick"/>
+                    <Static id="stcNm" taborder="1" left="0" top="stcMonth:-2" bottom="0" background="transparent" color="#c4c8d7" font="bold 11px 'KoPubL'" text="Jan" textAlign="center" verticalAlign="top" right="0" cursor="pointer" onclick="fnCommOnclick" padding="2px 0px 0px 0px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divMonth02" taborder="1" left="divMonth01:5" width="30" height="35" border="1px solid #c4c8d7" borderRadius="3px" top="5" cursor="pointer" onclick="fnCommOnclick">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcMonth" taborder="0" left="0" top="0" bottom="15" background="transparent" color="#005bc3" font="bold 13px 'KoPubL'" text="2" textAlign="center" verticalAlign="bottom" right="0" cursor="pointer" onclick="fnCommOnclick"/>
+                    <Static id="stcNm" taborder="1" left="0" top="stcMonth:-2" bottom="0" background="transparent" color="#c4c8d7" font="bold 11px 'KoPubL'" text="Feb" textAlign="center" verticalAlign="top" right="0" cursor="pointer" onclick="fnCommOnclick" padding="2px 0px 0px 0px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divMonth03" taborder="2" left="75" width="30" height="35" border="1px solid #c4c8d7" borderRadius="3px" top="5" cursor="pointer" onclick="fnCommOnclick">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcMonth" taborder="0" left="0" top="0" bottom="15" background="transparent" color="#005bc3" font="bold 13px 'KoPubL'" text="3" textAlign="center" verticalAlign="bottom" right="0" cursor="pointer" onclick="fnCommOnclick"/>
+                    <Static id="stcNm" taborder="1" left="0" top="stcMonth:-2" bottom="0" background="transparent" color="#c4c8d7" font="bold 11px 'KoPubL'" text="Mar" textAlign="center" verticalAlign="top" right="0" cursor="pointer" onclick="fnCommOnclick" padding="2px 0px 0px 0px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divMonth04" taborder="3" left="110" height="35" border="1px solid #c4c8d7" borderRadius="3px" top="5" width="30" cursor="pointer" onclick="fnCommOnclick">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcMonth" taborder="0" left="0" top="0" bottom="15" background="transparent" color="#005bc3" font="bold 13px 'KoPubL'" text="4" textAlign="center" verticalAlign="bottom" right="0" cursor="pointer" onclick="fnCommOnclick"/>
+                    <Static id="stcNm" taborder="1" left="0" top="stcMonth:-2" bottom="0" background="transparent" color="#c4c8d7" font="bold 11px 'KoPubL'" text="Apr" textAlign="center" verticalAlign="top" right="0" cursor="pointer" onclick="fnCommOnclick" padding="2px 0px 0px 0px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divMonth05" taborder="4" left="6.00" width="30" height="35" border="1px solid #c4c8d7" borderRadius="3px" top="45" cursor="pointer" onclick="fnCommOnclick">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcMonth" taborder="0" left="0" top="0" bottom="15" background="transparent" color="#005bc3" font="bold 13px 'KoPubL'" text="5" textAlign="center" verticalAlign="bottom" right="0" cursor="pointer" onclick="fnCommOnclick"/>
+                    <Static id="stcNm" taborder="1" left="0" top="stcMonth:-2" bottom="0" background="transparent" color="#c4c8d7" font="bold 11px 'KoPubL'" text="May" textAlign="center" verticalAlign="top" right="0" cursor="pointer" onclick="fnCommOnclick" padding="2px 0px 0px 0px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divMonth06" taborder="5" left="41.00" width="30" height="35" border="1px solid #c4c8d7" borderRadius="3px" top="45" cursor="pointer" onclick="fnCommOnclick">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcMonth" taborder="0" left="0" top="0" bottom="15" background="transparent" color="#005bc3" font="bold 13px 'KoPubL'" text="6" textAlign="center" verticalAlign="bottom" right="0" cursor="pointer" onclick="fnCommOnclick"/>
+                    <Static id="stcNm" taborder="1" left="0" top="stcMonth:-2" bottom="0" background="transparent" color="#c4c8d7" font="bold 11px 'KoPubL'" text="Jun" textAlign="center" verticalAlign="top" right="0" cursor="pointer" onclick="fnCommOnclick" padding="2px 0px 0px 0px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divMonth07" taborder="6" left="76.00" width="30" height="35" border="1px solid #c4c8d7" borderRadius="3px" top="45" cursor="pointer" onclick="fnCommOnclick">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcMonth" taborder="0" left="0" top="0" bottom="15" background="transparent" color="#005bc3" font="bold 13px 'KoPubL'" text="7" textAlign="center" verticalAlign="bottom" right="0" cursor="pointer" onclick="fnCommOnclick"/>
+                    <Static id="stcNm" taborder="1" left="0" top="stcMonth:-2" bottom="0" background="transparent" color="#c4c8d7" font="bold 11px 'KoPubL'" text="Jul" textAlign="center" verticalAlign="top" right="0" cursor="pointer" onclick="fnCommOnclick" padding="2px 0px 0px 0px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divMonth08" taborder="7" left="111" height="35" border="1px solid #c4c8d7" borderRadius="3px" top="45" width="30" cursor="pointer" onclick="fnCommOnclick">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcMonth" taborder="0" left="0" top="0" bottom="15" background="transparent" color="#005bc3" font="bold 13px 'KoPubL'" text="8" textAlign="center" verticalAlign="bottom" right="0" cursor="pointer" onclick="fnCommOnclick"/>
+                    <Static id="stcNm" taborder="1" left="0" top="stcMonth:-2" bottom="0" background="transparent" color="#c4c8d7" font="bold 11px 'KoPubL'" text="Aug" textAlign="center" verticalAlign="top" right="0" cursor="pointer" onclick="fnCommOnclick" padding="2px 0px 0px 0px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divMonth09" taborder="8" left="6.00" width="30" border="1px solid #c4c8d7" borderRadius="3px" top="85" height="35" cursor="pointer" onclick="fnCommOnclick">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcMonth" taborder="0" left="0" top="0" bottom="15" background="transparent" color="#005bc3" font="bold 13px 'KoPubL'" text="9" textAlign="center" verticalAlign="bottom" right="0" cursor="pointer" onclick="fnCommOnclick"/>
+                    <Static id="stcNm" taborder="1" left="0" top="stcMonth:-2" bottom="0" background="transparent" color="#c4c8d7" font="bold 11px 'KoPubL'" text="Sep" textAlign="center" verticalAlign="top" right="0" cursor="pointer" onclick="fnCommOnclick" padding="2px 0px 0px 0px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divMonth10" taborder="9" left="41.00" width="30" height="35" border="1px solid #c4c8d7" borderRadius="3px" top="85" cursor="pointer" onclick="fnCommOnclick">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcMonth" taborder="0" left="0" top="0" bottom="15" background="transparent" color="#005bc3" font="bold 13px 'KoPubL'" text="10" textAlign="center" verticalAlign="bottom" right="0" cursor="pointer" onclick="fnCommOnclick"/>
+                    <Static id="stcNm" taborder="1" left="0" top="stcMonth:-2" bottom="0" background="transparent" color="#c4c8d7" font="bold 11px 'KoPubL'" text="Oct" textAlign="center" verticalAlign="top" right="0" cursor="pointer" onclick="fnCommOnclick" padding="2px 0px 0px 0px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divMonth11" taborder="10" left="76.00" width="30" height="35" border="1px solid #c4c8d7" borderRadius="3px" top="85" cursor="pointer" onclick="fnCommOnclick">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcMonth" taborder="0" left="0" top="0" bottom="15" background="transparent" color="#005bc3" font="bold 13px 'KoPubL'" text="11" textAlign="center" verticalAlign="bottom" right="0" cursor="pointer" onclick="fnCommOnclick"/>
+                    <Static id="stcNm" taborder="1" left="0" top="stcMonth:-2" bottom="0" background="transparent" color="#c4c8d7" font="bold 11px 'KoPubL'" text="Nov" textAlign="center" verticalAlign="top" right="0" cursor="pointer" onclick="fnCommOnclick" padding="2px 0px 0px 0px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+              <Div id="divMonth12" taborder="11" left="111" border="1px solid #c4c8d7" borderRadius="3px" top="85" width="30" cursor="pointer" onclick="fnCommOnclick" height="35">
+                <Layouts>
+                  <Layout>
+                    <Static id="stcMonth" taborder="0" left="0" top="0" bottom="15" background="transparent" color="#005bc3" font="bold 13px 'KoPubL'" text="12" textAlign="center" verticalAlign="bottom" right="0" cursor="pointer" onclick="fnCommOnclick"/>
+                    <Static id="stcNm" taborder="1" left="0" top="stcMonth:-2" bottom="0" background="transparent" color="#c4c8d7" font="bold 11px 'KoPubL'" text="Dec" textAlign="center" verticalAlign="top" right="0" cursor="pointer" onclick="fnCommOnclick" padding="2px 0px 0px 0px"/>
+                  </Layout>
+                </Layouts>
+              </Div>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="YYYYMM" type="STRING" size="256"/>
+          <Column id="YYYYMM2" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="YYYYMM"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData" onrowsetchanged="dsData_onrowsetchanged"/>
+      <Dataset id="dsCurMonthDate"/>
+      <Dataset id="dsNextMonthDate"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ NHSB HOME 월달력
+* 화면(명)		︰ - 
+* 메뉴(경로)	︰ -
+* 화면 설명	︰ NHSB HOME 월달력
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+this.arrMonthDiv= [	this.divMonthCal.form.divMonth01, this.divMonthCal.form.divMonth02, this.divMonthCal.form.divMonth03, this.divMonthCal.form.divMonth04,
+					this.divMonthCal.form.divMonth05, this.divMonthCal.form.divMonth06, this.divMonthCal.form.divMonth07, this.divMonthCal.form.divMonth08, 
+					this.divMonthCal.form.divMonth09, this.divMonthCal.form.divMonth10, this.divMonthCal.form.divMonth11, this.divMonthCal.form.divMonth12 ];
+					
+this.arrMonth	= [ this.divMonthCal.form.divMonth01.form.stcMonth, this.divMonthCal.form.divMonth02.form.stcMonth, this.divMonthCal.form.divMonth03.form.stcMonth,
+					this.divMonthCal.form.divMonth04.form.stcMonth, this.divMonthCal.form.divMonth05.form.stcMonth, this.divMonthCal.form.divMonth06.form.stcMonth,
+					this.divMonthCal.form.divMonth07.form.stcMonth, this.divMonthCal.form.divMonth08.form.stcMonth, this.divMonthCal.form.divMonth09.form.stcMonth,
+					this.divMonthCal.form.divMonth10.form.stcMonth, this.divMonthCal.form.divMonth11.form.stcMonth, this.divMonthCal.form.divMonth12.form.stcMonth ];
+					
+this.arrMonthNm	= [ this.divMonthCal.form.divMonth01.form.stcNm,	this.divMonthCal.form.divMonth02.form.stcNm,	this.divMonthCal.form.divMonth03.form.stcNm,
+					this.divMonthCal.form.divMonth04.form.stcNm,	this.divMonthCal.form.divMonth05.form.stcNm,	this.divMonthCal.form.divMonth06.form.stcNm,
+					this.divMonthCal.form.divMonth07.form.stcNm,	this.divMonthCal.form.divMonth08.form.stcNm,	this.divMonthCal.form.divMonth09.form.stcNm,
+					this.divMonthCal.form.divMonth10.form.stcNm,	this.divMonthCal.form.divMonth11.form.stcNm,	this.divMonthCal.form.divMonth12.form.stcNm ];
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.CUR_YYYY;
+this.CUR_MM;
+
+this.SEL_YYYY;
+this.SEL_MM;
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	var today = Ex.util.today();
+	this.CUR_YYYY	= today.substr(0, 4);
+	this.CUR_MM		= today.substr(4, 2);
+	this.divTop.form.stcTitle.set_text(this.CUR_YYYY);
+	
+	this.SEL_YYYY 	= this.CUR_YYYY;
+	
+	this.fnsetCurMonthCss();
+}
+
+
+
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj)
+	{
+		case this.divMonthCal.form.divMonth01 :
+		case this.divMonthCal.form.divMonth01.form.stcMonth :
+		case this.divMonthCal.form.divMonth01.form.stcNm :
+			this.SEL_MM = this.divMonthCal.form.divMonth01.form.stcMonth.text;
+			break;
+		
+		case this.divMonthCal.form.divMonth02 :
+		case this.divMonthCal.form.divMonth02.form.stcMonth :
+		case this.divMonthCal.form.divMonth02.form.stcNm :
+			this.SEL_MM = this.divMonthCal.form.divMonth02.form.stcMonth.text;
+			break;
+		
+		case this.divMonthCal.form.divMonth03 :
+		case this.divMonthCal.form.divMonth03.form.stcMonth :
+		case this.divMonthCal.form.divMonth03.form.stcNm :
+			this.SEL_MM = this.divMonthCal.form.divMonth03.form.stcMonth.text;
+			break;
+		
+		case this.divMonthCal.form.divMonth04 :
+		case this.divMonthCal.form.divMonth04.form.stcMonth :
+		case this.divMonthCal.form.divMonth04.form.stcNm :
+			this.SEL_MM = this.divMonthCal.form.divMonth04.form.stcMonth.text;
+			break;
+		
+		case this.divMonthCal.form.divMonth05 :
+		case this.divMonthCal.form.divMonth05.form.stcMonth :
+		case this.divMonthCal.form.divMonth05.form.stcNm :
+			this.SEL_MM = this.divMonthCal.form.divMonth05.form.stcMonth.text;
+			break;
+		
+		case this.divMonthCal.form.divMonth06 :
+		case this.divMonthCal.form.divMonth06.form.stcMonth :
+		case this.divMonthCal.form.divMonth06.form.stcNm :
+			this.SEL_MM = this.divMonthCal.form.divMonth06.form.stcMonth.text;
+			break;
+		
+		case this.divMonthCal.form.divMonth07 :
+		case this.divMonthCal.form.divMonth07.form.stcMonth :
+		case this.divMonthCal.form.divMonth07.form.stcNm :
+			this.SEL_MM = this.divMonthCal.form.divMonth07.form.stcMonth.text;
+			break;
+		
+		case this.divMonthCal.form.divMonth08 :
+		case this.divMonthCal.form.divMonth08.form.stcMonth :
+		case this.divMonthCal.form.divMonth08.form.stcNm :
+			this.SEL_MM = this.divMonthCal.form.divMonth08.form.stcMonth.text;
+			break;
+		
+		case this.divMonthCal.form.divMonth09 :
+		case this.divMonthCal.form.divMonth09.form.stcMonth :
+		case this.divMonthCal.form.divMonth09.form.stcNm :
+			this.SEL_MM = this.divMonthCal.form.divMonth09.form.stcMonth.text;
+			break;
+		
+		case this.divMonthCal.form.divMonth10 :
+		case this.divMonthCal.form.divMonth10.form.stcMonth :
+		case this.divMonthCal.form.divMonth10.form.stcNm :
+			this.SEL_MM = this.divMonthCal.form.divMonth10.form.stcMonth.text;
+			break;
+		
+		case this.divMonthCal.form.divMonth11 :
+		case this.divMonthCal.form.divMonth11.form.stcMonth :
+		case this.divMonthCal.form.divMonth11.form.stcNm :
+			this.SEL_MM = this.divMonthCal.form.divMonth11.form.stcMonth.text;
+			break;
+		
+		case this.divMonthCal.form.divMonth12 :
+		case this.divMonthCal.form.divMonth12.form.stcMonth :
+		case this.divMonthCal.form.divMonth12.form.stcNm :
+			this.SEL_MM = this.divMonthCal.form.divMonth12.form.stcMonth.text;
+			break;
+	}
+	
+	if( Number(this.SEL_MM) < 10 )
+		this.SEL_MM = '0' + this.SEL_MM;
+	this.parent.closePopup(this.SEL_YYYY + this.SEL_MM);
+}
+
+
+this.divTop_stcBefMonth_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	this.divTop.form.stcTitle.set_text(--this.SEL_YYYY);
+	this.fnsetCurMonthCss();
+};
+
+this.divTop_stcAftMonth_onclick = function(obj:nexacro.Static,e:nexacro.ClickEventInfo)
+{
+	this.divTop.form.stcTitle.set_text(++this.SEL_YYYY);
+	this.fnsetCurMonthCss();
+};
+
+
+// 현재월 색칠
+this.fnsetCurMonthCss = function()
+{
+	if( this.CUR_YYYY == this.SEL_YYYY )
+	{
+		var idx = Number(this.CUR_MM - 1);
+		this.arrMonthDiv[idx].set_background('#6bb0fe');
+		this.arrMonth[idx].set_color('white');
+		this.arrMonthNm[idx].set_color('white');
+	}
+	else
+	{
+		// 초기화
+		for(var i = 0; i < this.arrMonthDiv.length; i++)
+		{
+			this.arrMonthDiv[i].set_background('white');
+			this.arrMonth[i].set_color('#005bc3');
+			this.arrMonthNm[i].set_color('#c4c8d7');
+		}
+	}
+	
+}]]></Script>
+  </Form>
+</FDL>

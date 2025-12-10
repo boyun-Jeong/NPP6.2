@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="form" classname="top" left="0" top="0" titletext="IT작업신청" onload="form_onload" scrolltype="none" cssclass="" height="250" width="675" font="normal 24pt/normal &quot;PretendardR&quot;" color="white">
+    <Layouts>
+      <Layout width="675" height="250" mobileorientation="landscape">
+        <Div id="divChart" taborder="14" left="123.00" top="15" width="268" url="comm::comHighChartDiv.xfdl" async="true" border="0px none" bottom="-20" text=""/>
+        <Div id="divChart2" taborder="15" left="377.00" top="15" url="comm::comHighChartDiv.xfdl" async="true" border="0px none" bottom="-15" right="-10" text=""/>
+        <Static id="stcGrdTitle" taborder="1" text="IT 작업신청" left="10" top="10" width="185" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="Static00" taborder="0" text="Static00" left="57.78%" top="10" width="1" cssclass="sta_TPF_line" bottom="10" background="url('theme://MIRAE_IMAGE_SET/HOME/main-linedashed.png')"/>
+        <Div id="divIco01_01_01_00_00_00" taborder="2" left="9.00" top="53" width="113" height="33" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-circlechart02-num.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01_00_00_00_00" taborder="3" left="9.00" top="divIco01_01_01_00_00_00:14" width="113" height="33" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-circlechart02-num.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01_00_00_00_02" taborder="5" left="9.00" top="divIco01_01_01_00_00_00_00:14" width="113" height="33" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-circlechart02-num.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divIco01_01_01_00_00_00_01" taborder="4" left="9.00" top="divIco01_01_01_00_00_00_02:14" width="113" height="33" edge="url('theme://MIRAE_IMAGE_SET/HOME/main-circlechart02-num.png')">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Static id="stcCntStep01" taborder="6" text="서버/DB/백업" top="53" width="65" height="26" color="white" font="10px 'KoPubL'" verticalAlign="middle" textAlign="center" left="7.00"/>
+        <Static id="stcCntStep01_00" taborder="7" text="보안/NW/그룹웨어" top="100" width="65" height="26" color="white" font="10px 'KoPubL'" verticalAlign="middle" textAlign="center" left="7.00"/>
+        <Static id="stcCntStep01_00_00" taborder="8" top="147" width="65" height="26" color="white" font="10px 'KoPubL'" verticalAlign="middle" textAlign="center" left="7.00" text="원장/SW/외주직원"/>
+        <Static id="stcCntStep01_00_00_00" taborder="9" text="기타" top="194" width="65" height="26" color="white" font="10px 'KoPubL'" verticalAlign="middle" textAlign="center" left="7.00"/>
+        <Static id="stcCntStep01_02_00_01" taborder="10" text="2" top="56" width="40" height="30" color="#3e3e46" font="18px 'KoPubL'" verticalAlign="middle" textAlign="center" left="72.00" onclick="stcCntStep01_02_00_01_onclick"/>
+        <Static id="stcCntStep01_02_00_00_01" taborder="11" text="1" top="103" width="40" height="30" color="#3e3e46" font="18px 'KoPubL'" verticalAlign="middle" textAlign="center" left="72.00"/>
+        <Static id="stcCntStep01_02_00_00_00_01" taborder="12" text="1" top="150" width="40" height="30" color="#3e3e46" font="18px 'KoPubL'" verticalAlign="middle" textAlign="center" left="72.00"/>
+        <Static id="stcCntStep01_02_00_00_00_00_00" taborder="13" text="4" top="197" width="40" height="30" color="#3e3e46" font="18px 'KoPubL'" verticalAlign="middle" textAlign="center" left="72.00"/>
+        <Button id="btnMore" taborder="16" top="11" width="20" height="20" onclick="fnCommOnclick" right="10" border="0px none" cursor="pointer" cssclass="btn_WF_hyperlink"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData"/>
+      <Dataset id="dsChart1">
+        <ColumnInfo>
+          <Column id="GBN" type="STRING" size="256"/>
+          <Column id="CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="GBN"/>
+            <Col id="CNT">4</Col>
+          </Row>
+          <Row>
+            <Col id="GBN"/>
+            <Col id="CNT">2</Col>
+          </Row>
+          <Row>
+            <Col id="GBN"/>
+            <Col id="CNT">1</Col>
+          </Row>
+          <Row>
+            <Col id="GBN"/>
+            <Col id="CNT">1</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsChart2">
+        <ColumnInfo>
+          <Column id="GBN" type="STRING" size="256"/>
+          <Column id="CNT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="GBN"/>
+            <Col id="CNT">2</Col>
+          </Row>
+          <Row>
+            <Col id="GBN"/>
+            <Col id="CNT">6</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ frHome_D00
+* 화면(명)		︰ - 
+* 메뉴(경로)	︰ -
+* 화면 설명	︰ 대시보드 우측 내 정보 Div
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();
+	this.fnSearch();
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 최초 전체 조회
+this.fnSearch = function()
+{
+	var sTranId = "select13";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJHOME/select13";            // 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData=dsData";       	// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select13" :			
+			this.fnDrawChart();
+			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch(pID)
+	{
+	
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)return;
+	
+	switch(mID)
+	{
+	
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	
+}
+
+
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['DAT_TYPE_CD']			// 조회할 상위코드
+		,codeDiv: ['CMM_CD']		// 조회할 코드의 업무구분
+		,optStr	: ['ALL']			// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y']				// 사용여부
+		,filter	: ['']				// filterStr
+		,objDs	: [this.dsDatTypeCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util;
+}
+
+
+
+this.fnDrawChart = function()
+{
+	var oParam = {
+		  title : ''
+		, colors: ['#6581F2', '#6ACCF1', '#7E88FE', '#424FD9']
+		, showLegned: false
+	};
+	var chartScript = this.divChart.form.hcfnGetPie2DChart(oParam, this.dsChart1, 'GBN', 'CNT');
+	this.divChart.form.drawChart(chartScript);
+	
+		
+		//데이터 가공 시작
+	this.dsChart2.clearData();
+	for(var i=0; i<4; i++)
+	{
+		var aRow = this.dsChart2.addRow();
+		this.dsChart2.setColumn(aRow, "GBN",  this.dsData.getColumn(0, "SUM1_NAME"+aRow));
+		this.dsChart2.setColumn(aRow, "CNT", this.dsData.getColumn(0, "CHM_SUM"+aRow));
+	}
+	//데이터 가공 끝
+	
+	var oParam = {
+		  title : ''
+		, colors: ['#68CBF2', '#3469F5']
+		
+	};
+	var chartScript = this.divChart2.form.hcfnGetPie2DChart(oParam, this.dsChart2, 'GBN', 'CNT');
+	this.divChart2.form.drawChart(chartScript);
+}
+
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	var objApp = nexacro.getApplication();
+	var rowpos = -1;
+	
+	switch(obj.name)
+	{
+		case "btnMore" :	rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SR0111_W');	break;	// IT작업신청
+		//case "btnMore2" :	rowpos = objApp.gdsMenu.findRow('SCREEN_ID', 'SV0110_W');	break;	// 구성현황(운영)
+	}
+	
+	if( rowpos >= 0 )
+		Ex.core.openLink(this, objApp.gdsMenu.getColumn(rowpos, 'MENU_ID'), '');
+}
+
+
+
+this.grdData_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if( e.cell == obj.getBindCellIndex('body', 'TITLE') ) {
+		var ds = obj.getBindDataset();
+		var PJT_ID 		= ds.getColumn(e.row, "PJT_ID");
+		var PJT_NAME	= ds.getColumn(e.row, "PJT_NAME");
+		var SUB_ID		= ds.getColumn(e.row, "SUB_ID");
+		
+		Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"actionItemPop",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ0510_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title		: "Action Item 상세",
+					pPjtId		: PJT_ID,
+					pPjtNm  	: PJT_NAME,
+					pActItemCd	: SUB_ID,
+					pNew		: 'N'
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"autosize"				// <--- width/height/modeless(프레임 처리 옵션)
+		);
+	}
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="stcCntStep01_02_00_01" propid="text" datasetid="dsData" columnid="CHM_SUM0"/>
+      <BindItem id="item1" compid="stcCntStep01_02_00_00_01" propid="text" datasetid="dsData" columnid="CHM_SUM1"/>
+      <BindItem id="item3" compid="stcCntStep01_02_00_00_00_00_00" propid="text" datasetid="dsData" columnid="CHM_SUM3"/>
+      <BindItem id="item2" compid="stcCntStep01_02_00_00_00_01" propid="text" datasetid="dsData" columnid="CHM_SUM2"/>
+      <BindItem id="item4" compid="stcCntStep01" propid="text" datasetid="dsData" columnid="SUM1_NAME0"/>
+      <BindItem id="item5" compid="stcCntStep01_00" propid="text" datasetid="dsData" columnid="SUM1_NAME1"/>
+      <BindItem id="item6" compid="stcCntStep01_00_00" propid="text" datasetid="dsData" columnid="SUM1_NAME2"/>
+      <BindItem id="item7" compid="stcCntStep01_00_00_00" propid="text" datasetid="dsData" columnid="SUM1_NAME3"/>
+    </Bind>
+  </Form>
+</FDL>

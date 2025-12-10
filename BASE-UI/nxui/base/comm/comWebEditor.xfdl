@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="comWebEditor" left="0" top="0" width="600" height="250" titletext="CKEditor5" onload="form_onload" ontimer="comWebEditor_ontimer">
+    <Layouts>
+      <Layout width="600" height="250">
+        <WebBrowser id="webEditor" taborder="0" left="0" top="0" right="0" bottom="0" onloadcompleted="webEditor_onloadcompleted" visible="false" onusernotify="webEditor_onusernotify" border="0px solid crimson"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ comWebEditor
+* 화면(명)		︰ 웹에디터(CKEditor5)
+* 메뉴(경로)	︰ 
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this._isInit	= false;
+this._loadFlag	= false;	// webeditor load complete flag
+this._setValue	= null;		// webeditor setContent flag
+this._bReadonly	= false;	// webeditor readonly flag
+this._bEmptyMsg	= "내용을 입력하세요.";
+this._bSetFocus	= false;
+this._backColor = "";
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+	Ex.util.setWait(this, true);
+}
+
+this.fnInit = function(){}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// web editor init
+// bReadonly	(true/false) :: true 시 readonly; default false
+this.initCreate = function(bReadonly, emptyMsg, color)
+{
+	this._isInit = true;
+	if(this.parent.parent.reqInfo)
+	{
+		trace("[comWebEditor] initCreate() SCRN_WF_PROC_CD : " + this.parent.parent.reqInfo.SCRN_WF_PROC_CD);
+	}
+	
+	// readonly
+	if( Ex.isEmpty(bReadonly) )	bReadonly = false;
+	if( !Ex.isEmpty(color) )	this._backColor = color;
+
+	var isModeChg = false;
+	if(this._bReadonly != bReadonly)
+	{
+		this._bReadonly = bReadonly;
+		isModeChg = true;
+	}
+
+	trace("isModeChg : " + isModeChg + " this.webEditor.url : " + this.webEditor.url + "this._bReadonly : " + this._bReadonly + " bReadonly : " + bReadonly);
+
+	if( !Ex.isEmpty(emptyMsg) )	this._bEmptyMsg = emptyMsg;
+	else						this._bEmptyMsg = "";
+
+	if( Ex.isEmpty(this.webEditor.url) )
+	{
+		var gvHost	= nexacro.getApplication().gvHost;
+		var svcUrl	= nexacro.getEnvironment().services["svc_url"].url;
+		this.webEditor.set_url(svcUrl + "spp/ckeditor/index.html");
+	}
+	else
+	{
+		if(isModeChg)
+		{
+			this.setReadonly(this._bReadonly);
+		}
+	}
+}
+
+// web editor에 값 setter
+this.setContent = function(value)
+{
+	if( !this._loadFlag)
+	{
+		this._setValue = value;
+	}
+	else
+	{
+		this.webEditor.callMethod("setContent", value);
+		this._setValue = null;
+	}
+}
+
+// web editor 값 getter
+this.getContent = function()
+{
+	this.webEditor.callMethod("getContent");
+	var contents	= this.webEditor.getProperty("document").getProperty("all").getProperty("editorData").getProperty("value")||'';
+	return contents;
+}
+
+this.setHeight = function(height)
+{
+	if( Ex.isEmpty(height) ) height = this.webEditor.getOffsetHeight();
+	this.webEditor.callMethod("setHeight", height);		// set default height
+}
+
+this.setFocus = function()
+{
+	if(this._loadFlag)	this.webEditor.callMethod("setFocus");
+	else				this._bSetFocus = true;
+}
+
+this.setReadonly = function(bReadonly)
+{
+	if(this._loadFlag)	this.fnSetReadonlyProc(bReadonly);
+}
+
+this.fnSetReadonlyProc = function(bReadonly)
+{
+	this.webEditor.callMethod("setReadonly", bReadonly, this.webEditor.getOffsetHeight(), this._bEmptyMsg, this._backColor);		// set web editor readonly
+		
+	if(bReadonly)
+	{
+		this.webEditor.set_bottom(null);
+		this.webEditor.set_height(this.parent.getOffsetHeight());
+	}
+	else
+	{
+		this.webEditor.set_height(null);
+		this.webEditor.set_bottom(0);
+	}
+}
+
+this.setEditorBackColor = function(backColor)
+{
+	this._backColor = backColor;
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		Ex.core.error(this,{id:"ERROR",msg:sSvcId+"\n"+Ex.core.msg(sErrorMsg)});
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId){}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+this.webEditor_onloadcompleted = function(obj:nexacro.WebBrowser,e:nexacro.WebLoadCompEventInfo)
+{
+	//trace('webEditor_onloadcompleted');
+	this.webEditor.callMethod('initEditor', this.getOffsetHeight(), this._backColor);
+}
+
+this.webEditor_onusernotify = function(obj:nexacro.WebBrowser,e:nexacro.WebUserNotifyEventInfo)
+{
+	//trace('onusernotify :: ' + e.userdata);
+	switch(e.userdata)
+	{
+		case "editor Load" :		// 웹에디터 로드 완료
+			trace("this.webEditor_onusernotify() editor Load");
+			this._loadFlag = true;
+			
+			this.setReadonly(this._bReadonly);
+			
+			if( this._setValue != null )
+			{
+				this.setContent(this._setValue);
+				this._setValue = null;
+			}
+
+			this.webEditor.set_visible(true);
+
+			if(this._bSetFocus)	this.webEditor.callMethod("setFocus");
+			break;
+			
+		case "editor Fail" :		// 웹에디터 로드 실패
+			trace("this.webEditor_onusernotify() editor Fail");
+			break;
+			
+		case "setContent" :			// setContent call
+			if(this.parent.parent.reqInfo)
+			{
+				trace("this.webEditor_onusernotify() setContent this._loadFlag : " + this._loadFlag + " SCRN_WF_PROC_CD : " + this.parent.parent.reqInfo.SCRN_WF_PROC_CD);
+			}
+			break;
+			
+		case "getContent" :			// getContent call
+			trace("this.webEditor_onusernotify() getContent");
+			break;
+			
+		case "setReadonly" :		// setReadonly call
+			trace("this.webEditor_onusernotify() setReadonly");
+			break;
+
+		case "changeData" :			// changeData
+			if(this.getOwnerFrame().url == "sr::SR0000_W.xfdl" || this.getOwnerFrame().url == "sr::SR0010_W.xfdl")
+			{
+				trace("this.webEditor_onusernotify() changeData");
+
+				var srForm = this;
+				while( srForm )
+				{
+					if( Ex.isEmpty(srForm.reqInfo) )
+					{
+						srForm = srForm.parent;
+					}
+					else
+					{
+						break;
+					}
+				}
+
+				var evt = nexacro.KeyEventInfo;
+				var objComp = srForm.reqInfo.PARENT_FORM.SR0000_W_onkeyup(this, evt);
+			}
+			break;
+
+		case "setFocus" :			// setFocus call
+			trace("this.webEditor_onusernotify() setFocus");
+// 			if(this.getOwnerFrame().url == "sr::SR0000_W.xfdl" || this.getOwnerFrame().url == "sr::SR0010_W.xfdl")
+// 			{
+// 				var srForm = this;
+// 				while( srForm )
+// 				{
+// 					if( Ex.isEmpty(srForm.reqInfo) )
+// 					{
+// 						srForm = srForm.parent;
+// 					}
+// 					else
+// 					{
+// 						break;
+// 					}
+// 				}
+// 
+// 				var objComp = srForm.reqInfo.PARENT_FORM.getFocus();
+// 				if(objComp)
+// 				{
+// 					trace("[comWebEditor] objComp.id : " + objComp.id);
+// 					if(objComp.updateToDataset)
+// 					{
+// 						trace("[comWebEditor] " + objComp.id + " updateToDataset() value : " + objComp.value);
+// 						var rtn = objComp.updateToDataset();
+// 						trace("[comWebEditor] " + objComp.id + " updateToDataset() rtn : " + rtn);
+// 					}
+// 				}
+// 			}
+			break;
+	}
+}]]></Script>
+    <Objects/>
+  </Form>
+</FDL>

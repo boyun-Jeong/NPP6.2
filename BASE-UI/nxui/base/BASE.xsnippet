@@ -1,0 +1,770 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Snippets version="2.0">
+  <Script>
+    <Group name="Alert/Confirm/Toast">
+      <Snippet name="[SCRIPT - Alert-Error" shortcut="uAlertError" description="[WEMB] 공통 Error Alert 호출 함수">var param = {id : "ERROR", msg : $end$};&#13;
+Ex.core.error(this, param);&#13;
+return;</Snippet>
+      <Snippet name="[SCRIPT] - Alert" shortcut="uAlertBasic" description="[WEMB] 공통 alert 호출 함수">var param = {&#13;
+	  id	: "AlertI"					//fnMsgAfter에서 식별자로 사용되는 ID&#13;
+	, msg	: "$end$"					//메시지 내용&#13;
+	, arrparam : [""]		//메시지의 변수에 들어갈 실제값&#13;
+	, msgtype : "I"						//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&amp;#13;&#13;
+};&#13;
+Ex.core.alert(this, param);&#13;
+return false;</Snippet>
+      <Snippet name="[SCRIPT] - Confirm" shortcut="uConfirmBasic" description="[WEMB] 공통 confirm 호출 함수">var param = {&#13;
+	  id : "$end$Confirm"&#13;
+	, msg : ""&#13;
+	, arrparam : []&#13;
+	, msgtype : "I"&#13;
+};&#13;
+Ex.core.confirm(this, param);</Snippet>
+      <Snippet name="[SCRIPT] - Toast-기본" shortcut="uToast" description="[WEMB] 공통 toast 호출 함수">Ex.core.toast(this, "$end$");   // 메시지 문자 혹은 메시지 코드</Snippet>
+      <Snippet name="[SCRIPT] - Toast-시간지정" shortcut="uToastTime" description="[WEMB] 공통 toast 시간 설정 호출 함수">var opts = {&#13;
+	displaySecond	: 4		//단위: 초, default 2&#13;
+};&#13;
+//(scope, strMsg, arrParam, optArr)&#13;
+Ex.core.toast(this, "$end$", null, opts);</Snippet>
+    </Group>
+    <Group name="Chart">
+      <Snippet name="[SCRIPT] - MultiAxesChart" shortcut="chartMultiAxes" description="[WEMB] MultiAxes Chart">var oParam = {&#13;
+	  fontFamily	: 'NanumSquareR'&#13;
+	, title 		: 'MultiAxesChart Test'&#13;
+	, align 		: 'center'&#13;
+	, subtitle 		: 'MultiAxesChart subtitle'&#13;
+	, subalign		: 'center'&#13;
+	, xAxis			: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']&#13;
+	, yAxis			: {&#13;
+				  title		: ['data1',		'data2',	'data3']&#13;
+				, type		: ['column',	'spline',	'spline']&#13;
+				, dataset	: [this.dsChart21,	this.dsChart22,	this.dsChart22]&#13;
+				, valueCol	: ['data',	'data',		'data2']&#13;
+				, prefix	: ['mm',	'°C',		'cm']&#13;
+				, color		: ['red',	'green',	'blue']&#13;
+	  }&#13;
+};&#13;
+var chartScript = this.divChart.form.hcfnGetMultiAxesChart(oParam);&#13;
+trace(chartScript);&#13;
+this.divChart2.form.drawChart(chartScript);</Snippet>
+      <Snippet name="[SCRIPT] - Pie-2D차트" shortcut="chartPie2D" description="[WEMB] Pie 2D Chart">var oParam = {&#13;
+	  title : 'pie2D chart test'&#13;
+	, colors: ['#dfdfdf', '#111111', '#acacac']&#13;
+	, fontFamily: 'NanumSquareR'&#13;
+};&#13;
+var chartScript = this.divChart.form.hcfnGetPie2DChart(oParam, this.dsChart, 'Name', 'Value');&#13;
+//trace(chartScript);&#13;
+this.divChart.form.drawChart(chartScript);</Snippet>
+    </Group>
+    <Group name="Component">
+      <Group name="Grid">
+        <Snippet name="[SCRIPT] - Grid checkValidate 함수" shortcut="gridCheckValidateGrid" description="[WEMB] Grid 입력값 유효성 체크">var rtn = this.$end$grdObj.checkValidate();&#13;
+//trace("rtn Value : " + rtn);</Snippet>
+        <Snippet name="[SCRIPT] - Grid displayRowType 함수" shortcut="gridDisplayRowType" description="[WEMB] Grid displayRowType 함수">this.$end$grdObj.displayRowType();</Snippet>
+        <Snippet name="[SCRIPT] - Grid displayRowType 함수-(DatasetID 복사기준)" shortcut="gridDisplayRowType" description="[WEMB] Grid displayRowType 함수">this.$clipboard$.displayRowType();</Snippet>
+        <Snippet name="[SCRIPT] - 포커스Red" shortcut="compFocusRed" description="[WEMB] 필수입력 표시 후 focus 처리 함수">//Edit/MaskEdit/Combo/Calendar/textarea Comp&#13;
+this.$end$edtObj.setFocusRed();</Snippet>
+      </Group>
+    </Group>
+    <Group name="Dataset">
+      <Snippet name="[SCRIPT] - getColumn 함수[공통]" shortcut="getColumn" description="[WEMB] Dataset getColumn 함수">this.$end$dsObj.getColumn(0, "");</Snippet>
+      <Snippet name="[SCRIPT] - getColumn 함수[공통]-(DatasetID 복사기준)" shortcut="getColumn" description="[WEMB] Dataset getColumn 함수">this.$end$$clipboard$.getColumn(0, "");</Snippet>
+      <Snippet name="[SCRIPT] - setColumn 함수[공통]" shortcut="setColumn" description="[WEMB] Dataset setColumn 함수">this.$end$dsObj.setColumn(0, "", "");</Snippet>
+      <Snippet name="[SCRIPT] - setColumn 함수[공통]-(DatasetID 복사기준)" shortcut="setColumn" description="[WEMB] Dataset setColumn 함수">this.$end$$clipboard$.setColumn(0, "", "");</Snippet>
+      <Snippet name="[SCRIPT] - setInsertRow 함수[공통]-(DatasetID 복사기준)" shortcut="setInsertRow" description="[WEMB] Dataset INSERT 행 삽입 함수">this.$end$$clipboard$.setInsertRow($clipboard$.rowposition+1);</Snippet>
+      <Snippet name="[SCRIPT] - setInsertRow 함수[공통]-기본" shortcut="setInsertRow" description="[WEMB] Dataset INSERT 행 삽입 함수">this.$end$dsObj.setInsertRow(dsObj.rowposition+1);</Snippet>
+      <Snippet name="[SCRIPT] - setUpdateRow 함수[공통]" shortcut="setUpdateRow" description="[WEMB] Dataset 변경 체크 함수">obj.setUpdateRow(e);</Snippet>
+    </Group>
+    <Group name="Ex.core">
+      <Snippet name="[SCRIPT] - closeSubpage" shortcut="uCloseSubpage" description="[WEMB] 서브페이지를 닫고 원 화면으로 돌아간다.">//ex) Ex.core.closeSubpage(this, 'fomm::FOMM0110_W.xfdl', {p1:'1',p2:'2'});&#13;
+Ex.core.closeSubpage(this, '$end$', {});</Snippet>
+      <Snippet name="[SCRIPT] - decode" shortcut="uDecode" description="[WEMB] 입력된 값 또는 수식을 검사해 적당한 값을 반환한다.">//var rtn = Ex.decode(100, 1, "일", 10, "십", 100, "백");	// output : 백&#13;
+Ex.decode($end$);</Snippet>
+      <Snippet name="[SCRIPT] - domainUrl" shortcut="uDomainUrl" description="[WEMB] 현재 실행중인 도메인Url을 반환한다.(protocol포함)">Ex.domainUrl();</Snippet>
+      <Snippet name="[SCRIPT] - isArray" shortcut="uIsArray" description="[WEMB] 데이타타입이 array인지 판별한다.">Ex.isArray($end$);</Snippet>
+      <Snippet name="[SCRIPT] - isBoolean" shortcut="uIsBoolean" description="[WEMB] 데이타타입이 boolean인지 판별한다.">Ex.isBoolean($end$);</Snippet>
+      <Snippet name="[SCRIPT] - isDate" shortcut="uIsDate" description="[WEMB] 데이타타입이 date 타입인지 판별한다.">Ex.isDate($end$);</Snippet>
+      <Snippet name="[SCRIPT] - isEmpty" shortcut="uIsEmpty" description="[WEMB] 데이타의 타입이 아니라 empty상태를 판별한다.">Ex.isEmpty($end$);</Snippet>
+      <Snippet name="[SCRIPT] - isFunction" shortcut="uIsFunction" description="[WEMB] 데이타타입이 function 인지 판별한다.">Ex.isFunction($end$);</Snippet>
+      <Snippet name="[SCRIPT] - isNull" shortcut="uIsNull" description="[WEMB] 데이타타입이 null인지 판별한다.">Ex.isNull($end$);</Snippet>
+      <Snippet name="[SCRIPT] - isNumber" shortcut="uIsNumber" description="[WEMB] 데이타타입이 number인지 판별한다.">Ex.isNumber($end$);</Snippet>
+      <Snippet name="[SCRIPT] - isNvl" shortcut="uIsNvl" description="[WEMB] 입력된 값 또는 수식을 검사해 적당한 값을 반환한다.">//var rtn = Ex.isNvl(null,'2016');	// output : 2016&#13;
+		Ex.isNvl($end$);</Snippet>
+      <Snippet name="[SCRIPT] - isObject" shortcut="uIsObject" description="[WEMB] 데이타타입이 object인지 판별한다.">Ex.isObject($end$);</Snippet>
+      <Snippet name="[SCRIPT] - isRegExp" shortcut="uIsRegExp" description="[WEMB] 데이타타입이 RegExp 인지 판별한다.">Ex.isRegExp($end$);</Snippet>
+      <Snippet name="[SCRIPT] - isString" shortcut="uIsString" description="[WEMB] 데이타타입이 string인지 판별한다.">Ex.isString($end$);</Snippet>
+      <Snippet name="[SCRIPT] - isStringDate" shortcut="uIsStringDate" description="[WEMB] 데이타타입이 yyyyMMdd형태의 8자리 날짜 문자열 인지 판별한다.">Ex.core.isStringDate($end$);</Snippet>
+      <Snippet name="[SCRIPT] - isUndefined" shortcut="uIsUndefined" description="[WEMB] 데이타타입이 undefined인지 판별한다.">Ex.isUndefined($end$);</Snippet>
+      <Snippet name="[SCRIPT] - isXComponent" shortcut="uIsXComponent" description="[WEMB] 데이타타입이 nexacro component 인지 판별한다.">Ex.isXComponent($end$);</Snippet>
+      <Snippet name="[SCRIPT] - openMenu" shortcut="uOpenMenu" description="[WEMB] 서브페이지(상세화면)으로 화면 전환">/* ex)&#13;
+var objParam = {};&#13;
+objParam.menuId = sMenuId;&#13;
+objParam.menuUrl = sMenuUrl;&#13;
+Ex.core.openMenu(objParam);&#13;
+*/&#13;
+Ex.core.openMenu('$end$');</Snippet>
+      <Snippet name="[SCRIPT] - openSubpage" shortcut="uOpenSubpage" description="[WEMB] 서브페이지(상세화면)으로 화면 전환">//ex) Ex.core.openSubpage(this, 'fomm::FOMM0110_W.xfdl', {p1:'1',p2:'2'});&#13;
+Ex.core.openSubpage(this, '$end$', {});</Snippet>
+      <Snippet name="[SCRIPT] - pclose" shortcut="uPclose" description="[WEMB] 팝업창 창닫기를 실행한다.&#13;&#10;/* Ex.core.pclose(this , '1'); */">Ex.core.pclose(this, $end$);</Snippet>
+      <Snippet name="[SCRIPT] - Popup (Modal)" shortcut="uPopupModal" description="[WEMB] Modal Popup 호출 함수">Ex.core.popup(&#13;
+	this,					// &lt;--- 팝업 실행 스코프&#13;
+	"modalpop",				// &lt;--- 팝업창 아이디(반드시 영문으로 입력 처리)&#13;
+	"$end$",				// &lt;--- 팝업창 오픈 Url&#13;
+	{&#13;
+		title : "",&#13;
+		p1 : 1,&#13;
+		p2 : 2&#13;
+	},						// &lt;--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)&#13;
+	"autosize"				// &lt;--- width/height/autosize/modeless(프레임 처리 옵션)	&#13;
+);</Snippet>
+      <Snippet name="[SCRIPT] - Popup (Modaless)" shortcut="uPopupModaless" description="[WEMB] Modaless Popup 호출 함수">Ex.core.popup(&#13;
+	this,									// &lt;--- 팝업 실행 스코프&#13;
+	"modelesspop",							// &lt;--- 팝업창 아이디(반드시 영문으로 입력 처리)&#13;
+	"$end$",								// &lt;--- 팝업창 오픈 Url&#13;
+	{&#13;
+		title : "",&#13;
+		p1 : 1,&#13;
+		p2 : 2&#13;
+	},										// &lt;--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)&#13;
+	"modeless=true,width=600,height=430"    // &lt;--- width/height/autosize/modeless(프레임 처리 옵션)&#13;
+);</Snippet>
+    </Group>
+    <Group name="Ex.util">
+      <Snippet name="[SCRIPT] - Component 필수입력체크" shortcut="uCheckValidate" description="[WEMB] Component 필수입력체크 함수">//scope, 그룹명&#13;
+var rtn = Ex.util.checkValidate(this, "$end$");&#13;
+//trace("rtn Value : " + rtn);</Snippet>
+      <Snippet name="[SCRIPT] - 공통코드셋팅" shortcut="uGetCmmCode" description="[WEMB] 공통코드 셋팅 처리 함수">//배열로 여러 코드 조회&#13;
+var oParam = {&#13;
+	 upCmmCd	: ['', 			''			]	// 조회할 상위코드&#13;
+	,codeDiv	: ['', 			''			]	// 코드 업무구분&#13;
+	,optStr		: ['ALL', 		'SEL'		]	// ALL: '- 전체 -'; SEL: '- 선택 -'&#13;
+	,useYn		: ['Y', 		'Y'			]	// 사용여부&#13;
+	,filter		: ['', 			''			]	// filterStr&#13;
+	,objDs		: [this.dsObj1,	this.dsObj2	]	// copy dataset&#13;
+}&#13;
+Ex.util.getCmmCode(oParam);	// 공통코드 getter util;</Snippet>
+      <Snippet name="[SCRIPT] - 데이터셋 변경 여부 체크" shortcut="uIsUpdated" description="[WEMB] 데이터셋 변경 여부 체크 함수">Ex.util.isUpdated($end$)</Snippet>
+    </Group>
+    <Group name="Form">
+      <Snippet name="[FUNC] - Callback 공통 함수 정의" shortcut="funcCallback" description="[WEMB] 공통 Callback 함수">this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)&#13;
+{&#13;
+	// 에러메세지 처리&#13;
+	if (nErrorCode &lt; 0) &#13;
+	{&#13;
+		var param = {id : "ERROR", msg : sSvcId + "::" + nErrorCode + "::" + sErrorMsg};&#13;
+		Ex.core.error(this, param);&#13;
+		return;&#13;
+	}&#13;
+&#13;
+	// 각 Transaction별 CallBack 처리&#13;
+	switch (sSvcId)&#13;
+	{&#13;
+		case "select01" :&#13;
+			Ex.core.toast(this, "10002");&#13;
+			break;&#13;
+&#13;
+		case "save01" :&#13;
+			Ex.core.toast(this, "10004", null, {toastType:'S'});&#13;
+			break;	&#13;
+	}&#13;
+}</Snippet>
+      <Snippet name="[FUNC] - Form 검색조건초기화 함수 정의" shortcut="funcSearchReset" description="[WEMB] 검색조건 초기화 기본 함수">// 검색조건 초기화&#13;
+this.fnSearchReset = function()&#13;
+{&#13;
+$tab$&#13;
+}</Snippet>
+      <Snippet name="[FUNC] Form CheckValidate 함수 정의" shortcut="funcFnCheckValidate" description="[WEMB] Form CheckValidate 함수">this.fnCheckValidate = function()&#13;
+{&#13;
+	// 저장할 dataset에 변경된 data 있는 지 확인&#13;
+	//if( !Ex.util.isUpdated(this.ds) )	return false;&#13;
+	&#13;
+	//Component Validation&#13;
+	//var rtn = Ex.util.checkValidate(this, "");	//(scope, 그룹명)&#13;
+	&#13;
+	//Grid Validation&#13;
+	//if( !this.grd.checkValidate() )	return false;&#13;
+	return true;&#13;
+}</Snippet>
+      <Snippet name="[FUNC] Form Comp Init 함수 정의" shortcut="funcCompInit" description="[WEMB] Form Comp Init 기본 정의 함수">// component init&#13;
+this.fnCompInit = function()&#13;
+{&#13;
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출&#13;
+	this.grd.displayRowType();&#13;
+	&#13;
+	// 공통코드 조회&#13;
+	this.fnGetCmmCd();&#13;
+	&#13;
+	// 버튼&amp;권한 mapping &amp;&amp; visible 처리&#13;
+	var arrBtn = [this.divGrdTopBtn.form.btnAdd];		// 쓰기&#13;
+	Ex.util.setBtnVisible(this, 'write', arrBtn);&#13;
+		arrBtn = [this.divGrdTopBtn.form.btnDelete];	// 삭제&#13;
+	Ex.util.setBtnVisible(this, 'delete', arrBtn);&#13;
+		arrBtn = [this.divGrdBotBtn.form.btnSave];		// 저장&#13;
+	Ex.util.setBtnVisible(this, 'save', arrBtn);&#13;
+	&#13;
+	// 버튼 영역 div align 처리&#13;
+	Ex.util.setBtnAlign(this.divGrdTopBtn, 'right', true);&#13;
+	Ex.util.setBtnAlign(this.divGrdBotBtn, 'right', true);&#13;
+	&#13;
+}</Snippet>
+      <Snippet name="[FUNC] Form Init 함수 정의" shortcut="funcInit" description="[WEMB] Form Init 함수 정의">this.fnInit = function()&#13;
+{&#13;
+	this.fnCompInit();	// 컴포넌트 초기화&#13;
+}</Snippet>
+      <Snippet name="[FUNC] Form OnLoad 함수 정의" shortcut="func" description="[WEMB] Form OnLoad 함수 정의">/***********************************************************************************&#13;
+ * Form Function&#13;
+ ***********************************************************************************/&#13;
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) &#13;
+{&#13;
+	// 업무화면 laod 전 공통 처리를 위한 함수. &#13;
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.&#13;
+	this.gfnFormOnLoad(this, this.fnInit);&#13;
+}</Snippet>
+      <Snippet name="[FUNC] Form 공통 OnLoad 함수 사용" shortcut="funcOnload" description="[WEMB] 공통 ONLAD 함수">this.gfnFormOnLoad(this, this.fnInit);</Snippet>
+      <Snippet name="[FUNC] Form 공통코드함수 정의" shortcut="funcComCode" description="[WEMB] 공통코드 기본 정의 함수">// 공통코드 조회&#13;
+this.fnGetCmmCd = function()&#13;
+{&#13;
+	var oParam = {&#13;
+		upCmmCd : [''	]	// 조회할 상위코드&#13;
+		,codeDiv: [''	]	// 조회할 코드의 업무구분&#13;
+		,optStr	: ['ALL']	// ALL: '- 전체 -'; SEL: '- 선택 -'&#13;
+		,useYn	: ['Y'	]	// 사용여부&#13;
+		,filter	: [''	]	// filterStr&#13;
+		,objDs	: [		]	// copy dataset&#13;
+	}&#13;
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util;&#13;
+}</Snippet>
+      <Snippet name="[SCRIPT] Form 버튼권한처리 Sample" shortcut="scriptBtnAuth" description="[WEMB] 버튼 권한 처리">/* 버튼 권한 종류&#13;
+"READ" : 조회권한, "WRITE" : 쓰기권한, "DELETE" : 삭제권한,&#13;
+"SAVE" : 저장권한, "EXCLDOWN" : 엑셀다운권한, "REPORTPRNT" : 리포트출력권한&#13;
+"FILEUP" : 파일첨부권한&#13;
+ */&#13;
+// 버튼&amp;권한 mapping &amp;&amp; visible 처리&#13;
+var arrBtn = [this.divGrdTopBtn.form.btnAdd];		// 쓰기&#13;
+Ex.util.setBtnVisible(this, 'write', arrBtn);&#13;
+	arrBtn = [this.divGrdTopBtn.form.btnDelete];	// 삭제&#13;
+Ex.util.setBtnVisible(this, 'delete', arrBtn);&#13;
+	arrBtn = [this.divGrdBotBtn.form.btnSave];		// 저장&#13;
+Ex.util.setBtnVisible(this, 'save', arrBtn);&#13;
+&#13;
+// 버튼 영역 div align 처리&#13;
+Ex.util.setBtnAlign(this.divGrdTopBtn, 'right', true);&#13;
+Ex.util.setBtnAlign(this.divGrdBotBtn, 'right', true);</Snippet>
+      <Snippet name="[SCRIPT] Form 전체 (기본 정의 Script)" shortcut="scriptForm" description="[WEMB] Form 전체 (기본 정의 Script)">/***********************************************************************************&#13;
+* 화면 ID		: $end$&#13;
+* 화면(명)	: &#13;
+* 메뉴(경로)	: &#13;
+* 화면 설명	: &#13;
+* 작성자		:&#13;
+* 작성일		: &#13;
+* 수정이력		: 2024.00.00&#13;
+*------------------------------------------------------------------&#13;
+* 수정일			작성자		이력&#13;
+*------------------------------------------------------------------&#13;
+* 2024.00.00	WEMB		최초작성&#13;
+*------------------------------------------------------------------&#13;
+***********************************************************************************/&#13;
+/***********************************************************************************&#13;
+ * Script Include &#13;
+ ***********************************************************************************/&#13;
+&#13;
+/***********************************************************************************&#13;
+ * Form Variable&#13;
+ ***********************************************************************************/&#13;
+&#13;
+/***********************************************************************************&#13;
+ * Form Function&#13;
+ ***********************************************************************************/&#13;
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)&#13;
+{&#13;
+	// 화면 초기 세팅&#13;
+	// 이외는 기술하지 말것&#13;
+	this.gfnFormOnLoad(obj, this.fnInit);&#13;
+}&#13;
+&#13;
+this.fnInit = function()&#13;
+{&#13;
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것&#13;
+	//trace("workArea form init call");&#13;
+}&#13;
+&#13;
+// 필요시 폼관련 이벤트는 여기 추가&#13;
+/***********************************************************************************&#13;
+ * Common Function&#13;
+ ***********************************************************************************/&#13;
+// 검색조건 초기화&#13;
+this.fnSearchReset = function()&#13;
+{&#13;
+}&#13;
+&#13;
+// 조회&#13;
+this.fnSearch = function()&#13;
+{&#13;
+&#13;
+}&#13;
+&#13;
+// 저장&#13;
+this.fnSave = function()&#13;
+{&#13;
+	//trace("fnSave call");&#13;
+}&#13;
+&#13;
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복&#13;
+this.fnDelete = function(objDs:Dataset)&#13;
+{&#13;
+	objDs.set_enableevent(false);	&#13;
+	objDs.set_filterstr("CHK=='1'");&#13;
+	for(var i = 0; i &lt; objDs.rowcount; i++)	objDs.setDeleteRow(i);&#13;
+	objDs.set_filterstr("");&#13;
+	objDs.set_enableevent(true);&#13;
+}&#13;
+&#13;
+/***********************************************************************************&#13;
+ * CallBack Event &#13;
+ ***********************************************************************************/&#13;
+// Transaction 디폴트 콜백함수&#13;
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)&#13;
+{&#13;
+	// 에러메세지 처리&#13;
+	if (nErrorCode &lt; 0) &#13;
+	{&#13;
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};&#13;
+		Ex.core.error(this, param);&#13;
+		return;&#13;
+	}&#13;
+			&#13;
+	// 각 Transaction별 CallBack 처리&#13;
+	switch (sSvcId)&#13;
+	{		&#13;
+		case "" : // 서비스 ID&#13;
+			break;	&#13;
+	}&#13;
+}&#13;
+&#13;
+// 팝업 디폴트 콜백함수&#13;
+this.fnPopupAfter = function(pID, varValue)&#13;
+{&#13;
+	// TO DO&#13;
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)&#13;
+	if( Ex.isEmpty(varValue) )	return;&#13;
+&#13;
+	switch(pID)&#13;
+	{&#13;
+		case "" :&#13;
+			break;&#13;
+	}&#13;
+}&#13;
+&#13;
+// alert/confirm/error 메시지창 디폴트 콜백함수&#13;
+this.fnMsgAfter = function(mID, varValue)&#13;
+{&#13;
+	// TO DO&#13;
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)&#13;
+	if(!varValue)	return;&#13;
+	&#13;
+	switch(mID)&#13;
+	{&#13;
+		case "saveConfirm" :	// 선택 확인&#13;
+			break;&#13;
+	}&#13;
+}&#13;
+&#13;
+/***********************************************************************************&#13;
+ * User Function&#13;
+ ***********************************************************************************/&#13;
+this.fnCompInit = function()&#13;
+{&#13;
+	this.grdObj.displayRowType();	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출&#13;
+&#13;
+	//버튼 권한 처리&#13;
+	/*&#13;
+	this.fnCompInit = function()&#13;
+	var arrBtn = [this.divGrdTopBtn.form.btnAdd];	//쓰기&#13;
+	Ex.util.setBtnVisible(this, 'write', arrBtn);&#13;
+	arrBtn = [this.divGrdTopBtn.form.btnDelete];	//삭제&#13;
+	Ex.util.setBtnVisible(this, 'delete', arrBtn);&#13;
+	arrBtn = [this.divGrdBotBtn.form.btnSave];		//저장&#13;
+	Ex.util.setBtnVisible(this, 'save', arrBtn);&#13;
+	arrBtn = [this.divGrdTopBtn.form.btnExcelDown];	//엑셀&#13;
+	Ex.util.setBtnVisible(this, 'exclDown', arrBtn);&#13;
+&#13;
+	Ex.util.setBtnAlign(this.divGrdTopBtn, 'right', true);&#13;
+	Ex.util.setBtnAlign(this.divGrdBotBtn, 'right', true);&#13;
+	*/&#13;
+&#13;
+	//this.fnGetCmmCd();	//공통코드 조회&#13;
+}&#13;
+&#13;
+this.fnGetCmmCd = function()&#13;
+{&#13;
+	/*&#13;
+	var oParam = {&#13;
+		upCmmCd : [''	]	// 조회할 상위코드&#13;
+		,codeDiv: [''	]	// 조회할 코드의 업무구분&#13;
+		,optStr	: ['ALL']	// ALL: '- 전체 -'; SEL: '- 선택 -'&#13;
+		,useYn	: ['Y'	]	// 사용여부&#13;
+		,filter	: [''	]	// filterStr&#13;
+		,objDs	: [		]	// copy dataset&#13;
+	}&#13;
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);&#13;
+	*/&#13;
+}&#13;
+&#13;
+/***********************************************************************************&#13;
+ * Component Event&#13;
+ ***********************************************************************************/&#13;
+// component onclick event. &#13;
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)&#13;
+{	&#13;
+	switch(obj.name)&#13;
+	{&#13;
+		case "" :&#13;
+		&#13;
+			break;&#13;
+	}&#13;
+}&#13;
+&#13;
+this.dsOncolumnchanged = function(obj:nexacro.NormalDataset, e:nexacro.DSColChangeEventInfo)&#13;
+{&#13;
+	obj.setUpdateRow(e);&#13;
+}</Snippet>
+    </Group>
+    <Group name="SESSION">
+      <Snippet name="[SESSION] - 권한ID[AUTH_ID]" shortcut="sessAuthId" description="{WEMB] Seesion AuthId">Ex.util.getSession('gvAuthId')</Snippet>
+      <Snippet name="[SESSION] - 권한명[AUTH_NM]" shortcut="sessAuthNm" description="{WEMB] Seesion AutnNm">Ex.util.getSession('gvAutnNm')</Snippet>
+      <Snippet name="[SESSION] - 내선번호[TELNUM]" shortcut="sessTelnum" description="{WEMB] Seesion Telnum">Ex.util.getSession('gvTelnum')</Snippet>
+      <Snippet name="[SESSION] - 대직자명[DAEJIC_NM]" shortcut="sessDaejicNm" description="{WEMB] Seesion DaejicNm">Ex.util.getSession('gvDaejicNm')</Snippet>
+      <Snippet name="[SESSION] - 대직자사번[DAEJIC_ID]" shortcut="sessDaejicId" description="{WEMB] Seesion DaejicId">Ex.util.getSession('gvDaejicId')</Snippet>
+      <Snippet name="[SESSION] - 부서명[DEPT_NM]" shortcut="sessDeptNm" description="{WEMB] Seesion DeptNm">Ex.util.getSession('gvDeptNm')</Snippet>
+      <Snippet name="[SESSION] - 부서코드[DEPT_CD]" shortcut="sessDeptCd" description="{WEMB] Seesion DeptCd">Ex.util.getSession('gvDeptCd')</Snippet>
+      <Snippet name="[SESSION] - 부재(대무)여부[ABSNCE_YN]" shortcut="sessAbsnceYn" description="{WEMB] Seesion UserId">Ex.util.getSession('gvAbsnceYn')</Snippet>
+      <Snippet name="[SESSION] - 부재사유[BUJAE_SAYU]" shortcut="sessBujaeSayu" description="{WEMB] Seesion BujaeSayu">Ex.util.getSession('gvBujaeSayu')</Snippet>
+      <Snippet name="[SESSION] - 부재시작일시[BUJAE_STIME]" shortcut="sessBujaeStime" description="{WEMB] Seesion BujaeStime">Ex.util.getSession('gvBujaeStime')</Snippet>
+      <Snippet name="[SESSION] - 부재종료일시[BUJAE_ETIME]" shortcut="sessBujaeEtime" description="{WEMB] Seesion BujaeEtime">Ex.util.getSession('gvBujaeEtime')</Snippet>
+      <Snippet name="[SESSION] - 사번[USER_ID]" shortcut="sessUserId" description="{WEMB] Seesion UserId">Ex.util.getSession('gvUserId')</Snippet>
+      <Snippet name="[SESSION] - 사용여부(유저)[USE_YN]" shortcut="sessUseYn" description="{WEMB] Seesion UseYn">Ex.util.getSession('gvUseYn')</Snippet>
+      <Snippet name="[SESSION] - 사용자 언어코드[LANG_CD]" shortcut="sessLangCd" description="{WEMB] Seesion LangCd">Ex.util.getSession('gvLangCd')</Snippet>
+      <Snippet name="[SESSION] - 사용자명[USER_NM]" shortcut="sessUserNm" description="{WEMB] Seesion UserNm">Ex.util.getSession('gvUserNm')</Snippet>
+      <Snippet name="[SESSION] - 시스템언어코드[SYS_LANG_CD]" shortcut="sessSysLangCd" description="{WEMB] Seesion SysLangCd">Ex.util.getSession('gvSysLangCd')</Snippet>
+      <Snippet name="[SESSION] - 이메일주소[EMAIL]" shortcut="sessEmail" description="{WEMB] Seesion Email">Ex.util.getSession('gvEmail')</Snippet>
+      <Snippet name="[SESSION] - 직급명[POS_NM]" shortcut="sessPosNm" description="{WEMB] Seesion PosNm">Ex.util.getSession('gvPosNm')</Snippet>
+      <Snippet name="[SESSION] - 직급코드[POS_CD]" shortcut="sessPosCd" description="{WEMB] Seesion PosCd">Ex.util.getSession('gvPosCd')</Snippet>
+      <Snippet name="[SESSION] - 직책명[ROLE_NM]" shortcut="sessRoleNm" description="{WEMB] Seesion RoleNm">Ex.util.getSession('gvRoleNm')</Snippet>
+      <Snippet name="[SESSION] - 직책코드[ROLE_CD]" shortcut="sessRoleCd" description="{WEMB] Seesion RoleCd">Ex.util.getSession('gvRoleCd')</Snippet>
+      <Snippet name="[SESSION] - 현재선택언어코드[SEL_LANG_CD]" shortcut="sessSelLangCd" description="{WEMB] Seesion SelLangCd">Ex.util.getSession('gvSelLangCd')</Snippet>
+      <Snippet name="[SESSION] - 회사명[CO_NM]" shortcut="sessCoNm" description="{WEMB] Seesion CoNm">Ex.util.getSession('gvCoNm')</Snippet>
+      <Snippet name="[SESSION] - 회사코드[CO_CD]" shortcut="sessCoCd" description="{WEMB] Seesion CoCd">Ex.util.getSession('gvCoCd')</Snippet>
+      <Snippet name="[SESSION] - 휴대폰번호[MOBILE_NUM]" shortcut="sessMobileNum" description="{WEMB] Seesion MobileNum">Ex.util.getSession('gvMobileNum')</Snippet>
+    </Group>
+    <Group name="Transaction">
+      <Snippet name="[SCRIPT] - 저장 Transaction" shortcut="uSave" description="[WEMB] 저장 Transaction">var sTranId = "save01";							// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID&#13;
+var sService = "$end$/save01";					// 서비스명&#13;
+var sInDs = "dsCond=dsCond dsInput=dsInput:U";	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨&#13;
+var sOutDs = "dsOutput=dsOutput";				// 서버에서 수신할 데이타셋&#13;
+var sArg = "";									// 서버 @ParamVariable 인자와 맵핑됨&#13;
+Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);</Snippet>
+      <Snippet name="[SCRIPT] - 조회 Transaction" shortcut="uSelect" description="[WEMB] 조회 Transaction">// transaction&#13;
+var sTranId = "select01";			// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID&#13;
+var sService = "$end$/select01";	// 서비스명&#13;
+var sInDs = "dsCond=dsCond";    	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨&#13;
+var sOutDs = "dsData=dsData";		// 서버에서 수신할 데이타셋&#13;
+var sArg = "";                  	// 서버 @ParamVariable 인자와 맵핑됨&#13;
+Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);</Snippet>
+    </Group>
+    <Group name="반복문/조건문">
+      <Snippet name="FOR문(기본)" shortcut="for" description="[WEMB] 기본 for문">for(var i=0; i&lt;$end$; i++)&#13;
+{&#13;
+$tab$&#13;
+}</Snippet>
+      <Snippet name="FOR문(복사한Dataset ID기준)" shortcut="forDs" description="[WEMB] Dataset for문">for(var i=0; i&lt;this.$end$$clipboard$.rowcount; i++)&#13;
+{&#13;
+$tab$&#13;
+}</Snippet>
+      <Snippet name="if () {}" shortcut="if" description="[WEMB] if문">if ($end$)
+{
+$tab$
+}</Snippet>
+      <Snippet name="if () {} else {}" shortcut="ifelse" description="[WEMB] if/else문">if ($end$)
+{
+$tab$
+}
+else
+{
+$tab$
+}</Snippet>
+      <Snippet name="switch() { case : break..." shortcut="switch" description="[WEMB] switch/case문">switch($end$) {
+case :
+$tab$break;
+case :
+$tab$break;
+default:
+}</Snippet>
+      <Snippet name="while () {}" shortcut="while" description="[WEMB] while문">while ($end$)
+{
+$tab$
+}</Snippet>
+    </Group>
+    <Group name="사용설명 모음">
+      <Snippet name="설명글-필수입력체크Component-[Ex.util.checkValidate]" shortcut="descCheckValidate" description="[WEMB] 필수입력체크Component 설명 안내문">※ Validation Check 처리 순서는 Component의 TabOrder 순서로 처리됩니다.&#13;
+&#13;
+Component Validation 사용되는 속성&#13;
+validationGroup : Validation Check Group을 설정합니다.&#13;
+validation : Edit의 Validation Check 로직을 설정하는 속성입니다.&#13;
+validationCheckEnable : true로 설정하면 Enable 상태가 true인 경우만 Validation Check를 수행합니다.(false인 경우 Enable 상태와 무관하게 무조건 Validation Check를 수행)&#13;
+validationCheckVisible : true로 설정하면 visible 상태가 true인 경우만 Validation Check를 수행합니다.(false인 경우 visible 상태와 무관하게 무조건 Validation Check를 수행)&#13;
+validationCheckReadonly : true로 설정하면 Readonly 상태가 false인 경우만 Validation Check를 수행합니다.(false인 경우 Readonly 상태와 무관하게 무조건 Validation Check를 수행)&#13;
+&#13;
+Validtion Check 함수 호출 예시&#13;
+ex) Ex.util.checkValidate(this, "sample1"); --Form내의 sample1이라는 group에 대해서만 체크를 진행합니다.&#13;
+&#13;
+Validation Check 종류&#13;
+NULL - 필수 입력 항목 설정시 사용&#13;
+NUMBER - 입력된 문자열이 모두 숫자인지 체크합니다.&#13;
+MIN - 숫자로 입력되어야 하는 입력 항목인 경우 숫자값으로 입력 가능한 최소 숫자값을 셋팅합니다. ex) MIN:5 (5이상이면 Vaildation 충족)&#13;
+MAX - 숫자로 입력되어야 하는 입력 항목인 경우 숫자값으로 입력 가능한 최대 숫자값을 셋팅합니다. ex) MIN:100 (100까지만 Vaildation 충족)&#13;
+MIN_LEN - 모든 문자 1글자로 인식하며 최소로 입력해야 하는 글자 수를 설정할 때 사용 ex) MIN_LEN:5 (최소 5글자를 입력하면 Vaildation 충족)&#13;
+MAX_LEN - 모든 문자 1글자로 인식하며 최대로 입력해야 하는 글자 수를 설정할 때 사용 ex) MAX_LEN:10 (최대 10글자 까지만 입력하면 Vaildation 충족)&#13;
+MIN_LEN_ASC - 한글은 2Byte 그외는 1Byte(ASCII)로 인식하며 최소로 입력해야 하는 byte수를 설정할 때 사용 ex) MIN_LEN_ASC:5 (최소 5byte 입력하면 Vaildation 충족)&#13;
+MAX_LEN_ASC - 한글은 2Byte 그외는 1Byte(ASCII)로 인식하며 최대로 입력해야 하는 byte수를 설정할 때 사용 ex) MAX_LEN_ASC:10 (최대 10byte 까지만 Vaildation 충족)&#13;
+MIN_LEN_UTF8 - 한글은 3Byte 그외는 1Byte(UTF-8)로 인식하며 최소로 입력해야 하는 byte수를 설정할 때 사용 ex) MIN_LEN_ASC:5 (최소 5byte 입력하면 Vaildation 충족)&#13;
+MAX_LEN_UTF8 - 한글은 3Byte 그외는 1Byte(UTF-8)로 인식하며 최대로 입력해야 하는 byte수를 설정할 때 사용 ex) MAX_LEN_ASC:10 (최대 10byte 까지만 Vaildation 충족)&#13;
+URL - 입력값이 URL 형식인지를 체크&#13;
+IPADDR - 입력값이 IP주소 형식인지를 체크&#13;
+PHONE - 입력값이 전화번호 형식인지를 체크&#13;
+MOBILE - 입력값이 핸드폰번호 형식인지를 체크&#13;
+EMAIL - 입력값이 E-MAIL 형식인지를 체크&#13;
+JUMINNO - 입력값이 주민등록번호 형식인지를 체크&#13;
+BIZNO - 입력값이 사업자번호 형식인지를 체크&#13;
+CORPNO - 입력값이 법인번호 형식인지를 체크&#13;
+DATETIME : 입력값이 일시/날짜/시간인 경우 유효성이 맞는지 체크&#13;
+종류 : YYYY/YYYYMM/YYYYMMDDHH/YYYYMMDDHHMI/YYYYMMDDHHMISS/HH/MI/SS/HHMI/HHMISS&#13;
+ex) DATETIME:YYYY 입력값이 년도 형식인지 체크&#13;
+ex) DATETIME:YYYYMM 입력값이 년월 형식인지 체크&#13;
+ex) DATETIME:YYYYMMDD 입력값이 년월일 형식인지 체크&#13;
+&#13;
+validation 입력 방법 예시&#13;
+1. 최초 입력값은 메시지에 뿌려질 항목값(라벨)을 입력 후 항목 입력 마지막에 ;를 입력&#13;
+2. 이후 해당 입력 항목에 필요한 validation Check 속성값을 입력 (다중 사용 가능) '|' 문자를 붙여 추가 옵션을 사용한다.&#13;
+ex) validation 신청사유;MIN_LEN_UTF8:100|MAX_LEN_UTF8:1000&#13;
+→ 신청사유 라는 입력 항목에 대한 최소 입력 내용은UTF-8 문자셋 기준 100Byte로 최대입력 제한 Byte는 UTF-8 문자셋 기준 1000Byte까지 처리한다는 예시임</Snippet>
+      <Snippet name="설명글-필수입력체크Grid-[Ex.util.checkValidate]" shortcut="descCheckValidateGrid" description="[WEMB] 필수입력체크Grid 설명 안내문">Grid Validation 사용되는 속성&#13;
+validation : Cell의 Validation Check 로직을 설정하는 속성입니다.&#13;
+validationStatus : true로 설정하면 edittype이 활성화된 상태인 cell만 Validation Check를 수행합니다.(false인 경우 edittype 상태와 무관하게 무조건 Validation Check를 수행)&#13;
+&#13;
+Validtion Check 함수 호출 예시&#13;
+ex) Ex.util.checkValidate(this, "sample1"); --Form내의 sample1이라는 group에 대해서만 체크를 진행합니다.&#13;
+&#13;
+Check 로직에 사용되는 항목은 아래와 같습니다.&#13;
+NULL - 필수 입력 항목 설정시 사용&#13;
+NUMBER - 입력된 문자열이 모두 숫자인지 체크합니다.&#13;
+MIN - 숫자로 입력되어야 하는 입력 항목인 경우 숫자값으로 입력 가능한 최소 숫자값을 셋팅합니다. ex) MIN:5 (5이상이면 Vaildation 충족)&#13;
+MAX - 숫자로 입력되어야 하는 입력 항목인 경우 숫자값으로 입력 가능한 최대 숫자값을 셋팅합니다. ex) MIN:100 (100까지만 Vaildation 충족)&#13;
+MIN_LEN - 모든 문자 1글자로 인식하며 최소로 입력해야 하는 글자 수를 설정할 때 사용 ex) MIN_LEN:5 (최소 5글자를 입력하면 Vaildation 충족)&#13;
+MAX_LEN - 모든 문자 1글자로 인식하며 최대로 입력해야 하는 글자 수를 설정할 때 사용 ex) MAX_LEN:10 (최대 10글자 까지만 입력하면 Vaildation 충족)&#13;
+MIN_LEN_ASC - 한글은 2Byte 그외는 1Byte(ASCII)로 인식하며 최소로 입력해야 하는 byte수를 설정할 때 사용 ex) MIN_LEN_ASC:5 (최소 5byte 입력하면 Vaildation 충족)&#13;
+MAX_LEN_ASC - 한글은 2Byte 그외는 1Byte(ASCII)로 인식하며 최대로 입력해야 하는 byte수를 설정할 때 사용 ex) MAX_LEN_ASC:10 (최대 10byte 까지만 Vaildation 충족)&#13;
+MIN_LEN_UTF8 - 한글은 3Byte 그외는 1Byte(UTF-8)로 인식하며 최소로 입력해야 하는 byte수를 설정할 때 사용 ex) MIN_LEN_ASC:5 (최소 5byte 입력하면 Vaildation 충족)&#13;
+MAX_LEN_UTF8 - 한글은 3Byte 그외는 1Byte(UTF-8)로 인식하며 최대로 입력해야 하는 byte수를 설정할 때 사용 ex) MAX_LEN_ASC:10 (최대 10byte 까지만 Vaildation 충족)&#13;
+URL - 입력값이 URL 형식인지를 체크&#13;
+IPADDR - 입력값이 IP주소 형식인지를 체크&#13;
+PHONE - 입력값이 전화번호 형식인지를 체크&#13;
+MOBILE - 입력값이 핸드폰번호 형식인지를 체크&#13;
+EMAIL - 입력값이 E-MAIL 형식인지를 체크&#13;
+JUMINNO - 입력값이 주민등록번호 형식인지를 체크&#13;
+BIZNO - 입력값이 사업자번호 형식인지를 체크&#13;
+CORPNO - 입력값이 법인번호 형식인지를 체크&#13;
+DATETIME : 입력값이 일시/날짜/시간인 경우 유효성이 맞는지 체크&#13;
+종류 : YYYY/YYYYMM/YYYYMMDDHH/YYYYMMDDHHMI/YYYYMMDDHHMISS/HH/MI/SS/HHMI/HHMISS&#13;
+ex) DATETIME:YYYY 입력값이 년도 형식인지 체크&#13;
+ex) DATETIME:YYYYMM 입력값이 년월 형식인지 체크&#13;
+ex) DATETIME:YYYYMMDD 입력값이 년월일 형식인지 체크&#13;
+&#13;
+validation 입력 방법 예시&#13;
+1. 최초 입력값은 메시지에 뿌려질 항목값(라벨)을 입력 후 항목 입력 마지막에 ;를 입력&#13;
+2. 이후 해당 입력 항목에 필요한 validation Check 속성값을 입력 (다중 사용 가능) '|' 문자를 붙여 추가 옵션을 사용한다.&#13;
+&#13;
+validation 신청사유;MIN_LEN_UTF8:100|MAX_LEN_UTF8:1000&#13;
+→ 신청사유 라는 입력 항목에 대한 최소 입력해야하는 100Byte, 최대입력 가능 Byte는 1000Byte)로 설정</Snippet>
+    </Group>
+    <Group name="주석">
+      <Snippet name="주석-Callbak 함수 영역 표기" shortcut="commentCallbackFunc" description="[WEMB] Callback 함수 영역 주석 표시">/***********************************************************************************&#13;
+ * CallBack Event &#13;
+ ***********************************************************************************/</Snippet>
+      <Snippet name="주석-Component 함수 영역 표기" shortcut="commentCompFunc" description="[WEMB] Component 함수 영역 주석 표시">/***********************************************************************************&#13;
+ * Component Event&#13;
+ ***********************************************************************************/</Snippet>
+      <Snippet name="주석-Form 함수 영역 표기" shortcut="commentFormFunc" description="[WEMB] Form 함수 영역 주석 표시">/***********************************************************************************&#13;
+ * Form Function&#13;
+ ***********************************************************************************/ </Snippet>
+      <Snippet name="주석-Nexacro17" shortcut="comment17" description="[Nexacro 17]">//[Nexacro 17]</Snippet>
+      <Snippet name="주석-NexacroN" shortcut="commentN" description="NexacroN">/* NexacroN */ </Snippet>
+      <Snippet name="주석-User 함수 영역 표기" shortcut="commentUserFunc" description="[WEMB] User 함수 영역 주석 표시">/***********************************************************************************&#13;
+ * User Function&#13;
+ ***********************************************************************************/</Snippet>
+      <Snippet name="주석-WEM[B종료]" shortcut="commentWemb" description="/* WEMB 추가 종료 */">/* WEMB 추가 종료 */</Snippet>
+      <Snippet name="주석-WEMB[시작]" shortcut="commentWemb" description="/* WEMB 추가 시작 */">/* WEMB 추가 시작 */</Snippet>
+      <Snippet name="주석-공통 함수 영역 표기" shortcut="commentCommFunc" description="[WEMB] 공통 함수 영역 주석 표시">/***********************************************************************************&#13;
+ * Common Function&#13;
+ ***********************************************************************************/</Snippet>
+      <Snippet name="주석-타이틀" shortcut="commentTitle" description="[WEMB] TITLE 주석">/***********************************************************************************&#13;
+* 화면 ID		: $end$&#13;
+* 화면(명)	: &#13;
+* 메뉴(경로)	: &#13;
+* 화면 설명	: &#13;
+* 작성자		:&#13;
+* 작성일		: &#13;
+* 수정이력		: 2024.00.00&#13;
+*------------------------------------------------------------------&#13;
+* 수정일			작성자		이력&#13;
+*------------------------------------------------------------------&#13;
+* 2024.00.00	WEMB		최초작성&#13;
+*------------------------------------------------------------------&#13;
+***********************************************************************************/</Snippet>
+    </Group>
+  </Script>
+  <Xcss>
+    <Group name="Attribute">
+      <Snippet name="-nexa-background-odd" shortcut="-nexa-background-odd" description="">$tab$-nexa-background-odd : #ffffaa;</Snippet>
+      <Snippet name="-nexa-border" shortcut="-nexa-border" description="">$tab$-nexa-border : 1px solid #999999;</Snippet>
+      <Snippet name="-nexa-color-odd" shortcut="-nexa-color-odd" description="">$tab$-nexa-color-odd : red;</Snippet>
+      <Snippet name="-nexa-edge" shortcut="-nexa-edge" description="">$tab$-nexa-edge : url("theme://images/Titlebar_bg.png") 5px 5px;</Snippet>
+      <Snippet name="-nexa-edge-odd" shortcut="-nexa-edge-odd" description="">$tab$-nexa-edge-odd : url("theme://images/Titlebar_bg.png") 5px 5px;</Snippet>
+      <Snippet name="-nexa-icon" shortcut="-nexa-icon" description="">$tab$-nexa-icon : url("theme://images/Titlebar_bg.png");</Snippet>
+      <Snippet name="-nexa-icon-position" shortcut="-nexa-icon-position" description="">$tab$-nexa-icon-position : left;</Snippet>
+      <Snippet name="-nexa-padding" shortcut="-nexa-padding" description="">$tab$-nexa-padding : 5px 5px 5px 5px;</Snippet>
+      <Snippet name="-nexa-text-align" shortcut="-nexa-text-align" description="">$tab$-nexa-text-align : left;</Snippet>
+      <Snippet name="-nexa-text-padding" shortcut="-nexa-text-padding" description="">$tab$-nexa-text-padding : 5px 5px 5px 5px;</Snippet>
+      <Snippet name="-nexa-vertical-align" shortcut="-nexa-vertical-align" description="">$tab$-nexa-vertical-align : top;</Snippet>
+      <Snippet name="-nexa-word-wrap" shortcut="-nexa-word-wrap" description="">$tab$-nexa-word-wrap : char;</Snippet>
+      <Snippet name="background" shortcut="background" description="">$tab$background : #ffffaa;</Snippet>
+      <Snippet name="border-radius" shortcut="border-radius" description="">$tab$border-radius : 5px 5px 5px 5px;</Snippet>
+      <Snippet name="box-shadow" shortcut="box-shadow" description="">$tab$box-shadow : 5px 5px 3px #ffffff;</Snippet>
+      <Snippet name="color" shortcut="color" description="">$tab$color : transparent;</Snippet>
+      <Snippet name="cursor" shortcut="cursor" description="">$tab$cursor : default;</Snippet>
+      <Snippet name="font" shortcut="font" description="">$tab$font : 9pt "Tahoma";</Snippet>
+      <Snippet name="letter-spacing" shortcut="letter-spacing" description="">$tab$letter-spacing : normal;</Snippet>
+      <Snippet name="opacity" shortcut="opacity" description="">$tab$opacity : 0.8;</Snippet>
+      <Snippet name="text-decoration" shortcut="text-decoration" description="">$tab$text-decoration : underline;</Snippet>
+      <Snippet name="word-spacing" shortcut="word-spacing" description="">$tab$word-spacing : 30px;</Snippet>
+    </Group>
+    <Group name="Selector">
+      <Snippet name="Band" shortcut=".Band" description="">.Band
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="Button" shortcut=".Button" description="">.Button
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="Calendar" shortcut=".Calendar" description="">.Calendar
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="Cell" shortcut=".Cell" description="">.Cell
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="CheckBox" shortcut=".CheckBox" description="">.CheckBox
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="Combo" shortcut=".Combo" description="">.Combo
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="ComboControl" shortcut=".ComboControl" description="">.ComboControl
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="DatePicker" shortcut=".DatePicker" description="">.DatePicker
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="Div" shortcut=".Div" description="">.Div
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="Edit" shortcut=".Edit" description="">.Edit
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="FileDownload" shortcut=".FileDownload" description="">.FileDownload
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="FileUpload" shortcut=".FileUpload" description="">.FileUpload
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="FlashPlayer" shortcut=".FlashPlayer" description="">.FlashPlayer
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="Grid" shortcut=".Grid" description="">.Grid
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="GroupBox" shortcut=".GroupBox" description="">.GroupBox
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="ImageViewer" shortcut=".ImageViewer" description="">.ImageViewer
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="ListBox" shortcut=".ListBox" description="">.ListBox
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="Menu" shortcut=".Menu" description="">.FlashPlayer
+{
+$tab$$end$
+}
+</Snippet>
+      <Snippet name="Radio" shortcut=".Radio" description="">.Radio
+{
+$tab$$end$
+}
+</Snippet>
+    </Group>
+    <Group name="Status">
+      <Snippet name="deactivate" shortcut="deactivate" description="">[status=deactivate]</Snippet>
+      <Snippet name="disabled" shortcut="disabled" description="">[status=disabled]</Snippet>
+      <Snippet name="focused" shortcut="focused" description="">[status=focused]</Snippet>
+      <Snippet name="mouseover" shortcut="mouseover" description="">[status=mouseover]</Snippet>
+      <Snippet name="readonly" shortcut="readonly" description="">[status=readonly]</Snippet>
+    </Group>
+    <Snippet name="/*" shortcut="" description="">/***** $end$ *****/
+</Snippet>
+    <Snippet name="/**" shortcut="" description="">/************************************************************************
+ * $end$
+ ************************************************************************/
+</Snippet>
+    <Snippet name="File header" shortcut="" description="">/*******************************************************
+  PROJECT NAME : $end$
+  CREATION DATES : $YEAR$.$MONTH$.$DAY$
+  DRAFTER :
+  DISTRIBUTION DATE :
+  AMENDER :
+  MODIIFICATION DATES :
+*******************************************************/
+</Snippet>
+  </Xcss>
+</Snippets>

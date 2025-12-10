@@ -1,0 +1,785 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PJ4600_W" left="0" top="0" width="1820" height="720" titletext="프로그램  목록" onload="form_onload">
+    <Layouts>
+      <Layout width="1820" height="720">
+        <Div id="divSearch" taborder="0" left="0" top="0" height="137" right="0" cssclass="div_WF_divSearchArea" text="">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="5"/>
+              <Edit id="edtChgUserNm" taborder="17" left="120" top="71" width="240" height="24" cssclass="edt_WF_normal" onkeyup="onKeyUp"/>
+              <Static id="Static00_00" taborder="4" left="edtChgUserNm:0" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" bottom="5"/>
+              <Static id="stcSubProject" taborder="5" text="서브프로젝트" left="Static00_00:0" top="13" width="100" height="24" cssclass="sta_WF_schTitle_E"/>
+              <Static id="stcPrgName" taborder="12" text="프로그램명" left="Static00_00:0" top="42" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Static id="stcDevUserNm" taborder="18" text="개발자" left="Static00_00:0" top="71" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtDevUserNm" taborder="30" left="stcDevUserNm:0" top="71" width="240" height="24" cssclass="edt_WF_normal" onkeyup="onKeyUp"/>
+              <Static id="Static00_00_00" taborder="7" left="edtDevUserNm:0" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" bottom="5"/>
+              <Static id="stcPrgTypeCd" taborder="14" text="유형" left="Static00_00_00:0" top="42" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Combo id="cboPrgTypeCd" taborder="15" left="stcPrgTypeCd:0" top="42" width="240" height="24" cssclass="cbo_WF_normal" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsPrgTypeCd"/>
+              <Static id="stcPrgNo" taborder="10" text="프로그램ID" left="Static00:0" top="42" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtPrgNo" taborder="11" left="stcPrgNo:0" top="42" width="240" height="24" cssclass="edt_WF_normal" onkeyup="onKeyUp"/>
+              <Static id="stcDevUserNm00" taborder="19" text="개발PL" left="Static00_00_00:0" top="71" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtPlUserNm" taborder="20" left="stcDevUserNm00:0" top="71" width="240" height="24" cssclass="edt_WF_normal" onkeyup="onKeyUp"/>
+              <Static id="stcBizId" taborder="8" text="업무" left="Static00_00_00:0" top="13" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edtPrgName" taborder="13" left="stcPrgName:0" top="42" width="240" height="24" cssclass="edt_WF_normal" onkeyup="onKeyUp"/>
+              <Combo id="cboSubProject" taborder="6" left="stcSubProject:0" top="13" width="240" height="24" cssclass="cbo_WF_normal" codecolumn="PJT_ID" datacolumn="PJT_NAME" onitemchanged="cboOnItemChanged"/>
+              <Combo id="cboBizId" taborder="9" text="" left="stcBizId:0" top="13" width="240" height="24" cssclass="cbo_WF_normal" codecolumn="BIZ_ID" datacolumn="BIZ_NAME"/>
+              <Static id="stcPjtNm" taborder="1" text="프로젝트명" onclick="Div00_Static01_onclick" cssclass="sta_WF_schTitle_E" left="Static00:0" top="13" width="100" height="24"/>
+              <Edit id="edtPjtNm" taborder="2" left="stcPjtNm:0" top="13" width="218" height="24" cssclass="edt_WF_normal" enable="true" readonly="true"/>
+              <Button id="btnSearchPjtPop" taborder="3" cssclass="btn_WF_SearchIcon" height="24" onclick="fnCommOnclick" top="13" width="24" left="edtPjtNm:-1"/>
+              <Static id="stcChgUserNm" taborder="16" text="담당자" left="Static00:0" top="71" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Static id="stcDate" taborder="21" text="일자" left="Static00:0" top="100" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Combo id="cboDateGbn" taborder="22" left="stcDate:0" top="100" width="90" height="24" cssclass="cbo_WF_normal" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" innerdataset="dsInfTypeCd"/>
+              <Calendar id="calStime" taborder="23" left="cboDateGbn:2" top="100" width="120" height="24" validate="title:시작일자,required:false,date" cssclass="cal_WF_normal"/>
+              <Static id="Static14" taborder="24" text="~" left="calStime:5" top="100" width="10" height="21" visible="true"/>
+              <Calendar id="calEtime" taborder="25" left="Static14:5" width="120" height="24" visible="true" validate="title:종료일자,required:false,date" cssclass="cal_WF_normal" top="100"/>
+              <Button id="btnSearch" taborder="29" top="56" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Button id="btnSearchReset" taborder="28" top="56" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+              <Static id="stcFuncNo" taborder="26" text="관련기능ID" left="Static00_00_00:0" top="100" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edFuncNo" taborder="27" left="stcFuncNo:0" top="100" width="240" height="24" cssclass="edt_WF_normal" onkeyup="onKeyUp"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00_01" taborder="1" left="0" top="divSearch:0" height="20" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="Static00_00_00" taborder="5" left="0" top="Static00_01:24" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Grid id="grdMainList" taborder="6" binddataset="dsProgram" cellsizingtype="col" left="0" right="0" oncellclick="grdOnCellClick" top="Static00_01:34" bottom="40" cssclass="grd_WF_normal">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="50"/>
+                <Column size="50"/>
+                <Column size="60"/>
+                <Column size="150"/>
+                <Column size="120"/>
+                <Column size="200"/>
+                <Column size="250"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="120"/>
+                <Column size="200"/>
+                <Column size="200"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="31"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" style="align:middle;"/>
+                <Cell col="2" text="행상태"/>
+                <Cell col="3" text="업무"/>
+                <Cell col="4" text="프로그램 ID"/>
+                <Cell col="5" text="프로그램 명"/>
+                <Cell col="6" text="프로그램설명"/>
+                <Cell col="7" text="유형"/>
+                <Cell col="8" text="담당자"/>
+                <Cell col="9" text="관련기능 ID"/>
+                <Cell col="10" text="관련기능 명"/>
+                <Cell col="11" text="비고"/>
+                <Cell col="12" text="개발자"/>
+                <Cell col="13" text="개발자 사번"/>
+                <Cell col="14" text="계획시작일"/>
+                <Cell col="15" text="계획종료일"/>
+                <Cell col="16" text="실제시작일"/>
+                <Cell col="17" text="실제종료일"/>
+                <Cell col="18" text="개발PL"/>
+                <Cell col="19" text="개발PL 사번"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="expr:currow+1"/>
+                <Cell col="1" displaytype="checkboxcontrol" edittype="checkbox" style="align:center;" text="bind:CHK"/>
+                <Cell col="2" text="bind:ROWFLAG"/>
+                <Cell col="3" style="align:left;" text="bind:BIZ_NAME"/>
+                <Cell col="4" style="align:center;" cssclass="grdBCell_WF_event" text="bind:PRG_NO"/>
+                <Cell col="5" style="align:left;" cssclass="grdBCell_WF_event" text="bind:PRG_NAME" tooltiptext="bind:PRG_NAME" textAlign="left"/>
+                <Cell col="6" style="align:left top;" text="bind:PRG_DESC" tooltiptext="bind:PRG_DESC" textAlign="left"/>
+                <Cell col="7" displaytype="combotext" style="align:center;" text="bind:PRG_TYPE_CD" combodataset="dsPrgTypeCdGrid" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                <Cell col="8" style="align:center;" text="bind:CHG_USER_NM"/>
+                <Cell col="9" displaytype="normal" style="align:top;" text="bind:FUNC_NO_INFO" tooltiptext="bind:FUNC_NO_INFO"/>
+                <Cell col="10" displaytype="normal" style="align:left top;" text="bind:FUNC_NAME_INFO" tooltiptext="bind:FUNC_NAME_INFO" textAlign="left"/>
+                <Cell col="11" displaytype="normal" style="align:left top;" text="bind:REMARK" tooltiptext="bind:REMARK" textAlign="left"/>
+                <Cell col="12" displaytype="normal" style="align:center;" text="bind:DEV_USER_NM"/>
+                <Cell col="13" displaytype="normal" style="align:center;" text="bind:DEV_USER_ID"/>
+                <Cell col="14" displaytype="date" style="align:center;" text="bind:PLAN_SDATE" calendardisplaynulltype="nulltext" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="15" displaytype="date" style="align:center;" text="bind:PLAN_EDATE" calendardisplaynulltype="nulltext" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="16" displaytype="date" style="align:center;" text="bind:ACTL_SDATE" calendardisplaynulltype="nulltext" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="17" displaytype="date" style="align:center;" text="bind:ACTL_EDATE" calendardisplaynulltype="nulltext" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="18" displaytype="normal" style="align:center;" text="bind:PL_USER_NM"/>
+                <Cell col="19" displaytype="normal" style="align:center;" text="bind:PL_USER_ID"/>
+              </Band>
+            </Format>
+            <Format id="default_excel">
+              <Columns>
+                <Column size="50"/>
+                <Column size="150"/>
+                <Column size="120"/>
+                <Column size="200"/>
+                <Column size="250"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="120"/>
+                <Column size="200"/>
+                <Column size="200"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="31"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No"/>
+                <Cell col="1" text="업무"/>
+                <Cell col="2" text="프로그램 ID"/>
+                <Cell col="3" text="프로그램 명"/>
+                <Cell col="4" text="프로그램설명"/>
+                <Cell col="5" text="유형"/>
+                <Cell col="6" text="담당자"/>
+                <Cell col="7" text="관련기능 ID"/>
+                <Cell col="8" text="관련기능 명"/>
+                <Cell col="9" text="비고"/>
+                <Cell col="10" text="개발자"/>
+                <Cell col="11" text="개발자 사번"/>
+                <Cell col="12" text="계획시작일"/>
+                <Cell col="13" text="계획종료일"/>
+                <Cell col="14" text="실제시작일"/>
+                <Cell col="15" text="실제종료일"/>
+                <Cell col="16" text="개발PL"/>
+                <Cell col="17" text="개발PL 사번"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="expr:currow+1"/>
+                <Cell col="1" style="align:left;" text="bind:BIZ_NAME"/>
+                <Cell col="2" style="align:center;" cssclass="cell_event" text="bind:PRG_NO"/>
+                <Cell col="3" style="align:left;" cssclass="cell_event" text="bind:PRG_NAME" tooltiptext="bind:PRG_NAME" textAlign="left"/>
+                <Cell col="4" style="align:left top;" text="bind:PRG_DESC" tooltiptext="bind:PRG_DESC" textAlign="left"/>
+                <Cell col="5" displaytype="combotext" style="align:center;" text="bind:PRG_TYPE_CD" combodataset="dsPrgTypeCdGrid" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                <Cell col="6" style="align:center;" text="bind:CHG_USER_NM"/>
+                <Cell col="7" displaytype="normal" style="align:top;" text="bind:FUNC_NO_INFO" tooltiptext="bind:FUNC_NO_INFO"/>
+                <Cell col="8" displaytype="normal" style="align:left top;" text="bind:FUNC_NAME_INFO" tooltiptext="bind:FUNC_NAME_INFO" textAlign="left"/>
+                <Cell col="9" displaytype="normal" style="align:left top;" text="bind:REMARK" tooltiptext="bind:REMARK" textAlign="left"/>
+                <Cell col="10" displaytype="normal" style="align:center;" text="bind:DEV_USER_NM"/>
+                <Cell col="11" displaytype="normal" style="align:center;" text="bind:DEV_USER_ID"/>
+                <Cell col="12" displaytype="date" style="align:center;" text="bind:PLAN_SDATE" calendardisplaynulltype="nulltext" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="13" displaytype="date" style="align:center;" text="bind:PLAN_EDATE" calendardisplaynulltype="nulltext" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="14" displaytype="date" style="align:center;" text="bind:ACTL_SDATE" calendardisplaynulltype="nulltext" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="15" displaytype="date" style="align:center;" text="bind:ACTL_EDATE" calendardisplaynulltype="nulltext" calendardateformat="yyyy-MM-dd"/>
+                <Cell col="16" displaytype="normal" style="align:center;" text="bind:PL_USER_NM"/>
+                <Cell col="17" displaytype="normal" style="align:center;" text="bind:PL_USER_ID"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcGrdTitle" taborder="2" text="프로그램 관리 목록" cssclass="sta_WF_gridTitle" left="0" top="Static00_01:0" width="171" height="24"/>
+        <Static id="sta_listCnt" taborder="3" cssclass="sta_WF_GridCount" left="stcGrdTitle:5" top="Static00_01:0" width="150" height="24" style="align:left middle;" countDataset="dsProgram"/>
+        <Div id="divGrdBotBtn" taborder="7" width="290" height="32" bottom="0" right="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnSave" taborder="1" text="저장" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="0" onclick="fnCommOnclick"/>
+              <Button id="btnAddRep" taborder="0" text="등록" width="80" height="32" bottom="0" cssclass="btn_WF_primary_save" right="btnSave:5" onclick="fnCommOnclick"/>
+              <Button id="btnConfAddRep" taborder="2" text="일괄등록" width="100" height="32" bottom="0" cssclass="btn_WF_primary_save" right="btnAddRep:5" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divGrdTopBtn" taborder="4" width="242" height="24" visible="true" isButtonGroup="true" top="Static00_01:0" right="0">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="1" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+              <Button id="btnExcelDown" taborder="1" text="엑셀" top="0" width="60" right="btnDelete:5" cssclass="btn_WF_excelDown" onclick="fnCommOnclick" height="24"/>
+              <Button id="btnExcelTemplate" taborder="2" text="엑셀 템플릿" top="0" width="90" right="btnExcelDown:5" onclick="fnCommOnclick" height="24"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsProgram" oncolumnchanged="dsOnColumnChanged">
+        <ColumnInfo>
+          <Column id="CHK" type="STRING" size="10"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="FUNC_ID" type="string" size="16"/>
+          <Column id="FUNC_NO" type="string" size="100"/>
+          <Column id="FUNC_NAME" type="string" size="100"/>
+          <Column id="FUNC_TYPE_CD" type="string" size="30"/>
+          <Column id="PJT_ID" type="string" size="16"/>
+          <Column id="FUNC_LV1" type="string" size="100"/>
+          <Column id="FUNC_LV2" type="string" size="100"/>
+          <Column id="FUNC_DESC" type="string" size="4000"/>
+          <Column id="REF_ENTITY" type="string" size="4000"/>
+          <Column id="REG_STIME" type="string" size="14"/>
+          <Column id="REG_USER_ID" type="string" size="10"/>
+          <Column id="REG_USER_NM" type="string" size="100"/>
+          <Column id="REG_USER_DEPT" type="string" size="100"/>
+          <Column id="LMOD_SDATE" type="string" size="14"/>
+          <Column id="LMOD_USER_ID" type="string" size="10"/>
+          <Column id="LMOD_USER_NM" type="string" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="string" size="100"/>
+          <Column id="PJT_NAME" type="string" size="200"/>
+          <Column id="P_PJT_ID" type="string" size="16"/>
+          <Column id="P_PJT_NAME" type="string" size="200"/>
+          <Column id="REQ_NO_INFO" type="string" size="4000"/>
+          <Column id="REQ_NAME_INFO" type="string" size="4000"/>
+          <Column id="CHK" type="string" size="1"/>
+          <Column id="BIZ_NAME" type="string" size="100"/>
+          <Column id="BIZ_ID" type="string" size="16"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsPrgTypeCd"/>
+      <Dataset id="dsPrgTypeCdGrid"/>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="PJT_NM" type="STRING" size="256"/>
+          <Column id="SUB_PJT_ID" type="STRING" size="256"/>
+          <Column id="BIZ_ID" type="STRING" size="256"/>
+          <Column id="PRG_NO" type="STRING" size="256"/>
+          <Column id="PRG_NM" type="STRING" size="256"/>
+          <Column id="PRG_TYPE_CD" type="STRING" size="256"/>
+          <Column id="CHG_USER_NM" type="STRING" size="256"/>
+          <Column id="DEV_USER_NM" type="STRING" size="256"/>
+          <Column id="PL_USER_NM" type="STRING" size="256"/>
+          <Column id="DATE_GBN" type="STRING" size="256"/>
+          <Column id="SDATE" type="STRING" size="256"/>
+          <Column id="EDATE" type="STRING" size="256"/>
+          <Column id="FUNC_NO" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsPopRtn"/>
+    </Objects>
+    <InitValue/>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ PJ4600_W
+* 화면(명)		︰ 프로그램  목록
+* 메뉴(경로)	︰ 프로젝트관리 > 설계/구현 관리 >  프로그램  목록
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.11.03
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.11.03	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_PjComm.xjs";
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.setColumn(0, "BIZ_ID", undefined);
+	this.dsCond.setColumn(0, "BTPR_NO", "");
+	this.dsCond.setColumn(0, "BTPR_NM", "");
+	this.dsCond.setColumn(0, "BTPR_TYPE_CD", undefined);
+	this.dsCond.setColumn(0, "CHG_USER_NM", "");
+	this.dsCond.setColumn(0, "DEV_USER_NM", "");
+	this.dsCond.setColumn(0, "PL_USER_NM", "");
+	this.dsCond.setColumn(0, "DATE_GBN", "PLAN");
+	this.dsCond.setColumn(0, "SDATE", "");
+	this.dsCond.setColumn(0, "EDATE", "");
+	this.dsCond.setColumn(0, "FUNC_NO", "");
+	this.dsCond.setColumn(0, "BATCHJOB_NO", "");
+
+	this.divSearch.form.cboBizId.setFocus();
+}
+
+// 조회
+this.fnSearch = function()
+{
+	if( Ex.isEmpty((this.dsCond.getColumn(0, "PJT_ID"))) )
+	{
+		var oParam = {id : "alertNoSelPjtI", msg : "프로젝트를 선택하세요.", arrparam : [], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return;
+	}
+
+	if( Ex.isEmpty((this.dsCond.getColumn(0, "SUB_PJT_ID"))) )
+	{
+		var oParam = {id : "alertNoSelSubPjtI", msg : "서브프로젝트를 선택하세요.", arrparam : [], msgtype : "I"};
+		Ex.core.alert(this, oParam);
+		return;
+	}
+
+	// transaction
+	var sTranId = "select01";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "PJ4600W/select01";			// 서비스명
+    var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsProgram=dsProgram";		// 서버에서 수신할 데이타셋
+    var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnSave = function()
+{
+	var sTranId = "save01";
+    var sService = "PJ4600W/save01";
+    var sInDs = "dsCond=dsCond dsProgram=dsProgram:U";
+	var sOutDs = "dsProgram=dsProgram";
+    var sArg = "";
+    Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+	
+	this.setAddRepButton();
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::" + nErrorCode+"::" + sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			this.setAddRepButton();
+			break;
+
+		case "save01" :
+			Ex.core.toast(this, "10004");
+			this.setAddRepButton();
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	trace("this.fnPopupAfter() pID ::: " + pID + " varValue ::: " + varValue);
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "PJ0100_P01" :
+			//trace("varValue:\n" + varValue);
+			if(varValue.indexOf("Dataset id=") > -1)	this.dsPopRtn.loadXML(varValue);
+			this.dsCond.setColumn(0, "PJT_ID", this.dsPopRtn.getColumn(0, "PJT_ID"));
+			this.dsCond.setColumn(0, "PJT_NM", this.dsPopRtn.getColumn(0, "PJT_NAME"));
+			this.fnSetSubPjtCombo();
+			break;
+
+		case "PJ4600_P01" :
+			trace("varValue ::: " + varValue);
+			if(varValue == "Y") this.fnSearch();
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+
+		case "alertNoSelSubPjtI" :
+			this.divSearch.form.cboSubProject.setFocus();
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.grdMainList.displayRowType();
+
+	this.divSearch.form.cboSubProject.set_displaynulltext(Ex.core.word("- 선택 - "));
+	this.divSearch.form.cboBizId.set_displaynulltext(Ex.core.word("- 전체 - "));
+	// 공통코드 조회
+	this.fnGetCmmCd();
+
+	// 버튼&권한 mapping && visible 처리
+	var arrBtn = [this.divGrdTopBtn.form.btnDelete];	//삭제
+	Ex.util.setBtnVisible(this, 'delete', arrBtn);
+	
+	arrBtn = [this.divGrdBotBtn.form.btnConfAddRep];	//일괄등록
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+
+	arrBtn = [this.divGrdBotBtn.form.btnAddRep];		//등록
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+	
+	arrBtn = [this.divGrdBotBtn.form.btnSave];			//저장
+	Ex.util.setBtnVisible(this, 'save', arrBtn);
+
+	// 버튼 영역 div align 처리
+	Ex.util.setBtnAlign(this.divGrdTopBtn, 'right', true);
+	Ex.util.setBtnAlign(this.divGrdBotBtn, 'right', true);
+	
+	this.fnSearchReset();
+
+	//this.fnSearch();	// 조회
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		 upCmmCd	: ['PRG_TYPE_CD',		'PRG_TYPE_CD']			// 조회할 상위코드
+		,codeDiv	: ['PJT_MNG_CD',		'PJT_MNG_CD']			// 조회할 코드의 업무구분
+		,optStr		: ['ALL',				'ALL']					// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn		: ['Y',					'Y']					// 사용여부
+		,filter		: ['',					'']						// filterStr
+		,objDs		: [this.dsPrgTypeCd,	this.dsPrgTypeCdGrid]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+
+	//일자 검색조건 Combo
+	var innerDS = new Dataset;
+	innerDS.addColumn("CODE", "string");
+	innerDS.addColumn("NAME", "string");
+	
+	var aRow = innerDS.addRow();
+	innerDS.setColumn(aRow, "CODE", "PLAN");
+	innerDS.setColumn(aRow, "NAME", Ex.core.word("계획"));
+	
+	aRow = innerDS.addRow();
+	innerDS.setColumn(aRow, "CODE", "ACTL");
+	innerDS.setColumn(aRow, "NAME", Ex.core.word("실제"));
+	
+	this.addChild("dsDateGbn", innerDS);
+	
+	this.divSearch.form.cboDateGbn.set_innerdataset(innerDS);
+	this.divSearch.form.cboDateGbn.set_codecolumn("CODE");
+	this.divSearch.form.cboDateGbn.set_datacolumn("NAME");
+
+	//trace("Inner rowcount : " + this.divSearch.form.cboDateGbn.getInnerDataset().rowcount);
+	
+	this.divSearch.form.cboDateGbn.set_index(0);
+}
+
+//Sub Project Combo 조회
+this.fnSetSubPjtCombo = function()
+{
+	this.setSubPjtList(this, this.dsCond.getColumn(0, "PJT_ID"), this.divSearch.form.cboSubProject, this.searchSubPjtInfoCallBack);
+}
+
+//Sub Project Combo 조회 CallBack
+this.searchSubPjtInfoCallBack = function()
+{
+	var aRow = this.divSearch.form.cboSubProject.getInnerDataset().insertRow(0);
+	this.divSearch.form.cboSubProject.getInnerDataset().setColumn(0, "PJT_NAME", Ex.core.word("- 선택 -"));
+
+	var fRow = -1;
+	this.divSearch.form.cboSubProject.set_displaynulltext("");
+	
+	if(this.divSearch.form.cboSubProject.getInnerDataset().rowcount > 1)
+	{
+		fRow = this.divSearch.form.cboSubProject.getInnerDataset().findRow("PJT_ID", this.dsCond.getColumn(0, "SUB_PJT_ID"));
+	}
+	else
+	{
+		fRow = 0;
+	}
+
+	if(fRow > -1)	this.divSearch.form.cboSubProject.set_index(fRow);
+	else			this.divSearch.form.cboSubProject.set_index(0);
+	
+	this.dsCond.setColumn(0, "SUB_PJT_ID", this.divSearch.form.cboSubProject.value);
+
+	//trace("AF this.searchProjectBizCallBack() DS_COND BIZ_ID : " + this.dsCond.getColumn(0, "BIZ_ID"));
+	//trace("AF this.searchProjectBizCallBack() COMBO BIZ_ID : " + this.divSearch.form.cboBizId.value);
+	
+	this.fnSetPjtBizCombo(this.dsCond.getColumn(0, "SUB_PJT_ID"));
+}
+
+//업무 Combo 조회
+this.fnSetPjtBizCombo = function(subPjtId)
+{
+	//trace("this.fnSetPjtBizCombo() this:[" + this + "] subPjtId:[" + subPjtId + "]");
+	if( !Ex.isEmpty(this.divSearch.form.cboBizId.innerdataset) )
+	{
+		this.divSearch.form.cboBizId.getInnerDataset().clearData();
+		var aRow = this.divSearch.form.cboBizId.getInnerDataset().insertRow(0);
+		this.divSearch.form.cboBizId.getInnerDataset().setColumn(0, "BIZ_NAME", Ex.core.word("- 전체 -"));
+	}
+	else
+	{
+		this.divSearch.form.cboBizId.set_displaynulltext(Ex.core.word("- 전체 - "));
+	}
+	this.setProjectBiz(this, subPjtId, this.divSearch.form.cboBizId, this.searchProjectBizCallBack);
+}
+
+//업무 Combo 조회 CallBack
+this.searchProjectBizCallBack = function()
+{
+	//trace("BF this.searchProjectBizCallBack() DS_COND BIZ_ID : " + this.dsCond.getColumn(0, "BIZ_ID"));
+	//trace("BF this.searchProjectBizCallBack() COMBO BIZ_ID : " + this.divSearch.form.cboBizId.value);
+	var aRow = this.divSearch.form.cboBizId.getInnerDataset().insertRow(0);
+	this.divSearch.form.cboBizId.getInnerDataset().setColumn(0, "BIZ_NAME", Ex.core.word("- 전체 -"));
+
+	var fRow = -1;
+	this.divSearch.form.cboBizId.set_displaynulltext("");
+	
+	if(this.divSearch.form.cboBizId.getInnerDataset().rowcount > 1)
+	{
+		fRow = this.divSearch.form.cboBizId.getInnerDataset().findRow("BIZ_ID", this.dsCond.getColumn(0, "BIZ_ID"));
+	}
+	else
+	{
+		fRow = 0;
+	}
+
+	if(fRow > -1)	this.divSearch.form.cboBizId.set_index(fRow);
+	else			this.divSearch.form.cboBizId.set_index(0);
+	
+	this.dsCond.setColumn(0, "BIZ_ID", this.divSearch.form.cboBizId.value);
+
+	//trace("AF this.searchProjectBizCallBack() DS_COND BIZ_ID : " + this.dsCond.getColumn(0, "BIZ_ID"));
+	//trace("AF this.searchProjectBizCallBack() COMBO BIZ_ID : " + this.divSearch.form.cboBizId.value);
+
+	if( !Ex.isEmpty(this.dsCond.getColumn(0, "SUB_PJT_ID")) )
+	{
+		this.fnSearch();	// 조회
+	}
+}
+
+this.setAddRepButton = function()
+{
+	var cnt = this.dsProgram.getCaseCount("ROWFLAG=='D'");
+	//trace("this.dsOnColumnDataChanged() cnt : " + cnt);
+	if(cnt > 0)
+	{
+		if(this.divGrdBotBtn.form.btnAddRep.visible)
+		{
+			this.divGrdBotBtn.form.btnAddRep.set_enable(false);
+			this.divGrdBotBtn.form.btnConfAddRep.set_enable(false);
+		}
+	}
+	else
+	{
+		if(this.divGrdBotBtn.form.btnAddRep.visible)
+		{
+			this.divGrdBotBtn.form.btnAddRep.set_enable(true);
+			this.divGrdBotBtn.form.btnConfAddRep.set_enable(true);
+		}
+	}
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearchPjtPop" :			
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ0100_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ0100_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title : "프로젝트 검색"
+				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				//"width=920,height=650"	// <--- width/height/modeless(프레임 처리 옵션)							
+				"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+			);
+			break;
+
+		case "btnSearchReset" :		// 검색조건 초기화
+			this.fnSearchReset();
+			break;
+
+		case "btnSearch" :			// 검색
+			this.fnSearch();
+			break;
+
+		case "btnExcelTemplate" :	// 엑셀템플릿
+			break;
+
+		case "btnExcelDown" :		// 엑셀다운
+			var oInfo = {
+   				Grid	: [this.grdMainList],
+   				Sheet	: [this.getOwnerFrame().info.menuNm],
+   				FileNm	: [this.getOwnerFrame().info.menuNm],
+   				ExportType : "XLSX",
+   				ExportId : "excel01"
+   			};
+			this.gfnExportExcel(this, oInfo);
+			break;
+
+		case "btnDelete" :			// 삭제
+			this.fnDelete(this.dsProgram);
+			break;
+
+		case "btnConfAddRep" :		//일괄등록
+			break;
+
+		case "btnAddRep" : 			// 등록
+			if(Ex.isEmpty(this.dsCond.getColumn(0, "PJT_ID")))
+			{
+				var oParam = {id : "alertNoSelPjtI", msg : "프로젝트를 선택하세요.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return;
+			}
+			
+			if(Ex.isEmpty(this.dsCond.getColumn(0, "SUB_PJT_ID")))
+			{
+				var oParam = {id : "alertNoSelSubPjtI", msg : "서브프로젝트를 선택하세요.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				return;
+			}
+
+			Ex.core.popup(
+				this,					// <--- 팝업 실행 스코프
+				"PJ4600_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+				"pj::PJ4600_P01.xfdl",	// <--- 팝업창 오픈 Url
+				{
+					title		: "프로그램 등록",
+					pPjtId		: this.dsCond.getColumn(0, "PJT_ID"),
+					pPjtNm		: this.dsCond.getColumn(0, "PJT_NM"),
+					pSubPjtId	: this.dsCond.getColumn(0, "SUB_PJT_ID"),
+					pPrgId		: '',
+					pMode		: 'NEW'
+				},							// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+				"autosize"					// <--- width/height/modeless(프레임 처리 옵션)							
+			);
+			break;
+
+		case "btnSave" :			//저장
+			if(this.dsProgram.getCaseCount("ROWFLAG=='D'") > 0)
+			{
+				var param = {
+						id : "saveConfirm"
+					  , msg : "10003"
+					  , arrparam : ['']
+					  , msgtype : "I"};
+				Ex.core.confirm(this, param);
+			}
+			break;
+	}
+}
+
+this.onKeyUp = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == 13) this.fnSearch();
+};
+
+this.cboOnItemChanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if(obj.id == "cboSubProject")
+	{
+		trace("this.cboOnItemChanged() cboSubProject e.postvalue : " + e.postvalue);
+		this.fnSetPjtBizCombo(e.postvalue);
+	}
+};
+
+this.grdOnCellClick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	if(e.row < 0) return;
+
+	// PJT_NAME 프로젝트/서브프로젝트명을 누를 때 마다 POPUP화면 호출
+	if (e.cell == obj.getBindCellIndex("body", "PRG_NO") || e.cell == obj.getBindCellIndex("body", "PRG_NAME"))
+	{
+		var strPjtId    = this.dsProgram.getColumn(obj.getDatasetRow(e.row), "P_PJT_ID");
+		var strPjtNm	= this.dsProgram.getColumn(obj.getDatasetRow(e.row), "P_PJT_NAME");
+		var strSubPjtId	= this.dsProgram.getColumn(obj.getDatasetRow(e.row), "PJT_ID");
+		var strSubPjtNm	= this.dsProgram.getColumn(obj.getDatasetRow(e.row), "PJT_NAME");
+		var strPrgId	= this.dsProgram.getColumn(obj.getDatasetRow(e.row), "PRG_ID");
+
+		trace("strPrgId : " + strPrgId);
+
+		Ex.core.popup(
+			this,					// <--- 팝업 실행 스코프
+			"PJ4600_P01",			// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+			"pj::PJ4600_P01.xfdl",	// <--- 팝업창 오픈 Url
+			{
+				title		: "프로그램 목록 상세",
+				pPjtId		: strPjtId,
+				pPjtNm		: strPjtNm,
+				pSubPjtId	: strSubPjtId,
+				pPrgId		: strPrgId,
+				pMode		: 'SEARCH'
+			},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+			"autosize"				// <--- width/height/modeless(프레임 처리 옵션)
+		);
+	}
+};
+
+this.dsOnColumnChanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+}]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divSearch.form.cboSubProject" propid="value" datasetid="dsCond" columnid="SUB_PJT_ID"/>
+      <BindItem id="item1" compid="divSearch.form.edtPrgNo" propid="value" datasetid="dsCond" columnid="PRG_NO"/>
+      <BindItem id="item2" compid="divSearch.form.edtPrgName" propid="value" datasetid="dsCond" columnid="PRG_NM"/>
+      <BindItem id="item3" compid="divSearch.form.cboBizId" propid="value" datasetid="dsCond" columnid="BIZ_ID"/>
+      <BindItem id="item4" compid="divSearch.form.cboPrgTypeCd" propid="value" datasetid="dsCond" columnid="PRG_TYPE_CD"/>
+      <BindItem id="item5" compid="divSearch.form.edtPlUserNm" propid="value" datasetid="dsCond" columnid="PL_USER_NM"/>
+      <BindItem id="item6" compid="divSearch.form.edtDevUserNm" propid="value" datasetid="dsCond" columnid="DEV_USER_NM"/>
+      <BindItem id="item11" compid="divSearch.form.edtPjtNm" propid="value" datasetid="dsCond" columnid="PJT_NM"/>
+      <BindItem id="item7" compid="divSearch.form.edtChgUserNm" propid="value" datasetid="dsCond" columnid="CHG_USER_NM"/>
+      <BindItem id="item9" compid="divSearch.form.cboDateGbn" propid="value" datasetid="dsCond" columnid="DATE_GBN"/>
+      <BindItem id="item10" compid="divSearch.form.calEtime" propid="value" datasetid="dsCond" columnid="EDATE"/>
+      <BindItem id="item12" compid="divSearch.form.calStime" propid="value" datasetid="dsCond" columnid="SDATE"/>
+      <BindItem id="item14" compid="divSearch.form.edFuncNo" propid="value" datasetid="dsCond" columnid="FUNC_NO"/>
+    </Bind>
+  </Form>
+</FDL>

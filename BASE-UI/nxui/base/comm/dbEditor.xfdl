@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="datasetList" width="1600" height="800" titletext="Debug" onload="DatasetList_onload" name="DatasetList" onkeydown="datasetList_onkeydown">
+    <Layouts>
+      <Layout width="1600" height="800">
+        <Static id="stcCenterLine" taborder="3" left="50%" top="0" background="rgba(173,142,219,0.4)" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" bottom="0" width="20"/>
+        <TextArea id="txaQueryEditor" taborder="0" left="5" top="29" cssclass="txa_WF_normal" bottom="0" wordWrap="char" acceptstab="true" onkeydown="txaQueryEditor_onkeydown" right="stcCenterLine:-5" oninput="txaQueryEditor_oninput"/>
+        <Grid id="grdList" taborder="1" left="stcCenterLine:-10.00" top="29" cssclass="grd_WF_normal" right="0" bottom="75" binddataset="dsData" cellsizebandtype="allband" cellsizingtype="col" autosizebandtype="allband" autosizingtype="both" cellmovingtype="col" extendsizetype="row" selecttype="area"/>
+        <Static id="stcCnt" taborder="2" top="2" width="90" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsData" right="0" textAlign="right"/>
+        <Button id="btnEditorSize" taborder="4" text="에디터 확대/축소" left="4.00" top="2" width="130" height="24" onclick="fnCommOnclick" cursor="pointer" tooltiptext="[CTRL+SHIFT+E] 확대/축소" cssclass="btn_WF_primary_save"/>
+        <TextArea id="txaErrMsg" taborder="5" left="stcCenterLine:-10" cssclass="txa_WF_normal" wordWrap="char" acceptstab="true" readonly="true" height="70" right="0" bottom="0"/>
+        <Button id="btnListSize" taborder="6" text="리스트 확대/축소" left="btnEditorSize:5.00" top="2" width="130" height="24" onclick="fnCommOnclick" cursor="pointer" tooltiptext="[CTRL+SHIFT+L] 확대/축소" cssclass="btn_WF_primary_save"/>
+        <Edit id="edtCurString" taborder="7" left="btnListSize:50" top="2" width="190" height="24"/>
+        <Static id="stc00" taborder="8" text="▶" left="edtCurString:10" top="6" width="14" height="15"/>
+        <Edit id="edtChgString" taborder="9" left="stc00:5" top="2" width="190" height="24"/>
+        <Button id="btnReplace" taborder="10" text="변경" left="edtChgString:2.00" top="2" width="60" height="24" onclick="fnCommOnclick" cssclass="btn_WF_primary_save"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="STR" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsData"/>
+      <Dataset id="dsErr"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ DEBUG/UTIL
+* 메뉴(경로)	︰ 공통관리 > 플랫폼 > 공통
+* 화면 설명	︰ 공통
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.00
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include
+ ***********************************************************************************/
+this.changeQueryString = "";
+this.sel1;
+this.sel2;
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.DatasetList_onload = function (obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.txaQueryEditor.set_acceptstab(true);
+	this.txaQueryEditor.setFocus();
+}
+
+this.fnExec = function()
+{
+	this.dsData.clear();
+	this.grdList.set_formats('<Formats><Format id="default"/></Formats>');
+	this.dsErr.clearData();
+	
+	var sTranId = "exec01";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+	var sService = "/sppExec";	// 서비스명
+	var sInDs = "dsCond=dsCond";                // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+	var sOutDs = "dsData=dsData dsErr=dsErr";			// 서버에서 수신할 데이타셋
+	var sArg = "";                   			// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "exec01" : // 서비스 ID
+			this.grdList.createFormat();
+			
+			if( this.dsErr.rowcount )
+			{
+				//trace('exec01 callbacak error');
+				trace(this.dsErr.getColumn(0, 'MSG'));
+				var opts = {
+					usedecorate		: true,
+					displaySecond	: 1,
+					toastType		: 'E'	// default ''
+				};
+				Ex.core.toast(this, "Error", null, opts);
+			}
+			else {
+				var opts = {
+					usedecorate		: true,
+					displaySecond	: 1,
+					toastType		: 'I'	// default ''
+				};
+				Ex.core.toast(this, "Complete", null, opts);
+			}
+			break;
+	}
+}
+
+this.btnSizeClickEvent = function(btnId)
+{
+	if(btnId == "btnEditorSize")
+	{
+		if(!this.txaQueryEditor)
+		{
+			this.txaQueryEditor.set_right("stcCenterLine:-5");
+			this.txaQueryEditor.set_visible(true);
+			this.stcCnt.set_visible(true);
+			this.grdList.set_visible(true);
+			this.txaErrMsg.set_visible(true);
+		}
+		else
+		{
+			if(this.txaQueryEditor.right != 0)
+			{
+				this.txaQueryEditor.set_right(0);
+				this.txaQueryEditor.set_visible(true);
+				this.stcCnt.set_visible(false);
+				this.grdList.set_visible(false);
+				this.txaErrMsg.set_visible(false);
+			}
+			else
+			{
+				this.txaQueryEditor.set_right("stcCenterLine:-5");
+				this.txaQueryEditor.set_visible(true);
+				this.stcCnt.set_visible(true);
+				this.grdList.set_visible(true);
+				this.txaErrMsg.set_visible(true);
+			}
+		}
+	}
+	else if(btnId == "btnListSize")
+	{
+		if(!this.grdList.visible)
+		{
+			this.grdList.set_left("stcCenterLine:-10");
+			this.txaErrMsg.set_left("stcCenterLine:-10");
+			this.txaQueryEditor.set_visible(true);
+			this.stcCnt.set_visible(true);
+			this.grdList.set_visible(true);
+			this.txaErrMsg.set_visible(true);
+		}
+		else
+		{
+			if(this.grdList.left != 0)
+			{
+				this.grdList.set_left(0);
+				this.txaErrMsg.set_left(true);
+				this.txaQueryEditor.set_visible(false);
+				this.stcCnt.set_visible(true);
+				this.grdList.set_visible(true);
+				this.txaErrMsg.set_visible(true);
+			}
+			else
+			{
+				this.grdList.set_left("stcCenterLine:-10");
+				this.txaErrMsg.set_left("stcCenterLine:-10");
+				this.txaQueryEditor.set_visible(true);
+				this.stcCnt.set_visible(true);
+				this.grdList.set_visible(true);
+				this.txaErrMsg.set_visible(true);
+			}
+		}
+	}
+};
+
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.id)
+	{
+		case "btnEditorSize" :	//에디터 확대/축소
+		case "btnListSize" :	//에디터 확대/축소
+			this.btnSizeClickEvent(obj.id);
+			break;
+
+		case "btnReplace" :		//텍스트 변경
+			var allString = this.txaQueryEditor.value;
+			this.txaQueryEditor.set_value(nexacro.replaceAll(allString, this.edtCurString.value, this.edtChgString.value));
+			break;
+	}
+}
+
+this.txaQueryEditor_onkeydown = function(obj:nexacro.TextArea,e:nexacro.KeyEventInfo)
+{
+ 	var isSelectText	= !Ex.isEmpty(obj.getSelectedText()) ? true : false;
+	var value			= isSelectText ? obj.getSelectedText() : obj.value;
+	var allText			= obj.value;
+	
+	this.changeQueryString = "";
+
+	if(e.keycode == 9)	//TAB키
+	{
+		if(isSelectText)
+		{
+			var selTextIdx = obj.getSelect();
+			//trace("selTextIdx[0]:[" + selTextIdx[0] + "] selTextIdx[1]:[" + selTextIdx[1] + "]");
+
+			var fromText	= allText.substring(0, selTextIdx[0]);
+			var toText		= allText.substring(selTextIdx[1]+ 1, allText.length-1);
+			//trace("fromText : " + fromText);
+			//trace("toText : " + toText);
+			
+			var allTextRowVal = allText.split("\n");
+			
+// 			for(var i=0; i<allTextRowVal.length; i++)
+// 			{
+// 				if(i>0)
+// 				{
+// 					allTextRowVal[i] = "\n" + allTextRowVal[i];
+// 				}
+// 			}
+			
+			var selectStartRow;
+			var selectEndRow;
+			var selectUpStartRowData	= allText.substring(0, selTextIdx[0]).split("\n");	//선택영역 전까지의 로우수
+			var selectUpEndRowData		= allText.substring(0, selTextIdx[1]).split("\n");	//선택영역 까지의 로우수
+			
+			selectStartRow	= selectUpStartRowData.length > 0 ? selectUpStartRowData.length-1 : 0;
+			selectEndRow	= selectUpEndRowData.length > 0 ? selectUpEndRowData.length-1 : 0;
+			
+// 			trace("선택시작행:[" + selectStartRow + "] 선택종료행:[" + selectEndRow + "]" +
+// 				  "\nDATA:[" + allText.split("\n")[selectStartRow] + "]" +
+// 				  "\nDATA:[" + allText.split("\n")[selectEndRow] + "]"
+// 			);
+			
+			var chgText = "";
+			
+			var firstRowAdd = 0;
+			var cnt = 0;
+			for(var i=0; i<allTextRowVal.length; i++)
+			{
+				if(i>=selectStartRow && i<=selectEndRow)
+				{
+					if(e.shiftkey)
+					{
+						if(allTextRowVal[i].substring(0, 1) == "\t")
+						{
+							chgText += (i>0 ? "\n" : "") + allTextRowVal[i].substring(1, allTextRowVal[i].length);
+							if(i==selectStartRow)	firstRowAdd++;
+							else					cnt++;
+							//trace("if i=" + i + " chgText:[" + chgText + "]");
+						}
+						else
+						{
+							chgText += (i>0 ? "\n" : "") + allTextRowVal[i];
+							//trace("else[1] i=" + i + " chgText:[" + chgText + "]");
+						}
+					}
+					else
+					{
+						chgText += (i>0 ? "\n\t" : "\t") + allTextRowVal[i];
+						if(i==selectStartRow)	firstRowAdd++;
+						else					cnt++;
+					}
+				}
+				else
+				{
+					chgText += (i>0 ? "\n" : "") + allTextRowVal[i];
+					//trace("else[2] i=" + i + " chgText:[" + chgText + "]");
+				}
+			}
+			
+			selTextIdx[0] = (e.shiftkey ? selTextIdx[0] - firstRowAdd : selTextIdx[0] + firstRowAdd);
+			selTextIdx[1] = (e.shiftkey ? selTextIdx[1] - (firstRowAdd + cnt) : selTextIdx[1] + (firstRowAdd + cnt) );
+			
+			//trace("chgText:\n[" + chgText + "]");
+			//trace("firstRowAdd:[" + firstRowAdd + "] cnt:[" + cnt + "] selTextIdx[0]:[" + selTextIdx[0] + "] selTextIdx[1]:[" + selTextIdx[1] + "] chg selectText:\n" + chgText.substring(selTextIdx[0], selTextIdx[1]));
+			
+			this.changeQueryString	= chgText;
+			this.sel1		= selTextIdx[0];
+			this.sel2		= selTextIdx[1];
+			
+			if(e.shiftkey)	this.txaQueryEditor_oninput(obj);
+		}
+		e.preventDefault();
+		e.stopPropagation();
+	}
+
+	if( e.ctrlkey ) 
+	{
+		if( e.keycode == 13 )
+		{
+			if( !Ex.isEmpty(value) )
+			{
+				this.dsCond.setColumn(0, 'STR', value);
+				this.fnExec();
+				if(this.stcCenterLine.left != "50%")
+				{
+					this.btnSizeClickEvent("btnEditorSize");
+				}
+			}
+		}
+	}
+};
+
+this.datasetList_onkeydown = function(obj:nexacro.Form,e:nexacro.KeyEventInfo)
+{
+	//trace("this.datasetList_onkeydown() e.keycode : " + e.keycode);
+	if(e.ctrlkey && e.shiftkey)
+	{
+		if(e.keycode == 69)	//e키
+		{
+			this.btnSizeClickEvent("btnEditorSize");
+		}
+		else if(e.keycode == 76)	//l키
+		{
+			this.btnSizeClickEvent("btnListSize");
+		}
+		else if(e.keycode == 49)	//1키
+		{
+			this.parent.parent.parent.btnAddTab.click();
+		}
+	}
+};
+
+this.txaQueryEditor_oninput = function(obj:nexacro.TextArea,e:nexacro.InputEventInfo)
+{
+	//trace("this.txaQueryEditor_oninput()");
+	if( !Ex.isEmpty(this.changeQueryString) )
+	{
+		obj.set_value(this.changeQueryString);
+		obj.setSelect(this.sel1, this.sel2);
+		//trace("confVal:\n[" + obj.value.substring(this.sel1, this.sel2) + "]");
+		this.changeQueryString = undefined;
+		this.sel1				= undefined;
+		this.sel2				= undefined;
+	}
+};]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="txaErrMsg" propid="value" datasetid="dsErr" columnid="MSG"/>
+    </Bind>
+  </Form>
+</FDL>

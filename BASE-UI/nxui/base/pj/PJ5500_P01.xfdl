@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="PJ5500_P01" left="0" top="0" width="1280" height="629" titletext="시나리오 테스트 상세 팝업" onload="form_onload">
+    <Layouts>
+      <Layout width="1280" height="629">
+        <Div id="divContents" taborder="0" left="0" top="0" right="0" bottom="60" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staTitle" taborder="0" text="시나리오 테스트" cssclass="sta_WF_gridTitle" left="20" top="20" width="147" height="24" visible="false"/>
+              <Static id="stcBackMid1" taborder="1" left="20" top="44" height="10" background="rgba(173,142,219,0.4)" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="20"/>
+              <Grid id="grdMainList" taborder="2" binddataset="dsScnrTest" useinputpanel="false" cellsizingtype="col" onsummclick="grdFuncMapList_onsummclick" left="20" right="20" autoupdatetype="itemselect" cssclass="grd_WF_normal" top="stcBackMid1:0" height="515">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="50"/>
+                      <Column size="150"/>
+                      <Column size="150"/>
+                      <Column size="100"/>
+                      <Column size="80"/>
+                      <Column size="120"/>
+                      <Column size="200"/>
+                      <Column size="200"/>
+                      <Column size="80"/>
+                      <Column size="150"/>
+                      <Column size="200"/>
+                      <Column size="250"/>
+                      <Column size="250"/>
+                      <Column size="250"/>
+                      <Column size="100"/>
+                      <Column size="130"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="100"/>
+                      <Column size="110"/>
+                      <Column size="100"/>
+                      <Column size="250"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="No"/>
+                      <Cell col="1" text="서브 PJT"/>
+                      <Cell col="2" text="업무"/>
+                      <Cell col="3" text="테스트 종류"/>
+                      <Cell col="4" text="차수"/>
+                      <Cell col="5" text="시나리오 ID"/>
+                      <Cell col="6" text="시나리오 명"/>
+                      <Cell col="7" text="테스트 절차"/>
+                      <Cell col="8" text="#STEP"/>
+                      <Cell col="9" text="스텝 ID"/>
+                      <Cell col="10" text="스텝 명"/>
+                      <Cell col="11" text="상세절차"/>
+                      <Cell col="12" text="테스트 데이터"/>
+                      <Cell col="13" text="예상결과"/>
+                      <Cell col="14" text="테스트 수행자"/>
+                      <Cell col="15" text="테스트 수행자 사번"/>
+                      <Cell col="16" text="테스트 계획일"/>
+                      <Cell col="17" text="결과"/>
+                      <Cell col="18" text="테스트 실행일"/>
+                      <Cell col="19" text="고객확인자"/>
+                      <Cell col="20" text="고객확인자 사번"/>
+                      <Cell col="21" text="고객확인일"/>
+                      <Cell col="22" text="비고"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell expr="expr:currow+1"/>
+                      <Cell col="1" style="align:left;" text="bind:PJT_NAME"/>
+                      <Cell col="2" style="align:left;" text="bind:BIZ_NAME"/>
+                      <Cell col="3" displaytype="combotext" text="bind:STEST_TYPE_CD" combodataset="dsStestTypeCd" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                      <Cell col="4" displaytype="combotext" text="bind:STEST_VERSION" combodataset="dsStestVersion" combocodecol="CODE" combodatacol="NAME"/>
+                      <Cell col="5" text="bind:STEST_NO"/>
+                      <Cell col="6" style="align:left;" text="bind:STEST_NAME" tooltiptext="bind:STEST_NAME" textAlign="left"/>
+                      <Cell col="7" style="align:left;" text="bind:CASE_DESC" tooltiptext="bind:CASE_DESC" textAlign="left"/>
+                      <Cell col="8" text="bind:STEP_SEQ"/>
+                      <Cell col="9" text="bind:STEP_NO"/>
+                      <Cell col="10" style="align:left;" text="bind:STEP_NAME" tooltiptext="bind:STEP_NAME" textAlign="left"/>
+                      <Cell col="11" style="align:left top;" text="bind:STEP_DESC" tooltiptext="bind:STEP_DESC" textAlign="left"/>
+                      <Cell col="12" style="align:left top;" text="bind:STEP_INPUT" tooltiptext="bind:STEP_INPUT" textAlign="left"/>
+                      <Cell col="13" style="align:left top;" text="bind:STEP_EXPECT" tooltiptext="bind:STEP_EXPECT" textAlign="left"/>
+                      <Cell col="14" displaytype="normal" text="bind:TESTER_NM"/>
+                      <Cell col="15" displaytype="normal" text="bind:TESTER_ID"/>
+                      <Cell col="16" displaytype="date" text="bind:TESTER_PDATE" calendardateformat="yyyy-MM-dd"/>
+                      <Cell col="17" displaytype="combotext" text="bind:RESULT_CD" combodataset="dsResultCd" combocodecol="CMM_CD" combodatacol="CMM_CD_NM"/>
+                      <Cell col="18" displaytype="date" text="bind:TESTER_ADATE" calendardateformat="yyyy-MM-dd"/>
+                      <Cell col="19" displaytype="normal" text="bind:UPMU_USER_NM"/>
+                      <Cell col="20" displaytype="normal" text="bind:UPMU_USER_ID"/>
+                      <Cell col="21" displaytype="date" text="bind:UPMU_TEST_ADATE" calendardateformat="yyyy-MM-dd"/>
+                      <Cell col="22" style="align:left top;" text="bind:REMARK" tooltiptext="bind:REMARK" textAlign="left"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+              <Static id="staListCnt" taborder="3" cssclass="sta_WF_GridCount" left="staTitle:0" top="20" width="150" height="24" style="align:left middle;" countDataset="dsScnrTest" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divBtnBottom" taborder="1" height="60" bottom="0" text="" cssclass="div_POP_msg_btnbg" left="20" right="20">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="14"/>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsScnrTest">
+        <ColumnInfo>
+          <Column id="CHK" type="string" size="1"/>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="UTDFT_ID" type="string" size="16"/>
+          <Column id="PJT_ID" type="string" size="16"/>
+          <Column id="BIZ_ID" type="string" size="16"/>
+          <Column id="BIZ_NAME" type="string" size="100"/>
+          <Column id="UTDFT_NO" type="string" size="100"/>
+          <Column id="UTDFT_NAME" type="string" size="200"/>
+          <Column id="UTDFT_TYPE_CD" type="string" size="30"/>
+          <Column id="UTDFT_DESC" type="string" size="4000"/>
+          <Column id="UTDFT_RCV_CD" type="string" size="30"/>
+          <Column id="UTDFT_ACT_CD" type="string" size="30"/>
+          <Column id="DFT_USER_ID" type="string" size="10"/>
+          <Column id="DFT_USER_NM" type="string" size="100"/>
+          <Column id="DFT_USER_DEPT" type="string" size="100"/>
+          <Column id="DFT_REG_DATE" type="string" size="8"/>
+          <Column id="ACT_USER_ID" type="string" size="10"/>
+          <Column id="ACT_USER_NM" type="string" size="100"/>
+          <Column id="ACT_USER_DEPT" type="string" size="100"/>
+          <Column id="ACT_PDATE" type="string" size="8"/>
+          <Column id="ACT_ADATE" type="string" size="8"/>
+          <Column id="ACT_DESC" type="string" size="4000"/>
+          <Column id="CONF_USER_ID" type="string" size="10"/>
+          <Column id="CONF_USER_NM" type="string" size="100"/>
+          <Column id="CONF_USER_DEPT" type="string" size="100"/>
+          <Column id="CONF_DATE" type="string" size="8"/>
+          <Column id="REG_STIME" type="string" size="14"/>
+          <Column id="REG_USER_ID" type="string" size="10"/>
+          <Column id="REG_USER_NM" type="string" size="100"/>
+          <Column id="REG_USER_DEPT" type="string" size="100"/>
+          <Column id="SYSMODTIME" type="string" size="14"/>
+          <Column id="LMOD_USER_ID" type="string" size="10"/>
+          <Column id="LMOD_USER_NM" type="string" size="100"/>
+          <Column id="LMOD_USER_DEPT" type="string" size="100"/>
+          <Column id="UTDFT_RCV_DESC" type="string" size="4000"/>
+          <Column id="REMARK" type="string" size="4000"/>
+          <Column id="UTEST_ID" type="string" size="16"/>
+          <Column id="UTEST_NO" type="string" size="100"/>
+          <Column id="UTEST_NAME" type="string" size="200"/>
+          <Column id="PRG_REF_CD" type="string" size="30"/>
+          <Column id="PRG_REF_ID" type="string" size="16"/>
+          <Column id="PRG_REF_NO" type="string" size="100"/>
+          <Column id="PRG_REF_NAME" type="string" size="100"/>
+          <Column id="PJT_NAME" type="string" size="200"/>
+          <Column id="P_PJT_ID" type="string" size="16"/>
+          <Column id="P_PJT_NAME" type="string" size="200"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsStestTypeCd"/>
+      <Dataset id="dsStestVersion">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="PJT_ID" type="STRING" size="256"/>
+          <Column id="BIZ_ID" type="STRING" size="256"/>
+          <Column id="STEST_TYPE_CD" type="STRING" size="256"/>
+          <Column id="STEST_VERSION" type="STRING" size="256"/>
+          <Column id="STEST_NO" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ PJ5500_P01
+* 화면(명)		︰ 시나리오 테스트 상세 팝업
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.11.13
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.11.13	 WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();		// 컴포넌트 초기화	
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	//trace("[PJ5500_P01] this.fnSearch()");
+	var sTranId = "select01";																
+    var sService = "PJ5500P/select01";		// 서비스명
+    var sInDs = "dsCond=dsCond";			// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsScnrTest=dsScnrTest";		// 서버에서 수신할 데이타셋
+    var sArg = "";							// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID, varValue)
+{
+	if( Ex.isEmpty(varValue) ) return;
+
+	switch(pID)
+	{
+		case "" :
+			break;
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	// TO DO
+	if(!varValue) return;
+	
+	switch(mID)
+	{
+		case "" :
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.dsCond.setColumn(0, "PJT_ID", this.getOwnerFrame().pPjtId);
+	this.dsCond.setColumn(0, "BIZ_ID", this.getOwnerFrame().pBizId);
+	this.dsCond.setColumn(0, "STEST_TYPE_CD", this.getOwnerFrame().pStestTypeCd);
+	this.dsCond.setColumn(0, "STEST_VERSION", this.getOwnerFrame().pStestVersion);
+	this.dsCond.setColumn(0, "STEST_NO", this.getOwnerFrame().pStestNo);
+
+	if( this.getOwnerFrame().pType == "FAIL_CNT")
+	{
+		this.divContents.form.staTitle.set_text(Ex.core.word("시나리오 테스트(실패 건)"));
+	}
+	else if( this.getOwnerFrame().pType ==  "ALL_CNT")
+	{
+		this.divContents.form.staTitle.set_text(Ex.core.word("시나리오 테스트(실패, 미수행 건)"));
+	}
+	
+	var objSize = nexacro.getTextSize(this.divContents.form.staTitle.text, this.divContents.form.staTitle._getCurrentStyleInheritValue("font"));
+	this.divContents.form.staTitle.set_width(parseInt(objSize.nx) + 35);
+	this.divContents.form.staListCnt.set_left("staTitle:0");
+
+	this.divContents.form.staTitle.set_visible(true);
+	this.divContents.form.staListCnt.set_visible(true);
+	
+	this.fnGetCmmCd();	// 공통코드 조회
+
+	this.fnSearch();
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		 upCmmCd	: ['STEST_TYPE_CD',		'STEST_RST_CD']		// 조회할 상위코드
+		,codeDiv	: ['PJT_MNG_CD',		'PJT_MNG_CD']		// 조회할 코드의 업무구분
+		,optStr		: ['',					'']					// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn		: ['Y',					'Y']				// 사용여부
+		,filter		: ['',					'']					// filterStr
+		,objDs		: [this.dsStestTypeCd,	this.dsResultCd]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+	
+	var aRow = this.dsStestVersion.addRow();
+	this.dsStestVersion.setColumn(aRow, "CODE", undefined);
+	this.dsStestVersion.setColumn(aRow, "NAME", "");
+	
+	for(var i=1; i<=10; i++)
+	{
+		aRow = this.dsStestVersion.addRow();
+		this.dsStestVersion.setColumn(aRow, "CODE", i);
+		this.dsStestVersion.setColumn(aRow, "NAME", i + Ex.core.word("차"));
+	}
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnClose" : 	// 닫기
+			Ex.core.pclose(this);
+			break;
+	}
+}]]></Script>
+  </Form>
+</FDL>

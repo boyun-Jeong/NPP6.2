@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="FOMM0260_W" classname="top" left="0" top="0" titletext="휴일관리" onload="form_onload" scrolltype="none" cssclass="" height="720" width="1600">
+    <Layouts>
+      <Layout width="1600" height="720" mobileorientation="landscape">
+        <Div id="divSearchArea" taborder="0" left="0" top="0" height="50" right="0" cssclass="div_WF_divSearchArea" text="" formscrollbartype="none">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="3" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="58"/>
+              <Button id="btnSearch" taborder="1" top="12" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick" visible="false"/>
+              <Button id="btnSearchReset" taborder="2" top="12" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick" visible="false"/>
+              <Div id="divChkAmStatCd" taborder="0" left="105" top="129" width="390" height="24" url="comm::comCheckboxDiv.xfdl" onkeydown="fnCommOnkeydown"/>
+              <Static id="stcWrkNm" taborder="4" text="기준년월" left="Static00:0" top="12" width="100" height="24" cssclass="sta_WF_schTitle"/>
+              <Combo id="cboYear" taborder="5" left="stcWrkNm:0" top="12" width="120" height="24" value="" index="-1" innerdataset="dsYearCd" datacolumn="YYYY" codecolumn="YYYY" onitemchanged="divSearchArea_cboMonth_onitemchanged"/>
+              <Combo id="cboMonth" taborder="6" left="cboYear:5" top="12" width="90" height="24" value="" index="-1" innerdataset="dsMonthCd" datacolumn="MONTH" codecolumn="MONTH" onitemchanged="divSearchArea_cboMonth_onitemchanged"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00" taborder="2" left="0" top="50" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divBottomButton" taborder="3" maxwidth="" text="" isChgLang="false" isButtonGroup="true" visible="true" width="200" height="32" bottom="0" right="0">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="1" left="0" top="46" height="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+              <Button id="btnSave" taborder="0" text="저장" width="80" cssclass="btn_WF_primary_save" right="0" onclick="fnCommOnclick" isChgLang="false" height="32" bottom="0"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Grid id="grdList" taborder="1" left="0" top="Static00:0" bottom="45" binddataset="dsMonthInfo" cssclass="grd_WF_normal" autofittype="col" useSort="true" right="0" oncellclick="grdList_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="48"/>
+                <Column size="150"/>
+                <Column size="150"/>
+                <Column size="70"/>
+                <Column size="800"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="행상태"/>
+                <Cell col="1" text="일자"/>
+                <Cell col="2" text="요일"/>
+                <Cell col="3" text="휴일구분"/>
+                <Cell col="4" text="비고"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:ROWFLAG"/>
+                <Cell col="1" text="bind:FULL_DT" textAlign="center" displaytype="date" calendardateformat="yyyy-MM-dd" cssclass="expr:HOLI_YN != 1 ? &quot;&quot; : &quot;grdBCell_WF_danger&quot;"/>
+                <Cell col="2" text="bind:WEEK_NM" textAlign="center" cssclass="expr:HOLI_YN != &quot;1&quot; ? &quot;&quot; : &quot;grdBCell_WF_danger&quot;"/>
+                <Cell col="3" text="bind:HOLI_YN" textAlign="center" displaytype="checkboxcontrol" calendardateformat="yyyy-MM-dd" edittype="checkbox" checkboxfalsevalue="0" checkboxtruevalue="1"/>
+                <Cell col="4" text="bind:HOLI_NAME" textAlign="left" displaytype="editcontrol" edittype="text"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="YEAR" type="STRING" size="256"/>
+          <Column id="MONTH" type="STRING" size="256"/>
+          <Column id="DT" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsMonthInfo" oncolumnchanged="fnCommOncolumnchanged">
+        <ColumnInfo>
+          <Column id="ROWFLAG" type="STRING" size="256"/>
+          <Column id="DT" type="STRING" size="256"/>
+          <Column id="FULL_DT" type="STRING" size="256"/>
+          <Column id="WEEK_CD" type="STRING" size="256"/>
+          <Column id="WEEK_NM" type="STRING" size="256"/>
+          <Column id="IS_TODAY" type="STRING" size="256"/>
+          <Column id="HOLI_YN" type="STRING" size="256"/>
+          <Column id="HOLI_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsYearCd">
+        <ColumnInfo>
+          <Column id="YYYY" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsMonthCd">
+        <ColumnInfo>
+          <Column id="MONTH" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="MONTH">-전체-</Col>
+          </Row>
+          <Row>
+            <Col id="MONTH">01</Col>
+          </Row>
+          <Row>
+            <Col id="MONTH">02</Col>
+          </Row>
+          <Row>
+            <Col id="MONTH">03</Col>
+          </Row>
+          <Row>
+            <Col id="MONTH">04</Col>
+          </Row>
+          <Row>
+            <Col id="MONTH">05</Col>
+          </Row>
+          <Row>
+            <Col id="MONTH">06</Col>
+          </Row>
+          <Row>
+            <Col id="MONTH">07</Col>
+          </Row>
+          <Row>
+            <Col id="MONTH">08</Col>
+          </Row>
+          <Row>
+            <Col id="MONTH">09</Col>
+          </Row>
+          <Row>
+            <Col id="MONTH">10</Col>
+          </Row>
+          <Row>
+            <Col id="MONTH">11</Col>
+          </Row>
+          <Row>
+            <Col id="MONTH">12</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ FOMM0260_W
+* 화면(명)		︰ 휴일관리
+* 메뉴(경로)		︰ 관리자 > 운영관리자 > 휴일관리
+* 화면 설명		︰ 휴일관리
+* 작성자			︰ WEMB
+* 작성일			︰ 2024.07.11
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2024.07.11 	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// component init
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	var today = Ex.util.today();
+	var tDate = new Date(Ex.util.strToDate(today));
+	var curYear = Ex.util.getMaskFormatString(tDate, "yyyy");	
+	var curMonth = Ex.util.getMaskFormatString(tDate, "MM");
+	
+	this.dsCond.setColumn(0, "YEAR", curYear);
+	this.dsCond.setColumn(0, "MONTH", curMonth);
+	this.dsCond.setColumn(0, "DT", this.dsCond.getColumn(0, "YEAR") + this.dsCond.getColumn(0, "MONTH"));
+}
+
+// 조회
+this.fnSearch = function()
+{
+	if( Ex.util.isUpdated(this.dsMain) )
+	{
+		var param = {
+						id : "pSearchConfirm"
+					  , msg : "10001"
+					  , arrparam : []
+					  , msgtype : "I"};
+		Ex.core.confirm(this, param);
+		return;
+	}
+	
+	if(!this.fnCheckValidate()) return;
+	this.fnSearch01();
+}
+
+this.fnSearch01 = function()
+{
+	if(this.dsCond.getColumn(0, "MONTH") == '-전체-')
+			this.dsCond.setColumn(0, "DT", "ALL");
+	else	this.dsCond.setColumn(0, "DT", this.dsCond.getColumn(0, "YEAR") + this.dsCond.getColumn(0, "MONTH"));
+	
+	// transaction
+	var sTranId = "select01";                       			// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0260W/select01";            			// 서비스명
+    var sInDs = "dsCond=dsCond";                  				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsMonthInfo=dsMonthInfo dsCalData=dsCalData"; // 서버에서 수신할 데이타셋
+    var sArg = "";                   							// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 저장
+this.fnSave = function()
+{
+	// transaction
+	var sTranId = "save01";			// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0260W/save01";	// 서비스명
+    var sInDs = "dsMonthInfo=dsMonthInfo:U dsCond=dsCond";		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsMonthInfo=dsMonthInfo";		// 서버에서 수신할 데이타셋
+    var sArg = "";                   	//  서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 삭제
+this.fnDelete = function(objDs:Dataset)
+{	
+}
+
+this.fnYearCd = function()
+{
+	// transaction
+	var sTranId = "select02";                   // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0260W/select02";        // 서비스명
+    var sInDs = "dsCond=dsCond";              	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsYearCd=dsYearCd"; 			//서버에서 수신할 데이타셋
+    var sArg = "";                   			// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");	
+			break;
+			
+		case "save01" :
+			Ex.core.toast(this, "10004", null, {toastType:'S'});
+			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	if( Ex.isEmpty(varValue) )	return;
+	//this.dsPopRtn.loadXML(varValue);
+	switch(pID){}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	if(!varValue)	return;
+	
+	switch(mID)
+	{
+		case "searchConfirm" :
+			this.fnSearch01();
+			break;
+			
+		case "saveConfirm" :
+			this.fnSave();
+			break;
+			
+		case "saveDelete" :
+			this.fnDelete();
+			break;
+	}
+}
+
+
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.grdList.displayRowType();
+
+	// 공통코드 조회
+	this.fnGetCmmCd();
+	this.fnYearCd();
+	this.fnSearchReset();
+	this.fnSearch();
+	
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['']// 조회할 상위코드
+		,codeDiv: ['']// 조회할 코드의 업무구분
+		,optStr	: ['']// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['']// 사용여부
+		,filter	: ['']// filterStr
+		,objDs	: [''] 		// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+
+
+// 검색조건 유효성 검사
+this.fnCheckValidate = function()
+{
+	// component validation
+
+	var strValue1 = this.dsCond.getColumn(0,"START_WRK_DTTM");
+	var strValue2 = this.dsCond.getColumn(0,"END_WRK_DTTM");
+	
+	if( strValue1 > strValue2 )
+	{	
+		var param = {id : "pAlertDate", msg : "대체 기간을 확인해주세요."};
+		Ex.core.alert(this, param);
+		return false;
+	} 
+	
+	if( !Ex.util.checkValidate(this.divSearchArea, "fvValiCmp") )
+	{	
+		return false;
+	}
+	
+	return true;
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearch" :
+			this.fnSearch();
+			break;
+			
+		case "btnDelete" : 
+			var param = {
+ 					id : "saveDelete"
+ 				  , msg : "관리자를 삭제하시겠습니까?"
+ 				  , arrparam : ['']
+ 				  , msgtype : "I"
+ 			};
+ 			Ex.core.confirm(this, param);
+			break;
+			
+		case "btnSave" : 
+			var param = {
+ 					id : "saveConfirm"
+ 				  , msg : "10003"
+ 				  , arrparam : ['']
+ 				  , msgtype : "I"
+ 			};
+ 			Ex.core.confirm(this, param);
+			break;
+	}
+}
+
+this.divSearchArea_cboMonth_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	this.fnSearch();
+};
+
+this.fnCommOnkeydown = function(obj:nexacro.Calendar,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == '13')
+	{
+		this.divSearchArea.form.btnSearch.setFocus();
+		this.fnSearch();
+		obj.setFocus();
+	}
+};
+
+// 대체기간 :: 시작일이 종료일보다 크지 않도록 / 종료일이 시작일보다 작지 않도록
+this.fnDateOncloseup = function(obj:nexacro.Calendar,e:nexacro.CalendarCloseUpEventInfo)
+{
+	var sDate = this.dsAgency.getColumn(0, "AGENCY_SDT");
+	var eDate = this.dsAgency.getColumn(0, "AGENCY_EDT");
+	
+	if( !Ex.isEmpty(sDate) && !Ex.isEmpty(eDate) )
+	{
+		if(sDate > eDate)
+		{
+			
+			if(obj.id == 'calBeginDate')
+			{
+				//var oParam = {id : "alertSearchDateI", msg : "대체 기간 시작일은 종료일 이전 날짜여야 합니다.", arrparam : [], msgtype : "I"};
+				//Ex.core.alert(this, oParam);
+				//var preDate = Ex.util.addDate(Ex.util.today(), -120);
+				//var today = Ex.util.today();
+				//this.dsAgency.setColumn(0, "AGENCY_SDT", today);
+				this.dsAgency.setColumn(0, "AGENCY_EDT", sDate);
+			}
+			else if(obj.id == 'calEndDate')
+			{
+				var oParam = {id : "alertSearchDateI", msg : "종료일자가 시작일자보다 작을 수 없습니다.", arrparam : [], msgtype : "I"};
+				Ex.core.alert(this, oParam);
+				this.dsAgency.setColumn(0, "AGENCY_EDT", sDate);
+			}
+			return false;
+		}
+	}
+};
+
+this.grdList_oncellclick = function(obj:nexacro.Grid,e:nexacro.GridClickEventInfo)
+{
+	console.log(e.row);
+	console.log(this.grdList.getCellProperty("body", e.row, "cssclass"));
+	console.log(this.grdList.getCellPropertyValue( e.row, 1, "cssclass"));
+	console.log(this.grdList.getCellPropertyValue( e.row, 2, "cssclass"));
+};
+
+// 공통 oncloumnchanged event : dataset
+// Grid rowFlag 처리르 위해 호출 필요
+this.fnCommOncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};]]></Script>
+    <Bind>
+      <BindItem id="item1" compid="divSearchArea.form.calBeginDate" propid="value" datasetid="dsCond" columnid="START_WRK_DTTM"/>
+      <BindItem id="item2" compid="divSearchArea.form.calEndDate" propid="value" datasetid="dsCond" columnid="END_WRK_DTTM"/>
+      <BindItem id="item13" compid="divSearchArea.form.edtSvcId" propid="value" datasetid="dsCond" columnid="SVC_ID"/>
+      <BindItem id="item14" compid="divSearchArea.form.edtHostNm" propid="value" datasetid="dsCond" columnid="EXEC_HSTNM"/>
+      <BindItem id="item3" compid="divSearchArea.form.edtNotiUserNm" propid="value" datasetid="dsCond" columnid="WRK_NAME"/>
+      <BindItem id="item0" compid="divSearchArea.form.edtNotiUserDeptNm" propid="value" datasetid="dsCond" columnid="WRK_ID"/>
+      <BindItem id="item4" compid="divSearchArea.form.edtAgencyUserId" propid="value" datasetid="dsCond" columnid="AGENCY_USER_ID"/>
+      <BindItem id="item5" compid="divSearchArea.form.edtUserId" propid="value" datasetid="dsCond" columnid="USER_ID"/>
+      <BindItem id="item6" compid="divSearchArea.form.cboYear" propid="value" datasetid="dsCond" columnid="YEAR"/>
+      <BindItem id="item7" compid="divSearchArea.form.cboMonth" propid="value" datasetid="dsCond" columnid="MONTH"/>
+    </Bind>
+  </Form>
+</FDL>

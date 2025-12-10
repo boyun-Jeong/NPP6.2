@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="ref35" left="0" top="0" width="1024" height="720" titletext="NAC Test" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <Div id="divSearchArea" taborder="1" left="0" top="60" height="50" right="0" cssclass="div_WF_divSearchArea" text="">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="3" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+              <Static id="staCoNm" taborder="2" text="IP(등록/삭제시)" left="Static00:0.00" top="13" width="105" height="24" cssclass="sta_WF_inputTitle"/>
+              <Edit id="edtCoNm" taborder="0" left="staCoNm:-1" top="13" width="145" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown"/>
+              <Button id="btnDelete" taborder="4" top="13" width="75" height="24" text="삭제" right="5" onclick="fnCommOnclick"/>
+              <Button id="btnReg" taborder="1" top="13" width="75" height="24" text="등록" right="btnDelete:5" onclick="fnCommOnclick"/>
+              <Static id="staCoNm00" taborder="6" text="SENSORNID(등록시)" left="edtCoNm:5.00" top="13" width="130" height="24" cssclass="sta_WF_inputTitle"/>
+              <Edit id="edtCoNm00" taborder="5" left="staCoNm00:-1" top="13" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown" right="btnReg:5"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <TextArea id="txaResult" taborder="3" left="0" height="200" bottom="0" right="0" readonly="true"/>
+        <Edit id="edt00" taborder="4" left="50%" right="0" bottom="txaResult:5" height="24" readonly="true"/>
+        <Grid id="grdUseIpList" taborder="0" left="0" top="divSearchArea:10" bottom="edt00:5" binddataset="dsIpUseList" autosizebandtype="allband" autosizingtype="col" selecttype="area" width="50%">
+          <Formats>
+            <Format id="default"/>
+          </Formats>
+        </Grid>
+        <Div id="divSearchArea00" taborder="2" left="0" top="0" height="50" right="0" cssclass="div_WF_divSearchArea" text="">
+          <Layouts>
+            <Layout>
+              <Static id="staCoNm" taborder="0" text="근무장소" left="20.00" top="13" width="60" height="24" cssclass="sta_WF_schTitle"/>
+              <Static id="Static00" taborder="1" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+              <Combo id="cboPlace" taborder="2" text="cbo00" left="staCoNm:5.00" top="13" width="165" height="24" cssclass="cbo_WF_normal" innerdataset="dsPlaceAll" codecolumn="CMM_CD" datacolumn="CMM_CD_NM" onitemchanged="divSearchArea00_cboPlace_onitemchanged"/>
+              <Combo id="cboGubun" taborder="7" left="cboPlace:5.00" top="13" height="24" value="CODE" index="0" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" text="근무장소 대역" width="120" onitemchanged="divSearchArea00_cboGubun_onitemchanged">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">CODE</Col>
+                      <Col id="datacolumn">근무장소 대역</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">IP</Col>
+                      <Col id="datacolumn">입력 IP</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Combo id="cboGubun00" taborder="9" left="cboGubun:5" top="13" height="24" value="CODE" index="0" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" text="근무장소 대역" width="90">
+                <Dataset id="innerdataset">
+                  <ColumnInfo>
+                    <Column id="codecolumn" size="256"/>
+                    <Column id="datacolumn" size="256"/>
+                  </ColumnInfo>
+                  <Rows>
+                    <Row>
+                      <Col id="codecolumn">ALL</Col>
+                      <Col id="datacolumn">전체</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">Y</Col>
+                      <Col id="datacolumn">사용중</Col>
+                    </Row>
+                    <Row>
+                      <Col id="codecolumn">N</Col>
+                      <Col id="datacolumn">미사용</Col>
+                    </Row>
+                  </Rows>
+                </Dataset>
+              </Combo>
+              <Edit id="edt00" taborder="3" left="cboGubun00:5" top="13" width="105" height="24" readonly="true"/>
+              <Edit id="edt00_00" taborder="4" left="edt00:5.00" top="13" width="100" height="24" readonly="true"/>
+              <Edit id="edt00_00_00" taborder="5" left="edt00_00:5.00" top="13" width="199" height="24" readonly="true"/>
+              <Button id="btnSearch" taborder="8" top="13" width="75" height="24" text="조회" right="5" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Edit id="edt00_00_00_00" taborder="6" left="edt00_00_00:5.00" top="13" height="24" readonly="true" right="btnSearch:5"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Edit id="edt00_00" taborder="5" left="0" right="50%" bottom="205" height="24" readonly="true"/>
+        <Grid id="grdUnUseIpList" taborder="6" top="120" bottom="234" binddataset="dsIpUnUseList" autosizebandtype="allband" autosizingtype="col" selecttype="area" width="50.00%" right="0">
+          <Formats>
+            <Format id="default"/>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsParams">
+        <ColumnInfo>
+          <Column id="GUBUN" type="STRING" size="256"/>
+          <Column id="UP_CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="IP_ADDR" type="STRING" size="256"/>
+          <Column id="ITM_VAL_1" type="STRING" size="256"/>
+          <Column id="ITM_VAL_2" type="STRING" size="256"/>
+          <Column id="SENSORNID" type="STRING" size="256"/>
+          <Column id="USE_YN" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="GUBUN">CODE</Col>
+            <Col id="USE_YN">ALL</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsIpList"/>
+      <Dataset id="dsPlaceAll"/>
+      <Dataset id="dsPlace1"/>
+      <Dataset id="dsPlace2"/>
+      <Dataset id="dsResult"/>
+      <Dataset id="dsIpUseList"/>
+      <Dataset id="dsIpUnUseList"/>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="divSearchArea.form.edtCoNm" propid="value" datasetid="dsParams" columnid="IP_ADDR"/>
+      <BindItem id="item1" compid="txaResult" propid="value" datasetid="dsResult" columnid="RTN"/>
+      <BindItem id="item2" compid="divSearchArea00.form.edt00" propid="value" datasetid="dsParams" columnid="UP_CMM_CD"/>
+      <BindItem id="item3" compid="divSearchArea00.form.edt00_00" propid="value" datasetid="dsParams" columnid="CMM_CD"/>
+      <BindItem id="item4" compid="divSearchArea00.form.edt00_00_00" propid="value" datasetid="dsParams" columnid="ITM_VAL_1"/>
+      <BindItem id="item5" compid="divSearchArea00.form.edt00_00_00_00" propid="value" datasetid="dsParams" columnid="ITM_VAL_2"/>
+      <BindItem id="item6" compid="divSearchArea.form.edtCoNm00" propid="value" datasetid="dsParams" columnid="SENSORNID"/>
+      <BindItem id="item9" compid="edt00" propid="value" datasetid="dsResult" columnid="PROC_KEY"/>
+      <BindItem id="item7" compid="edt00_00" propid="value" datasetid="dsResult" columnid="PROC_IP"/>
+      <BindItem id="item8" compid="divSearchArea00.form.cboGubun" propid="value" datasetid="dsParams" columnid="GUBUN"/>
+      <BindItem id="item10" compid="divSearchArea00.form.cboGubun00" propid="value" datasetid="dsParams" columnid="USE_YN"/>
+    </Bind>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		︰ 팝업 처리
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ 
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.00
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일       작성자		이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+}
+
+// 저장
+this.fnSave = function()
+{
+	trace("fnSave call");
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+	else
+	{
+		if(this.dsResult.getColumn(0, "CODE") == "200" || sSvcId == "getIpList")
+		{
+			this.dsIpList.set_filterstr("USE_YN=='Y'");
+			this.dsIpUseList.copyData(this.dsIpList, true);
+			this.dsIpList.set_filterstr("USE_YN=='N'");
+			this.dsIpUnUseList.copyData(this.dsIpList, true);
+			this.dsIpList.set_filterstr("");
+			
+			this.grdUseIpList.createFormat();
+			this.grdUnUseIpList.createFormat();
+			
+			if( !Ex.isEmpty(this.dsParams.getColumn(0, "IP_ADDR")) && Ex.util.checkType("IPADDR", this.dsParams.getColumn(0, "IP_ADDR")))
+			{
+				var fRow = this.dsIpUseList.findRow("NL_IPSTR", this.dsParams.getColumn(0, "IP_ADDR"));
+
+				/*
+				alert(
+					"CODE : " + this.dsResult.getColumn(0, "CODE") +
+					"\nsSvcId : " + sSvcId +
+					"\nfRow : " + fRow
+				);
+				*/
+				if(fRow > -1)
+				{
+					this.grdUseIpList.setCellPos(1, fRow);
+				}
+				
+				var fRow = this.dsIpUnUseList.findRow("NL_IPSTR", this.dsParams.getColumn(0, "IP_ADDR"));
+
+				/*
+				alert(
+					"CODE : " + this.dsResult.getColumn(0, "CODE") +
+					"\nsSvcId : " + sSvcId +
+					"\nfRow : " + fRow
+				);
+				*/
+				if(fRow > -1)
+				{
+					this.grdUnUseIpList.setCellPos(1, fRow);
+				}
+			}
+		}
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{	
+		case "regIp" :
+			if(this.dsResult.getColumn(0, "CODE") != "200")
+			{
+				var param = {id : "ERROR", msg : this.dsResult.getColumn(0, "MESSAGE")};
+				Ex.core.error(this, param);
+			}
+			else
+			{
+				Ex.core.toast(this, "IP:[" + this.dsParams.getColumn(0, "IP_ADDR") + "] 등록이 완료 되었습니다.");
+			}
+			break;
+
+		case "deleteIp" :
+			if(this.dsResult.getColumn(0, "CODE") != "200")
+			{
+				var param = {id : "ERROR", msg : this.dsResult.getColumn(0, "MESSAGE")};
+				Ex.core.error(this, param);
+			}
+			else
+			{
+				Ex.core.toast(this, "IP:[" + this.dsParams.getColumn(0, "IP_ADDR") + "] 삭제가 완료 되었습니다.");
+			}
+			break;
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	trace("pID="+pID+" ,varValue="+varValue);
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID, varValue)
+{
+	if(!varValue)	return;
+	
+	switch(mID)
+	{	
+		case "saveConfirm" :
+			this.dsResult.clearData();
+			var sTranId = "regIp";
+			var sService = "NacUtil/regIp";
+			var sInDs = "dsParams=dsParams";
+			var sOutDs = "dsIpList=dsIpList dsResult=dsResult";
+			var sArg = "";
+			Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+			break;
+
+		case "deleteConfirm" :
+			this.dsResult.clearData();
+			var sTranId = "deleteIp";
+			var sService = "NacUtil/deleteIp";
+			var sInDs = "dsParams=dsParams";
+			var sOutDs = "dsIpList=dsIpList dsResult=dsResult";
+			var sArg = "";
+			Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+this.fnCompInit = function()
+{
+	this.fnGetCmmCd();	// 공통코드 조회
+}
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['SWKP0A00',		'SWKP0J00'		]	// 조회할 상위코드
+		,codeDiv: ['',				''				]	// 조회할 코드의 업무구분
+		,optStr	: ['',				''				]	// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y',				'Y'				]	// 사용여부
+		,filter	: ['',				''				]	// filterStr
+		,objDs	: [this.dsPlace1,	this.dsPlace2	]	// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util;
+	
+	this.dsPlaceAll.appendData(this.dsPlace1);
+	this.dsPlaceAll.appendData(this.dsPlace2);
+	
+	this.dsPlaceAll.insertRow(0);
+	this.dsPlaceAll.setColumn(0, "CMM_CD_NM", "- 선택 -");
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnSearch" :
+			if( this.dsParams.getColumn(0, "GUBUN") == "CODE" && Ex.isEmpty(this.divSearchArea00.form.cboPlace.value) ) return;
+			else if( this.dsParams.getColumn(0, "GUBUN") == "IP" &&
+					 (Ex.isEmpty(this.dsParams.getColumn(0, "IP_ADDR")) || !Ex.util.checkType("IPADDR", this.dsParams.getColumn(0, "IP_ADDR"))) 
+					) return;
+
+			var sTranId = "getIpList";
+			var sService = "NacUtil/getIpList";
+			var sInDs = "dsParams=dsParams";
+			var sOutDs = "dsIpList=dsIpList";
+			var sArg = "";
+			Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+			break;
+
+		case "btnReg" :
+			if( Ex.isEmpty(this.dsParams.getColumn(0, "IP_ADDR")) ) return;
+			if( !Ex.util.checkType("IPADDR", this.dsParams.getColumn(0, "IP_ADDR")) ) return;
+			if( Ex.isEmpty(this.dsParams.getColumn(0, "SENSORNID")) ) return;
+
+			var param = {
+					id : "saveConfirm"
+				  , msg : "IP:[" + this.dsParams.getColumn(0, "IP_ADDR") + "] 등록 하시겠습니까?"
+				  , arrparam : [""]
+				  , msgtype : "I"};
+			Ex.core.confirm(this, param);
+			break;
+
+		case "btnDelete" :
+			if( Ex.isEmpty(this.dsParams.getColumn(0, "IP_ADDR")) ) return;
+			if( !Ex.util.checkType("IPADDR", this.dsParams.getColumn(0, "IP_ADDR")) ) return;
+			
+			var param = {
+					id : "deleteConfirm"
+				  , msg : "IP:[" + this.dsParams.getColumn(0, "IP_ADDR") + "] 삭제 하시겠습니까?"
+				  , arrparam : [""]
+				  , msgtype : "I"};
+			Ex.core.confirm(this, param);
+	}
+};
+
+this.divSearchArea00_cboPlace_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if( !Ex.isEmpty(e.postvalue) )
+	{
+		if( this.dsParams.getColumn(0, "GUBUN") == "IP" &&
+		    (Ex.isEmpty(this.dsParams.getColumn(0, "IP_ADDR")) || !Ex.util.checkType("IPADDR", this.dsParams.getColumn(0, "IP_ADDR"))) ) return;
+					
+		var fRow = this.dsPlaceAll.findRow("CMM_CD", this.divSearchArea00.form.cboPlace.value);
+		this.dsParams.setColumn(0, "UP_CMM_CD", this.dsPlaceAll.getColumn(fRow, "UP_CMM_CD"));
+		this.dsParams.setColumn(0, "CMM_CD", this.dsPlaceAll.getColumn(fRow, "CMM_CD"));
+		this.dsParams.setColumn(0, "ITM_VAL_1", this.dsPlaceAll.getColumn(fRow, "ITM_VAL_1"));
+		this.dsParams.setColumn(0, "ITM_VAL_2", this.dsPlaceAll.getColumn(fRow, "ITM_VAL_2"));
+		
+		var sTranId = "getIpList";
+		var sService = "NacUtil/getIpList";
+		var sInDs = "dsParams=dsParams";
+		var sOutDs = "dsIpList=dsIpList";
+		var sArg = "";
+		Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+	}
+	else
+	{
+		this.dsParams.setColumn(0, "UP_CMM_CD", "");
+		this.dsParams.setColumn(0, "CMM_CD", "");
+		this.dsParams.setColumn(0, "ITM_VAL_1", "");
+		this.dsParams.setColumn(0, "ITM_VAL_2", "");
+		this.dsIpList.clearData();
+	}
+};
+
+this.divSearchArea00_cboGubun_onitemchanged = function(obj:nexacro.Combo,e:nexacro.ItemChangeEventInfo)
+{
+	if(e.postvalue == "IP")
+	{
+		this.divSearchArea00.form.cboGubun00.set_enable(false);
+	}
+	else
+	{
+		this.divSearchArea00.form.cboGubun00.set_enable(true);
+	}
+};]]></Script>
+  </Form>
+</FDL>

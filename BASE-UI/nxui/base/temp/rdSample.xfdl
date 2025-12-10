@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="rd_sample_main" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Static id="stc00" taborder="0" text="URL" left="5" top="11" width="59" height="13"/>
+        <Edit id="input_RS" taborder="1" left="118.00" top="5" width="739" height="25" value="https://crownixdev.wemb.co.kr:1443/reporting/html5/report_view.jsp" text="https://crownixdev.wemb.co.kr:1443/reporting/html5/report_view.jsp"/>
+        <Edit id="input_mrdPath" taborder="2" left="118.00" top="29" width="739" height="25" value="ITSM/SBYi202407050.mrd" text="ITSM/SBYi202407050.mrd"/>
+        <Edit id="input_mrdParam" taborder="3" left="118.00" top="53" height="25" value="/rdata [변경담당부서//DD//담당자//DD//bbb프로젝트//DD//요청부서//DD//요청자//DD//2024-05-21//DD//D//DD//요청목적bbb//DD//세부내용bbb//DD//변경개요1//DD//주요...1//DD//2024-05-21 15:50//DD//이행위험요소1//DD//장애...1//DD//이행 후...1//DD//향후일정1//DD//곽현호//DD//2024-05-21//DD///ENTER//ENTER///EOR//] /rnl [/ENTER/] " text="/rdata [변경담당부서//DD//담당자//DD//bbb프로젝트//DD//요청부서//DD//요청자//DD//2024-05-21//DD//D//DD//요청목적bbb//DD//세부내용bbb//DD//변경개요1//DD//주요...1//DD//2024-05-21 15:50//DD//이행위험요소1//DD//장애...1//DD//이행 후...1//DD//향후일정1//DD//곽현호//DD//2024-05-21//DD///ENTER//ENTER///EOR//] /rnl [/ENTER/] " right="5"/>
+        <Button id="btn_View" taborder="4" text="조회" left="858.00" top="5" width="73" height="25" visible="true" onclick="btn_View_onclick"/>
+        <WebBrowser id="webBrowser" taborder="5" left="5" top="82" width="908" url="https://nitsmdev.wemb.co.kr/spp/temp/crownixReport.html" bottom="5"/>
+        <Grid id="grdSample" taborder="6" left="920" top="110" width="266" height="318" binddataset="dsSample">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="반복1"/>
+                <Cell col="1" text="반복2"/>
+                <Cell col="2" text="반복3"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:반복1"/>
+                <Cell col="1" text="bind:반복2"/>
+                <Cell col="2" text="bind:반복3"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stc00_00" taborder="7" text="MRD file" left="5.00" top="35" width="59" height="13"/>
+        <Static id="stc00_01" taborder="8" text="parameter" left="5.00" top="59" width="59" height="13"/>
+        <Button id="btnAdd" taborder="9" text="btnAdd" left="920" top="82" width="59" height="22" onclick="btnAdd_onclick"/>
+        <Button id="btnDel" taborder="10" text="btnDel" left="990.00" top="82" width="59" height="22" onclick="btnDel_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// dataset TO TEXT
+function DStoTEXT(dsArr, delStr) {
+	var returnStr;
+	var dsLength;	// 배열의 전체 개수 (데이터셋의 개수)
+	var dsColCnt;	// 각 데이터셋의 컬럼 개수
+	var dsRowCnt;	// 각 데이터셋의 로우 개수
+
+    dsLength = dsArr.length;
+	// 데이터셋 배열의 크기가 1보다 작을 경우
+	if (dsLength < 1) {
+		returnStr = "";
+	} else {
+		var tmpStr = "";
+		for(i=0; i<dsLength; i++)
+		{
+			dsColCnt = dsArr[i].getColCount();
+			dsRowCnt = dsArr[i].getRowCount();
+			for(j=0; j<dsRowCnt; j++)
+			{
+				for(k=0; k<dsColCnt; k++)
+				{
+					// 각 필드의 값을 문자열로 연결
+					tmpStr += dsArr[i].getColumn(j,k);
+					tmpStr += delStr;	// 각 필드 사이에 구분자 값을 입력
+				}
+				tmpStr += "/ENTER/";	// 각 데이터 로우 사이에 개행 문자 삽입
+			}
+			
+			// 데이터셋이 두 개 이상일 경우 구분하기 위한 문자 삽입 (Crownix에서 필요)
+			if(dsLength>1)
+			{
+				tmpStr += "//EOR//";
+				tmpStr += "/ENTER/";
+			}
+		}
+		returnStr = tmpStr;
+	}
+
+	return returnStr;
+}
+
+this.btn_View_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+    var ReportingServerUrl = this.input_RS.value;
+    var mrdPath            = this.input_mrdPath.value;
+    var pwin               = this.webBrowser.getProperty("window");
+	var dtot;
+	var param;
+	var datasetArray = new Array();
+	datasetArray[0] = this.dsTest;
+
+	dtot = DStoTEXT(datasetArray, "//DD//");
+	param = "/rdata [" + dtot + "] ";
+	param += "/rnl [/ENTER/] ";
+
+    pwin.callMethod("funcRpt", ReportingServerUrl, mrdPath, param);
+};
+
+this.btnAdd_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+    this.dsSample.addRow();
+};
+
+this.btnDel_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+    this.dsSample.deleteRow(this.dsSample.rowposition);
+};
+]]></Script>
+    <Objects>
+      <Dataset id="dsSample">
+        <ColumnInfo>
+          <Column id="반복1" type="STRING" size="256"/>
+          <Column id="반복2" type="STRING" size="256"/>
+          <Column id="반복3" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="반복1">a1</Col>
+            <Col id="반복2">b1</Col>
+            <Col id="반복3">c1</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a2</Col>
+            <Col id="반복2">b2</Col>
+            <Col id="반복3">c2</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a3</Col>
+            <Col id="반복2">b3</Col>
+            <Col id="반복3">c3</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a3</Col>
+            <Col id="반복2">b3</Col>
+            <Col id="반복3">c3</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a4</Col>
+            <Col id="반복2">b4</Col>
+            <Col id="반복3">c4</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a5</Col>
+            <Col id="반복2">b5</Col>
+            <Col id="반복3">c5</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a6</Col>
+            <Col id="반복2">b6</Col>
+            <Col id="반복3">c6</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a7</Col>
+            <Col id="반복2">b7</Col>
+            <Col id="반복3">c7</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a8</Col>
+            <Col id="반복2">b8</Col>
+            <Col id="반복3">c8</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a9</Col>
+            <Col id="반복2">b9</Col>
+            <Col id="반복3">c9</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a10</Col>
+            <Col id="반복2">b10</Col>
+            <Col id="반복3">c10</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ADL version="2.0">
+  <Application id="BaseApp" screenid="screen01" onload="application_onload" onloadforms="application_onloadforms" onerror="application_onerror" onbeforeexit="application_onbeforeexit" licenseurl="svc_url::">
+    <Layout>
+      <MainFrame id="mainframe" title="maintitle" resizable="true" showtitlebar="true" showstatusbar="false" position1="absolute 0 0 800 800" width="1600" height="900">
+        <VFrameSet id="VFrameSetMain" separatesize="*,0,0,0,0">
+          <Frames>
+            <ChildFrame id="frLogin" showtitlebar="false" dragmovetype="none" formurl="Frame::frLogin.xfdl"/>
+            <ChildFrame id="frTop" showtitlebar="false" dragmovetype="none"/>
+            <ChildFrame id="frTabMain" dragmovetype="none" showtitlebar="false" formurl=""/>
+            <ChildFrame id="frHome" showtitlebar="false" openstatus="normal" dragmovetype="none"/>
+            <FrameSet id="FrameSetWork">
+              <Frames/>
+            </FrameSet>
+          </Frames>
+        </VFrameSet>
+      </MainFrame>
+    </Layout>
+  </Application>
+  <Script type="xscript5.1"><![CDATA[this.application_onload = function(obj:nexacro.Application,e:nexacro.LoadEventInfo)
+{
+	var objEnv 	= nexacro.getEnvironment();
+	var objSvcs = objEnv.services;
+	var objApp 	= nexacro.getApplication();
+
+	var svcUrl = nexacro.replaceAll(objApp.xadl, "base/BaseApp.xadl.js", "");
+	trace("xadl // svcUrl :: " + svcUrl);
+
+	var svUrl = nexacro.replaceAll(objApp.xadl, "", "");
+
+	//if(svUrl.indexOf("localhost") > -1 || svUrl.indexOf("127.0.0.1") > -1 || svUrl.indexOf("http://") > -1)
+	//{
+		for(var i=0; i<objEnv.services.length; i++)
+		{
+			if(objEnv.services[i].type == "form")
+			{
+				if(objEnv.services[i].cachelevel != "none")
+				{
+					//trace(" service type:[" + objEnv.services[i].type + "] id:[" + objEnv.services[i].prefixid + "] cachelevel \"" + objEnv.services[i].cachelevel + "\" → \"none\" Change");
+					objEnv.services[i].set_cachelevel("none");
+				}
+			}
+		}
+	//}
+
+	objApp.gvHost = "";
+	objApp.gvRunMode = "";
+
+	objSvcs["svc_url"].set_url(svcUrl);
+	objApp.gvHost = objSvcs["svc_url"].url;
+
+	// 세션객체생성
+	objApp._session_ = {};
+	// 3rd party lib load
+	if( window && window.document )
+	{
+	}
+
+	objApp.MAXCNT		= 15;	// 최대 mdi 개수
+	objApp.LOADCOUNT	= 0;
+	objApp.FRAMETYPE	= "INIT"; // frameType : default INIT
+
+ 	objApp.MAIN_FRAME	= objApp.mainframe.VFrameSetMain;
+	objApp.MAIN_LOGIN 	= objApp.mainframe.VFrameSetMain.frLogin;
+ 	objApp.MAIN_TOP  	= objApp.mainframe.VFrameSetMain.frTop;
+ 	objApp.MAIN_TAB		= objApp.mainframe.VFrameSetMain.frTabMain;
+	objApp.MAIN_HOME  	= objApp.mainframe.VFrameSetMain.frHome;
+ 	objApp.MAIN_WORK	= objApp.mainframe.VFrameSetMain.FrameSetWork;
+
+	objApp.ACTIVE_WORK = null;
+
+	var strMode = ""; // 로컬/개발/운영 구분
+	var strHost = objApp.gvHost;
+
+	if( strHost.indexOf("xxx.xxx.com") > -1 )	// 운영
+	{
+		objApp.gvRunMode = "P";
+		// 운영 적용 시 trace 출력 제거 
+		objApp.gtrace = trace;
+		trace = function(){};
+	}
+	
+	if(strHost.indexOf("nitsm.wemb.co.kr") > -1)			// 운영
+	{
+		strMode = "";
+		objApp.gvRunMode = "R";
+	}
+	else if(strHost.indexOf("nitsmdev.wemb.co.kr") > -1)	// 개발
+	{
+		strMode = "[개발] ";
+		objApp.gvRunMode = "D";
+	}
+	//else if(strHost.indexOf("localhost") > -1 || strHost.indexOf("127.0.0.1") > -1)		// 로컬
+	else
+	{
+		strMode = "[로컬] ";
+		objApp.gvRunMode = "L";
+	}
+	objApp.mainframe.set_titletext(strMode + "IT포털");
+	
+	
+};
+
+// frameType setter
+this.afnSetFrame = function(strFrameType)
+{
+	var objApp 	= nexacro.getApplication();
+
+	strFrameType = strFrameType||'';
+	if( Ex.isEmpty(strFrameType) ) return;
+
+	switch(strFrameType)
+	{
+		case "INIT" :
+			objApp.MAIN_LOGIN.form.fnSessCheck();
+			objApp.MAIN_FRAME.set_separatesize("0,0,0,0,0");	// login,top,tab,home,work
+			objApp.FRAMETYPE = "INIT";
+			objApp.ACTIVE_WORK = null;
+			break;
+		case "LOGIN":
+			objApp.MAIN_FRAME.set_separatesize("*,0,0,0,0");	// login,top,tab,home,work
+			objApp.FRAMETYPE = "LOGIN";
+			objApp.ACTIVE_WORK = null;
+			break;
+
+		case "HOME":
+			if( !Ex.isEmpty(objApp.MAIN_TAB.form.tabMain) ) {
+				var cnt = objApp.MAIN_TAB.form.tabMain.tabpages.length;
+				if( cnt > 0 ) {
+					for(var i = (cnt-1); i >= 0; i--) 
+						objApp.MAIN_TAB.form.fnClose(i);
+				}
+			}
+			
+ 			objApp.MAIN_TOP.set_formurl("Frame::frTop.xfdl");
+			
+			objApp.MAIN_FRAME.set_separatesize("0,100,0,*,0");
+			objApp.FRAMETYPE = "HOME";
+			objApp.ACTIVE_WORK = null;
+			
+			// Home화면 fnSearch 재호출
+			if(objApp.MAIN_HOME.form.fnActiveSearch) {
+				objApp.MAIN_HOME.form.fnActiveSearch();
+			}
+			break;
+
+		case "WORK":
+			objApp.MAIN_FRAME.set_separatesize("0,100,40,0,*");
+			objApp.FRAMETYPE = "WORK";
+			break;
+	}
+}
+
+// frameType getter
+this.afnGetFrameType = function()
+{
+	return nexacro.getApplication().FRAMETYPE;
+}
+
+
+
+this.application_onloadforms = function(obj:nexacro.Application,e:nexacro.LoadEventInfo)
+{
+	this.afnSetFrame('INIT');
+}
+
+this.application_onbeforeexit = function(obj:nexacro.Application,e:nexacro.ExitEventInfo)
+{
+	trace("nexacro.getApplication().gvIsSessionOut ::: " + nexacro.getApplication().gvIsSessionOut);
+	trace("Ex.util.getSession('gvUserId') : " + Ex.util.getSession('gvUserId'));
+	if(nexacro.getApplication().gvIsSessionOut == "N")
+	{
+		return false;
+	}
+}]]></Script>
+</ADL>

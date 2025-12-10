@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmFOMM0190_W" classname="top" left="0" top="0" width="1840" height="720" titletext="부서관리" onload="form_onload" scrolltype="none" cssclass="">
+    <Layouts>
+      <Layout width="1840" height="720">
+        <Div id="divSearchArea" taborder="0" left="0" top="0" height="50" right="0" cssclass="div_WF_divSearchArea">
+          <Layouts>
+            <Layout width="1840" height="720" mobileorientation="landscape">
+              <Static id="stcMenuGbn" taborder="3" text="부서명" left="20" top="13" width="90" height="24" cssclass="sta_WF_schTitle"/>
+              <Static id="Static00" taborder="4" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+              <Button id="btnSearch" taborder="1" top="13" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Button id="btnSearchReset" taborder="2" top="13" width="90" height="24" text="초기화" right="100" cssclass="btn_WF_searchReset" onclick="fnCommOnclick"/>
+              <Edit id="edtDeptNm" taborder="0" left="85" top="13" width="140" height="24" cssclass="edt_WF_normal" onkeydown="fnCommOnkeydown"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00" taborder="1" left="0" top="divSearchArea:0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Grid id="grdTree" taborder="2" left="0" top="104" bottom="0" binddataset="dsTree" cssclass="grd_WF_tree" autofittype="col" useSort="false" useCheck="false" width="300" treeusecheckbox="false" treeuseline="false" treeinitstatus="expand,null" treeusebutton="use" treeuseimage="true">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="200"/>
+              </Columns>
+              <Rows>
+                <Row size="32"/>
+              </Rows>
+              <Band id="body">
+                <Cell displaytype="treeitemcontrol" edittype="tree" text="bind:DEPT_NM" cssclass="" treelevel="expr:DEPT_LEVEL"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="stcTreeTitle" taborder="3" text="부서체계" left="0" top="70" width="120" height="24" cssclass="sta_WF_gridTitle"/>
+        <Static id="Static00_00" taborder="4" left="0" top="94" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Grid id="grdData" taborder="5" left="grdTree:20" top="104" bottom="0" binddataset="dsData" cssclass="grd_WF_normal" autofittype="col" right="0" treeuseimage="false" useSort="true" onexpandup="grdMenuMt_onexpandup" cellmovingtype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="100"/>
+                <Column size="180"/>
+                <Column size="130"/>
+                <Column size="100"/>
+                <Column size="100"/>
+                <Column size="70"/>
+                <Column size="70"/>
+                <Column size="65"/>
+                <Column size="350"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="부서코드"/>
+                <Cell col="1" text="부서명"/>
+                <Cell col="2" text="부서장"/>
+                <Cell col="3" text="상위부서코드"/>
+                <Cell col="4" text="회계부서코드"/>
+                <Cell col="5" text="정렬순서"/>
+                <Cell col="6" text="부서레벨"/>
+                <Cell col="7" text="부서상태"/>
+                <Cell col="8" text="전체경로"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="text" text="bind:DEPT_CD" edittype="none" autosizecol="none"/>
+                <Cell col="1" displaytype="text" text="bind:DEPT_NM" edittype="text" textAlign="left"/>
+                <Cell col="2" text="bind:DEPT_MANAGER_NM" autosizecol="none"/>
+                <Cell col="3" displaytype="text" text="bind:UP_DEPT_CD" autosizecol="none"/>
+                <Cell col="4" text="bind:COST_DEPT_ID" autosizecol="none"/>
+                <Cell col="5" displaytype="text" text="bind:SORT_ORDER" edittype="text" autosizecol="none"/>
+                <Cell col="6" displaytype="text" text="bind:DEPT_LEVEL" edittype="text" autosizecol="none"/>
+                <Cell col="7" text="bind:DEPT_STATUS" displaytype="combotext" combodataset="dsDeptStatus" combodatacol="CMM_CD_NM" combocodecol="CMM_CD" autosizecol="none"/>
+                <Cell col="8" displaytype="text" text="bind:FULL_PATH" edittype="none" textAlign="left" autosizecol="default"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static00_01" taborder="6" left="grdTree:0" top="105" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" bottom="0" width="20"/>
+        <Static id="stcDeptTitle" taborder="7" text="[부서] 하위부서 목록" left="grdTree:20.00" top="70" width="185" height="24" cssclass="sta_WF_gridTitle" onclick="fnCommOnclick"/>
+        <Static id="stcCnt" taborder="8" left="stcDeptTitle:5" top="71" width="60" height="24" text="0 건" cssclass="sta_WF_grdCnt" countDataset="dsData"/>
+        <Button id="btnTreeExpand" taborder="9" text="+" top="70" width="24" height="24" onclick="fnCommOnclick" left="stcTreeTitle:126"/>
+        <Button id="btnTreeCollapse" taborder="10" text="-" top="70" height="24" onclick="fnCommOnclick" width="24" left="btnTreeExpand:5"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond">
+        <ColumnInfo>
+          <Column id="UP_DEPT_CD" type="STRING" size="256"/>
+          <Column id="DEPT_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="UP_DEPT_CD"/>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsTree" oncolumnchanged="fnCommOncolumnchanged" onrowposchanged="dsTree_onrowposchanged"/>
+      <Dataset id="dsData" oncolumnchanged="fnCommOncolumnchanged"/>
+      <Dataset id="dsDeptStatus" oncolumnchanged="fnCommOncolumnchanged" onrowposchanged="dsTree_onrowposchanged"/>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ FOMM0190_W
+* 화면(명)		︰ 부서관리
+* 메뉴(경로)	︰ 관리자 > 부서관리 > 부서관리
+* 화면 설명	︰ 부서관리
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/ 
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 업무화면 laod 전 공통 처리를 위한 함수. 
+	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnSearchReset();	// 검색조건 초기화
+	this.fnCompInit();		// 컴포넌트 초기화
+	this.fnSearch();		// 조회
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+	this.dsCond.clearData();
+	this.dsCond.addRow();
+}
+
+// 변경 행 확인
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "select01";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0190W/select01";            // 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsTree=dsTree";       	// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+    
+    /**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+// 조회
+this.fnSearch01 = function()
+{	
+	// transaction
+	var sTranId = "select02";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "FOMM0190W/select02";            // 서비스명
+    var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsData=dsData";       	// 서버에서 수신할 데이타셋
+    var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+    
+    /**
+	 * 기본문법
+	 * this : transaction 실행스코프 (필수)
+	 */
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+ 
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = objDs.rowcount-1; i >= 0; i--)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			break;
+
+		case "select02" :
+			break;
+	}
+}
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+	switch(pID)
+	{
+		
+	}
+}
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{	
+		case "searchConfirm" :
+			this.fnSearch01();
+			break;
+		
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	// Grid 행상태(ROWFLAG) 이미지 처리 util 호출
+	this.grdTree.displayRowType();
+	this.grdData.displayRowType();
+	
+	// 공통코드 조회
+	this.fnGetCmmCd();
+}
+
+
+// 공통코드 조회
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ['DEPT_STATUS'		]	// 조회할 상위코드
+		,codeDiv: ['CMM_CD'				]		// 조회할 코드의 업무구분
+		,optStr	: [''					]						// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ['Y'					]						// 사용여부
+		,filter	: [''					]							// filterStr
+		,objDs	: [this.dsDeptStatus	]		// copy dataset
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case 'btnSearch' :	// 조회
+			this.dsTree.clearData();
+			this.dsData.clearData();
+			this.fnSearch();
+			break;
+			
+		case 'btnSearchReset' :	// 조회조건 초기화
+			this.fnSearchReset();
+			break;
+		
+		case "btnTreeExpand" :
+			this.grdTree.set_treeinitstatus("expand,all");
+			break;
+
+		case "btnTreeCollapse" :
+			this.grdTree.set_treeinitstatus("collapse,all");
+			break;
+			
+		case "stcDeptTitle" :
+			//좌측 Grid에서 this.dsClassTree.getColumn(e.newrow, "CLASS_NM")에 해당하는 분류로 포커싱 이동
+			//var ind = obj.getDisplayText().substring(1, obj.getDisplayText().length-9);
+			var ind = this.dsCond.getColumn(0, "UP_DEPT_CD");
+
+			this.dsTree.set_rowposition(-1);
+			this.dsTree.set_rowposition(this.dsTree.findRow("DEPT_CD", ind));
+			this.grdTree.setCellPos(this.dsTree.findRow("DEPT_CD", ind));
+			this.grdTree.setFocus();
+			
+			break;
+	}
+}
+
+// 공통 oncloumnchanged event : dataset
+this.fnCommOncolumnchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSColChangeEventInfo)
+{
+	obj.setUpdateRow(e);
+};
+
+
+// 공통 onkeydown event : component
+this.fnCommOnkeydown = function(obj:nexacro.Edit,e:nexacro.KeyEventInfo)
+{
+	if(e.keycode == '13')
+	{
+		this.divSearchArea.form.btnSearch.setFocus();
+		this.fnSearch();
+		obj.setFocus();
+	}
+};
+
+this.dsTree_onrowposchanged = function(obj:nexacro.NormalDataset,e:nexacro.DSRowPosChangeEventInfo)
+{
+	var UP_DEPT_CD	= obj.getColumn(e.newrow, 'DEPT_CD');
+	var DEPT_NM		= obj.getColumn(e.newrow, 'DEPT_NM');
+	
+	// grid title	
+	if(!Ex.isEmpty(DEPT_NM))
+	{
+		var title = '[' + DEPT_NM + '] ' + '하위부서 목록';
+		this.stcDeptTitle.set_text(title);
+
+		// cnt 위치 조정
+		var objSize = nexacro.getTextSize(this.stcDeptTitle.text, this.stcDeptTitle._getCurrentStyleInheritValue("font"));
+		var nWidth = parseInt(objSize.nx) + 25;
+		this.stcDeptTitle.set_width(nWidth);
+		this.stcCnt.set_left(this.stcDeptTitle.getOffsetLeft() + nWidth);
+	}
+
+	// search
+	this.dsCond.setColumn(0, 'UP_DEPT_CD', UP_DEPT_CD);
+	this.fnSearch01();
+};
+]]></Script>
+    <Bind>
+      <BindItem id="item3" compid="divSearchArea.form.cboMenuDIv" propid="value" datasetid="dsCond" columnid="TOP_MENU_ID"/>
+      <BindItem id="item0" compid="divSearchArea.form.cboSvcTypeCd" propid="value" datasetid="dsCond" columnid="SVC_TYPE_CD"/>
+      <BindItem id="item1" compid="divSearchArea.form.edtDeptNm" propid="value" datasetid="dsCond" columnid="DEPT_NM"/>
+    </Bind>
+  </Form>
+</FDL>

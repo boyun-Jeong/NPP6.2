@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="FOMM730_W" width="1840" height="720" titletext="쪽지함 첨부파일 용량조회" onload="form_onload">
+    <Layouts>
+      <Layout height="720" horizontalgap="0" mobileorientation="landscape" spacing="0px" tabletemplate="1* / 1*" verticalgap="0" width="1840">
+        <Div id="div_search" taborder="0" left="0" top="0" right="0" height="50" cssclass="div_WF_divSearchArea" text="">
+          <Layouts>
+            <Layout>
+              <Static id="Static00" taborder="0" text="첨부기간" cssclass="sta_WF_schTitle" left="20" top="12" width="63" height="24"/>
+              <Calendar id="cal_regDtTo" taborder="7" left="233" top="13" width="120" height="24"/>
+              <Static id="Static00_00_00_00_00_00" taborder="3" left="cal_regDtTo:0" top="12" background="#e5dbfa" text="300" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="300" height="24"/>
+              <Static id="Static15" taborder="1" text="이름" cssclass="sta_WF_schTitle" left="Static00_00_00_00_00_00:0" top="12" width="40" height="24"/>
+              <Button id="btn_search" taborder="2" top="27" width="75" height="24" text="조회" right="20" cssclass="btn_WF_search" onclick="fnCommOnclick"/>
+              <Static id="Static00_00" taborder="4" left="0" top="13" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" height="24"/>
+              <Calendar id="cal_regDtFr" taborder="5" left="Static00:20" top="13" width="120" height="24"/>
+              <Static id="stc00" taborder="6" text="~" left="cal_regDtFr:0" top="11" width="10" height="24"/>
+              <Edit id="edt_regUserNm" taborder="8" left="Static15:20" top="13" width="200" height="24"/>
+              <Static id="Static00_00_00_00_00_00_00" taborder="9" left="edt_regUserNm:0" top="13" background="#e5dbfa" text="30" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="30" height="24"/>
+              <Static id="stc01" taborder="10" text="파일사용용량" left="Static00_00_00_00_00_00_00:0" top="14" width="90" height="24" cssclass="sta_WF_schTitle"/>
+              <Edit id="edt_fileSize" taborder="11" left="stc01:20" top="14" width="150" height="24"/>
+              <Static id="stc02" taborder="12" text="MB이상" left="edt_fileSize:10" top="14" width="50" height="27"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="Static00_01" taborder="1" left="0" top="49" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Static id="sta_userInfo" taborder="2" text="전체" cssclass="sta_WF_gridTitle" left="0" top="79" width="77" height="24"/>
+        <Static id="sta_mainListCnt" taborder="3" left="82.00" top="99" width="45" height="24" cssclass="sta_WF_GridCount" countDataset="dsMain"/>
+        <Static id="Static00_00" taborder="4" left="0" top="103" height="10" background="#e5dbfa" text="10" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0"/>
+        <Div id="divGrdTopBtn" taborder="5" width="425" visible="true" right="0" isButtonGroup="true" top="99" height="24">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Div id="divGrdBotBtn" taborder="6" width="360" height="32" bottom="0" right="0" visible="false">
+          <Layouts>
+            <Layout/>
+          </Layouts>
+        </Div>
+        <Grid id="grd_main" taborder="7" binddataset="dsMain" left="0" top="113" right="0" autofittype="col" bottom="60" cssclass="grd_WF_normal" cellsizingtype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="50"/>
+                <Column size="120"/>
+                <Column size="300"/>
+                <Column size="100"/>
+                <Column size="150"/>
+              </Columns>
+              <Rows>
+                <Row size="40" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="No" displaytype="text"/>
+                <Cell col="1" text="이름"/>
+                <Cell col="2" text="부서"/>
+                <Cell col="3" text="파일갯수"/>
+                <Cell col="4" text="파일사용요령(MB)"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="expr:currow+1"/>
+                <Cell col="1" text="bind:CONTRACT_NO" color="blue" font="10pt &quot;Malgun Gothic, 맑은 고딕&quot;" cursor="pointer" textDecoration="underline"/>
+                <Cell col="2" text="bind:CONTRACT_NM" textAlign="left"/>
+                <Cell col="3" displaytype="combo" edittype="none" text="bind:UNIT_CNTR_YN" combodataset="dsUnitCntrYn" combocodecol="CODE" combodatacol="CODE_NAME"/>
+                <Cell col="4" displaytype="normal" text="bind:DLVR_DUE_DATE" calendardisplaynulltype="nulltext"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)	︰ FOMM0930_W
+* 화면(명)	︰ 쪽지함 첨부파일 용량조회
+* 메뉴(경로)	︰ 관리자 > 포털관리 > 쪽지함 첨부파일 용량조회
+* 화면 설명	︰ SPP 쪽지함 첨부파일 용량조회
+* 작성자		︰ WEMB
+* 작성일		︰ 2024.11.12
+* 수정이력	︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2024.11.12	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.fvVar;  // 폼변수는 var로 선언하지 말고 this.변수명으로 기술한다.
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	// 폼 로드시 필요한 기술사항은 this.fnInit에서 기술할것
+	trace("workArea form init call");
+}
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 검색조건 초기화
+this.fnSearchReset = function()
+{
+
+}
+
+// 조회
+this.fnSearch = function()
+{
+
+}
+
+// 저장
+this.fnSave = function()
+{
+	trace("fnSave call");
+}
+
+// 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);	
+	objDs.set_filterstr("CHK=='1'");
+	for(var i = 0; i < objDs.rowcount; i++)	
+		objDs.setDeleteRow(i);
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{		
+		case "ABOUT" : // 서비스 ID
+			break;	
+	}
+}
+
+// 팝업 디폴트 콜백함수
+this.fnPopupAfter = function(pID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// component onclick event. 
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{	
+	// TO DO
+	// 개발자가 컴포넌트 onclick event를 'fnCommOnclick'으로 지정하고 컴포넌트 id로 구분하여 작성
+	switch(obj.name)
+	{
+		case "" :		
+
+			break;
+	}
+}]]></Script>
+    <Objects>
+      <Dataset id="ds_pt_file_attach">
+        <ColumnInfo>
+          <Column id="REG_USER_NM" type="STRING" size="255"/>
+          <Column id="REG_USER_DEPT" type="STRING" size="255"/>
+          <Column id="CNT" type="BIGDECIMAL" size="255"/>
+          <Column id="FILE_SIZE" type="BIGDECIMAL" size="255"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

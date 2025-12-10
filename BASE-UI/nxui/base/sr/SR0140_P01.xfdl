@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="frmSR0140_P01" left="0" top="0" width="750" height="373" titletext="요청서 결재 팝업" onload="form_onload" scrolltype="none" cssclass="">
+    <Layouts>
+      <Layout width="750" height="373">
+        <Div id="divGrdTopBtn" taborder="0" width="425" height="24" bottom="626" visible="true" right="18.48%" isButtonGroup="true">
+          <Layouts>
+            <Layout>
+              <Button id="btnDelete" taborder="0" text="삭제" top="0" width="60" bottom="0" right="0" cssclass="btn_WF_del" onclick="fnCommOnclick"/>
+              <Button id="btnAdd" taborder="1" text="추가" top="0" width="60" bottom="0" right="65" cssclass="btn_WF_add" onclick="fnCommOnclick"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Static id="staAuthTitle" taborder="1" text="사용자의 권한그룹" left="1520" top="70" width="200" height="24" cssclass="sta_WF_gridTitle"/>
+        <Div id="divBottom" taborder="2" left="20" height="60" bottom="0" right="20" text="" cssclass="div_POP_msg_btnbg">
+          <Layouts>
+            <Layout>
+              <Button id="btnClose" taborder="1" text="닫기" onclick="fnCommOnclick" cssclass="btn_WF_primary_close" right="0" width="100" height="32" bottom="14"/>
+              <Button id="btnRtrn" taborder="1" text="반려" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="btnClose:5" width="100" height="32" bottom="14" visible="false"/>
+              <Button id="btnAppv" taborder="2" text="승인" onclick="fnCommOnclick" cssclass="btn_WF_primary_save" right="btnRtrn:5" width="100" height="32" bottom="14" visible="false"/>
+            </Layout>
+          </Layouts>
+        </Div>
+        <Div id="divContent" taborder="3" text="Div00" left="0" top="0" right="0" bottom="60">
+          <Layouts>
+            <Layout>
+              <Static id="Static00_01" taborder="0" left="5" top="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="-5"/>
+              <Static id="Static00_01_00" taborder="1" left="0" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0"/>
+              <Static id="Static00_01_00_00" taborder="2" top="0" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" width="20" bottom="0" right="0"/>
+              <Static id="Static00_02" taborder="3" left="0" height="20" background="#e5dbfa" text="20" textAlign="center" verticalAlign="middle" font="normal 12pt/normal &quot;Arial&quot;" visible="false" right="0" bottom="0"/>
+              <Static id="stcBg01" taborder="4" left="20" top="19" height="34" cssclass="sta_WF_inputBg" right="20"/>
+              <Static id="stcRqstr" taborder="5" left="20" top="19" width="90" height="34" cssclass="sta_WF_inputTitle" text="요청자"/>
+              <Static id="stcReqId" taborder="6" left="440" top="19" width="90" height="34" cssclass="sta_WF_inputTitle" text="요청ID"/>
+              <Static id="stcReqDt" taborder="7" left="190" top="19" width="90" height="34" cssclass="sta_WF_inputTitle" text="요청일시"/>
+              <Edit id="edtReqUser" taborder="8" left="stcRqstr:5" top="24" height="24" cssclass="edt_WF_normal" right="stcReqDt:5" validationGroup="fvValiCmp" readonly="true"/>
+              <Static id="stcBg01_00" taborder="9" left="20" top="52" height="34" cssclass="sta_WF_inputBg" right="20" text=""/>
+              <Static id="stcTitle" taborder="10" left="20" top="52" width="90" height="34" cssclass="sta_WF_inputTitle" text="제목"/>
+              <Edit id="edtTitle" taborder="11" left="115" top="57" height="24" cssclass="edt_WF_normal" right="25" validationGroup="fvValiCmp" enable="true" readonly="true"/>
+              <Edit id="edtReqDt" taborder="12" left="stcReqDt:5" top="24" height="24" cssclass="edt_WF_normal" right="stcReqId:5" readonly="true" validationGroup="fvValiCmp"/>
+              <Edit id="edtReqId" taborder="13" left="stcReqId:5" top="25" height="24" cssclass="edt_WF_normal" right="25" validationGroup="fvValiCmp" readonly="true"/>
+              <Static id="stcBg01_00_00" taborder="15" left="20" top="85" height="68" cssclass="sta_WF_inputBg" right="20" text=""/>
+              <Static id="stcApprDesc" taborder="14" left="20" top="85" width="90" height="68" cssclass="sta_WF_inputTitle_E" text="결재의견"/>
+              <TextArea id="txaApprDesc" taborder="16" left="115" top="90" height="58" cssclass="txa_WF_normal" right="25" enable="true" validationGroup="fvValiCmp" text="" validation="의견/사유;MAX_LEN_UTF8:1500" maxlength="1500"/>
+              <Static id="stcBg01_00_00_00" taborder="17" left="20" top="152" height="141" cssclass="sta_WF_inputBg" right="20" text=""/>
+              <Static id="stcAppr" taborder="18" left="20" top="152" width="90" height="141" cssclass="sta_WF_inputTitle" text="결재현황"/>
+              <Grid id="grdAppvMt" taborder="19" left="115" top="157" height="131" autofittype="col" cssclass="grd_WF_normal" binddataset="dsApprList" right="25">
+                <Formats>
+                  <Format id="default">
+                    <Columns>
+                      <Column size="48"/>
+                      <Column size="70"/>
+                      <Column size="80"/>
+                      <Column size="120"/>
+                      <Column size="70"/>
+                      <Column size="150"/>
+                      <Column size="70"/>
+                    </Columns>
+                    <Rows>
+                      <Row size="32" band="head"/>
+                      <Row size="32"/>
+                    </Rows>
+                    <Band id="head">
+                      <Cell text="No"/>
+                      <Cell col="1" text="결재자"/>
+                      <Cell col="2" text="직책"/>
+                      <Cell col="3" text="부서"/>
+                      <Cell col="4" text="결재상태"/>
+                      <Cell col="5" text="결재시간"/>
+                      <Cell col="6" text="결재의견"/>
+                    </Band>
+                    <Band id="body">
+                      <Cell text="bind:APPR_SEQ"/>
+                      <Cell col="1" text="bind:USER_NM"/>
+                      <Cell col="2" text="bind:POS_NM"/>
+                      <Cell col="3" text="bind:DEPT_NM"/>
+                      <Cell col="4" text="bind:APPR_STAT_CD" displaytype="combotext" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" combodataset="dsApprStatCd"/>
+                      <Cell col="5" text="bind:APPR_STIME" displaytype="date" calendardateformat="yyyy-MM-dd HH:mm:ss" calendareditformat="yyyy-MM-dd HH:mm:ss"/>
+                      <Cell col="6" text="bind:APPR_DESC"/>
+                    </Band>
+                  </Format>
+                </Formats>
+              </Grid>
+            </Layout>
+          </Layouts>
+        </Div>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCond" onrowposchanged="dsFommUserMt_onrowposchanged" oncolumnchanged="fnCommOncolumnchanged" canrowposchange="dsFommUserMt_canrowposchange">
+        <ColumnInfo>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="SEQ" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row/>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsApprList"/>
+      <Dataset id="dsWfApprovalMt"/>
+      <Dataset id="dsApprGbnCd"/>
+      <Dataset id="dsApprStatCd"/>
+      <Dataset id="dsApprInfo">
+        <ColumnInfo>
+          <Column id="REQ_ID" type="STRING" size="256"/>
+          <Column id="WF_PROC_CD" type="STRING" size="256"/>
+          <Column id="USER_ID" type="STRING" size="256"/>
+          <Column id="APPR_DESC" type="STRING" size="256"/>
+          <Column id="APPR_DIV" type="STRING" size="256"/>
+          <Column id="RTRN_DIV" type="STRING" size="256"/>
+          <Column id="WF_FUNC_CD" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="WF_FUNC_CD">WF_FUNC_01</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(ID)		︰ SR0140_P01
+* 화면(명)		︰ 요청서 결재 팝업
+* 메뉴(경로)	︰ 공통
+* 화면 설명	︰ SPP 요청서 결재 팝업
+* 작성자		︰ WEMB
+* 작성일		︰ 2023.04.06
+* 수정이력		︰
+*------------------------------------------------------------------
+* 수정일        작성자		이력
+*------------------------------------------------------------------
+* 2023.04.06	 WEMB			최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+include "lib::lib_WorkFlow.xjs";
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo) 
+{
+	this.gfnFormOnLoad(this, this.fnInit);
+}
+
+this.fnInit = function()
+{	
+	this.fnCompInit();		// 컴포넌트 초기화
+}
+
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+// 조회
+this.fnSearch = function()
+{
+	// transaction
+	var sTranId = "select01";                          					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+    var sService = "SR0140W/select02";                         			// 서비스명
+    var sInDs = "dsCond=dsCond";                  						// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+    var sOutDs = "dsWfApprovalMt=dsWfApprovalMt dsApprList=dsApprList"; // 서버에서 수신할 데이타셋
+    var sArg = "";                   									// 서버 @ParamVariable 인자와 맵핑됨
+	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+}
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// Transaction 디폴트 콜백함수
+this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+{
+	// 에러메세지 처리
+	if (nErrorCode < 0) 
+	{
+		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+		Ex.core.error(this, param);
+		return;
+	}
+			
+	// 각 Transaction별 CallBack 처리
+	switch (sSvcId)
+	{
+		case "select01" :
+			Ex.core.toast(this, "10002");
+			var fRow = this.dsApprList.findRow("CUR_APV_YN", "Y");
+
+			if( !Ex.isEmpty(this.getOwnerFrame().OPINION) )
+			{
+				this.divContent.form.txaApprDesc.set_value(this.getOwnerFrame().OPINION);
+			}
+
+			if(this.getOwnerFrame().GUBUN == "APV")
+			{
+				this.divContent.form.stcApprDesc.set_text("결재의견");
+				
+				if(this.dsApprList.getColumn(fRow, "APV_ESS_YN") == "Y")
+				{
+					this.divContent.form.stcApprDesc.set_cssclass("sta_WF_inputTitle_E");
+					this.divContent.form.txaApprDesc.set_validation(this.divContent.form.stcApprDesc.text + ";NULL");
+				}
+				else
+				{
+					this.divContent.form.stcApprDesc.set_cssclass("sta_WF_inputTitle");
+					this.divContent.form.txaApprDesc.set_validation("");
+				}
+				this.divBottom.form.btnAppv.set_visible(true);
+			}
+			else if(this.getOwnerFrame().GUBUN == "RTRN")
+			{
+				this.divContent.form.stcApprDesc.set_text("반려사유");
+
+				if(this.dsApprList.getColumn(fRow, "RTRN_ESS_YN") == "Y")
+				{
+					this.divContent.form.stcApprDesc.set_cssclass("sta_WF_inputTitle_E");
+					this.divContent.form.txaApprDesc.set_validation(this.divContent.form.stcApprDesc.text + ";NULL");
+				}
+				else
+				{
+					this.divContent.form.stcApprDesc.set_cssclass("sta_WF_inputTitle");
+					this.divContent.form.txaApprDesc.set_validation("");
+				}
+				this.divBottom.form.btnRtrn.set_visible(true);
+			}
+			Ex.util.setBtnAlign(this.divBottom, 'right', true);
+			
+			this.divContent.form.txaApprDesc.setFocus();
+			break;
+	}
+}
+
+// alert/confirm/error 메시지창 디폴트 콜백함수
+this.fnMsgAfter = function(mID,varValue)
+{
+	// TO DO
+	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+	// alert/error : 무조건 true 반환
+	// confirm     : true/false 선택적 반환
+	if(!varValue)
+		return;
+	
+	switch(mID)
+	{
+		case "appvConfirm" :	// 승인
+			this.fnSetApprInfo('APV');
+			break;
+
+		case "rtrnConfirm" :	// 반려
+			this.fnSetApprInfo('RTRN');
+			break;
+	}
+}
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+// component init
+this.fnCompInit = function()
+{
+	this.fnGetCmmCd();
+
+	var REQ_ID			= this.getOwnerFrame().REQ_ID;
+	var WF_PROC_CD		= this.getOwnerFrame().WF_PROC_CD;
+	var SEQ				= this.getOwnerFrame().SEQ;
+	
+	this.dsCond.setColumn(0, 'REQ_ID', REQ_ID);
+	this.dsCond.setColumn(0, 'WF_PROC_CD', WF_PROC_CD);
+	this.dsCond.setColumn(0, 'SEQ', SEQ);
+
+	this.fnSearch();		// 검색
+}
+
+this.fnGetCmmCd = function()
+{
+	var oParam = {
+		upCmmCd : ["APPR_GBN_CD",		"APPR_STAT_CD"]		// 조회할 상위코드
+		,codeDiv: ["WORKFLOW_CD",		"WORKFLOW_CD"]		// 조회할 코드의 업무구분
+		,optStr	: ["NO",				"NO"]				// ALL: '- 전체 -'; SEL: '- 선택 -'
+		,useYn	: ["",					""]					// 사용여부
+		,filter	: ["",					""]					// filterStr
+		,objDs	: [this. dsApprGbnCd,	this.dsApprStatCd]	// copy dataset	
+	}
+	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+}
+
+this.fnCheckValidate = function()
+{
+	if( !Ex.util.checkValidate(this.divContent, "fvValiCmp") )	return false;		
+	return true;
+}
+
+this.fnSetApprInfo = function(APPR_DIV)
+{
+	this.dsApprInfo.clearData();
+	var rowPos = this.dsApprInfo.addRow();
+	
+	var REQ_ID			= this.dsWfApprovalMt.getColumn(this.dsWfApprovalMt.rowposition, 'REQ_ID');
+	var WF_PROC_CD		= this.dsWfApprovalMt.getColumn(this.dsWfApprovalMt.rowposition, 'WF_PROC_CD');
+	var APPR_DESC		= this.divContent.form.txaApprDesc.value||'';
+
+	this.dsApprInfo.setColumn(rowPos, 'REQ_ID',		REQ_ID);
+	this.dsApprInfo.setColumn(rowPos, 'WF_PROC_CD',	WF_PROC_CD);
+	this.dsApprInfo.setColumn(rowPos, 'APPR_DESC',	APPR_DESC);
+	this.dsApprInfo.setColumn(rowPos, 'APPR_DIV',	APPR_DIV);
+	
+	Ex.core.pclose(this, this.dsApprInfo.saveXML());
+}
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+// 공통 onclick : component
+this.fnCommOnclick = function(obj:objects, e:nexacro.ClickEventInfo)
+{
+	switch(obj.name)
+	{
+		case "btnAppv" :
+			if( !this.fnCheckValidate() ) return;
+			var param = {
+						id : "appvConfirm"
+					  , msg : "10008"
+					  , arrparam : ['승인']
+					  , msgtype : "I"};
+			Ex.core.confirm(this, param);
+			break;
+
+		case "btnRtrn" :
+			if( !this.fnCheckValidate() ) return;
+			var param = {
+						id : "rtrnConfirm"
+					  , msg : "10008"
+					  , arrparam : ['반려']
+					  , msgtype : "I"};
+			Ex.core.confirm(this, param);
+			break;
+
+		case "btnClose" :
+			Ex.core.pclose(this);
+			break;
+	}
+}]]></Script>
+    <Bind>
+      <BindItem id="item0" compid="divContent.form.edtReqUser" propid="value" datasetid="dsWfApprovalMt" columnid="REQ_USER_NM"/>
+      <BindItem id="item2" compid="divContent.form.edtTitle" propid="value" datasetid="dsWfApprovalMt" columnid="TITLE"/>
+      <BindItem id="item1" compid="divContent.form.edtReqDt" propid="value" datasetid="dsWfApprovalMt" columnid="REQ_DATE_NM"/>
+      <BindItem id="item3" compid="divContent.form.edtReqId" propid="value" datasetid="dsWfApprovalMt" columnid="REQ_ID"/>
+    </Bind>
+  </Form>
+</FDL>

@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="rd_sample_main" width="1280" height="720" titletext="New Form">
+    <Layouts>
+      <Layout height="720" width="1280">
+        <Static id="stc00" taborder="0" text="URL&#13;&#10;&#13;&#10;MRD path&#13;&#10;&#13;&#10;parameter" left="42" top="39" width="59" height="74"/>
+        <Edit id="input_RS" taborder="1" left="118.00" top="33" width="739" height="25" value="https://crownixdev.wemb.co.kr:1443/reporting/html5/report_view.jsp" text="https://crownixdev.wemb.co.kr:1443/reporting/html5/report_view.jsp"/>
+        <Edit id="input_mrdPath" taborder="2" left="118.00" top="64" width="739" height="25" value="ITSM/SBYi202407050.mrd" text="ITSM/SBYi202407050.mrd"/>
+        <Edit id="input_mrdParam" taborder="3" left="118.00" top="95" height="25" value="/rdata [변경담당부서//DD//담당자//DD//bbb프로젝트//DD//요청부서//DD//요청자//DD//2024-05-21//DD//D//DD//요청목적bbb//DD//세부내용bbb//DD//변경개요1//DD//주요...1//DD//2024-05-21 15:50//DD//이행위험요소1//DD//장애...1//DD//이행 후...1//DD//향후일정1//DD//곽현호//DD//2024-05-21//DD///ENTER//ENTER///EOR//] /rnl [/ENTER/] /rusedrm [fasoo-jni-3.6.0u.jar] [3@/crownix/ReportingServer//config/fsdinit/@0000000000012471@system@시스템@system@시스템@000000@전체조직@system@시스템@000000@전체조직@2015080614534000021]" text="/rdata [변경담당부서//DD//담당자//DD//bbb프로젝트//DD//요청부서//DD//요청자//DD//2024-05-21//DD//D//DD//요청목적bbb//DD//세부내용bbb//DD//변경개요1//DD//주요...1//DD//2024-05-21 15:50//DD//이행위험요소1//DD//장애...1//DD//이행 후...1//DD//향후일정1//DD//곽현호//DD//2024-05-21//DD///ENTER//ENTER///EOR//] /rnl [/ENTER/] /rusedrm [fasoo-jni-3.6.0u.jar] [3@/crownix/ReportingServer//config/fsdinit/@0000000000012471@system@시스템@system@시스템@000000@전체조직@system@시스템@000000@전체조직@2015080614534000021]" right="5"/>
+        <Button id="btn_View" taborder="4" text="조회" left="867.00" top="119" width="73" height="25" onclick="btn_View_onclick" visible="true"/>
+        <WebBrowser id="webBrowser" taborder="5" left="32.00" top="170" width="908" url="https://nitsmdev.wemb.co.kr/spp/temp/crownix61.html" bottom="5"/>
+        <Edit id="input_webB_url" taborder="6" left="32.00" top="145" width="825" height="25" value="https://nitsmdev.wemb.co.kr/spp/temp/crownix61.jsp" text="https://nitsmdev.wemb.co.kr/spp/temp/crownix61.jsp"/>
+        <Button id="btn_Set" taborder="7" text="설정" left="867.00" top="145" width="73" height="25" onclick="btn_Set_onclick"/>
+        <Grid id="grdTest" taborder="8" left="954" top="170" width="266" height="318" binddataset="dsTest">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="반복1"/>
+                <Cell col="1" text="반복2"/>
+                <Cell col="2" text="반복3"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:반복1" edittype="text"/>
+                <Cell col="1" text="bind:반복2" edittype="text"/>
+                <Cell col="2" text="bind:반복3" edittype="text"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="btnTest" taborder="9" text="btnOther" left="954" top="119" width="73" height="25" onclick="btnTest_onclick"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+// dataset TO TEXT
+function DStoTEXT(dsArr, delStr) {
+	var returnStr;
+	var dsLength;	// 배열의 전체 개수 (데이터셋의 개수)
+	var dsColCnt;	// 각 데이터셋의 컬럼 개수
+	var dsRowCnt;	// 각 데이터셋의 로우 개수
+
+    dsLength = dsArr.length;
+	// 데이터셋 배열의 크기가 1보다 작을 경우
+	if (dsLength < 1) {
+		returnStr = "";
+	} else {
+		var tmpStr = "";
+		for(i=0; i<dsLength; i++)
+		{
+			dsColCnt = dsArr[i].getColCount();
+			dsRowCnt = dsArr[i].getRowCount();
+			for(j=0; j<dsRowCnt; j++)
+			{
+				for(k=0; k<dsColCnt; k++)
+				{
+					// 각 필드의 값을 문자열로 연결
+					tmpStr += dsArr[i].getColumn(j,k);
+					tmpStr += delStr;	// 각 필드 사이에 구분자 값을 입력
+				}
+				tmpStr += "/ENTER/";	// 각 데이터 로우 사이에 개행 문자 삽입
+			}
+			
+			// 데이터셋이 두 개 이상일 경우 구분하기 위한 문자 삽입 (Crownix에서 필요)
+			if(dsLength>1)
+			{
+				tmpStr += "//EOR//";
+				tmpStr += "/ENTER/";
+			}
+		}
+		returnStr = tmpStr;
+	}
+
+	return returnStr;
+}
+
+this.btnTest_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+    var ReportingServerUrl = this.input_RS.value;
+    var mrdPath            = this.input_mrdPath.value;
+    var mrdParam           = this.input_mrdParam.value;
+    var pwin               = this.webBrowser.getProperty("window");
+	var dtot;
+	var param;
+	var datasetArray = new Array();
+	datasetArray[0] = this.dsTest;
+
+	dtot = DStoTEXT(datasetArray, "//DD//");
+	param = "/rdata [" + dtot + "] ";
+	param += "/rnl [/ENTER/] ";
+    param += "/rusedrm [fasoo-jni-3.6.0u.jar] [3@/crownix/ReportingServer//config/fsdinit/@0000000000012471@system@시스템@system@시스템@000000@전체조직@system@시스템@000000@전체조직@2015080614534000021]";
+
+    this.input_mrdParam.value = param;
+
+    pwin.callMethod("funcRpt", ReportingServerUrl, mrdPath, this.input_mrdParam.value);
+};
+
+this.btn_View_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+    var ReportingServerUrl = this.input_RS.value;
+    var mrdPath            = this.input_mrdPath.value;
+    var mrdParam           = this.input_mrdParam.value;
+    var pwin               = this.webBrowser.getProperty("window");
+
+    var crownixRpt = pwin.callMethod("_crownix_createViewer", ReportingServerUrl+"/service", "crownix-viewer");
+    crownixRpt.callMethod("openFile", mrdPath, mrdParam);
+};
+
+this.btn_Set_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+//  http://10.16.103.22:8088/mrd/ITSM/PrjMigr.mrd
+//  https://nitsmdev.wemb.co.kr/spp/temp/crownix6.html
+//  https://crownixdev.wemb.co.kr:1443/reporting/html5/report_view.jsp
+	this.webBrowser.url = this.input_webB_url.value;
+};]]></Script>
+    <Objects>
+      <Dataset id="dsTest">
+        <ColumnInfo>
+          <Column id="반복1" type="STRING" size="256"/>
+          <Column id="반복2" type="STRING" size="256"/>
+          <Column id="반복3" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="반복1">a1</Col>
+            <Col id="반복2">b1</Col>
+            <Col id="반복3">c1</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a2</Col>
+            <Col id="반복2">b2</Col>
+            <Col id="반복3">c2</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a3</Col>
+            <Col id="반복2">b3</Col>
+            <Col id="반복3">c3</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a3</Col>
+            <Col id="반복2">b3</Col>
+            <Col id="반복3">c3</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a4</Col>
+            <Col id="반복2">b4</Col>
+            <Col id="반복3">c4</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a5</Col>
+            <Col id="반복2">b5</Col>
+            <Col id="반복3">c5</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a6</Col>
+            <Col id="반복2">b6</Col>
+            <Col id="반복3">c6</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a7</Col>
+            <Col id="반복2">b7</Col>
+            <Col id="반복3">c7</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a8</Col>
+            <Col id="반복2">b8</Col>
+            <Col id="반복3">c8</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a9</Col>
+            <Col id="반복2">b9</Col>
+            <Col id="반복3">c9</Col>
+          </Row>
+          <Row>
+            <Col id="반복1">a10</Col>
+            <Col id="반복2">b10</Col>
+            <Col id="반복3">c10</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+  </Form>
+</FDL>

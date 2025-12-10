@@ -1,0 +1,492 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XCSS version="1.1">
+  <CSSData><![CDATA[]]></CSSData>
+  <CSSData type="desktop"><![CDATA[/*******************************************************/
+/***** PROJECT NAME 	: SPP2.0		********/
+/***** XCSSNAME 	: spp_TPF(TopFrame)	********/
+/***** Naming Rule 	: Component_TPF_cssname	********/
+/***** Naming Rule Ex 	: sta_TPF_logo		********/
+/***** USING FRAME 	: Top Frame		********/
+/***** CREATION DATES 	: 2023.04  		********/
+/***** DRAFTER 		: SPP TEAM		********/
+/***** AMENDER 		: SPP TEAM		********/
+/***** MOD DATES 	: 2023.04		********/
+/*******************************************************/
+
+
+/****************************************************************************************************************************/
+/*****************************************************   POPUP DIV START   **************************************************/
+/****************************************************************************************************************************/
+/* 
+ * pdv_TPF_menuBg
+ * SPP 메뉴 팝업 배경
+ */
+.PopupDiv.pdv_TPF_menuBg
+{
+	background		: #ffffff;
+	-nexa-border		: 0px, 0px, 1px solid #d3d3d3, 0px;
+}
+
+/* 
+ * pdv_TPF_myMenuBg
+ * SPP 즐겨찾기메뉴 팝업 배경
+ */
+.PopupDiv.pdv_TPF_myMenuBg
+{
+	background		: #ffffff;
+	-nexa-border		: 1px solid #2196F3;
+}
+/****************************************************************************************************************************/
+/*****************************************************   POPUP DIV END   ****************************************************/
+/****************************************************************************************************************************/
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   STATIC START   *****************************************************/
+/****************************************************************************************************************************/
+/* 
+ * sta_TPF_logo
+ * SPP 시스템 로고 아이콘/이미지
+ */
+.Static.sta_TPF_logo
+{
+	background		: url('theme://MIRAE_IMAGE_SET/TPF/ma-spp-top-logo.png') no-repeat 0px center /auto;
+	cursor			: pointer;
+}
+
+/* 
+ * sta_TPF_topBg
+ * SPP 시스템 로고 아이콘/이미지
+ */
+.Static.sta_TPF_topBg
+{
+	background 		: linear-gradient( rgb(4,59,155) , rgb(70,116,254) ) to-right;
+	-nexa-border		: 0px none;
+}
+
+/* 
+ * sta_TPF_line
+ * SPP Top frame icon 구분 라인
+ */
+.Static.sta_TPF_line
+{
+	background		: #dfdfdf;
+}
+
+/* 
+ * sta_TPF_messageCntBg
+ * SPP Top frame Message 버튼 count용 static background css
+ */
+.Static.sta_TPF_messageCntBg
+{
+	background		: url('theme://SPP_IMAGE_SET/TPF/sta_TPF_MessageCntBg.png') no-repeat center center;
+	cursor			: pointer;
+}
+
+/* 
+ * sta_TPF_use
+ * SPP Top frame user 표기 static css
+ */
+.Static.sta_TPF_user
+{
+	-nexa-text-align 	: left;
+	-nexa-vertical-align	: middle; 
+	color			: #0a5dad;
+	font 			: bold 12px 'KoPubL';
+	
+}
+
+/* 
+ * sta_TPF_part
+ * SPP Top frame part(소속/부서) 표기 static css
+ */
+.Static.sta_TPF_part
+{
+	-nexa-text-align 	: left;
+	-nexa-vertical-align	: middle; 
+	-nexa-padding		: 0px 8px 0px 8px;
+	color			: #000000;
+	font 			: bold 12px 'KoPubL';
+}
+/****************************************************************************************************************************/
+/*****************************************************   STATIC END   *******************************************************/
+/****************************************************************************************************************************/
+
+
+
+
+/****************************************************************************************************************************/
+/*****************************************************   BUTTON START   *****************************************************/
+/****************************************************************************************************************************/
+/* 
+ * btn_TPF_menuLv1
+ * 대메뉴 css
+ */
+ .Button.btn_TPF_menuLv1
+{
+	background		: transparent;
+	-nexa-border		: 0px, 0px, 3px solid transparent, 0px;
+	-nexa-text-align	: center;
+	-nexa-vertical-align 	: middle;
+	color			: #ffffff;
+	cursor			: pointer;
+	font 			: bold 15px "KoPubL";
+	-nexa-padding		: 6px 0px 0px 0px;
+}
+.Button.btn_TPF_menuLv1[status=focused],
+.Button.btn_TPF_menuLv1[status=mouseover],
+.Button.btn_TPF_menuLv1[userstatus=pushed],
+.Button.btn_TPF_menuLv1[userstatus=selected]
+{
+	background		: transparent;
+	-nexa-border		: 0px, 0px, 3px solid #F58220, 0px;
+	-nexa-text-align	: center;
+	-nexa-vertical-align 	: middle;
+	cursor			: pointer;
+	font 			: bold 15px "KoPubL";
+	color			: #ffffff;
+	-nexa-padding		: 6px 0px 0px 0px;
+}
+
+/* 
+ * btn_TPF_menuLv2
+ * 중메뉴 css
+ */
+ .Button.btn_TPF_menuLv2
+{
+	background		: #ffffff;
+	-nexa-border		: 0px;
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	color			: #222222;
+	cursor			: none;
+	font 			: bold 18px "KoPubL";
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+.Button.btn_TPF_menuLv2[status=focused],
+.Button.btn_TPF_menuLv2[status=mouseover],
+.Button.btn_TPF_menuLv2[userstatus=pushed],
+.Button.btn_TPF_menuLv2[userstatus=selected]
+{
+	background		: #ffffff;
+	-nexa-border		: 0px;
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	cursor			: pointer;
+	font 			: bold 18px "KoPubL";
+	color			: #222222;
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+
+/* 
+ * btn_TPF_menuLv3
+ * 소메뉴 css
+ */
+.Button.btn_TPF_menuLv3,
+.Button.btn_TPF_menuLv3[status=focused]
+{
+	background		: url(theme://SPP_IMAGE_SET/TPF/bg_TPF_menuLv3.png) no-repeat left center;
+	-nexa-border		: 0px;
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	color			: #999999;
+	cursor			: pointer;
+	font 			: bold 13px "KoPubL";
+	-nexa-padding		: 0px 0px 0px 10px;
+}
+
+.Button.btn_TPF_menuLv3[status=mouseover],
+.Button.btn_TPF_menuLv3[userstatus=pushed],
+.Button.btn_TPF_menuLv3[userstatus=selected]
+{
+	background		: url(theme://SPP_IMAGE_SET/TPF/bg_TPF_menuLv3.png) no-repeat left center;
+	-nexa-border		: 0px;
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	color			: #F58220;
+	cursor			: pointer;
+	font 			: bold 13px "KoPubL";
+	-nexa-padding		: 0px 0px 0px 10px;
+}
+.Button.btn_TPF_menuLv3[status=disabled]
+{
+	background		: url(theme://SPP_IMAGE_SET/TPF/bg_TPF_menuLv3.png) no-repeat left center;
+	-nexa-border		: 0px;
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	color			: #dfdfdf;
+	cursor			: none;
+	font 			: bold 13px "KoPubL";
+	-nexa-text-decoration 	: line-through;
+	-nexa-padding		: 0px 0px 0px 10px;
+}
+
+/* 
+ * btn_TPF_menuLv3Link
+ * 소메뉴 (hyperlink) css
+ */
+ .Button.btn_TPF_menuLv3Link
+{
+	background		: url(theme://SPP_IMAGE_SET/TPF/ico_TPF_hyperlinkMenu.png) no-repeat left 45% /15px;
+	-nexa-border		: 0px;
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	color			: #444444;
+	cursor			: pointer;
+	font 			: bold 13px "KoPubL";
+	-nexa-padding		: 0px 0px 0px 15px;
+}
+.Button.btn_TPF_menuLv3Link[status=focused],
+.Button.btn_TPF_menuLv3Link[status=mouseover],
+.Button.btn_TPF_menuLv3Link[userstatus=pushed],
+.Button.btn_TPF_menuLv3Link[userstatus=selected]
+{
+	background		: url(theme://SPP_IMAGE_SET/TPF/ico_TPF_hyperlinkMenu.png) no-repeat left 45% /15px;
+	-nexa-border		: 0px;
+	-nexa-text-align	: left;
+	-nexa-vertical-align 	: middle;
+	color			: #444444;
+	cursor			: pointer;
+	font 			: bold 13px "KoPubL";
+	-nexa-text-decoration 	: underline;
+	-nexa-padding		: 0px 0px 0px 15px;
+}
+
+
+
+/* 
+ * btn_TPF_logout
+ * Top frame 로그아웃 버튼
+ */
+.Button.btn_TPF_logout,
+.Button.btn_TPF_logout[status=focused],
+.Button.btn_TPF_logout[userstatus=selected]
+{
+	background		: url(theme://NHSB_IMAGE_SET/HOME/icon_19.png) no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer;
+}
+
+.Button.btn_TPF_logout[status=mouseover],
+.Button.btn_TPF_logout[userstatus=pushed]
+{
+	background		: url(theme://NHSB_IMAGE_SET/HOME/icon_19-hover.png) no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer;
+}
+
+
+
+/* 
+ * btn_TPF_dropBox
+ * Top frame dropBox형태 버튼
+ */
+.Button.btn_TPF_dropBox,
+.Button.btn_TPF_dropBox[status=focused]
+{
+	background		: url('theme://NHSB_IMAGE_SET/HOME/icon_23.png') no-repeat right center;
+	-nexa-border		: 0px;
+	-nexa-text-align	: right;
+	-nexa-vertical-align	: middle;
+	color			: #444444;
+	cursor			: pointer;
+	font 			: 14px "KoPubL";
+	-nexa-padding		: 0px 25px 0px 0px;
+	-nexa-text-decoration 	: ;
+}
+.Button.btn_TPF_dropBox[status=mouseover],
+.Button.btn_TPF_dropBox[userstatus=pushed],
+.Button.btn_TPF_dropBox[userstatus=selected]
+{
+	background		: url('theme://NHSB_IMAGE_SET/HOME/icon_23-hover.png') no-repeat right center;
+	-nexa-border		: 0px;
+	-nexa-text-align	: right;
+	-nexa-vertical-align	: middle;
+	color			: #444444;
+	cursor			: pointer;
+	font 			: 14px "KoPubL";
+	-nexa-padding		: 0px 25px 0px 0px;
+	-nexa-text-decoration 	: underline;
+}
+
+/* 
+ * btn_TPF_hyperlink
+ * Top frame 외부링크 버튼
+ */
+.Button.btn_TPF_hyperlink,
+.Button.btn_TPF_hyperlink[status=focused]
+{
+	background		: url('theme://SPP_IMAGE_SET/TPF/ico_TPF_hyperlink.png') no-repeat right center;
+	-nexa-border		: 0px;
+	-nexa-text-align	: right;
+	-nexa-vertical-align	: middle;
+	color			: #444444;
+	cursor			: pointer;
+	font 			: 14px "KoPubL";
+	-nexa-padding		: 0px 25px 0px 0px;
+}
+.Button.btn_TPF_hyperlink[status=mouseover],
+.Button.btn_TPF_hyperlink[userstatus=pushed],
+.Button.btn_TPF_hyperlink[userstatus=selected]
+{
+	background		: url('theme://SPP_IMAGE_SET/TPF/ico_TPF_hyperlink.png') no-repeat right center;
+	-nexa-border		: 0px;
+	-nexa-text-align	: left;
+	-nexa-vertical-align	: middle;
+	color			: #444444;
+	cursor			: pointer;
+	font 			: 14px "KoPubL";
+	-nexa-padding		: 0px 25px 0px 0px;
+	-nexa-text-decoration 	: underline;
+}
+
+/* 
+ * btn_TPF_message
+ * Top frame 메시지 버튼 (기본)
+ */
+.Button.btn_TPF_message,
+.Button.btn_TPF_message[status=focused],
+.Button.btn_TPF_message[status=mouseover],
+.Button.btn_TPF_message[userstatus=pushed],
+.Button.btn_TPF_message[userstatus=selected]
+{
+	background		: url('theme://SPP_IMAGE_SET/TPF/ico_TPF_Message.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer; 
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+
+
+/* 
+ * btn_TPF_messageWR
+ * Top frame 메시지 버튼 (쓰기)
+ */
+.Button.btn_TPF_messageWR,
+.Button.btn_TPF_messageWR[status=focused],
+.Button.btn_TPF_messageWR[status=mouseover],
+.Button.btn_TPF_messageWR[userstatus=pushed],
+.Button.btn_TPF_messageWR[userstatus=selected]
+{
+	background		: transparent url('theme://SPP_IMAGE_SET/TPF/ico_TPF_Message_WR.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer; 
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+
+/* 
+ * btn_TPF_notice
+ * Top frame Notice 버튼
+ */
+.Button.btn_TPF_notice,
+.Button.btn_TPF_notice[status=mouseover],
+.Button.btn_TPF_notice[status=focused],
+.Button.btn_TPF_notice[userstatus=pushed],
+.Button.btn_TPF_notice[userstatus=selected]
+
+{
+	background		: url('theme://SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer; 
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+
+/* 
+ * btn_TPF_setting
+ * Top frame 설정 버튼
+ */
+.Button.btn_TPF_setting,
+.Button.btn_TPF_setting[status=focused],
+.Button.btn_TPF_setting[userstatus=selected]
+{
+	background		: url('theme://SPP_IMAGE_SET/TPF/ico_TPF_Setting.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer; 
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+.Button.btn_TPF_setting[status=mouseover],
+.Button.btn_TPF_setting[userstatus=pushed]
+{
+	background		: url('theme://MIRAE_IMAGE_SET/TPF/icon_20-hover.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer; 
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+
+/* 
+ * btn_TPF_btn_TPF_language
+ * Top frame 언어선택 버튼
+ */
+.Button.btn_TPF_btn_TPF_language,
+.Button.btn_TPF_btn_TPF_language[status=focused],
+.Button.btn_TPF_btn_TPF_language[status=mouseover],
+.Button.btn_TPF_btn_TPF_language[userstatus=pushed],
+.Button.btn_TPF_btn_TPF_language[userstatus=selected]
+{
+	background		: transparent url(theme://SPP_IMAGE_SET/TPF/btn_TPF_lang_ETC.png) no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer;
+}
+
+
+/* 
+ * btn_TPF_sitemap
+ * Top frame sitemap 버튼
+ */
+.Button.btn_TPF_sitemap,
+.Button.btn_TPF_sitemap[status=focused],
+.Button.btn_TPF_sitemap[userstatus=selected]
+{
+	background		: transparent url('theme://NHSB_IMAGE_SET/HOME/icon_24.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer; 
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+.Button.btn_TPF_sitemap[status=mouseover],
+.Button.btn_TPF_sitemap[userstatus=pushed]
+{
+	background		: transparent url('theme://NHSB_IMAGE_SET/HOME/icon_24-hover.png') no-repeat center center;
+	-nexa-border		: 0px none;
+	cursor			: pointer; 
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+
+
+/* 
+ * btn_TPF_prev
+ * Top frame menu prev 버튼
+ */
+.Button.btn_TPF_prev,
+.Button.btn_TPF_prev[status=focused],
+.Button.btn_TPF_prev[status=mouseover],
+.Button.btn_TPF_prev[userstatus=pushed],
+.Button.btn_TPF_prev[userstatus=selected]
+{
+	background		: url('theme://SPP_IMAGE_SET/TPF/btn_TPF_Prev.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer; 
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+
+/* 
+ * btn_TPF_next
+ * Top frame menu next 버튼
+ */
+.Button.btn_TPF_next,
+.Button.btn_TPF_next[status=focused],
+.Button.btn_TPF_next[status=mouseover],
+.Button.btn_TPF_next[userstatus=pushed],
+.Button.btn_TPF_next[userstatus=selected]
+{
+	background		: url('theme://SPP_IMAGE_SET/TPF/btn_TPF_Next.png') no-repeat center center;
+	-nexa-border		: 0px;
+	cursor			: pointer; 
+	-nexa-padding		: 0px 0px 0px 0px;
+}
+/****************************************************************************************************************************/
+/*****************************************************   BUTTON END   *******************************************************/
+/****************************************************************************************************************************/]]></CSSData>
+  <CSSData type="mobile_large"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_small"><![CDATA[]]></CSSData>
+  <CSSData type="mobile_medium"><![CDATA[]]></CSSData>
+</XCSS>

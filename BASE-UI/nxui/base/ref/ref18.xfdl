@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="ref18" left="0" top="0" width="1840" height="720" titletext="첨부파일" onload="form_onload">
+    <Layouts>
+      <Layout>
+        <TextArea id="TextArea01" taborder="0" left="1050" top="20" readonly="true" value="첨부파일 업/다운로드를 처리한다.&#10;파일 업로드 하고 저장하는 업무 화면일 경우 예시&#10;화면에서 데이터 입력&amp;파일 첨부 -&gt; 저장 시 물리파일 서버에 업로드&amp;파일첨부 테이블에 정보 저장 &#10;-&gt; fnUploadCallback 이벤트 호출 -&gt; save transaction -&gt; fnCallback 호출&#10;&#10;&#10;script 처리 (자세한 처리는 스크립트 참조)&#10;1) 파일첨부 Div setting&#10;- Div를 배치한 후 &quot;comm::comFile.xfdl&quot;을 url로 지정한다.&#10;- fnInit에 아래 첨부파일 처리용 setConfig함수를 호출한다.&#10;&#10;var oParam = {&#10;&#9; sSvcId&#9;&#9;: 'testFileSvc'&#9;&#9;// divFile callback 후처리용 서비스 ID&#10;&#9;,title&#9;&#9;: 'User Title'&#9;&#9;// 첨부파일 그리드 타이틀; default : '첨부파일'&#10;&#9;,limitMinCnt: 0&#9;&#9;&#9;&#9;&#9;// 파일 최소 갯수; defualt 0&#10;&#9;,limitCnt&#9;: 3&#9;&#9;&#9;&#9;&#9;// 파일 최대 갯수; default 5&#10;&#9;,limitSize&#9;: 100&#9;&#9;&#9;&#9;// 첨부파일 개당 용량 제한(단위 MB); default 100 MB&#10;&#9;,folderName&#9;: 'ref'&#9;&#9;&#9;&#9;// 폴더명(업무명)&#10;&#9;,tableName&#9;: 'CM0000_W_div01'&#9;// 구분명(ex. 화면명 + &quot;_&quot; + 첨부파일 Div ID)&#10;&#9;,primaryKey1: 'TT202306270002'&#9;// 테이블 PK1(ex. 요청서ID 등)&#10;&#9;,primaryKey2: ''&#9;&#9;&#9;&#9;// 테이블 PK2 (복합 키인 경우 사용)&#10;&#9;,primaryKey3: ''&#9;&#9;&#9;&#9;// 테이블 PK3 (복합 키인 경우 사용)&#10;&#9;,extGrid&#9;: this.formatGrid&#9;// 확장 입력 컬럼 처리를 위한 format용 grid; 자세한 처리는 스크립트 및 좌측 그리드 설명란 참조&#10;&#9;,fileDownYn&#9;: ''&#9;&#9;&#9;&#9;// 파일다운권한; &#9; 공백 시 메뉴의 조회 권한&#10;&#9;,fileUpYn&#9;: ''&#9;&#9;&#9;&#9;// 파일업로드권한; 공백 시 메뉴의 추가 권한&#10;&#9;,deleteYn&#9;: ''&#9;&#9;&#9;&#9;// 파일삭제권한; &#9; 공백 시 메뉴의 삭제 권한&#10;};&#10;this.divFile.form.setConfig(this, oParam);&#10;&#10;&#10;2) 파일 저장 서비스 호출&#10;this.divFile.form.fnUploadFiles(true);&#10;- parameter(bCheckValidate) : true:파일업로드전validation수행(default) / false:파일업로드전 validation 비수행&#10;&#10;&#10;3) 파일업로드 콜백이벤트 setting&#10;- 업무화면 script의 this.fnUploadCallback() 함수에서 업로드 후처리를 기술한다.&#10;// 파일 업로드 default callback&#10;this.fnUploadCallback = function(sSvcId, nErrorCode, sErrorMsg)&#10;{&#10;&#9;// TO DO&#10;&#9;// 개발자가 지정한 sSvcId(setConfig 옵션에 넣은 파일첨부ID), nErrorCode(에러코드), sErrorMsg(에러메시지)&#10;&#9;if (nErrorCode &lt; 0) &#10;&#9;{&#10;&#9;&#9;Ex.core.error(this,{id:&quot;ERROR&quot;,msg:sSvcId+&quot;\n&quot;+Ex.core.msg(sErrorMsg)});&#10;&#9;&#9;return;&#10;&#9;}&#10;&#9;&#10;&#9;switch(sSvcId)&#10;&#9;{&#10;&#9;&#9;case &quot;fileUploadSvc&quot; :&#10;&#9;&#9;&#9;//this.fnSave();&#10;&#9;&#9;&#9;break;&#10;&#9;}&#9;&#10;}" right="20" bottom="20"/>
+        <Div id="divFile" taborder="1" left="20" top="55" width="1000" height="142" url="comm::comFile.xfdl"/>
+        <Button id="btnSave" taborder="2" text="저장" left="940" top="215" width="80" height="32" cssclass="btn_WF_primary_save" onclick="fnButtonComOnclick"/>
+        <Grid id="formatGrid" taborder="3" left="20" top="400" width="550" height="270" autofittype="none" visible="true" cssclass="grd_WF_normal">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="150"/>
+                <Column size="150"/>
+                <Column size="150"/>
+                <Column size="150"/>
+                <Column size="150"/>
+              </Columns>
+              <Rows>
+                <Row size="32" band="head"/>
+                <Row size="32"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="항목1"/>
+                <Cell col="1" text="항목2" validation="항목2;NULL" cssclass="grdHCell_WF_essential"/>
+                <Cell col="2" text="항목3"/>
+                <Cell col="3" text="항목4"/>
+                <Cell col="4" text="항목5"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:EXT_COL_1" edittype="combo" displaytype="combocontrol" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" combodataset="dsCode1"/>
+                <Cell col="1" text="bind:EXT_COL_2" displaytype="combocontrol" edittype="combo" combocodecol="CMM_CD" combodatacol="CMM_CD_NM" combodataset="dsCode2" validation="항목2;NULL" validationStatus="false"/>
+                <Cell col="2" text="bind:EXT_COL_3" edittype="text"/>
+                <Cell col="3" text="bind:EXT_COL_4" displaytype="mask" edittype="text" editinputtype="number"/>
+                <Cell col="4" text="bind:EXT_COL_5" displaytype="date" edittype="date" calendardateformat="yyyy-MM-dd"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <TextArea id="TextArea01_00" taborder="4" left="formatGrid:20" top="400" readonly="true" right="830" bottom="20" value="첨부파일 추가 입력 처리를 위한 가이드&#10;&#10;1. 추가항목 data 처리&#10;첨부파일 Table(FOMM_ATCHFILE_MT)의 항목1~항목5(EXT_COL_1 ~ EXT_COL_5)&#10;컬럼에 매핑하여 저장한다.&#10;&#10;2. 추가항목 UI 가이드&#10;추가항목을 입력받을 grid 객체에 입력 제한, 입력 타입을 설정한 후&#10;setConfig oParam의 extGrid로 넘긴다.&#10;- extGrid의 input type, displayType, inner dataset 등&#10;  모든 입력 관련 옵션을 그대로 넘기기 위해 format을 읽어 처리함.&#10;(자세한 처리는 스크립트 및 좌측 그리드 형식 참조)" wordWrap="char"/>
+        <Static id="Static00" taborder="6" text="첨부파일 입력모드" left="1.09%" top="20" width="6.47%" height="24"/>
+        <Radio id="Radio00" taborder="5" left="130" top="20" width="200" height="24" innerdataset="innerdataset" codecolumn="codecolumn" datacolumn="datacolumn" cssclass="rdo_WF_normal" rowcount="-1" columncount="-1" value="normal" text="보통" index="0" onitemchanged="Radio00_onitemchanged">
+          <Dataset id="innerdataset">
+            <ColumnInfo>
+              <Column id="codecolumn" size="256"/>
+              <Column id="datacolumn" size="256"/>
+            </ColumnInfo>
+            <Rows>
+              <Row>
+                <Col id="codecolumn">normal</Col>
+                <Col id="datacolumn">보통</Col>
+              </Row>
+              <Row>
+                <Col id="codecolumn">ext</Col>
+                <Col id="datacolumn">추가입력</Col>
+              </Row>
+            </Rows>
+          </Dataset>
+        </Radio>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsCode1">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CMM_CD_NM">- 선택 -</Col>
+          </Row>
+          <Row>
+            <Col id="CMM_CD">Code1</Col>
+            <Col id="CMM_CD_NM">코드11</Col>
+          </Row>
+          <Row>
+            <Col id="CMM_CD_NM">코드12</Col>
+            <Col id="CMM_CD">Code2</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="dsCode2">
+        <ColumnInfo>
+          <Column id="CMM_CD" type="STRING" size="256"/>
+          <Column id="CMM_CD_NM" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CMM_CD_NM">- 선택 -</Col>
+          </Row>
+          <Row>
+            <Col id="CMM_CD">Code3</Col>
+            <Col id="CMM_CD_NM">코드21</Col>
+          </Row>
+          <Row>
+            <Col id="CMM_CD">Code4</Col>
+            <Col id="CMM_CD_NM">코드22</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/***********************************************************************************
+* 화면(명)		: ROWFLAG 핸들링 가이드
+* 메뉴(경로)	: 공통관리 > 플랫폼 > 공통
+* 화면 설명	: ROWFLAG 핸들링 가이드
+* 작성자		: WEMB
+* 작성일		: 
+* 수정이력		:
+*------------------------------------------------------------------
+* 수정일			작성자			이력
+*------------------------------------------------------------------
+* 2023.04.00	WEMB		최초작성
+*------------------------------------------------------------------
+***********************************************************************************/
+/***********************************************************************************
+ * Script Include 
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Form Variable
+ ***********************************************************************************/
+this.oParam;
+/***********************************************************************************
+ * Form Function
+ ***********************************************************************************/
+this.form_onload = function(obj:Form, e:nexacro.LoadEventInfo)
+{
+	// 화면 초기 세팅
+	// 이외는 기술하지 말것
+	this.gfnFormOnLoad(obj, this.fnInit);
+}
+
+this.fnInit = function()
+{
+	var oParam = {
+		 sSvcId		: 'testFileSvc'		// divFile callback 후처리용 서비스 ID
+		,title		: 'User Title'		// 첨부파일 그리드 타이틀; default : '첨부파일'
+		,limitMinCnt: 0					// 파일 최소 갯수; defualt 0
+		,limitCnt	: 3					// 파일 최대 갯수; default 5
+		,limitSize	: 100				// 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+		,folderName	: 'ref'				// 폴더명(업무명)
+		,tableName	: 'CM0000_W_div01'	// 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+		,primaryKey1: 'TT202306270002'	// 테이블 PK1(ex. 요청서ID 등)
+		,primaryKey2: ''				// 테이블 PK2 (복합 키인 경우 사용)
+		,primaryKey3: ''				// 테이블 PK3 (복합 키인 경우 사용)
+		,extGrid	: null				// 확장컬럼 입력을 위한 format용 grid
+		,fileDownYn	: ''				// 파일다운권한; 	 공백 시 메뉴의 조회 권한
+		,fileUpYn	: ''				// 파일업로드권한; 공백 시 메뉴의 추가 권한
+		,deleteYn	: ''				// 파일삭제권한; 	 공백 시 메뉴의 삭제 권한
+	};
+	this.divFile.form.setConfig(this, oParam);
+	
+	this.oParam = oParam;
+}
+
+
+// 필요시 폼관련 이벤트는 여기 추가
+/***********************************************************************************
+ * Common Function
+ ***********************************************************************************/
+this.fnSave = function()
+{
+	alert('Save Transaction call');
+}
+
+
+// 공통 저장 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+this.fnDelete = function(objDs:Dataset)
+{
+	objDs.set_enableevent(false);
+	objDs.set_filterstr("CHK=='1'");
+	
+	for(var i = 0; i < objDs.rowcount; i++)
+		objDs.setDeleteRow(i);
+		
+	objDs.set_filterstr("");
+	objDs.set_enableevent(true);
+}
+
+
+
+/***********************************************************************************
+ * CallBack Event 
+ ***********************************************************************************/
+// 파일 업로드 default callback
+this.fnUploadCallback = function(sSvcId, nErrorCode, sErrorMsg)
+{
+	// TO DO
+	// 개발자가 지정한 sSvcId(setConfig 옵션에 넣은 파일첨부ID), nErrorCode(에러코드), sErrorMsg(에러메시지)
+	if (nErrorCode < 0) 
+	{
+		Ex.core.error(this,{id:"ERROR",msg:sSvcId+"\n"+Ex.core.msg(sErrorMsg)});
+		return;
+	}
+	
+	switch(sSvcId)
+	{
+		case "testFileSvc" :
+			this.fnSave();
+			break;
+	}
+	
+}
+
+
+
+/***********************************************************************************
+ * User Function
+ ***********************************************************************************/
+
+/***********************************************************************************
+ * Component Event
+ ***********************************************************************************/
+ 
+/*
+ * Dataset 변경에 따라 ROWFLAG 처리가 들어가야 하므로 setAddRow, setInsertRow, setDeleteRow, setCopyRow를 활용한다.
+ */
+this.fnButtonComOnclick = function(obj:Button, e:nexacro.ClickEventInfo)
+{
+    var sObjId = obj.name;
+    switch(sObjId)
+	{
+		// 저장 버튼 클릭
+        case "btnSave" :
+			// 물리파일업로드&파일정보 테이블 저장 호출
+			if(this.divFile.form.fnSaveCheck())
+			{
+				this.divFile.form.fnUploadFiles();
+			}
+			break;
+		
+    }
+}
+
+
+this.Radio00_onitemchanged = function(obj:nexacro.Radio,e:nexacro.ItemChangeEventInfo)
+{
+	switch(e.postvalue)
+	{
+		case "normal" :		// 일반 첨부파일
+			this.oParam.extGrid = null;
+			break;
+			
+		case "ext" :		// 추가입력 첨부파일
+			this.oParam.extGrid = this.formatGrid;
+			break;
+	}
+	
+	this.divFile.form.setConfig(this, this.oParam);
+};
+]]></Script>
+  </Form>
+</FDL>
