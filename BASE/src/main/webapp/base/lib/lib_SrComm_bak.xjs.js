@@ -1,0 +1,461 @@
+//XJS=lib_SrComm_bak.xjs
+(function()
+{
+    return function(path)
+    {
+        var obj;
+    
+        // User Script
+        this.registerScript(path, function() {
+        //include "lib::lib_WorkFlow.xjs";
+
+        //화면 기본정보 폼 조회 서비스
+        this.getSelectBaseInfo = function(topForm)
+        {
+        	var isExist = this.isValidObject("dsCond_TOP");
+
+        	var dsObj;
+
+        	if( !isExist )
+        	{
+        		dsObj = new Dataset;
+        		dsObj.set_name("dsCond_TOP");
+        		this.addChild("dsCond_TOP", dsObj);
+
+        		dsObj.assign(topForm.dsCond);
+        	}
+
+        	isExist = this.isValidObject("dsSrBaseInfo_TOP");
+
+        	if( !isExist )
+        	{
+        		dsObj = new Dataset;
+        		dsObj.set_name("dsSrBaseInfo_TOP");
+        		this.addChild("dsSrBaseInfo_TOP", dsObj);
+
+        		dsObj.assign(topForm.dsSrBaseInfo);
+        	}
+
+        	var sTranId = "selectBaseInfo";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+            var sService = "SR0000D/select01";				// 서비스명
+        	var sInDs = "dsCond=dsCond_TOP";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+            var sOutDs = "dsSrBaseInfo_TOP=dsSrBaseInfo";	// 서버에서 수신할 데이타셋
+            var sArg = "";									// 서버 @ParamVariable 인자와 맵핑됨
+            Ex.core.callService(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        //transaction 실행
+        this.getServiceInfo = function(gubun, gubunArr)
+        {
+        	if( Ex.isEmpty(gubunArr) )
+        	{
+        		gubunArr = this.gubunArr;
+        	}
+
+        	this.dsService.clearData();
+
+        	var inDsParam = "";
+        	var outDsParam = "";
+
+        	var selectRtn = "";
+        	var saveRtn = "";
+
+        	if(gubun == "SELECT")
+        	{
+        		selectRtn = this.getSelectService(gubunArr);
+
+        		inDsParam = selectRtn[0];
+        		outDsParam = selectRtn[1];
+        	}
+        	else if(gubun == "SAVE")
+        	{
+        		saveRtn = this.getSaveService();
+
+        		//trace("[lib_SrComm] this.getServiceInfo() saveRtn:::" + saveRtn);
+
+        		inDsParam = saveRtn[0];
+        		outDsParam = saveRtn[1];
+
+        		var selectRtn = this.getSelectService();
+
+        		inDsParam += (Ex.isEmpty(inDsParam) ? "" : " ") + selectRtn[0];
+        		outDsParam += (Ex.isEmpty(outDsParam) ? "" : " ") + selectRtn[1];
+        	}
+
+        	if( Ex.isEmpty(gubun == "SAVE" && this.dsSaveInfo.getColumn(0, "REQ_ID")) )
+        	{
+        		outDsParam += (Ex.isEmpty(outDsParam) ? "" : " ") + selectRtn[0];
+        	}
+
+        // 	trace("[lib_SrComm] this.getServiceInfo() gubun : " + gubun);
+        // 	trace("[lib_SrComm] this.getServiceInfo() inDsParam : " + inDsParam);
+        // 	trace("[lib_SrComm] this.getServiceInfo() outDsParam : " + outDsParam);
+
+        	var sTranId = "callService_" + gubun;														// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+            var sService = "SRComm/" + gubun.toLowerCase();												// 서비스명
+        	var sInDs = "dsService=dsService dsSaveInfo=dsSaveInfo" + inDsParam;						// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+            var sOutDs = outDsParam;																	// 서버에서 수신할 데이타셋
+            var sArg = "";																				// 서버 @ParamVariable 인자와 맵핑됨
+
+        	trace("[lib_SrComm] this.getServiceInfo() INDS INFO=" + sInDs);
+        	trace("[lib_SrComm] this.getServiceInfo() OUTDS INFO=" + sOutDs);
+            Ex.core.callService(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        //화면 폼 전체 조회 서비스 생성
+        this.getSelectService = function(gubunArr)
+        {
+        	var inDsParam = "";
+        	var outDsParam = "";
+
+        	if( Ex.isEmpty(gubunArr) )
+        	{
+        		gubunArr = this.gubunArr;
+        	}
+
+        	//trace("[lib_SrComm] this.getSelectService() gubunArr.length :::::::::::::::::::::: " + gubunArr.length);
+
+        	for(var i=0; i<gubunArr.length; i++)
+        	{
+        		var divGubun = nexacro.replaceAll(gubunArr[i], "div", "");
+        			divGubun = (divGubun || "").toUpperCase();
+
+        		//if(this.divForm.form[gubunArr[i]].visible)
+        		//{
+        			var value = this.divForm.form[this.gubunArr[i]].form.selectServiceInfo;
+
+        			var inWhereDsObj;
+        			var inWhereDsObjStr = "";
+
+        			for(var j=0; j<value.CALL_SVC.length; j++)
+        			{
+        				var aRow = this.dsService.addRow();
+        				var callService = value.CALL_SVC[j];
+        				var callBackId = value.CALLBACK_ID[j];
+        				var whereDsNm = value.IN_DS_WHERE[j].name + "_" + divGubun;
+
+        				//trace("[lib_SrComm] this.getSelectService() callService : " + callService + " callBackId : " + callBackId);
+
+        				this.dsService.setColumn(aRow, "SCOPE", divGubun);
+        				this.dsService.setColumn(aRow, "SERVICE_GUBUN", "SELECT");
+        				this.dsService.setColumn(aRow, "CALLBACK_ID", callBackId);
+        				this.dsService.setColumn(aRow, "CALL_SERVICE_ID", callService);
+        				this.dsService.setColumn(aRow, "IN_DS_WHERE", whereDsNm);
+
+        				var isExist = this.isValidObject(whereDsNm);
+
+        				//trace("[lib_SrComm] this.getSelectService() IN_DS_OBJ k=" + k + " isExist : " + isExist);
+
+        				if( !isExist )
+        				{
+        					//trace("lib_SrComm.xjs this.getSelectService() j=" + j + " Not Exists [" + whereDsNm + "]");
+        					inWhereDsObj = new Dataset;
+        					inWhereDsObj.set_name(whereDsNm);
+        					this.addChild(whereDsNm, inWhereDsObj);
+        				}
+        				else
+        				{
+        					//trace("[lib_SrComm] this.getSelectService() j=" + j + " Exists [" + value.IN_DS_WHERE[j].name + "_" + divGubun + "]");
+        					inWhereDsObj = this[whereDsNm];
+        				}
+
+        				if(inDsParam.indexOf(whereDsNm + "=") == -1)
+        				{
+        					inDsParam += " " + whereDsNm + "=" + whereDsNm;
+        				}
+
+        				inWhereDsObj.clear();
+        				inWhereDsObj.loadXML(value.IN_DS_WHERE[j].saveXML());	//inDsName
+
+        				var dsType = "";
+
+        				var outDsObjStr = "";
+
+        				for(var k=0; k<value.OUT_DS_OBJ[j].length; k++)
+        				{
+        					var outDsNm = value.OUT_DS_OBJ[j][k].name + "_" + divGubun;
+        					var isExist = this.isValidObject(outDsNm);
+
+        					//trace("[lib_SrComm] this.getSelectService() OUT_DS_OBJ k=" + k + " isExist : " + isExist);
+
+        					var outFormDsObj;
+
+        					if( !isExist )
+        					{
+        						outFormDsObj = new Dataset;
+        						outFormDsObj.set_name(outDsNm);
+        						this.addChild(outDsNm, outFormDsObj);
+        					}
+        					else
+        					{
+        						outFormDsObj = this[outDsNm];
+        					}
+
+        					if(outDsParam.indexOf(outDsNm + "=") == -1)
+        					{
+        						outDsParam += (Ex.isEmpty(outDsParam) ? "" : " ") + outDsNm + "=" + outDsNm;
+        					}
+
+        					outDsObjStr += (Ex.isEmpty(outDsObjStr) ? "" : ",") + outDsNm;
+
+        					if( !isExist )
+        					{
+        						for(var l=0; l<value.OUT_DS_OBJ[j][k].colcount; l++)
+        						{
+        							 outFormDsObj.addColumn(value.OUT_DS_OBJ[j][k].getColID(l), value.OUT_DS_OBJ[j][k].colinfos[l].type);
+        						}
+        					}
+        				}
+
+        				this.dsService.setColumn(aRow, "FORM_OUTDS", outDsObjStr);
+        				//trace("[lib_SrComm] this.getSelectService() outDsParam:\n" + outDsParam);
+        			}
+        		//}
+        	}
+        	return [inDsParam, outDsParam];
+        }
+
+        //화면 폼 전체 저장 서비스 생성
+        this.getSaveService = function()
+        {
+        	var inDsParam = "";
+        	var outDsParam = "";
+        	var inDsNextWfProcCdObj;
+        	var curWfProcCd = this.dsSaveInfo.getColumn(0, "WF_PROC_CD");	//현재 진행단계
+        	var saveGubun = this.dsSaveInfo.getColumn(0, "SAVE_GUBUN");
+
+        	for(var i=0; i<this.gubunArr.length; i++)
+        	{
+        		var divGubun = nexacro.replaceAll(this.gubunArr[i], "div", "");
+        			divGubun = (divGubun || "").toUpperCase();
+
+
+        		var divGubunForm = this.divForm.form[this.gubunArr[i]].form;
+        		var value = divGubunForm.saveServiceInfo;
+
+        		//기본정보 Form 화면을 제외하고 dsNextWfProcCd(다음 진행 단계 정보를 관리하는 약속된 dataset이 존재하는지 체크
+        		if(this.gubunArr[i] != "divTop")
+        		{
+        			//그려진 Form 화면의 진행 단계와 현재 진행 되어야 할 표준 진행 단계가 일치하는 Form 화면에 대해서만 해당 dataset을 찾는다.
+        			//trace("[lib_SrComm] this.getSaveService() i=" + i + " div : " + this.gubunArr[i] + " divScrnProcCd : " + divGubunForm.reqInfo.SCRN_WF_PROC_CD + " curWfProcCd : " + curWfProcCd);
+
+        			if(divGubunForm.reqInfo.SCRN_WF_PROC_CD == curWfProcCd)
+        			{
+        				var dsNextWfProcCd = divGubunForm.dsNextWfProcCd;
+
+        				//trace("[lib_SrComm] this.getSaveService() " + this.gubunArr[i] + " divGubunForm.parent.wfProcCd : " + " dsSaveInfo WF_PROC_CD : " + divGubunForm.reqInfo.WF_PROC_CD + this.dsSaveInfo.getColumn(0, "WF_PROC_CD"));
+
+        				if( divGubunForm.isValidObject(dsNextWfProcCd) )
+        				{
+        					if(saveGubun == "REG")
+        					{
+        						if(dsNextWfProcCd.rowcount != 1)
+        						{
+        							var param = {id : "pAlertNextLvlI", msg : "다음 진행단계가 올바르게 지정되지 않았습니다."};
+        							Ex.core.alert(this, param);
+        							return;
+        						}
+        						else
+        						{
+        							if( Ex.isEmpty(dsNextWfProcCd.getColumn(0, "NEXT_WF_PROC_CD")) )
+        							{
+        								var param = {id : "pAlertNextLvlI", msg : "다음 진행단계가 지정되지 않았습니다."};
+        								Ex.core.alert(this, param);
+        								return;
+        							}
+        						}
+        					}
+
+        					//trace("[lib_SrComm] this.getSaveService() i=" + i + " this.gubunArr : " + this.gubunArr[i]);
+        					var isDsExist = this.isValidObject(dsNextWfProcCd.name);
+
+        					if(!isDsExist)
+        					{
+        						inDsNextWfProcCdObj = new Dataset;
+        						inDsNextWfProcCdObj.set_name(dsNextWfProcCd.name);
+        						this.addChild(dsNextWfProcCd.name, inDsNextWfProcCdObj);
+        					}
+        					else
+        					{
+        						inDsNextWfProcCdObj = this[dsNextWfProcCd.name];
+        					}
+        					inDsNextWfProcCdObj.loadXML(dsNextWfProcCd.saveXML());	//inDsName
+        				}
+        			}
+        		}
+
+        		for(var j=0; j<value.CALL_SVC.length; j++)
+        		{
+        			if(divGubunForm.reqInfo.SCRN_WF_PROC_CD == curWfProcCd)
+        			{
+        				var aRow = this.dsService.addRow();
+        				var callService = value.CALL_SVC[j];
+        				var callBackId = value.CALLBACK_ID[j];
+
+        				this.dsService.setColumn(aRow, "SCOPE", divGubun);
+        				this.dsService.setColumn(aRow, "SERVICE_GUBUN", "SAVE");
+        				this.dsService.setColumn(aRow, "CALLBACK_ID", callBackId);
+        				this.dsService.setColumn(aRow, "CALL_SERVICE_ID", callService);
+
+        				var dsType = "";
+
+        				for(var k=0; k<value.IN_DS_TYPE[j].length; k++)
+        				{
+        					if("MAP" == value.IN_DS_TYPE[j][k] || "LIST" == value.IN_DS_TYPE[j][k])
+        					{
+        						//trace("[lib_SrComm] this.getSaveService"() IN_DS_TYPE k=" + k + " value : " + value.IN_DS_TYPE[j][k]);
+        						dsType += (Ex.isEmpty(dsType) ? "" : ",") + value.IN_DS_TYPE[j][k];
+        					}
+        					else
+        					{
+        						var param = {id : "pAlertWrongInDsTypeI", msg : "IN Dataset Type이 올바르게 지정되지 않았습니다."};
+        						Ex.core.alert(this, param);
+        						return;
+        					}
+        				}
+        				//trace("[lib_SrComm] this.getSaveService"() dsType:\n" + dsType);
+        				this.dsService.setColumn(aRow, "INDS_TYPE", dsType);
+
+        				//trace("[lib_SrComm] this.getSaveService"() value.IN_DS_OBJ[" + j + "].length : " + value.IN_DS_OBJ[j].length);
+
+        				var inDsListStr = "";
+
+        				for(var k=0; k<value.IN_DS_OBJ[j].length; k++)
+        				{
+        					var inDsNm = value.IN_DS_OBJ[j][k].name + "_" + divGubun;
+        					var isExist = this.isValidObject(inDsNm);
+
+        					//trace("[lib_SrComm] this.getSaveService"() IN_DS_OBJ k=" + k + " isExist : " + isExist);
+
+        					var inFormDsObj;
+
+        					if( !isExist )
+        					{
+        						//trace("[lib_SrComm] this.getSaveService"() k=" + k + " Not Exists [" + inDsNm + "]");
+        						inFormDsObj = new Dataset;
+        						inFormDsObj.set_name(inDsNm);
+        						this.addChild(inDsNm, inFormDsObj);
+        					}
+        					else
+        					{
+        						//trace("[lib_SrComm] this.getSaveService"() k=" + k + " Exists [" + inDsNm + "]");
+        						inFormDsObj = this[inDsNm];
+        					}
+
+        					if(inDsParam.indexOf(inDsNm + "=") == -1)
+        					{
+        						inDsParam += " " + inDsNm + "=" + inDsNm;	// + ":U";
+        					}
+
+        					inDsListStr += (Ex.isEmpty(inDsListStr) ? "" : ",") + inDsNm;
+
+        					inFormDsObj.clear();
+        					inFormDsObj.loadXML(value.IN_DS_OBJ[j][k].saveXML(inDsNm, "U"));	//inDsName
+        				}
+        				//trace("[lib_SrComm] this.getSaveService() inDsParam:\n" + inDsParam);
+
+        				this.dsService.setColumn(aRow, "INDS", inDsListStr);
+
+        				//trace("[lib_SrComm] this.getSaveService() value.IN_DS_OBJ[" + j + "].length : " + value.IN_DS_OBJ[j].length);
+
+        				var outDsObjStr = "";
+
+        				if(value.OUT_DS_OBJ.length > 0)
+        				{
+        					for(var k=0; k<value.OUT_DS_OBJ[j].length; k++)
+        					{
+        						var outDsNm = value.OUT_DS_OBJ[j][k].name + "_" + divGubun;
+        						var isExist = this.isValidObject(outDsNm);
+
+        						//trace("[lib_SrComm] this.getSaveService() OUT_DS_OBJ k=" + k + " isExist : " + isExist);
+
+        						var outFormDsObj;
+
+        						if( !isExist )
+        						{
+        							outFormDsObj = new Dataset;
+        							outFormDsObj.set_name(outDsNm);
+        							this.addChild(outDsNm, outFormDsObj);
+        						}
+        						else
+        						{
+        							outFormDsObj = this[outDsNm];
+        						}
+
+        						if(outDsParam.indexOf(outDsNm + "=") == -1)
+        						{
+        							outDsParam += (Ex.isEmpty(outDsParam) ? "" : " ") + outDsNm + "=" + outDsNm;
+        						}
+
+        						outDsObjStr += (Ex.isEmpty(outDsObjStr) ? "" : ",") + outDsNm;
+
+        						if( !isExist )
+        						{
+        							for(var l=0; l<value.OUT_DS_OBJ[j][k].colcount; l++)
+        							{
+        								 outFormDsObj.addColumn(value.OUT_DS_OBJ[j][k].getColID(l), value.OUT_DS_OBJ[j][k].colinfos[l].type);
+        							}
+        						}
+        					}
+        				}
+
+        				this.dsService.setColumn(aRow, "FORM_OUTDS", outDsObjStr);
+        				//trace("[lib_SrComm] this.getSaveService() outDsParam:\n" + outDsParam);
+        			}
+        		}
+        	}
+
+        	if( !Ex.isEmpty(inDsNextWfProcCdObj) )
+        	{
+        		inDsParam += " " + inDsNextWfProcCdObj.name + "=" + inDsNextWfProcCdObj.name;
+        	}
+        	return [inDsParam, outDsParam];
+        }
+
+        //첨부파일 셋팅
+        this.setFileConfig = function(keyInfoArr, isSearch)
+        {
+        	if( Ex.isEmpty(keyInfoArr) )
+        	{
+        		keyInfoArr = ["", "", ""];
+        	}
+        	else
+        	{
+        		if( Ex.isArray(keyInfoArr) )
+        		{
+        			if(keyInfoArr < 3) for(var i=0; i<3-keyInfoArr.length; i++) keyInfoArr.push("");
+        		}
+        		else keyInfoArr = ["", "", ""];
+        	}
+
+        	if( Ex.isEmpty(isSearch) ) isSearch = false;
+        	else if(isSearch != true && isSearch != false) isSearch = false;
+
+        	//trace("[lib_SrComm] this.setFileConfig() keyInfoArr[0] : " + keyInfoArr[0]);
+
+        	var oParam = {
+        		 sSvcId		: 'srFileSvc'					// divFile callback 후처리용 서비스 ID
+        		,limitMinCnt : 0							// 파일 최소 갯수; default 0
+        		,limitCnt	: 3								// 파일 최대 갯수; default 5
+        		,limitSize	: 100							// 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+        		,folderName	: 'sr'							// 폴더명(업무명)
+        		,tableName	: "SR0000_W" + "_divFile"		// 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+        		,primaryKey1: keyInfoArr[0]					// 테이블 PK1(ex. 요청서ID 등)
+        		,primaryKey2: keyInfoArr[1]					// 테이블 PK2 (복합 키인 경우 사용)
+        		,primaryKey3: keyInfoArr[2]					// 테이블 PK3 (복합 키인 경우 사용)
+        		,fileDownYn	: ''							// 파일다운권한; 	 공백 시 메뉴의 조회 권한
+        		,fileUpYn	: ''							// 파일업로드권한; 공백 시 메뉴의 추가 권한
+        		,deleteYn	: ''							// 파일삭제권한; 	 공백 시 메뉴의 삭제 권한
+        	};
+        	this.divForm.form.divFile.form.setConfig(this, oParam);
+
+        	if(isSearch) this.divForm.form.divFile.form.fnSearchFile();
+        }
+        });
+    
+        this.loadIncludeScript(path);
+        
+        obj = null;
+    };
+}
+)();

@@ -1,0 +1,1109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR0000DDAO">
+
+    <sql id="selectNewReqId">
+        SELECT
+            CASE
+                WHEN AS_KEY IS NOT NULL
+                THEN
+                    AS_KEY || TO_CHAR(SYSDATE, 'YYYYMMDD') || 
+	                (
+	                SELECT LPAD(NVL(MAX(TO_NUMBER(SUBSTR(REQ_ID, -3))), 0) + 1, 3, '0') AS REQ_ID
+	                FROM SR_BASE_INFO
+	                WHERE SUBSTR(REQ_ID, 1, 8 + LENGTH(AS_KEY) + 1) LIKE AS_KEY || TO_CHAR(SYSDATE, 'YYYYMMDD') || '%'
+	                )
+            END
+            AS REQ_ID
+            
+        FROM
+            (
+	        SELECT
+			      NVL(
+	                CASE
+	                    WHEN SVC_DTL_CD  IS NOT NULL
+	                    THEN (SELECT ITM_VAL_1 FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = SVC_CD AND CMM_CD = SVC_DTL_CD AND LANG_CD = 'KR')
+	                END,
+			        (SELECT ITM_VAL_1 FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'SVC_CD' AND CMM_CD = SVC_CD AND LANG_CD = 'KR')
+			      ) AS AS_KEY
+			FROM
+			    (
+			    SELECT SVC_CD, SVC_DTL_CD
+			    FROM
+			        WF_REQ_TMPLAT_HT
+			    WHERE 1 = 1
+			    AND REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+			    AND REQ_TMPLAT_VER    = NVL(#{REQ_TMPLAT_VER}, (SELECT REQ_TMPLAT_VER FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = #{REQ_TMPLAT_ID} AND CUR_VER_YN = 'Y'))
+			    ) A
+            )
+    </sql>
+
+    <sql id="selectBaseInfo">
+        SELECT
+              0 AS CHK      /* CHECKBOX 컬럼 */
+            <choose>
+                <when test='"".equals(REQ_ID) or REQ_ID == null or "Y".equals(IS_COPY)'>
+            , 'I' AS ROWFLAG
+                </when>
+                <otherwise>
+            , CASE WHEN B.REQ_ID IS NULL THEN 'I' ELSE '' END AS ROWFLAG        /* 행상태 표기를 위한 컬럼 */
+                </otherwise>
+            </choose>
+
+            , A.REQ_TMPLAT_ID
+            , A.REQ_TMPLAT_VER
+
+            <choose>
+                <when test='"".equals(REQ_ID) or REQ_ID == null or "Y".equals(IS_COPY)'>                
+            , 'REQ_' || TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF') || '_' || #{CUR_USER_ID}  AS TEMP_REQ_ID
+            , 'WF_FUNC_00'  AS WF_FUNC_CD
+                </when>
+                <otherwise>
+            , null  AS TEMP_REQ_ID
+            , #{WF_FUNC_CD} AS WF_FUNC_CD
+                </otherwise>
+            </choose>
+            , CASE
+               WHEN B.REQ_ID IS NULL
+               THEN 'REQ_' || TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF') || '_' || #{CUR_USER_ID}
+               ELSE B.REQ_ID
+              END AS REQ_ID    --요청서ID
+            <choose>
+                <when test='"".equals(REQ_ID) or REQ_ID == null or "Y".equals(IS_COPY)'>
+            , A.MAP_PROC_CD
+            , 'WF_PROC_1000'    AS WF_PROC_CD
+            , (
+              SELECT
+                REPLACE(WF_PROC_NM, '\n', ' ')
+              FROM
+                WF_REQ_TMPLAT_PROC_HT A
+
+              WHERE 1 = 1
+              AND A.REQ_TMPLAT_ID   = NVL(B.REQ_TMPLAT_ID, #{REQ_TMPLAT_ID})
+              AND A.REQ_TMPLAT_VER  = NVL(B.REQ_TMPLAT_VER, #{REQ_TMPLAT_VER})
+              AND A.WF_PROC_CD      = 'WF_PROC_1000'
+              ) AS WF_PROC_NM            
+            , (
+              SELECT
+                MAP_WF_PROC_CD
+              FROM
+                WF_REQ_TMPLAT_PROC_HT A
+              WHERE 1 = 1
+              AND A.REQ_TMPLAT_ID   = NVL(B.REQ_TMPLAT_ID, #{REQ_TMPLAT_ID})
+              AND A.REQ_TMPLAT_VER  = NVL(B.REQ_TMPLAT_VER, #{REQ_TMPLAT_VER})                                  
+              AND A.WF_PROC_CD      = 'WF_PROC_1000'
+              ) AS MAP_WF_PROC_CD
+            , REPLACE(#{MAP_WF_PROC_NM}, '\n', CHR(13) || CHR(10))  AS MAP_WF_PROC_NM
+                </when>
+                <otherwise>
+            , B.MAP_PROC_CD
+            , NVL(B.WF_PROC_CD, 'WF_PROC_1000')     AS WF_PROC_CD       --진행단계코드
+            , B.WF_PROC_NM                          AS WF_PROC_NM       --진행단계명
+            , B.MAP_WF_PROC_CD                      AS MAP_WF_PROC_CD   --매핑진행단계코드 
+            , B.MAP_WF_PROC_NM                      AS MAP_WF_PROC_NM   --매핑진행단계
+                </otherwise>
+            </choose>
+               
+            <choose>
+                <when test='"".equals(REQ_ID) or REQ_ID == null or "Y".equals(IS_COPY)'>
+            , 'N'   AS PL_YN
+            , 'RQST00'  AS REQ_STAT_CD                                 --요청서진행상태코드
+            , 'RQST00'  AS ORG_REQ_STAT_CD                             --요청서진행상태코드
+            , '임시저장'  AS REQ_STAT_NM
+            , NULL      AS REQ_USER_ID
+            , NULL      AS REQ_USER_NM
+            , NULL      AS REQ_DEPT_CD
+            , NULL      AS REQ_DEPT_NM
+            , NULL      AS REQ_DATE
+                </when>
+                <otherwise>
+            , NVL( (SELECT MAX('Y') FROM WF_SVC_STAFF_MNG WHERE 1 = 1 AND LVL4_STAFF_YN = '1' AND STAFF_ID = #{CUR_USER_ID}), 'N')   AS PL_YN
+            , B.REQ_STAT_CD                                 --요청서진행상태코드
+            , B.REQ_STAT_CD AS ORG_REQ_STAT_CD              --요청서진행상태코드
+            , B.REQ_STAT_NM || CASE WHEN B.LAST_RTRN_YN = 'Y' THEN '(반려)' END   AS REQ_STAT_NM  --요청서진행상태명
+
+            , B.REQ_USER_ID                                 --요청자ID
+            , B.REQ_USER_NM                                 --요청자명
+            , B.REQ_DEPT_CD                                 --요청자부서ID
+            , B.REQ_DEPT_NM                                 --요청자부서명
+            , B.REQ_DATE                                    --요청일시
+                </otherwise>
+            </choose>
+
+            , B.TITLE                                       --제목
+            , NVL(B.REQ_EM_YN, 'N') AS REQ_EM_YN            --긴급요청여부
+            , A.SVC_CD                                      --서비스유형코드
+            , A.SVC_DTL_CD                                  --서비스유형 상세코드
+            , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'SVC_CD' AND CMM_CD = A.SVC_CD AND LANG_CD = 'KR')
+              || ' > ' ||
+              (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = A.SVC_CD AND CMM_CD = A.SVC_DTL_CD AND LANG_CD = 'KR')  AS SVC_NM_INFO
+            , A.REQ_TMPLAT_NM                               --요청서양식명
+            , A.REQ_REF_YN                                  --요청서 참조여부
+            , B.REQ_WISH_DT                                 --희망완료일
+            , B.REQ_WISH_TIME                               --희망완료시분
+            , B.JOB_REQ_DT                                  --작업요청일
+            , B.JOB_REQ_TIME                                --작업요청시분
+            , B.PROC_COMP_DATE                              --완료일시
+            , B.DEL_YN                                      --삭제여부
+            , B.CONTENTS                                    --요청서내용
+            , B.PRE_CONF_USER_ID                            --사전협의자ID
+            , B.PRE_CONF_USER_NM                            --사전협의자명
+            , B.PRE_CONF_DEPT_CD                            --사전협의자부서ID
+            , B.PRE_CONF_DEPT_NM                            --사전협의자부서명
+            , A.REQ_DESC                                    --작성요령
+            , B.RMK                                         --비고
+
+            <choose>
+                <when test='"".equals(REQ_ID) or REQ_ID == null or "Y".equals(IS_COPY)'>
+            , #{REF_REQ_ID}     AS REF_REQ_ID
+                </when>
+                <otherwise>
+            , B.REF_REQ_ID                                  --참조요청서ID
+                </otherwise>
+            </choose>
+
+            , B.E_DOCU_NO                                   --전자결재문서
+
+            <choose>
+                <when test='"".equals(REQ_ID) or REQ_ID == null or "Y".equals(IS_COPY)'>
+            , NULL  AS FRID
+            , NULL  AS FR_USER_NM
+            , NULL  AS FR_DEPT_CD
+            , NULL  AS FR_DEPT_NM
+            , NULL  AS FRDT
+
+            , NULL  AS LMID
+            , NULL  AS LM_USER_NM
+            , NULL  AS LM_DEPT_CD
+            , NULL  AS LM_DEPT_NM
+            , NULL  AS LMDT
+            , NULL  AS LMPID
+              </when>
+              <otherwise>              
+            , B.FRID                                        --등록자ID
+            , B.FR_USER_NM                                  --등록자명
+            , B.FR_DEPT_CD                                  --등록자부서ID
+            , B.FR_DEPT_NM                                  --등록자부서명
+            , TO_DATE(B.FRDT, 'YYYYMMDDHH24MISS') AS FRDT   --최초등록일시
+            , B.LMID                                        --수정자ID
+            , B.LM_USER_NM                                  --수정자명
+            , B.LM_DEPT_CD                                  --수정자부서ID
+            , B.LM_DEPT_NM                                  --수정자부서명
+            , TO_DATE(B.FRDT, 'YYYYMMDDHH24MISS') AS LMDT   --최초등록일시
+            , B.LMPID                                       --최종수정화면ID
+                </otherwise>
+            </choose>
+            , NVL(B.CANCEL_POSS_YN, 'N')    AS CANCEL_POSS_YN
+            , B.KEY_INFO
+            <choose>
+                <when test='"".equals(REQ_ID) or REQ_ID == null or "Y".equals(IS_COPY)'>
+            , CASE WHEN A.SAVE_BTN_YN = 'Y' THEN 'Y' ELSE 'N' END AS SAVE_BTN_YN
+            , 'Y'   AS REG_BTN_YN
+            , 'N'   AS CANCEL_BTN_YN
+            , 'N'   AS DEL_BTN_YN
+                </when>
+                <otherwise>
+            , CASE WHEN B.WF_PROC_CD = 'WF_PROC_1000' AND A.SAVE_BTN_YN = 'Y' AND B.REQ_STAT_CD IN ('RQST00', 'RQST91') AND B.REQ_USER_ID = #{CUR_USER_ID} THEN 'Y' ELSE 'N' END AS SAVE_BTN_YN
+            , CASE WHEN B.WF_PROC_CD = 'WF_PROC_1000' AND B.REQ_STAT_CD IN ('RQST00', 'RQST91') AND B.REQ_USER_ID = #{CUR_USER_ID} THEN 'Y' ELSE 'N' END AS REG_BTN_YN
+            , CASE WHEN A.CANCEL_BTN_YN = 'Y' AND B.CANCEL_POSS_YN = 'Y' AND B.REQ_STAT_CD IN ('RQST01', 'RQST11') AND B.REQ_USER_ID = #{CUR_USER_ID} THEN 'Y' ELSE 'N' END AS CANCEL_BTN_YN
+            , CASE WHEN B.WF_PROC_CD = 'WF_PROC_1000' AND A.DEL_BTN_YN = 'Y' AND B.REQ_STAT_CD IN ('RQST00', 'RQST91') AND B.REQ_USER_ID = #{CUR_USER_ID} THEN 'Y' ELSE 'N' END AS DEL_BTN_YN
+                </otherwise>
+            </choose>
+
+            , NVL(B.LAST_RTRN_YN, 'N')  AS LAST_RTRN_YN
+            , B.RTRN_WF_PROC_CD
+            , B.RTRN_MAP_WF_PROC_CD
+            , NVL(B.RTRN_APPV_YN, 'N') AS RTRN_APPV_YN
+            , (SELECT TELNUM FROM FOMM_USER_MT WHERE USER_ID = B.REQ_USER_ID) AS REQ_USER_TELNUM
+
+            , B.UPMU_ID1
+            , B.UPMU_ID2
+            , B.UPMU_ID3
+            
+            , NVL(B.RESERV_FLAG, 'N')   AS RESERV_FLAG                  --등록예약
+            , B.RESERV_DT                                                               --등록예약시간
+            , NVL(B.RESERV_PROC_YN, 'N')    AS RESERV_PROC_YN  --예약처리여부
+
+        FROM
+             (
+             SELECT *
+             FROM
+             WF_REQ_TMPLAT_HT
+             WHERE 1 = 1
+             
+             <choose>
+                <when test='"".equals(REQ_ID) or REQ_ID == null or "Y".equals(IS_COPY) or REQ_ID.startsWith("REQ_")'>
+                    <if test='"".equals(REQ_ID) or REQ_ID == null or "".equals(CHK_ADV) or CHK_ADV == null or "N".equals(CHK_ADV)'>
+                         AND REQ_TMPLAT_ID  = #{REQ_TMPLAT_ID}
+                         AND CUR_VER_YN = 'Y'
+                    </if>
+                    <if test='"Y".equals(CHK_ADV) and !"".equals(REQ_ID) and REQ_ID != null and !REQ_ID.startsWith("REQ_")'>
+                          AND REQ_TMPLAT_ID  IN (SELECT REQ_TMPLAT_ID 
+                                                   FROM SR_BASE_INFO
+                                                  WHERE REQ_ID = #{REQ_ID})
+                          AND CUR_VER_YN = 'Y'
+                    </if>
+                </when>
+                <otherwise>
+             AND (REQ_TMPLAT_ID, REQ_TMPLAT_VER) IN (SELECT REQ_TMPLAT_ID, REQ_TMPLAT_VER FROM SR_BASE_INFO WHERE REQ_ID = #{REQ_ID})            
+                </otherwise>
+             </choose>
+            ) A
+            ,SR_BASE_INFO B
+            
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID(+) 
+        AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER(+)
+        AND B.REQ_ID(+)         = #{REQ_ID}
+    </sql>
+    
+    <select id="selectReqTmplatIdVerByReqId" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT MAX(#{REQ_ID}) AS REQ_ID, MAX(REQ_TMPLAT_ID) AS REQ_TMPLAT_ID, MAX(REQ_TMPLAT_VER) AS REQ_TMPLAT_ID
+    	FROM SR_BASE_INFO
+    	WHERE 1 = 1
+    	AND REQ_ID = #{REQ_ID}
+    	AND NVL(DEL_YN, 'N') = 'N'
+    </select>
+
+    <select id="selectSrBaseEncEmptyList" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              REQ_ID
+        FROM
+            SR_BASE_INFO        
+        WHERE 1 = 1
+
+        ORDER BY
+            REQ_ID
+    </select> 
+
+    <select id="selectAppvSeq" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+            SEQ,
+            WF_PROC_CD,
+            APPR_LVL_SEQ,
+            APPR_GRP_SEQ,
+            APPR_SEQ
+        FROM
+            (
+            SELECT
+                USER_ID,
+                SEQ,
+                WF_PROC_CD,
+                APPR_LVL_SEQ,
+                APPR_GRP_SEQ,
+                APPR_SEQ,
+                DENSE_RANK() OVER(ORDER BY SEQ) AS RNK
+            FROM
+                (
+                SELECT
+                      C.USER_ID
+                    , C.SEQ
+                    , C.WF_PROC_CD
+                    , C.APPR_LVL_SEQ
+                    , C.APPR_GRP_SEQ
+                    , C.APPR_SEQ
+                    , DENSE_RANK() OVER(PARTITION BY REQ_ID, WF_PROC_CD, APPR_LVL_SEQ, APPR_GRP_SEQ ORDER BY APPR_SEQ) AS RNK
+                FROM
+                    WF_APPROVAL_MT C
+        
+                WHERE 1 = 1
+                AND REQ_ID        = #{REQ_ID}
+                AND WF_PROC_CD    = #{WF_PROC_CD}
+                AND APPR_STAT_CD = 'APST_01'
+                AND APPR_LVL_SEQ =
+                                    (
+                                    SELECT MIN(APPR_LVL_SEQ)
+                                      FROM WF_APPROVAL_MT
+                                      WHERE 1 = 1
+                                      AND REQ_ID         = C.REQ_ID
+                                      AND WF_PROC_CD     = C.WF_PROC_CD
+                                      AND APPR_STAT_CD   = C.APPR_STAT_CD
+                                    )
+                )
+            WHERE RNK = 1
+            
+            <if test="USER_ID != '' and USER_ID != null">
+            AND USER_ID = #{USER_ID}
+            </if>
+            )
+        WHERE RNK = 1        
+    </select>
+
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+        <include refid="selectBaseInfo"/>
+    </select>
+
+    <select id="selectBaseInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              REQ_ID
+			, REQ_TMPLAT_ID
+			, REQ_TMPLAT_VER
+			, SVC_CD
+			, SVC_DTL_CD
+			, NVL(REQ_EM_YN, 'N') AS REQ_EM_YN
+			, WF_PROC_CD
+			, WF_PROC_NM
+			, MAP_WF_PROC_CD
+			, MAP_WF_PROC_NM
+			, REQ_STAT_CD
+			, REQ_STAT_NM
+			, TITLE
+			, REQ_USER_ID
+			, REQ_USER_NM
+			, (SELECT TELNUM FROM FOMM_USER_MT WHERE USER_ID = REQ_USER_ID) AS REQ_USER_TELNUM
+			, REQ_DEPT_CD
+			, REQ_DEPT_NM
+			, REQ_DATE
+			, REQ_WISH_DT
+			, REQ_WISH_TIME
+			, JOB_REQ_DT
+			, JOB_REQ_TIME
+			, PROC_COMP_DATE
+			, CONTENTS
+			, PRE_CONF_USER_ID
+			, PRE_CONF_USER_NM
+			, PRE_CONF_DEPT_CD
+			, PRE_CONF_DEPT_NM
+			, NVL(CANCEL_POSS_YN, 'N') AS CANCEL_POSS_YN
+			, REF_REQ_ID
+			, E_DOCU_NO
+			, KEY_INFO
+			, NVL(DEL_YN, 'N') AS DEL_YN
+			, RMK
+			, FRID
+			, FR_USER_NM
+			, FR_DEPT_CD
+			, FR_DEPT_NM
+			, FRDT
+			, LMID
+			, LM_USER_NM
+			, LM_DEPT_CD
+			, LM_DEPT_NM
+			, LMDT
+			, LMPID
+			, NVL(LAST_RTRN_YN, 'N') AS LAST_RTRN_YN
+			, RTRN_WF_PROC_CD
+			, RTRN_MAP_WF_PROC_CD
+			, NVL(RTRN_APPV_YN, 'N') AS RTRN_APPV_YN
+			, UPMU_ID1
+			, UPMU_ID2
+			, UPMU_ID3
+			, MAP_PROC_CD
+			, NVL(RESERV_FLAG, 'N')  AS RESERV_FLAG
+			, RESERV_DT  AS FULL_RESERV_DT
+			, SUBSTR(RESERV_DT, 1, 8)   AS RESERV_DT
+			, SUBSTR(RESERV_DT, 9, 4)   AS RESERV_TIME
+			, REG_WF_PROC_CD
+			, REG_REQ_STAT_CD
+			, REG_MAP_WF_PROC_CD
+			, NVL(RESERV_PROC_YN, 'N')   AS RESERV_PROC_YN
+			, URL_CHK
+			, NVL(END_DEL_YN, 'N')   AS END_DEL_YN
+        FROM
+        	SR_BASE_INFO
+        WHERE REQ_ID = #{REQ_ID}
+    </select>
+
+    <select id="selectKey" resultType="String">
+        <include refid="selectNewReqId"/>
+    </select>
+
+    <insert id="insert01" parameterType="java.util.Map">
+        INSERT INTO SR_BASE_INFO
+        (
+              REQ_ID        --요청서ID
+            , REQ_TMPLAT_ID
+            , REQ_TMPLAT_VER
+            , SVC_CD
+            , SVC_DTL_CD 
+            , WF_PROC_CD        --진행단계코드
+            , WF_PROC_NM        --진행단계명
+            , MAP_PROC_CD           --매핑단계코드
+            , MAP_WF_PROC_CD    --매핑진행단계코드
+            , MAP_WF_PROC_NM    --매핑진행단계명
+            , REQ_STAT_CD       --요청서진행상태코드
+            , REQ_STAT_NM       --요청서진행상태명
+
+            , TITLE             --제목
+            , REQ_USER_ID       --요청자ID
+            , REQ_USER_NM       --요청자명
+            , REQ_DEPT_CD       --요청자부서ID
+            , REQ_DEPT_NM       --요청자부서명
+
+<!--             <if test='"REG".equals(SAVE_GUBUN)'> -->
+            , REQ_DATE          --요청일시
+<!--             </if> -->
+
+            , REQ_WISH_DT       --희망완료일
+            , REQ_WISH_TIME     --희망완료시분
+            , JOB_REQ_DT        --작업요청일
+            , JOB_REQ_TIME      --작업요청시분
+            , PROC_COMP_DATE    --완료일시
+            , DEL_YN            --삭제여부
+            , CONTENTS          --요청서내용
+            , PRE_CONF_USER_ID  --사전협의자ID
+            , PRE_CONF_USER_NM  --사전협의자명
+            , PRE_CONF_DEPT_CD  --사전협의자부서ID
+            , PRE_CONF_DEPT_NM  --사전협의자부서명
+            , CANCEL_POSS_YN
+            , REF_REQ_ID
+            , KEY_INFO
+            , RMK   --비고
+            , E_DOCU_NO -- 전자결재 문서
+
+            , FRID  --등록자ID
+            , FR_USER_NM    --등록자명
+            , FR_DEPT_CD    --등록자부서ID
+            , FR_DEPT_NM    --등록자부서명
+            , FRDT  --등록일시
+            , LMID  --수정자ID
+            , LM_USER_NM    --수정자명
+            , LM_DEPT_CD    --수정자부서ID
+            , LM_DEPT_NM    --수정자부서명
+            , LMDT  --수정일시
+            , LMPID --최종수정화면ID
+            
+            , UPMU_ID1
+            , UPMU_ID2
+            , UPMU_ID3
+        )
+        VALUES
+        (
+              #{REQ_ID}
+            , #{REQ_TMPLAT_ID}
+            , #{REQ_TMPLAT_VER}
+            , (SELECT SVC_CD FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = #{REQ_TMPLAT_ID} AND REQ_TMPLAT_VER = #{REQ_TMPLAT_VER})
+            , (SELECT SVC_DTL_CD FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = #{REQ_TMPLAT_ID} AND REQ_TMPLAT_VER = #{REQ_TMPLAT_VER})
+            , #{WF_PROC_CD}
+            , (
+              SELECT
+                REPLACE(WF_PROC_NM, '\n', ' ')
+              FROM
+                WF_REQ_TMPLAT_PROC_HT A
+
+              WHERE 1 = 1
+              AND A.REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID}
+              AND A.REQ_TMPLAT_VER  = #{REQ_TMPLAT_VER}                                  
+              AND A.WF_PROC_CD      = #{WF_PROC_CD}
+              )
+            , (
+              SELECT
+                MAP_PROC_CD
+              FROM
+                WF_REQ_TMPLAT_HT A
+
+              WHERE 1 = 1
+              AND A.REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID}
+              AND A.REQ_TMPLAT_VER  = #{REQ_TMPLAT_VER}
+              )
+            , (
+              SELECT
+                MAP_WF_PROC_CD
+              FROM
+                WF_REQ_TMPLAT_PROC_HT A
+
+              WHERE 1 = 1
+              AND A.REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID}
+              AND A.REQ_TMPLAT_VER  = #{REQ_TMPLAT_VER}                                  
+              AND A.WF_PROC_CD      = #{WF_PROC_CD}
+              )
+            , (
+              SELECT CMM_CD_NM
+              FROM FOMM_CMM_CD_MT
+              WHERE 1 = 1
+              AND CODE_DIV    = 'WORKFLOW_CD'
+              AND UP_CMM_CD   = (SELECT MAP_PROC_CD FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = #{REQ_TMPLAT_ID} AND REQ_TMPLAT_VER = #{REQ_TMPLAT_VER})
+              AND CMM_CD      = 
+                                (
+                                SELECT
+                                    MAP_WF_PROC_CD
+                                FROM
+                                    WF_REQ_TMPLAT_PROC_HT B
+                                WHERE 1 = 1
+                                AND B.REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID}
+                                AND B.REQ_TMPLAT_VER  = #{REQ_TMPLAT_VER}
+                                AND B.WF_PROC_CD      = #{WF_PROC_CD}
+                                )
+              AND LANG_CD     = 'KR'
+              )
+            , #{REQ_STAT_CD}
+            , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = #{REQ_STAT_CD} AND LANG_CD = 'KR')    --요청서진행상태명
+            
+            , #{TITLE}
+            , #{REQ_USER_ID}
+            , #{REQ_USER_NM}
+            , #{REQ_DEPT_CD}
+            , #{REQ_DEPT_NM}
+            <!-- , SUBSTR(#{REQ_DATE}, 1, 14) -->
+<!--             <if test='"REG".equals(SAVE_GUBUN)'> -->
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+<!--             </if> -->
+            , #{REQ_WISH_DT}
+            , #{REQ_WISH_TIME}
+            , #{JOB_REQ_DT}
+            , #{JOB_REQ_TIME}
+            , #{PROC_COMP_DATE}
+            , 'N'
+            , #{CONTENTS}
+            , #{PRE_CONF_USER_ID}
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{PRE_CONF_USER_ID})    --사전협의자명
+            , #{PRE_CONF_DEPT_CD}
+            , (SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = #{PRE_CONF_DEPT_CD})    --사전협의자부서명
+            , 'Y'
+            , #{REF_REQ_ID}
+            , #{KEY_INFO}
+            , #{RMK}            
+            , #{E_DOCU_NO}
+
+            , #{LMID}
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})            
+            , (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+            , (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  --최초등록일시
+            , #{LMID}
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})            
+            , (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+            , (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  --최초등록일시
+            , #{LMPID}
+            
+            , #{UPMU_ID1}
+            , #{UPMU_ID2}
+            , #{UPMU_ID3}
+        )
+    </insert>
+
+    <update id="modify01" parameterType="java.util.Map">
+        <selectKey resultType="map" keyColumn="MAP_WF_PROC_CD,MAP_WF_PROC_NM" keyProperty="MAP_WF_PROC_CD,MAP_WF_PROC_NM" order="BEFORE">
+            SELECT
+                  FN_SR_REQ_MAP_WF_PROC(#{REQ_ID}, #{WF_PROC_CD}, NULL, 'CODE')  AS MAP_WF_PROC_CD
+                , FN_SR_REQ_MAP_WF_PROC(#{REQ_ID}, #{WF_PROC_CD}, NULL, 'NAME')  AS WF_PROC_NM
+            FROM DUAL              
+        </selectKey>
+
+        UPDATE SR_BASE_INFO A SET
+            <!-- REQ_EM_YN         = NVL(#{REQ_EM_YN}, 'N')    긴급요청여부 -->
+              WF_PROC_CD        = #{WF_PROC_CD}             --진행단계
+            , WF_PROC_NM        = #{WF_PROC_NM}
+            
+            
+            <if test="REQ_TMPLAT_ID != '' and REQ_TMPLAT_ID != null">
+            , REQ_TMPLAT_ID     = CASE WHEN A.REQ_TMPLAT_ID <![CDATA[<>]]> #{REQ_TMPLAT_ID} THEN #{REQ_TMPLAT_ID} ELSE A.REQ_TMPLAT_ID END
+            , REQ_TMPLAT_VER = CASE
+                                                    WHEN A.REQ_TMPLAT_ID <![CDATA[<>]]> #{REQ_TMPLAT_ID}
+                                                    THEN
+                                                        (SELECT REQ_TMPLAT_VER FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = #{REQ_TMPLAT_ID} AND CUR_VER_YN = 'Y') 
+                                                     ELSE A.REQ_TMPLAT_VER
+                                              END
+            </if>
+
+            , MAP_PROC_CD       = 
+                                  (
+					              SELECT
+					                MAP_PROC_CD
+					              FROM
+					                WF_REQ_TMPLAT_HT T
+					
+					              WHERE 1 = 1
+					              AND T.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+					              AND T.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER
+					              )
+            , MAP_WF_PROC_CD    = #{MAP_WF_PROC_CD}
+            , MAP_WF_PROC_NM    = 
+                                  (
+					              SELECT CMM_CD_NM
+					              FROM FOMM_CMM_CD_MT
+					              WHERE 1 = 1
+					              AND CODE_DIV    = 'WORKFLOW_CD'
+					              AND UP_CMM_CD   = (SELECT MAP_PROC_CD FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = A.REQ_TMPLAT_VER)
+					              AND CMM_CD      = 
+					                                (
+					                                SELECT
+					                                    MAP_WF_PROC_CD
+					                                FROM
+					                                    WF_REQ_TMPLAT_PROC_HT B
+					                                WHERE 1 = 1
+					                                AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+					                                AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER
+					                                AND B.WF_PROC_CD      = #{WF_PROC_CD}
+					                                )
+					              AND LANG_CD     = 'KR'
+					              )
+
+            , REQ_STAT_CD       = #{REQ_STAT_CD}            --요청서진행상태코드
+            , REQ_STAT_NM       = (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = #{REQ_STAT_CD} AND LANG_CD = 'KR')    --요청서진행상태명
+
+            , TITLE             = #{TITLE}                  --제목
+<!--             <if test='"REG".equals(SAVE_GUBUN)'> -->
+<!--             , REQ_DATE          = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  요청일시 -->
+<!--             </if> -->
+
+            , REQ_WISH_DT       = #{REQ_WISH_DT}            --희망완료일
+            , REQ_WISH_TIME     = #{REQ_WISH_TIME}          --희망완료시분
+            , JOB_REQ_DT        = #{JOB_REQ_DT}             --작업요청일
+            , JOB_REQ_TIME      = #{JOB_REQ_TIME}           --작업요청시분
+            , PROC_COMP_DATE    = #{PROC_COMP_DATE}         --완료일시
+            , CONTENTS          = #{CONTENTS}               --요청서내용
+            , PRE_CONF_USER_ID  = #{PRE_CONF_USER_ID}       --사전협의자ID
+            , PRE_CONF_USER_NM  = (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{PRE_CONF_USER_ID})    --사전협의자명
+            , PRE_CONF_DEPT_CD  = #{PRE_CONF_DEPT_CD}   --사전협의자부서ID
+            , PRE_CONF_DEPT_NM  = (SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = #{PRE_CONF_DEPT_CD})    --사전협의자부서명
+            , REF_REQ_ID        = #{REF_REQ_ID}
+            , RMK               = #{RMK}                    --비고
+            , E_DOCU_NO         = #{E_DOCU_NO}
+
+            , LMID              = #{LMID}                   --수정자ID
+            , LM_USER_NM        = (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자명
+            , LM_DEPT_CD        = (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서ID
+            , LM_DEPT_NM        = (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서명
+            , LMDT              = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  --수정일시
+            , LMPID             = #{LMPID}                  --최종수정화면ID
+            , UPMU_ID1		= #{UPMU_ID1}
+            , UPMU_ID2		= #{UPMU_ID2}
+            , UPMU_ID3		= #{UPMU_ID3}
+        WHERE 1 = 1
+        AND REQ_ID  = #{REQ_ID}
+    </update>
+
+    <update id="modify02" parameterType="java.util.Map">
+        <selectKey resultType="map" keyColumn="MAP_WF_PROC_CD,MAP_WF_PROC_NM" keyProperty="MAP_WF_PROC_CD,MAP_WF_PROC_NM" order="BEFORE">
+            SELECT
+                  FN_SR_REQ_MAP_WF_PROC(#{REQ_ID}, #{WF_PROC_CD}, NULL, 'CODE')  AS MAP_WF_PROC_CD
+                , FN_SR_REQ_MAP_WF_PROC(#{REQ_ID}, #{WF_PROC_CD}, NULL, 'NAME')  AS WF_PROC_NM
+            FROM DUAL              
+        </selectKey>
+
+        UPDATE SR_BASE_INFO A SET
+			  WF_PROC_CD		= #{WF_PROC_CD}            --요청서진행상태코드
+			, WF_PROC_NM        = #{WF_PROC_NM}
+			, MAP_WF_PROC_CD    = #{MAP_WF_PROC_CD}
+			, MAP_WF_PROC_NM    = 
+                                  (
+                                  SELECT CMM_CD_NM
+                                  FROM FOMM_CMM_CD_MT
+                                  WHERE 1 = 1
+                                  AND CODE_DIV    = 'WORKFLOW_CD'
+                                  AND UP_CMM_CD   = (SELECT MAP_PROC_CD FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = A.REQ_TMPLAT_VER)
+                                  AND CMM_CD      = 
+                                                    (
+                                                    SELECT
+                                                        MAP_WF_PROC_CD
+                                                    FROM
+                                                        WF_REQ_TMPLAT_PROC_HT B
+                                                    WHERE 1 = 1
+                                                    AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                                                    AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER
+                                                    AND B.WF_PROC_CD      = #{WF_PROC_CD}
+                                                    )
+                                  AND LANG_CD     = 'KR'
+                                  )
+            , REQ_STAT_CD       = #{REQ_STAT_CD}            --요청서진행상태코드
+            , REQ_STAT_NM       = (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = #{REQ_STAT_CD} AND LANG_CD = 'KR')    --요청서진행상태명
+
+<!--             , REQ_DATE          = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  수정일시 -->
+
+            , LMID              = #{LMID}                   --수정자ID
+            , LM_USER_NM        = (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자명
+            , LM_DEPT_CD        = (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서ID
+            , LM_DEPT_NM        = (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서명
+            , LMDT              = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  --수정일시
+            , LMPID             = #{LMPID}                  --최종수정화면ID
+            , UPMU_ID1		= #{UPMU_ID1}
+            , UPMU_ID2		= #{UPMU_ID2}
+            , UPMU_ID3		= #{UPMU_ID3}
+        WHERE 1 = 1
+        AND REQ_ID  = #{REQ_ID}
+    </update>
+
+    <delete id="remove01" parameterType="java.util.Map">
+        UPDATE SR_BASE_INFO SET
+              DEL_YN        = 'Y'
+            , LMID          = #{LMID}                                                       --수정자ID
+            , RESERV_FLAG           = 'N'
+            , RESERV_DT             = NULL
+            , RESERV_PROC_YN    = 'N'
+            , LM_USER_NM    = (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자명
+            , LM_DEPT_CD    = (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서ID
+            , LM_DEPT_NM    = (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서명
+            , LMDT          = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')                          --수정일시
+            , LMPID         = #{LMPID}                                                      --최종수정화면ID
+        WHERE 1 = 1
+        AND DEL_YN  = 'N'
+        AND REQ_ID  = #{REQ_ID}
+    </delete>
+    
+    <update id="cancel" parameterType="java.util.Map">
+        UPDATE SR_BASE_INFO A SET
+              WF_PROC_CD        = 'WF_PROC_1000'    /* 워크플로우단계[WF_PROC_CD] - WF_PROC_1000 : 등록, WF_PROC_2000 : 접수, WF_PROC_3000 : 처리, WF_PROC_9000 : 완료, WF_PROC_9999 : 종료 */
+            , WF_PROC_NM        = (
+                                  SELECT
+                                    REPLACE(WF_PROC_NM, '\n', ' ')
+                                  FROM
+                                    WF_REQ_TMPLAT_PROC_HT B
+
+                                  WHERE 1 = 1
+                                  AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                                  AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER                                  
+                                  AND B.WF_PROC_CD      = 'WF_PROC_1000'
+                                  )
+			, MAP_WF_PROC_CD    = (
+                                  SELECT
+                                    MAP_WF_PROC_CD
+                                  FROM
+                                    WF_REQ_TMPLAT_PROC_HT B
+
+                                  WHERE 1 = 1
+                                  AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                                  AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER
+                                  AND B.WF_PROC_CD      = 'WF_PROC_1000'
+                                  )
+            , MAP_WF_PROC_NM    = (
+					              SELECT CMM_CD_NM
+					              FROM FOMM_CMM_CD_MT
+					              WHERE 1 = 1
+					              AND CODE_DIV    = 'WORKFLOW_CD'
+					              AND UP_CMM_CD   = (SELECT MAP_PROC_CD FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = A.REQ_TMPLAT_VER)
+					              AND CMM_CD      = 
+                                                    (
+                                                    SELECT
+                                                        MAP_WF_PROC_CD
+                                                    FROM
+                                                        WF_REQ_TMPLAT_PROC_HT B
+                                                    WHERE 1 = 1
+                                                    AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                                                    AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER
+                                                    AND B.WF_PROC_CD      = 'WF_PROC_1000'
+                                                    )
+					              AND LANG_CD     = 'KR'
+					              )
+
+            , REQ_STAT_CD       = 'RQST00'          /* 요청서상태코드[REQ_STAT_CD] - RQST00 : 임시저장, RQST01 : 등록, RQST11 : 결재중, RQST21 : 검토중, RQST30 : 승인완료, RQST91 : 반려, RQST98 : 종료, RQST99 : 완료 */
+            , REQ_STAT_NM       = (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = 'RQST00' AND LANG_CD = 'KR')    --요청서진행상태명
+
+            , LAST_RTRN_YN      = 'N'
+
+            , RESERV_FLAG           = 'N'
+            , RESERV_DT             = NULL
+            , RESERV_PROC_YN    = 'N'
+
+            , LMID              = #{LMID}                                                       --수정자ID
+            , LM_USER_NM        = (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자명
+            , LM_DEPT_CD        = (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서ID
+            , LM_DEPT_NM        = (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서명
+            , LMDT              = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')                          --수정일시
+            , LMPID             = #{LMPID}                                                      --최종수정화면ID
+
+        WHERE 1 = 1
+        AND DEL_YN          = 'N'
+        AND CANCEL_POSS_YN  = 'Y'
+        AND REQ_ID          = #{REQ_ID}
+    </update>
+
+    <update id="updateStop" parameterType="java.util.Map">
+        UPDATE SR_BASE_INFO A SET
+              WF_PROC_CD        = 'WF_PROC_9999'    /* 워크플로우단계[WF_PROC_CD] - WF_PROC_1000 : 등록, WF_PROC_2000 : 접수, WF_PROC_3000 : 처리, WF_PROC_9000 : 완료, WF_PROC_9999 : 종료 */
+			, WF_PROC_NM        = (
+                                  SELECT
+                                    REPLACE(WF_PROC_NM, '\n', ' ')
+                                  FROM
+                                    WF_REQ_TMPLAT_PROC_HT B
+
+                                  WHERE 1 = 1
+                                  AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                                  AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER                                  
+                                  AND B.WF_PROC_CD      = 'WF_PROC_9999'
+                                  )
+            , REQ_STAT_CD       = 'RQST98'          /* 요청서상태코드[REQ_STAT_CD] - RQST00 : 임시저장, RQST01 : 등록, RQST11 : 결재중, RQST21 : 검토중, RQST30 : 승인완료, RQST91 : 반려, RQST98 : 중단, RQST99 : 완료 */
+            , REQ_STAT_NM       = (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = 'RQST98' AND LANG_CD = 'KR')    --요청서진행상태명
+
+			, MAP_WF_PROC_CD    = (
+                                  SELECT
+                                    MAP_WF_PROC_CD
+                                  FROM
+                                    WF_REQ_TMPLAT_PROC_HT B
+                                  WHERE 1 = 1
+                                  AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                                  AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER
+                                  AND B.WF_PROC_CD      = 'WF_PROC_9999'
+                                  )
+            , MAP_WF_PROC_NM    = (
+                                  SELECT CMM_CD_NM
+                                  FROM FOMM_CMM_CD_MT
+                                  WHERE 1 = 1
+                                  AND CODE_DIV    = 'WORKFLOW_CD'
+                                  AND UP_CMM_CD   = (SELECT MAP_PROC_CD FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = A.REQ_TMPLAT_VER)
+                                  AND CMM_CD      = 
+                                                    (
+                                                    SELECT
+                                                        MAP_WF_PROC_CD
+                                                    FROM
+                                                        WF_REQ_TMPLAT_PROC_HT B
+                                                    WHERE 1 = 1
+                                                    AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                                                    AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER
+                                                    AND B.WF_PROC_CD      = 'WF_PROC_9999'
+                                                    )
+                                  AND LANG_CD     = 'KR'
+                                  )
+
+            , LAST_RTRN_YN      = 'N'
+            
+            , LMID              = #{LMID}                                                       --수정자ID
+            , LM_USER_NM        = (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자명
+            , LM_DEPT_CD        = (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서ID
+            , LM_DEPT_NM        = (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서명
+            , LMDT              = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')                          --수정일시
+            , LMPID             = #{LMPID}                                                      --최종수정화면ID
+
+        WHERE 1 = 1
+        AND DEL_YN          = 'N'
+        <!-- AND WF_PROC_CD <![CDATA[<>]]> 'WF_PROC_9999' -->
+        AND REQ_STAT_CD <![CDATA[<>]]> 'RQST98'
+        AND REQ_ID          = #{REQ_ID}
+    </update>
+
+    <update id="updateDiscard" parameterType="java.util.Map">
+        UPDATE SR_BASE_INFO A SET
+              WF_PROC_CD        = 'WF_PROC_9999'    /* 워크플로우단계[WF_PROC_CD] - WF_PROC_1000 : 등록, WF_PROC_2000 : 접수, WF_PROC_3000 : 처리, WF_PROC_9000 : 완료, WF_PROC_9999 : 종료 */
+            , WF_PROC_NM        = (
+                                  SELECT
+                                    REPLACE(WF_PROC_NM, '\n', ' ')
+                                  FROM
+                                    WF_REQ_TMPLAT_PROC_HT B
+
+                                  WHERE 1 = 1
+                                  AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                                  AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER                                  
+                                  AND B.WF_PROC_CD      = 'WF_PROC_9999'
+                                  )
+            , REQ_STAT_CD       = 'RQST97'          /* 요청서상태코드[REQ_STAT_CD] - RQST00 : 임시저장, RQST01 : 등록, RQST11 : 결재중, RQST21 : 검토중, RQST30 : 승인완료, RQST91 : 반려, RQST98 : 중단, RQST99 : 완료 */
+            , REQ_STAT_NM       = (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = 'RQST97' AND LANG_CD = 'KR')    --요청서진행상태명
+
+            , MAP_WF_PROC_CD    = (
+                                  SELECT
+                                    MAP_WF_PROC_CD
+                                  FROM
+                                    WF_REQ_TMPLAT_PROC_HT B
+                                  WHERE 1 = 1
+                                  AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                                  AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER                                  
+                                  AND B.WF_PROC_CD      = 'WF_PROC_9999'
+                                  )
+            , MAP_WF_PROC_NM    = (
+                                  SELECT CMM_CD_NM
+                                  FROM FOMM_CMM_CD_MT
+                                  WHERE 1 = 1
+                                  AND CODE_DIV    = 'WORKFLOW_CD'
+                                  AND UP_CMM_CD   = (SELECT MAP_PROC_CD FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = A.REQ_TMPLAT_VER)
+                                  AND CMM_CD      = 
+                                                    (
+                                                    SELECT
+                                                        MAP_WF_PROC_CD
+                                                    FROM
+                                                        WF_REQ_TMPLAT_PROC_HT B
+                                                    WHERE 1 = 1
+                                                    AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                                                    AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER
+                                                    AND B.WF_PROC_CD      = 'WF_PROC_9999'
+                                                    )
+                                  AND LANG_CD     = 'KR'
+                                  )
+
+            , LAST_RTRN_YN      = 'N'            
+            
+            , LMID              = #{LMID}                                                       --수정자ID
+            , LM_USER_NM        = (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자명
+            , LM_DEPT_CD        = (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서ID
+            , LM_DEPT_NM        = (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서명
+            , LMDT              = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')                          --수정일시
+            , LMPID             = #{LMPID}                                                      --최종수정화면ID
+
+        WHERE 1 = 1
+        AND DEL_YN  = 'N'
+        <!-- AND WF_PROC_CD <![CDATA[<>]]> 'WF_PROC_9999' -->
+        AND REQ_STAT_CD <![CDATA[<>]]> 'RQST97'
+        AND REQ_ID  = #{REQ_ID}
+    </update>
+    
+    <update id="updateExaEnd" parameterType="java.util.Map">
+        UPDATE SR_BASE_INFO A SET
+              WF_PROC_CD        = 'WF_PROC_9999'    /* 워크플로우단계[WF_PROC_CD] - WF_PROC_1000 : 등록, WF_PROC_2000 : 접수, WF_PROC_3000 : 처리, WF_PROC_9000 : 완료, WF_PROC_9999 : 종료 */
+			, WF_PROC_NM        = (
+                                  SELECT
+                                    REPLACE(WF_PROC_NM, '\n', ' ')
+                                  FROM
+                                    WF_REQ_TMPLAT_PROC_HT B
+
+                                  WHERE 1 = 1
+                                  AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                                  AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER                                  
+                                  AND B.WF_PROC_CD      = 'WF_PROC_9999'
+                                  )
+            , REQ_STAT_CD       = 'RQST99'          /* 요청서상태코드[REQ_STAT_CD] - RQST00 : 임시저장, RQST01 : 등록, RQST11 : 결재중, RQST21 : 검토중, RQST30 : 승인완료, RQST91 : 반려, RQST98 : 중단, RQST99 : 완료 */
+            , REQ_STAT_NM       = (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = 'RQST99' AND LANG_CD = 'KR')    --요청서진행상태명
+
+			, MAP_WF_PROC_CD    = (
+                                  SELECT
+                                    MAP_WF_PROC_CD
+                                  FROM
+                                    WF_REQ_TMPLAT_PROC_HT B
+                                  WHERE 1 = 1
+                                  AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                                  AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER
+                                  AND B.WF_PROC_CD      = 'WF_PROC_9999'
+                                  )
+            , MAP_WF_PROC_NM    = (
+                                  SELECT CMM_CD_NM
+                                  FROM FOMM_CMM_CD_MT
+                                  WHERE 1 = 1
+                                  AND CODE_DIV    = 'WORKFLOW_CD'
+                                  AND UP_CMM_CD   = (SELECT MAP_PROC_CD FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = A.REQ_TMPLAT_VER)
+                                  AND CMM_CD      = 
+                                                    (
+                                                    SELECT
+                                                        MAP_WF_PROC_CD
+                                                    FROM
+                                                        WF_REQ_TMPLAT_PROC_HT B
+                                                    WHERE 1 = 1
+                                                    AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                                                    AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER
+                                                    AND B.WF_PROC_CD      = 'WF_PROC_9999'
+                                                    )
+                                  AND LANG_CD     = 'KR'
+                                  )
+
+            , LAST_RTRN_YN      = 'N'
+            
+            , LMID              = #{LMID}                                                       --수정자ID
+            , LM_USER_NM        = (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자명
+            , LM_DEPT_CD        = (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서ID
+            , LM_DEPT_NM        = (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서명
+            , LMDT              = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')                          --수정일시
+            , LMPID             = #{LMPID}                                                      --최종수정화면ID
+
+        WHERE 1 = 1
+        AND DEL_YN          = 'N'
+        <!-- AND WF_PROC_CD <![CDATA[<>]]> 'WF_PROC_9999' -->
+        AND REQ_STAT_CD <![CDATA[<>]]> 'RQST98'
+        AND REQ_ID          = #{REQ_ID}
+    </update>
+
+    <update id="updateWfProcDelete" parameterType="java.util.Map">
+        UPDATE SR_BASE_INFO A SET
+              WF_PROC_CD        = 'WF_PROC_9999'    /* 워크플로우단계[WF_PROC_CD] - WF_PROC_1000 : 등록, WF_PROC_2000 : 접수, WF_PROC_3000 : 처리, WF_PROC_9000 : 완료, WF_PROC_9999 : 종료 */
+            , WF_PROC_NM        = (
+			                                  SELECT
+			                                    REPLACE(WF_PROC_NM, '\n', ' ')
+			                                  FROM
+			                                    WF_REQ_TMPLAT_PROC_HT B
+			
+			                                  WHERE 1 = 1
+			                                  AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+			                                  AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER                                  
+			                                  AND B.WF_PROC_CD      = 'WF_PROC_9999'
+			                                  )
+            , REQ_STAT_CD       = 'RQST99'          /* 요청서상태코드[REQ_STAT_CD] - RQST00 : 임시저장, RQST01 : 등록, RQST11 : 결재중, RQST21 : 검토중, RQST30 : 승인완료, RQST91 : 반려, RQST98 : 중단, RQST99 : 완료 */
+            , REQ_STAT_NM       = (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = 'RQST99' AND LANG_CD = 'KR')    --요청서진행상태명
+
+            , MAP_WF_PROC_CD    = (
+                                  SELECT
+                                    MAP_WF_PROC_CD
+                                  FROM
+                                    WF_REQ_TMPLAT_PROC_HT B
+                                  WHERE 1 = 1
+                                  AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                                  AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER
+                                  AND B.WF_PROC_CD      = 'WF_PROC_9999'
+                                  )
+            , MAP_WF_PROC_NM    = (
+                                  SELECT CMM_CD_NM
+                                  FROM FOMM_CMM_CD_MT
+                                  WHERE 1 = 1
+                                  AND CODE_DIV    = 'WORKFLOW_CD'
+                                  AND UP_CMM_CD   = (SELECT MAP_PROC_CD FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = A.REQ_TMPLAT_VER)
+                                  AND CMM_CD      = 
+                                                    (
+                                                    SELECT
+                                                        MAP_WF_PROC_CD
+                                                    FROM
+                                                        WF_REQ_TMPLAT_PROC_HT B
+                                                    WHERE 1 = 1
+                                                    AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                                                    AND B.REQ_TMPLAT_VER  = A.REQ_TMPLAT_VER
+                                                    AND B.WF_PROC_CD      = 'WF_PROC_9999'
+                                                    )
+                                  AND LANG_CD     = 'KR'
+                                  )
+
+            , LAST_RTRN_YN      = 'N'
+            , DEL_YN                = 'Y'
+            , END_DEL_YN         = 'Y'
+            
+            , LMID              = #{LMID}                                                       --수정자ID
+            , LM_USER_NM        = (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자명
+            , LM_DEPT_CD        = (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서ID
+            , LM_DEPT_NM        = (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서명
+            , LMDT              = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')                          --수정일시
+            , LMPID             = #{LMPID}                                                      --최종수정화면ID
+
+        WHERE 1 = 1
+        AND DEL_YN          = 'N'
+        AND END_DEL_YN  = 'N'
+        AND REQ_ID          = #{REQ_ID}
+    </update>
+
+    <update id="updateWfColInfo" parameterType="java.util.Map">
+        UPDATE SR_BASE_INFO A SET
+			  REQ_WISH_DT		= #{REQ_WISH_DT}
+			, REQ_WISH_TIME	= #{REQ_WISH_TIME}
+            , UPMU_ID1			= #{UPMU_ID1}
+			, UPMU_ID2           = #{UPMU_ID2}
+			, UPMU_ID3           = #{UPMU_ID3}
+        WHERE REQ_ID	= #{REQ_ID}
+    </update>
+
+    <update id="updateProcReserve" parameterType="java.util.Map">
+        UPDATE SR_BASE_INFO A SET
+              RESERV_FLAG       = 'Y'
+            , RESERV_DT             = #{RESERV_DT} || #{RESERV_TIME} || '00'
+            , RESERV_PROC_YN    = 'N'
+            , LMID              = #{LMID}                                                       --수정자ID
+            , LM_USER_NM        = (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자명
+            , LM_DEPT_CD        = (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서ID
+            , LM_DEPT_NM        = (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서명
+            , LMDT              = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')                          --수정일시
+            , LMPID             = #{LMPID}                                                      --최종수정화면ID
+        WHERE 1 = 1
+        AND REQ_ID    = #{REQ_ID}
+        AND NVL(RESERV_FLAG, 'N')       = 'N'
+        AND NVL(RESERV_PROC_YN, 'N')   = 'N' 
+    </update>
+
+    <update id="updateProcCancelReserve" parameterType="java.util.Map">
+        UPDATE SR_BASE_INFO A SET
+              RESERV_FLAG       = 'N'
+            , LMID                   = #{LMID}                                                       --수정자ID
+            , LM_USER_NM        = (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자명
+            , LM_DEPT_CD        = (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서ID
+            , LM_DEPT_NM        = (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})    --수정자부서명
+            , LMDT              = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')                          --수정일시
+            , LMPID             = #{LMPID}                                                      --최종수정화면ID
+        WHERE 1 = 1
+        AND REQ_ID    = #{REQ_ID}
+        AND NVL(RESERV_FLAG, 'N')       = 'Y'
+        AND NVL(RESERV_PROC_YN, 'N')   = 'N' 
+    </update>
+
+<update id="updateReservProcYn" parameterType="java.util.Map">
+        UPDATE SR_BASE_INFO A SET
+              RESERV_PROC_YN  = 'Y'
+            , LMDT              = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  --수정일시
+            , LMPID             = #{LMPID}                                                      --최종수정화면ID
+        WHERE 1 = 1
+        AND REQ_ID                              = #{REQ_ID}
+        AND NVL(RESERV_FLAG, 'N')       = 'Y'
+        AND NVL(RESERV_PROC_YN, 'N') = 'N'
+    </update>
+</mapper>

@@ -1,0 +1,270 @@
+﻿.Div.div_LG_bg
+{
+	background : #ffffff;
+	border-radius : 15px;
+	box-shadow : 5px 5px 30px #dfdfdf;
+}
+.Div.div_LG_loginImg
+{
+	background : transparent url('./SPP_IMAGE_SET/LG/bg_LG_login.png') no-repeat center;
+	border : 0px;
+}
+.Div.div_LG_loginImg_MIRAE
+{
+	background : transparent url('./MIRAE_IMAGE_SET/LG/bg_LG_login.png') no-repeat center;
+	border : 0px;
+}
+.Button.btn_LG_login
+{
+	background : #355cc5;
+	border-radius : 10px;
+	font : bold 26px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_LG_login .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+.Button.btn_LG_login_MIRAE
+{
+	background : #4674fe;
+	border-radius : 14px;
+	font : 16pt "kop","KoPub돋움체_Pro Medium";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_LG_login_MIRAE .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+.Button.btn_LG_login_MIRAE_T
+{
+	background : transparent url('./MIRAE_IMAGE_SET/LG/login-btn-01.png') no-repeat center;
+	border-radius : 10px;
+	font : 14pt "kop","KoPub돋움체_Pro Medium";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_LG_login_MIRAE_T .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+.Static.sta_LG_welcome
+{
+	border : 0px;
+}
+.Static.sta_LG_welcome >.nexaedge
+{
+	border-image-source : url('./SPP_IMAGE_SET/LG/bg_LG_loginText.png');
+	border-image-slice : 0 0 fill;
+	border-image-width : 0px 0px;
+}
+.Edit.edt_LG_input
+{
+	background : #ffffff;
+	border : 1px solid #b5b5c4;
+	border-radius : 10px;
+	font : bold 16px "KoPubL";
+	color : #444444;
+}
+.Edit.edt_LG_input .nexainput
+{
+	text-align : left;
+	padding : 0px 10px 0px 10px;
+}
+.Edit.edt_LG_input .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+.Edit.edt_LG_input_MIRAE
+{
+	font : 10pt "kop","KoPub돋움체_Pro Medium";
+	color : #333333;
+}
+.Edit.edt_LG_input_MIRAE .nexainput
+{
+	text-align : left;
+	padding : 0px 10px 0px 10px;
+}
+.Edit.edt_LG_input_MIRAE .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .Button.btn_LG_login[data-status=focused]
+{
+	background : #355cc5;
+	border-radius : 10px;
+	font : bold 26px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_LG_login[data-status=focused] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+#nexacontainer .Button.btn_LG_login[data-status=mouseover]
+{
+	background : #355cc5;
+	border-radius : 10px;
+	font : bold 26px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_LG_login[data-status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE[data-status=focused]
+{
+	background : #4674fe;
+	border-radius : 14px;
+	font : 16pt "kop","KoPub돋움체_Pro Medium";
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE[data-status=focused] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE[data-status=mouseover]
+{
+	background : #4674fe;
+	border-radius : 14px;
+	font : 16pt "kop","KoPub돋움체_Pro Medium";
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE[data-status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE_T[data-status=focused]
+{
+	background : transparent url('./MIRAE_IMAGE_SET/LG/login-btn-01.png') no-repeat center;
+	border-radius : 10px;
+	font : 14pt "kop","KoPub돋움체_Pro Medium";
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE_T[data-status=focused] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE_T[data-status=mouseover]
+{
+	background : transparent url('./MIRAE_IMAGE_SET/LG/login-btn-01.png') no-repeat center;
+	border-radius : 10px;
+	font : 14pt "kop","KoPub돋움체_Pro Medium";
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE_T[data-status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+#nexacontainer .Button.btn_LG_login[data-userstatus=pushed]
+{
+	background : #355cc5;
+	border-radius : 10px;
+	font : bold 26px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_LG_login[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+#nexacontainer .Button.btn_LG_login[data-userstatus=selected]
+{
+	background : #355cc5;
+	border-radius : 10px;
+	font : bold 26px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_LG_login[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE[data-userstatus=pushed]
+{
+	background : #4674fe;
+	border-radius : 14px;
+	font : 16pt "kop","KoPub돋움체_Pro Medium";
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE[data-userstatus=selected]
+{
+	background : #4674fe;
+	border-radius : 14px;
+	font : 16pt "kop","KoPub돋움체_Pro Medium";
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE_T[data-userstatus=pushed]
+{
+	background : transparent url('./MIRAE_IMAGE_SET/LG/login-btn-01.png') no-repeat center;
+	border-radius : 10px;
+	font : 14pt "kop","KoPub돋움체_Pro Medium";
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE_T[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE_T[data-userstatus=selected]
+{
+	background : transparent url('./MIRAE_IMAGE_SET/LG/login-btn-01.png') no-repeat center;
+	border-radius : 10px;
+	font : 14pt "kop","KoPub돋움체_Pro Medium";
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_LG_login_MIRAE_T[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+#nexacontainer .Edit.edt_LG_input[data-userstatus=nulltext]
+{
+	color : #c1ccdf;
+	font : bold 16px "KoPubL";
+	color : #c1ccdf;
+}
+#nexacontainer .Edit.edt_LG_input[data-userstatus=nulltext] .nexainput
+{
+	text-align : left;
+	padding : 0px 10px 0px 10px;
+}
+#nexacontainer .Edit.edt_LG_input[data-userstatus=nulltext] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}

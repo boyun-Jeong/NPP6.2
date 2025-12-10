@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.homeWidget.dao.widgetFOMMDAO">
+	
+	<!-- 요청/결재/검토/처리 유무 조회 -->
+    <select id="selectMyTask" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* widgetFOMMMapper >> selectMyTask */
+		SELECT 'REQ' AS GBN, COUNT(*) AS CNT  /* 요청 */
+        FROM
+              WF_REQ_TMPLAT_HT A
+            , ( SELECT    B.*
+                        , DECODE(   NVL(B.WF_PROC_CD, 'WF_PROC_1000'), 
+                                    'WF_PROC_1000', 'WF_PROC_1000',     
+                                    'WF_PROC_9999', 'WF_PROC_9999',     
+                                    (SELECT UP_CMM_CD FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'WF_PROC_CD' AND CMM_CD = B.WF_PROC_CD)        
+                          ) AS UP_WF_PROC_CD            
+                FROM
+                   SR_BASE_INFO B
+                WHERE NVL(DEL_YN, 'N') = 'N'
+              ) B
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID   = B.REQ_TMPLAT_ID
+        AND A.REQ_TMPLAT_VER  = B.REQ_TMPLAT_VER
+        AND B.REQ_USER_ID     = #{USER_ID}
+        AND B.REQ_STAT_CD NOT IN ('RQST98','RQST99','RQST97') 
+		
+		
+		UNION ALL
+        SELECT
+            'APPR' AS GBN, COUNT(*) AS CNT  /* 결재 */
+        FROM
+              SR_BASE_INFO A
+            , WF_REQ_TMPLAT_HT B
+            , (
+              SELECT *
+              FROM
+                (
+                SELECT
+                      C.*
+                    , DENSE_RANK() OVER(PARTITION BY REQ_ID, WF_PROC_CD ORDER BY APPR_SEQ ASC) AS RNK
+                FROM
+                    WF_APPROVAL_MT C
+                WHERE 1 = 1
+                AND APPR_STAT_CD = 'APST_01'
+                AND APPR_LVL_SEQ =
+                                    (
+                                    SELECT MIN(APPR_LVL_SEQ)
+                                      FROM WF_APPROVAL_MT
+                                      WHERE APPR_STAT_CD = 'APST_01'
+                                      AND REQ_ID = C.REQ_ID
+                                    )
+                )
+              WHERE RNK = 1
+              ) C
+            , SR_WF_PROC D
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID       = B.REQ_TMPLAT_ID
+        AND A.REQ_TMPLAT_VER      = B.REQ_TMPLAT_VER
+        AND A.REQ_ID              = C.REQ_ID
+        AND A.WF_PROC_CD          = C.WF_PROC_CD
+        AND A.REQ_ID              = D.REQ_ID
+        AND A.WF_PROC_CD          = D.WF_PROC_CD
+        AND NVL(A.DEL_YN, 'N')    = 'N'
+        AND A.REQ_STAT_CD         = 'RQST11'    -- 결재중
+        AND C.USER_ID             = #{USER_ID}
+		
+		
+		UNION ALL
+        SELECT 'REVR' AS GBN, COUNT(*) AS CNT   /* 검토 */
+        FROM
+            (
+            SELECT
+                  A.*
+                , DECODE(NVL(A.WF_PROC_CD, 'WF_PROC_1000'), 'WF_PROC_1000', 'WF_PROC_1000',     -- 등록 > 등록
+                                                            'WF_PROC_9999', 'WF_PROC_9999',     -- 종료 > 종료
+                         (SELECT UP_CMM_CD FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND CMM_CD = A.WF_PROC_CD AND LANG_CD = 'KR')     -- 상위단계코드
+                  ) AS UP_WF_PROC_CD            -- 상위 단계 코드 
+            FROM
+                SR_BASE_INFO A
+            ) A,
+            WF_REQ_TMPLAT_HT B
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+        AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+        AND NVL(A.DEL_YN, 'N')  = 'N'
+        AND A.REQ_STAT_CD = 'RQST21' -- 검토중
+        --잔여 검토 처리할 건수가 넘은 내역만
+        AND (
+            SELECT COUNT(*) AS CNT  --총 검토 해야할 건수
+            FROM WF_APPROVAL_MT AP
+            WHERE 1 = 1
+            AND AP.REQ_ID       = A.REQ_ID
+            AND AP.WF_PROC_CD   = A.WF_PROC_CD
+            AND AP.APPR_STAT_CD = 'APST_99'     -- 승인
+            )  <![CDATA[<]]> 
+                    (
+                    SELECT RVER_CNT
+                    FROM WF_REQ_TMPLAT_PROC_HT C
+                    WHERE 1 = 1
+                    AND C.REQ_TMPLAT_ID     = A.REQ_TMPLAT_ID
+                    AND C.REQ_TMPLAT_VER    = A.REQ_TMPLAT_VER
+                    AND C.WF_PROC_CD        = A.WF_PROC_CD
+                    )
+        AND --총 검토 해야할 건수
+            (
+            SELECT RVER_CNT
+            FROM WF_REQ_TMPLAT_PROC_HT X
+            WHERE 1 = 1
+            AND X.REQ_TMPLAT_ID     = A.REQ_TMPLAT_ID
+            AND X.REQ_TMPLAT_VER    = A.REQ_TMPLAT_VER
+            AND X.WF_PROC_CD        = A.WF_PROC_CD
+            ) -
+            -- 필수 검토해야 할 건수
+            (
+             SELECT COUNT(*)
+             FROM SR_CGER_DT X
+             WHERE 1 = 1
+             AND X.REQ_ID       = A.REQ_ID
+             AND X.REQ_ID       = A.WF_PROC_CD
+             AND X.WF_FUNC_CD   = 'WF_FUNC_02'
+             AND X.ESS_YN       = 'Y'
+            )
+            - 
+            --필수가 검토자가 아닌 승인자의 처리 건수
+             (
+             SELECT COUNT(*)
+             FROM
+                SR_CGER_DT X,
+                WF_APPROVAL_MT Y
+             WHERE 1 = 1
+             AND X.REQ_ID       = Y.REQ_ID
+             AND X.WF_PROC_CD   = Y.WF_PROC_CD
+             AND X.USER_ID      = Y.USER_ID
+             AND X.WF_PROC_CD   = 'WF_FUNC_02'
+             AND X.ESS_YN  <![CDATA[<>]]>  'Y'
+             AND Y.APPR_STAT_CD = 'APST_99'
+             ) > 0
+        AND (
+             --필수 검토자에 해당하는 경우
+             #{USER_ID} IN
+             (
+             SELECT
+                     C.USER_ID
+                FROM
+                      SR_CGER_DT C
+                WHERE 1 = 1
+                AND C.REQ_ID        = A.REQ_ID
+                AND C.WF_PROC_CD    = A.WF_PROC_CD
+                AND C.WF_FUNC_CD    = 'WF_FUNC_02'
+                AND C.ESS_YN        = 'Y'
+                --승인 건은 제외
+                AND NOT EXISTS
+                            (
+                            SELECT 1
+                            FROM WF_APPROVAL_MT D
+                            WHERE 1 = 1
+                            AND D.REQ_ID        = C.REQ_ID
+                            AND D.WF_PROC_CD    = C.WF_PROC_CD
+                            AND D.USER_ID       = C.USER_ID
+                            AND D.APPR_STAT_CD  = 'APST_99'
+                            )             
+             ) OR
+             --필수 검토자가 아닌 경우
+             #{USER_ID} IN
+             (
+             SELECT
+                     C.USER_ID
+                FROM
+                      SR_CGER_DT C
+                WHERE 1 = 1
+                AND C.REQ_ID        = A.REQ_ID
+                AND C.WF_PROC_CD    = A.WF_PROC_CD
+                AND C.WF_FUNC_CD    = 'WF_FUNC_02'
+                AND NVL(C.ESS_YN, 'N')  <![CDATA[<>]]>  'Y'
+                --승인 건은 제외
+                AND NOT EXISTS
+                            (
+                            SELECT 1
+                            FROM WF_APPROVAL_MT D
+                            WHERE 1 = 1
+                            AND D.REQ_ID        = C.REQ_ID
+                            AND D.WF_PROC_CD    = C.WF_PROC_CD
+                            AND D.USER_ID       = C.USER_ID
+                            AND D.APPR_STAT_CD  = 'APST_99'
+                            )            
+             )
+           )
+		
+		
+		UNION ALL
+		SELECT  'TSK' AS GBN, COUNT(*) AS CNT           /* 처리 */
+        FROM
+            (
+            SELECT
+                  A.*
+                , DECODE
+                  (
+                    NVL(A.WF_PROC_CD, 'WF_PROC_1000'), 'WF_PROC_1000', 'WF_PROC_1000',  -- 등록 > 등록
+                                                       'WF_PROC_9999', 'WF_PROC_9999',  -- 종료 > 종료
+                    (SELECT UP_CMM_CD FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'WF_PROC_CD' AND CMM_CD = A.WF_PROC_CD AND LANG_CD = 'KR')     -- 상위단계코드
+                  ) AS UP_WF_PROC_CD            -- 상위 단계 코드 
+            FROM
+                SR_BASE_INFO A
+            WHERE 1 = 1
+            AND NVL(DEL_YN, 'N') = 'N'
+            ) A,
+            WF_REQ_TMPLAT_HT B
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID   = B.REQ_TMPLAT_ID
+        AND A.REQ_TMPLAT_VER  = B.REQ_TMPLAT_VER
+        AND EXISTS
+                (
+                SELECT 1
+                FROM
+                    SR_CGER_DT D
+                WHERE 1 = 1
+                AND (D.WF_FUNC_CD = 'WF_FUNC_04' AND A.REQ_STAT_CD IN ('RQST00', 'RQST01', 'RQST91'))   -- 담당자; 임시저장, 등록, 반려
+                AND D.REQ_ID        = A.REQ_ID 
+                AND D.WF_PROC_CD    = A.WF_PROC_CD 
+                AND D.USER_ID       = #{USER_ID}
+                ) 
+    </select>
+	
+	
+	
+	<!-- 빠른이동용 내 메뉴 조회 -->
+    <select id="selectMyMenu" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* widgetFOMMMapper >> selectMyMenu */
+    	SELECT	  DECODE(#{CUR_MENU_ID}, A.MENU_ID, '1', '0')	AS CHK
+				, '' AS ROWFALG
+				, DECODE(#{CUR_MENU_ID}, A.MENU_ID, #{CUR_SHORTCUT_NM}, '')	AS SHORTCUT_NM
+				, A.*
+		FROM
+		(
+			SELECT	  ROWNUM AS RNUM
+					, A.MENU_ID
+					, A.MENU_NM
+					, B.READ_YN
+					, A.MENU_LVL
+					, DECODE(A.MENU_LVL+1, 2, A.MENU_ID, TRIM(SYS_CONNECT_BY_PATH(DECODE(LEVEL, 2, UP_MENU_ID), ' '))) AS LV1_MENU_ID
+					, DECODE(A.MENU_LVL+1, 2, A.MENU_NM, TRIM(SYS_CONNECT_BY_PATH(DECODE(LEVEL, 2, (SELECT B.MENU_NM FROM FOMM_MENU_MT B WHERE B.MENU_ID = A.UP_MENU_ID)), '    '))) AS LV1_MENU_NM
+					, DECODE(A.MENU_LVL+1, 3, A.MENU_ID, TRIM(SYS_CONNECT_BY_PATH(DECODE(LEVEL, 3, UP_MENU_ID), ' '))) AS LV2_MENU_ID
+					, DECODE(A.MENU_LVL+1, 3, A.MENU_NM, TRIM(SYS_CONNECT_BY_PATH(DECODE(LEVEL, 3, (SELECT B.MENU_NM FROM FOMM_MENU_MT B WHERE B.MENU_ID = A.UP_MENU_ID)), '    '))) AS LV2_MENU_NM
+					, DECODE(A.MENU_LVL+1, 4, A.MENU_ID, TRIM(SYS_CONNECT_BY_PATH(DECODE(LEVEL, 4, UP_MENU_ID), ' '))) AS LV3_MENU_ID
+					, DECODE(A.MENU_LVL+1, 4, A.MENU_NM, TRIM(SYS_CONNECT_BY_PATH(DECODE(LEVEL, 4, (SELECT B.MENU_NM FROM FOMM_MENU_MT B WHERE B.MENU_ID = A.UP_MENU_ID)), '    '))) AS LV3_MENU_NM
+			FROM	( 	
+						SELECT    *
+						FROM      FOMM_MENU_MT
+				        WHERE     USE_YN = 'Y'
+				    ) A
+				  , ( 
+				  		SELECT    MENU_ID
+					            , DECODE(COUNT(CASE WHEN READ_YN = 'Y' THEN 1 END), 0, 'N', 'Y') AS READ_YN
+					    FROM      FOMM_AUTH_MENU_DT
+					    WHERE     AUTH_ID IN (
+					                SELECT AUTH_ID
+					                FROM   FOMM_AUTH_USER_DT
+					                WHERE  USER_ID = #{USER_ID}		/* 로그인ID */
+					              )
+					    GROUP BY MENU_ID
+					 ) B
+			WHERE	1=1
+			AND		A.MENU_ID = B.MENU_ID(+)
+			
+			CONNECT BY PRIOR A.MENU_ID = A.UP_MENU_ID
+			START WITH UP_MENU_ID = '0'
+			ORDER SIBLINGS BY A.SORT_ORDR
+		) A
+		WHERE	1=1
+		AND		A.READ_YN = 'Y'
+		AND		A.LV3_MENU_ID IS NOT NULL
+		<if test="MENU_NM != null and MENU_NM != ''">
+			AND	UPPER(MENU_NM) LIKE UPPER('%' || #{MENU_NM} || '%')
+		</if>
+		
+		ORDER BY RNUM
+    </select>
+	
+	<!-- 빠른이동 조회 -->
+    <select id="selectMyShortcut" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* widgetFOMMMapper >> selectMyShortcut */
+    	SELECT	  '0' AS CHK
+				, '' AS ROWFLAG
+				, A.USER_TYPE
+				, A.USER_ID
+				, NO.NO
+				, NVL2(A.SHORTCUT_NO,	A.SHORTCUT_NO,	DEF.SHORTCUT_NO)	AS SHORTCUT_NO
+				, NVL2(A.SHORTCUT_NO,	A.MENU_ID,		DEF.MENU_ID)		AS MENU_ID
+				, NVL2(A.SHORTCUT_NO,	A.MENU_NM,		DEF.MENU_NM)		AS MENU_NM
+				, NVL2(A.SHORTCUT_NO, 	NVL(A.SHORTCUT_NM,A.MENU_NM),	DEF.SHORTCUT_NM)	AS SHORTCUT_NM
+				, NVL2(A.SHORTCUT_NO,	A.EXT_COL1,		DEF.EXT_COL1)		AS EXT_COL1
+				, NVL2(A.SHORTCUT_NO,	A.EXT_COL2,		DEF.EXT_COL2)		AS EXT_COL2
+				, NVL2(A.SHORTCUT_NO,	A.EXT_COL3,		DEF.EXT_COL3)		AS EXT_COL3
+
+				
+		FROM	  (
+							SELECT	1 AS NO FROM DUAL
+					UNION 	SELECT	2 AS NO FROM DUAL
+					UNION 	SELECT	3 AS NO FROM DUAL
+					UNION 	SELECT	4 AS NO FROM DUAL
+					UNION 	SELECT	5 AS NO FROM DUAL
+					UNION 	SELECT	6 AS NO FROM DUAL
+				  ) NO
+				, (
+					SELECT	  A.*
+							, B.MENU_NM
+					FROM	  FOMM_WIDGET_SHORTCUT_DT A
+							, FOMM_MENU_MT B
+					WHERE	A.MENU_ID = B.MENU_ID
+					AND		(A.EXT_COL1 != 'DEFAULT' OR A.EXT_COL1 IS NULL)
+					AND		A.USER_ID 	= #{USER_ID}
+				  ) A
+				, (
+					SELECT	  A.*
+							, B.MENU_NM
+					FROM	  FOMM_WIDGET_SHORTCUT_DT A
+							, FOMM_MENU_MT B
+					WHERE	A.MENU_ID = B.MENU_ID
+					AND		A.EXT_COL1 = 'DEFAULT'
+				  ) DEF		/* 미설정 시 DEFAULT 표기용 */
+		WHERE	1=1
+		AND		NO.NO = A.SHORTCUT_NO(+)
+		AND		NO.NO = DEF.SHORTCUT_NO(+)
+		
+		ORDER BY NO.NO
+    </select>
+    
+    <!-- 빠른이동 추가/수정 -->
+    <insert id="modifyMyShortcut" parameterType="java.util.Map">
+        /* widgetFOMMMapper >> modifyMyShortcut */
+		MERGE INTO FOMM_WIDGET_SHORTCUT_DT A
+		USING DUAL
+			ON (A.SHORTCUT_NO = #{SHORTCUT_NO} AND USER_ID = #{USER_ID})
+      
+      	WHEN MATCHED THEN
+			UPDATE
+			SET	  USER_TYPE		= #{USER_TYPE}
+				, MENU_ID		= #{MENU_ID}
+				, SHORTCUT_NM	= NVL(#{SHORTCUT_NM}, '')
+				, EXT_COL1		= NVL(#{EXT_COL1}, '')
+				, EXT_COL2		= NVL(#{EXT_COL2}, '')
+				, EXT_COL3		= NVL(#{EXT_COL3}, '')
+				, RMK			= NVL(#{RMK}, '')
+				, LMID			= #{USER_ID}
+				, LMDT			= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, LMPID			= #{LMPID}
+		
+		WHEN NOT MATCHED THEN
+            INSERT
+			(
+				  SHORTCUT_NO
+				, USER_ID
+				, USER_TYPE
+				, MENU_ID
+				, SHORTCUT_NM
+				, EXT_COL1
+				, EXT_COL2
+				, EXT_COL3
+				, RMK
+				, FRID
+				, FRDT
+				, LMID
+				, LMDT
+				, LMPID
+			)
+			VALUES
+			(
+				  #{SHORTCUT_NO}
+				, #{USER_ID}
+				, #{USER_TYPE}
+				, #{MENU_ID}
+				, NVL(#{SHORTCUT_NM}, '')
+				, NVL(#{EXT_COL1}, '')
+				, NVL(#{EXT_COL2}, '')
+				, NVL(#{EXT_COL3}, '')
+				, NVL(#{RMK}, '')
+				, #{USER_ID}
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, #{USER_ID}
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, #{LMPID}
+			)
+    </insert>
+    
+    
+</mapper>

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0100WDAO">
+
+	<sql id="mergePjWbs">
+		MERGE
+		INTO	PJ_WBS A
+		USING 	DUAL
+		ON		(A.PJT_ID = #{PJT_ID} AND A.WBS_ID = #{WBS_ID})
+		
+		WHEN MATCHED THEN
+			UPDATE SET
+				  WBS_CODE			= #{WBS_CODE}
+				, WBS_NAME			= #{WBS_NAME}
+				, LVL				= #{LVL}
+				, PARENT_ID			= #{PARENT_ID}
+				, LEAF_YN			= #{LEAF_YN}
+				, PLAN_SDATE 		= #{PLAN_SDATE}
+				, PLAN_EDATE 		= #{PLAN_EDATE}
+				, WEIGHT			= CASE WHEN #{PARENT_ID} IS NULL THEN 100 ELSE #{WEIGHT} END
+				, ACTL_SDATE		= #{ACTL_SDATE}
+				, ACTL_EDATE		= #{ACTL_EDATE}
+				, ACTL_WORK			= #{ACTL_WORK}
+				, ACTL_CMPL_RATE	= #{ACTL_CMPL_RATE}
+				, WORK_CMPL_YN		= #{WORK_CMPL_YN}
+				, WBS_DESC			= #{WBS_DESC}
+				, CHG_USER_NM		= #{CHG_USER_NM} 
+				, OUTPRNT_ORD		= #{OUTPRNT_ORD}
+				, EXE_USER_NM		= #{EXE_USER_NM}
+				, PLAN_CMPL_MRATE	= #{PLAN_CMPL_MRATE}
+				
+				, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, LMOD_USER_ID		= #{LMID}
+				, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+				, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+		WHEN NOT MATCHED THEN
+			INSERT
+			(
+		
+				  PJT_ID
+				, WBS_ID
+				, WBS_CODE			--WBS코드
+				, WBS_NAME			--WBS이름
+				, LVL				--WBS 레벨
+				, PARENT_ID			--상위 프로젝트 코드
+				, LEAF_YN			--TASK여부
+				, PLAN_SDATE		--계획시작일자
+				, PLAN_EDATE		--계획종료일자
+				, WEIGHT			--가중치
+				, ACTL_SDATE		--실제시작일자
+				, ACTL_EDATE		--실제종료일자
+				, ACTL_WORK			--실제공수
+				, ACTL_CMPL_RATE	--실제진척율
+				, WORK_CMPL_YN		--공정완료여부
+				, CHG_USER_NM 		--고객담당
+				, WBS_DESC			--비고
+				, OUTPRNT_ORD		--정렬순서
+				, EXE_USER_NM		--수행담당
+				, PLAN_CMPL_MRATE	--조정계획
+				
+				, REG_STIME
+				, REG_USER_ID
+				, REG_USER_NM
+				, REG_USER_DEPT
+	
+				, LMOD_SDATE
+				, LMOD_USER_ID
+				, LMOD_USER_NM
+				, LMOD_USER_DEPT
+			)
+			VALUES
+			(
+				  #{PJT_ID}
+				, (
+				  SELECT
+					'PJWB' || TO_CHAR(SYSDATE, 'YYMMDD') || LPAD(TO_NUMBER(NVL(MAX(SUBSTR(WBS_ID, 11)), 0)) + 1, 6, 0)
+				  FROM PJ_WBS
+				  WHERE 1 = 1
+				  AND WBS_ID LIKE 'PJWB%'
+				  AND LENGTH(WBS_ID) = 16
+				  ) 
+				, #{WBS_CODE} 
+				, #{WBS_NAME} 
+				, #{LVL}
+				, #{PARENT_ID}
+				, #{LEAF_YN}
+				, #{PLAN_SDATE} 
+				, #{PLAN_EDATE}
+				, CASE WHEN #{PARENT_ID} IS NULL THEN 100 ELSE #{WEIGHT} END
+				, #{ACTL_SDATE}
+				, #{ACTL_EDATE}
+				, #{ACTL_WORK}
+				, #{ACTL_CMPL_RATE}
+				, #{WORK_CMPL_YN}
+				, #{CHG_USER_NM}
+				, #{WBS_DESC} 
+				, #{OUTPRNT_ORD}
+				, #{EXE_USER_NM}
+				, #{PLAN_CMPL_MRATE}
+	
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  
+				, #{LMID}
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+				, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+	
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  
+				, #{LMID}
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+				, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			)
+	</sql>
+
+	<sql id="procPrWbsRateCacu">
+		<![CDATA[
+		{
+			call PR_PJ_WBS_RATE_CACU
+			(
+				#{GUBUN,			mode=IN, jdbcType=VARCHAR},
+				#{SEL_PJT_ID,		mode=IN, jdbcType=VARCHAR},
+				#{SEL_SUB_PJT_ID,	mode=IN, jdbcType=VARCHAR},
+				#{CALC_DATE,		mode=IN, jdbcType=VARCHAR},
+	            #{LMID,				mode=IN, jdbcType=VARCHAR},
+	            #{OUT_RTN_CD,		mode=OUT, jdbcType=INTEGER, javaType=int},
+	            #{OUT_RTN_MSG,		mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+			)
+		}]]>
+	</sql>
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, CASE WHEN LVL > 0 AND P_WBS_CODE IS NOT NULL AND CHILD_CHK IS NULL THEN 'Y' ELSE 'N' END AS IS_LAST_LVL
+			, A.*
+
+		FROM
+			(
+			SELECT
+				  CASE WHEN A.WBS_ID IS NULL THEN 'Y' ELSE 'N' END	AS CREATE_YN
+				, P.PJT_ID
+				, A.WBS_ID
+				<!-- , REGEXP_COUNT(A.WBS_CODE, '\.')	AS V_LVL -->
+				, NVL(A.LVL, 0)						AS LVL
+				, CASE
+					WHEN SUBSTR(NVL(A.WBS_CODE, '1'), 1, INSTR(A.WBS_CODE, '.', -1) - 1) IS NOT NULL
+					THEN SUBSTR(NVL(A.WBS_CODE, '1'), 1, INSTR(A.WBS_CODE, '.', -1) - 1)
+				  END   AS P_WBS_CODE
+				, NVL(A.WBS_CODE, '1')				AS WBS_CODE
+				, NVL(A.WBS_NAME, P.PJT_NAME)		AS WBS_NAME
+				, A.PARENT_ID 
+<!-- 				, NVL(A.PARENT_ID, #{PJT_ID})		AS PARENT_ID -->
+				, A.LEAF_YN
+				, A.PLAN_SDATE
+				, A.PLAN_EDATE
+				, A.PLAN_TOT_WORK
+				, A.PLAN_WORK
+				, A.PLAN_CMPL_RATE
+				, CASE
+					WHEN A.PJT_ID = #{PJT_ID}  AND (P.SUB_PJT_YN IS NULL OR P.SUB_PJT_YN = 'N')  THEN (SELECT SUM(WEIGHT) FROM PJ_PROJECT WHERE 1=1 AND PARENT_ID = #{PJT_ID} )
+					WHEN DECODE(#{SUB_PJT_ID}, NULL, 'N', 'Y') = 'N' AND A.LVL =0  THEN (SELECT WEIGHT FROM PJ_PROJECT WHERE 1=1 AND SUB_PJT_YN ='Y' AND PJT_ID = A.PJT_ID )
+					ELSE A.WEIGHT 
+				  END AS WEIGHT
+				, A.ACTL_SDATE
+				, A.ACTL_EDATE
+				, A.ACTL_WORK
+				, NVL(A.ACTL_CMPL_RATE, 0) AS ACTL_CMPL_RATE
+				, A.WORK_CMPL_YN
+				, A.REG_STIME
+				, A.REG_USER_ID
+				, A.REG_USER_NM
+				, A.REG_USER_DEPT
+				, A.LMOD_SDATE
+				, A.LMOD_USER_ID
+				, A.LMOD_USER_NM
+				, A.LMOD_USER_DEPT
+				, A.WBS_DESC
+				, A.ACTL_PLAN_RATE
+				, A.CHG_USER_NM
+				, (SELECT 1 FROM PJ_WBS WHERE PJT_ID = A.PJT_ID AND WBS_CODE LIKE NVL(A.WBS_CODE, '1') || '.' || '%' AND ROWNUM = 1) AS CHILD_CHK
+				, NVL(B.CALC_DATE, A.PLAN_EDATE) AS CALC_DATE
+				, A.PLAN_DAYS
+				, A.EXE_USER_NM
+				, NVL(A.PLAN_CMPL_MRATE,  A.PLAN_CMPL_RATE) AS PLAN_CMPL_MRATE
+				, A.OUTPRNT_ORD
+	
+			FROM
+				PJ_PROJECT P,
+				PJ_WBS A,
+				PJ_WBS_TOT B
+<!-- 			( -->
+<!-- 			SELECT -->
+<!-- 				  E.WBS_ID -->
+<!-- 				, SUM(F.FCNT) AS FCNT -->
+<!-- 				, DECODE(SUM(F.FCNT), 1, MAX(F.ORG_FILE_NM), NULL, MAX(F.ORG_FILE_NM), MAX(F.ORG_FILE_NM)||'외 '||TO_CHAR(SUM(F.FCNT)-1, '99')||'건') AS FILE_NM -->
+<!-- 			FROM -->
+<!-- 				PJ_DLVR_WBS_MAP E,  -->
+<!--                 ( -->
+<!--                 SELECT -->
+<!-- 					REF_ID, -->
+<!--                 	COUNT(*) AS FCNT,  -->
+<!--                     MAX(ORG_FILE_NM) AS ORG_FILE_NM  -->
+<!-- 				FROM -->
+<!-- 					FOMM_ATCHFILE_MT -->
+<!-- 					PJ_FILE_ATTACH  -->
+
+<!-- 				WHERE 1 = 1 -->
+<!-- 				GROUP BY REF_ID -->
+<!-- 				) F -->
+<!-- 			WHERE 1 = 1 -->
+<!-- 			AND E.DLVR_ID = F.REF_ID  -->
+<!-- 			GROUP BY E.WBS_ID -->
+<!--         	) C, -->
+        	
+
+			WHERE 1 = 1 
+			AND P.PJT_ID    = A.PJT_ID(+)
+			AND P.PJT_ID    = B.PJT_ID(+) 
+			<!--AND A.WBS_ID = C.WBS_ID(+) -->
+	    	AND ( P.PARENT_ID = #{PJT_ID}  OR  P.PJT_ID = #{PJT_ID} )
+			) A
+
+		WHERE 1 = 1
+		<if test="LVL != '' and LVL != null">
+		AND A.LVL <![CDATA[<=]]> TO_NUMBER(#{LVL}) 
+		</if>
+
+		<if test="SUB_PJT_ID != '' and SUB_PJT_ID != null">
+		AND A.PJT_ID = #{SUB_PJT_ID}
+		</if>
+
+		ORDER BY
+			A.PARENT_ID DESC, A.CREATE_YN, A.PJT_ID, A.WBS_CODE, A.OUTPRNT_ORD 
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.PJT_ID
+			, A.CALC_DATE
+			, NVL(A.ACTL_PLAN_RATE, 0)	AS ACTL_PLAN_RATE
+			, NVL(A.PLAN_CMPL_RATE, 0)	AS PLAN_CMPL_RATE
+			, NVL(A.ACTL_CMPL_RATE, 0)	AS ACTL_CMPL_RATE
+			, A.STAGE_CD
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+		FROM
+			PJ_WBS_TOT A
+
+		WHERE 1 = 1
+		
+		<choose>
+ 			<when test="SUB_PJT_ID != '' and SUB_PJT_ID != null">
+		AND A.PJT_ID = #{SUB_PJT_ID}
+ 			</when>
+ 			<otherwise>
+ 		AND A.PJT_ID = #{PJT_ID}	
+ 			</otherwise>
+ 		</choose>
+	</select>
+
+	<select id="select03" parameterType="java.util.Map" resultType="string">
+		SELECT
+			NVL(
+				MAX(
+					CASE
+						WHEN 
+							NVL(WBS_CODE, ' ') <![CDATA[<>]]> NVL(#{WBS_CODE}, ' ') OR
+							NVL('' || LVL, ' ') <![CDATA[<>]]> NVL('' || #{LVL}, ' ') OR
+							NVL(PLAN_SDATE, ' ') <![CDATA[<>]]> NVL(#{PLAN_SDATE}, ' ') OR
+							NVL(PLAN_EDATE, ' ') <![CDATA[<>]]> NVL(#{PLAN_EDATE}, ' ') OR
+							NVL('' || WEIGHT, ' ') <![CDATA[<>]]> NVL('' || #{WEIGHT}, ' ') OR
+							NVL('' || ACTL_CMPL_RATE, ' ') <![CDATA[<>]]> NVL('' || #{ACTL_CMPL_RATE}, ' ') OR
+							NVL(WBS_DESC, ' ') <![CDATA[<>]]> NVL(#{WBS_DESC}, ' ') OR
+							NVL(EXE_USER_NM, ' ') <![CDATA[<>]]> NVL(#{EXE_USER_NM}, ' ') OR
+							NVL(CHG_USER_NM, ' ') <![CDATA[<>]]> NVL(#{CHG_USER_NM}, ' ') OR
+							NVL('' || PLAN_CMPL_MRATE, ' ') <![CDATA[<>]]> NVL('' || #{PLAN_CMPL_MRATE}, ' ')
+						THEN 'Y'
+						ELSE 'N'
+					END), 'N')	AS CHG_YN
+				
+		FROM
+			PJ_WBS
+		WHERE WBS_ID = #{WBS_ID}
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<include refid="mergePjWbs"/>
+ 	</insert>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		INSERT INTO PJ_WBS_HIST
+		(
+			  WBS_ID
+			, HIST_SEQ
+			, VERSION
+			, WBS_CODE, WBS_NAME, PJT_ID, LVL, PARENT_ID
+			, LEAF_YN, PLAN_SDATE, PLAN_EDATE, PLAN_TOT_WORK, PLAN_WORK
+			, PLAN_CMPL_RATE, WEIGHT, ACTL_SDATE, ACTL_EDATE, ACTL_WORK
+			, ACTL_CMPL_RATE, WORK_CMPL_YN, WBS_DESC, ACTL_PLAN_RATE, ACTL_PLAN_RATE
+			, CHG_USER_NM , OUTPRNT_ORD , PLAN_DAYS , EXE_USER_NM , PLAN_CMPL_MRATE , STAGE_CD
+
+			, REG_STIME, REG_USER_ID, REG_USER_NM, REG_USER_DEPT
+			, LMOD_SDATE, LMOD_USER_ID, LMOD_USER_NM, LMOD_USER_DEPT
+		)
+		SELECT
+			  WBS_ID
+			, (SELECT NVL(MAX(HIST_SEQ), 0) + 1 FROM PJ_WBS_HIST WHERE WBS_ID	= #{WBS_ID})
+			, (SELECT VERSION FROM PJ_WBS_TOT WHERE PJT_ID	= #{PJT_ID})
+			, WBS_CODE, WBS_NAME, PJT_ID, LVL, PARENT_ID
+			, LEAF_YN, PLAN_SDATE, PLAN_EDATE, PLAN_TOT_WORK, PLAN_WORK
+			, PLAN_CMPL_RATE, WEIGHT, ACTL_SDATE, ACTL_EDATE, ACTL_WORK
+			, ACTL_CMPL_RATE, WORK_CMPL_YN, WBS_DESC, ACTL_PLAN_RATE, ACTL_PLAN_RATE
+			, CHG_USER_NM , OUTPRNT_ORD , PLAN_DAYS , EXE_USER_NM , PLAN_CMPL_MRATE , STAGE_CD
+
+			, REG_STIME, REG_USER_ID, REG_USER_NM, REG_USER_DEPT
+			, LMOD_SDATE, LMOD_USER_ID, LMOD_USER_NM, LMOD_USER_DEPT
+
+		FROM PJ_WBS
+		WHERE WBS_ID = #{WBS_ID}
+ 	</insert>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_WBS 
+		WHERE 1 = 1
+		AND WBS_ID = #{WBS_ID}
+	</delete>
+
+	<select id="callPrPjWbsRateCacuProc" parameterType="java.util.Map" statementType="CALLABLE">
+		<include refid="procPrWbsRateCacu"/>
+    </select>
+
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR0110WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT *
+		FROM
+			(
+			SELECT
+				  A.REQ_TMPLAT_ID																												--요청서양식ID
+				, A.REQ_TMPLAT_VER																												--버전
+				, A.CUR_VER_YN																													--현재사용버전여부
+				, A.REQ_TMPLAT_NM																												--요청서양식명
+				, A.SVC_CD																														--서비스유형코드
+				, NVL((SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'SVC_CD' AND CMM_CD = A.SVC_CD AND LANG_CD = #{SEL_LANG_CD})
+					, (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'SVC_CD' AND CMM_CD = A.SVC_CD AND LANG_CD = #{SYS_LANG_CD})
+					 )	AS SVC_NM							--서비스유형명
+				, A.SVC_DTL_CD																													--서비스유형 상세코드
+				, NVL((SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = A.SVC_CD AND CMM_CD = A.SVC_DTL_CD AND LANG_CD = #{SEL_LANG_CD})
+					, (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = A.SVC_CD AND CMM_CD = A.SVC_DTL_CD AND LANG_CD = #{SYS_LANG_CD})
+					 )	AS SVC_DTL_NM 					--서비스유형상세명
+				, A.WF_ID																														--워크플로우ID
+				, A.REQ_INFO_TYPE_CD																											--요청서 기본정보 타입코드
+				, (SELECT ITM_VAL_1 FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'REQ_INFO_TYPE_CD' AND CMM_CD = A.REQ_INFO_TYPE_CD AND LANG_CD = #{SYS_LANG_CD})	AS SR_INFO_URL	--요청서 기본정보 화면 URL
+				, A.REQ_URL																														--요청서URL
+				, A.ATTACH_USE_YN																												--첨부파일 사용여부
+				, A.USE_YN																														--사용여부
+				, A.REQ_DESC																													--작성요령
+				, A.RMK																															--비고
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM																--최초등록자
+				, TO_DATE(A.FRDT, 'YYYYMMDDHH24MISS') AS FRDT																					--최초등록일시
+				, A.LMID																														--최종수정자ID
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM																--수정자
+				, TO_DATE(A.LMDT, 'YYYYMMDDHH24MISS') AS LMDT																					--최종수정일시
+				, A.LMPID																														--최종수정 화면ID
+				, M.SORT_NO -- 정렬순서
+			FROM
+				 WF_REQ_TMPLAT_HT A
+				,WF_REQ_TMPLAT_MT M /* IT작업신청서 목록에서 USE_YN FLAG 적용 */
+			WHERE 1 = 1
+			AND A.REQ_TMPLAT_ID = M.REQ_TMPLAT_ID
+			AND CUR_VER_YN			= 'Y'
+			AND NVL(A.USE_YN, 'N')	= 'Y'
+			AND NVL(M.USE_YN, 'N') = 'Y'
+			AND NVL(M.DEL_YN, 'N') = 'N'  /* IT작업신청서 목록에서 USE_YN FLAG 적용 */
+			AND A.SVC_CD IN ('CHM','SVC') -- IT작업신청, 서비스운영
+
+			<if test="SVC_CD != '' and SVC_CD != null">
+			AND A.SVC_CD = #{SVC_CD}
+			</if>
+
+			<if test="REQ_TMPLAT_NM != '' and REQ_TMPLAT_NM != null">
+			AND A.REQ_TMPLAT_NM LIKE '%' || #{REQ_TMPLAT_NM} || '%'
+			</if>
+
+			<if test='SCREEN_ID != null and SCREEN_ID.equals("SI0210_W")'>	-- SI0210_W; 외주 서비스신청 화면이면
+			AND A.SVC_CD 		= 'SVC'	-- 서비스유형: 서비스 
+			AND A.SVC_DTL_CD 	= '30'	-- 요청분류: 사용자
+			</if>
+			)
+
+		ORDER BY
+			SORT_NO,SVC_DTL_NM, REQ_TMPLAT_NM
+	</select>
+
+</mapper>

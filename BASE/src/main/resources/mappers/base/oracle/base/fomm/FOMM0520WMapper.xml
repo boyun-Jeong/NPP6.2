@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0520WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+			SELECT 
+		    TO_CHAR(TRAN_SQNO) AS TRAN_SQNO  -- 전송일련번호
+		    , RCVR_INDN             --받는사람 개인번호
+		    , RCVR_INDN_NM		--받는사람 개인성명
+		    , TITLE                     --알람제목
+		    , CONTENT               --알람내용
+		    , ADD_URL               --추가연계 URL 내용
+		    , TO_CHAR((TO_DATE(TARGET_DATE,'YYYYMMDD HH24:MI:SS')),'YYYY-MM-DD HH24:MI') AS TARGET_DATE
+		    , TO_CHAR(SEND_TIME, 'YYYY-MM-DD HH24:MI:SS') AS SEND_TIME            --발송완료시간
+		    , MAP_PROC_CD
+            , MAP_WF_PROC_CD
+            , SEND_TARGET_YN    --발송 상태 -  NULL:입력, Y:발송대상(O),N:발송대상(X)
+            , SEND_GUBUN
+            , JOB_REV_NO
+            , SEND_USER_ID
+            , SEND_USER_NM
+		FROM FOMM_HEARIMTLKTRAN_MT
+		WHERE 1=1
+		AND  SUBSTR(TO_CHAR(SEND_TIME,'YYYYMMDD HH24:MI:SS'),1,8) BETWEEN #{START_DATE} AND #{END_DATE}
+
+			<if test="RCVR_INDN != '' and RCVR_INDN != null">
+	           AND RCVR_INDN LIKE = #{RCVR_INDN}
+	        </if>
+	        
+	        <if test="RCVR_INDN_NM != '' and RCVR_INDN_NM != null">
+	           AND UPPER(RCVR_INDN_NM) LIKE '%' ||  UPPER(#{RCVR_INDN_NM}) || '%'
+	        </if>
+	        
+	        <if test="SEND_USER_ID != '' and SEND_USER_ID != null">
+	           AND SEND_USER_ID LIKE = #{SEND_USER_ID}
+	        </if>
+	        
+	        <if test="SEND_USER_NM != '' and SEND_USER_NM != null">
+	           AND UPPER(SEND_USER_NM) LIKE '%' ||  UPPER(#{SEND_USER_NM}) || '%'
+	        </if>
+	        
+            <if test="TITLE != '' and TITLE != null">
+               AND TITLE LIKE '%' ||  #{TITLE} || '%'
+            </if>
+
+            <if test="CONTENT != '' and CONTENT != null">
+               AND UPPER(TITLE || ';;' || CONTENT) LIKE UPPER('%' || #{CONTENT} || '%')
+            </if>
+            
+       ORDER BY SEND_TIME DESC
+	
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	</delete>
+
+</mapper>

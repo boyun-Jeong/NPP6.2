@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ5500WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  A.PJT_ID
+			, A.BIZ_ID
+			, A.BIZ_NAME
+			, B.PJT_NAME AS PJT_NAME
+			, C.PJT_ID      AS P_PJT_ID 
+			, C.PJT_NAME AS P_PJT_NAME
+			, D.STEST_TYPE_CD
+			, D.STEST_VERSION
+			, D.STEST_NO
+			, D.STEST_NAME
+			, NVL(D.STEP_TOT_CNT,0) AS STEP_TOT_CNT
+			, NVL(D.STEP_PASS_CNT,0) AS STEP_PASS_CNT
+			, NVL(D.STEP_FAIL_CNT,0) AS STEP_FAIL_CNT
+			, ROUND( DECODE( NVL(D.STEP_TOT_CNT, 0) , 0, 0, NVL(D.STEP_PASS_CNT, 0) / NVL(D.STEP_TOT_CNT, 0) ) * 100, 1)	AS STEP_RATE
+
+		FROM
+			  PJ_BIZ A
+			, PJ_PROJECT B
+			, PJ_PROJECT C
+			, (
+			  SELECT
+				  A.PJT_ID
+				, A.BIZ_ID
+				, A.STEST_TYPE_CD
+				, A.STEST_VERSION
+				, A.STEST_NO
+				, MAX(A.STEST_NAME) AS STEST_NAME
+				, SUM(STEP_TOT_CNT) AS STEP_TOT_CNT
+				, SUM(STEP_PASS_CNT) AS STEP_PASS_CNT
+				, SUM(STEP_FAIL_CNT) AS STEP_FAIL_CNT
+			  FROM
+				(
+                /* 테스트 케이스 */
+                SELECT 
+					  A.PJT_ID
+					, A.BIZ_ID
+					, A.STEST_TYPE_CD
+					, A.STEST_VERSION
+					, A.STEST_NO
+					, MAX(A.STEST_NAME) AS STEST_NAME
+					, COUNT(1) AS STEP_TOT_CNT
+					, NULL AS STEP_PASS_CNT
+					, NULL AS STEP_FAIL_CNT
+
+				FROM PJ_SCNR_TEST A
+
+				WHERE 1 = 1
+				AND A.PJT_ID = #{SUB_PJT_ID}
+
+				<if test="STEST_TYPE_CD != '' and STEST_TYPE_CD != null">
+				AND A.STEST_TYPE_CD = #{STEST_TYPE_CD}
+				</if>
+
+				<if test="STEST_VERSION != '' and STEST_VERSION != null">
+				AND A.STEST_VERSION = #{STEST_VERSION}
+				</if>
+
+				GROUP BY A.PJT_ID, A.BIZ_ID, A.STEST_TYPE_CD, A.STEST_VERSION, A.STEST_NO
+
+                UNION ALL
+
+                SELECT 
+					  A.PJT_ID
+					, A.BIZ_ID
+					, A.STEST_TYPE_CD
+					, A.STEST_VERSION
+					, A.STEST_NO
+					, MAX(A.STEST_NAME) AS STEST_NAME
+					, NULL AS STEP_TOT_CNT
+					, COUNT(1) AS STEP_PASS_CNT
+					, NULL AS STEP_FAIL_CNT
+
+				FROM PJ_SCNR_TEST A
+
+				WHERE 1 = 1
+				AND A.PJT_ID	= #{SUB_PJT_ID}
+				AND A.RESULT_CD = 'STEST_RST_CD01'	/* 결과 - P */
+
+				<if test="STEST_TYPE_CD != '' and STEST_TYPE_CD != null">
+				AND A.STEST_TYPE_CD = #{STEST_TYPE_CD}
+				</if>
+
+				<if test="STEST_VERSION != '' and STEST_VERSION != null">
+				AND A.STEST_VERSION = #{STEST_VERSION}
+				</if>
+
+				GROUP BY A.PJT_ID, A.BIZ_ID, A.STEST_TYPE_CD, A.STEST_VERSION, A.STEST_NO
+
+                UNION ALL
+
+                SELECT 
+					  A.PJT_ID
+					, A.BIZ_ID
+					, A.STEST_TYPE_CD
+					, A.STEST_VERSION
+					, A.STEST_NO
+					, MAX(A.STEST_NAME) AS STEST_NAME
+					, NULL AS STEP_TOT_CNT
+					, NULL AS STEP_PASS_CNT
+					, COUNT(1) AS STEP_FAIL_CNT
+
+				FROM PJ_SCNR_TEST A
+
+				WHERE 1 = 1
+				AND A.PJT_ID	= #{SUB_PJT_ID}
+				AND A.RESULT_CD = 'STEST_RST_CD02'	/* 결과 - F */
+				
+				<if test="STEST_TYPE_CD != '' and STEST_TYPE_CD != null">
+				AND A.STEST_TYPE_CD = #{STEST_TYPE_CD}
+				</if>
+
+				<if test="STEST_VERSION != '' and STEST_VERSION != null">
+				AND A.STEST_VERSION = #{STEST_VERSION}
+				</if>
+
+				GROUP BY A.PJT_ID, A.BIZ_ID, A.STEST_TYPE_CD, A.STEST_VERSION, STEST_NO
+				) A
+
+			  GROUP BY A.PJT_ID, A.BIZ_ID, A.STEST_TYPE_CD, A.STEST_VERSION, A.STEST_NO
+			  ) D
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND B.PARENT_ID	= C.PJT_ID
+		AND A.PJT_ID	= D.PJT_ID
+		AND A.BIZ_ID	= D.BIZ_ID
+		AND A.PJT_ID	= #{SUB_PJT_ID}
+
+		ORDER BY
+			A.ORD_NUM, D.STEST_TYPE_CD, D.STEST_VERSION, D.STEST_NO
+	</select>
+
+</mapper>

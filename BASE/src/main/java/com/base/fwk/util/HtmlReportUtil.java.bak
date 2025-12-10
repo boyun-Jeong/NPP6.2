@@ -1,0 +1,323 @@
+package com.wemb.spp.fwk.util;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.net.Inet4Address;
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+import org.jsoup.Jsoup;
+import org.jsoup.helper.W3CDom;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.PdfStamper;
+import com.lowagie.text.pdf.PdfWriter;
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
+
+/**
+ * <pre>
+ * @title - 리포트 출력 (htmlReport)
+ * @package com.wemb.spp.fwk.util
+ * @author 정하림
+ * @since 2025. 03. 25
+ * @version 1.0
+ * @see
+ */
+@Controller
+@RequestMapping("/htmlReport")
+public class HtmlReportUtil {
+	
+	private Logger log = LoggerFactory.getLogger(JasperReportUtil.class);
+
+	@Autowired
+	private ServletContext servletContext;
+	
+	private DataSource ds;
+	
+	private static final String FONT_PATH = "/WEB-INF/classes/reports/fonts/malgun.ttf";
+	
+
+	@GetMapping("/viewer")
+	public void generate(HttpServletRequest req, HttpServletResponse res) throws Exception  {
+		
+		log.debug("req.getParameterMap().size() : " + req.getParameterMap().size());
+
+		HashMap<String, Object> parameters = new HashMap<>();
+		String dbConnNm = "";
+		
+		for(String colNm : req.getParameterMap().keySet()) {
+			
+			log.debug("colNm:[" + colNm + "] value:[" + req.getParameter(colNm) + "]");
+
+			if("CONN_NM".equals(colNm)) {
+				dbConnNm = StringUtil.safe(req.getParameter(colNm), "").replace("undefined", "");
+			}else {
+				parameters.put(colNm, StringUtil.safe(req.getParameter(colNm), ""));
+			}
+		}
+		
+		if("".equals(dbConnNm)) {
+			dbConnNm = "itsm";
+
+		}else {
+			dbConnNm = dbConnNm.toLowerCase();
+		}
+		
+		log.debug("[EXEC] dbConnNm:[" + dbConnNm + "]");
+		
+		Connection conn = null;
+		
+		try {
+			Context init = new InitialContext();
+        	
+        	String ip4 = Inet4Address.getLocalHost().getHostAddress();
+        	String lookUpStr = "";
+
+        	if(!"10.120.120.62".equals(ip4) && !"10.120.15.29".equals(ip4)) {	//개발서버, 운영서버가 아닌 경우
+        		lookUpStr = "java:comp/env/";
+        	}
+			Context env = (Context) init.lookup(lookUpStr);
+			ds = (DataSource) env.lookup("jdbc/" + dbConnNm);
+			conn = ds.getConnection();
+			
+			// 1. DB에서 HTML 콘텐츠(CLOB)를 읽어옴
+            String htmlContent = readHtmlFromClob(parameters);
+            if (htmlContent == null || htmlContent.trim().isEmpty()) {
+            	throw new Exception("출력할 보고서 내용이 존재하지 않습니다.");
+            }
+
+            // 2. JSoup을 이용해 HTML을 파싱 후 XHTML 문법으로 변경
+            Document jsoupDoc = cleanHtmlWithJsoup(htmlContent);
+
+            // 3. 한글 폰트 및 보더 스타일 적용 CSS 추가
+            jsoupDoc = addFontCss(jsoupDoc);
+
+            // 4. W3C DOM으로 변환
+            W3CDom w3cDom = new W3CDom();
+            org.w3c.dom.Document w3cDocument = w3cDom.fromJsoup(jsoupDoc);
+
+            // 5. openhtmltopdf로 PDF 생성
+            byte[] pdfBytes = generatePdfFromW3cDoc(w3cDocument);
+
+            // 6. OpenPDF(PdfStamper)를 사용하여 후처리 (예: 뷰어 옵션 설정)
+            ByteArrayInputStream bais = new ByteArrayInputStream(pdfBytes);
+            PdfReader reader = new PdfReader(bais);
+            ByteArrayOutputStream modifiedBaos = new ByteArrayOutputStream();
+            PdfStamper stamper = new PdfStamper(reader, modifiedBaos);
+
+            // 예시: PDF 뷰어의 초기 페이지 모드를 'UseNone'으로 설정하여 썸네일 패널 등을 숨깁니다.
+            stamper.getWriter().setViewerPreferences(PdfWriter.PageModeUseNone);
+
+            stamper.close();
+            reader.close();
+            byte[] modifiedPdf = modifiedBaos.toByteArray();
+
+            // 7. 최종 PDF 응답 전송
+            res.setContentType("application/pdf");
+            res.setHeader("Content-Disposition", "inline; filename=report.pdf");
+            try (OutputStream os = res.getOutputStream()) {
+                os.write(modifiedPdf);
+                os.flush();
+            }
+			
+		}catch(Exception e) {
+			log.debug("----Error generating report : {}", e.getMessage());
+			
+		}
+		
+	}
+
+	
+	public String readHtmlFromClob(HashMap<String, Object> params) throws Exception {
+
+        String query = 
+        		"SELECT   U.* " +
+	        	" 		, TO_CHAR('실시 사항 (' || SUBSTR(YYYYMM, 1, 4) || '.' || SUBSTR(YYYYMM, 5, 2) || '월)') ACT_TITLE " +   
+	        	"		, TO_CHAR('예정 사항 (' || SUBSTR(YYYYMM2, 1, 4) || '.' || SUBSTR(YYYYMM2, 5, 2) || '월)') PLAN_TITLE " +   
+	        	"FROM ( "+
+	        		"SELECT "+ 
+	        		"              UPMU_ID " + 
+	    			"            , YYYYMM " + 
+	    			"            , TO_CHAR(ADD_MONTHS(TO_DATE(YYYYMM||'01','YYYYMMDD'),1),'YYYYMM') AS YYYYMM2 " + 
+	    			"            , DEPT_CD " + 
+	    			"            , (SELECT DEPT_NM FROM FOMM_DEPT_MT D WHERE D.DEPT_CD = U.DEPT_CD) AS DEPT_NM " + 
+	    			"            , ACT_CONTS " + 
+	    			"            , PLAN_CONTS " + 
+	    			"            , FRID " + 
+	    			"            , FRDT " + 
+	    			"            , LMID " + 
+	    			"            , LMDT " + 
+	    			"        FROM RPT_MON_UPMU U " +
+	        	" ) U "+
+	        	"        WHERE 1=1" + 
+    			"          AND DEPT_CD = ?" + 
+    			"          AND YYYYMM = ?";
+
+        
+        Map<String, String> htmlContent = new HashMap<>();
+        String finalHtml = null;
+        
+        if(!params.isEmpty()) {
+        	String deptCd = (String) params.get("DEPT_CD");
+        	String yyyymm = (String) params.get("YYYYMM");
+        	
+        	try (Connection conn = ds.getConnection();
+                   PreparedStatement pstmt = conn.prepareStatement(query)) {
+        		
+                   pstmt.setString(1, deptCd);
+                   pstmt.setString(2, yyyymm);
+                   
+                   try (ResultSet rs = pstmt.executeQuery()) {
+                       if (rs.next()) {
+                           Clob actClob = rs.getClob("ACT_CONTS");
+                           Clob planClob = rs.getClob("PLAN_CONTS");
+                           String deptNm = rs.getString("DEPT_NM");
+                           String actTitle = rs.getString("ACT_TITLE");
+                           String planTitle = rs.getString("PLAN_TITLE");
+                           
+                           htmlContent.put("ACT_CONTS", clobToString(actClob));
+                           htmlContent.put("PLAN_CONTS", clobToString(planClob));
+                           
+                           finalHtml = wrapHtmlContent(deptNm, actTitle, planTitle, clobToString(actClob), clobToString(planClob));
+                       }
+                   }
+               }
+        }
+        
+        return finalHtml;
+    }
+	
+	
+	private static String clobToString(Clob clob) throws Exception {
+        if (clob == null) return "";
+        StringBuilder sb = new StringBuilder();
+        try (Reader reader = clob.getCharacterStream();
+             BufferedReader br = new BufferedReader(reader)) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            
+            if(br != null)			br.close();
+            if(reader != null)	reader.close();
+        }
+        return sb.toString();
+    }
+
+    /**
+     * HTML 문자열을 JSoup Document로 파싱한 후 XHTML 문법에 맞게 변환합니다.
+     */
+    public static Document cleanHtmlWithJsoup(String html) {
+        // HTML5 문서를 파싱한 후 outputSettings()를 XHTML으로 변경
+        Document doc = Jsoup.parse(html);
+        doc.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
+        doc.outputSettings().charset("UTF-8");
+        doc.outputSettings().prettyPrint(false);
+        return doc;
+    }
+
+    /**
+     * 한글 폰트를 포함하는 CSS를 추가합니다.
+     * (W3C DOM 변환 전에 JSoup Document에 적용)
+     */
+    public Document addFontCss(Document doc) throws IOException {
+        // head가 없으면 생성
+        if (doc.head() == null) {
+            doc.prependElement("head");
+        }
+        Element head = doc.head();
+        // XHTML에서는 meta 태그가 self-closing 태그여야 함.
+        head.prepend("<meta charset=\"UTF-8\" />");
+        head.append("<style type=\"text/css\">"
+        		+ "@page { size: A4 landscape; }"  // 용지를 A4 가로(landscape)로 지정
+                + "@font-face { font-family: 'MalgunGothic'; src: url('data:font/ttf;base64," + encodeFontToBase64() + "') format('truetype'); }"
+                + "body { font-family: 'MalgunGothic', sans-serif; margin: 0; padding: 0; }"
+                + ".container { width: 100%; height: 100%; }"
+                + ".mainTitle { text-align: center; }"
+                + ".left { width: 50%; margin-top: 20px; padding: 10px; box-sizing: border-box; float: left; border: 1px solid black; }"
+                + ".right { width: 50%; margin-top: 20px; padding: 10px; box-sizing: border-box; float: left; border: 1px solid black; }"
+                + ".title { background-color: gray; padding: 10x; margin-bottom: 15px; border: 1px solid black; font-size: 16px; font-weight: bold; text-align: center; }"
+                + ".box {  font-size: 12px; }"
+                + ".text-tiny {  font-size: 8px; }"
+                + ".text-small {  font-size: 10px; }"
+                + ".text-big {  font-size: 16px; }"
+                + ".text-huge {  font-size: 20px; }"
+                + "table { border: 1px solid black; border-collapse: collapse; }"
+                + "td, th { border: 1px solid black; padding: 5px; text-align: left; }"
+                + "p { margin: 10px; }"
+                + ""
+                + "</style>");
+        return doc;
+    }
+    //  line-height: 1.0;
+
+    // html 구조만 잡기
+    private static String wrapHtmlContent(String deptNm, String actTitle, String planTitle, String actConts, String planConts) {
+    	return	  "<html><head></head><body>"
+    			+ "<div class='container'>"
+    			+ " <h2 class='mainTitle'>주요업무현황("+ deptNm +")</h2>"
+    			+ " <div class='left'><div class='title'>" + actTitle + "</div><div class='box'>" + actConts + "</div></div>" 
+    			+ " <div class='right'><div class='title'>" + planTitle + "</div><div class='box'>" + planConts + "</div></div>"
+    			+ "</div>"
+    			+ "</body></html>";
+    }
+    
+    
+    /**
+     * 폰트 파일을 Base64 인코딩하여 문자열로 반환
+     */
+    private String encodeFontToBase64() throws IOException {
+        InputStream fontStream = servletContext.getResourceAsStream(FONT_PATH);
+        if (fontStream == null) {
+            System.err.println("폰트 파일을 찾을 수 없습니다: " + FONT_PATH);
+            return "";
+        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        byte[] data = new byte[1024];
+        int bytesRead;
+        while ((bytesRead = fontStream.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, bytesRead);
+        }
+        fontStream.close();
+        return Base64.getEncoder().encodeToString(buffer.toByteArray());
+    }
+
+    /**
+     * W3C Document를 사용하여 openhtmltopdf로 PDF를 생성합니다.
+     */
+    public byte[] generatePdfFromW3cDoc(org.w3c.dom.Document w3cDocument) throws Exception {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PdfRendererBuilder builder = new PdfRendererBuilder();
+        builder.useFastMode();
+        // W3C Document를 직접 설정
+        builder.withW3cDocument(w3cDocument, null);
+        builder.toStream(baos);
+        builder.run();
+        return baos.toByteArray();
+    }
+    
+
+	
+}

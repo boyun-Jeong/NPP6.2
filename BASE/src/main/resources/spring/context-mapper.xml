@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+    
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+
+	<!-- define the SqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="base" />
+		<property name="mapperLocations" value="classpath:mappers/${base.mapper.path}/**/*Mapper.xml" />
+		<property name="configLocation" value="classpath:mappers/config/hsql/sql-mapper-config.xml" />
+	</bean>
+
+	<!-- scan for mappers and let them be autowired -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.base.**.dao" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    </bean>
+
+    <!-- Tibero START -->
+<!--     <bean id="sqlSessionTibero" class="org.mybatis.spring.SqlSessionTemplate"> -->
+<!--         <constructor-arg index="0" ref="sqlSessionFactoryTibero" /> -->
+<!--     </bean> -->
+
+    <!-- define the SqlSessionFactory -->
+<!--     <bean id="sqlSessionFactoryTibero" class="org.mybatis.spring.SqlSessionFactoryBean"> -->
+<!--         <property name="dataSource" ref="dataSourceTibero" /> -->
+<!--         <property name="mapperLocations" value="classpath:mappers/tibero/*Mapper.xml" /> -->
+<!--         <property name="configLocation" value="classpath:mappers/config/hsql/sql-mapper-config.xml" /> -->
+<!--     </bean> -->
+
+    <!-- scan for mappers and let them be autowired -->
+<!--     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> -->
+<!--         <property name="basePackage" value="com.base.tibero" /> -->
+<!--         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryTibero" /> -->
+<!--     </bean> -->
+    <!-- Tibero END -->
+
+</beans>

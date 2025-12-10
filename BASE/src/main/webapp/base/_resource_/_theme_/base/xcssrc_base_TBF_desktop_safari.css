@@ -1,0 +1,120 @@
+﻿.Tab.tab_TBF_mdi
+{
+	background : transparent;
+	border : 0px;
+}
+.Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi
+{
+	background : #F2F2F2;
+	border-top : 1px solid #b9b9b9;
+	border-right : 1px solid #b9b9b9;
+	border-bottom : 2px solid #3697f8;
+	border-left : 1px solid #b9b9b9;
+	cursor : pointer;
+	font : 14px 'KoPubL';
+}
+.Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi .tabbuttonitemtext .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi .tabbuttonitemtext
+{
+	font : 14px 'KoPubL';
+}
+.Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi .extrabutton
+{
+	background : url(./SPP_IMAGE_SET/TBF/btn_TBF_MdiX.png) no-repeat center center;
+	cursor : pointer;
+}
+.Static.sta_TBF_mdiBg
+{
+	background : #ffffff;
+	border-top : 0px;
+	border-right : 0px;
+	border-bottom : 2px solid #252c43;
+	border-left : 0px;
+}
+.Button.btn_TBF_mdiAllX
+{
+	background : #fafafa URL('./MIRAE_IMAGE_SET/TBF/tab-all.gif') no-repeat center center;
+	border : 0px none;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Tab.tab_TBF_mdi[data-status=focused]
+{
+	background : transparent;
+	border : 0px;
+}
+#nexacontainer .Tab.tab_TBF_mdi[data-status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+}
+#nexacontainer .Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi[data-status=mouseover]
+{
+	background : #F2F2F2;
+	border-top : 1px solid #b9b9b9;
+	border-right : 1px solid #b9b9b9;
+	border-bottom : 2px solid #3697f8;
+	border-left : 1px solid #b9b9b9;
+	cursor : pointer;
+	font : 14px 'KoPubL';
+}
+#nexacontainer .Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi[data-status=focused]
+{
+	background : #ffffff;
+	border-top : 1px solid #3697f8;
+	border-right : 1px solid #3697f8;
+	border-bottom : 2px solid white;
+	border-left : 1px solid #3697f8;
+	cursor : pointer;
+	color : #0a5dad;
+	font : 14px 'KoPubL';
+}
+#nexacontainer .Button.btn_TBF_mdiAllX[data-status=mouseover]
+{
+	background : #fafafa URL('./MIRAE_IMAGE_SET/TBF/tab-all-over.gif') no-repeat center center;
+	border : 0px none;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_TBF_mdiAllX[data-status=focused]
+{
+	background : #fafafa URL('./MIRAE_IMAGE_SET/TBF/tab-all-over.gif') no-repeat center center;
+	border : 0px none;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi[data-userstatus=selected]
+{
+	background : #ffffff;
+	border-top : 1px solid #3697f8;
+	border-right : 1px solid #3697f8;
+	border-bottom : 2px solid white;
+	border-left : 1px solid #3697f8;
+	cursor : pointer;
+	color : #0a5dad;
+	font : 14px 'KoPubL';
+}
+#nexacontainer .Button.btn_TBF_mdiAllX[data-userstatus=selected]
+{
+	background : #fafafa URL('./MIRAE_IMAGE_SET/TBF/tab-all.gif') no-repeat center center;
+	border : 0px none;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi[data-userstatus=selected][data-status=mouseover]
+{
+	background : #ffffff;
+	border-top : 1px solid #3697f8;
+	border-right : 1px solid #3697f8;
+	border-bottom : 2px solid white;
+	border-left : 1px solid #3697f8;
+	cursor : pointer;
+	color : #0a5dad;
+	font : 14px 'KoPubL';
+}

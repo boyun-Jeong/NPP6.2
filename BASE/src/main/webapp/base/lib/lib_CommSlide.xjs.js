@@ -1,0 +1,99 @@
+//XJS=lib_CommSlide.xjs
+(function()
+{
+    return function(path)
+    {
+        var obj;
+    
+        // User Script
+        this.registerScript(path, function() {
+        // include "lib::lib_CommSlide.xjs";
+        // 슬라이드 알림 관련 공통 라이브러리
+
+        this._commArrSlide = [];	// slide queue
+        /*****************************************************************
+         * slide 알림 관련
+         * 함수명	: fnCommAddSlide
+         * 설명	: 슬라이드 Queue에 슬라이드 추가
+         *****************************************************************/
+        this.fnCommAddSlide = function(value)
+        {
+        	// 슬라이드 QUEUE 추가
+        	this._commArrSlide.push(value);
+
+        	// 슬라이드 실행
+        	this.fnCommOpenSlide();
+        }
+
+        /*****************************************************************
+         * slide 알림 관련
+         * 함수명	: fnCommOpenSlide
+         * 설명	: slide 표기 위해 childframe 띄우기 ( modal )
+         *****************************************************************/
+        this.fnCommOpenSlide = function()
+        {
+        	if( this._commArrSlide.length == 0 )
+        	{
+        		trace('표기할 슬라이드가 없습니다.');
+        		return;
+        	}
+
+        	var objApp = nexacro.getApplication();
+        	var divId = '__divSlide';
+        	var nLeft = 280;
+        	var nWidth = objApp.MAIN_TOP.form.btnAlarm.getOffsetLeft() - nLeft - 50;
+
+        	if( !Ex.isEmpty(this.components[divId]) )
+        	{
+        		//trace('fnCommOpenSlide >> 이미 열려잇습니다. 잔여 슬라이드 :: ' + this._commArrSlide.length);
+        		this.components[divId].set_width(nWidth);
+        		return;
+        	}
+
+        // 	if( nexacro.getPopupFrames(this.getOwnerFrame())['CF_SLIDE'] ) {
+        // 		trace('fnCommOpenSlide >> 이미 열려잇습니다. 잔여 슬라이드 :: ' + this._commArrSlide.length);
+        // 		return;
+        // 	}
+
+        	var __divSlide = new Div();
+        	__divSlide.init(divId, nLeft, 0, nWidth, 52, null, null);
+        	__divSlide.set_background('transparent');
+        	__divSlide.set_async(false);
+        	__divSlide.set_url('comm::comSlideDiv.xfdl');
+        	this.addChild(divId, __divSlide);
+        	__divSlide.show();
+        	__divSlide.form.fnInitSlide(this);
+
+        // 	var cfSlide = new ChildFrame();
+        // 	var nTop	= 0;
+        // 	var nHeight	= window.innerHeight;
+        // 	cfSlide.init('CF_SLIDE', 0, nTop, window.innerwidth, nHeight, null, null, "comm::comSlidePop.xfdl");
+        // 	cfSlide.set_background('transparent');
+        // 	cfSlide.set_dragmovetype('none');
+        // 	cfSlide.set_showtitlebar(false);
+        // 	cfSlide.set_showtitleicon(false);
+        // 	cfSlide.set_autosize(false);
+        // 	cfSlide.set_resizable(false);
+        // 	cfSlide.set_showstatusbar(false);
+        // 	cfSlide.titlebar.closebutton.set_visible(false);
+        // 	var oArg = {
+        // 		  pScope	: this
+        // 	};
+        // 	cfSlide.showModal(this.getOwnerFrame(), oArg, this, this._commSlidePopupAfter);
+        }
+
+        /*****************************************************************
+         * slide 알림 관련 EVENT 모음
+         *****************************************************************/
+        this._commSlidePopupAfter = function(pID, varValue)
+        {
+        	this.fnCommOpenSlide();
+        }
+        });
+    
+        this.loadIncludeScript(path);
+        
+        obj = null;
+    };
+}
+)();

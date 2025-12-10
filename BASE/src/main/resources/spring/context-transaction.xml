@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	  <property name="dataSource" ref="base"/>
+	</bean>
+
+    <!-- @Transactionl 사용 설정 -->
+    <tx:annotation-driven proxy-target-class="true"/>
+
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" rollback-for="Exception"/>
+			<tx:method name="select*" read-only="true"/>
+<!-- 			<tx:method name="callPr*" rollback-for="Exception"/> -->			
+<!-- 			<tx:method name="insert*" rollback-for="Exception"/> -->
+<!-- 			<tx:method name="update*" rollback-for="Exception"/> -->
+<!-- 			<tx:method name="remove*" rollback-for="Exception"/> -->
+<!-- 			<tx:method name="delete*" rollback-for="Exception"/> -->
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="requiredTransaction" expression="execution(* com.base.*.service.impl.*(..))"/>
+<!-- 	<aop:pointcut id="requiredTransaction" expression="execution(* com.base.**.*Impl.*(..))"/> -->
+<!-- 		<aop:pointcut id="requiredTransaction" expression="execution(* com.base.**.*Service.*(..))"/> -->
+		<aop:advisor advice-ref="transactionAdvice" pointcut-ref="requiredTransaction"/>
+	</aop:config>
+
+<!-- UMPDBD(업무계) START -->
+<!--     <bean id="transactionManager2" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> -->
+<!--       <property name="dataSource" ref="dataSourceUmpdbd"/> -->
+<!--     </bean> -->
+<!-- UMPDBD(업무계) END -->
+</beans>

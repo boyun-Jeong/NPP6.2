@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+-->
+<html lang="ko">
+<style>
+</style>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body style="margin:0; padding:0; width:100%; height:100%">
+    <div id="editor"></div>
+    <input type="hidden" id="editorData"/>
+    <script src="build/ckeditor.js"></script>
+    <script>
+	var backColorStyle = "";
+	var isReplaceing = false;
+    var gEmptyMsg = "내용을 입력하세요.";
+    if(!window.NEXACROHTML) {
+        window.NEXACROHTML = {};
+    }
+
+    window.NEXACROHTML.FireUserNotify = function(userdata)  {
+        if(window.NEXACROWEBBROWSER)    {
+            window.NEXACROWEBBROWSER.on_fire_onusernotify(window.NEXACROWEBBROWSER, userdata);
+        }else   {
+            window.document.title = userdata;
+        }
+    }
+
+    function setNexaContents(str)
+    {
+        window.NEXACROHTML.FireUserNotify(str);
+    }
+    </script>
+    <script>
+        function initEditor(height, backColor)
+        {
+			var cacuH = parseInt(height)-41;
+
+			if(backColor != "")
+			{
+				backColorStyle = " .ck-restricted-editing_mode_standard.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline{ background-color: " + backColor + ";}";
+			}
+
+            ClassicEditor.create( document.querySelector( '#editor' ),
+			{
+				/*
+				table : {
+					tableProperties : {
+						defaultProperties : {
+							alignment : 'left'
+						}
+					}
+				},
+				*/
+				image : {
+					insert : {
+						type : 'inline'
+					},
+					toolbar : ['imageTextAlternative',  '|', 'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight']
+			   },
+				language: "ko",
+				simpleUpload:
+				{
+					uploadUrl: "/FommMultipart/upload/image",
+					withCredentials: true
+				}
+			})
+			.then( editor => {
+				window.editor = editor;
+				
+				editor.editing.view.document.on('focus', () => {
+					//console.log("Editor focusing editor.getData():[" + editor.getData() + "]");
+					if(editor.getData() == "<p>" + gEmptyMsg + "</p>")
+					{
+						editor.setData("");
+					}
+					setNexaContents('setFocus');
+				});
+
+				editor.editing.view.document.on('blur', () => {
+					//console.log("Editor lost focus editor.getData():[" + editor.getData() + "]");
+					if(editor.getData() == "" || editor.getData() == "<p>&nbsp;</p>")
+					{
+						const toolbarElement = editor.ui.view.toolbar.element;
+						if(toolbarElement.style.display != 'none') {
+							editor.setData(gEmptyMsg);
+						}
+					}
+				});
+
+				editor.ui.view.toolbar.element.addEventListener('click', (event) => {
+					var data = editor.getData();
+					//console.log("toolbar에서 클릭 발생");
+					//console.log("data : " + data);
+					//console.log("data.indexOf(gEmptyMsg) : " + data.indexOf(gEmptyMsg));
+					if(data.indexOf(gEmptyMsg) > -1)
+					{
+						setTimeout(() => {
+							var emptyMsg = '<p>' + gEmptyMsg + '</p>';
+							console.log("emptyMsg=>" + emptyMsg);
+							var result = data.replaceAll(emptyMsg, "");
+							//window.editor.setData(result);
+							isReplaceing = true;
+							//console.log("isReplaceing ====> " + isReplaceing);
+							setContent(result);
+						}, 0);
+						setNexaContents('changeData');
+						//data.split("<p>" + gEmptyMsg + "</p>").join("");
+					}
+					setNexaContents('changeData');
+					isReplaceing = false;
+				});
+
+				editor.model.document.on('change:data', () => {
+					if(isReplaceing) return;
+					//console.log("에디터 데이터가 변경되었습니다.");
+					setNexaContents('changeData');
+				});
+				
+				var styleObj = document.querySelector("style");
+				styleObj.innerText = ".ck.ck-editor{ border: 0; } .ck-editor__editable { min-height: " + cacuH + "px;} .ck-editor__editable p {margin-top: 1px; margin-bottom: 1px;} " + backColorStyle;
+				setNexaContents('editor Load');
+			})
+			.catch( err => {
+				console.error( err.stack );
+			});
+        }
+    </script>
+
+    <script language="javascript">
+        async function setFocus()
+        {
+            window.editor.editing.view.focus();
+        };
+
+        async function setContent(value)
+        {
+            window.editor.setData(value);
+            if(window.editor.getData() == "" || window.editor.getData() == "<p>&nbsp;</p>")
+            {
+                const toolbarElement = window.editor.ui.view.toolbar.element;
+                if(toolbarElement.style.display != 'none') {
+                    window.editor.setData(gEmptyMsg);
+                }
+            }
+
+            var anchors = document.querySelectorAll("a");
+            anchors.forEach((item) => {
+                if(window.editor.isReadOnly) {
+                    item.target = "_blank";
+                }else {
+                    item.removeAttribute("target");
+                }
+            });
+            setNexaContents('setContent');
+        };
+
+        async function getContent()
+        {
+            var data = "";
+            
+            if(window.editor.getData() == "<p>&nbsp;</p>" || window.editor.getData() == "<p>" + gEmptyMsg + "</p>") {
+                data = "";
+            }else {
+                data = window.editor.getData();
+            }
+            document.getElementById("editorData").value = data;
+            setNexaContents('getContent');
+        };
+
+        async function setHeight(height)
+        {
+            var nH  = (height-41) + 'px';
+            var styleObj = document.querySelector("style");
+            if(nH > 0) {
+                styleObj.innerText = ".ck.ck-editor{ border: 0; } .ck-editor__editable{ min-height:" + nH + "px;}";
+                styleObj = document.querySelector("style");
+                //console.log("styleObj:\n" + styleObj.innerText);
+            }
+            setNexaContents('setHeight');
+        };
+
+        async function setReadonly(bReadonly, nHeight, emptyMsg, backColor)
+        {
+        	if(backColor != "")
+			{
+				backColorStyle = " .ck-restricted-editing_mode_standard.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline{ background-color: " + backColor + ";}";
+			}
+			
+            var bakEmptyMsg = gEmptyMsg;
+            console.log("bakEmptyMsg:[" + bakEmptyMsg + "]");
+
+            if(bReadonly == null || bReadonly == undefined) bReadonly = false;
+            if(emptyMsg != "" && emptyMsg != null && emptyMsg != undefined) {
+                gEmptyMsg = emptyMsg;
+            }else {
+                gEmptyMsg = "내용을 입력하세요.";
+            }
+
+            window.editor = editor;
+            var styleObj = document.querySelector("style");
+			styleObj.innerText = ".ck.ck-editor{ border: 0; } .ck-editor__editable { min-height:" + (nHeight-2) + "px;} .ck-editor__editable p {margin-top: 1px; margin-bottom: 1px;}" + backColorStyle;
+
+            const toolbarElement = window.editor.ui.view.toolbar.element;
+            var id = 'nexa-web-editor';
+
+            if(bReadonly)
+			{
+                toolbarElement.style.display = 'none';
+                window.editor.enableReadOnlyMode(id);
+
+                if(window.editor.getData() == "<p>" + bakEmptyMsg + "</p>")
+                {
+                    window.editor.setData("");
+                }
+            }
+            else
+			{
+                window.editor.disableReadOnlyMode(id);
+                toolbarElement.style.display = 'flex';
+                
+                if(window.editor.getData() == "" || window.editor.getData() == "<p>&nbsp;</p>" || bakEmptyMsg != gEmptyMsg)
+                {
+                    window.editor.setData(gEmptyMsg);
+                }
+            }
+
+            var anchors = document.querySelectorAll("a");
+            anchors.forEach((item) => {
+                if(bReadonly) {
+                    item.target = "_blank";
+                }else {
+                    item.removeAttribute("target");
+                }
+            });
+            setNexaContents('setReadonly');
+        };
+    </script>
+</body>
+</html>

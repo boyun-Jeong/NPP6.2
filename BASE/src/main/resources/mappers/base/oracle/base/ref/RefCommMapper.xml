@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.ref.dao.RefCommDAO">
+
+	<select id="selectFuncProcList" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              OBJECT_NAME
+			, OBJECT_TYPE
+			, TO_CHAR(CREATED, 'YYYY-MM-DD HH24:MI:SS')         AS CREATED
+			, TO_CHAR(LAST_DDL_TIME, 'YYYY-MM-DD HH24:MI:SS')   AS LAST_DDL_TIME
+			, STATUS
+        FROM USER_OBJECTS
+        WHERE 1 = 1
+        AND OBJECT_TYPE = #{OBJECT_TYPE}
+	</select>
+
+    <select id="selectCurrentFuncProcData" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT TEXT
+        FROM USER_SOURCE
+        WHERE 1 = 1
+        AND NAME = #{OBJECT_NAME}
+    </select>
+    
+
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              OBJECT_NAME   --오브젝트 이름
+            , SEQ   --순번
+            , OBJECT_TYPE   --오브젝트 타입(FUNCTION PROCEDURE)
+            , CONTENT   --본문 내용
+            , FRID  --최초등록자ID
+            , FRDT  --최초등록일시
+            , LMID  --최종수정자ID
+            , LMDT  --최종수정일시
+        FROM SPP_FUNC_PROC_MT
+        WHERE 1 = 1
+        AND OBJECT_TYPE = #{OBJECT_TYPE}
+        AND OBJECT_NAME = #{OBJECT_NAME}
+
+        <if test="OBJECT_TYPE != '' and OBJECT_TYPE != null">
+        AND SEQ = #{SEQ}
+        </if>
+        ORDER BY SEQ
+    </select>
+    
+	<insert id="insert01" parameterType="java.util.Map">
+        <selectKey resultType="string" keyProperty="SEQ" order="BEFORE">
+            SELECT  NVL(MAX(SEQ), 0) + 1
+            FROM SPP_FUNC_PROC_MT
+            WHERE 1 = 1
+            AND OBJECT_NAME = #{OBJECT_NAME}
+            AND OBJECT_TYPE   = #{OBJECT_TYPE}
+        </selectKey>
+
+	   INSERT INTO SPP_FUNC_PROC_MT
+        (
+              OBJECT_NAME   --오브젝트 이름
+            , SEQ                   --순번
+            , OBJECT_TYPE       --오브젝트 타입(FUNCTION PROCEDURE)
+            , CONTENT           --본문 내용
+            , FRID                  --최초등록자ID
+            , FRDT                  --최초등록일시
+            , LMID                  --최종수정자ID
+            , LMDT                  --최종수정일시
+        )
+        VALUES
+        (
+              #{OBJECT_NAME}
+            , #{SEQ}
+            , #{OBJECT_TYPE}
+            , #{CONTENT}
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        )
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	   UPDATE SPP_FUNC_PROC_MT SET
+              CONTENT = #{CONTENT}
+            , LMID          = #{LMID}
+            , LMDT          = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        WHERE 1 = 1
+        AND OBJECT_NAME = #{OBJECT_NAME}
+        AND OBJECT_TYPE   = #{OBJECT_TYPE}
+        AND SEQ                 = #{SEQ}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+        DELETE
+        FROM SPP_FUNC_PROC_MT
+        WHERE 1 = 1
+        AND OBJECT_NAME = #{OBJECT_NAME}
+        AND OBJECT_TYPE   = #{OBJECT_TYPE}
+        AND SEQ                 = #{SEQ}
+	</delete>
+
+</mapper>

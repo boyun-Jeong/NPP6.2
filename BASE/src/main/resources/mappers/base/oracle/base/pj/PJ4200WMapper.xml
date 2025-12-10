@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ4200WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.SCR_ID
+			, A.SCR_NO
+			, A.SCR_NAME
+			, A.SCR_TYPE_CD
+			, A.PJT_ID
+			, A.BIZ_ID
+			, D.BIZ_NAME
+			, A.IMPORTANT_CD
+			, A.DIFFICULT_CD
+			, A.PLAN_SDATE
+			, A.PLAN_EDATE
+			, A.ACTL_SDATE
+			, A.ACTL_EDATE
+			, A.CHG_USER_NM
+			, A.DEV_USER_ID
+			, A.DEV_USER_NM
+			, A.DEV_USER_DEPT
+			, A.PL_USER_ID
+			, A.PL_USER_NM
+			, A.PL_USER_DEPT
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, A.SCR_DESC
+			, A.REMARK
+			, B.PJT_NAME	AS PJT_NAME
+			, C.PJT_ID		AS P_PJT_ID 
+			, C.PJT_NAME	AS P_PJT_NAME
+			, E.FUNC_NO_INFO
+			, E.FUNC_NAME_INFO
+
+		FROM
+			  PJ_SCREEN A   
+			, PJ_PROJECT B   
+			, PJ_PROJECT C
+			, PJ_BIZ D
+			, (
+			  SELECT
+				  EE.PJT_ID
+				, EE.SCR_ID
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.FUNC_NO) ORDER BY FF.FUNC_NO, FF.FUNC_ID).EXTRACT('//text()').GETCLOBVAL(),2)  AS FUNC_NO_INFO
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.FUNC_NAME) ORDER BY FF.FUNC_NO, FF.FUNC_ID).EXTRACT('//text()').GETCLOBVAL(),2)  AS FUNC_NAME_INFO
+			  FROM
+			  	  PJ_SCR_FUNC_MAP EE
+			  	, PJ_FUNCTION FF
+
+			  WHERE 1 = 1
+			  AND EE.FUNC_ID	= FF.FUNC_ID
+              AND EE.PJT_ID		= FF.PJT_ID
+              AND EE.PJT_ID     = #{SUB_PJT_ID}
+
+			  GROUP BY
+			  	  EE.PJT_ID
+				, EE.SCR_ID
+			  ) E
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND B.PARENT_ID = C.PJT_ID
+		AND A.PJT_ID	= D.PJT_ID
+		AND A.BIZ_ID	= D.BIZ_ID
+		AND A.PJT_ID	= E.PJT_ID(+)
+		AND A.SCR_ID	= E.SCR_ID(+)   
+		AND A.PJT_ID	= #{SUB_PJT_ID} 
+
+		<if test="BIZ_ID != '' and BIZ_ID != null">
+		AND A.BIZ_ID	= #{BIZ_ID}
+		</if>
+
+		<if test="SCR_NO != '' and SCR_NO != null">
+		AND UPPER(A.SCR_NO) LIKE '%' || UPPER(#{SCR_NO}) || '%'
+		</if>
+
+		<if test="SCR_NM != '' and SCR_NM != null">
+		AND UPPER(A.SCR_NAME) LIKE '%' || UPPER(#{SCR_NM}) || '%'
+		</if>
+		
+		<if test="SCR_TYPE_CD != '' and SCR_TYPE_CD != null">
+		AND A.SCR_TYPE_CD	= #{SCR_TYPE_CD}
+		</if>
+
+		<if test="CHG_USER_NM != '' and CHG_USER_NM != null">
+		AND UPPER(A.CHG_USER_NM) LIKE '%' || UPPER(#{CHG_USER_NM}) || '%'
+		</if>
+
+		<if test="DEV_USER_NM != '' and DEV_USER_NM != null">
+		AND UPPER(A.DEV_USER_NM) LIKE '%' || UPPER(#{DEV_USER_NM}) || '%'
+		</if>
+
+		<if test="PL_USER_NM != '' and PL_USER_NM != null">
+		AND UPPER(A.PL_USER_NM) LIKE '%' || UPPER(#{PL_USER_NM}) || '%'
+		</if>
+
+		<if test="FUNC_NO != '' and FUNC_NO != null">
+		AND A.SCR_ID IN
+						(
+                        SELECT
+                        	AA.SCR_ID
+                        FROM
+							  PJ_SCR_FUNC_MAP AA
+                        	, PJ_FUNCTION BB
+
+                        WHERE 1 = 1
+                        AND AA.PJT_ID	= BB.PJT_ID
+                        AND AA.FUNC_ID	= BB.FUNC_ID
+                        AND AA.PJT_ID	= #{SUB_PJT_ID}
+                        AND UPPER(BB.FUNC_NO) LIKE '%' || UPPER(#{FUNC_NO}) || '%'
+						)
+		</if>
+    
+		<choose>
+			<when test='"PLAN".equals(DATE_GBN)'>
+				<if test="(SDATE != '' and SDATE != null) or (EDATE != '' and EDATE != null)">
+		AND (
+			 A.PLAN_SDATE BETWEEN #{SDATE} AND #{EDATE} OR
+			 A.PLAN_EDATE BETWEEN #{SDATE} AND #{EDATE}
+			)
+				</if>
+			</when>
+			<when test='"ACTL".equals(DATE_GBN)'>
+				<if test="(SDATE != '' and SDATE != null) or (EDATE != '' and EDATE != null)">
+		AND (
+			 A.ACTL_SDATE BETWEEN #{SDATE} AND #{EDATE} OR
+			 A.ACTL_EDATE BETWEEN #{SDATE} AND #{EDATE}
+			)
+				</if>
+			</when>
+		</choose>
+
+		ORDER BY
+			A.SCR_NO, A.SCR_ID
+	</select>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_RPPR_SCR_MAP
+  		WHERE 1 = 1
+  		AND SCR_ID = #{SCR_ID}
+	</delete>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_STEST_SCR_MAP
+  		WHERE 1 = 1
+  		AND SCR_ID = #{SCR_ID}
+	</delete>
+
+	<delete id="remove03" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_SCR_FUNC_MAP
+  		WHERE 1 = 1
+  		AND SCR_ID = #{SCR_ID}
+	</delete>
+
+	<delete id="remove04" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_SCREEN
+		WHERE 1 = 1
+		AND SCR_ID = #{SCR_ID}
+	</delete>
+
+</mapper>

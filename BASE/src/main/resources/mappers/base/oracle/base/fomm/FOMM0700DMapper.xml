@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0700DDAO">
+
+    <select id="selectMaxScore" parameterType="java.util.Map" resultType="Integer">
+        SELECT NVL(MAX(QUE_VAL), 0) AS MAX_VAL   
+        FROM FOMM_CHKLST_QUE
+        WHERE 1 = 1
+        AND CHKLST_ID   = #{CHKLST_ID}
+        AND USE_YN      = 'Y'
+    </select>
+
+    <select id="select00" parameterType="java.util.Map" resultType="String">
+        SELECT
+            MAX(CHKLST_ID) AS CHKLST_ID
+        FROM
+            FOMM_CHKLST_EXM A
+
+        WHERE 1 = 1
+        AND EXISTS
+                (
+                SELECT 1
+                FROM FOMM_CHKLST_RET B
+                WHERE 1 = 1
+                AND A.CHKLSTEXM_ID  = B.CHKLSTEXM_ID 
+                AND B.KEY_TBL       = #{KEY_TBL}
+                AND B.PK1           = #{PK1}
+                
+                <choose>
+                    <when test="PK2 != '' and PK2 != null">
+                AND B.PK2           = #{PK2}
+                    </when>
+                    <otherwise>
+                AND B.PK2 IS NULL
+                    </otherwise>
+                </choose>
+                  
+                <choose>
+                    <when test="PK3 != '' and PK3 != null">
+                AND B.PK3           = #{PK3}
+                    </when>
+                    <otherwise>
+                AND B.PK3 IS NULL
+                    </otherwise>
+                </choose>
+                )
+    </select>
+
+    <select id="select01" parameterType="java.util.Map" resultType="Integer">
+        SELECT
+           NVL(MAX(CNT), 0)    AS MAX_CNT
+        FROM
+            (
+            SELECT QUE_SEQ, COUNT(*) AS CNT
+            FROM FOMM_CHKLST_EXM
+            WHERE 1 = 1
+            AND CHKLST_ID   = #{CHKLST_ID}
+            AND USE_YN      = 'Y'
+            GROUP BY
+                QUE_SEQ
+            )
+    </select>
+
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              '0' AS CHK
+            , CASE WHEN MAX(C.CHKLSTRET_ID)  IS NULL THEN 'I' END AS ROWFLAG
+            , A.CHKLST_ID
+            , #{KEY_TBL}    AS KEY_TBL
+            , #{PK1}        AS PK1
+            , #{PK2}        AS PK2
+            , #{PK3}        AS PK3
+            , A.QUE_SEQ
+            , A.QUE_TYPE_CD
+            , A.MIN_ANS_CNT       /* 복수선택인 경우만 해당 컬럼 사용 */
+            , A.MAX_ANS_CNT       /* 복수선택인 경우만 해당 컬럼 사용 */
+            , A.IS_NO_INPUT_YN    /* 단일선택, 주관식인 경우만 해당 컬럼 사용 */ 
+            , A.QUE_VAL
+            , REPLACE(A.QUE_NM, <![CDATA['<br>']]>, CHR(13) || CHR(10))   AS QUE_NM
+            ${QUERY_STRING}
+            , MAX(C.CHKLSTRET_ID)   AS CHKLSTRET_ID
+            , MAX(C.RET_STR)  AS RET_STR
+            , MAX(C.RET_SEQ)    AS RET_SEQ
+            , MAX(C.RET_VAL)    AS RET_VAL
+            , MAX(C.CHKLSTEXM_ID) AS CHKLSTEXM_ID
+        
+        FROM
+              FOMM_CHKLST_QUE A
+            , FOMM_CHKLST_EXM B
+            ,
+              (
+              SELECT * 
+              FROM FOMM_CHKLST_RET
+              WHERE 1 = 1
+              AND KEY_TBL   = #{KEY_TBL}
+              AND PK1       = #{PK1}
+              
+              <choose>
+                    <when test="PK2 != '' and PK2 != null">
+              AND PK2       = #{PK2}
+                    </when>
+                    <otherwise>
+              AND PK2 IS NULL
+                    </otherwise>
+              </choose>
+              
+              <choose>
+                    <when test="PK3 != '' and PK3 != null">
+              AND PK3       = #{PK3}
+                    </when>
+                    <otherwise>
+              AND PK3 IS NULL
+                    </otherwise>
+              </choose>
+              ) C            
+        
+        WHERE 1 = 1
+        AND A.CHKLST_ID   = B.CHKLST_ID(+)
+        AND A.QUE_SEQ     = B.QUE_SEQ(+)
+        AND A.USE_YN      = B.USE_YN(+)
+        AND A.CHKLST_ID   = C.CHKLST_ID(+)
+        AND A.QUE_SEQ     = C.QUE_SEQ(+)
+        AND A.USE_YN        = 'Y'
+        AND A.CHKLST_ID     = #{CHKLST_ID}
+
+        GROUP BY
+              A.CHKLST_ID
+            , A.QUE_SEQ
+            , A.QUE_TYPE_CD
+            , A.MIN_ANS_CNT
+            , A.MAX_ANS_CNT
+            , A.IS_NO_INPUT_YN
+            , A.QUE_VAL
+            , A.QUE_NM
+            , A.ORD_NO
+
+        ORDER BY
+              A.ORD_NO
+    </select>
+
+    <select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              CHKLSTEXL_ID
+            , CHKLST_ID
+            , QUE_SEQ
+            , EXM_SEQ
+            , EXL_SEQ_VAL
+            , USE_YN
+            , FRID
+            , FRDT
+            , LMID
+            , LMDT
+            , LMPID 
+        
+        FROM FOMM_CHKLST_EXL
+        WHERE 1 = 1
+        AND CHKLST_ID   = #{CHKLST_ID}
+        
+        ORDER BY
+            QUE_SEQ
+    </select>
+
+    <insert id="insert01" parameterType="java.util.Map">
+        MERGE INTO FOMM_CHKLST_RET M
+        USING DUAL
+        ON (M.CHKLSTRET_ID = #{CHKLSTRET_ID})
+
+        WHEN MATCHED THEN
+            UPDATE SET
+                  KEY_TBL       = #{KEY_TBL}
+                , PK1           = #{PK1}
+                , PK2           = #{PK2}
+                , PK3           = #{PK3}
+                , CHKLSTEXM_ID  = #{CHKLSTEXM_ID}
+                , RET_SEQ       = #{RET_SEQ}
+                , RET_VAL       = #{RET_VAL}
+                , RET_STR       = #{RET_STR}
+                , CHKLST_ID     = #{CHKLST_ID}
+                , QUE_SEQ       = #{QUE_SEQ}
+
+                , LMID          = #{LMID}                               /* 최종수정자 */
+                , LMDT          = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  /* 최종수정일시 */
+                , LMPID         = #{LMPID}                              /* 최종수정화면ID */
+
+        WHEN NOT MATCHED THEN
+            INSERT
+            (
+                CHKLSTRET_ID, KEY_TBL, PK1, PK2, PK3, CHKLSTEXM_ID, RET_SEQ, RET_VAL, RET_STR, CHKLST_ID, QUE_SEQ, FRID, FRDT, LMID, LMDT, LMPID 
+            )
+            VALUES
+            (
+                  (SELECT NVL(MAX(TO_NUMBER(CHKLSTRET_ID)), 0) + 1 FROM FOMM_CHKLST_RET) 
+                , #{KEY_TBL}
+                , #{PK1}
+                , #{PK2}
+                , #{PK3}
+                , #{CHKLSTEXM_ID}
+                , #{RET_SEQ}
+                , #{RET_VAL}
+                , #{RET_STR}
+                
+                , #{CHKLST_ID}
+                , #{QUE_SEQ}
+    
+                , #{LMID}
+                , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                , #{LMID}
+                , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                , #{LMPID}
+            )
+    </insert>
+
+    <update id="replaceTempKeyOne" parameterType="java.util.Map">
+        BEGIN
+
+            UPDATE FOMM_CHKLST_RET SET
+                PK1 = #{REPLACE_KEY}
+            WHERE PK1 = #{TEMP_KEY}
+            ;
+            
+            UPDATE FOMM_CHKLST_RET SET
+                PK2 = #{REPLACE_KEY}
+            WHERE PK2 = #{TEMP_KEY}
+            ;
+            
+            UPDATE FOMM_CHKLST_RET SET
+                PK3 = #{REPLACE_KEY}
+            WHERE PK3 = #{TEMP_KEY}
+            ;
+
+        END
+        ;
+    </update>
+
+    <select id="selectChklstRestSummary" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+            CASE
+                <!-- WHEN COUNT(DISTINCT A.CHKLST_ID || A.QUE_SEQ) > 0 AND COUNT(DISTINCT A.CHKLST_ID || A.QUE_SEQ) = COUNT(B.RET_VAL) -->
+                WHEN COUNT(B.RET_VAL) > 0
+                THEN 'Y'
+                ELSE 'N'
+            END ANSWER_YN,
+            COUNT(DISTINCT A.CHKLST_ID || A.QUE_SEQ)    AS QUE_CNT,
+            COUNT(B.RET_VAL)                            AS RET_CNT,
+            MAX(B.LMDT)                                 AS MAX_LMDT
+            --*
+        FROM
+              
+              FOMM_CHKLST_QUE A
+            , (
+              SELECT
+                A.CHKLST_ID,
+                A.QUE_SEQ,
+                B.RET_VAL,
+                MAX(B.LMDT)   AS LMDT
+
+              FROM
+                  FOMM_CHKLST_EXM A
+                , (
+                  SELECT *
+                  FROM
+                      FOMM_CHKLST_RET
+                  WHERE 1 = 1
+                  AND PK1 = #{PK1}
+                  
+                  <if test="PK2 != '' and PK2 != null">
+                  AND PK2 = #{PK2}
+                  </if>
+
+                  <if test="PK3 != '' and PK3 != null">
+                  AND PK3 = #{PK3}
+                  </if>
+
+                <choose>
+                    <when test="KEY_TBL_ARR != '' and KEY_TBL_ARR != null">
+                  AND KEY_TBL IN
+                        <foreach collection="KEY_TBL_ARR" item="keyTbl" open="(" close=")" separator=",">
+                        #{keyTbl}  /* 'REQ_WF_PROC_1000_01', 'REQ_WF_PROC_1000_02' */
+                        </foreach>
+                    </when>
+                    <otherwise>
+                  AND KEY_TBL = ''
+                    </otherwise>
+                </choose>
+                  ) B
+        
+              WHERE 1 = 1
+              <choose>
+                    <when test="CHKLST_ID_ARR != '' and CHKLST_ID_ARR != null">
+              AND A.CHKLST_ID IN
+                        <foreach collection="CHKLST_ID_ARR" item="CHKLST_ID" open="(" close=")" separator=",">
+                        #{CHKLST_ID}  /* 56, 58 */
+                        </foreach>
+                    </when>
+                    <otherwise>
+              AND A.CHKLST_ID = ''
+                    </otherwise>
+              </choose>
+              AND A.CHKLST_ID = B.CHKLST_ID(+)
+              AND A.QUE_SEQ   = B.QUE_SEQ(+)
+
+              GROUP BY
+                A.CHKLST_ID,
+                A.QUE_SEQ,
+                B.RET_VAL
+              ) B
+
+        WHERE 1 = 1
+        AND A.CHKLST_ID = B.CHKLST_ID
+        AND A.QUE_SEQ   = B.QUE_SEQ
+
+        ORDER BY
+            A.CHKLST_ID,
+            A.QUE_SEQ,
+            A.ORD_NO,
+            B.LMDT DESC
+    </select>
+
+    <select id="selectTotalInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+            TOT_QUE_VAL,
+            (
+            SELECT SUM(RET_VAL)
+            FROM 
+            FOMM_CHKLST_RET
+            WHERE 1 = 1
+            
+            <choose>
+                <when test="KEY_TBL_ARR != '' and KEY_TBL_ARR != null">
+            AND KEY_TBL IN
+                    <foreach collection="KEY_TBL_ARR" item="KEY_TBL" open="(" close=")" separator=",">
+                    #{KEY_TBL}  /* 'REQ_WF_PROC_1000_01', 'REQ_WF_PROC_1000_02' */
+                    </foreach>
+                </when>
+                <otherwise>
+            AND KEY_TBL = ''
+                </otherwise>
+            </choose>
+
+            AND PK1 = #{PK1}
+                  
+            <if test="PK2 != '' and PK2 != null">
+            AND PK2 = #{PK2}
+            </if>
+            
+            <if test="PK3 != '' and PK3 != null">
+            AND PK3 = #{PK3}
+            </if>
+            ) AS TOT_RET_VAL,
+            
+            
+            SELECT SUM(RET_VAL)
+            FROM 
+            FOMM_CHKLST_RET
+            WHERE 1 = 1
+            
+            <choose>
+                <when test="KEY_TBL_ARR != '' and KEY_TBL_ARR != null">
+            AND KEY_TBL IN
+                    <foreach collection="KEY_TBL_ARR" item="KEY_TBL" open="(" close=")" separator=",">
+                    #{KEY_TBL}  /* 'REQ_WF_PROC_1000_01', 'REQ_WF_PROC_1000_02' */
+                    </foreach>
+                </when>
+                <otherwise>
+            AND KEY_TBL = ''
+                </otherwise>
+            </choose>
+
+            AND PK1 = #{PK1}
+                  
+            <if test="PK2 != '' and PK2 != null">
+            AND PK2 = #{PK2}
+            </if>
+            
+            <if test="PK3 != '' and PK3 != null">
+            AND PK3 = #{PK3}
+            </if>
+            ) / TOT_QUE_VAL * 100 AS AVG_RET_VAL
+
+        FROM
+            (
+            SELECT
+                NVL(SUM(A.QUE_VAL), 0) AS TOT_QUE_VAL
+            FROM
+              FOMM_CHKLST_QUE A
+        
+            WHERE 1 = 1
+            <choose>
+                <when test="CHKLST_ID_ARR != '' and CHKLST_ID_ARR != null">
+            AND A.CHKLST_ID IN
+                    <foreach collection="CHKLST_ID_ARR" item="CHKLST_ID" open="(" close=")" separator=",">
+                    #{CHKLST_ID}  /* 56, 58 */
+                    </foreach>
+                </when>
+                <otherwise>
+            AND A.CHKLST_ID = ''
+                </otherwise>
+            </choose>
+            )
+    </select>
+
+    <select id="selectChklstIdList" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+		    A.CHKLST_NM , B.KEY_TBL, B.PK1, B.PK2, B.PK3, B.CHKLST_ID
+		
+		FROM
+		      FOMM_CHKLST A
+		    , (
+		      SELECT
+		        KEY_TBL, PK1, PK2, PK3, CHKLST_ID
+		      FROM
+		        FOMM_CHKLST_RET
+		      WHERE 1 =1
+            <choose>
+                <when test="KEY_TBL_STR != '' and KEY_TBL_STR != null">
+              AND KEY_TBL IN
+                    <foreach collection="KEY_TBL_ARR" item="keyTbl" open="(" close=")" separator=",">
+                    #{keyTbl}
+                    </foreach>
+                </when>
+                <otherwise>
+              AND KEY_TBL = ''
+                </otherwise>
+            </choose>
+
+		      AND PK1     = #{PK1}
+
+            <if test="PK2 != '' and PK2 != null">
+              AND PK2     = #{PK2}
+            </if>
+		
+            <if test="PK3 != '' and PK3 != null">
+              AND PK3     = #{PK3}
+            </if>
+
+              GROUP BY
+                KEY_TBL, PK1, PK2, PK3, CHKLST_ID
+              ) B
+		
+		WHERE 1 = 1
+		AND A.CHKLST_ID = B.CHKLST_ID
+    </select>
+
+    <delete id="removeChklstOther" parameterType="java.util.Map">
+        DELETE
+        FROM FOMM_CHKLST_RET
+        WHERE 1 = 1
+        AND KEY_TBL     = #{KEY_TBL}        
+        AND PK1         = #{PK1}
+
+        <if test="PK2 != '' and PK2 != null">
+          AND PK2     = #{PK2}
+        </if>
+    
+        <if test="PK3 != '' and PK3 != null">
+          AND PK3     = #{PK3}
+        </if>
+
+        AND CHKLST_ID   <![CDATA[<>]]> #{CHKLST_ID}
+    </delete>
+
+</mapper>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0700WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		 SELECT
+		 	'0'	AS CHK,
+		 	''	AS ROWFLAG,
+			A.MILESTONE_ID, 
+			A.PJT_ID, 
+			A.MILESTONE_NAME, 
+			A.MILESTONE_CODE, 
+			A.MILESTONE_SDATE, 
+			A.MILESTONE_EDATE, 
+			A.REG_STIME, 
+			A.REG_USER_ID, 
+			A.REG_USER_NM, 
+			A.REG_USER_DEPT, 
+			A.LMOD_SDATE, 
+			A.LMOD_USER_ID, 
+			A.LMOD_USER_NM, 
+			A.LMOD_USER_DEPT, 
+			A.MILESTONE_DESC
+		FROM
+			PJ_MILESTONE A
+
+		WHERE 1 = 1
+		AND A.PJT_ID		= #{PJT_ID}
+		AND MILESTONE_FLAG	= 'M'
+ 
+ 		ORDER BY
+ 			A.MILESTONE_SDATE DESC
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		INSERT INTO PJ_MILESTONE 
+		(
+			  MILESTONE_ID
+			, PJT_ID
+			, MILESTONE_NAME
+			, MILESTONE_CODE
+			, MILESTONE_SDATE
+			, MILESTONE_EDATE
+			, MILESTONE_DESC
+			, MILESTONE_FLAG
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  (
+			  SELECT
+				'PJMS' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(MILESTONE_ID, -6), 0) )), 0) + 1, 6, 0)
+			  FROM PJ_MILESTONE
+			  WHERE 1 = 1
+			  AND MILESTONE_ID LIKE 'PJMS%'
+			  AND LENGTH(MILESTONE_ID) = 16
+			  ) 
+			, #{PJT_ID}
+			, #{MILESTONE_NAME}
+			, #{MILESTONE_CODE}
+			, #{MILESTONE_SDATE}
+			, #{MILESTONE_EDATE}
+			, #{MILESTONE_DESC}
+			, 'M'
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_MILESTONE SET
+			  PJT_ID			= #{PJT_ID}
+			, MILESTONE_NAME	= #{MILESTONE_NAME}
+			, MILESTONE_CODE	= #{MILESTONE_CODE}
+			, MILESTONE_SDATE	= #{MILESTONE_SDATE}
+			, MILESTONE_EDATE	= #{MILESTONE_EDATE}
+			, MILESTONE_DESC	= #{MILESTONE_DESC}
+			
+			, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+		WHERE 1 = 1
+		AND MILESTONE_ID = #{MILESTONE_ID} 
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_MILESTONE 
+		WHERE 1 = 1
+		AND MILESTONE_ID = #{MILESTONE_ID}
+	</delete>
+
+</mapper>

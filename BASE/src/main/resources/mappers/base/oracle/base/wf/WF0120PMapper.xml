@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.wf.dao.WF0120PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, SCRN_NO    --화면번호
+			, '' AS TEMP_SCRN_NO
+			, SCRN_PATH	--요청서화면경로
+			, SCRN_NM	--요청서화면명칭
+			--, CASE WHEN SCRN_NM IS NOT NULL THEN ' [' || SCRN_NM || ']' END || SCRN_PATH
+			, SCRN_NM || '[' || REPLACE(SUBSTR(SCRN_PATH, INSTR(SCRN_PATH, '::') + 2), '.xfdl', '') || ']' AS SCRN_INFO	
+			, REG_SCRN_YN	--요청서(등록)화면여부
+			, USE_YN	--사용여부
+			, (SELECT COUNT(*) FROM WF_REQ_SCRN_DEF_TBL_DT B WHERE A.SCRN_NO = B.SCRN_NO)	AS TBL_CNT
+			, RMK	--비고
+			, FRID	--최초등록자ID
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자ID
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정 화면ID
+
+		FROM
+			WF_REQ_SCRN_DT A
+
+		WHERE 1 = 1
+
+		<if test="SCRN_PATH != '' and SCRN_PATH != null">
+		AND SCRN_PATH	= #{SCRN_PATH}
+		</if>
+		
+		<if test="USE_YN != '' and USE_YN != null">
+		AND A.USE_YN	= #{USE_YN}
+		</if>
+
+		ORDER BY
+			SCRN_PATH
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+	   <selectKey resultType="string" keyProperty="SCRN_NO" order="BEFORE">
+            SELECT
+                NVL(MAX(SCRN_NO), 0) + 1
+            FROM WF_REQ_SCRN_DT
+        </selectKey>
+
+		INSERT INTO WF_REQ_SCRN_DT
+		(
+		      SCRN_NO     --화면번호
+			, SCRN_PATH	--요청서화면경로
+			, SCRN_NM	--요청서화면명칭
+			, REG_SCRN_YN	--요청서(등록)화면여부
+			, USE_YN	--사용여부
+			, RMK	--비고
+			, FRID	--최초등록자ID
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자ID
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정 화면ID
+		)
+		VALUES
+		(
+              #{SCRN_NO}
+			, #{SCRN_PATH}
+			, #{SCRN_NM}
+			, #{REG_SCRN_YN}
+			, #{USE_YN}
+			, #{RMK}
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최종수정일시
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최종수정일시
+			, #{LMPID}
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE WF_REQ_SCRN_DT SET
+              SCRN_PATH     = #{SCRN_PATH}
+			, SCRN_NM		= #{SCRN_NM}							--요청서화면명칭
+			, REG_SCRN_YN	= #{REG_SCRN_YN}						--요청서(등록)화면여부
+			, USE_YN		= #{USE_YN}								--사용여부
+			, RMK			= #{RMK}								--비고
+
+			, LMID			= #{LMID}								--최종수정자ID
+			, LMDT			= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최종수정일시
+			, LMPID			= #{LMPID}								--최종수정 화면ID
+
+		WHERE 1 = 1
+		AND SCRN_NO   = #{SCRN_NO}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM WF_REQ_SCRN_DT
+		WHERE 1 = 1
+		AND SCRN_NO   = #{SCRN_NO}
+	</delete>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, SCRN_NO    --요청서화면경로
+			, '' AS TEMP_SCRN_NO
+			, SCRN_TBL_NO
+			, TBL_NM	--기본 테이블명
+			, USE_YN	--사용여부
+			
+			,
+			(
+		    SELECT
+		        'SELECT ' || CHR(13)||CHR(10) ||
+                CHR(9) || '  ' || '''' || '0' || ''''	|| CHR(9) || 'AS CHK' || CHR(13)||CHR(10) || 
+                CHR(9) || ', ' || '''' || '''' || CHR(9) || 'AS ROWFLAG' || CHR(13)||CHR(10) || CHR(9) || ', ' || 
+		        LISTAGG('A.' || COLUMN_NAME, CHR(13)||CHR(10) || CHR(9) || ', ') WITHIN GROUP (ORDER BY COLUMN_ID) || CHR(13)||CHR(10) || CHR(13)||CHR(10) ||
+		        'FROM' || CHR(13)||CHR(10) || CHR(9) || TABLE_NAME || ' A ' || CHR(13)||CHR(10) || CHR(13)||CHR(10) ||
+		        'WHERE 1 = 1' || CHR(13)||CHR(10) ||
+		        'AND A.REQ_ID = #' || '{REQ_ID}'
+		    FROM ALL_TAB_COLUMNS
+		    WHERE TABLE_NAME = A.TBL_NM
+		    GROUP BY
+		        TABLE_NAME
+		    )   AS SELECT_QUERY
+		    ,
+		   DBMS_LOB.SUBSTR((
+            SELECT
+                'INSERT INTO ' || TABLE_NAME || CHR(13)||CHR(10) ||
+                '(' || CHR(13)||CHR(10) || CHR(9) || '  ' ||
+                XMLAGG(XMLELEMENT(A, (COLUMN_NAME || CHR(13)||CHR(10) || CHR(9) || ', ')) ORDER BY COLUMN_ID).EXTRACT('//text()').GETCLOBVAL() || CHR(13)||CHR(10) ||
+                ')' || CHR(13)||CHR(10) ||
+                'VALUES' || CHR(13)||CHR(10) || 
+                '(' || CHR(13)||CHR(10) || CHR(9) || '  ' ||
+                XMLAGG(XMLELEMENT(A,
+                    CASE
+                        WHEN COLUMN_NAME IN ('FRID', 'LMID') THEN '#' || '{LMID}'
+                        WHEN COLUMN_NAME IN ('FR_USER_NM', 'LM_USER_NM') THEN '(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #' || '{LMID})'
+                        WHEN COLUMN_NAME IN ('FR_DEPT_CD', 'LM_DEPT_CD') THEN '(SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #' || '{LMID})'
+                        WHEN COLUMN_NAME IN ('FR_DEPT_NM', 'LM_DEPT_NM') THEN '(SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #' || '{LMID})'
+                        WHEN COLUMN_NAME IN ('FRDT', 'LMDT') THEN 'TO_CHAR(SYSDATE, ''YYYYMMDDHH24MISS'')'
+                        ELSE '#' || '{' || COLUMN_NAME || '}'
+                    END
+                    || CHR(13)||CHR(10) || CHR(9) || ', ') ORDER BY COLUMN_ID).EXTRACT('//text()').GETCLOBVAL() || CHR(13)||CHR(10) || ')'
+                
+            FROM ALL_TAB_COLUMNS
+            WHERE TABLE_NAME = A.TBL_NM
+            GROUP BY
+                TABLE_NAME
+            ), 4000, 1 ) AS INSERT_QUERY
+		    ,
+		   DBMS_LOB.SUBSTR( (
+            SELECT
+                'UPDATE ' || TABLE_NAME || ' SET ' || CHR(13)||CHR(10) || CHR(9) || '  ' ||
+                XMLAGG(XMLELEMENT(A,
+                    COLUMN_NAME || ' = ' ||
+                    CASE
+                        WHEN COLUMN_NAME = 'LM_USER_NM' THEN '(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #' || '{LMID})'
+                        WHEN COLUMN_NAME = 'LM_DEPT_CD' THEN '(SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #' || '{LMID})'
+                        WHEN COLUMN_NAME = 'LM_DEPT_NM' THEN '(SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #' || '{LMID})'
+                        WHEN COLUMN_NAME = 'LMDT' THEN 'TO_CHAR(SYSDATE, ''YYYYMMDDHH24MISS'')'
+                        ELSE '#' || '{' || COLUMN_NAME || '}'
+                    END        
+                    || CHR(13)||CHR(10) || CHR(9) || ', ') ORDER BY COLUMN_ID).EXTRACT('//text()').GETCLOBVAL() || ' ' || CHR(13)||CHR(10) || CHR(13)||CHR(10) ||
+                'WHERE 1 = 1' || CHR(13)||CHR(10) ||
+                'AND ' ||
+                (
+                SELECT XMLAGG(XMLELEMENT(A, (E.COLUMN_NAME || ' = ' || '#' || '{' || E.COLUMN_NAME || '}' || CHR(13)||CHR(10) || 'AND ')) ORDER BY E.POSITION).EXTRACT('//text()').GETCLOBVAL() AS PK_COLS
+                FROM    
+                ALL_CONSTRAINTS  D,
+                ALL_CONS_COLUMNS E
+                WHERE 1 = 1
+                AND D.OWNER           = E.OWNER
+                AND D.CONSTRAINT_NAME = E.CONSTRAINT_NAME
+                AND D.TABLE_NAME      = B.TABLE_NAME
+                AND D.CONSTRAINT_TYPE = 'P'
+                ) AS QUERY
+            FROM ALL_TAB_COLUMNS B
+            WHERE 1 = 1
+            AND TABLE_NAME = A.TBL_NM
+            AND COLUMN_NAME NOT IN ('FRID', 'FR_USER_NM', 'FR_DEPT_CD', 'FR_DEPT_NM', 'FRDT')
+            AND NOT EXISTS
+                        (
+                        SELECT 1
+                        FROM    
+                        ALL_CONSTRAINTS  D,
+                        ALL_CONS_COLUMNS E
+                        WHERE 1 = 1
+                        AND D.OWNER             = E.OWNER
+                        AND D.CONSTRAINT_NAME   = E.CONSTRAINT_NAME
+                        AND D.CONSTRAINT_TYPE   = 'P'
+                        AND D.TABLE_NAME        = B.TABLE_NAME
+                        AND E.COLUMN_NAME       = B.COLUMN_NAME
+                        )
+        
+            GROUP BY
+                TABLE_NAME
+            ), 4000, 1 ) AS UPDATE_QUERY
+		    ,
+		    'DELETE' || CHR(13)||CHR(10) ||
+		    'FROM ' || A.TBL_NM || ' ' || CHR(13)||CHR(10) ||
+		    'WHERE 1 = 1' || CHR(13)||CHR(10) ||
+		    'AND ' ||
+		    (
+		    SELECT LISTAGG(E.COLUMN_NAME || ' = ' || '#' || '{' || E.COLUMN_NAME || '}', CHR(13)||CHR(10) || CHR(13) || 'AND ') WITHIN GROUP (ORDER BY E.POSITION) AS PK_COLS
+		        FROM    
+		        ALL_CONSTRAINTS  D,
+		        ALL_CONS_COLUMNS E
+		        WHERE 1 = 1
+		        AND D.OWNER           = E.OWNER
+		        AND D.CONSTRAINT_NAME = E.CONSTRAINT_NAME
+		        AND D.TABLE_NAME      = A.TBL_NM
+		        AND D.CONSTRAINT_TYPE = 'P'
+		     )  AS DELETE_QUERY
+		     
+			, RMK		--비고
+			, FRID		--최초등록자ID
+			, FRDT		--최초등록일시
+			, LMID		--최종수정자ID
+			, LMDT		--최종수정일시
+			, LMPID		--최종수정 화면ID
+
+		FROM
+			WF_REQ_SCRN_DEF_TBL_DT A
+
+		WHERE 1 = 1
+
+		<if test="SCRN_NO != '' and SCRN_NO != null">
+		AND A.SCRN_NO	= #{SCRN_NO}
+		AND A.USE_YN  = 'Y'
+		</if>
+
+		<if test="TBL_NM != '' and TBL_NM != null">
+		AND A.TBL_NM	= #{TBL_NM}
+		AND A.USE_YN  = 'Y'
+		</if>
+
+		<if test="USE_YN != '' and USE_YN != null">
+		AND A.USE_YN	= #{USE_YN}
+		</if>
+
+		ORDER BY
+			A.SCRN_NO, A.SCRN_TBL_NO
+	</select>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		INSERT INTO WF_REQ_SCRN_DEF_TBL_DT
+		(
+              SCRN_NO
+            , SCRN_TBL_NO
+			, TBL_NM	--기본 테이블명
+			, USE_YN	--사용여부
+			, RMK	--비고
+			, FRID	--최초등록자ID
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자ID
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정 화면ID
+		)
+		VALUES
+		(
+              #{SCRN_NO}
+            , (SELECT NVL(MAX(SCRN_TBL_NO), 0) + 1 FROM WF_REQ_SCRN_DEF_TBL_DT WHERE SCRN_NO = #{SCRN_NO})
+			, #{TBL_NM}
+			, #{USE_YN}
+			, #{RMK}
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		)
+	</insert>
+
+	<update id="modify02" parameterType="java.util.Map">
+		UPDATE WF_REQ_SCRN_DEF_TBL_DT SET
+			  TBL_NM	= #{TBL_NM}								--기본 테이블명
+			, USE_YN	= #{USE_YN}								--사용여부
+			, RMK		= #{RMK}								--비고
+
+			, LMID		= #{LMID}								--최종수정자ID
+			, LMDT		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최종수정일시
+			, LMPID		= #{LMPID}								--최종수정 화면ID
+
+		WHERE 1 = 1
+		AND SCRN_NO       = #{SCRN_NO}
+		AND SCRN_TBL_NO   = #{SCRN_TBL_NO}
+	</update>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE
+		FROM WF_REQ_SCRN_DEF_TBL_DT
+		WHERE 1 = 1
+		AND SCRN_NO       = #{SCRN_NO}
+		
+		<if test="SCRN_TBL_NO != '' and SCRN_TBL_NO != null">
+		AND SCRN_TBL_NO   = #{SCRN_TBL_NO}
+		</if>
+	</delete>
+
+	<select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  EXTD_ID,
+			  EXTD_NM
+		FROM
+			FOMM_AUTH_EXTD_MT
+
+		WHERE 1 = 1
+		AND EXTD_GB = '00'	--기준
+		AND USE_YN	= 'Y'
+		
+		ORDER BY
+			EXTD_ID
+	</select>
+	
+	<select id="select04" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              '0'   AS CHK
+            , ''    AS ROWFLAG
+            , SCRN_NO    --요청서화면경로
+            , '' AS TEMP_SCRN_NO
+            , SCRN_TBL_NO
+            , TBL_NM    --기본 테이블명
+            , USE_YN    --사용여부
+            , RMK       --비고
+            , FRID      --최초등록자ID
+            , FRDT      --최초등록일시
+            , LMID      --최종수정자ID
+            , LMDT      --최종수정일시
+            , LMPID     --최종수정 화면ID
+
+        FROM
+            WF_REQ_SCRN_DEF_TBL_DT A
+
+        WHERE 1 = 1
+
+        <if test="USE_YN != '' and USE_YN != null">
+        AND A.USE_YN    = #{USE_YN}
+        </if>
+
+        ORDER BY
+            A.SCRN_NO, A.SCRN_TBL_NO
+    </select>
+
+</mapper>

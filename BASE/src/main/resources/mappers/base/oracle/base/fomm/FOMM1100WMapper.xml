@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM1100WDAO">
+
+	<select id="selectStaffSvcMng" parameterType="java.util.Map" resultType="java.util.Map">
+	    /* FOMM1100WDAO.selectStaffSvcMng */
+	    select '' AS CHK
+	         ,     '' AS ROWFLAG 
+	         ,     SVC_CLSS_CD
+	         ,     BSE_LVL1_CD
+	         ,     BSE_LVL2_CD
+	         ,     STAFF_ID
+	         ,     STAFF_NM
+	         ,     BSE_LVL1_NM
+	         ,     BSE_LVL2_NM
+	         ,     NVL(LVL1_STAFF_YN, 0) AS LVL1_STAFF_YN
+	         ,     NVL(LVL2_STAFF_YN, 0) AS LVL2_STAFF_YN
+	         ,     NVL(LVL3_STAFF_YN, 0) AS LVL3_STAFF_YN
+	         ,     NVL(LVL4_STAFF_YN, 0) AS LVL4_STAFF_YN
+	         ,     NVL(LVL5_STAFF_YN, 0) AS LVL5_STAFF_YN
+	         ,     NVL(LVL6_STAFF_YN, 0) AS LVL6_STAFF_YN
+	         ,     NVL(LVL7_STAFF_YN, 0) AS LVL7_STAFF_YN
+	         ,     NVL(LVL8_STAFF_YN, 0) AS LVL8_STAFF_YN
+	         ,     NVL(LVL9_STAFF_YN, 0) AS LVL9_STAFF_YN
+	         ,     BIGO
+	         ,     REG_USER_ID
+	         ,     REG_USER_NM
+	         ,     REG_STIME
+	         ,     LMOD_USER_ID
+	         ,     LMOD_USER_NM
+	         ,     SYSMODTIME
+	         ,     '' AS CHG_REASON
+	         ,     (SELECT DEPT_NM FROM FOMM_USER_MT UM WHERE UM.USER_ID = STAFF_ID) AS DEPT_NM
+             ,     (SELECT COUNT(*)
+                      FROM SR_CAT_CHG_HIST 
+                     WHERE 1=1 
+                       AND SVC_CLSS_CD = SM.SVC_CLSS_CD
+                       AND BSE_LVL1_CD = SM.BSE_LVL1_CD
+                       AND BSE_LVL2_CD = SM.BSE_LVL2_CD
+                       AND STAFF_ID = SM.STAFF_ID
+                   ) AS HIST_CNT	  
+              ,   (SELECT USE_YN FROM FOMM_USER_MT WHERE USER_ID = STAFF_ID) AS USER_USE_YN   
+               ,   (SELECT TO_CHAR(TO_DATE(RTRM_DT),'YYYY-MM-DD') FROM FOMM_USER_MT WHERE USER_ID = STAFF_ID) AS RTRM_DT                 
+           from WF_SVC_STAFF_MNG SM
+        where 1 = 1       
+         <if test="svcClssCd != '' and svcClssCd != null">
+            AND SVC_CLSS_CD = #{svcClssCd}
+         </if>
+
+         <if test="bseLvl1Nm != '' and bseLvl1Nm != null">
+              AND REPLACE(UPPER(BSE_LVL1_NM),' ','')  LIKE '%'||REPLACE(UPPER(#{bseLvl1Nm}), ' ','')||'%'
+         </if>   
+         
+         <if test="bseLvl2Nm != '' and bseLvl2Nm != null">
+                AND REPLACE(UPPER(BSE_LVL2_NM),' ','')  LIKE '%'||REPLACE(UPPER(#{bseLvl2Nm}), ' ','')||'%'
+         </if>
+         
+         <if test="staffNm != '' and staffNm != null">
+              AND STAFF_NM LIKE '%'||#{staffNm}||'%'
+         </if>
+      
+          <choose>
+                <when test='"".equals(ADMIN_YN) or ADMIN_YN == null or "N".equals(ADMIN_YN)'>
+                <!--
+                       AND STAFF_ID IN (SELECT USER_ID 
+                                                      FROM FOMM_USER_MT
+                                                    WHERE 1=1                                                    
+                                                         AND UPPER(DEPT_NM) LIKE UPPER('%' || #{DEPT_NM} || '%')
+                                                  ) 
+                 -->
+                </when>              
+          </choose>
+     
+     ORDER BY   SVC_CLSS_CD,     BSE_LVL1_CD, BSE_LVL2_CD     
+	</select>
+	
+	<select id="selectSvcType" parameterType="java.util.Map" resultType="java.util.Map">
+	    /* FOMM1100WDAO.selectSvcType */
+       SELECT *
+          FROM (
+                  SELECT
+                      'CAT' FLAG,
+                      SR_CAT_ID,
+                      SR_TYPE,
+                      SR_CAT_NAME,
+                      PT_GETCODENM(SR_TYPE) SR_CAT_TYPE,
+                      AUTH_ID,
+                      USE_YN,
+                      BIGO
+                  FROM SR_CATEGORY_NH
+                  WHERE USE_YN = 'Y'
+                  UNION ALL
+                  SELECT 
+                      'SR' FLAG, 
+                      X.CMM_CD SR_CAT_ID, 
+                      X.UPPER_CODE SR_TYPE, 
+                      X.CODE_NAME SR_CAT_NAME, 
+                      PT_GETCODENM(X.UPPER_CODE ) SR_CAT_TYPE,
+                      '' AUTH_ID, 
+                      X.USE_YN, 
+                      '' BIGO
+                  FROM (
+                  SELECT CD_NO, CMM_CD, CMM_CD_NM CODE_NAME, UP_CMM_CD UPPER_CODE, CODE_DIV AS USE_PART, USE_YN, CMM_CD_DESC, SORT_ORDR AS OUTPRNT_ORD
+                        ,CONNECT_BY_ISLEAF AS ISLEAF, LEVEL AS LVL
+                    FROM FOMM_CMM_CD_MT FCCM 
+                       WHERE 1 = 1
+                       AND   USE_YN = 'Y'
+                      START WITH UP_CMM_CD = 'BIZC0000'
+                  CONNECT BY PRIOR CD_NO = UP_CD_NO
+                             ) X
+                  WHERE  LVL = 2 
+                  )
+                  WHERE 1=1
+                  <if test="srCatNm != '' and srCatNm != null">
+                        AND SR_CAT_NAME LIKE '%'||#{srCatNm}||'%'
+                  </if>  
+    </select>
+    
+    <select id="chkDup" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FOMM1100WDAO.chkDup */
+        select SVC_CLSS_CD
+             ,     BSE_LVL1_CD
+             ,     BSE_LVL2_CD
+             ,     STAFF_ID
+             ,     STAFF_NM
+             ,     BSE_LVL1_NM
+             ,     BSE_LVL2_NM
+             ,     LVL1_STAFF_YN
+             ,     LVL2_STAFF_YN
+             ,     LVL3_STAFF_YN
+             ,     LVL4_STAFF_YN
+             ,     LVL5_STAFF_YN
+             ,     LVL6_STAFF_YN
+             ,     LVL7_STAFF_YN
+             ,     LVL8_STAFF_YN
+             ,     LVL9_STAFF_YN
+             ,     BIGO
+             ,     REG_USER_ID
+             ,     REG_USER_NM
+             ,     REG_STIME
+             ,     LMOD_USER_ID
+             ,     LMOD_USER_NM
+             ,     SYSMODTIME
+             ,     '' AS CHG_REASON
+             ,     (SELECT DEPT_NM FROM FOMM_USER_MT UM WHERE UM.USER_ID = STAFF_ID) AS DEPT_NM
+             ,     (SELECT COUNT(*)
+                      FROM SR_CAT_CHG_HIST 
+                     WHERE 1=1 
+                       AND SVC_CLSS_CD = SM.SVC_CLSS_CD
+                       AND BSE_LVL1_CD = SM.BSE_LVL1_CD
+                       AND BSE_LVL2_CD = SM.BSE_LVL2_CD
+                       AND STAFF_ID = SM.STAFF_ID
+                   ) AS HIST_CNT    
+             ,     (SELECT USE_YN FROM FOMM_USER_MT WHERE USER_ID = STAFF_ID) AS USER_USE_YN      
+           from WF_SVC_STAFF_MNG SM
+        where 1 = 1    
+           AND SVC_CLSS_CD = #{SVC_CLSS_CD}
+           AND BSE_LVL1_CD = #{BSE_LVL1_CD}
+           AND BSE_LVL2_CD = #{BSE_LVL2_CD}
+           AND STAFF_ID = #{STAFF_ID} 
+    </select>
+
+	<insert id="insertStaffMng" parameterType="java.util.Map">
+	 /* FOMM1100WDAO.insertStaffMng */
+	 insert into WF_SVC_STAFF_MNG
+      ( SVC_CLSS_CD,
+        BSE_LVL1_CD,
+        BSE_LVL2_CD,
+        STAFF_ID,
+        STAFF_NM,
+        BSE_LVL1_NM,
+        BSE_LVL2_NM,
+        LVL1_STAFF_YN,
+        LVL2_STAFF_YN,
+        LVL3_STAFF_YN,
+        LVL4_STAFF_YN,
+        LVL5_STAFF_YN,
+        LVL6_STAFF_YN,
+        LVL7_STAFF_YN,
+        LVL8_STAFF_YN,
+        LVL9_STAFF_YN,
+        BIGO,
+        REG_USER_ID,
+        REG_USER_NM,
+        REG_STIME,
+        LMOD_USER_ID,
+        LMOD_USER_NM,
+        SYSMODTIME )
+      values 
+      ( #{SVC_CLSS_CD},
+        #{BSE_LVL1_CD},
+        #{BSE_LVL2_CD},
+        #{STAFF_ID},
+        #{STAFF_NM},
+        #{BSE_LVL1_NM},
+        #{BSE_LVL2_NM},
+        #{LVL1_STAFF_YN},
+        #{LVL2_STAFF_YN},
+        #{LVL3_STAFF_YN},
+        #{LVL4_STAFF_YN},
+        #{LVL5_STAFF_YN},
+        #{LVL6_STAFF_YN},
+        #{LVL7_STAFF_YN},
+        #{LVL8_STAFF_YN},
+        #{LVL9_STAFF_YN},
+        #{BIGO},
+        #{userId},
+        #{userNm},
+        to_char(sysdate, 'yyyyMMddhh24miss'),
+        #{userId},
+        #{userNm},
+        to_char(sysdate, 'yyyyMMddhh24miss') 
+     )
+	</insert>
+
+	<update id="updateStaffMng" parameterType="java.util.Map">
+	 /* FOMM1100WDAO.updateStaffMng */
+	 update WF_SVC_STAFF_MNG set 
+         SVC_CLSS_CD = #{SVC_CLSS_CD},
+         BSE_LVL1_CD = #{BSE_LVL1_CD},
+         BSE_LVL2_CD = #{BSE_LVL2_CD},
+         STAFF_ID = #{STAFF_ID},
+         STAFF_NM = #{STAFF_NM},
+         BSE_LVL1_NM = #{BSE_LVL1_NM},
+         BSE_LVL2_NM = #{BSE_LVL2_NM},
+         LVL1_STAFF_YN = #{LVL1_STAFF_YN},
+         LVL2_STAFF_YN = #{LVL2_STAFF_YN},
+         LVL3_STAFF_YN = #{LVL3_STAFF_YN},
+         LVL4_STAFF_YN = #{LVL4_STAFF_YN},
+         LVL5_STAFF_YN = #{LVL5_STAFF_YN},
+         LVL6_STAFF_YN = #{LVL6_STAFF_YN},
+         LVL7_STAFF_YN = #{LVL7_STAFF_YN},
+         LVL8_STAFF_YN = #{LVL8_STAFF_YN},
+         LVL9_STAFF_YN = #{LVL9_STAFF_YN},
+         BIGO = #{BIGO},
+         LMOD_USER_ID = #{userId},
+         LMOD_USER_NM = #{userNm},
+         SYSMODTIME = to_char(sysdate, 'yyyyMMddhh24miss')
+        where 1 = 1
+        AND SVC_CLSS_CD = #{SVC_CLSS_CD}
+        and BSE_LVL1_CD = #{BSE_LVL1_CD}
+        and BSE_LVL2_CD = #{BSE_LVL2_CD}
+        and STAFF_ID = #{STAFF_ID}
+	</update>
+
+	<delete id="deleteStaffMng" parameterType="java.util.Map">
+	 /* FOMM1100WDAO.deleteStaffMng */
+	 delete from WF_SVC_STAFF_MNG
+     where SVC_CLSS_CD = #{SVC_CLSS_CD}
+        and BSE_LVL1_CD = #{BSE_LVL1_CD}
+        and BSE_LVL2_CD = #{BSE_LVL2_CD}
+        and STAFF_ID = #{STAFF_ID}
+	</delete>
+	
+	<insert id="insertChgHist" parameterType="java.util.Map">
+	  /* FOMM1100WDAO.insertChgHist */
+      INSERT INTO SR_CAT_CHG_HIST
+      (
+         HIST_ID,
+         SVC_CLSS_CD,
+         BSE_LVL1_CD,
+         BSE_LVL2_CD,
+         STAFF_ID,
+         STAFF_NM,
+         BSE_LVL1_NM,
+         BSE_LVL2_NM,
+         LVL1_STAFF_YN,
+         LVL2_STAFF_YN,
+         LVL3_STAFF_YN,
+         LVL4_STAFF_YN,
+         LVL5_STAFF_YN,
+         LVL6_STAFF_YN,
+         LVL7_STAFF_YN,
+         LVL8_STAFF_YN,
+         LVL9_STAFF_YN,
+         CHG_USER_ID,
+         CHG_USER_NM,
+         CRUD_FLAG,
+         PRE_DATA,
+         CUR_DATA,
+         CHG_REASON,
+         CHG_DT
+      ) VALUES (
+         (SELECT NVL(MAX(HIST_ID),0)+1 AS HIST_ID FROM SR_CAT_CHG_HIST),
+         #{SVC_CLSS_CD},
+         #{BSE_LVL1_CD},
+         #{BSE_LVL2_CD},
+         #{STAFF_ID},
+         #{STAFF_NM},
+         #{BSE_LVL1_NM},
+         #{BSE_LVL2_NM},
+         #{LVL1_STAFF_YN},
+         #{LVL2_STAFF_YN},
+         #{LVL3_STAFF_YN},
+         #{LVL4_STAFF_YN},
+         #{LVL5_STAFF_YN},
+         #{LVL6_STAFF_YN},
+         #{LVL7_STAFF_YN},
+         #{LVL8_STAFF_YN},
+         #{LVL9_STAFF_YN},
+         #{userId},
+         #{userNm},
+         #{CRUD_FLAG},
+         #{PRE_DATA},
+         #{CUR_DATA},
+         #{CHG_REASON},
+         to_char(sysdate, 'yyyyMMddhh24miss')
+      )
+	</insert>
+	
+	<select id="selectPreStaffSvcMng" parameterType="java.util.Map" resultType="java.util.Map">
+	  /* FOMM1100WDAO.selectPreStaffSvcMng */
+	   SELECT * 
+	      FROM WF_SVC_STAFF_MNG
+	    WHERE 1=1  
+	         AND SVC_CLSS_CD = #{SVC_CLSS_CD}
+             and BSE_LVL1_CD = #{BSE_LVL1_CD}
+             and BSE_LVL2_CD = #{BSE_LVL2_CD}
+             and STAFF_ID = #{STAFF_ID}
+	</select>
+	
+	<select id="selectChgHist" parameterType="java.util.Map" resultType="java.util.Map">
+      /* FOMM1100WDAO.selectChgHist */
+      WITH BASE AS(   
+       SELECT HIST_ID
+          ,   CRUD_FLAG 
+          ,   CHG_DT 
+          ,   SVC_CLSS_CD
+          ,   BSE_LVL1_CD
+          ,   BSE_LVL2_CD
+          ,   STAFF_ID
+          ,   STAFF_NM
+          ,   BSE_LVL1_NM
+          ,   BSE_LVL2_NM
+          ,   LVL1_STAFF_YN
+          ,   LVL2_STAFF_YN
+          ,   LVL3_STAFF_YN
+          ,   LVL4_STAFF_YN
+          ,   LVL5_STAFF_YN
+          ,   LVL6_STAFF_YN
+          ,   LVL7_STAFF_YN
+          ,   LVL8_STAFF_YN
+          ,   LVL9_STAFF_YN
+          ,   CHG_USER_ID
+          ,   CHG_USER_NM
+          ,   CHG_REASON
+         FROM SR_CAT_CHG_HIST 
+        WHERE 1=1
+             AND SVC_CLSS_CD = #{SVC_CLSS_CD}
+             AND BSE_LVL1_CD = #{BSE_LVL1_CD}
+             AND BSE_LVL2_CD = #{BSE_LVL2_CD}
+             AND STAFF_ID = #{STAFF_ID}
+         UNION ALL
+       SELECT (SELECT NVL(MAX(HIST_ID),0)+1 FROM SR_CAT_CHG_HIST)HIST_ID
+          ,   NULL AS CRUD_FLAG 
+          ,   SYSMODTIME AS CHG_DT 
+          ,   SVC_CLSS_CD
+          ,   BSE_LVL1_CD
+          ,   BSE_LVL2_CD
+          ,   STAFF_ID
+          ,   STAFF_NM
+          ,   BSE_LVL1_NM
+          ,   BSE_LVL2_NM
+          ,   LVL1_STAFF_YN
+          ,   LVL2_STAFF_YN
+          ,   LVL3_STAFF_YN
+          ,   LVL4_STAFF_YN
+          ,   LVL5_STAFF_YN
+          ,   LVL6_STAFF_YN
+          ,   LVL7_STAFF_YN
+          ,   LVL8_STAFF_YN
+          ,   LVL9_STAFF_YN
+          ,   LMOD_USER_ID AS CHG_USER_ID
+          ,   LMOD_USER_NM AS CHG_USER_NM
+          ,   NULL AS CHG_REASON
+         FROM WF_SVC_STAFF_MNG 
+        WHERE 1=1
+             AND SVC_CLSS_CD = #{SVC_CLSS_CD}
+             AND BSE_LVL1_CD = #{BSE_LVL1_CD}
+             AND BSE_LVL2_CD = #{BSE_LVL2_CD}
+             AND STAFF_ID = #{STAFF_ID}
+      ), TV_HIST AS(
+      SELECT DENSE_RANK() OVER(ORDER BY HIST_ID) AS HIST_SEQ 
+         ,   HIST_ID
+         ,   CRUD_FLAG 
+         ,   CHG_DT 
+         ,   SVC_CLSS_CD
+         ,   BSE_LVL1_CD
+         ,   BSE_LVL2_CD
+         ,   STAFF_ID
+         ,   STAFF_NM
+         ,   BSE_LVL1_NM
+         ,   BSE_LVL2_NM
+         ,   LVL1_STAFF_YN
+         ,   LVL2_STAFF_YN
+         ,   LVL3_STAFF_YN
+         ,   LVL4_STAFF_YN
+         ,   LVL5_STAFF_YN
+         ,   LVL6_STAFF_YN
+         ,   LVL7_STAFF_YN
+         ,   LVL8_STAFF_YN
+         ,   LVL9_STAFF_YN
+         ,   CHG_USER_ID
+         ,   CHG_USER_NM
+         ,   CHG_REASON
+        FROM BASE
+      ) , TV_DATA AS(
+      SELECT  HIST_SEQ
+           ,  LVL1  
+           || CASE WHEN LVL1 IS NOT NULL AND LVL2 IS NOT NULL THEN ' / ' || LVL2 ELSE LVL2 END
+           || CASE WHEN (LVL1 IS NOT NULL OR LVL2 IS NOT NULL) AND LVL3 IS NOT NULL THEN ' / ' || LVL3 ELSE LVL3 END
+           || CASE WHEN (LVL1 IS NOT NULL OR LVL2 IS NOT NULL OR LVL3 IS NOT NULL) AND LVL4 IS NOT NULL THEN ' / ' || LVL4 ELSE LVL4 END
+           || CASE WHEN (LVL1 IS NOT NULL OR LVL2 IS NOT NULL OR LVL3 IS NOT NULL OR LVL4 IS NOT NULL) AND LVL5 IS NOT NULL THEN ' / ' || LVL5 ELSE LVL5 END
+           || CASE WHEN (LVL1 IS NOT NULL OR LVL2 IS NOT NULL OR LVL3 IS NOT NULL OR LVL4 IS NOT NULL OR LVL5 IS NOT NULL) AND LVL6 IS NOT NULL THEN ' / ' || LVL6 ELSE LVL6 END
+           || CASE WHEN (LVL1 IS NOT NULL OR LVL2 IS NOT NULL OR LVL3 IS NOT NULL OR LVL4 IS NOT NULL OR LVL5 IS NOT NULL OR LVL6 IS NOT NULL) AND LVL7 IS NOT NULL THEN ' / ' || LVL7 ELSE LVL7 END AS DATA
+       FROM (
+           SELECT DECODE(LVL1_STAFF_YN,'1','담당자') AS LVL1
+              ,   DECODE(LVL2_STAFF_YN,'1','현장관리인') AS LVL2
+              ,   DECODE(LVL3_STAFF_YN,'1','QA') AS LVL3
+              ,   DECODE(LVL4_STAFF_YN,'1','PL') AS LVL4
+              ,   DECODE(LVL5_STAFF_YN,'1','팀장') AS LVL5
+              ,   DECODE(LVL6_STAFF_YN,'1','부장') AS LVL6
+              ,   DECODE(LVL7_STAFF_YN,'1','기타') AS LVL7
+              ,   HIST_SEQ
+             FROM TV_HIST
+            WHERE 1=1
+            )
+      )
+      SELECT TH.HIST_SEQ
+          ,  TH.HIST_ID
+          ,  TH.CHG_DT 
+          ,  TH.CHG_USER_ID 
+          ,  TH.CHG_USER_NM 
+          ,  CRUD_FLAG
+          ,  DECODE(CRUD_FLAG,'C','등록','D','삭제','U','변경') AS CRUD_FLAG_NM
+          ,  (SELECT DATA FROM TV_DATA WHERE HIST_SEQ = TH.HIST_SEQ) AS PRE_DATA
+          ,  (SELECT DATA FROM TV_DATA WHERE HIST_SEQ = TH.HIST_SEQ+1) AS POST_DATA
+          ,  TH.CHG_REASON
+        FROM TV_HIST TH  
+      WHERE CRUD_FLAG IS NOT NULL
+       ORDER BY TH.HIST_SEQ
+    </select>
+    
+    <select id="selectExlStaffSvcMng" parameterType="java.util.Map" resultType="java.util.LinkedHashMap">
+     /* FOMM1100WDAO.selectExlStaffSvcMng */
+     SELECT '' AS CHK
+              ,   '' AS ROWFLAG
+              ,   NULL AS SVC_CLSS_CD
+              ,   NULL AS BSE_LVL1_CD
+              ,   NULL AS BSE_LVL2_CD
+              ,   NULL AS STAFF_ID
+              ,   NULL AS STAFF_NM
+              ,   NULL AS BSE_LVL1_NM
+              ,   NULL AS BSE_LVL2_NM              
+              ,   NULL AS LVL1_STAFF_YN
+              ,   NULL AS LVL2_STAFF_YN
+              ,   NULL AS LVL3_STAFF_YN
+              ,   NULL AS LVL4_STAFF_YN
+              ,   NULL AS LVL5_STAFF_YN
+              ,   NULL AS LVL6_STAFF_YN
+              ,   NULL AS LVL7_STAFF_YN
+        FROM DUAL
+      WHERE 1=0
+    </select>
+    
+    <delete id="deleteStaffMngAll" parameterType="java.util.Map">
+     /* FOMM1100WDAO.deleteStaffMngAll */
+     delete from WF_SVC_STAFF_MNG   
+    </delete>
+    
+
+</mapper>

@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0500WDAO">
+
+    <select id="selectWorkflowList" parameterType="java.util.Map" resultType="java.util.Map">
+        WITH PROC AS
+		(
+		    SELECT
+		        1 AS GUBUN, X.REQ_TMPLAT_ID, X.REQ_TMPLAT_VER, X.MAP_PROC_CD, A.SEQ, 0 AS APPR_LVL_SEQ, A.MAP_WF_PROC_CD, A.WF_PROC_CD, REPLACE(A.WF_PROC_NM, '\n', ' ') AS WF_PROC_NM
+		    FROM
+		        WF_REQ_TMPLAT_HT X,
+		        WF_REQ_TMPLAT_PROC_HT A
+		    WHERE X.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+		    AND X.REQ_TMPLAT_VER   = A.REQ_TMPLAT_VER
+		    AND X.CUR_VER_YN        = 'Y'
+		    UNION ALL
+		    SELECT
+		        2 AS GUBUN, X.REQ_TMPLAT_ID, X.REQ_TMPLAT_VER, X.MAP_PROC_CD, A.SEQ, B.APPR_LVL_SEQ, B.MAP_WF_PROC_CD, B.WF_PROC_CD, REPLACE(A.WF_PROC_NM, '\n', ' ') || '(' || REPLACE(B.APPR_NM, '\n', ' ') || ')' AS WF_PROC_NM
+		    FROM
+		        WF_REQ_TMPLAT_HT X,
+		        WF_REQ_TMPLAT_PROC_HT A,
+		        WF_REQ_APPV_HT B        
+		    WHERE 1 = 1
+		    AND X.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+		    AND X.REQ_TMPLAT_VER   = A.REQ_TMPLAT_VER
+		    AND X.CUR_VER_YN        = 'Y'
+		    AND A.REQ_TMPLAT_ID   = B.REQ_TMPLAT_ID
+		    AND A.REQ_TMPLAT_VER   = B.REQ_TMPLAT_VER
+		    AND A.WF_PROC_CD        = B.WF_PROC_CD  
+		)
+		SELECT
+		              A.SVC_CD
+		            , A.SVC_DTL_CD             
+		            , A.REQ_TMPLAT_ID
+		            , A.REQ_TMPLAT_NM || '[' || A.REQ_TMPLAT_ID || ']' || CASE WHEN A.USE_YN = 'N' THEN ' [미사용]' END AS REQ_TMPLAT_NM
+		            , A.MAP_PROC_CD
+		            , A.USE_YN
+		            , (SELECT DEL_YN FROM WF_REQ_TMPLAT_MT WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID) AS DEL_YN
+		            , CASE
+		                WHEN
+		                      /* 워크플로우 상세 내역 중 FOMM_NOTI_MNG_MT에 등록되지 않는 내역이 존재하는 경우 */
+		                      (
+		                      SELECT COUNT(*)
+		                      FROM PROC X
+		                      WHERE 1 = 1
+		                      AND X.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+		                      AND NOT EXISTS
+		                                    (
+		                                    SELECT 1
+		                                    FROM FOMM_NOTI_MNG_MT Y
+		                                    WHERE 1 = 1
+		                                    AND Y.REQ_TMPLAT_ID         = X.REQ_TMPLAT_ID
+		                                    AND Y.SEQ                   = X.SEQ
+		                                    AND Y.WF_PROC_CD            = X.WF_PROC_CD
+		                                    AND NVL(Y.APPR_LVL_SEQ, 0)  = X.APPR_LVL_SEQ
+		                                    )
+		                      ) > 0 OR
+		                      /* 워크플로우 상세 내역에 존재하지 않는 내역이 FOMM_NOTI_MNG_MT에 존재하는 경우 */
+		                      (
+		                      SELECT COUNT(*)
+		                      FROM FOMM_NOTI_MNG_MT X
+		                      WHERE 1 = 1
+		                      AND X.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID
+		                      AND NOT EXISTS
+		                                    (
+		                                    SELECT 1
+		                                    FROM PROC Y
+		                                    WHERE 1 = 1
+		                                    AND Y.REQ_TMPLAT_ID     = X.REQ_TMPLAT_ID
+		                                    AND Y.SEQ               = X.SEQ
+		                                    AND Y.WF_PROC_CD        = X.WF_PROC_CD
+		                                    AND Y.APPR_LVL_SEQ      = NVL(X.APPR_LVL_SEQ, 0)
+		                                    )
+		                      ) > 0
+		                THEN 'Y'
+		                ELSE 'N'
+		              END   AS ERROR_YN
+		        FROM WF_REQ_TMPLAT_HT A
+		        WHERE 1 = 1
+		        AND A.CUR_VER_YN    = 'Y'
+		        AND (SELECT DEL_YN FROM WF_REQ_TMPLAT_MT WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID) = 'N'
+		
+		        ORDER BY
+		            REQ_TMPLAT_NM
+    </select>
+
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+        WITH PROC AS
+		(
+		    SELECT
+		      1 AS GUBUN, X.REQ_TMPLAT_ID, X.REQ_TMPLAT_VER, X.REQ_TMPLAT_NM, X.SVC_CD, X.SVC_DTL_CD, X.MAP_PROC_CD, A.SEQ, 0 AS APPR_LVL_SEQ, A.MAP_WF_PROC_CD, A.WF_PROC_CD, REPLACE(A.WF_PROC_NM, '\n', ' ') AS WF_PROC_NM
+		    FROM
+		        WF_REQ_TMPLAT_HT X,
+		        WF_REQ_TMPLAT_PROC_HT A
+		    WHERE X.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+		    AND X.REQ_TMPLAT_VER   = A.REQ_TMPLAT_VER
+		    AND X.CUR_VER_YN        = 'Y'
+		    UNION ALL
+		    SELECT
+		        2 AS GUBUN, X.REQ_TMPLAT_ID, X.REQ_TMPLAT_VER, X.REQ_TMPLAT_NM, X.SVC_CD, X.SVC_DTL_CD, X.MAP_PROC_CD, A.SEQ, B.APPR_LVL_SEQ, B.MAP_WF_PROC_CD, B.WF_PROC_CD, REPLACE(B.APPR_NM, '\n', ' ') AS WF_PROC_NM
+		    FROM
+		        WF_REQ_TMPLAT_HT X,
+		        WF_REQ_TMPLAT_PROC_HT A,
+		        WF_REQ_APPV_HT B        
+		    WHERE 1 = 1
+		    AND X.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+		    AND X.REQ_TMPLAT_VER   = A.REQ_TMPLAT_VER
+		    AND X.CUR_VER_YN        = 'Y'
+		    AND A.REQ_TMPLAT_ID   = B.REQ_TMPLAT_ID
+		    AND A.REQ_TMPLAT_VER   = B.REQ_TMPLAT_VER
+		    AND A.WF_PROC_CD        = B.WF_PROC_CD  
+		)
+		SELECT *
+		FROM
+		    (
+		    SELECT
+                '' AS CHK,
+		        '' AS ROWFLAG,
+		        A.MNG_NO,
+		        A.REQ_TMPLAT_ID,
+		        A.MAP_PROC_CD,
+		        A.MAP_WF_PROC_CD,
+		        A.SEQ,
+		        A.WF_PROC_CD,
+		        A.WF_PROC_NM,
+		        NVL(A.APPR_LVL_SEQ, 0) AS APPR_LVL_SEQ,
+		        A.NOTI_MSG,
+		        A.NOTI_DESC,
+		        A.SEND_SMS_YN,
+		        A.SEND_TALK_YN,
+		        A.SEND_MEMO_YN,
+		        CASE
+		            WHEN
+		                (
+		                SELECT COUNT(*)
+		                FROM PROC B
+		                WHERE 1= 1
+		                AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+		                AND B.WF_PROC_CD      = A.WF_PROC_CD
+		                AND B.SEQ             = A.SEQ
+		                AND B.APPR_LVL_SEQ =  NVL(A.APPR_LVL_SEQ, 0)
+		                ) > 0
+		            THEN 'Y'
+		            ELSE 'N'
+		        END AS USE_YN,
+		        CASE
+		            WHEN
+		                (
+		                SELECT COUNT(*)
+		                FROM PROC B
+		                WHERE 1 = 1
+		                AND B.REQ_TMPLAT_ID   = A.REQ_TMPLAT_ID
+                        AND B.WF_PROC_CD      = A.WF_PROC_CD
+                        AND B.SEQ                    = A.SEQ
+                        AND B.APPR_LVL_SEQ = NVL(A.APPR_LVL_SEQ, 0)
+		                ) = 0
+		            THEN 'Y'
+		            ELSE 'N'
+		        END AS DEL_POSS_YN
+		    FROM FOMM_NOTI_MNG_MT A
+		    WHERE 1 = 1
+		    AND A.REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+		    
+		    UNION ALL
+		    
+		    SELECT
+                '' AS CHK,
+		        'I' AS ROWFLAG,
+		        NULL  AS MNG_NO,
+		        A.REQ_TMPLAT_ID,
+		        A.MAP_PROC_CD,
+		        A.MAP_WF_PROC_CD,
+		        A.SEQ,
+		        A.WF_PROC_CD,		        
+		        A.WF_PROC_NM,
+		        A.APPR_LVL_SEQ,
+		        NULL    AS NOTI_MSG,
+		        NULL    AS NOTI_DESC,
+		        'N'     AS SEND_SMS_YN,
+		        'N'     AS SEND_TALK_YN,
+		        'N'     AS SEND_MEMO_YN,
+		        'N'     AS USE_YN,
+		        'N'     AS DEL_POSS_YN
+
+		    FROM PROC A
+		    WHERE 1 = 1
+		    AND A.REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+		    AND NOT EXISTS
+		                (
+		                SELECT 1
+		                FROM FOMM_NOTI_MNG_MT B
+		                WHERE 1 = 1
+		                AND A.REQ_TMPLAT_ID         = B.REQ_TMPLAT_ID
+		                AND A.WF_PROC_CD            = B.WF_PROC_CD
+		                AND A.APPR_LVL_SEQ          = NVL(B.APPR_LVL_SEQ, 0)
+		                )
+		    )
+		ORDER BY SEQ, APPR_LVL_SEQ
+        
+	</select>
+
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              SEQ
+            , GUBUN
+            , WF_PROC_CD
+            , WF_PROC_NM
+            , MAP_WF_PROC_CD
+            , APPR_LVL_SEQ            
+        FROM
+			    (
+			    SELECT
+                      A.SEQ
+                    , '단계'  AS GUBUN
+			        , A.WF_PROC_CD
+			        , REPLACE(A.WF_PROC_NM, '\n', ' ')   AS WF_PROC_NM
+			        , A.MAP_WF_PROC_CD
+			        , 0   AS APPR_LVL_SEQ
+			    FROM WF_REQ_TMPLAT_PROC_HT A
+			    WHERE 1 = 1
+			    AND (A.REQ_TMPLAT_ID, A.REQ_TMPLAT_VER) IN (SELECT REQ_TMPLAT_ID, REQ_TMPLAT_VER FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = #{REQ_TMPLAT_ID} AND CUR_VER_YN = 'Y')
+			    
+			    UNION ALL
+			    
+			    SELECT
+			          B.SEQ
+			        , '결재'   AS GUBUN
+			        , A.WF_PROC_CD
+			        , REPLACE(B.WF_PROC_NM, '\n', ' ') || '(' || REPLACE(A.APPR_NM, '\n', ' ') || ')'    AS WF_PROC_NM
+			        , A.MAP_WF_PROC_CD
+			        , A.APPR_LVL_SEQ
+			    FROM
+			        WF_REQ_APPV_HT A,
+			        WF_REQ_TMPLAT_PROC_HT B
+			
+			    WHERE 1 = 1
+			    AND A.REQ_TMPLAT_ID = B.REQ_TMPLAT_ID
+			    AND A.REQ_TMPLAT_VER = B.REQ_TMPLAT_VER
+			    AND A.WF_PROC_CD    = B.WF_PROC_CD
+			    AND (A.REQ_TMPLAT_ID, A.REQ_TMPLAT_VER) IN (SELECT REQ_TMPLAT_ID, REQ_TMPLAT_VER FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = #{REQ_TMPLAT_ID} AND CUR_VER_YN = 'Y')
+			    )
+			ORDER BY SEQ, APPR_LVL_SEQ
+    </select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+	   /* FOMM0500WMapper >> insert01 */
+	   MERGE
+        INTO    FOMM_NOTI_MNG_MT A
+        USING   DUAL
+        ON (
+                 A.REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+         AND A.MAP_PROC_CD = #{MAP_PROC_CD}
+         AND A.MAP_WF_PROC_CD = #{MAP_WF_PROC_CD}
+         AND A.WF_PROC_CD = #{WF_PROC_CD}
+         <choose>
+            <when test="APPR_LVL_SEQ != '' and APPR_LVL_SEQ != null">
+         AND A.APPR_LVL_SEQ = #{APPR_LVL_SEQ}
+            </when>
+            <otherwise>
+        AND A.APPR_LVL_SEQ IS NULL
+            </otherwise>
+         </choose>
+         )
+
+        WHEN MATCHED THEN
+            UPDATE SET
+                  SEQ                   = #{SEQ}
+                , WF_PROC_NM    = #{WF_PROC_NM}
+                , NOTI_MSG  = #{NOTI_MSG}
+                , NOTI_DESC  = #{NOTI_DESC}
+                , SEND_SMS_YN   = NVL(DECODE(#{SEND_SMS_YN}, '1', 'Y', '0', 'N', #{SEND_SMS_YN}), 'N')
+                , SEND_TALK_YN   = NVL(DECODE(#{SEND_TALK_YN}, '1', 'Y', '0', 'N', #{SEND_TALK_YN}), 'N')
+                , SEND_MEMO_YN   = NVL(DECODE(#{SEND_MEMO_YN}, '1', 'Y', '0', 'N', #{SEND_MEMO_YN}), 'N')
+                , LMID   = #{LMID}
+                , LMDT  = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  --최종수정일시                 
+                , LMPID = #{LMPID}
+            
+        WHEN NOT MATCHED THEN
+            INSERT
+            (
+                  MNG_NO
+                , REQ_TMPLAT_ID
+                , MAP_PROC_CD
+                , SEQ
+                , MAP_WF_PROC_CD
+                , WF_PROC_CD
+                , WF_PROC_NM
+                , APPR_LVL_SEQ
+                , NOTI_MSG --통보 메시지
+	            , NOTI_DESC --설명
+	            , SEND_SMS_YN   --문자설정여부
+	            , SEND_TALK_YN  --헤아림톡여부
+	            , SEND_MEMO_YN  --쪽지여부
+	            , FRID
+	            , FRDT
+	            , LMID
+	            , LMDT
+	            ,  LMPID
+            )
+            VALUES
+            (
+                  (SELECT NVL(MAX(MNG_NO), 0) + 1 FROM FOMM_NOTI_MNG_MT) 
+                , #{REQ_TMPLAT_ID}
+                , #{MAP_PROC_CD}
+                , #{SEQ}
+                , #{MAP_WF_PROC_CD}
+                , #{WF_PROC_CD}
+                , REPLACE(#{WF_PROC_NM}, '\n', ' ')
+                , #{APPR_LVL_SEQ}
+                , #{NOTI_MSG}
+                , #{NOTI_DESC}
+                , NVL(DECODE(#{SEND_SMS_YN}, '1', 'Y', '0', 'N', #{SEND_SMS_YN}), 'N')
+                , NVL(DECODE(#{SEND_TALK_YN}, '1', 'Y', '0', 'N', #{SEND_TALK_YN}), 'N')
+                , NVL(DECODE(#{SEND_MEMO_YN}, '1', 'Y', '0', 'N', #{SEND_MEMO_YN}), 'N')
+                , #{LMID}
+                , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                , #{LMID}
+                , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                , #{LMPID}
+            )
+	</insert>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM
+		FOMM_NOTI_MNG_MT
+		WHERE 1 = 1
+        AND MNG_NO  = #{MNG_NO}
+	</delete>
+
+    <select id="selectFommNotiMngMt" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              REQ_TMPLAT_ID
+			, SEQ
+			, WF_PROC_CD
+			, WF_PROC_NM
+			, APPR_LVL_SEQ
+			
+			, MAP_PROC_CD
+			, MAP_WF_PROC_CD
+
+			, NOTI_MSG
+			, NOTI_DESC
+			, SEND_SMS_YN
+			, SEND_TALK_YN
+			, SEND_MEMO_YN
+
+        FROM
+            FOMM_NOTI_MNG_MT A
+
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID       = #{REQ_TMPLAT_ID}
+        AND WF_PROC_CD          = #{WF_PROC_CD}
+
+        <choose>
+            <when test="APPR_LVL_SEQ != '' and APPR_LVL_SEQ != null">
+        AND APPR_LVL_SEQ    = #{APPR_LVL_SEQ}
+            </when>
+            <otherwise>
+        AND NVL(APPR_LVL_SEQ, 0) = 0
+            </otherwise>
+        </choose>
+    </select>
+
+</mapper>

@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ2400WDAO">
+
+	<sql id="selectPjYyyyMmList">
+		SELECT
+			  #{USER_ID}	AS USER_ID
+			, X.PJT_ID		AS PJT_ID
+			, TO_CHAR(ADD_MONTHS(TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH'), LEVEL-1 ), 'YYYYMM') AS PJT_MONTH
+			, TO_CHAR(ADD_MONTHS(TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH'), LEVEL-1 ), 'YYYY-MM') AS PJT_FMONTH
+     		, 'PJT_MONTH_' || LPAD(TO_CHAR(LEVEL), 3, '0') AS COL_ID
+		FROM (SELECT * FROM PJ_PROJECT WHERE PJT_ID = #{PJT_ID}) X
+		CONNECT BY LEVEL <![CDATA[<=]]> MONTHS_BETWEEN(TRUNC(TO_DATE(PJT_ETIME,'YYYYMMDD'),'MONTH'), TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH')) + 1
+		ORDER BY LEVEL
+	</sql>
+
+	<sql id="insertPjUserMmHist">
+		INSERT INTO PJ_USER_MM_HIST
+		(
+			  USER_ID
+			, PJT_ID
+			, YYYYMM
+			, HIST_DTIME
+			, SEQ
+			, PLAN_MM
+			, ACT_MM
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_STIME
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, SYSMODTIME
+		)
+		SELECT
+			  USER_ID
+			, PJT_ID
+			, YYYYMM
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{SEQ}
+			, PLAN_MM
+			, ACT_MM
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_STIME
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, SYSMODTIME
+		FROM
+			PJ_USER_MM
+
+		WHERE 1 = 1
+		AND PJT_ID	= #{PJT_ID}
+		AND USER_ID	= #{USER_ID} 
+	</sql>
+
+	<sql id="mergeInsertPjUserMmByPjt">
+		MERGE INTO PJ_USER_MM A USING
+		(
+			<include refid="com.base.pj.dao.PJ2400WDAO.selectPjYyyyMmList"/>
+		) X
+		ON
+		(
+			1 = 1 AND 
+			A.USER_ID	= #{USER_ID} AND
+			A.PJT_ID	= #{PJT_ID} AND
+			A.YYYYMM	= X.PJT_MONTH 
+		)
+		
+		WHEN NOT MATCHED THEN
+			INSERT 
+			(
+				  USER_ID
+				, PJT_ID
+				, YYYYMM
+				, PLAN_MM
+				, ACT_MM
+				
+				, REG_USER_ID
+				, REG_USER_NM
+				, REG_STIME
+				
+				, LMOD_USER_ID
+				, LMOD_USER_NM
+				, SYSMODTIME
+			)
+			VALUES
+			(
+				  X.USER_ID
+		        , X.PJT_ID
+		        , X.PJT_MONTH
+		        , 0
+		        , 0
+				
+				, #{LMID}
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				
+				, #{LMID}
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			)
+	</sql>
+
+	<sql id="deletePjUser">
+		DELETE FROM PJ_USER
+		WHERE 1 = 1
+		AND PJT_ID	= #{PJT_ID}
+		AND USER_ID	= #{USER_ID}
+	</sql>
+
+	<sql id="deletePjUserMm">
+		DELETE FROM PJ_USER_MM
+		WHERE 1 = 1
+		AND PJT_ID	= #{PJT_ID}
+		AND USER_ID	= #{USER_ID}
+	</sql>
+
+	<sql id="deletePjUserMmByPjt">
+		DELETE FROM PJ_USER_MM A
+		WHERE 1 = 1
+		AND PJT_ID  = #{PJT_ID}
+		AND USER_ID = #{USER_ID}
+		AND NOT EXISTS
+					(
+					SELECT 1
+					FROM
+					    (
+					    SELECT
+					        TO_CHAR(ADD_MONTHS(TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH'), LEVEL-1 ), 'YYYYMM') AS PJT_MONTH
+					    FROM (SELECT * FROM PJ_PROJECT WHERE PJT_ID = #{PJT_ID})
+					    CONNECT BY LEVEL <![CDATA[<=]]> MONTHS_BETWEEN(TRUNC(TO_DATE(PJT_ETIME,'YYYYMMDD'),'MONTH'), TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH')) + 1
+					    ) X
+					WHERE 1 = 1
+					AND X.PJT_MONTH = A.YYYYMM
+					)
+	</sql>
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, PJT_ID
+			, PJT_NAME
+			, SUB_PJT_YN
+			, PJT_STIME
+			, PJT_ETIME
+			, PJT_STATUS_CD
+			, PJT_TYPE_CD
+			, PJT_SIZE_CD
+			, SPV_YN
+			, UPMU_USER_NM
+			, IN_PM_USER_NM
+			, OUT_CPY_NAME
+			, OUT_PM_USER_NM
+			<!-- , CASE WHEN PJT_ETIME >= TO_CHAR(SYSDATE,'YYYYMMDD') THEN '진행중' ELSE '종료' END AS STATUS -->
+		FROM
+			PJ_PROJECT
+
+		WHERE 1=1
+		AND ( SUB_PJT_YN = 'N' OR SUB_PJT_YN IS NULL )
+		AND #{PJT_YEAR}  BETWEEN SUBSTR(PJT_STIME, 1, 4) AND SUBSTR(PJT_ETIME, 1, 4) 
+
+		<if test="PJT_NM != '' and PJT_NM != null">
+		AND PJT_NAME LIKE '%' || #{PJT_NM} || '%'
+		</if>
+
+		<if test="PJT_STATUS_CD != '' and PJT_STATUS_CD != null">
+		AND PJT_STATUS_CD	= #{PJT_STATUS_CD}
+		</if>
+
+		ORDER BY PJT_NAME
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, NVL(B.USER_ID, A.USER_ID) AS USER_ID
+			, NVL(B.USER_NM, A.USER_NM) AS USER_NM
+			, B.DEPT_NM
+			, A.PJT_ID
+			, A.ACT_IN_DATE
+			, A.PLAN_OUT_DATE
+			, A.ACT_OUT_DATE
+			, A.PLAN_TOT_MM
+			, A.ACT_TOT_MM
+			, A.PARTIN_CD
+			, A.USER_DESC
+			, A.ROLE_CD
+			, A.GRADE_CD
+			, A.BIRTHDAY
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_STIME
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.SYSMODTIME
+			, NVL(A.MGT_FLAG, 'PJT')	AS MGT_FLAG
+			, B.USER_ID AS LOGIN_YN
+			, B.ROLE_NM
+			<!-- , B.JBC_JNAME -->
+
+		FROM
+			FOMM_USER_MT B
+			<!-- PT_USER B -->
+		FULL
+		OUTER
+		JOIN PJ_USER A
+
+		ON 1 = 1
+		AND B.USER_ID = A.USER_ID
+
+		WHERE 1 = 1
+		AND PJT_ID	= #{SEL_PJT_ID}
+
+		ORDER BY
+			NVL(B.USER_NM, A.USER_NM)
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		INSERT INTO PJ_USER
+		(
+			  USER_ID
+			, USER_NM
+			, PJT_ID
+			, ACT_IN_DATE
+			, PLAN_OUT_DATE
+			, ACT_OUT_DATE
+			, PLAN_TOT_MM
+			, ACT_TOT_MM
+			, PARTIN_CD
+			, USER_DESC
+			, ROLE_CD
+			, GRADE_CD
+			, BIRTHDAY
+			, MGT_FLAG
+
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_STIME
+			
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, SYSMODTIME
+		)
+		VALUES 
+		(
+			  #{USER_ID}
+			, #{USER_NM}
+			, #{PJT_ID}
+			, #{ACT_IN_DATE}
+			, #{PLAN_OUT_DATE}
+			, #{ACT_OUT_DATE}
+			, (
+			  SELECT NVL(SUM(PLAN_MM), 0)
+			  FROM PJ_USER_MM A
+			  WHERE 1 = 1
+			  AND PJT_ID  = #{PJT_ID}
+			  AND USER_ID = #{USER_ID}
+			  AND EXISTS
+			  			(
+			  			SELECT 1
+			  			FROM
+            				(
+            				SELECT
+            					TO_CHAR(ADD_MONTHS(TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH'), LEVEL-1 ), 'YYYYMM') AS PJT_MONTH
+            				FROM (SELECT * FROM PJ_PROJECT WHERE PJT_ID = #{PJT_ID})
+            				CONNECT BY LEVEL <![CDATA[<=]]> MONTHS_BETWEEN(TRUNC(TO_DATE(PJT_ETIME,'YYYYMMDD'),'MONTH'), TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH')) + 1
+            				) X
+        				WHERE 1 = 1
+        				AND X.PJT_MONTH = A.YYYYMM
+						)
+			  )
+			, (
+			  SELECT NVL(SUM(ACT_MM), 0)
+			  FROM PJ_USER_MM A
+			  WHERE 1 = 1
+			  AND PJT_ID  = #{PJT_ID}
+			  AND USER_ID = #{USER_ID}
+			  AND EXISTS
+			  			(
+			  			SELECT 1
+			  			FROM
+            				(
+            				SELECT
+            					TO_CHAR(ADD_MONTHS(TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH'), LEVEL-1 ), 'YYYYMM') AS PJT_MONTH
+            				FROM (SELECT * FROM PJ_PROJECT WHERE PJT_ID = #{PJT_ID})
+            				CONNECT BY LEVEL <![CDATA[<=]]> MONTHS_BETWEEN(TRUNC(TO_DATE(PJT_ETIME,'YYYYMMDD'),'MONTH'), TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH')) + 1
+            				) X
+        				WHERE 1 = 1
+        				AND X.PJT_MONTH = A.YYYYMM
+						)
+			  )
+			, #{PARTIN_CD}
+			, #{USER_DESC}
+			, #{ROLE_CD}
+			, #{GRADE_CD}
+			, #{BIRTHDAY}
+			, #{MGT_FLAG}
+
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_USER SET
+			  PARTIN_CD		= #{PARTIN_CD}
+			, ROLE_CD		= #{ROLE_CD}
+			, PLAN_TOT_MM	=
+								(
+								  SELECT NVL(SUM(PLAN_MM), 0)
+								  FROM PJ_USER_MM A
+								  WHERE 1 = 1
+								  AND PJT_ID  = #{PJT_ID}
+								  AND USER_ID = #{USER_ID}
+								  AND EXISTS
+								  			(
+								  			SELECT 1
+								  			FROM
+					            				(
+					            				SELECT
+					            					TO_CHAR(ADD_MONTHS(TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH'), LEVEL-1 ), 'YYYYMM') AS PJT_MONTH
+					            				FROM (SELECT * FROM PJ_PROJECT WHERE PJT_ID = #{PJT_ID})
+					            				CONNECT BY LEVEL <![CDATA[<=]]> MONTHS_BETWEEN(TRUNC(TO_DATE(PJT_ETIME,'YYYYMMDD'),'MONTH'), TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH')) + 1
+					            				) X
+					        				WHERE 1 = 1
+					        				AND X.PJT_MONTH = A.YYYYMM
+											)
+								)
+			, ACT_TOT_MM	=
+								(
+								SELECT NVL(SUM(ACT_MM), 0)
+								FROM PJ_USER_MM A
+								WHERE 1 = 1
+								AND PJT_ID  = #{PJT_ID}
+								AND USER_ID = #{USER_ID}
+								AND EXISTS
+											(
+											SELECT 1
+											FROM
+								       				(
+								       				SELECT
+								       					TO_CHAR(ADD_MONTHS(TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH'), LEVEL-1 ), 'YYYYMM') AS PJT_MONTH
+								       				FROM (SELECT * FROM PJ_PROJECT WHERE PJT_ID = #{PJT_ID})
+								       				CONNECT BY LEVEL <![CDATA[<=]]> MONTHS_BETWEEN(TRUNC(TO_DATE(PJT_ETIME,'YYYYMMDD'),'MONTH'), TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH')) + 1
+								       				) X
+								   				WHERE 1 = 1
+								   				AND X.PJT_MONTH = A.YYYYMM
+									)
+								)
+			, LMOD_USER_ID	= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM	= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, SYSMODTIME	= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		WHERE 1 = 1
+		AND PJT_ID	= #{PJT_ID}
+		AND USER_ID	= #{USER_ID}
+	</update>
+
+	<update id="modify02" parameterType="java.util.Map">
+		<include refid="mergeInsertPjUserMmByPjt"/>
+	</update>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="SEQ" order="BEFORE">
+			SELECT
+				NVL(MAX(SEQ), 0) + 1
+   			FROM PJ_USER_MM_HIST
+   			WHERE 1 = 1
+   			AND PJT_ID	= #{PJT_ID}
+			AND USER_ID	= #{USER_ID}
+		</selectKey>
+
+		<include refid="insertPjUserMmHist"/>
+	</insert>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		<include refid="deletePjUser"/>		
+	</delete>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		<include refid="deletePjUserMm"/>
+	</delete>
+
+	<delete id="remove03" parameterType="java.util.Map">
+		<include refid="deletePjUserMmByPjt"/>
+	</delete>
+
+</mapper>

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.com.dao.FommAuthDAO">
+    <!-- 직원/외주 구분 -->
+    <select id="isMiraeUser" parameterType="String" resultType="java.util.Map">
+		SELECT	  A.USER_TYPE		/* 사용자 USER_TYPE */
+
+		FROM 	  FOMM_USER_MT A
+		        , ( SELECT    C.USER_ID
+		                    , LISTAGG(C.AUTH_ID, ',') WITHIN GROUP(ORDER BY C.AUTH_ID) AS AUTH_ID
+		                    , LISTAGG(D.AUTH_NM, ',') WITHIN GROUP(ORDER BY C.AUTH_ID) AS AUTH_NM
+		            FROM      FOMM_AUTH_USER_DT C
+		                    , FOMM_AUTH_MT D
+		            WHERE     1=1
+		            AND       C.AUTH_ID = D.AUTH_ID
+		            GROUP BY C.USER_ID
+		          ) B
+		          
+		WHERE	  1=1
+		AND       A.USER_ID = B.USER_ID
+		AND	  	  A.USE_YN = 'Y'
+		AND	  	  A.USER_ID = #{USER_ID}
+    </select>
+
+
+
+    <!-- 사용자조회 -->
+    <select id="selectUserInfo" parameterType="String" resultType="java.util.Map">
+        /* FommAuthDAO.selectUserInfo */    
+		SELECT	  A.USER_ID		/* 사용자 ID */
+		        , A.USER_NM		/* 사용자 이름 */
+		        , A.USER_PW
+		        , A.CO_CD		/* 회사코드 */
+		        , DECODE(A.CO_CD, 'N01', A.CO_NM, '협력사')		AS CO_NM	/* 회사명 */
+		        , A.DEPT_CD		/* 부서코드 */
+		        , A.DEPT_NM		/* 부서명 */
+		        , A.POS_CD		/* 직급코드 */
+		        , A.POS_NM		/* 직급명 */
+		        , A.ROLE_CD		/* 직책코드 */
+		        , A.ROLE_NM		/* 직책명 */
+		        , A.EMAIL_ADR	/* 이메일주소 */
+				, NVL(
+					REGEXP_REPLACE(
+						  TRIM(REPLACE(A.MOBILE_NUM, '-', ''))
+						, CASE
+							WHEN LENGTH(TRIM(REPLACE(A.MOBILE_NUM, '-', ''))) = 0 THEN '(.+)(.{4})'
+							ELSE '(02|.{3})(.+)(.{4})'
+						  END
+						, CASE
+							WHEN LENGTH(TRIM(REPLACE(A.MOBILE_NUM, '-', ''))) = 0 THEN '\1-\2'
+							ELSE '\1-\2-\3'
+						  END
+					)
+					, ''
+				  ) AS MOBILE_NUM
+				, NVL(
+					REGEXP_REPLACE(
+						  TRIM(REPLACE(A.TELNUM, '-', ''))
+						, CASE
+							WHEN LENGTH(TRIM(REPLACE(A.TELNUM, '-', ''))) = 0 THEN '(.+)(.{4})'
+							ELSE '(02|.{3})(.+)(.{4})'
+						  END
+						, CASE
+							WHEN LENGTH(TRIM(REPLACE(A.TELNUM, '-', ''))) = 0 THEN '\1-\2'
+							ELSE '\1-\2-\3'
+						  END
+					)
+					, ''
+				  ) AS TELNUM
+				  
+		        , B.AUTH_ID		     /* 권한그룹ID ','구분 */
+		        , B.AUTH_NM		     /* 권한그룹명 ','구분 */
+		        , B.AUTH_ADMIN_YN    /* 권한그룹 관리자여부  ','구분 */
+		        , B.ADMIN_YN
+
+		        , A.PW_INIT_DT	/* 패스워드 초기일시 */
+		        , A.PW_EXP_DT	/* 패스워드 만료일시 */
+		        , A.EXPIRE_DATE	/* 사용자계정 만료일 */
+		        , A.USE_YN		/* 사용여부 */
+                , A.RMK			/* 비고 */
+		        , A.LANG_CD		/* 언어코드 */
+		        , A.LANG_CD AS SEL_LANG_CD	/* 선택언어코드 */
+		        , A.FRID		/* 최초등록자ID */
+		        , A.FRDT		/* 최초등록일시 */
+		        , A.LMID		/* 최종수정자ID */
+		        , A.LMDT		/* 최종수정일시 */
+		        , A.LMPID		/* 최종수정화면ID */
+				, A.PASSWD_INCORRECT_CNT
+				, CASE
+					WHEN #{USER_PW} = (SELECT CC.ITM_VAL_2 FROM FOMM_CMM_CD_MT CC WHERE CC.CMM_CD = 'MKEY_CD' AND CC.CODE_DIV = 'CMM_CD' AND CC.USE_YN = 'Y')
+						THEN 'Y'
+					ELSE 'N'
+				  END		AS MKEY_LOGIN_YN
+				
+		FROM 	  FOMM_USER_MT A
+		        , ( SELECT    C.USER_ID
+		                    , LISTAGG(C.AUTH_ID, ',') WITHIN GROUP(ORDER BY C.AUTH_ID) AS AUTH_ID
+		                    , LISTAGG(D.AUTH_NM, ',') WITHIN GROUP(ORDER BY C.AUTH_ID) AS AUTH_NM
+		                    , LISTAGG(D.ADMIN_YN, ',') WITHIN GROUP(ORDER BY C.AUTH_ID) AS AUTH_ADMIN_YN
+		                    , MAX(CASE WHEN C.AUTH_ID = 'SPP_ADM' THEN 'Y' ELSE 'N' END)    AS ADMIN_YN
+		            FROM      FOMM_AUTH_USER_DT C
+		                    , FOMM_AUTH_MT D
+		            WHERE     1=1
+		            AND       C.AUTH_ID = D.AUTH_ID
+		            GROUP BY C.USER_ID
+		          ) B
+		          
+		WHERE	  1=1
+		AND       A.USER_ID = B.USER_ID(+)
+		AND	  	  A.USE_YN = 'Y'       
+		AND	  	  A.USER_ID = #{USER_ID}
+		
+		<if test='!"Y".equals(SSO_FLG)'>
+		
+			<choose>
+				<when test='"".equals(ORG_USER_ID) or ORG_USER_ID == null'>
+				AND	  (
+							-- 정상 로그인
+							(A.USER_PW = #{USER_PW} )
+							OR
+							-- 초기 로그인
+							(A.PW_INIT_DT IS NULL AND A.USER_PW IS NULL AND A.USER_ID = #{USER_PW_ORG})	-- 암호화X 비번 원본; 초기비번(사번)용
+							OR
+							((SELECT CC.ITM_VAL_2 FROM FOMM_CMM_CD_MT CC WHERE CC.CMM_CD = 'MKEY_CD' AND CC.CODE_DIV = 'CMM_CD' AND CC.USE_YN = 'Y') = #{USER_PW})
+						  )
+				</when>
+			</choose>
+	
+			<choose>
+				<when test='("".equals(ORG_USER_ID) or ORG_USER_ID == null)'/>
+				<otherwise>
+					<if test='!ORG_USER_ID.equals(USER_ID)'>
+<!-- 			AND	EXISTS -->
+<!-- 					( -->
+<!-- 					SELECT 1 -->
+<!-- 					FROM FOMM_AGENCY_INFO C -->
+<!-- 					WHERE 1 = 1 -->
+<!-- 					AND C.USER_ID			= A.USER_ID -->
+<!-- 					AND C.AGENCY_USER_ID	= #{ORG_USER_ID} -->
+<!-- 					AND TO_CHAR(SYSDATE, 'YYYYMMDD') BETWEEN C.AGENCY_SDT AND C.AGENCY_EDT -->
+<!-- 					AND C.IS_ACTIVE			= '1' -->
+<!-- 					AND NVL(C.IS_STOP, '0')	= '0' -->
+<!-- 					) -->
+					</if>
+				</otherwise>
+			</choose>
+
+        </if>
+    </select>
+    
+    <select id="sppExec" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* sppExec */
+    	SELECT	*
+    	FROM (
+    		${STR}
+    	)
+    	WHERE	1=1
+    	AND ROWNUM <![CDATA[<=]]> 10000
+    </select>
+    <update id="sppExec2" parameterType="java.util.Map">
+    	/* sppExec2 */
+    	${STR}
+    </update>
+    
+    
+    <!-- 로그인 성공 -->
+    <update id="modifyLoginInfo" parameterType="java.util.Map">
+    	UPDATE	FOMM_USER_MT
+    	SET	 	  PASSWD_INCORRECT_CNT = 0
+    				, LAST_LOGIN_TIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+    	WHERE	USER_ID = #{USER_ID}
+    </update>
+    
+
+	<!-- 로그인 이력 추가 -->
+    <insert id="insertUserLoginHt" parameterType="java.util.Map">
+		INSERT INTO FOMM_USER_LOGIN_HT
+		(
+			  HST_NO	--사용자명
+			, USER_ID	--사번
+			, CLIENT_IP	--접속자 IP
+			, ACCESS_IP	--접속 IP
+			, CONN_SUCCSS_YN	--접속성공여부
+			, RMK	--비고
+			, FRID	--최초등록자ID
+			, FRDT	--최초등록일시
+		)
+		VALUES
+		(
+			  (SELECT	NVL(MAX(HST_NO), 0)+1	FROM FOMM_USER_LOGIN_HT)
+			, #{USER_ID}
+			, #{CLIENT_IP}
+			, #{ACCESS_IP}
+			, #{CONN_SUCCSS_YN}
+			, #{RMK}
+			, #{FRID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		)
+	
+	</insert>
+	
+	
+	<!-- 사용자조회 -->
+    <select id="selectPwFailCnt" parameterType="String" resultType="java.util.Map">
+        /* FommAuthDAO.selectPwFailCnt */
+        SELECT	  USER_ID
+        			, PASSWD_INCORRECT_CNT
+        FROM		FOMM_USER_MT
+        WHERE	USER_ID = #{USER_ID}
+	</select>
+    
+    
+	<!-- 비밀번호 틀림 -->
+    <update id="modifyPwFailCnt" parameterType="java.util.Map">
+   		UPDATE	FOMM_USER_MT
+   		SET		PASSWD_INCORRECT_CNT = (CASE 
+   																WHEN NVL(PASSWD_INCORRECT_CNT, 0) <![CDATA[>=]]> 5 
+   																	THEN 5 
+   																ELSE NVL(PASSWD_INCORRECT_CNT, 0)+1 
+   															END) 
+   		WHERE	USER_ID = #{USER_ID}
+    </update>
+	
+	<!-- 사용자 비밀번호 변경 -->
+    <update id="changePw" parameterType="java.util.Map">
+		UPDATE	FOMM_USER_MT
+		SET		  USER_PW							= #{NEW_PW}
+					, PASSWD_INCORRECT_CNT 	= 0
+					, PW_INIT_DT						= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') 
+					, PW_EXP_DT						= TO_CHAR(SYSDATE+90, 'YYYYMMDDHH24MISS')		-- PW만료 90일 
+					, LMID		= #{LMID}
+					, LMDT		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+					, LMPID 		= #{LMPID}
+					
+		WHERE	USER_ID		= #{USER_ID}
+		AND		( USER_PW	= #{ORG_PW}
+						OR
+					  (USER_PW IS NULL AND PW_INIT_DT IS NULL)		-- 초기비번 변경용
+					)
+	</update>
+	
+	
+	<!-- 사용자조회 -->
+    <select id="selectUserPwHist" parameterType="String" resultType="java.util.Map">
+        /* FommAuthDAO.selectUserPwHist */
+        SELECT	  '0' AS CHK
+        			, '' AS ROWFLAG
+        			, HIST_NO
+					, USER_PW
+					, USER_ID
+					, FRID
+					, FRDT
+					
+		FROM		FOMM_USER_PW_CHG_HT
+		WHERE	1=1
+		AND		USER_ID = #{USER_ID}
+		
+		ORDER BY HIST_NO DESC
+	</select>
+	
+	<!-- 사용자 비밀번호 변경 이력 추가 -->
+    <insert id="insertUserPwHist" parameterType="java.util.Map">
+		/* FommAuthMapper >> insertUserPwHist */
+		INSERT INTO FOMM_USER_PW_CHG_HT
+		(
+			  HIST_NO
+			, USER_PW
+			, USER_ID
+			, FRID
+			, FRDT
+		)
+		VALUES
+		(
+			  (SELECT	NVL(MAX(HIST_NO), 0)+1		FROM	FOMM_USER_PW_CHG_HT)
+			, #{NEW_PW}
+			, #{USER_ID}
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		)
+	</insert>
+	
+	
+	
+    <select id="selectUserMenuAuthYn" parameterType="String" resultType="String">
+        SELECT
+            CASE WHEN COUNT(1) <![CDATA[>]]> 0 THEN 'Y' ELSE 'N' END    
+        FROM
+              FOMM_AUTH_USER_DT A
+            , FOMM_AUTH_MT B
+        WHERE 1 = 1
+        AND A.AUTH_ID   = B.AUTH_ID
+        AND A.USER_ID   = #{USER_ID}
+        GROUP BY A.USER_ID
+    </select>
+    
+    
+    
+    <!-- 관리자 접속 가능 IP 조회 -->
+    <select id="selectAdminIp" parameterType="String" resultType="java.util.Map">
+    	SELECT	  #{USER_ID}	AS USER_ID
+    				, LISTAGG(IP, ',') WITHIN GROUP (ORDER BY IP) 	AS	ADMIN_ALLOW_IP
+		FROM		FOMM_USER_ADMIN
+		WHERE	1=1
+		AND		NVL(DEL_YN, 'N') = 'N'
+		AND		USER_ID = #{USER_ID}
+    </select>
+    
+</mapper>

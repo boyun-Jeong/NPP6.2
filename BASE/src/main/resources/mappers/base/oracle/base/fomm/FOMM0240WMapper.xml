@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0240WDAO">
+
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FOMM0240WMapper >> select01 */
+        SELECT 
+              '0'   AS CHK
+            , ''    AS ROWFLAG
+            , A.USER_ID
+            , (SELECT USER_NM
+                 FROM FOMM_USER_MT 
+                WHERE USER_ID = A.USER_ID) AS USER_NM
+            , (SELECT USER_NM||'/'||DEPT_NM||'/'||POS_NM
+                 FROM FOMM_USER_MT 
+                WHERE USER_ID = A.USER_ID) AS USER_INFO
+            , A.AGENCY_SEQ
+            , A.AGENCY_SDT
+            , A.AGENCY_EDT
+            , A.AGENCY_USER_ID
+            , (SELECT USER_NM
+                 FROM FOMM_USER_MT 
+                WHERE USER_ID = A.AGENCY_USER_ID) AS AGENCY_USER_NM 
+            , (SELECT USER_NM||'/'||DEPT_NM||'/'||POS_NM
+                 FROM FOMM_USER_MT 
+                WHERE USER_ID = A.AGENCY_USER_ID) AS AGENCY_USER_INFO
+            <!-- , (SELECT USER_NM
+                 FROM FOMM_USER_MT 
+                WHERE USER_ID = A.AGENCY_USER_ID)||'/'||AGENCY_DEPT_NM||'/'||AGENCY_DUTY_NM AS AGENCY_USER_NM    추후 테이블에 직급명, 팀명 만들어질 경우 사용 -->
+            , A.AGENCY_DUTY_NM
+            , A.AGENCY_DEPT_NM
+            , A.AGENCY_DESC
+            , A.IS_ACTIVE
+            , A.IS_STOP
+            , A.STOP_DT
+            , A.FRID
+            , A.FRDT
+            , A.LMID
+            , A.LMDT
+            , #{LMID} AS LOGIN_USER_ID
+            , (SELECT USER_NM
+                 FROM FOMM_USER_MT 
+                WHERE USER_ID = #{LMID}) AS LOGIN_USER_NM
+            , #{LMDEPTNM} AS LOGIN_DEPT_NM
+            , #{LMPOSNM} AS LOGIN_POS_NM
+        FROM
+            FOMM_AGENCY_INFO A      
+        WHERE 1 = 1
+        <if test="USER_ID != '' and USER_ID != null">
+             AND UPPER(A.USER_ID) LIKE '%' || UPPER(#{USER_ID}) || '%'
+        </if>
+        <if test="USER_NM != '' and USER_NM != null">
+             AND UPPER((SELECT USER_NM
+                          FROM FOMM_USER_MT 
+                         WHERE USER_ID = A.USER_ID)) LIKE '%' || UPPER(#{USER_NM}) || '%'
+        </if> 
+        <if test="AGENCY_USER_ID != '' and AGENCY_USER_ID != null">
+             AND UPPER(A.AGENCY_USER_ID) LIKE '%' || UPPER(#{AGENCY_USER_ID}) || '%'
+        </if>
+        <if test="AGENCY_USER_NM != '' and AGENCY_USER_NM != null">
+             AND UPPER((SELECT USER_NM
+                          FROM FOMM_USER_MT 
+                         WHERE USER_ID = A.AGENCY_USER_ID)) LIKE '%' || UPPER(#{AGENCY_USER_NM}) || '%'
+        </if>
+
+		AND (
+				 (#{AGENCY_SDT} BETWEEN A.AGENCY_SDT AND A.AGENCY_EDT) OR
+				 (#{AGENCY_EDT} BETWEEN A.AGENCY_SDT AND A.AGENCY_EDT)
+				)
+        
+        ORDER BY A.FRDT DESC
+    </select>
+
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FOMM0240WMapper >> select02 */
+        SELECT 
+              '0'   AS CHK
+            , ''    AS ROWFLAG
+            , A.USER_ID
+            , (SELECT USER_NM
+                 FROM FOMM_USER_MT 
+                WHERE USER_ID = A.USER_ID) AS USER_NM
+            , (SELECT USER_NM||'/'||DEPT_NM||'/'||POS_NM
+                 FROM FOMM_USER_MT 
+                WHERE USER_ID = A.USER_ID) AS USER_INFO
+            , A.AGENCY_SEQ
+            , A.AGENCY_SDT
+            , A.AGENCY_EDT
+            , A.AGENCY_USER_ID
+            , (SELECT USER_NM
+                 FROM FOMM_USER_MT 
+                WHERE USER_ID = A.AGENCY_USER_ID) AS AGENCY_USER_NM 
+            , (SELECT USER_NM||'/'||DEPT_NM||'/'||POS_NM
+                 FROM FOMM_USER_MT 
+                WHERE USER_ID = A.AGENCY_USER_ID) AS AGENCY_USER_INFO
+            <!-- , (SELECT USER_NM
+                 FROM FOMM_USER_MT 
+                WHERE USER_ID = A.AGENCY_USER_ID)||'/'||AGENCY_DEPT_NM||'/'||AGENCY_DUTY_NM AS AGENCY_USER_NM    추후 테이블에 직급명, 팀명 만들어질 경우 사용 -->
+            , A.AGENCY_DUTY_NM
+            , A.AGENCY_DEPT_NM
+            , A.AGENCY_DESC
+            , A.IS_ACTIVE
+            , A.IS_STOP
+            , A.STOP_DT
+            , A.FRID
+            , A.FRDT
+            , A.LMID
+            , A.LMDT
+            , #{LMID} AS LOGIN_USER_ID
+            , (SELECT USER_NM
+                 FROM FOMM_USER_MT 
+                WHERE USER_ID = #{LMID}) AS LOGIN_USER_NM
+            , #{LMDEPTNM} AS LOGIN_DEPT_NM
+            , #{LMPOSNM} AS LOGIN_POS_NM
+        FROM
+            FOMM_AGENCY_INFO A      
+        WHERE 1 = 1
+        AND (USER_ID = #{LMID} OR AGENCY_USER_ID = #{LMID})
+        <if test="USER_ID != '' and USER_ID != null">
+             AND UPPER(A.USER_ID) LIKE '%' || UPPER(#{USER_ID}) || '%'
+        </if>
+        <if test="USER_NM != '' and USER_NM != null">
+             AND UPPER((SELECT USER_NM
+                          FROM FOMM_USER_MT 
+                         WHERE USER_ID = A.USER_ID)) LIKE '%' || UPPER(#{USER_NM}) || '%'
+        </if> 
+        <if test="AGENCY_USER_ID != '' and AGENCY_USER_ID != null">
+             AND UPPER(A.AGENCY_USER_ID) LIKE '%' || UPPER(#{AGENCY_USER_ID}) || '%'
+        </if>
+        <if test="AGENCY_USER_NM != '' and AGENCY_USER_NM != null">
+             AND UPPER((SELECT USER_NM
+                          FROM FOMM_USER_MT 
+                         WHERE USER_ID = A.AGENCY_USER_ID)) LIKE '%' || UPPER(#{AGENCY_USER_NM}) || '%'
+        </if>
+        
+		AND (
+				 (#{AGENCY_SDT} BETWEEN A.AGENCY_SDT AND A.AGENCY_EDT) OR
+				 (#{AGENCY_EDT} BETWEEN A.AGENCY_SDT AND A.AGENCY_EDT)
+				)
+        ORDER BY A.FRDT DESC
+    </select>
+    
+    
+     <select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FOMM0240WMapper >> select03 */
+			SELECT 
+			      '0' AS CHK
+			    , '' AS ROWFLAG
+			    , A.USER_ID
+			    , U.USER_NM
+			    , (U.USER_NM||'/'||U.DEPT_NM||'/'||U.POS_NM) AS USER_INFO
+			    , A.AGENCY_SEQ
+			    , A.AGENCY_SDT
+			    , A.AGENCY_EDT
+			    , A.AGENCY_USER_ID
+			    , AU.USER_NM AS AGENCY_USER_NM
+			    , AU.USER_NM||'/'||AU.DEPT_NM||'/'||AU.POS_NM AS AGENCY_USER_INFO
+			    , A.AGENCY_DUTY_NM
+			    , A.AGENCY_DEPT_NM
+			    , A.AGENCY_DESC
+			    , A.IS_ACTIVE
+			    , A.IS_STOP
+			    , A.STOP_DT
+			    , A.FRID
+			    , A.FRDT
+			    , A.LMID
+			    , A.LMDT
+			    , '3' AS LOGIN_USER_ID
+			    , lu.user_nm AS LOGIN_USER_NM
+			    , lu.dept_cd AS LOGIN_USER_dept
+			    , 'IT보험개발2팀(손해)' AS LOGIN_DEPT_NM
+			    , '이사' AS LOGIN_POS_NM
+			    , lu.dept_cd login_dept_cd
+			    , au.dept_cd agency_dept_cd
+			    , u.dept_cd user_dept_cd
+			FROM
+			    FOMM_AGENCY_INFO A
+			    LEFT OUTER JOIN FOMM_USER_MT LU ON lu.USER_ID = #{LMID}                                -- 로그인 유저
+			    LEFT OUTER JOIN FOMM_USER_MT AU ON a.AGENCY_USER_ID = au.USER_ID    -- 대직받는 유저
+			    LEFT OUTER JOIN FOMM_USER_MT U ON a.USER_ID = u.USER_ID                       -- 대직하는 유저
+			WHERE 1 = 1 
+			    AND (lu.dept_cd = au.dept_cd
+			         OR 
+			         lu.dept_cd = u.dept_cd
+			        )
+			     <if test="AGENCY_USER_ID != '' and AGENCY_USER_ID != null">
+			         AND A.AGENCY_USER_ID = #{AGENCY_USER_ID} -- 대직 받는 유저 업무처리자
+			    </if>
+			    <if test="USER_ID != '' and USER_ID != null">
+			         AND A.USER_ID = #{USER_ID}  -- 대직하는 유저 업무 위임자
+			     </if>
+			     
+			AND (
+					 (#{AGENCY_SDT} BETWEEN A.AGENCY_SDT AND A.AGENCY_EDT) OR
+					 (#{AGENCY_EDT} BETWEEN A.AGENCY_SDT AND A.AGENCY_EDT)
+					)
+
+            ORDER BY A.FRDT DESC
+    </select>
+    
+    <select id="select04" parameterType="java.util.Map" resultType="java.util.Map">
+            /* FOMM0240WMapper >> select04  부서가 같으며 현재일 기준으로 부재기간인 직직원 조회 */
+            
+            SELECT
+                  0 AS CHK      /* CHECKBOX 컬럼 */
+                , '' AS ROWFLAG     /* 행상태 표기를 위한 컬럼 */
+                , USER_ID           /* ID(사번) */
+                , USER_NM           /* 사용자명 */
+                , CO_CD             /* 회사코드 */
+                , CO_NM             /* 회사명 */
+                , DEPT_CD           /* 부서코드 */
+                , DEPT_NM           /* 부서명 */
+                , POS_NM            /* 직급명 */
+                , ROLE_NM           /* 역할(직책)명 */
+                , EMAIL_ADR         /* 이메일주소 */
+                , TELNUM            /* 사내전화번호 */
+                , MOBILE_NUM        /* 휴대폰번호 */
+                , EXPIRE_DATE       /* 계정만료일자 */
+                , decode(USE_YN    ,'Y','사용','미사용') USE_YN          /* 계정사용여부 */
+                , RMK               /* 비고 */
+                , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM             /* 최초등록자 */
+                , FRDT              /* 최초등록일시 */
+                , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM             /* 최종수정자 */
+                , LMDT              /* 최종수정일시 */
+                , LMPID             /* 최종수정화면ID */
+                , LANG_CD           /* 사용자 언어코드 */
+                , TO_CHAR(TO_DATE(BUJAE_STIME,'YYYYMMDD HH24:MI:ss'),'YYYY-MM-DD') AS BUJAE_STIME
+                , TO_CHAR(TO_DATE(BUJAE_ETIME,'YYYYMMDD HH24:MI:ss'),'YYYY-MM-DD') AS BUJAE_ETIME
+        FROM      FOMM_USER_MT A
+        WHERE     1=1
+                        AND USE_YN = 'Y'
+                        AND DEPT_CD = #{DEPT_CD}
+            <if test="SEARCH_STR != '' and SEARCH_STR != null">     
+                        AND UPPER(USER_NM || ';;' || USER_ID) LIKE UPPER('%' || #{SEARCH_STR} || '%')   /* ID/이름 통합검색 */
+            </if>
+          <!--
+            AND NVL(ABSNCE_YN,'N') = 'N'
+           AND USER_ID NOT IN (SELECT USER_ID  FROM OM_USER_MT ) 
+           AND UPPER(DEPT_NM) LIKE UPPER('%' || '외주인력' || '%')
+		 AND TO_DATE(BUJAE_STIME,'YYYYMMDD HH24:MI:ss') &gt; = TO_DATE(#{START_DATE},'YYYYMMDD HH24:MI:ss')
+         AND TO_DATE(BUJAE_ETIME,'YYYYMMDD HH24:MI:ss') &lt; = TO_DATE(#{END_DATE},'YYYYMMDD HH24:MI:ss')
+      -->
+        ORDER BY USE_YN desc, USER_NM
+            
+    
+    </select>
+    
+    <select id="selectYN" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT 
+		      COUNT(*) AS CNT
+		    , CASE WHEN COUNT(*) = 0 THEN '저장 되었습니다.' 
+		           WHEN COUNT(*) >= 1 THEN '이미 등록된 업무 위임 정보가 있습니다.'
+		      END AS ALERT_YN
+		FROM FOMM_AGENCY_INFO
+		WHERE IS_ACTIVE = '1'
+<!-- 		AND   AGENCY_EDT <![CDATA[>=]]> TO_CHAR(SYSDATE, 'YYYYMMDD') -->
+        AND   AGENCY_SDT <![CDATA[<=]]> #{AGENCY_EDT}
+        AND   AGENCY_EDT >= #{AGENCY_SDT}
+		AND   USER_ID = #{USER_ID}
+		<!-- AND   AGENCY_USER_ID = #{AGENCY_USER_ID}  -->
+    </select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+	   INSERT INTO FOMM_AGENCY_INFO
+		(
+		      USER_ID
+		    , AGENCY_SEQ
+		    , AGENCY_SDT
+		    , AGENCY_EDT
+		    , AGENCY_USER_ID
+		    , AGENCY_DUTY_NM
+		    , AGENCY_DEPT_NM
+		    , AGENCY_DESC
+		    , IS_ACTIVE
+		    , IS_STOP
+		    , STOP_DT
+		    , FRID
+		    , FRDT
+		    , LMID
+		    , LMDT
+		)
+		VALUES
+		(
+		      #{USER_ID}
+		    , (SELECT NVL(MAX(AGENCY_SEQ), 0)+1 FROM FOMM_AGENCY_INFO WHERE USER_ID = #{USER_ID})
+		    , SUBSTR(#{AGENCY_SDT}, 0, 8)
+		    , SUBSTR(#{AGENCY_EDT}, 0, 8)
+		    , #{AGENCY_USER_ID}
+		    , #{AGENCY_DUTY_NM}
+		    , #{AGENCY_DEPT_NM}
+		    , #{AGENCY_DESC}
+		    , '1'
+		    , '0'
+		    , ''
+		    , #{LMID}
+		    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		    , #{LMID}
+		    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	   UPDATE FOMM_AGENCY_INFO SET 
+		      IS_ACTIVE = '0'
+		    , STOP_DT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		    , LMID = #{LMID}
+		    , LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') 
+		
+		WHERE 1 = 1
+		AND USER_ID = #{USER_ID}
+		AND AGENCY_SEQ = #{AGENCY_SEQ}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	    DELETE
+		FROM FOMM_AGENCY_INFO 
+		WHERE 1 = 1
+		AND USER_ID = #{USER_ID}
+		AND AGENCY_SEQ = #{AGENCY_SEQ}
+	</delete>
+
+</mapper>

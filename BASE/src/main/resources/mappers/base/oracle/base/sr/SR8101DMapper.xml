@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR8101DDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  REQ_ID	--요청서 ID
+			, JOB_TYPE	--작업구분
+			, JOB_ID	--작업 ID
+			, JOB_NM	--작업명
+			, JOB_CONT	--작업내용
+			, FRID	--최초등록자ID
+			, FRDT	--최초등록일시
+			, LMID	--최초수정자ID
+			, LMDT	--최초수정일시
+			, LMPID	--최초수정 화면ID
+		FROM SR_INFR_NETWORK
+		WHERE 1 = 1
+		AND REQ_ID		= #{REQ_ID}
+	</select>
+	
+	<insert id="insert01" parameterType="java.util.Map">
+		INSERT INTO SR_INFR_NETWORK
+		(
+			  REQ_ID	--요청서 ID
+			, JOB_TYPE	--작업구분
+			, JOB_ID	--작업 ID
+			, JOB_NM	--작업명
+			, JOB_CONT	--작업내용
+			, FRID	--최초등록자ID
+			, FRDT	--최초등록일시
+			, LMID	--최초수정자ID
+			, LMDT	--최초수정일시
+			, LMPID	--최초수정 화면ID
+		)
+		VALUES
+		(
+			  #{REQ_ID}
+			, #{JOB_TYPE}
+			, #{JOB_ID}
+			, #{JOB_NM}
+			, #{JOB_CONT}
+			, #{FRID}
+			, #{FRDT}
+			, #{LMID}
+			, #{LMDT}
+			, #{LMPID}
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE SR_INFR_NETWORK SET
+			  REQ_ID = #{REQ_ID}	--요청서 ID
+			, JOB_TYPE = #{JOB_TYPE}	--작업구분
+			, JOB_ID = #{JOB_ID}	--작업 ID
+			, JOB_NM = #{JOB_NM}	--작업명
+			, JOB_CONT = #{JOB_CONT}	--작업내용
+			, LMID = #{LMID}	--최종수정자ID
+			, LMDT = #{LMDT}	--최종수정일시
+			, LMPID = #{LMPID}	--최종수정 화면ID
+		WHERE 1 = 1
+		AND REQ_ID		= #{REQ_ID}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM SR_INFR_NETWORK
+		WHERE 1 = 1
+		AND REQ_ID		= #{REQ_ID}
+	</delete>
+
+	<select id="selectProc_01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  REQ_ID	--요청서ID
+			, WF_PROC_CD	--진행단계
+			, USER_ID	--사번(접수자 처리자 현장관리자)
+			, USER_NM	--성명(접수자 처리자 현장관리자)
+			, DEPT_CD	--부서코드(접수자 처리자 현장관리자)
+			, DEPT_NM	--부서명(접수자 처리자 현장관리자)
+			, POS_NM	--직책(접수자 처리자 현장관리자)
+			, GUBUN_NM	--처리자구분(접수자 처리자 현장관리자 등)
+			, CEGR_ID	--지정 담당자 ID)
+			, PLAN_PROC_SDT	--계획시작일
+			, PLAN_PROC_STIME	--계획시작시
+			, PLAN_PROC_EDT	--계획종료일
+			, PLAN_PROC_ETIME	--계획종료시
+			, PLAN_PROC_ADT	--적용예정일자
+			, PLAN_MH	--계획공수
+			, PLAN_SVC_DOWN_YN	--서비스중단여부
+			, PLAN_JOB_YN	--작업계획여부
+			, PLAN_SVC_IMPT_YN	--영향도유무
+			, PLAN_SVC_IMPT	--영향도분석
+			, PLAN_ADVC_PREP_CONT	--사전준비사항
+			, PLAN_JOB_CONT	--본작업내용
+			, PLAN_POST_CHK	--작업후점검사항
+			, RMK	--비고
+			, FRID	--최초등록자ID
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자ID
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정 화면ID
+		FROM SR_REV_PROC_01
+		WHERE 1 = 1
+		<if test="REQ_ID != '' and REQ_ID != null">
+		AND REQ_ID = #{REQ_ID}
+		</if>
+		<if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+		AND WF_PROC_CD = #{WF_PROC_CD}
+		</if>
+		<if test="USER_ID != '' and USER_ID != null">
+		AND USER_ID = #{USER_ID}
+		</if>
+	</select>
+
+	<insert id="insertProc_01" parameterType="java.util.Map">
+		INSERT INTO SR_REV_PROC_01
+		(
+			  REQ_ID	--요청서ID
+			, WF_PROC_CD	--진행단계
+			, USER_ID	--사번(접수자 처리자 현장관리자)
+			, USER_NM	--성명(접수자 처리자 현장관리자)
+			, DEPT_CD	--부서코드(접수자 처리자 현장관리자)
+			, DEPT_NM	--부서명(접수자 처리자 현장관리자)
+			, POS_NM	--직책(접수자 처리자 현장관리자)
+			, GUBUN_NM	--처리자구분(접수자 처리자 현장관리자 등)
+			, CEGR_ID	--지정 담당자 ID)
+			, PLAN_PROC_SDT	--계획시작일
+			, PLAN_PROC_STIME	--계획시작시
+			, PLAN_PROC_EDT	--계획종료일
+			, PLAN_PROC_ETIME	--계획종료시
+			, PLAN_PROC_ADT	--적용예정일자
+			, PLAN_MH	--계획공수
+			, PLAN_SVC_DOWN_YN	--서비스중단여부
+			, PLAN_JOB_YN	--작업계획여부
+			, PLAN_SVC_IMPT_YN	--영향도유무
+			, PLAN_SVC_IMPT	--영향도분석
+			, PLAN_ADVC_PREP_CONT	--사전준비사항
+			, PLAN_JOB_CONT	--본작업내용
+			, PLAN_POST_CHK	--작업후점검사항
+			, RMK	--비고
+			, FRID	--최초등록자ID
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자ID
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정 화면ID
+		)
+		VALUES
+		(
+			  #{REQ_ID}
+			, #{WF_PROC_CD}
+			, #{USER_ID}
+			, #{USER_NM}
+			, #{DEPT_CD}
+			, #{DEPT_NM}
+			, #{POS_NM}
+			, #{GUBUN_NM}
+			, #{CEGR_ID}
+			, #{PLAN_PROC_SDT}
+			, #{PLAN_PROC_STIME}
+			, #{PLAN_PROC_EDT}
+			, #{PLAN_PROC_ETIME}
+			, #{PLAN_PROC_ADT}
+			, #{PLAN_MH}
+			, #{PLAN_SVC_DOWN_YN}
+			, #{PLAN_JOB_YN}
+			, #{PLAN_SVC_IMPT_YN}
+			, #{PLAN_SVC_IMPT}
+			, #{PLAN_ADVC_PREP_CONT}
+			, #{PLAN_JOB_CONT}
+			, #{PLAN_POST_CHK}
+			, #{RMK}
+			, #{FRID}
+			, #{FRDT}
+			, #{LMID}
+			, #{LMDT}
+			, #{LMPID}
+		)
+	</insert>
+
+	<update id="modifyProc_01" parameterType="java.util.Map">
+		UPDATE SR_REV_PROC_01 SET
+			  REQ_ID = #{REQ_ID}	--요청서ID
+			, WF_PROC_CD = #{WF_PROC_CD}	--진행단계
+			, USER_ID = #{USER_ID}	--사번(접수자 처리자 현장관리자)
+			, USER_NM = #{USER_NM}	--성명(접수자 처리자 현장관리자)
+			, DEPT_CD = #{DEPT_CD}	--부서코드(접수자 처리자 현장관리자)
+			, DEPT_NM = #{DEPT_NM}	--부서명(접수자 처리자 현장관리자)
+			, POS_NM = #{POS_NM}	--직책(접수자 처리자 현장관리자)
+			, GUBUN_NM = #{GUBUN_NM}	--처리자구분(접수자 처리자 현장관리자 등)
+			, CEGR_ID = #{CEGR_ID}	--지정 담당자 ID)
+			, PLAN_PROC_SDT = #{PLAN_PROC_SDT}	--계획시작일
+			, PLAN_PROC_STIME = #{PLAN_PROC_STIME}	--계획시작시
+			, PLAN_PROC_EDT = #{PLAN_PROC_EDT}	--계획종료일
+			, PLAN_PROC_ETIME = #{PLAN_PROC_ETIME}	--계획종료시
+			, PLAN_PROC_ADT = #{PLAN_PROC_ADT}	--적용예정일자
+			, PLAN_MH = #{PLAN_MH}	--계획공수
+			, PLAN_SVC_DOWN_YN = #{PLAN_SVC_DOWN_YN}	--서비스중단여부
+			, PLAN_JOB_YN = #{PLAN_JOB_YN}	--작업계획여부
+			, PLAN_SVC_IMPT_YN = #{PLAN_SVC_IMPT_YN}	--영향도유무
+			, PLAN_SVC_IMPT = #{PLAN_SVC_IMPT}	--영향도분석
+			, PLAN_ADVC_PREP_CONT = #{PLAN_ADVC_PREP_CONT}	--사전준비사항
+			, PLAN_JOB_CONT = #{PLAN_JOB_CONT}	--본작업내용
+			, PLAN_POST_CHK = #{PLAN_POST_CHK}	--작업후점검사항
+			, RMK = #{RMK}	--비고
+			, FRID = #{FRID}	--최초등록자ID
+			, FRDT = #{FRDT}	--최초등록일시
+			, LMID = #{LMID}	--최종수정자ID
+			, LMDT = #{LMDT}	--최종수정일시
+			, LMPID = #{LMPID}	--최종수정 화면ID
+		WHERE 1 = 1
+		<if test="REQ_ID != '' and REQ_ID != null">
+		AND REQ_ID = #{REQ_ID}
+		</if>
+		<if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+		AND WF_PROC_CD = #{WF_PROC_CD}
+		</if>
+		<if test="USER_ID != '' and USER_ID != null">
+		AND USER_ID = #{USER_ID}
+		</if>
+	</update>
+
+	<delete id="removeProc_01" parameterType="java.util.Map">
+		DELETE
+		FROM SR_REV_PROC_01
+		WHERE 1 = 1
+		<if test="REQ_ID != '' and REQ_ID != null">
+		AND REQ_ID = #{REQ_ID}
+		</if>
+		<if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+		AND WF_PROC_CD = #{WF_PROC_CD}
+		</if>
+		<if test="USER_ID != '' and USER_ID != null">
+		AND USER_ID = #{USER_ID}
+		</if>
+	</delete>
+	
+	
+		<select id="selectProc_02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  REQ_ID	--요청서ID
+			, WF_PROC_CD	--진행단계
+			, USER_ID	--사번(접수자 처리자 현장관리자)
+			, USER_NM	--성명(접수자 처리자 현장관리자)
+			, DEPT_CD	--부서코드(접수자 처리자 현장관리자)
+			, DEPT_NM	--부서명(접수자 처리자 현장관리자)
+			, POS_NM	--직책(접수자 처리자 현장관리자)
+			, GUBUN_NM	--처리자구분(접수자 처리자 현장관리자 등)
+			, CEGR_ID	--지정 담당자 ID)
+			, PROC_SDT	--비고
+			, PROC_STIME	--최초등록자ID
+			, PROC_EDT	--최초등록일시
+			, PROC_ETIME	--최종수정자ID
+			, PROC_MH	--최종수정일시
+			, PROC_JOB_RSLT	--최종수정 화면ID
+			, PROC_CHK_RSLT
+			, PROC_CHK_POST
+			, JOB_CEGR_CHK_YN
+			, RMK
+			, FRID
+			, FRDT
+			, LMID
+			, LMDT
+			, LMPID
+		FROM SR_REV_PROC_02
+		WHERE 1 = 1
+		<if test="REQ_ID != '' and REQ_ID != null">
+		AND REQ_ID = #{REQ_ID}
+		</if>
+		<if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+		AND WF_PROC_CD = #{WF_PROC_CD}
+		</if>
+		<if test="USER_ID != '' and USER_ID != null">
+		AND USER_ID = #{USER_ID}
+		</if>
+	</select>
+
+	<insert id="insertProc_02" parameterType="java.util.Map">
+		INSERT INTO SR_REV_PROC_02
+		(
+			  REQ_ID	--요청서ID
+			, WF_PROC_CD	--진행단계
+			, USER_ID	--사번(접수자 처리자 현장관리자)
+			, USER_NM	--성명(접수자 처리자 현장관리자)
+			, DEPT_CD	--부서코드(접수자 처리자 현장관리자)
+			, DEPT_NM	--부서명(접수자 처리자 현장관리자)
+			, POS_NM	--직책(접수자 처리자 현장관리자)
+			, GUBUN_NM	--처리자구분(접수자 처리자 현장관리자 등)
+			, CEGR_ID	--지정 담당자 ID)
+			, PROC_SDT	--비고
+			, PROC_STIME	--최초등록자ID
+			, PROC_EDT	--최초등록일시
+			, PROC_ETIME	--최종수정자ID
+			, PROC_MH	--최종수정일시
+			, PROC_JOB_RSLT	--최종수정 화면ID
+			, PROC_CHK_RSLT
+			, PROC_CHK_POST
+			, JOB_CEGR_CHK_YN
+			, RMK
+			, FRID
+			, FRDT
+			, LMID
+			, LMDT
+			, LMPID
+		)
+		VALUES
+		(
+			  #{REQ_ID}
+			, #{WF_PROC_CD}
+			, #{USER_ID}
+			, #{USER_NM}
+			, #{DEPT_CD}
+			, #{DEPT_NM}
+			, #{POS_NM}
+			, #{GUBUN_NM}
+			, #{CEGR_ID}
+			, #{PROC_SDT}
+			, #{PROC_STIME}
+			, #{PROC_EDT}
+			, #{PROC_ETIME}
+			, #{PROC_MH}
+			, #{PROC_JOB_RSLT}
+			, #{PROC_CHK_RSLT}
+			, #{PROC_CHK_POST}
+			, #{JOB_CEGR_CHK_YN}
+			, #{RMK}
+			, #{FRID}
+			, #{FRDT}
+			, #{LMID}
+			, #{LMDT}
+			, #{LMPID}
+		)
+	</insert>
+
+	<update id="modifyProc_02" parameterType="java.util.Map">
+		UPDATE SR_REV_PROC_02 SET
+			  REQ_ID = #{REQ_ID}	--요청서ID
+			, WF_PROC_CD = #{WF_PROC_CD}	--진행단계
+			, USER_ID = #{USER_ID}	--사번(접수자 처리자 현장관리자)
+			, USER_NM = #{USER_NM}	--성명(접수자 처리자 현장관리자)
+			, DEPT_CD = #{DEPT_CD}	--부서코드(접수자 처리자 현장관리자)
+			, DEPT_NM = #{DEPT_NM}	--부서명(접수자 처리자 현장관리자)
+			, POS_NM = #{POS_NM}	--직책(접수자 처리자 현장관리자)
+			, GUBUN_NM = #{GUBUN_NM}	--처리자구분(접수자 처리자 현장관리자 등)
+			, CEGR_ID = #{CEGR_ID}	--지정 담당자 ID)
+			, PROC_SDT = #{PROC_SDT}	--비고
+			, PROC_STIME = #{PROC_STIME}	--최초등록자ID
+			, PROC_EDT = #{PROC_EDT}	--최초등록일시
+			, PROC_ETIME = #{PROC_ETIME}	--최종수정자ID
+			, PROC_MH = #{PROC_MH}	--최종수정일시
+			, PROC_JOB_RSLT = #{PROC_JOB_RSLT}	--최종수정 화면ID
+			, PROC_CHK_RSLT = #{PROC_CHK_RSLT}
+			, PROC_CHK_POST = #{PROC_CHK_POST}
+			, JOB_CEGR_CHK_YN = #{JOB_CEGR_CHK_YN}
+			, RMK = #{RMK}
+			, FRID = #{FRID}
+			, FRDT = #{FRDT}
+			, LMID = #{LMID}
+			, LMDT = #{LMDT}
+			, LMPID = #{LMPID}
+		WHERE 1 = 1
+		<if test="REQ_ID != '' and REQ_ID != null">
+		AND REQ_ID = #{REQ_ID}
+		</if>
+		<if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+		AND WF_PROC_CD = #{WF_PROC_CD}
+		</if>
+		<if test="USER_ID != '' and USER_ID != null">
+		AND USER_ID = #{USER_ID}
+		</if>
+	</update>
+
+	<delete id="removeProc_02" parameterType="java.util.Map">
+		DELETE
+		FROM SR_REV_PROC_02
+		WHERE 1 = 1
+		<if test="REQ_ID != '' and REQ_ID != null">
+		AND REQ_ID = #{REQ_ID}
+		</if>
+		<if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+		AND WF_PROC_CD = #{WF_PROC_CD}
+		</if>
+		<if test="USER_ID != '' and USER_ID != null">
+		AND USER_ID = #{USER_ID}
+		</if>
+	</delete>
+	
+</mapper>

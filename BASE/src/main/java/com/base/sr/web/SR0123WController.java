@@ -1,0 +1,61 @@
+package com.base.sr.web;
+
+import java.util.List;
+import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import com.nexacro.uiadapter.jakarta.core.NexacroException;
+import com.nexacro.uiadapter.jakarta.core.annotation.ParamDataSet;
+import com.nexacro.uiadapter.jakarta.core.data.NexacroResult;
+import com.base.sr.service.SR0123WService;
+import com.base.com.service.FommAuthService;
+
+/**
+ * 
+ * <pre>
+ * @title
+ * - 요청함(CMO/PMO)조회 Controller
+ * @package com.base.sr.web
+ * <pre>
+ *
+ * @author  김미성
+ * @since   2024. 08. 21.
+ * @version 1.0
+ * @see
+ *
+ * =================== 변경 내역 ==================
+ * 날짜			변경자				내용
+ * ------------------------------------------------
+ * 2024. 08. 21.	김미성		최초작성
+ */
+@Controller
+@RequestMapping("SR0123W")
+public class SR0123WController {
+
+	private Logger log = LoggerFactory.getLogger(SR0123WController.class);
+
+	@Autowired
+	private SR0123WService sr0123wSvc;
+
+	@Autowired
+	private FommAuthService fommAuthSvc;
+
+	/**
+	 * 요청함(CMO/PMO)조회 목록 조회
+	 * @param dsCond
+	 * @return
+	 */
+	@RequestMapping("/select01")
+	public NexacroResult select01(@ParamDataSet(name = "dsCond") Map<String, Object> dsCond) throws NexacroException {
+
+		NexacroResult result = new NexacroResult();
+
+		List<Map<String, Object>> dsSrBaseInfo = sr0123wSvc.select01(dsCond);
+		result.addDataSet("dsSrBaseInfo", dsSrBaseInfo);
+		return result;
+	}
+	
+}

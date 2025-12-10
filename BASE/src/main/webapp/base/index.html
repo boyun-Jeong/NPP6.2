@@ -1,0 +1,97 @@
+<!-- DOCTYPE : DOCTYPE declaration -->
+<!DOCTYPE html>
+<html > <!-- LANGUAGE : locale setting (value of location property in Environment) -->
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="user-scalable=1, initial-scale=0.1, width=device-width, target-densitydpi=device-dpi">
+	<!-- META_CHECKVERSION : Add if value of checkversion property in Envrionment is true -->
+
+	
+	<!-- FAVICON : favion setting (value of icon property in Environment. add to value of icon property in Environment) -->
+
+	
+	<!-- USERFONT_STYLE : userfont style setting (value of userfontid property in Environment. crate contents contained in xfont file specified userfontid property in Environment) -->
+    <style id="userfont">
+        @font-face {
+          font-family : 'KoPubL';
+          font-style : normal;
+          font-weight : 400;
+          src : local("KoPubL");
+          src : url(./_resource_/_font_/KoPubDotum_Pro_Light_0.otf);
+        }
+        @font-face {
+          font-family : 'KoPubM';
+          font-style : normal;
+          font-weight : 400;
+          src : local("KoPubM");
+          src : url(./_resource_/_font_/KoPubDotum_Pro_Medium_0.otf);
+        }
+        @font-face {
+          font-family : 'KoPubB';
+          font-style : normal;
+          font-weight : 400;
+          src : local("KoPubB");
+          src : url(./_resource_/_font_/KoPubDotum_Pro_Bold_0.otf);
+        }
+        </style>
+	
+	<!-- FRAMEWORK_LIBRARY : framework lodaing path (list of scripts files in the Framework.json file) -->
+    <script src="./nexacrolib/framework/Framework.js"></script>
+	
+	<!-- COMPONENTS_LIBRARY : commonent lodaing path (list of script file in json file specified in the TypeDefinition module) -->
+    <script src="./nexacrolib/component/CompBase.js"></script>
+    <script src="./nexacrolib/component/ComComp.js"></script>
+    <script src="./nexacrolib/component/Grid.js"></script>
+    <script src="./nexacrolib/component/ListView.js"></script>
+    <script src="./nexacrolib/component/DeviceAPI.js"></script>
+    <script src="./nexacrolib/component/Graphics.js"></script>
+    <script src="./nexacrolib/component/ExLib/core.js"></script>
+    <script src="./nexacrolib/component/ExLib/util.js"></script>
+    <script src="./nexacrolib/component/ExLib/define.js"></script>
+    <script src="./nexacrolib/component/html2canvas/html2canvas.js"></script>
+    <script src="./nexacrolib/component/jspdf/jspdf.min.js"></script>
+    <script src="./nexacrolib/component/jquery/jquery.min.js"></script>
+  
+	<!-- ENVIRONMENT_LIBRARY : application environment path (path of Environment.xml.js) -->
+    <script src="./environment.xml.js"></script>
+	
+  <!-- SPLASH_DEFINE_STYLE : Defines the style of the splash screen that is visible while modules are loading -->
+
+  
+	<title></title>
+</head>
+<body style="margin:0;border:none;-ms-touch-action:none;" onload="oninitframework()">
+	<!-- SPLASH_SHOW_STYLE : Adds the splash screen that is visible while modules are loading -->
+
+  
+	<script>
+		function oninitframework()
+		{
+			/* SPLASH_HIDE_STYLE : Hides the splash screen when modules finish loading */
+
+      
+			/* SCREEN_INFORMATION : create screen information defined in Environment > ScreenDefinition */
+			var screeninfo = [
+            {"id":"screen01","type":"desktop","httptimeout":"30","scrollbarsize":"10","icon":"url(\'\')","useproxykeepalive":"true","usehttpkeepalive":"true","datatyperule":"2.0","themeid":"theme::base","xadl":"BaseApp.xadl.js"}
+			];
+			nexacro._initHTMLSysEvent(window, document);
+			nexacro._initEnvironment(screeninfo);
+			/* create internal iframe */
+			/* USERFONT_INFORMATION : userfontid property is specified in the Environment */
+			nexacro._prepareManagerFrame(onloadframework, [{family:'KoPubL', style:'normal', weight:400},{family:'KoPubM', style:'normal', weight:400},{family:'KoPubB', style:'normal', weight:400}]);
+		}
+		function onloadframework()
+		{
+			/* application loading */
+			nexacro._loadADL();
+		}
+		function onfinalframework()
+		{
+			/* application exit */
+		}
+	</script>
+</body>
+</html>
+  
+  

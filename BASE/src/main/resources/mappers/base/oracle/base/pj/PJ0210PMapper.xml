@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0210PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		 SELECT
+			  '0' AS CHK
+		 	, '' AS ROWFLAG
+			, PJT_ID
+			, PJT_NAME
+			, PJT_STATUS_CD
+			, PJT_DESC
+			, NVL(PJT_EXEC_CD, 'N')	AS PJT_EXEC_CD
+			, IN_PM_USER_ID
+			, IN_PM_USER_NM
+			, IN_PM_DEPT
+			, OUT_PM_USER_ID
+			, OUT_PM_USER_NM
+			, OUT_CPY_ID
+			, OUT_CPY_NAME
+			, UPMU_USER_ID
+			, UPMU_USER_NM
+			, UPMU_USER_DEPT
+			, PJT_STIME
+			, PJT_ETIME
+			, PJT_OPEN_DATE
+			, PJT_TYPE_CD
+			, NVL(SPV_YN, 'N')	AS SPV_YN
+			, DEV_MM
+			, PJT_SIZE_CD
+			
+			, REG_STIME 
+			, REG_USER_ID 
+			, REG_USER_NM 
+			, REG_USER_DEPT
+
+			, SYSMODTIME 
+			, LMOD_USER_ID 
+			, LMOD_USER_NM 
+			, LMOD_USER_DEPT    
+			, (SELECT COUNT(*) FROM PJ_PROJECT WHERE PARENT_ID = '11') AS SUB_PJT_CNT
+
+		FROM
+			PJ_PROJECT
+
+		WHERE 1 = 1
+		AND PJT_ID = #{PJT_ID}
+	</select>
+	
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT DISTINCT
+			  '0' AS CHK
+			, '' AS ROWFLAG
+			, A.PJT_ID 
+			, B.CONTRACT_ID 
+			, D.CONTRACT_NO
+			, D.CONTRACT_NM
+			, C.COMPANY_NM              
+			, D.CNTR_AMT
+			, (SELECT SUM(AMOUNT) FROM CT_CNTR_ITEM WHERE CONTRACT_ID = B.CONTRACT_ID AND BUDGET_CD = 'A11') AS HW_AMT /*HW*/
+			, (SELECT SUM(AMOUNT) FROM CT_CNTR_ITEM WHERE CONTRACT_ID = B.CONTRACT_ID AND BUDGET_CD = 'B11') AS SW_AMT /*SW*/
+			, (SELECT SUM(AMOUNT) FROM CT_CNTR_ITEM WHERE CONTRACT_ID = B.CONTRACT_ID AND BUDGET_CD = 'B12') AS DEV_AMT /*개발비*/
+
+			, B.REG_STIME
+			, B.REG_USER_ID
+			, B.REG_USER_NM
+			, B.REG_USER_DEPT
+		FROM
+			  PJ_PROJECT A
+			, PJ_PJT_CNTR_MAP B
+			, MS_COMPANY C
+			, CT_CONTRACT D
+
+		WHERE 1=1
+		AND A.PJT_ID		= B.PJT_ID
+		AND B.CONTRACT_ID	= D.CONTRACT_ID		
+		AND D.COMPANY_ID	= C.COMPANY_ID(+)
+		AND A.PJT_ID		= #{PJT_ID}
+
+		ORDER BY
+			B.CONTRACT_ID
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="PJT_ID" order="BEFORE">
+			SELECT
+				'PJPJ' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(PJT_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_PROJECT
+   			WHERE 1 = 1
+   			AND PJT_ID LIKE 'PJPJ%'
+			AND LENGTH(PJT_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_PROJECT
+		(
+			  PJT_ID	--프로젝트ID
+			, PJT_NAME	--프로젝트명
+			, PJT_STATUS_CD	--프로젝트진행상태 코드
+			, PJT_DESC	--개요 내용
+			, PJT_EXEC_CD	--내외부 PJT 구분
+			, IN_PM_USER_ID	--담당PM ID
+			, IN_PM_USER_NM	--담당PM 이름
+			, IN_PM_DEPT	--담당PM 부서
+			, OUT_PM_USER_ID	--수행사PM ID
+			, OUT_PM_USER_NM	--수행사PM 이름
+			, OUT_CPY_ID	--수행회사 ID
+			, OUT_CPY_NAME	--수행회사 명
+			, UPMU_USER_ID	--현업담당자 ID
+			, UPMU_USER_NM	--현업담당자 이름
+			, UPMU_USER_DEPT	--현업담당자 부서
+			, PJT_STIME	--프로젝트 시작일자
+			, PJT_ETIME	--프로젝트 종료일자
+			, PJT_TYPE_CD	--프로젝트 유형코드
+			, PJT_SIZE_CD	--개발등급
+			, PJT_DEV_CD	--개발유형
+			, PJT_STD_YN	--표준준수여부
+			, PJT_OPEN_DATE	--오픈예정일
+			, CONTRT_ID	--계약번호
+			, DEV_AMOUNT	--개발비용
+			, DEV_MM	--개발공수
+			, HW_AMOUNT	--HW금액
+			, SW_AMOUNT	--SW금액
+			, TOT_AMOUNT	--총합계금액
+			, CONTRACT_ID	--계약테이블ID
+			, CONTRACT_NO	--계약번호
+			, OUT_PM_DEPT	--수행PM부서
+			, SUB_PJT_NO	--SUB프로젝트NO(WBS코드1레벨)
+			, SUB_PJT_YN	--SUB 프로젝트여부
+			, PARENT_ID	--상위프로젝트 ID
+			, WEIGHT	--가중치
+			, METHOD_ID	--방법론ID
+			, SCM_YN	--형상관리 시스템 적용 여부
+			, META_YN	--메타시스템 적용 여부
+			, SCODING_YN	--시큐어코딩 적용 여부
+			, EAM_YN	--EAM(통합권한관리) 적용 여부
+			, SPV_YN	--감리대상 여부
+			
+			, REG_STIME	--등록일시
+			, REG_USER_ID	--등록자ID
+			, REG_USER_NM	--등록자이름
+			, REG_USER_DEPT	--등록자부서이름
+			
+			, SYSMODTIME	--최종수정일시
+			, LMOD_USER_ID	--최종수정자ID
+			, LMOD_USER_NM	--최종수장자이름
+			, LMOD_USER_DEPT	--최종수정자부서이름
+		)
+		VALUES
+		(
+			  #{PJT_ID}
+			, #{PJT_NAME}
+			, #{PJT_STATUS_CD}
+			, #{PJT_DESC}
+			, #{PJT_EXEC_CD}
+			, #{IN_PM_USER_ID}
+			, #{IN_PM_USER_NM}
+			, #{IN_PM_DEPT}
+			, #{OUT_PM_USER_ID}
+			, #{OUT_PM_USER_NM}
+			, #{OUT_CPY_ID}
+			, #{OUT_CPY_NAME}
+			, #{UPMU_USER_ID}
+			, #{UPMU_USER_NM}
+			, #{UPMU_USER_DEPT}
+			, #{PJT_STIME}
+			, #{PJT_ETIME}
+			, #{PJT_TYPE_CD}
+			, #{PJT_SIZE_CD}
+			, #{PJT_DEV_CD}
+			, #{PJT_STD_YN}
+			, #{PJT_OPEN_DATE}
+			, #{CONTRT_ID}
+			, #{DEV_AMOUNT}
+			, #{DEV_MM}
+			, #{HW_AMOUNT}
+			, #{SW_AMOUNT}
+			, #{TOT_AMOUNT}
+			, #{CONTRACT_ID}
+			, #{CONTRACT_NO}
+			, #{OUT_PM_DEPT}
+			, #{SUB_PJT_NO}
+			, #{SUB_PJT_YN}
+			, #{PARENT_ID}
+			, #{WEIGHT}
+			, #{METHOD_ID}
+			, #{SCM_YN}
+			, #{META_YN}
+			, #{SCODING_YN}
+			, #{EAM_YN}
+			, #{SPV_YN}
+			
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_PROJECT SET
+			  PJT_NAME			= #{PJT_NAME}													--프로젝트명
+			, PJT_STATUS_CD		= #{PJT_STATUS_CD}												--프로젝트진행상태 코드
+			, PJT_DESC			= #{PJT_DESC}													--개요 내용
+			, PJT_EXEC_CD		= #{PJT_EXEC_CD}												--내외부 PJT 구분
+			, IN_PM_USER_ID		= #{IN_PM_USER_ID}												--담당PM ID
+			, IN_PM_USER_NM		= #{IN_PM_USER_NM}												--담당PM 이름
+			, IN_PM_DEPT		= #{IN_PM_DEPT}													--담당PM 부서
+			, OUT_PM_USER_ID	= #{OUT_PM_USER_ID}												--수행사PM ID
+			, OUT_PM_USER_NM	= #{OUT_PM_USER_NM}												--수행사PM 이름
+			, OUT_CPY_ID		= #{OUT_CPY_ID}													--수행회사 ID
+			, OUT_CPY_NAME		= #{OUT_CPY_NAME}												--수행회사 명
+			, UPMU_USER_ID		= #{UPMU_USER_ID}												--현업담당자 ID
+			, UPMU_USER_NM		= #{UPMU_USER_NM}												--현업담당자 이름
+			, UPMU_USER_DEPT	= #{UPMU_USER_DEPT}												--현업담당자 부서
+			, PJT_STIME			= #{PJT_STIME}													--프로젝트 시작일자
+			, PJT_ETIME			= #{PJT_ETIME}													--프로젝트 종료일자
+			, PJT_TYPE_CD		= #{PJT_TYPE_CD}												--프로젝트 유형코드
+			, PJT_SIZE_CD		= #{PJT_SIZE_CD}												--개발등급
+			, PJT_DEV_CD		= #{PJT_DEV_CD}													--개발유형
+			, PJT_STD_YN		= #{PJT_STD_YN}													--표준준수여부
+			, PJT_OPEN_DATE		= #{PJT_OPEN_DATE}												--오픈예정일
+			, CONTRT_ID			= #{CONTRT_ID}													--계약번호
+			, DEV_AMOUNT		= #{DEV_AMOUNT}													--개발비용
+			, DEV_MM			= #{DEV_MM}														--개발공수
+			, HW_AMOUNT			= #{HW_AMOUNT}													--HW금액
+			, SW_AMOUNT			= #{SW_AMOUNT}													--SW금액
+			, TOT_AMOUNT		= #{TOT_AMOUNT}													--총합계금액
+			, CONTRACT_ID		= #{CONTRACT_ID}												--계약테이블ID
+			, CONTRACT_NO		= #{CONTRACT_NO}												--계약번호
+			, OUT_PM_DEPT		= #{OUT_PM_DEPT}												--수행PM부서
+			, SUB_PJT_NO		= #{SUB_PJT_NO}													--SUB프로젝트NO(WBS코드1레벨)
+			, SUB_PJT_YN		= #{SUB_PJT_YN}													--SUB 프로젝트여부
+			, PARENT_ID			= #{PARENT_ID}													--상위프로젝트 ID
+			, WEIGHT			= #{WEIGHT}														--가중치
+			, METHOD_ID			= #{METHOD_ID}													--방법론ID
+			, SCM_YN			= #{SCM_YN}														--형상관리 시스템 적용 여부
+			, META_YN			= #{META_YN}													--메타시스템 적용 여부
+			, SCODING_YN		= #{SCODING_YN}													--시큐어코딩 적용 여부
+			, EAM_YN			= #{EAM_YN}														--EAM(통합권한관리) 적용 여부
+			, SPV_YN			= #{SPV_YN}														--감리대상 여부
+			
+			, SYSMODTIME		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+
+		WHERE 1 = 1
+		AND PJT_ID = #{PJT_ID}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_PROJECT
+		WHERE 1 = 1
+		AND PJT_ID = #{PJT_ID}
+	</delete>
+	
+	<insert id="insert02" parameterType="java.util.Map">
+		INSERT INTO PJ_PJT_CNTR_MAP 
+		(
+			  PJT_ID
+			, CONTRACT_ID
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+		) 
+		VALUES 
+		(
+			  #{PJT_ID} 
+			, #{CONTRACT_ID}
+			
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		) 
+	</insert>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE PJ_PJT_CNTR_MAP 
+		WHERE 1 = 1
+		AND PJT_ID		= #{PJT_ID}
+		
+		<if test="CONTRACT_ID != '' and CONTRACT_ID != null">
+		AND CONTRACT_ID = #{CONTRACT_ID}
+		</if>
+	</delete>
+
+	<insert id="insert03" parameterType="java.util.Map">
+		MERGE
+		INTO	PJ_WBS A
+		USING 	DUAL
+		ON		(A.PJT_ID = #{PJT_ID} AND A.LVL = 0)
+
+		WHEN NOT MATCHED THEN
+			INSERT
+			(
+		
+				  PJT_ID
+				, WBS_ID
+				, WBS_CODE			--WBS코드
+				, WBS_NAME			--WBS이름
+				, LVL				--WBS 레벨
+				, PARENT_ID			--상위 프로젝트 코드
+				
+				, REG_STIME
+				, REG_USER_ID
+				, REG_USER_NM
+				, REG_USER_DEPT
+	
+				, LMOD_SDATE
+				, LMOD_USER_ID
+				, LMOD_USER_NM
+				, LMOD_USER_DEPT
+			)
+			VALUES
+			(
+				  #{PJT_ID}
+				, (
+				  SELECT
+					'PJWB' || TO_CHAR(SYSDATE, 'YYMMDD') || LPAD(TO_NUMBER(NVL(MAX(SUBSTR(WBS_ID, 11)), 0)) + 1, 6, 0)
+				  FROM PJ_WBS
+				  WHERE 1 = 1
+				  AND WBS_ID LIKE 'PJWB%'
+				  AND LENGTH(WBS_ID) = 16
+				  ) 
+				, '1' 
+				, #{PJT_NAME} 
+				, '0'
+				, NULL
+
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  
+				, #{REG_USER_ID}
+				, #{REG_USER_NM}
+				, #{REG_USER_DEPT}
+	
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') 
+				, #{LMOD_USER_ID}
+				, #{LMOD_USER_NM}
+				, #{LMOD_USER_DEPT}
+			)
+	</insert>
+
+	<delete id="remove03" parameterType="java.util.Map">
+		DELETE PJ_WBS 
+		WHERE 1 = 1
+		AND PJT_ID	= #{PJT_ID}
+	</delete>
+
+	<insert id="insert04" parameterType="java.util.Map">
+		MERGE
+		INTO	PJ_WBS_TOT A
+		USING 	DUAL
+		ON		(A.PJT_ID = #{PJT_ID})
+
+		WHEN NOT MATCHED THEN
+			INSERT
+		    (
+		          PJT_ID
+		        , VERSION
+
+		        , REG_STIME
+		        , REG_USER_ID
+		        , REG_USER_NM
+		        , REG_USER_DEPT
+		        , LMOD_SDATE
+		        , LMOD_USER_ID
+		        , LMOD_USER_NM
+		        , LMOD_USER_DEPT
+		    )
+		    VALUES
+		    (
+		    	  #{PJT_ID}
+				, '0.0'
+
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  
+				, #{REG_USER_ID}
+				, #{REG_USER_NM}
+				, #{REG_USER_DEPT}
+	
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') 
+				, #{LMOD_USER_ID}
+				, #{LMOD_USER_NM}
+				, #{LMOD_USER_DEPT}
+		    )
+	</insert>
+
+	<delete id="remove04" parameterType="java.util.Map">
+		DELETE PJ_WBS_TOT 
+		WHERE 1 = 1
+		AND PJT_ID = #{PJT_ID}
+	</delete>
+</mapper>

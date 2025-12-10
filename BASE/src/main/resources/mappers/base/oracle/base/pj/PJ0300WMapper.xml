@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0300WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0' AS CHK
+			, '' AS ROWFLAG
+			, A.PJT_ID
+			, D.PJT_NAME
+			, A.DLVR_ID
+			, ''	AS TMP_DLVR_ID
+			, D.METHOD_ID
+			, C.METHOD_NAME
+			, C.METHOD_CLASS_CD
+			, A.STAGE_CD
+			, A.METHOD_DLVR_ID
+			, A.DLVR_NAME
+			, A.METHOD_MAND
+			, B.GRADE_A
+			, DECODE(E.CNT, 1, E.WBS_NAME, NULL, E.WBS_NAME, E.WBS_NAME||' 외 '||TO_CHAR(E.CNT-1, '99')||'건') AS WBS_ID
+			, DECODE(F.FCNT, 1, F.ORG_FILE_NM, NULL, F.ORG_FILE_NM, F.ORG_FILE_NM || ' 외'||TO_CHAR(F.FCNT-1, '99') || '건') AS ATTACH_FILE
+			, 'N'	AS SEARCH_ATTACH_FILE_YN
+			, A.SYSMODTIME
+			, A.EXCEPT_YN
+			, A.EXCEPT_REASON
+			, A.METHOD_DLVR_NAME
+			, A.METHOD_GRADE
+			, '' AS METHOD_TYPE_CD
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, F.LMOD_ATTACH_TIME
+			, I.TEMP_ORG_FILE_NM
+
+		FROM
+			PJ_DELIVERY A,
+			PJ_METHOD_DLVR B,
+			PJ_METHOD C,
+			PJ_PROJECT D,
+			(
+			SELECT
+				T1.PJT_ID,
+                T1.DLVR_ID,
+                COUNT(*) AS CNT,
+				<!-- MAX(WBS_NAME) WBS_NAME  -->
+				MAX(WBS_NAME) KEEP(DENSE_RANK FIRST ORDER BY WBS_ID) AS WBS_NAME
+			FROM
+				PJ_DLVR_WBS_MAP T1 
+			GROUP BY
+				T1.PJT_ID, T1.DLVR_ID
+			) E,
+			(
+			SELECT
+				PK1						AS REF_ID, 
+                COUNT(*)				AS FCNT,
+                MAX(FILE_NM) KEEP(DENSE_RANK FIRST ORDER BY FRDT) AS ORG_FILE_NM,
+                MAX(NVL(LMDT, FRDT))	AS LMOD_ATTACH_TIME
+			FROM
+				FOMM_ATCHFILE_MT
+			WHERE 1 = 1
+			AND KEY_TBL	= 'PJ_DELIVERY'
+			AND DEL_YN	= 'N'
+			AND	TEMP_YN	= 'N'
+			GROUP BY PK1
+			) F,
+			(
+			SELECT
+				  A.METHOD_ID
+				, A.DELIVERY_ID 
+				, A.STAGE_CD
+				, MAX(B.FILE_NM) KEEP(DENSE_RANK FIRST ORDER BY B.FRDT) AS TEMP_ORG_FILE_NM
+				, '' AS FILE_IMG
+			FROM
+				PJ_METHOD_DLVR A,
+				FOMM_ATCHFILE_MT B
+
+			WHERE 1 = 1
+            AND A.METHOD_ID		= B.PK1(+)
+			AND A.DELIVERY_ID	= B.PK2(+)
+			AND B.DEL_YN(+)		= 'N'
+			AND B.TEMP_YN(+)	= 'N'
+
+			GROUP BY
+				  A.METHOD_ID
+				, A.DELIVERY_ID
+				, A.STAGE_CD
+			) I
+
+		WHERE 1 = 1
+		AND A.METHOD_DLVR_ID	= B.DELIVERY_ID(+)
+		AND A.METHOD_ID			= C.METHOD_ID(+)
+		AND A.PJT_ID			= D.PJT_ID
+		AND A.METHOD_DLVR_ID	= I.DELIVERY_ID(+)
+		AND A.PJT_ID			= E.PJT_ID(+)
+		AND A.DLVR_ID			= E.DLVR_ID(+)
+		AND A.DLVR_ID			= F.REF_ID(+)
+
+		<if test="STAGE_CD != '' and STAGE_CD != null">
+		AND B.STAGE_CD = #{STAGE_CD}
+		</if>
+
+		<if test="METHOD_CLASS_CD != '' and METHOD_CLASS_CD != null">
+        AND C.METHOD_CLASS_CD = #{METHOD_CLASS_CD}
+		</if>
+
+		<choose>
+			<when test='"Y".equals(SUB_YN)'>
+		AND D.PJT_ID = #{PJT_ID}
+			</when>
+			<when test='"N".equals(SUB_YN)'>
+		AND D.PARENT_ID = #{PJT_ID}
+			</when>
+		</choose>
+
+		ORDER BY
+			A.PJT_ID, A.METHOD_DLVR_ID
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  A.PJT_ID
+			, A.PJT_NAME
+			, A.PJT_STATUS_CD
+			, A.PJT_DESC
+			, A.PJT_EXEC_CD
+			, A.IN_PM_USER_ID
+			, A.IN_PM_USER_NM
+			, A.IN_PM_DEPT
+			, A.OUT_PM_USER_ID
+			, A.OUT_PM_USER_NM
+			, A.OUT_CPY_ID
+			, A.OUT_CPY_NAME
+			, A.UPMU_USER_ID
+			, A.UPMU_USER_NM
+			, A.UPMU_USER_DEPT
+			, A.PJT_STIME
+			, A.PJT_ETIME
+			, A.PJT_TYPE_CD
+			, A.PJT_SIZE_CD
+			, A.PJT_DEV_CD
+			, A.PJT_STD_YN
+			, A.PJT_OPEN_DATE
+			, A.CONTRT_ID
+			, A.DEV_AMOUNT
+			, A.DEV_MM
+			, A.HW_AMOUNT
+			, A.SW_AMOUNT
+			, A.TOT_AMOUNT
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.SYSMODTIME
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, A.CONTRACT_ID
+			, A.CONTRACT_NO
+			, A.OUT_PM_DEPT
+			, A.SUB_PJT_NO
+			, A.SUB_PJT_YN
+			, A.PARENT_ID
+			, A.WEIGHT
+			, A.METHOD_ID
+			, B.METHOD_NAME
+			, B.METHOD_CLASS_CD
+
+		FROM
+			  PJ_PROJECT A
+			, PJ_METHOD B   
+
+		WHERE 1 = 1 
+		AND A.PARENT_ID = #{MAIN_ID} 
+		AND A.METHOD_ID = B.METHOD_ID(+) 
+
+		ORDER
+			BY A.PJT_NAME
+	</select>
+
+	<select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, D.PARENT_ID
+			, A.DLVRWBS_ID
+			, ''	AS TMP_DLVR_ID
+			, A.DLVR_ID
+			, A.DLVR_NAME
+			, A.PJT_ID
+			, A.WBS_ID
+			, A.WBS_CODE
+			, A.WBS_NAME
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+
+		FROM
+			PJ_DLVR_WBS_MAP A,
+			PJ_PROJECT D 
+
+		WHERE 1 = 1
+		AND D.PJT_ID  = A.PJT_ID
+
+		<choose>
+			<when test='"Y".equals(SUB_YN)'>
+		AND D.PJT_ID = #{PJT_ID}
+			</when>
+			<when test='"N".equals(SUB_YN)'>
+		AND D.PARENT_ID = #{PJT_ID}
+			</when>
+		</choose>
+
+		ORDER BY
+			A.WBS_CODE, A.DLVR_ID
+	</select>
+
+	<select id="select04" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+		      A.METHOD_ID
+		    , A.METHOD_NAME
+		    , B.DELIVERY_ID
+		    , B.DELIVERY_NAME
+		    , B.STAGE_CD
+		FROM
+		      PJ_METHOD A
+		    , PJ_METHOD_DLVR B
+		
+		WHERE 1 = 1
+		AND A.METHOD_ID   = B.METHOD_ID
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="DLVR_ID" order="BEFORE">
+			SELECT
+				'PJDL' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(DLVR_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_DELIVERY
+   			WHERE 1 = 1
+   			AND DLVR_ID LIKE 'PJDL%'
+			AND LENGTH(DLVR_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_DELIVERY
+		(
+			  DLVR_ID
+			, DLVR_NAME
+			, PJT_ID
+			, METHOD_DLVR_ID
+			, METHOD_DLVR_NAME
+			, METHOD_ID
+			, METHOD_GRADE
+			, METHOD_MAND
+			, EXCEPT_YN
+			, EXCEPT_REASON
+			, STAGE_CD
+			
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+			
+			, SYSMODTIME
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+
+			, LMOD_ATTACH_TIME
+		)
+		VALUES 
+		(
+			  #{DLVR_ID}
+			, #{DLVR_NAME}
+			, #{PJT_ID}
+			, #{METHOD_DLVR_ID}
+			, #{METHOD_DLVR_NAME}
+			, #{METHOD_ID}
+			, #{METHOD_GRADE}
+			, #{METHOD_MAND}
+			, #{EXCEPT_YN}
+			, #{EXCEPT_REASON}
+			, #{STAGE_CD}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, #{LMOD_ATTACH_TIME}		 
+ 		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_DELIVERY SET
+			  DLVR_NAME			= #{DLVR_NAME}
+			, METHOD_DLVR_NAME	= #{METHOD_DLVR_NAME}
+			, METHOD_GRADE		= #{METHOD_GRADE}
+			, METHOD_MAND		= #{METHOD_MAND}
+			, EXCEPT_YN			= #{EXCEPT_YN}
+			, EXCEPT_REASON		= #{EXCEPT_REASON}
+			<!-- , STAGE_CD			= #{STAGE_CD} -->
+
+			, SYSMODTIME		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+
+			, LMOD_ATTACH_TIME	= #{LMOD_ATTACH_TIME}
+  		WHERE 1 = 1
+  		AND PJT_ID	= #{PJT_ID}
+  		AND DLVR_ID = #{DLVR_ID}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_DELIVERY
+  		WHERE 1 = 1
+  		AND DLVR_ID = #{DLVR_ID}
+	</delete>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		INSERT INTO PJ_DLVR_WBS_MAP 
+		(
+			  DLVRWBS_ID
+			, DLVR_ID
+			, DLVR_NAME
+			, PJT_ID
+			, WBS_ID
+			, WBS_CODE
+			, WBS_NAME
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+		)
+		VALUES
+		(
+			  (
+			  SELECT
+				'PJDW' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(DLVRWBS_ID, -6), 0) )), 0) + 1, 6, 0)
+			  FROM PJ_DLVR_WBS_MAP
+			  WHERE 1 = 1
+			  AND DLVRWBS_ID LIKE 'PJDW%'
+			  AND LENGTH(DLVRWBS_ID) = 16
+			  )
+			, #{DLVR_ID}
+			, #{DLVR_NAME} 
+			, #{PJT_ID}
+			, #{WBS_ID}
+			, #{WBS_CODE}
+			, #{WBS_NAME}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		 )
+	</insert>
+
+	<update id="modify02" parameterType="java.util.Map">
+		UPDATE PJ_DLVR_WBS_MAP SET
+			  DLVR_ID	= #{DLVR_ID}
+			, DLVR_NAME = #{DLVR_NAME}
+			, PJT_ID	= #{PJT_ID}
+			, WBS_ID	= #{WBS_ID}
+			, WBS_CODE	= #{WBS_CODE}
+		WHERE 1 = 1
+		AND DLVRWBS_ID = #{DLVRWBS_ID}
+	</update>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE FROM PJ_DLVR_WBS_MAP
+  		WHERE 1 = 1
+  		AND DLVRWBS_ID = #{DLVRWBS_ID}
+	</delete>
+
+</mapper>

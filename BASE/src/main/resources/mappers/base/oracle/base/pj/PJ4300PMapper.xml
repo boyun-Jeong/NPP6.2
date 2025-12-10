@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ4300PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.INF_ID
+			, A.INF_NO
+			, A.INF_NAME
+			, A.INF_TYPE_CD
+			, A.PJT_ID
+			, A.BIZ_ID
+			, A.REQ_ORG
+			, A.REQ_BIZ
+			, A.RSP_ORG
+			, A.RSP_BIZ
+			, A.INF_CLASS_CD
+			, A.INF_PERIOD_CD
+			, A.INF_METHOD_CD
+			, A.INF_COM_TYPE
+			, A.INF_TR_NO
+			, A.INF_DESC
+			, A.REMARK
+			, A.PLAN_SDATE
+			, A.PLAN_EDATE
+			, A.ACTL_SDATE
+			, A.ACTL_EDATE
+			, A.CHG_USER_NM
+			, A.DEV_USER_ID
+			, A.DEV_USER_NM
+			, A.DEV_USER_DEPT
+			, A.PL_USER_ID
+			, A.PL_USER_NM
+			, A.PL_USER_DEPT
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, B.PJT_NAME AS PJT_NAME
+			, C.PJT_ID   AS P_PJT_ID 
+			, C.PJT_NAME AS P_PJT_NAME
+
+		FROM
+			  PJ_INTERFACE A   
+			, PJ_PROJECT B   
+			, PJ_PROJECT C   
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND B.PARENT_ID	= C.PJT_ID
+		AND A.INF_ID	= #{INF_ID}
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'		AS CHK
+			, ''		AS ROWFLAG
+			, A.INF_ID AS REF_ID
+			, A.REQ_ID
+			, B.REQ_NO
+			, B.REQ_NAME
+			, A.PJT_ID
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+
+		FROM
+			  PJ_INF_REQ_MAP A
+			, PJ_REQMENT B
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND A.REQ_ID	= B.REQ_ID
+		AND A.INF_ID	= #{INF_ID}
+		<!-- AND A.PJT_ID	= #{SUB_PJT_ID} -->
+
+		ORDER BY
+			B.REQ_NO, B.REQ_ID
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="INF_ID" order="BEFORE">
+			SELECT
+				'PJIF' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(INF_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_INTERFACE
+   			WHERE 1 = 1
+   			AND INF_ID LIKE 'PJIF%'
+			AND LENGTH(INF_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_INTERFACE
+		(  
+			  INF_ID
+			, INF_NO
+			, INF_NAME
+			, INF_TYPE_CD
+			, PJT_ID
+			, BIZ_ID
+			, REQ_ORG
+			, REQ_BIZ
+			, RSP_ORG
+			, RSP_BIZ
+			, INF_CLASS_CD
+			, INF_PERIOD_CD
+			, INF_METHOD_CD
+			, INF_COM_TYPE
+			, INF_TR_NO
+			, INF_DESC
+			, REMARK
+			, PLAN_SDATE
+			, PLAN_EDATE
+			, ACTL_SDATE
+			, ACTL_EDATE
+			, CHG_USER_NM
+			, DEV_USER_ID
+			, DEV_USER_NM
+			, DEV_USER_DEPT
+			, PL_USER_ID
+			, PL_USER_NM
+			, PL_USER_DEPT
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  #{INF_ID}
+			, #{INF_NO}
+			, #{INF_NAME}
+			, #{INF_TYPE_CD}
+			, #{PJT_ID}
+			, #{BIZ_ID}
+			, #{REQ_ORG}
+			, #{REQ_BIZ}
+			, #{RSP_ORG}
+			, #{RSP_BIZ}
+			, #{INF_CLASS_CD}
+			, #{INF_PERIOD_CD}
+			, #{INF_METHOD_CD}
+			, #{INF_COM_TYPE}
+			, #{INF_TR_NO}
+			, #{INF_DESC}
+			, #{REMARK}
+			, #{PLAN_SDATE}
+			, #{PLAN_EDATE}
+			, #{ACTL_SDATE}
+			, #{ACTL_EDATE}
+			, #{CHG_USER_NM}	
+			, #{DEV_USER_ID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{DEV_USER_ID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{DEV_USER_ID})
+			, #{PL_USER_ID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{PL_USER_ID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{PL_USER_ID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_INTERFACE SET
+			  INF_NO			= #{INF_NO}
+            , INF_NAME			= #{INF_NAME}
+            , INF_TYPE_CD		= #{INF_TYPE_CD}
+            , BIZ_ID			= #{BIZ_ID}
+            , REQ_ORG			= #{REQ_ORG}
+            , REQ_BIZ			= #{REQ_BIZ}
+            , RSP_ORG			= #{RSP_ORG}
+            , RSP_BIZ			= #{RSP_BIZ}
+            , INF_CLASS_CD		= #{INF_CLASS_CD}
+            , INF_PERIOD_CD		= #{INF_PERIOD_CD}
+            , INF_METHOD_CD		= #{INF_METHOD_CD}
+            , INF_COM_TYPE		= #{INF_COM_TYPE}
+            , INF_TR_NO			= #{INF_TR_NO}
+            , INF_DESC			= #{INF_DESC}
+            , REMARK			= #{REMARK}
+            , PLAN_SDATE		= #{PLAN_SDATE}
+            , PLAN_EDATE		= #{PLAN_EDATE}
+            , ACTL_SDATE		= #{ACTL_SDATE}
+            , ACTL_EDATE		= #{ACTL_EDATE}
+            , CHG_USER_NM		= #{CHG_USER_NM}
+			, DEV_USER_ID		= #{DEV_USER_ID}
+			, DEV_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{DEV_USER_ID})
+			, DEV_USER_DEPT		= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{DEV_USER_ID})
+			, PL_USER_ID		= #{PL_USER_ID}
+			, PL_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{PL_USER_ID})
+			, PL_USER_DEPT		= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{PL_USER_ID})
+
+            , LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+
+		WHERE 1 = 1
+		AND INF_ID	= #{INF_ID}			
+	</update>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		INSERT INTO PJ_INF_REQ_MAP
+		(  
+			  INF_ID
+			, REQ_ID
+			, PJT_ID
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+		)
+		VALUES
+		(
+			  #{REF_ID}
+			, #{REQ_ID}
+			, #{PJT_ID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_INF_REQ_MAP
+		WHERE 1 = 1
+		AND INF_ID	= #{REF_ID}
+		AND REQ_ID	= #{REQ_ID}
+	</delete>
+
+</mapper>

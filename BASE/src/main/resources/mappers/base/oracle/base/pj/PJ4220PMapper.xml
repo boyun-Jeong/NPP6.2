@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ4220PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.SCR_ID
+			, A.SCR_NO
+			, A.SCR_NAME
+			, A.SCR_TYPE_CD
+			, A.PJT_ID
+			, A.BIZ_ID
+			, D.BIZ_NAME
+			, A.IMPORTANT_CD
+			, A.DIFFICULT_CD
+			, A.PLAN_SDATE
+			, A.PLAN_EDATE
+			, A.ACTL_SDATE
+			, A.ACTL_EDATE
+			, A.CHG_USER_NM
+			, A.DEV_USER_ID
+			, A.DEV_USER_NM
+			, A.DEV_USER_DEPT
+			, A.PL_USER_ID
+			, A.PL_USER_NM
+			, A.PL_USER_DEPT
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, A.SCR_DESC
+			, A.REMARK
+			, B.PJT_NAME AS PJT_NAME
+			, C.PJT_ID      AS P_PJT_ID 
+			, C.PJT_NAME AS P_PJT_NAME
+
+		FROM
+			  PJ_SCREEN A   
+			, PJ_PROJECT B
+			, PJ_PROJECT C
+			, PJ_BIZ D
+
+		WHERE 1 = 1
+		AND A.PJT_ID    = B.PJT_ID
+		AND B.PARENT_ID = C.PJT_ID
+		AND A.PJT_ID	= D.PJT_ID
+		AND A.BIZ_ID	= D.BIZ_ID
+		AND A.PJT_ID	= #{SUB_PJT_ID}
+
+		<if test="BIZ_ID != '' and BIZ_ID != null">
+		AND A.BIZ_ID	= #{BIZ_ID}
+		</if>
+
+		<if test="SCR_NO != '' and SCR_NO != null">
+		AND UPPER(A.SCR_NO) LIKE '%' || UPPER(#{SCR_NO}) || '%'
+		</if>
+
+		<if test="SCR_NM != '' and SCR_NM != null">
+		AND UPPER(A.SCR_NAME) LIKE '%' || UPPER(#{SCR_NM}) || '%'
+		</if>
+
+		<if test="SCR_TYPE_CD != '' and SCR_TYPE_CD != null">
+		AND A.SCR_TYPE_CD	= #{SCR_TYPE_CD}
+		</if>
+
+		ORDER BY
+			A.SCR_NO, A.SCR_ID
+	</select>
+
+</mapper>

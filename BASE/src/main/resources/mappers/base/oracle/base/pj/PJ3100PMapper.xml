@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ3100PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.RISK_ID         
+			, A.RISK_NO         
+			, A.RISK_NAME       
+			, A.PJT_ID          
+			, B.PJT_NAME AS PJT_NAME
+			, A.RISK_STATUS_CD  
+			, A.RISK_TYPE_CD    
+			, A.RISK_DESC       
+			, A.RISK_STIME      
+			, A.RISK_IMPACT_CD  
+			, A.RISK_PLAN_CD    
+			, A.RISK_REAL_CD    
+			, A.CPL_PLAN_TIME   
+			, A.CPL_ACT_TIME    
+			, A.CHG_USER_ID     
+			, A.CHG_USER_NM     
+			, A.CHG_USER_DEPT   
+			, A.REG_STIME       
+			, A.REG_USER_ID     
+			, A.REG_USER_NM     
+			, A.REG_USER_DEPT   
+			, A.SYSMODTIME      
+			, A.LMOD_USER_ID    
+			, A.LMOD_USER_NM    
+			, A.LMOD_USER_DEPT  
+			, C.ISSUE_ID
+			, C.ISSUE_NO
+			, C.ISSUE_NAME
+
+		FROM
+			PJ_RISK A
+          , PJ_PROJECT B
+          , (
+            SELECT 
+				  C.ISSUE_ID
+				, C.ISSUE_NO
+				, C.ISSUE_NAME
+				, C.RISK_ID
+			FROM
+				PJ_ISSUE C
+
+			WHERE 1 = 1
+			AND C.PJT_ID	= #{PJT_ID}
+			AND C.RISK_ID	= #{RISK_ID}
+			AND ROWNUM		= 1
+            ) C
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND A.RISK_ID	= C.RISK_ID(+)
+		AND A.RISK_ID	= #{RISK_ID}
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.ACT_ID
+			, A.RISK_ID
+			, A.ACT_DESC
+			, A.ACT_STATUS_CD
+			, A.ACT_TIME
+			, A.ACT_USER_ID
+			, A.ACT_USER_NM
+			, A.ACT_USER_DEPT
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.SYSMODTIME
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, MAX(B.FILE_SAVE_NM)   AS ORG_FILE_NM 
+			, COUNT(B.FILE_SAVE_NM)	AS FILE_CNT
+<!-- 			, MAX(B.ORG_FILE_NM)    AS ORG_FILE_NM -->
+<!-- 			, COUNT(B.ORG_FILE_NM) AS FILE_CNT -->
+
+		FROM
+			PJ_RISK_ACTION A
+          , FOMM_ATCHFILE_MT B	<!-- PJ_FILE_ATTACH B -->
+
+		WHERE 1 = 1
+		<!-- AND A.ACT_ID = B.REF_ID(+) -->
+		AND A.RISK_ID		= B.PK1(+)
+		AND A.ACT_ID		= B.PK2(+)
+		AND B.DEL_YN(+)		= 'N'
+		AND B.TEMP_YN(+)	= 'N'
+		<!-- AND B.REF_TYPE(+)	= 'PJRA' -->
+		AND B.KEY_TBL(+)	= 'PJ_RISK_ACTION'
+		AND A.RISK_ID		= #{RISK_ID}
+
+		GROUP BY
+			  A.ACT_ID
+			, A.RISK_ID
+			, A.ACT_DESC
+			, A.ACT_STATUS_CD
+			, A.ACT_TIME
+			, A.ACT_USER_ID
+			, A.ACT_USER_NM
+			, A.ACT_USER_DEPT
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.SYSMODTIME
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+
+		ORDER BY
+			A.ACT_ID
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="RISK_ID" order="BEFORE">
+			SELECT
+				'PJRS' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(RISK_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_RISK
+   			WHERE 1 = 1
+   			AND RISK_ID LIKE 'PJRS%'
+			AND LENGTH(RISK_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_RISK
+		(
+			  RISK_ID
+			, RISK_NO
+			, RISK_NAME
+			, PJT_ID
+			, RISK_STATUS_CD
+			, RISK_TYPE_CD
+			, RISK_DESC
+			, RISK_STIME
+			, RISK_IMPACT_CD
+			, RISK_PLAN_CD
+			, RISK_REAL_CD
+			, CPL_PLAN_TIME
+			, CPL_ACT_TIME
+			, CHG_USER_ID
+			, CHG_USER_NM
+			, CHG_USER_DEPT
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+
+			, SYSMODTIME
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES 
+		(
+			  #{RISK_ID}
+			, #{RISK_NO}
+			, #{RISK_NAME}
+			, #{PJT_ID}
+			, #{RISK_STATUS_CD}
+			, #{RISK_TYPE_CD}
+			, #{RISK_DESC}
+			, #{RISK_STIME}
+			, #{RISK_IMPACT_CD}
+			, #{RISK_PLAN_CD}
+			, #{RISK_REAL_CD}
+			, #{CPL_PLAN_TIME}
+			, #{CPL_ACT_TIME}
+			, #{CHG_USER_ID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{CHG_USER_ID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{CHG_USER_ID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)	
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_RISK SET
+			  RISK_NO			= #{RISK_NO}
+            , RISK_NAME			= #{RISK_NAME}
+            , RISK_STATUS_CD	= #{RISK_STATUS_CD}
+            , RISK_TYPE_CD		= #{RISK_TYPE_CD}
+            , RISK_DESC			= #{RISK_DESC}
+            , RISK_STIME		= #{RISK_STIME}
+            , RISK_IMPACT_CD	= #{RISK_IMPACT_CD}
+            , RISK_PLAN_CD		= #{RISK_PLAN_CD}
+            , RISK_REAL_CD		= #{RISK_REAL_CD}
+            , CPL_PLAN_TIME		= #{CPL_PLAN_TIME}
+            , CPL_ACT_TIME		= #{CPL_ACT_TIME}
+            , CHG_USER_ID		= #{CHG_USER_ID}
+            , CHG_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{CHG_USER_ID})
+            , CHG_USER_DEPT		= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{CHG_USER_ID})
+
+			, SYSMODTIME		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+		WHERE 1 = 1
+		AND RISK_ID = #{RISK_ID}
+	</update>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="ACT_ID" order="BEFORE">
+			SELECT
+				'PJRA' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(ACT_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_RISK_ACTION
+   			WHERE 1 = 1
+   			AND ACT_ID LIKE 'PJRA%'
+			AND LENGTH(ACT_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_RISK_ACTION
+		(
+			  ACT_ID           
+			, RISK_ID
+			, ACT_DESC
+			, ACT_STATUS_CD
+			, ACT_TIME
+			, ACT_USER_ID
+			, ACT_USER_NM
+			, ACT_USER_DEPT
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+
+			, SYSMODTIME
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  #{ACT_ID}
+			, #{RISK_ID}
+			, #{ACT_DESC}
+			, #{ACT_STATUS_CD}
+			, #{ACT_TIME}
+			, #{ACT_USER_ID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{ACT_USER_ID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{ACT_USER_ID})
+			 
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify02" parameterType="java.util.Map">
+		UPDATE PJ_RISK_ACTION SET
+			  ACT_DESC			= #{ACT_DESC}
+            , ACT_STATUS_CD		= #{ACT_STATUS_CD}
+            , ACT_TIME			= #{ACT_TIME}
+            , ACT_USER_ID		= #{ACT_USER_ID}
+			, ACT_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{ACT_USER_ID}) 
+			, ACT_USER_DEPT 	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{ACT_USER_ID})
+
+			, SYSMODTIME		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+
+		WHERE 1 = 1
+		AND RISK_ID	= #{RISK_ID}
+		AND ACT_ID	= #{ACT_ID}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_RISK_ACTION
+		WHERE 1 = 1
+		AND RISK_ID = #{RISK_ID}
+		AND ACT_ID	= #{ACT_ID}
+	</delete>
+
+</mapper>

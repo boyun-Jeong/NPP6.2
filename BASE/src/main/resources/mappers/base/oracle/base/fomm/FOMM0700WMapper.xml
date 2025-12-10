@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0700WDAO">
+
+		<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT			  
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, CHKLST_ID	--표준체크리스트ID
+			, CHKLST_STEP_CD	--단계(01공통/11착수/12분석/13설계/14구현/15테스트/16이관/17모니터링/99기타 등)
+			, CHKLST_TYPE_CD	--업무유형 (일반업무/프로젝트관리/개발업무/SDLC/교육/산출물검토)
+			, CHKLST_NM	--체크리스트명
+			, CHKLST_DESC	--체크리스트설명
+			, CHKLST_MAX_VAL	--체크리스트최대점수
+			, CHKLST_CAL_CD	--통계방법 (1평균 2총점)
+			, ORD_NO	--순서번호
+			, USE_YN	--사용유무(Y/N)
+			, FRID	--최초등록자
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정화면ID
+		FROM FOMM_CHKLST
+		WHERE 1 = 1
+		
+		<if test="CHKLST_ID_STR != '' and CHKLST_ID_STR != null">
+		AND CHKLST_ID IN
+            <foreach collection="CHKLST_ID_ARR" item="chklstId" open="(" close=")" separator=",">
+                #{chklstId}
+            </foreach>
+		</if>
+		
+		<if test="CHKLST_ID != '' and CHKLST_ID != null">
+		AND CHKLST_ID = #{CHKLST_ID}
+		</if>
+		
+		<if test="CHKLST_STEP_CD != '' and CHKLST_STEP_CD != null">
+		AND CHKLST_STEP_CD = #{CHKLST_STEP_CD}
+		</if>
+		
+		<if test="CHKLST_TYPE_CD != '' and CHKLST_TYPE_CD != null">
+		AND CHKLST_TYPE_CD = #{CHKLST_TYPE_CD}
+		</if>
+		
+		<if test="CHKLST_NM != '' and CHKLST_NM != null">
+		AND UPPER(CHKLST_NM) LIKE '%'||UPPER(#{CHKLST_NM})||'%'
+		</if>
+		
+	</select>	
+	
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+	SElECT 	
+		'0'	AS CHK,
+		''	AS ROWFLAG,	    
+		A.LVL,		
+		CASE
+			WHEN A.LVL = 1 THEN A.QUE_SEQ
+			WHEN A.LVL = 2 THEN EXAMPLE_SEQ END AS SEQ,
+		A.CHKLST_ID,
+		A.QUE_SEQ,
+		A.QUE_SEQ AS OLD_QUE_SEQ,
+		A.UNI_ID,
+		A.EXAMPLE_SEQ,
+		A.TEST_DIV 		AS QUESTION_DIV, 
+		A.TEST_NO		AS TEST_NO, 
+		A.TEST_ORDER	AS EXAMPLE_ORDER,
+		A.MIN_ANS_CNT,
+        A.MAX_ANS_CNT,
+        A.IS_NO_INPUT_YN,
+		<choose>
+			<when test="NO_NUM != '' and NO_NUM != null">
+		A.TEST_NAME	AS QUESTION_DESC, 
+			</when>
+			<otherwise>
+		CASE
+			WHEN A.LVL = 1 THEN A.QUE_SEQ
+			WHEN A.LVL = 2 THEN A.EXAMPLE_SEQ
+		END || '. ' || A.TEST_NAME	AS QUESTION_DESC, 
+			</otherwise>
+		</choose>	
+		A.TEST_SORE		AS QUESTION_SCORE, 
+		A.TEST_TYPE		AS QUESTION_TYPE,
+		A.USE_YN
+	FROM (
+	        SELECT	
+	                1 AS LVL,
+	                CHKLST_ID,
+	                QUE_SEQ,
+	                CHKLSTQUE_ID AS UNI_ID,
+	                0 AS EXAMPLE_SEQ,
+	                'Q' AS TEST_DIV,
+	                ORD_NO AS TEST_NO,
+	                0 AS TEST_ORDER,
+	                QUE_NM  AS TEST_NAME,
+	                QUE_VAL AS TEST_SORE,
+	                QUE_TYPE_CD  AS TEST_TYPE,
+	                USE_YN,
+	                MIN_ANS_CNT,
+	                MAX_ANS_CNT,
+	                IS_NO_INPUT_YN
+	        FROM	FOMM_CHKLST_QUE 
+	        WHERE	USE_YN = 'Y'
+	
+	        UNION	ALL
+	
+	        SELECT	2 AS LVL,
+	                a.CHKLST_ID,
+	                a.QUE_SEQ,
+	                b.CHKLSTEXM_ID AS UNI_ID,
+	                b.EXM_SEQ,
+	                'E' AS TEST_DIV,
+	                a.ORD_NO AS TEST_NO,
+	                b.ORD_NO 	AS TEST_ORDER,
+	                b.EXM_NM	AS TEST_NAME,		     
+	                b.EXM_VAL 			AS TEST_SORE,
+					<!-- a.QUE_TYPE_CD  AS TEST_TYPE, -->
+					null AS TEST_TYPE,
+	                b.USE_YN AS USE_YN,
+	                a. MIN_ANS_CNT,
+	                a. MAX_ANS_CNT,
+	                a. IS_NO_INPUT_YN
+	
+	        FROM  FOMM_CHKLST_QUE a INNER JOIN FOMM_CHKLST_EXM b 
+	        ON(a.CHKLST_ID = b.CHKLST_ID AND a.QUE_SEQ = b.QUE_SEQ)
+	        WHERE	a.USE_YN = 'Y'
+	    ) A
+	WHERE 1 = 1
+	
+	<if test="CHKLST_QUE_ID != '' and CHKLST_QUE_ID != null">
+	AND A.CHKLST_ID = #{CHKLST_QUE_ID}
+	</if>
+	
+	ORDER BY A.TEST_NO, A.TEST_ORDER
+	</select>
+
+	<select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+	SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			,  CHKLSTGRD_ID	-- 
+			, CHKLST_ID	--표준체크리스트ID
+			, GRD_SEQ	--등급순번
+			, GRD_NM	--등급명
+			, GRD_FR_VAL	--등급구간(시작)점수
+			, GRD_TO_VAL	--등급구간(종료)점수
+			, USE_YN	--사용유무(Y/N)
+			, FRID	--최초등록자
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정화면ID
+		FROM FOMM_CHKLST_GRD
+		WHERE 1 = 1
+
+        <if test="CHKLST_ID_STR != '' and CHKLST_ID_STR != null">
+        AND CHKLST_ID IN
+            <foreach collection="CHKLST_ID_ARR" item="chklstId" open="(" close=")" separator=",">
+                #{chklstId}
+            </foreach>
+        </if>
+
+		<if test="CHKLST_ID != '' and CHKLST_ID != null">
+		AND CHKLST_ID = #{CHKLST_ID}
+		</if>
+		
+		<if test="CHKLSTGRD_ID != '' and CHKLSTGRD_ID != null">
+		AND CHKLSTGRD_ID = #{CHKLSTGRD_ID}
+		</if>
+
+        ORDER BY
+            CHKLST_ID, GRD_SEQ
+	</select>
+	
+	<select id="select04" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, CHKLSTEXL_ID	--체크리스트예문ID
+			, CHKLST_ID	--체크리스트ID
+			, QUE_SEQ	--질문순번
+			, EXM_SEQ	--예문순번
+			, EXL_SEQ_VAL	--제외대상문항
+			, USE_YN	--사용유무(Y/N)
+			, FRID	--최초등록자
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정화면ID
+		FROM FOMM_CHKLST_EXL
+		WHERE 1 = 1
+		<if test="CHKLST_ID != '' and CHKLST_ID != null">
+		AND CHKLST_ID = #{CHKLST_ID}
+		</if>
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="CHKLST_ID" order="BEFORE">
+			SELECT
+				NVL(MAX(TO_NUMBER(CHKLST_ID)), 0) + 1
+   			FROM FOMM_CHKLST
+		</selectKey>
+		
+		INSERT INTO FOMM_CHKLST
+		(
+			  CHKLST_ID	--표준체크리스트ID
+			, CHKLST_STEP_CD	--단계(01공통/11착수/12분석/13설계/14구현/15테스트/16이관/17모니터링/99기타 등)
+			, CHKLST_TYPE_CD	--업무유형 (일반업무/프로젝트관리/개발업무/SDLC/교육/산출물검토)
+			, CHKLST_NM	--체크리스트명
+			, CHKLST_DESC	--체크리스트설명
+			, CHKLST_MAX_VAL	--체크리스트최대점수
+			, CHKLST_CAL_CD	--통계방법 (1평균 2총점)
+			, ORD_NO	--순서번호
+			, USE_YN	--사용유무(Y/N)
+			
+			, FRID	--최초등록자
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정화면ID
+		)
+		VALUES
+		(
+			  #{CHKLST_ID}
+			, #{CHKLST_STEP_CD}
+			, #{CHKLST_TYPE_CD}
+			, #{CHKLST_NM}
+			, #{CHKLST_DESC}
+			, #{CHKLST_MAX_VAL}
+			, #{CHKLST_CAL_CD}
+			, #{ORD_NO}
+			, #{USE_YN}
+			
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		)
+	</insert>
+	
+	<insert id="insert02" parameterType="java.util.Map">
+		INSERT INTO FOMM_CHKLST_GRD
+		(
+			  CHKLSTGRD_ID	-- 
+			, CHKLST_ID	--표준체크리스트ID
+			, GRD_SEQ	--등급순번
+			, GRD_NM	--등급명
+			, GRD_FR_VAL	--등급구간(시작)점수
+			, GRD_TO_VAL	--등급구간(종료)점수
+			, USE_YN	--사용유무(Y/N)
+			
+			, FRID	--최초등록자
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정화면ID
+		)
+		VALUES
+		(
+			  (SELECT NVL(MAX(TO_NUMBER(CHKLSTGRD_ID)), 0) + 1 FROM FOMM_CHKLST_GRD)
+			, #{CHKLST_ID}
+			, (SELECT NVL(MAX(GRD_SEQ), 0) + 1 FROM FOMM_CHKLST_GRD WHERE CHKLST_ID = #{CHKLST_ID})
+			, #{GRD_NM}
+			, #{GRD_FR_VAL}
+			, #{GRD_TO_VAL}
+			, #{USE_YN}
+			
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		)
+	</insert>	
+	
+	<insert id="insert03" parameterType="java.util.Map">
+		INSERT INTO FOMM_CHKLST_QUE
+		(
+			  CHKLSTQUE_ID	--체크리스트질문ID
+			, CHKLST_ID	--표준체크리스트ID
+			, QUE_SEQ	--질문순번
+			, QUE_TYPE_CD	--질문응답유형(01단일선택/02복수선택/03주관식)
+			, QUE_VAL	--질문점수
+			, QUE_NM	--질문내용
+			, USE_YN	--사용유무(Y/N)
+			, ORD_NO	--순서번호
+			
+			, FRID	--최초등록자
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정화면ID
+			
+			, MIN_ANS_CNT	--복수선택인 경우 최소 응답 가능 답항 갯수
+			, MAX_ANS_CNT	--복수선택인 경우 최대 응답 가능 답항 갯수
+			, IS_NO_INPUT_YN	--미응답 가능여부
+		)
+		VALUES
+		(
+			  (SELECT NVL(MAX(TO_NUMBER(CHKLSTQUE_ID)), 0) + 1 FROM FOMM_CHKLST_QUE)
+			, #{CHKLST_ID}
+			, #{SEQ}--질문순번
+			, #{QUESTION_TYPE}
+			, #{QUESTION_SCORE}
+			, #{QUESTION_DESC}
+			, #{USE_YN}
+			, #{SEQ}
+			
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		
+			,#{MIN_ANS_CNT}
+			,#{MAX_ANS_CNT}
+			,'N'
+		)
+	</insert>
+	
+	<insert id="insert04" parameterType="java.util.Map">
+		INSERT INTO FOMM_CHKLST_EXM
+		(
+			  CHKLSTEXM_ID	--체크리스트예문ID
+			, CHKLST_ID	--체크리스트ID
+			, QUE_SEQ	--질문순번
+			, EXM_SEQ	--예문순번
+			, EXM_VAL	--예문점수
+			, EXM_NM	--예문이름
+			, ORD_NO	--순서번호
+			, USE_YN	--사용유무(Y/N)
+			
+			, FRID	--최초등록자
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정화면ID
+		)
+		VALUES
+		(
+			  (SELECT NVL(MAX(TO_NUMBER(CHKLSTEXM_ID)), 0) + 1 FROM FOMM_CHKLST_EXM)
+			, #{CHKLST_ID}
+			, #{QUE_SEQ}
+			, #{SEQ}
+			, #{QUESTION_SCORE}
+			, #{QUESTION_DESC}
+			, #{SEQ}
+			, #{USE_YN}
+			
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		)
+	</insert>
+	
+	<insert id="insert05" parameterType="java.util.Map">
+		INSERT INTO FOMM_CHKLST_EXL
+		(
+			  CHKLSTEXL_ID	--체크리스트예문ID
+			, CHKLST_ID	--체크리스트ID
+			, QUE_SEQ	--질문순번
+			, EXM_SEQ	--예문순번
+			, EXL_SEQ_VAL	--제외대상문항
+			, USE_YN	--사용유무(Y/N)
+			
+			, FRID	--최초등록자
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정화면ID
+		)
+		VALUES
+		(
+			  (SELECT NVL(MAX(TO_NUMBER(CHKLSTEXL_ID)), 0) + 1 FROM FOMM_CHKLST_EXL)
+			, #{CHKLST_ID}
+			, #{QUE_SEQ}
+			, #{EXM_SEQ}
+			, #{EXL_SEQ_VAL}
+			, #{USE_YN}
+			
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		)
+	</insert>		
+	
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE FOMM_CHKLST SET
+			  CHKLST_STEP_CD = #{CHKLST_STEP_CD}	--단계(01공통/11착수/12분석/13설계/14구현/15테스트/16이관/17모니터링/99기타 등)
+			, CHKLST_TYPE_CD = #{CHKLST_TYPE_CD}	--업무유형 (일반업무/프로젝트관리/개발업무/SDLC/교육/산출물검토)
+			, CHKLST_NM = #{CHKLST_NM}	--체크리스트명
+			, CHKLST_DESC = #{CHKLST_DESC}	--체크리스트설명
+			, CHKLST_MAX_VAL = #{CHKLST_MAX_VAL}	--체크리스트최대점수
+			, CHKLST_CAL_CD = #{CHKLST_CAL_CD}	--통계방법 (1평균 2총점)
+			, ORD_NO = #{ORD_NO}	--순서번호
+			, USE_YN = #{USE_YN}	--사용유무(Y/N)
+			
+			, LMID = #{LMID}	--최종수정자
+			, LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최종수정일시
+			, LMPID = #{LMPID}	--최종수정화면ID
+		WHERE 1 = 1
+		<if test="CHKLST_ID != '' and CHKLST_ID != null">
+		AND CHKLST_ID = #{CHKLST_ID}
+		</if>
+	</update>
+
+	<update id="modify02" parameterType="java.util.Map">
+		UPDATE FOMM_CHKLST_GRD SET
+			  GRD_NM = #{GRD_NM}	--등급명
+			, GRD_FR_VAL = #{GRD_FR_VAL}	--등급구간(시작)점수
+			, GRD_TO_VAL = #{GRD_TO_VAL}	--등급구간(종료)점수
+			, USE_YN = #{USE_YN}	--사용유무(Y/N)
+			
+			, LMID = #{LMID}	--최종수정자
+			, LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최종수정일시
+			, LMPID = #{LMPID}	--최종수정화면ID
+		WHERE 1 = 1
+		AND CHKLST_ID		= #{CHKLST_ID}	--표준체크리스트ID
+		AND CHKLSTGRD_ID	= #{CHKLSTGRD_ID}
+	</update>
+	
+	<update id="modify03" parameterType="java.util.Map">
+		UPDATE FOMM_CHKLST_QUE SET
+			  QUE_SEQ = #{QUE_SEQ}	--질문순번
+			, QUE_TYPE_CD = #{QUESTION_TYPE}	--질문응답유형(01단일선택/02복수선택/03주관식)
+			, QUE_VAL = #{QUESTION_SCORE}	--질문점수
+			, QUE_NM = #{QUESTION_DESC}	--질문내용
+			, USE_YN = #{USE_YN}	--사용유무(Y/N)
+			, ORD_NO = #{SEQ}	--순서번호
+			, MIN_ANS_CNT = #{MIN_ANS_CNT}
+			, MAX_ANS_CNT = #{MAX_ANS_CNT}
+			
+			, LMID = #{LMID}	--최종수정자
+			, LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최종수정일시
+			, LMPID = #{LMPID}	--최종수정화면ID
+			
+		
+		WHERE 1 = 1
+		<if test="QUE_SEQ != '' and QUE_SEQ != null and CHKLST_ID != '' and CHKLST_ID != null ">
+		AND QUE_SEQ = #{QUE_SEQ}
+		AND CHKLST_ID = #{CHKLST_ID}
+		</if>
+	</update>
+		
+	<update id="modify04" parameterType="java.util.Map">
+		UPDATE FOMM_CHKLST_EXM SET			
+			  EXM_VAL = #{QUESTION_SCORE}	--예문점수
+			, EXM_NM = #{QUESTION_DESC}	--예문이름
+			, ORD_NO = #{SEQ}	--순서번호
+			, USE_YN = #{USE_YN}	--사용유무(Y/N)
+			
+			, LMID = #{LMID}	--최종수정자
+			, LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최종수정일시
+			, LMPID = #{LMPID}	--최종수정화면ID
+		WHERE 1 = 1
+		<if test="QUE_SEQ != '' and QUE_SEQ != null and CHKLST_ID != '' and CHKLST_ID != null and SEQ != '' and SEQ != null ">
+		AND QUE_SEQ = #{QUE_SEQ}
+		AND CHKLST_ID = #{CHKLST_ID}
+		AND EXM_SEQ = #{SEQ}
+		</if>
+	</update>
+	
+	<update id="modify05" parameterType="java.util.Map">
+		UPDATE FOMM_CHKLST_EXL SET
+			  EXL_SEQ_VAL = #{EXL_SEQ_VAL}	--제외대상문항
+			, USE_YN = #{USE_YN}	--사용유무(Y/N)
+			, LMID = #{LMID}	--최종수정자
+			, LMDT = #{LMDT}	--최종수정일시
+			, LMPID = #{LMPID}	--최종수정화면ID
+		WHERE 1 = 1
+		<if test="QUE_SEQ != '' and QUE_SEQ != null and CHKLST_ID != '' and CHKLST_ID != null and EXM_SEQ != '' and EXM_SEQ != null ">
+		AND QUE_SEQ = #{QUE_SEQ}
+		AND CHKLST_ID = #{CHKLST_ID}
+		AND EXM_SEQ = #{EXM_SEQ}
+		</if>
+	</update>
+	
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM FOMM_CHKLST
+		WHERE 1 = 1
+		<if test="CHKLST_ID != '' and CHKLST_ID != null">
+		AND CHKLST_ID = #{CHKLST_ID}
+		</if>
+	</delete>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE
+		FROM FOMM_CHKLST_GRD
+		WHERE 1 = 1
+		AND CHKLST_ID		= #{CHKLST_ID}	--표준체크리스트ID
+		AND CHKLSTGRD_ID	= #{CHKLSTGRD_ID}
+	</delete>
+		
+	<delete id="remove03" parameterType="java.util.Map">
+		DELETE
+		FROM FOMM_CHKLST_QUE
+		WHERE 1 = 1
+		<if test="QUE_SEQ != '' and QUE_SEQ != null and CHKLST_ID != '' and CHKLST_ID != null and SEQ != '' and SEQ != null ">
+		AND CHKLST_ID = #{CHKLST_ID}
+		AND QUE_SEQ = #{QUE_SEQ}
+		</if>
+	</delete>
+	
+	<delete id="remove04" parameterType="java.util.Map">
+		DELETE
+		FROM FOMM_CHKLST_EXM
+		WHERE 1 = 1
+		<if test="QUE_SEQ != '' and QUE_SEQ != null and CHKLST_ID != '' and CHKLST_ID != null and SEQ != '' and SEQ != null ">
+		AND QUE_SEQ = #{QUE_SEQ}
+		AND CHKLST_ID = #{CHKLST_ID}
+		AND EXM_SEQ = #{SEQ}
+		</if>
+	</delete>
+	
+	<delete id="remove05" parameterType="java.util.Map">
+		DELETE
+		FROM FOMM_CHKLST_EXL
+		WHERE 1 = 1
+		<if test="QUE_SEQ != '' and QUE_SEQ != null and CHKLST_ID != '' and CHKLST_ID != null and EXM_SEQ != '' and EXM_SEQ != null ">
+		AND QUE_SEQ = #{QUE_SEQ}
+		AND CHKLST_ID = #{CHKLST_ID}
+		AND EXM_SEQ = #{EXM_SEQ}
+		</if>
+	</delete>
+
+</mapper>

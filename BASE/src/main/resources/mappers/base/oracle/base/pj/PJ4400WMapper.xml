@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ4400WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.BTJB_ID
+			, A.BTJB_NO
+			, A.BTJB_NAME
+			, A.BTJB_TYPE_CD
+			, A.PJT_ID
+			, A.BIZ_ID
+			, D.BIZ_NAME
+			, A.PRE_BTJB_NO
+			, A.POST_BTJB_NO
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, A.BTJB_DESC
+			, A.REMARK
+			, B.PJT_NAME AS PJT_NAME
+			, C.PJT_ID      AS P_PJT_ID
+			, C.PJT_NAME AS P_PJT_NAME
+			, E.REQ_NO_INFO
+			, E.REQ_NAME_INFO
+
+		FROM
+			  PJ_BATCHJOB A   
+			, PJ_PROJECT B
+			, PJ_PROJECT C
+			, PJ_BIZ D
+			, (
+			  SELECT
+				  EE.PJT_ID
+				, EE.BTJB_ID
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.REQ_NO) ORDER BY FF.REQ_NO, FF.REQ_ID).EXTRACT('//text()').GETCLOBVAL(),2) AS REQ_NO_INFO
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.REQ_NAME) ORDER BY FF.REQ_NO, FF.REQ_ID).EXTRACT('//text()').GETCLOBVAL(),2) AS REQ_NAME_INFO
+			  FROM
+			  	  PJ_BTJB_REQ_MAP EE
+			  	, PJ_REQMENT FF
+			  WHERE 1 = 1
+			  AND EE.REQ_ID		= FF.REQ_ID
+			  AND EE.PJT_ID     = FF.PJT_ID
+			  AND EE.PJT_ID     = #{SUB_PJT_ID} 
+
+			  GROUP BY
+			  	  EE.PJT_ID
+			  	, EE.BTJB_ID
+			  ) E
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND B.PARENT_ID = C.PJT_ID
+		AND A.PJT_ID	= D.PJT_ID
+		AND A.BIZ_ID	= D.BIZ_ID
+		AND A.PJT_ID	= E.PJT_ID(+)
+		AND A.BTJB_ID	= E.BTJB_ID(+)   
+		AND A.PJT_ID	= #{SUB_PJT_ID} 
+
+		<if test="BIZ_ID != '' and BIZ_ID != null">
+		AND A.BIZ_ID	= #{BIZ_ID}
+		</if>
+
+		<if test="BTJB_NO != '' and BTJB_NO != null">
+		AND UPPER(A.BTJB_NO) LIKE '%' || UPPER(#{BTJB_NO}) || '%'
+		</if>
+
+		<if test="BTJB_NM != '' and BTJB_NM != null">
+		AND UPPER(A.BTJB_NAME) LIKE '%' || UPPER(#{BTJB_NM}) || '%'
+		</if>
+		
+		<if test="BTJB_TYPE_CD != '' and BTJB_TYPE_CD != null">
+		AND A.BTJB_TYPE_CD	= #{BTJB_TYPE_CD}
+		</if>
+
+		<if test="PRE_BTJB_NO != '' and PRE_BTJB_NO != null">
+		AND UPPER(A.PRE_BTJB_NO) LIKE '%' || UPPER(#{PRE_BTJB_NO}) || '%'
+		</if>
+
+		<if test="POST_BTJB_NO != '' and POST_BTJB_NO != null">
+		AND UPPER(A.POST_BTJB_NO) LIKE '%' || UPPER(#{POST_BTJB_NO}) || '%'
+		</if>
+
+		<if test="REQ_NO != '' and REQ_NO != null">
+		AND A.BTJB_ID IN
+						(
+                        SELECT
+                        	AA.BTJB_ID
+                        FROM
+							  PJ_BTJB_REQ_MAP AA
+                        	, PJ_REQMENT BB
+
+                        WHERE 1 = 1
+						AND AA.PJT_ID	= BB.PJT_ID
+						AND AA.REQ_ID	= BB.REQ_ID
+						AND AA.PJT_ID	= #{SUB_PJT_ID}
+						AND UPPER(BB.REQ_NO) LIKE UPPER('%' || #{REQ_NO} || '%')
+						)
+		</if>
+
+		ORDER BY
+			A.BTJB_ID, A.BTJB_NO
+	</select>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_BTPR_BTJB_MAP
+  		WHERE 1 = 1
+  		AND BTJB_ID = #{BTJB_ID}
+	</delete>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_RPPR_BTJB_MAP
+  		WHERE 1 = 1
+  		AND BTJB_ID = #{BTJB_ID}
+	</delete>
+
+	<delete id="remove03" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_STEST_BTJB_MAP
+  		WHERE 1 = 1
+  		AND BTJB_ID = #{BTJB_ID}
+	</delete>
+
+	<delete id="remove04" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_BTJB_REQ_MAP
+  		WHERE 1 = 1
+  		AND BTJB_ID = #{BTJB_ID}
+	</delete>
+
+	<delete id="remove05" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_BATCHJOB
+  		WHERE 1 = 1
+  		AND BTJB_ID = #{BTJB_ID}
+	</delete>
+
+</mapper>

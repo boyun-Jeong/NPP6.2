@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.wf.dao.WF0110WDAO">
+	
+	<!-- 워크플로우 Type 목록 조회 -->
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  0 AS CHK		    /* CHECKBOX 컬럼 */
+			, '' AS ROWFLAG		/* 행상태 표기를 위한 컬럼 */
+			, '' AS SEL_YN
+			, A.WF_ID	--워크플로우ID
+			, A.WF_NM	--워크플로우명
+			, A.DEL_YN	--삭제여부
+			, A.RMK	--비고
+			, A.FRID	--최초등록자ID
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM				/* 최초등록자 */
+			, TO_DATE(A.FRDT, 'YYYYMMDDHH24MISS') AS FRDT									/* 최초등록일시 */
+			, A.LMID	--최종수정자ID
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM				/* 수정자 */
+			, TO_DATE(A.LMDT, 'YYYYMMDDHH24MISS') AS LMDT									/* 최종수정일시 */
+			, A.LMPID	--최종수정 화면ID
+		FROM WF_WORKFLOW_MT A
+		WHERE 1 = 1
+		<if test="WF_ID != '' and WF_ID != null">
+		AND A.WF_ID LIKE UPPER('%' || #{WF_NM} || '%')
+		</if>
+		
+		<if test="WF_NM != '' and WF_NM != null">
+        	AND	UPPER(A.WF_NM) LIKE UPPER('%' || #{WF_NM} || '%')
+        </if>
+        
+        <if test="DEL_YN != '' and DEL_YN != null">
+		AND A.DEL_YN = #{DEL_YN}
+		</if>
+	</select>
+	
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="WF_ID" order="BEFORE">
+        	SELECT 'WF' || TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(NVL(MAX(SUBSTR(WF_ID, -3)), 0) + 1, 3, '0') AS WF_ID
+			FROM WF_WORKFLOW_MT
+			WHERE SUBSTR(WF_ID, 3) LIKE TO_CHAR(SYSDATE, 'YYYYMMDD') || '%'
+    	</selectKey>
+		INSERT INTO WF_WORKFLOW_MT
+		(
+			  WF_ID	--워크플로우ID
+			, WF_NM	--워크플로우명
+			, DEL_YN	--삭제여부
+			, RMK	--비고
+			, FRID	--최초등록자ID
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자ID
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정 화면ID
+		)
+		VALUES
+		(
+			  #{WF_ID}
+			, #{WF_NM}
+			, #{DEL_YN}
+			, #{RMK}
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최초등록일시
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최초등록일시
+			, #{LMPID}
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE WF_WORKFLOW_MT SET
+			  WF_NM 		= #{WF_NM}		--워크플로우명
+			, DEL_YN		= #{DEL_YN}		--삭제여부
+			, RMK			= #{RMK}		--비고
+			, FRID			= #{LMID}		--최초등록자ID
+			, FRDT			= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최초등록일시
+			, LMID			= #{LMID}		--최종수정자ID
+			, LMDT			= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최종수정일시
+			, LMPID			= #{LMPID}		--최종수정 화면ID
+		WHERE 1 = 1
+		<if test="WF_ID != '' and WF_ID != null">
+		AND WF_ID = #{WF_ID}
+		</if>
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		UPDATE WF_WORKFLOW_MT SET
+			  DEL_YN	= 'Y'
+			, LMID		= #{LMID}		--최종수정자ID
+			, LMDT		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최종수정일시
+			, LMPID		= #{LMPID}		--최종수정 화면ID
+		WHERE 1 = 1
+		AND WF_ID	= #{WF_ID}
+		AND DEL_YN	= 'N'
+	</delete>
+
+	<!-- 워크플로우 단계 조회(Type 상세) -->
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* WF0110WMapper >> select02 */
+    	SELECT
+			  0 AS CHK		    /* CHECKBOX 컬럼 */
+			, '' AS ROWFLAG		/* 행상태 표기를 위한 컬럼 */
+			, NVL(B.WF_ID, #{SEL_WF_ID})	AS WF_ID
+		    , A.UP_CMM_CD
+		    , A.CMM_CD			AS WF_PROC_CD
+		    , A.CMM_CD_NM		AS WF_PROC_NM
+		    , A.CMM_CD_DESC
+		    , A.ITM_VAL_1
+		    , A.ITM_VAL_2
+		    , A.ITM_VAL_3
+		    , A.ITM_VAL_4
+		    , A.ITM_VAL_5
+		    , A.SORT_ORDR
+		    , A.USE_YN
+		    , CASE WHEN B.WF_PROC_CD IS NOT NULL THEN 'Y' ELSE 'N' END AS WF_USE_YN
+		    , CASE WHEN B.WF_PROC_CD IS NOT NULL THEN 'Y' ELSE 'N' END AS IS_DATA
+		    , B.RMK
+		FROM
+		    (	SELECT	  A.*
+		    			, LEVEL AS LVL
+		   	 	FROM 	  FOMM_CMM_CD_MT A 
+		   	 	START WITH A.UP_CMM_CD = 'WF_PROC_CD'
+		   	 	CONNECT BY PRIOR A.CD_NO = A.UP_CD_NO
+		   	) A
+		LEFT
+		OUTER
+		JOIN
+		    (SELECT * FROM WF_WORKFLOW_DT WHERE WF_ID = #{SEL_WF_ID}) B
+		ON A.CMM_CD = B.WF_PROC_CD
+		WHERE LVL > 1
+		AND ( (A.USE_YN = 'N' AND B.WF_PROC_CD IS NOT NULL) OR (A.USE_YN = 'Y') )
+		AND A.CMM_CD <![CDATA[<>]]> 'WF_PROC_9020'
+
+        ORDER BY
+            A.UP_CMM_CD, A.SORT_ORDR
+    </select>
+
+	<insert id="modify02" parameterType="java.util.Map">
+		MERGE 
+		INTO	WF_WORKFLOW_DT A
+		USING 	DUAL
+		ON		(A.WF_ID = #{WF_ID} AND A.WF_PROC_CD = #{WF_PROC_CD})
+		
+		WHEN NOT MATCHED THEN
+			INSERT 
+			(
+				 WF_ID
+				,WF_PROC_CD
+				,SORT_ORDR
+				,RMK
+				,FRID
+				,FRDT
+				,LMID
+				,LMDT
+				,LMPID
+			)
+			VALUES
+			(
+				  #{WF_ID}
+				, #{WF_PROC_CD}
+				, #{SORT_ORDR}
+				, #{RMK}
+				, #{LMID}
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, #{LMID}
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, #{LMPID}
+			)
+	</insert>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE
+		FROM WF_WORKFLOW_DT
+		WHERE 1 = 1
+		AND WF_ID	= #{WF_ID}
+		AND WF_PROC_CD	= #{WF_PROC_CD}
+	</delete>
+
+</mapper>

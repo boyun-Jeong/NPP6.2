@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0900WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		/* PJ0900WMapper >> select01 */
+		 SELECT
+			  '0' AS CHK 
+			, A.PJT_ID 
+			, DECODE(A.SUB_PJT_YN, 'Y', '-' || A.SUB_PJT_NO || '. ' || A.PJT_NAME, A.PJT_NAME) AS PJT_NAME
+			, A.PJT_STATUS_CD 
+			, A.PJT_DESC 
+			, A.PJT_EXEC_CD 
+			, A.IN_PM_USER_ID 
+			, A.IN_PM_USER_NM 
+			, A.IN_PM_DEPT 
+			, A.OUT_PM_USER_ID 
+			, A.OUT_PM_USER_NM 
+			, A.OUT_CPY_ID 
+			, A.OUT_CPY_NAME 
+			, A.UPMU_USER_ID 
+			, A.UPMU_USER_NM 
+			, A.UPMU_USER_DEPT 
+			, A.PJT_STIME 
+			, A.PJT_ETIME 
+			, A.PJT_TYPE_CD 
+			, A.PJT_SIZE_CD 
+			, A.PJT_DEV_CD 
+			, A.PJT_STD_YN 
+			, A.PJT_OPEN_DATE 
+			, A.CONTRT_ID 
+			, A.DEV_AMOUNT 
+			, A.DEV_MM 
+			, A.HW_AMOUNT 
+			, A.SW_AMOUNT 
+			, A.TOT_AMOUNT 
+			, A.REG_STIME 
+			, A.REG_USER_ID 
+			, A.REG_USER_NM 
+			, A.REG_USER_DEPT 
+			, A.SYSMODTIME 
+			, A.LMOD_USER_ID 
+			, A.LMOD_USER_NM 
+			, A.LMOD_USER_DEPT 
+			, A.CONTRACT_ID 
+			, A.CONTRACT_NO 
+			, A.OUT_PM_DEPT 
+			, A.SUB_PJT_NO 
+			, A.SUB_PJT_YN 
+			, A.PARENT_ID
+			, (SELECT PJT_NAME FROM PJ_PROJECT WHERE PJT_ID = A.PARENT_ID) AS PARENT_NM 
+			, A.WEIGHT 
+			, B.CALC_DATE
+			, B.ACTL_PLAN_RATE
+			, B.PLAN_CMPL_RATE
+			, B.ACTL_CMPL_RATE
+			, B.STAGE_CD
+			, A.PJT_NAME AS ORG_PJT_NAME
+
+		FROM
+			PJ_PROJECT A,
+			PJ_WBS_TOT B 
+
+		WHERE 1 = 1
+		AND B.PJT_ID(+) = A.PJT_ID 
+
+		<if test="PJT_YEAR != '' and PJT_YEAR != null">
+		AND #{PJT_YEAR} BETWEEN SUBSTR(PJT_STIME, 1, 4) AND SUBSTR(PJT_ETIME, 1, 4)
+		</if>
+		
+		<if test="GUBUN != '' and GUBUN != null">
+		AND PJT_STATUS_CD = DECODE( #{GUBUN}  , 'N' , 'PROC_STS_CD02' , PJT_STATUS_CD)
+		</if>
+
+		<if test="PJT_ID != '' and PJT_ID != null">
+		AND (A.PARENT_ID = #{PJT_ID} OR A.PJT_ID = #{PJT_ID})
+		</if>
+
+		<if test="SUB_PJT_YN != '' and SUB_PJT_YN != null">
+		AND (NVL(A.SUB_PJT_YN, 'N') = 'N' OR NVL(A.SUB_PJT_YN, 'N') LIKE #{SUB_PJT_YN})
+		</if>
+
+		<choose>
+			<when test="PJT_YEAR != '' and PJT_YEAR != null">
+		START WITH NVL(A.SUB_PJT_YN, 'N') = 'N'
+		CONNECT BY PRIOR A.PJT_ID = A.PARENT_ID
+		ORDER SIBLINGS BY A.SUB_PJT_NO
+			</when>
+			<otherwise>
+		ORDER BY NVL(A.SUB_PJT_NO, 0), A.PJT_NAME
+			</otherwise>
+		</choose>
+
+	</select>
+
+</mapper>

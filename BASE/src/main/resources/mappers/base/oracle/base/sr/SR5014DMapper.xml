@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR5014DDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+	<!--
+	    SELECT UP_CMM_CD, CMM_CD, CMM_CD_NM, LEVEL AS LVL, SYS_CONNECT_BY_PATH(CMM_CD_NM, '|') FULLPATH 
+		FROM SR_LOC_IP C
+		WHERE LEVEL != 3 AND NVL(USE_YN, 'Y')  = 'Y'
+		CONNECT BY PRIOR C.CD_NO = C.UP_CD_NO
+		START WITH C.UP_CMM_CD  = 'SWKP0000'
+	    ORDER SIBLINGS BY SORT_ORDR
+	-->
+	    SELECT A.CD_NO, A.UP_CMM_CD, A.CMM_CD, A.CMM_CD_NM, A.CD_LVL AS LVL, SYS_CONNECT_BY_PATH(A.CMM_CD_NM, '|') FULLPATH
+		FROM SR_LOC_IP A, SR_LOC_IP B
+		WHERE A.CD_NO = B.CD_NO
+		CONNECT BY PRIOR A.CD_NO = A.UP_CD_NO
+		START WITH A.CD_NO = '1'
+	    
+	</select>
+	
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+	
+	   SELECT 
+	        0 AS CHK
+            , '' AS ROWFLAG
+		    , CD_NO
+		    , LANG_CD
+		    , UP_CD_NO
+		    , CD_LVL
+		    , CMM_CD
+		    , UP_CMM_CD
+		    , CMM_CD_NM
+		    , CMM_CD_DESC
+		    , ITM_VAL_1
+		    , ITM_VAL_2
+		    , ITM_VAL_3
+		    , ITM_VAL_4
+		    , ITM_VAL_5
+		    , CODE_DIV
+		    , SORT_ORDR
+		    , USE_YN
+		    , RMK
+		    , FRID
+		    , FRDT
+		    , LMPID
+		FROM SR_LOC_IP
+		WHERE 1=1
+		    AND UP_CMM_CD= #{UP_CMM_CD}
+		ORDER BY SORT_ORDR
+    
+    </select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+	   INSERT INTO SR_LOC_IP
+		    (
+		      LANG_CD
+		    , CD_NO
+		    , UP_CD_NO
+		    , CD_LVL
+		    , CMM_CD
+		    , UP_CMM_CD
+		    , CMM_CD_NM
+		    , ITM_VAL_1
+		    , ITM_VAL_2
+		    , ITM_VAL_3
+		    , USE_YN
+		    , FRID
+		    , FRDT
+		    , LMPID
+		    , SORT_ORDR
+		    )
+		VALUES
+		    (
+		      NVL(#{LANG_CD}, 'KR')
+		    , NVL( #{CD_NO}, (SELECT MAX(NVL(TO_NUMBER(CD_NO), 0))+1 FROM SR_LOC_IP))
+		    , #{UP_CD_NO}
+		    , #{CD_LVL}
+		    , #{CMM_CD}
+		    , #{UP_CMM_CD}
+		    , #{CMM_CD_NM}
+		    , #{ITM_VAL_1}
+		    , #{ITM_VAL_2}
+		    , #{ITM_VAL_3}
+		    , #{USE_YN}
+		    , #{LMID}
+		    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		    , #{LMPID}
+		    , #{SORT_ORDR}
+		    )
+	   
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	
+	   UPDATE SR_LOC_IP SET 
+		    CMM_CD_NM = #{CMM_CD_NM}
+		    , ITM_VAL_1 = #{ITM_VAL_1}
+		    , ITM_VAL_2 = #{ITM_VAL_2}
+		    , ITM_VAL_3 = #{ITM_VAL_3}
+		    , USE_YN =#{USE_YN}
+		    , LMID = #{LMID}
+		    , LMDT =TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		    , LMPID = #{LMPID}
+		    , SORT_ORDR = #{SORT_ORDR}
+		WHERE 1 = 1
+		    AND CD_NO = #{CD_NO}
+		    AND CMM_CD = #{CMM_CD}
+
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	   
+	    DELETE
+        FROM SR_LOC_IP
+        WHERE CD_NO = #{CD_NO}
+	   
+	</delete>
+
+</mapper>

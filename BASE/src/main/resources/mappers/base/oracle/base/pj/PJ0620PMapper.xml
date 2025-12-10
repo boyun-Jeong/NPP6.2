@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0620PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			'0'	AS CHK,
+			''	AS ROWFLAG,
+			A.MEET_ID,
+			A.MEET_NO,
+			A.TITLE,
+			A.PJT_ID,
+			C.PJT_NAME,
+			SUBSTR(A.MEET_STIME, 1, 8)  AS MEET_DATE,
+			SUBSTR(A.MEET_STIME, -4)	AS MEET_STIME,
+			SUBSTR(A.MEET_ETIME, -4)	AS MEET_ETIME,
+			A.CONTENTS,
+			A.MEET_TYPE_CD,
+			A.CLOSE_YN,
+			A.MEET_LOC,
+			A.DETRM_CONTS,
+			A.PENDG_CONTS,
+			A.ISSUE_CONTS,
+			
+			SUBSTR(A.REG_STIME, 1, 8)  AS REG_DATE,
+            SUBSTR(A.REG_STIME, -6)  AS REG_TIME,			
+			A.REG_USER_ID,
+			A.REG_USER_NM,
+			A.REG_USER_DEPT,
+			A.LMOD_SDATE,
+			A.LMOD_USER_ID,
+			A.LMOD_USER_NM,
+			A.LMOD_USER_DEPT
+
+		FROM
+			PJ_MEETING A,
+			PJ_PROJECT C  
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= C.PJT_ID 
+		AND A.MEET_ID	= #{MEET_ID} 
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			'0' AS CHK,
+			''	AS ROWFLAG,
+			A.MEET_ATTND_ID,
+			A.MEET_ID,
+			A.ATN_USER_ID,
+			A.ATN_USER_NM,
+			A.ATN_USER_DEPT,
+			A.ATN_USER_CD,
+			A.READ_YN,
+			A.READ_TIME,
+			A.CONF_YN,
+			A.CONF_TIME,
+			A.DIS_REASON,
+
+			A.REG_USER_ID,
+			A.REG_USER_NM,
+			A.REG_USER_DEPT,
+			A.REG_STIME
+
+		FROM
+			PJ_MEET_ATTND A
+
+		WHERE 1 = 1
+		AND A.MEET_ID = #{MEET_ID} 
+
+		ORDER BY
+			A.ATN_USER_NM
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="MEET_ID" order="BEFORE">
+			SELECT
+				'PJMT' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(MEET_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_MEETING
+   			WHERE 1 = 1
+   			AND MEET_ID LIKE 'PJMT%'
+			AND LENGTH(MEET_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_MEETING 
+		(
+			  MEET_ID
+			, MEET_NO
+			, TITLE
+			, PJT_ID
+			, MEET_STIME
+			, MEET_ETIME
+			, CONTENTS
+			, MEET_TYPE_CD
+			, CLOSE_YN
+			, MEET_LOC 
+			, DETRM_CONTS 
+			, PENDG_CONTS 
+			, ISSUE_CONTS
+			
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		) 
+		VALUES 
+		(
+			  #{MEET_ID}
+			, #{MEET_NO}
+			, #{TITLE}
+			, #{PJT_ID}
+			, #{MEET_DATE} || #{MEET_STIME}
+			, #{MEET_DATE} || #{MEET_ETIME}
+			, #{CONTENTS}
+			, #{MEET_TYPE_CD}
+			, #{CLOSE_YN}
+			, #{MEET_LOC}
+			, #{DETRM_CONTS}
+			, #{PENDG_CONTS}
+			, #{ISSUE_CONTS}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID}) 
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_MEETING SET
+			  MEET_NO			= #{MEET_NO}
+			, TITLE				= #{TITLE}
+			, PJT_ID			= #{PJT_ID}
+			, MEET_STIME		= #{MEET_DATE} || #{MEET_STIME}
+			, MEET_ETIME		= #{MEET_DATE} || #{MEET_ETIME}
+			, CONTENTS			= #{CONTENTS}
+			, MEET_TYPE_CD		= #{MEET_TYPE_CD}
+			, CLOSE_YN			= #{CLOSE_YN}
+			, MEET_LOC			= #{MEET_LOC}
+			, DETRM_CONTS		= #{DETRM_CONTS}
+			, PENDG_CONTS		= #{PENDG_CONTS}
+			, ISSUE_CONTS		= #{ISSUE_CONTS}
+
+			, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+		WHERE 1 = 1
+		AND MEET_ID = #{MEET_ID}
+	</update>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="MEET_ATTND_ID" order="BEFORE">
+			SELECT
+				'PJMA' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(MEET_ATTND_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_MEET_ATTND
+   			WHERE 1 = 1
+   			AND MEET_ATTND_ID LIKE 'PJMA%'
+			AND LENGTH(MEET_ATTND_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_MEET_ATTND 
+		(
+			  MEET_ATTND_ID
+			, MEET_ID
+			, ATN_USER_ID
+			, ATN_USER_NM
+			, ATN_USER_DEPT
+<!-- 			, ATN_USER_CD -->
+<!-- 			, READ_YN -->
+<!-- 			, READ_TIME -->
+			, CONF_YN
+			, CONF_TIME
+			, DIS_REASON
+			
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+			, REG_STIME
+		) 
+		VALUES
+		(
+			  #{MEET_ATTND_ID} 
+			, #{MEET_ID}
+			, #{ATN_USER_ID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{ATN_USER_ID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{ATN_USER_ID})
+<!-- 			, #{ATN_USER_CD} -->
+<!-- 			, #{READ_YN} -->
+<!-- 			, #{READ_TIME} -->
+			, #{CONF_YN}
+			, CASE WHEN #{CONF_YN} IS NOT NULL THEN TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') END
+			, #{DIS_REASON}
+
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') 
+		)
+	</insert>
+
+	<update id="modify02" parameterType="java.util.Map">
+		UPDATE PJ_MEET_ATTND SET
+<!-- 			  ATN_USER_CD	= #{ATN_USER_CD} -->
+<!-- 			  READ_YN		= #{READ_YN} -->
+<!-- 			, READ_TIME		= #{READ_TIME} -->
+			  CONF_YN		= #{CONF_YN}
+			, CONF_TIME		= CASE WHEN CONF_YN <![CDATA[<>]]> #{CONF_YN} AND #{CONF_YN} IS NOT NULL THEN TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') ELSE NULL END
+			, DIS_REASON	= #{DIS_REASON}
+		WHERE 1 = 1
+		AND MEET_ID			= #{MEET_ID}
+		AND MEET_ATTND_ID	= #{MEET_ATTND_ID}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_MEET_ATTND 
+		WHERE 1 = 1
+		AND MEET_ID			= #{MEET_ID}
+		AND MEET_ATTND_ID	= #{MEET_ATTND_ID}
+	</delete>
+
+</mapper>

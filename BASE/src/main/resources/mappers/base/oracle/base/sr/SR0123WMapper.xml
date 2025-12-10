@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR0123WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  0 AS CHK			/* CHECKBOX 컬럼 */
+		    , ''	AS ROWFLAG
+		    , B.REQ_ID
+			, A.REQ_TMPLAT_ID																												--요청서양식ID
+			, A.REQ_TMPLAT_VER																												--버전
+			, B.WF_PROC_CD																													--진행단계
+			, (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'WF_PROC_CD' AND CMM_CD = B.WF_PROC_CD AND LANG_CD = 'KR')	AS WF_PROC_NM				--진행단계명
+			, B.REQ_STAT_CD		-- 요청서 상태
+			, B.REQ_STAT_NM || CASE WHEN B.LAST_RTRN_YN = 'Y' THEN '(반려)' END	AS REQ_STAT_NM	--요청서진행상태명
+			, A.CUR_VER_YN																													--현재사용버전여부
+			, A.REQ_TMPLAT_NM																												--요청서양식명
+			, A.SVC_CD																														--서비스유형코드
+			, A.SVC_DTL_CD
+			, (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'SVC_CD' AND CMM_CD = A.SVC_CD AND LANG_CD = 'KR')
+              ||
+              CASE
+                WHEN A.SVC_DTL_CD IS NOT NULL
+                THEN
+                    ' > '|| (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = A.SVC_CD AND CMM_CD = A.SVC_DTL_CD AND LANG_CD = 'KR')
+              END   AS SVC_CD_NM	-- 서비스 > 서비스상세
+			
+			, B.TITLE
+			, B.REQ_EM_YN
+			, B.REQ_USER_ID
+			, B.REQ_USER_NM		
+			, B.REQ_WISH_DT
+			, B.REQ_WISH_TIME
+            , CASE
+                WHEN B.REQ_WISH_DT IS NOT NULL
+                THEN RPAD((B.REQ_WISH_DT || NVL(B.REQ_WISH_TIME, '2359')), 14, '0')
+                ELSE ''
+              END   AS REQ_WISH_DT_NM       -- 완료희망일시명
+			, B.DEL_YN			
+			, (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'SVC_CD' AND CMM_CD = A.SVC_CD AND LANG_CD = 'KR')	AS SVC_NM							--서비스유형명
+			, A.SVC_DTL_CD																													--서비스유형 상세코드
+			, (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = A.SVC_CD AND CMM_CD = A.SVC_DTL_CD AND LANG_CD = 'KR')	AS SVC_DTL_NM 					--서비스유형상세명
+			, A.WF_ID																														--워크플로우ID
+			, A.REQ_INFO_TYPE_CD																											--요청서 기본정보 타입코드
+			, (SELECT ITM_VAL_1 FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'REQ_INFO_TYPE_CD' AND CMM_CD = A.REQ_INFO_TYPE_CD AND LANG_CD = 'KR')	AS SR_INFO_URL	--요청서 기본정보 화면 URL
+			, A.REQ_URL																														--요청서URL
+			, A.ATTACH_USE_YN																												--첨부파일 사용여부
+			, A.USE_YN																														--사용여부
+			, A.REQ_DESC	
+			, A.RMK		
+            , 'PMO종료' AS PROC_NM  
+            , C.PM_USER_ID 
+            , C.PM_USER_NM		
+            , TO_CHAR((SELECT MAX (CR_CONFDATE)
+		                  FROM (SELECT CR_CONFDATE
+		                          FROM  ECAMS.CMR1000 R1
+		                             ,  ECAMS.CMR9900 R2
+		                         WHERE R1.CR_ACPTNO = R2.CR_ACPTNO
+		                           AND R1.CR_PRJNO =B.REQ_ID
+		                           AND R1.CR_STATUS = '9'
+		                           AND R1.CR_QRYCD = '04'
+		                           AND R2.CR_LOCAT != '00'
+		                           AND R2.CR_TEAM = 'SYSED'
+		                         UNION ALL
+		                        SELECT CR_CONFDATE
+		                          FROM  ECAMS.CMR1000 R1
+		                             ,  ECAMS.CMR9900 R2
+		                         WHERE R1.CR_ACPTNO = R2.CR_ACPTNO
+		                           AND R1.CR_PRJNO IN (SELECT P.PRJ_ID
+		                                  FROM  SR_MA_PRJ P
+		                                 WHERE P.REQ_ID =B.REQ_ID
+		                                   AND P.DEL_YN='N' )
+		                           AND R1.CR_STATUS = '9'
+		                           AND R1.CR_QRYCD = '04'
+		                           AND R2.CR_LOCAT != '00'
+		                           AND R2.CR_TEAM = 'SYSED')), 'YYYY-MM-DD')		AS MAX_EXE_DT
+		     , (SELECT COUNT(*) CNT
+		          FROM (SELECT CR_PRJNO
+		                  FROM ECAMS.CMR1000 TB1
+		                     , ECAMS.CMR1010 TB2
+		                 WHERE TB1.CR_ACPTNO = TB2.CR_ACPTNO
+		                   AND TB1.CR_PRJNO =B.REQ_ID 
+		                   AND TB1.CR_STATUS IN ('0', '8', '9')
+		                   AND TB1.CR_QRYCD = '04'
+		                   AND TB1.CR_EMGCD IN('01', '02', '03', '04') /* 림스 변경구분*/
+		                   AND TB2.CR_ITEMID = TB2.CR_BASEITEM
+		                   AND TB2.CR_STATUS IN ('0', '8', '9')
+		                   AND TB2.CR_QRYCD IN('03', '04', '05', '08', '09') /* 림스 체크인 신청구분 */
+                         UNION ALL
+                         SELECT CR_PRJNO
+		                  FROM ECAMS.CMR1000 TB1
+		                     , ECAMS.CMR1010 TB2
+		                 WHERE TB1.CR_ACPTNO = TB2.CR_ACPTNO
+		                   AND TB1.CR_STATUS IN ('0', '8', '9')
+		                   AND TB1.CR_QRYCD = '04'
+		                   AND TB1.CR_EMGCD IN('01', '02', '03', '04') /* 림스 변경구분*/
+		                   AND TB2.CR_ITEMID = TB2.CR_BASEITEM
+		                   AND TB2.CR_STATUS IN ('0', '8', '9')
+		                   AND TB2.CR_QRYCD IN('03', '04', '05', '08', '09') /* 림스 체크인 신청구분 */
+		                   AND TB1.CR_PRJNO IN (SELECT P.PRJ_ID
+                                                  FROM SR_MA_PRJ P
+                                                 WHERE P.REQ_ID =B.REQ_ID
+                                                   AND P.DEL_YN='N' ))) 										AS EXE_CNT
+		     , (SELECT COUNT(*) CNT
+		          FROM (SELECT TB1.CR_PRJNO
+                          FROM ECAMS.CMR1000 TB1
+                             , ECAMS.CMR1010 TB2
+                             , ECAMS.CMR9900 TB3
+                         WHERE TB1.CR_ACPTNO = TB2.CR_ACPTNO
+                           AND TB1.CR_ACPTNO = TB3.CR_ACPTNO
+                           AND TB1.CR_PRJNO =B.REQ_ID
+                           AND TB1.CR_QRYCD = '04'
+                           AND TB1.CR_PRJNO IS NOT NULL
+                           AND TB2.CR_ITEMID = TB2.CR_BASEITEM
+                           AND TB1.CR_EMGCD IN('01', '02', '03', '04')          /* 림스 변경구분*/
+                           AND TB2.CR_STATUS IN ('0', '8', '9')
+                           AND TB2.CR_QRYCD IN('03', '04', '05', '08', '09')    /* 림스 체크인 신청구분 */
+                           AND TB3.CR_LOCAT != '00'
+                           AND TB3.CR_TEAM = 'SYSED'
+                           AND TB3.CR_STATUS = '9'
+                         UNION ALL
+                        SELECT TB1.CR_PRJNO
+                          FROM ECAMS.CMR1000 TB1
+                             , ECAMS.CMR1010 TB2
+                             , ECAMS.CMR9900 TB3
+                         WHERE TB1.CR_ACPTNO = TB2.CR_ACPTNO
+                           AND TB1.CR_ACPTNO = TB3.CR_ACPTNO
+                           AND TB1.CR_QRYCD = '04'
+                           AND TB1.CR_PRJNO IS NOT NULL
+                           AND TB2.CR_ITEMID = TB2.CR_BASEITEM
+                           AND TB1.CR_EMGCD IN('01', '02', '03', '04')          /* 림스 변경구분*/
+                           AND TB2.CR_STATUS IN ('0', '8', '9')
+                           AND TB2.CR_QRYCD IN('03', '04', '05', '08', '09')    /* 림스 체크인 신청구분 */
+                           AND TB3.CR_LOCAT != '00'
+                           AND TB3.CR_TEAM = 'SYSED'
+                           AND TB3.CR_STATUS = '9'
+		                   AND TB1.CR_PRJNO IN (SELECT P.PRJ_ID
+                                                  FROM SR_MA_PRJ P
+                                                 WHERE P.REQ_ID =B.REQ_ID
+                                                   AND P.DEL_YN='N' )))		AS EXE_CNT2
+		FROM
+			  WF_REQ_TMPLAT_HT A
+			, SR_BASE_INFO B
+            , SR_MA_BA_IT_REV C
+			
+		WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID   = B.REQ_TMPLAT_ID
+		AND A.REQ_TMPLAT_VER  = B.REQ_TMPLAT_VER
+        AND B.REQ_ID          = C.REQ_ID
+        AND NVL(B.DEL_YN, 'N') = 'N'
+        AND (
+             (A.REQ_TMPLAT_ID = 'WFT240009' AND B.WF_PROC_CD = 'WF_PROC_3020' )--요청등록(일반)
+			  OR           
+             (A.REQ_TMPLAT_ID = 'WFT240096' AND  B.WF_PROC_CD = 'WF_PROC_3020' ) --요청등록(IT)
+			  OR			
+			 (A.REQ_TMPLAT_ID = 'WFT240097' AND B.WF_PROC_CD = 'WF_PROC_3020' )--요청등록(IT자체)
+			 OR			
+			 (A.REQ_TMPLAT_ID = 'WFT240097' AND B.WF_PROC_CD = 'WF_PROC_3020' )--요청등록(비상-IT자체)
+			 OR			
+			 (A.REQ_TMPLAT_ID = 'WFT240099' AND B.WF_PROC_CD = 'WF_PROC_3020' )--요청등록(비상-현업)
+           )
+           
+        <if test="IT_PS != '' and IT_PS != null">
+        AND C.PM_USER_ID = #{IT_PS}
+      	</if>
+      	<if test="REQ_ID != '' and REQ_ID != null">
+        AND UPPER(B.REQ_ID) LIKE UPPER('%' || #{REQ_ID} || '%')
+      	</if>
+      	<if test="ORDER1 != '' and ORDER1 != null and ORDER2 != '' and ORDER2 != null">
+        <choose>
+            <when test='"MAX_EXE_DT".equals(ORDER1)'>
+            ORDER BY MAX_EXE_DT
+            </when>
+            <when test='"REQ_ID".equals(ORDER1)'>
+            ORDER BY REQ_ID
+            </when>
+            <when test='"TITLE".equals(ORDER1)'>
+            ORDER BY TITLE
+            </when>
+            <when test='"IT_PS".equals(ORDER1)'>
+            ORDER BY PM_USER_ID
+            </when>
+            <when test='"REQ_WISH_DT_NM".equals(ORDER1)'>
+            ORDER BY REQ_WISH_DT_NM
+            </when>
+        </choose> <if test='"DESC".equals(ORDER2)'> DESC </if>
+      	</if>     
+		
+		
+	</select>
+</mapper>

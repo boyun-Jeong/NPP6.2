@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ3200WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.ISSUE_ID
+			, A.ISSUE_NO
+			, A.ISSUE_NAME
+			, A.PJT_ID
+			, A.ISSUE_STATUS_CD
+			, A.ISSUE_TYPE_CD
+			, A.ISSUE_DESC
+			, A.ISSUE_STIME
+			, A.ISSUE_IMPACT_CD
+			, A.ISSUE_PLAN
+			, A.CPL_PLAN_TIME
+			, A.CPL_ACT_TIME
+			, A.CHG_USER_ID
+			, A.CHG_USER_NM
+			, A.CHG_USER_DEPT
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.SYSMODTIME
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, CASE
+				WHEN NVL(CPL_ACT_TIME,'00000000') != '00000000' OR CPL_PLAN_TIME >= TO_CHAR(SYSDATE, 'YYYYMMDD')
+				THEN 'N'
+				ELSE 'Y'
+			  END AS ISSUE_DELAY_CD
+		FROM
+			PJ_ISSUE A
+
+		WHERE 1 = 1 
+		AND A.PJT_ID = #{PJT_ID}
+		
+		<if test="ISSUE_NM != '' and ISSUE_NM != null">
+		AND UPPER(A.ISSUE_NAME) LIKE '%' || UPPER(#{ISSUE_NM}) ||'%'
+		</if>
+
+		<if test="ISSUE_STATUS_CD != '' and ISSUE_STATUS_CD != null">
+		AND A.ISSUE_STATUS_CD = #{ISSUE_STATUS_CD}
+		</if>
+
+		<if test="ISSUE_DELAY_CD != '' and ISSUE_DELAY_CD != null">
+		AND CASE
+				WHEN NVL(CPL_ACT_TIME,'00000000') != '00000000' OR CPL_PLAN_TIME >= TO_CHAR(SYSDATE, 'YYYYMMDD')
+				THEN 'N'
+				ELSE 'Y'
+			END = #{ISSUE_DELAY_CD}
+		</if>
+
+		ORDER BY
+			A.ISSUE_ID DESC
+	</select>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_ISSUE
+		WHERE RISK_ID = #{ISSUE_ID}
+	</delete>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE FROM PJ_ISSUE_ACTION 
+		WHERE RISK_ID = #{ISSUE_ID}
+	</delete>
+	
+	
+</mapper>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0190WDAO">
+
+	<!-- 부서트리 조회 -->
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		/* FOMM0190WMapper >> select01 */
+		SELECT
+               0 AS CHK        /* CHECKBOX 컬럼 */
+              ,'' AS ROWFLAG   /* 행상태 표기를 위한 컬럼 */
+              ,M.DEPT_CD
+              ,M.DEPT_NM
+              ,M.DEPT_MANAGER_ID
+              ,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = M.DEPT_MANAGER_ID) AS DEPT_MANAGER_NM  /* 부서장명 */
+              ,M.UP_DEPT_CD
+              ,(SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = M.UP_DEPT_CD) AS UP_DEPT_NM  /* 상위부서명 */
+              ,M.DEPT_LEVEL
+              ,M.DEPT_ENG_NAME				     /* 부서영문명 */
+              ,M.OPEN_DT
+              ,M.CLOSE_DT
+              ,M.SORT_ORDER
+              ,M.DEPT_STATUS
+              ,DECODE(M.DEPT_STATUS,'1','유효','폐쇄')     AS STATUS_NM       /* 부서상태 */
+              ,CONNECT_BY_ISLEAF AS LT
+          FROM FOMM_DEPT_MT M  
+          WHERE 1=1
+		<if test='"BIZ".equals(GBN)'>
+			AND DEPT_BIZ_YN = 'Y'
+		</if>
+       
+		<if test="DEPT_NM != '' and DEPT_NM != null">
+		 AND M.DEPT_CD IN
+		(
+			SELECT 	DEPT_CD
+			FROM		FOMM_DEPT_MT
+			START WITH UPPER(DEPT_NM) LIKE UPPER('%' || #{DEPT_NM} || '%')
+			CONNECT BY NOCYCLE PRIOR UP_DEPT_CD = DEPT_CD
+			UNION
+			SELECT DEPT_CD
+			FROM FOMM_DEPT_MT
+			START WITH UPPER(DEPT_NM) LIKE UPPER('%' || #{DEPT_NM} || '%')
+			CONNECT BY NOCYCLE PRIOR  DEPT_CD = UP_DEPT_CD
+		)
+		</if>
+		       
+       <if test="DEPT_STATUS != '' and DEPT_STATUS != null">
+           AND M.DEPT_STATUS = #{DEPT_STATUS}
+       </if>
+		
+       CONNECT BY PRIOR M.DEPT_CD = M.UP_DEPT_CD
+       START WITH UP_DEPT_CD = '@TOPLEVEL'
+
+         ORDER SIBLINGS BY M.SORT_ORDER
+	</select>
+
+	<!-- 하위부서 조회 -->
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		/* FOMM0190WMapper >> select02 */
+		SELECT
+               0 AS CHK        /* CHECKBOX 컬럼 */
+              ,'' AS ROWFLAG   /* 행상태 표기를 위한 컬럼 */
+              ,M.DEPT_CD
+              ,M.DEPT_NM
+              ,M.DEPT_MANAGER_ID
+              --,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = M.DEPT_MANAGER_ID) AS DEPT_MANAGER_NM  /* 부서장명 */
+              ,CASE
+                WHEN M.DEPT_LEVEL = 2 THEN
+                    CASE WHEN M.UP_DEPT_CD = '70073' AND M.DEPT_NM LIKE '농협손해보험%'
+                        THEN (SELECT LISTAGG(USER_NM, ', ') WITHIN GROUP (ORDER BY USER_ID) FROM FOMM_USER_MT WHERE DEPT_CD = M.UP_DEPT_CD AND USE_YN = 'Y')
+                        WHEN M.DEPT_CD = 'E9999' THEN NULL
+                        ELSE (SELECT LISTAGG(USER_NM, ', ') WITHIN GROUP (ORDER BY USER_ID) FROM FOMM_USER_MT WHERE DEPT_CD = M.DEPT_CD AND DEPT_NM = M.DEPT_NM AND USE_YN = 'Y')
+                    END
+			   END AS DEPT_MANAGER_NM /* 부서장명 */
+              ,M.UP_DEPT_CD
+              ,(SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = M.UP_DEPT_CD) AS UP_DEPT_NM  /* 상위부서명 */
+              ,M.DEPT_LEVEL
+              ,M.DEPT_ENG_NAME				     /* 부서영문명 */
+              ,M.OPEN_DT
+              ,M.CLOSE_DT
+              ,M.SORT_ORDER
+              ,M.DEPT_STATUS
+              ,DECODE(M.DEPT_STATUS,'1','유효','폐쇄')     AS STATUS_NM       /* 부서상태 */
+              
+          FROM FOMM_DEPT_MT M
+          WHERE 1=1
+          
+          <if test="UP_DEPT_CD != null and UP_DEPT_CD != ''">
+          AND M.UP_DEPT_CD = #{UP_DEPT_CD}
+          </if>  
+          
+          ORDER BY SORT_ORDER
+	</select>
+	
+	
+</mapper>

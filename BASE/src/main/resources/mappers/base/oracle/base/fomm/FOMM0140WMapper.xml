@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0140WDAO">
+	
+	<!-- FOMM_MENU_MT 기본 select -->
+	<sql id="selectFommMenuMt">
+		SELECT    0 AS CHK
+		        , '' AS ROWFLAG
+		        , MENU_ID		/* 메뉴ID */
+		        , MENU_NM
+		        , UP_MENU_ID	/* 상위메뉴ID */
+		        , MENU_LVL		/* 메뉴레벨 */
+		        , MENU_URL		/* 메뉴경로 */
+		        , SVC_TYPE_CD	/* SPP 업무구분 */
+		        , SCREEN_ID		/* 화면ID */
+				, MENU_PARAM_CD
+		        , SORT_ORDR		/* 정렬순서 */
+		        , USE_YN		/* 사용여부 */
+		        
+		        , RMK			/* 비고 */
+		        , FRID			/* 최초등록자ID */
+		        , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM				/* 최초등록자 */
+		        , FRDT			/* 최초등록일시 */
+		        , LMID			/* 최종수정자ID */
+		        , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM				/* 최종수정자 */
+		        , LMDT			/* 최종수정일시 */
+		        , LMPID			/* 최종수정화면ID */
+		        , A.MENU_HELP
+		FROM      FOMM_MENU_MT A
+		WHERE     1=1
+	</sql>
+	
+	
+	<!-- SPP 메뉴 트리 조회 -->
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0140WMapper >> select01 */
+    	
+		WITH menu_tb AS (
+		    SELECT menu_id, menu_nm, up_menu_id, menu_lvl, MENU_URL, SVC_TYPE_CD, SCREEN_ID, MENU_PARAM_CD, SORT_ORDR, USE_YN, RMK, FRID, FRDT, LMID, LMDT, LMPID, MENU_HELP
+		          , SYS_CONNECT_BY_PATH(lpad(sort_ordr, 5, '0'),'|') AS sort_key
+		    FROM fomm_menu_mt
+		    CONNECT BY PRIOR MENU_ID = UP_MENU_ID
+		<choose>
+			<when test="TOP_MENU_ID != null and TOP_MENU_ID != ''">
+				START WITH MENU_ID = #{TOP_MENU_ID}
+			</when>
+			<when test="SVC_TYPE_CD != null and SVC_TYPE_CD != ''">
+				START WITH MENU_ID = (SELECT MENU_ID FROM FOMM_MENU_MT WHERE SVC_TYPE_CD = #{SVC_TYPE_CD})
+			</when>
+			<otherwise>
+				START WITH MENU_ID = '0'
+			</otherwise>
+		</choose>
+		/*  ORDER SIBLINGS BY SORT_ORDR */
+		)
+		
+		select  0 AS CHK
+                , '' AS ROWFLAG
+                , MENU_ID       /* 메뉴ID */
+                , MENU_NM
+                , UP_MENU_ID    /* 상위메뉴ID */
+                , MENU_LVL      /* 메뉴레벨 */
+                , MENU_URL      /* 메뉴경로 */
+                , SVC_TYPE_CD   /* SPP 업무구분 */
+                , SCREEN_ID     /* 화면ID */
+                , MENU_PARAM_CD
+                , SORT_ORDR     /* 정렬순서 */
+                , USE_YN        /* 사용여부 */
+                
+                , RMK           /* 비고 */
+                , FRID          /* 최초등록자ID */
+                , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM             /* 최초등록자 */
+                , FRDT          /* 최초등록일시 */
+                , LMID          /* 최종수정자ID */
+                , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM             /* 최종수정자 */
+                , LMDT          /* 최종수정일시 */
+                , LMPID         /* 최종수정화면ID */
+                , MENU_HELP
+		from menu_tb a
+		<choose>
+        <when test="MENU_NM != null and MENU_NM != ''">
+        WHERE menu_id IN (
+            SELECT menu_id /*상위메뉴*/
+              FROM fomm_menu_mt 
+             START WITH upper(menu_nm) like UPPER('%' || #{MENU_NM} || '%')
+             CONNECT BY nocycle PRIOR up_menu_id = menu_id
+            UNION ALL 
+            SELECT menu_id /*하위메뉴*/
+              FROM fomm_menu_mt 
+             START WITH upper(menu_nm) like UPPER('%' || #{MENU_NM} || '%')
+             CONNECT BY nocycle PRIOR menu_id = up_menu_id
+        )    
+        </when>
+        </choose>       
+        order by sort_key 		
+    </select>
+    
+        
+    <!-- SPP 하위메뉴 -->
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0140WMapper >> select02 */
+    	<include refid="selectFommMenuMt"/>
+    	
+    	<if test="MENU_ID != null and MENU_ID != ''">
+			AND	  MENU_ID = #{MENU_ID}
+		</if>
+    	<if test="SEL_MENU_ID != null and SEL_MENU_ID != ''">
+			AND	  UP_MENU_ID = #{SEL_MENU_ID}
+		</if>
+		<if test="MENU_LVL != null and MENU_LVL != ''">
+			AND MENU_LVL = #{MENU_LVL}	
+		</if>
+		ORDER BY SORT_ORDR
+    </select>
+    
+    
+    
+    <!-- SPP 메뉴 도움말 조회-->
+    <select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0140WMapper >> select03 */
+    	SELECT	  '0' AS CHK
+    				, '' AS ROWFLAG
+    				, A.MENU_ID
+    				, A.MENU_NM
+    				, B.MENU_HELP
+    	FROM		  FOMM_MENU_MT A
+    				, FOMM_MENU_HELP_DT B
+    	WHERE	1=1
+    	AND		A.MENU_ID = B.MENU_ID
+    	<if test="MENU_ID != null and MENU_ID != ''">
+    		AND	A.MENU_ID = #{MENU_ID}
+    	</if>
+	</select>
+	
+	
+    <!-- SPP 메뉴 추가 -->
+    <insert id="insert01" parameterType="java.util.Map">
+		/* FOMM0140WMapper >> insert01 */
+		<selectKey resultType="string" keyProperty="menuId" order="BEFORE">
+        	SELECT MAX(TO_NUMBER(NVL(MENU_ID, 0)))+1 FROM FOMM_MENU_MT        
+    	</selectKey>
+		BEGIN
+			INSERT
+			INTO	FOMM_MENU_MT
+			(
+				  MENU_ID		/* 메뉴ID */
+		        , MENU_NM		/* 메뉴명 */
+		        , UP_MENU_ID	/* 상위메뉴ID */
+		        , MENU_LVL		/* 메뉴레벨 */
+		        , MENU_URL		/* 메뉴경로 */
+		        , SVC_TYPE_CD		/* 메뉴 업무구분 */
+		        , SCREEN_ID		/* 화면ID */
+				, MENU_PARAM_CD
+		        , SORT_ORDR		/* 정렬순서 */
+		        , USE_YN		/* 사용여부 */
+		        , RMK			/* 비고 */
+		        , FRID			/* 최초등록자ID */
+		        , FRDT			/* 최초등록일시 */
+		        , LMID			/* 최종수정자ID */
+		        , LMDT			/* 최종수정일시 */
+		        , LMPID			/* 최종수정화면ID */
+			)
+			VALUES
+			(
+				  #{menuId}
+				, #{MENU_NM}
+				, #{UP_MENU_ID}
+				, #{MENU_LVL}
+				, #{MENU_URL}
+				, #{SVC_TYPE_CD}
+				, #{SCREEN_ID}
+				, #{MENU_PARAM_CD}
+				, #{SORT_ORDR}
+				, #{USE_YN}
+				, #{RMK}
+				, #{LMID}
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, #{LMID}
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, #{LMPID}
+			);
+			
+			INSERT
+			INTO	FOMM_CMM_MSG_MT
+			(
+				  MSG_NO
+				, LANG_CD
+				, MSG_CONTS
+				, FRID
+				, FRDT
+				, LMID
+				, LMDT
+				, LMPID
+			)
+			VALUES
+			(
+				  #{menuId}
+				, #{SEL_LANG_CD}
+				, #{MENU_NM}
+				, #{LMID}
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, #{LMID}
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, #{LMPID}
+			);
+		END;
+			
+    </insert>
+    
+    <!-- SPP 메뉴 수정 -->
+    <update id="modify01" parameterType="java.util.Map">
+    	/* FOMM0140WMapper >> modify01 */
+    	BEGIN
+	        UPDATE	  FOMM_MENU_MT
+	        SET		  MENU_NM 		= #{MENU_NM}
+	        		, MENU_URL 		= #{MENU_URL}
+	        		, SVC_TYPE_CD	= #{SVC_TYPE_CD}
+	        		, MENU_PARAM_CD	= #{MENU_PARAM_CD}
+	        		, SCREEN_ID		= #{SCREEN_ID}
+	        		, SORT_ORDR 	= #{SORT_ORDR}
+	        		, USE_YN 		= #{USE_YN}
+	        		
+	        		, RMK		= #{RMK}
+	        		, LMID 		= #{LMID}
+					, LMDT 		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+					, LMPID 	= #{LMPID}
+					, MENU_HELP = #{MENU_HELP}
+			WHERE	  MENU_ID = #{MENU_ID}
+			;
+			
+			UPDATE	  FOMM_CMM_MSG_MT
+			SET		  MSG_CONTS = #{MENU_NM}
+			WHERE	  LANG_CD 	= #{SEL_LANG_CD}
+			AND		  MSG_NO 	= #{MENU_ID}
+			;
+			
+			<if test='USE_YN != null and USE_YN.equals("N")'>
+				UPDATE	FOMM_MENU_MT
+				SET		USE_YN = 'N'
+				WHERE	MENU_ID IN(
+							SELECT	MENU_ID
+							FROM	FOMM_MENU_MT
+							CONNECT BY PRIOR MENU_ID = UP_MENU_ID
+	        				START WITH MENU_ID = #{MENU_ID}
+						)
+				;
+			</if>
+		END;
+    </update>
+    
+        
+    <!-- SPP 메뉴 삭제 (하위메뉴 포함 모두 삭제) -->
+    <update id="remove01" parameterType="java.util.Map">
+    	/* FOMM0140WMapper >> remove01 */
+    	BEGIN
+	        DELETE
+	        FROM	FOMM_CMM_MSG_MT
+	        WHERE	MSG_NO IN
+	        		(
+	        			SELECT	MENU_ID
+	        			FROM	FOMM_MENU_MT
+	        			CONNECT BY PRIOR MENU_ID = UP_MENU_ID
+	        			START WITH MENU_ID = #{MENU_ID}
+	        		)
+	        ;
+
+            DELETE
+            FROM    FOMM_AUTH_MENU_DT
+            WHERE   MENU_ID IN
+                    (
+                        SELECT  MENU_ID
+                        FROM    FOMM_MENU_MT
+                        CONNECT BY PRIOR MENU_ID = UP_MENU_ID
+                        START WITH MENU_ID = #{MENU_ID}
+                    )
+            ;
+	        
+            DELETE
+            FROM    FOMM_MENU_MT
+            WHERE   MENU_ID IN
+                    (
+                        SELECT  MENU_ID
+                        FROM    FOMM_MENU_MT
+                        CONNECT BY PRIOR MENU_ID = UP_MENU_ID
+                        START WITH MENU_ID = #{MENU_ID}
+                    )
+            ;
+            
+
+		END;
+    </update>
+    
+    
+    
+    <!-- SPP 메뉴 도움말 추가/수정 -->
+    <update id="modify02" parameterType="java.util.Map">
+    	/* FOMM0140WMapper >> modify02 */
+    	MERGE INTO FOMM_MENU_HELP_DT A
+        USING DUAL
+        	ON (A.MENU_ID = #{MENU_ID})
+			
+		WHEN MATCHED THEN
+			UPDATE
+			SET	  MENU_HELP = #{MENU_HELP}
+					, LMID 		= #{LMID}	--최종수정자ID  
+					, LMDT 	= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최종수정일시 
+			WHERE	MENU_ID = #{MENU_ID}
+			
+			
+		WHEN NOT MATCHED THEN
+			INSERT
+			(
+				  MENU_ID
+				, MENU_HELP
+				, FRID
+				, FRDT
+				, LMID
+				, LMDT  
+			)
+			VALUES
+			(
+				  #{MENU_ID}
+				, #{MENU_HELP}
+				
+				, #{LMID}
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, #{LMID}
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			)
+    </update>
+    
+    <!-- SPP 메뉴 도움말 삭제 -->
+    <update id="remove02" parameterType="java.util.Map">
+    	/* FOMM0140WMapper >> remove02 */
+    	DELETE
+    	FROM		FOMM_MENU_HELP_DT
+    	WHERE	MENU_ID = #{MENU_ID}
+    </update>
+</mapper>

@@ -1,0 +1,221 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("comCheckboxDiv");
+            this.set_titletext("checkbox 유사radio div");
+            this.set_background("transparent");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(400,24);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+
+            
+            // UI Components Initialize
+
+            // Layout Functions
+            //-- Default Layout : this
+            obj = new Layout("default","",400,24,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("comCheckboxDiv.xfdl", function() {
+        /***********************************************************************************
+        * 화면(명)		︰ Checkbox div
+        * 메뉴(경로)	︰ -
+        * 화면 설명	︰ checkbox radio처럼생성
+        * 작성자		︰ WEMB
+        * 작성일		︰ 2023.04.00
+        * 수정이력		︰
+        *------------------------------------------------------------------
+        * 수정일       작성자		이력
+        *------------------------------------------------------------------
+        * 2023.04.00	WEMB		최초작성
+        *------------------------------------------------------------------
+        ***********************************************************************************/
+
+        /*	검색조건 등 공통코드를 radio처럼 사용해야 할 경우 사용
+         *  this.fnDrawChk = function(dsCmmCd:nexacro.NormalDataset)으로 checkbox 다중 동적 생성;		param : 공통코드 들어있는 dataset
+         *  this.fnGetValue();	최종 선택된 값 return;	전체 : 'CODE_ALL';  나머지 : ','구분 코드 문자열
+         */
+
+        this.chkAll;		// 전체 checkbox
+        this.arrChk = new Array();	// 전체 제외 나머지 checkbox
+
+        this.form_onload = function(obj,e)
+        {
+        	this.gfnFormOnLoad(this, this.fnInit);
+        };
+
+        this.fnInit = function()
+        {
+        	trace('comCheckboxDiv init call');
+        }
+
+        // chekcbox 동적 생성
+        this.fnDrawChk = function(dsCmmCd)
+        {
+        	if( Ex.isEmpty(dsCmmCd) ) {
+        		trace('공통코드 dataset이 없습니다.');
+        		return;
+        	}
+
+        	if(dsCmmCd.rowcount == 0) {
+        		trace('공통코드가 없습니다.');
+        		return;
+        	}
+
+        	// 초기화
+        	var comps = this.components;
+        	for(var i = 0; i < comps.length; i++) {
+        		this.removeChild(comps[i].name);
+        		comps[i].destroy();
+        	}
+
+        	// '전체' 행 강제추가
+        	var cmmCd = dsCmmCd.getColumn(0, 'CMM_CD')||'';
+        	if( Ex.isEmpty(cmmCd) )
+        		dsCmmCd.setColumn(0, 'CMM_CD_NM', '전체');
+        	else {
+        		dsCmmCd.setInsertRow(0);
+        		dsCmmCd.setColumn(0, 'CMM_CD', '');
+        		dsCmmCd.setColumn(0, 'CMM_CD_NM', '전체');
+        	}
+
+
+        	// chkbox 동적생성 시작
+        	var nL = 0;
+        	var nT = 0;
+        	var nW = 0;		// 재계산
+        	var nH = 24;
+        	var nMargin = 5;
+        	for(var i = 0; i < dsCmmCd.rowcount; i++)
+        	{
+        		var CMM_CD		= dsCmmCd.getColumn(i, 'CMM_CD')||'';
+        		var CMM_CD_NM	= dsCmmCd.getColumn(i, 'CMM_CD_NM')||'전체';
+
+        		// create checkbox
+        		var objChk = new CheckBox(CMM_CD, nL, nT, 1, nH, null, null);
+        		objChk.set_cssclass('chk_WF_normal');
+        		objChk.set_text(CMM_CD_NM);
+        		objChk.CMM_CD = CMM_CD;
+
+        		// set_width
+        		var objSize = nexacro.getTextSize(CMM_CD_NM, "12px 'KoPubL'");
+        		var tempWidth = parseInt(objSize.nx + 30);
+        		if(tempWidth > 50 )	nW = tempWidth;
+        		objChk.set_width(nW);
+
+        		// add event
+        		objChk.setEventHandler("onchanged", this.chk_onchanged, this);
+
+        		// add obj to variable
+        		if(CMM_CD == '')	this.chkAll = objChk;
+        		else	this.arrChk.push(objChk);
+
+        		// show
+        		this.addChild(CMM_CD, objChk);
+        		objChk.show();
+        		nL += nW + nMargin;
+        	}
+        }
+
+
+        this.chk_onchanged = function(obj,e)
+        {
+        	switch(obj.CMM_CD)
+        	{
+        		case "" :
+        			for(var i = 0; i < this.arrChk.length; i++)
+        				this.arrChk[i].set_value(e.postvalue);
+        			break;
+
+        		default :
+        			if(e.postvalue == true)
+        			{
+        				for(var i = 0; i < this.arrChk.length; i++) {
+        					if(this.arrChk[i].value	== true)
+        						continue;
+        					else {
+        						this.chkAll.set_value(false);
+        						return;
+        					}
+        				}
+        				this.chkAll.set_value(true);
+        			}
+        			else	// 하나라도 false면 전체 체크 해제
+        			{
+        				this.chkAll.set_value(false);
+        			}
+
+        			break;
+        	}
+        }
+
+
+        this.fnGetValue = function()
+        {
+        	var rtn = '';
+        	if(this.chkAll.value == true) {
+        		return this.chkAll.CMM_CD;
+        	}
+        	else {
+        		for(var i = 0; i < this.arrChk.length; i++) {
+        			if(this.arrChk[i].value == true)
+        				rtn += this.arrChk[i].CMM_CD + ',';
+        		}
+        	}
+
+        	if( !Ex.isEmpty(rtn) )
+        		rtn = rtn.substring(0, rtn.length-1);
+
+        	return rtn;
+        }
+
+
+
+        this.fnResetChk = function()
+        {
+        	for(var i = 0; i < this.arrChk.length; i++) {
+        		this.arrChk[i].set_value(false);
+        	}
+        	if(this.chkAll)
+        		this.chkAll.set_value(false);
+        }
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+        };
+        this.loadIncludeScript("comCheckboxDiv.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

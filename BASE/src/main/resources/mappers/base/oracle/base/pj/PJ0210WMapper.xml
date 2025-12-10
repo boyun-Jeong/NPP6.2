@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0210WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		/* PJ0210WMapper >> select01 */
+		SELECT
+			  PJT_ID
+			, PJT_NAME
+			, SUB_PJT_YN 
+			, PJT_STIME
+			, PJT_ETIME
+			, PJT_STATUS_CD
+			, PJT_TYPE_CD
+			, PJT_SIZE_CD
+			, SPV_YN
+			, UPMU_USER_NM
+			, IN_PM_USER_NM
+			, OUT_CPY_NAME
+			, OUT_PM_USER_NM
+
+		FROM PJ_PROJECT
+		WHERE 1 = 1
+		
+		AND (NVL(SUB_PJT_YN, 'N') = 'N' OR NVL(SUB_PJT_YN, 'N') IS NULL)
+		AND #{PJT_YEAR} BETWEEN SUBSTR(PJT_STIME, 1, 4) AND SUBSTR(PJT_ETIME, 1, 4)
+
+		<if test="PJT_STATUS_CD != '' and PJT_STATUS_CD != null">
+		AND PJT_STATUS_CD = #{PRJ_STATUS_CD}
+		</if>
+
+		<if test="PJT_ID != '' and PJT_ID != null">
+		AND PJT_ID = #{PJT_ID}
+		</if>
+
+		<if test="PJT_NM != '' and PJT_NM != null">
+		AND PJT_NAME LIKE '%' || #{PJT_NM} || '%'
+		</if>
+
+		ORDER BY
+			PJT_STIME DESC, PJT_ETIME DESC, PJT_ID DESC
+	</select>
+
+</mapper>

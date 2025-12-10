@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.com.dao.FommMenuDAO">
+	
+	<!-- 메뉴 전체 조회 -->
+    <select id="selectUserMenu" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT    0 AS CHK
+				, '' AS ROWFLAG
+				, A.MENU_ID		/* 메뉴ID */
+		        , A.MENU_NM
+		        , A.UP_MENU_ID	/* 상위메뉴ID */
+		        , A.MENU_URL	/* 메뉴경로 */
+		        , A.SCREEN_ID	/* 화면ID */
+		        , '' AS SVC_TYPE_CD
+				, '' AS MENU_PARAM_CD
+		         , DECODE(C.MENU_ID, NULL, 'N', 'Y') AS MY_MENU_YN	/* 즐겨찾기여부 */
+		        , A.MENU_LVL-2 AS MENU_LVL1							/* 레벨1 메뉴레벨 */
+		        , A.MENU_LVL-1 AS MENU_LVL2							/* 레벨2 메뉴레벨*/
+		        , A.MENU_LVL										/* 메뉴레벨 */
+		        , REGEXP_SUBSTR(SYS_CONNECT_BY_PATH(A.MENU_ID, '>>'), '[^>>]+', 1, 2) AS LVL1_MENU_ID		/* 레벨1 메뉴ID */
+		        , REGEXP_SUBSTR(SYS_CONNECT_BY_PATH(A.MENU_ID, '>>'), '[^>>]+', 1, 3) AS LVL2_MENU_ID		/* 레벨2 메뉴ID */
+		        , SUBSTR(SYS_CONNECT_BY_PATH(A.MENU_ID, '>>'), 6) AS MENU_PATH			/* 메뉴경로 */
+		        , SUBSTR(SYS_CONNECT_BY_PATH(A.MENU_NM, '>>'), 9) AS MENU_PATH_NM		/* 메뉴경로명 */
+		        , CASE
+		            WHEN INSTR(MENU_URL, CHR(63)) > 0
+		                THEN SUBSTR(MENU_URL, INSTR(MENU_URL, CHR(63))+1)
+		            ELSE ''
+		          END AS MENU_ARGS	/* 메뉴 파라미터 */
+		        , B.READ_YN			/* 접근권한 */
+		        , B.WRITE_YN		/* 쓰기권한 */
+		        , B.DELETE_YN		/* 삭제권한 */
+		        , CASE 
+		            WHEN (B.WRITE_YN = 'Y' OR B.DELETE_YN = 'Y') 
+		                THEN 'Y'
+		            ELSE 'N'
+		          END AS SAVE_YN	/* 저장권한; 쓰기/삭제권한 중 하나라도 있으면 Y */  
+		        , B.EXCL_DOWN_YN	/* 엑셀다운권한 */
+		        , B.REPORT_PRNT_YN	/* 레포트출력권한 */
+		        , B.FILE_UP_YN		/* 파일첨부권한 */
+		        
+		        , A.SORT_ORDR		/* 정렬순서 */
+		        , B.ADMIN_YN        /* 관리자여부 */
+		        , 'N' AS MENU_HELP_YN
+		FROM
+			  (
+			  SELECT *
+			  FROM FOMM_MENU_MT
+			  WHERE 1 = 1
+			  AND USE_YN = 'Y'
+			  ) A
+			, (
+			  SELECT
+			  	  MENU_ID
+				, DECODE(COUNT(CASE WHEN AD.READ_YN = 'Y' THEN 1 END),         0, 'N', 'Y') AS READ_YN
+				, DECODE(COUNT(CASE WHEN AD.WRITE_YN = 'Y' THEN 1 END),        0, 'N', 'Y') AS WRITE_YN
+				, DECODE(COUNT(CASE WHEN AD.DELETE_YN = 'Y' THEN 1 END),       0, 'N', 'Y') AS DELETE_YN
+				, DECODE(COUNT(CASE WHEN AD.EXCL_DOWN_YN = 'Y' THEN 1 END),    0, 'N', 'Y') AS EXCL_DOWN_YN
+				, DECODE(COUNT(CASE WHEN AD.REPORT_PRNT_YN = 'Y' THEN 1 END),  0, 'N', 'Y') AS REPORT_PRNT_YN
+				, DECODE(COUNT(CASE WHEN AD.FILE_UP_YN = 'Y' THEN 1 END),      0, 'N', 'Y') AS FILE_UP_YN
+				, DECODE(COUNT(CASE WHEN AM.ADMIN_YN = 'Y' THEN 1 END),      0, 'N', 'Y') AS ADMIN_YN
+			  FROM
+			 	  FOMM_AUTH_MENU_DT AD
+			 	, FOMM_AUTH_MT AM
+
+			  WHERE 1 = 1
+			  AND AD.AUTH_ID IN
+               				(
+               				SELECT AUTH_ID
+               				FROM FOMM_AUTH_USER_DT
+               				WHERE 1 = 1
+               				AND USER_ID = #{USER_ID}	/* 로그인ID */
+                         		)
+			  AND AD.AUTH_ID = AM.AUTH_ID           
+			  GROUP BY MENU_ID
+			  ) B
+			, (
+			  SELECT  *
+			  FROM FOMM_MENU_BKMK_DT
+			  WHERE 1 = 1
+			  AND USER_ID = #{USER_ID}	/* 로그인ID */
+			  ) C
+
+		WHERE 1 = 1
+		AND A.MENU_ID = B.MENU_ID(+)
+		AND A.MENU_ID = C.MENU_ID(+)
+		AND (MENU_LVL = 0 OR READ_YN ='Y')	/* 메뉴 ROOT OR 접근권한 있는 메뉴만 */
+
+		<if test="MY_MENU_YN != null and MY_MENU_YN != ''">		/* 즐겨찾기 메뉴만 조회 */
+		AND DECODE(C.MENU_ID, NULL, 'N', 'Y') = #{MY_MENU_YN}
+		</if>
+
+		<if test="MENU_ID != null and MENU_ID != ''">			/* 특정 메뉴만 조회 */
+		AND A.MENU_ID = #{MENU_ID}
+		</if>
+
+		START WITH A.UP_MENU_ID = 'ROOT'
+		CONNECT BY PRIOR A.MENU_ID = A.UP_MENU_ID
+		ORDER SIBLINGS BY(NVL(A.SORT_ORDR, '0'))
+    </select>
+
+    <!-- 개발 전용 메뉴 -->
+	<select id="selectDevMenu" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+		    MENU_ID
+		  , MENU_NM
+		  , UP_MENU_ID
+          , CASE WHEN INSTR(MENU_URL, CHR(63)) > 0
+	             THEN SUBSTR(MENU_URL, 1, INSTR(MENU_URL, CHR(63))-1)
+	             ELSE MENU_URL
+	         END AS MENU_URL
+		  , SCREEN_ID
+		  , '' AS SVC_TYPE_CD
+		  , '' AS MENU_PARAM_CD
+		  , LEVEL - 3 AS MENU_LVL1
+		  , LEVEL - 1 AS MENU_LVL2
+		  , LEVEL AS MENU_LVL
+		  , REGEXP_SUBSTR(SYS_CONNECT_BY_PATH(MENU_ID, ','), '[^,]+', 1, 1) AS LVL1_MENU_ID
+		  , REGEXP_SUBSTR(SYS_CONNECT_BY_PATH(MENU_ID, ','), '[^,]+', 1, 2) AS LVL2_MENU_ID
+		  , SUBSTRB(SYS_CONNECT_BY_PATH(MENU_ID, ','), 2) AS MENU_PATH
+          , SUBSTRB(SYS_CONNECT_BY_PATH(MENU_NM, ','), 7) AS MENU_PATH_NM
+          
+	      , CASE WHEN INSTR(MENU_URL, CHR(63)) > 0
+	             THEN SUBSTR(MENU_URL, INSTR(MENU_URL, CHR(63))+1)
+	             ELSE ''
+	        END AS MENU_ARGS
+		  , READ_YN			/* 접근권한 */
+          , WRITE_YN		/* 쓰기권한 */
+          , DELETE_YN		/* 삭제권한 */
+          , SAVE_YN
+          , EXCL_DOWN_YN	/* 엑셀다운권한 */
+          , REPORT_PRNT_YN	/* 레포트출력권한 */
+          , FILE_UP_YN		/* 파일첨부권한 */
+		  , SORT_ORDR
+		FROM
+		    (
+		        SELECT
+		            M.MENU_ID,
+		            M.MENU_NM,
+		            M.UP_MENU_ID,
+		            M.SCREEN_ID,
+		            M.MENU_URL,
+		            M.SORT_ORDR,
+		            M.USE_YN,
+		            'Y' AS READ_YN,
+                    'Y' AS WRITE_YN,
+                    'Y' AS DELETE_YN,
+                	'Y' AS SAVE_YN,
+                    'Y' AS EXCL_DOWN_YN,
+                    'Y' AS REPORT_PRNT_YN,
+                    'Y' AS FILE_UP_YN,
+		            M.RMK,
+		            M.FRID,
+		            M.FRDT,
+		            M.LMID,
+		            M.LMDT,
+		            M.LMPID
+		        FROM
+		            FOMM_DEV_MENU_MT M
+		        WHERE
+		            1 = 1
+		            AND M.USE_YN = 'Y'
+		            AND EXISTS (
+			                SELECT 1
+			                FROM
+			                    FOMM_AUTH_USER_DT
+			                WHERE 1 = 1
+			                AND AUTH_ID		= 'SPP_DEV'
+			                AND USER_ID		= #{USER_ID}
+		            )
+		        GROUP BY
+		            M.MENU_ID,
+		            M.MENU_NM,
+		            M.UP_MENU_ID,
+		            M.SCREEN_ID,
+		            M.MENU_URL,
+		            M.SORT_ORDR,
+		            M.USE_YN,
+		            M.RMK,
+		            M.FRID,
+		            M.FRDT,
+		            M.LMID,
+		            M.LMDT,
+		            M.LMPID
+		    ) T
+		START WITH UP_MENU_ID = '0'
+		CONNECT BY PRIOR MENU_ID = UP_MENU_ID
+		ORDER SIBLINGS BY TO_NUMBER(SORT_ORDR)
+	</select>
+
+	<select id="selectTableCount" parameterType="String" resultType="Integer">
+    	SELECT COUNT(1)
+		FROM TAB
+		WHERE TNAME = #{TBL_NM}
+    </select>
+    
+    <select id="selectTableList" parameterType="String" resultType="java.util.Map">
+    	SELECT
+			  A.TNAME   AS TBL_CD
+			, A.TNAME   AS TBL_NM
+			, A.TNAME ||
+			  CASE WHEN B.COMMENTS IS NOT NULL THEN '[' || B.COMMENTS || ']' END AS TBL_FULL_NM
+		FROM
+			  TAB A
+			, SYS.ALL_TAB_COMMENTS B
+
+		WHERE 1 = 1
+		AND A.TNAME = B.TABLE_NAME(+)
+		AND A.TABTYPE = 'TABLE'
+		AND A.TNAME NOT LIKE 'BIN%'		
+
+		ORDER BY
+			A.TNAME
+    </select>
+    
+    <select id="selectTableColumnList" parameterType="String" resultType="java.util.Map">
+    	SELECT
+		     A.COLS
+		    ,A.COMMENTS
+		    ,(
+		     SELECT LISTAGG(D.COLUMN_NAME, CHR(13)||CHR(10)) WITHIN GROUP (ORDER BY D.POSITION) AS PK_COLS
+		     FROM
+		        ALL_CONSTRAINTS  C,
+		        ALL_CONS_COLUMNS D
+		     WHERE 1 = 1
+		     AND C.OWNER           = D.OWNER
+		     AND C.CONSTRAINT_NAME = D.CONSTRAINT_NAME
+		     AND C.TABLE_NAME      = A.TABLE_NAME
+		     AND C.CONSTRAINT_TYPE = 'P'
+		     ) AS PK_COLS
+		FROM
+		    (
+			SELECT
+			     A.TABLE_NAME
+			    ,LISTAGG(A.COLUMN_NAME, CHR(13)||CHR(10)) WITHIN GROUP (ORDER BY A.COLUMN_ID)           AS COLS
+			    ,LISTAGG(NVL(B.COMMENTS, ' '), CHR(13)||CHR(10)) WITHIN GROUP (ORDER BY A.COLUMN_ID)    AS COMMENTS
+			FROM
+			    ALL_TAB_COLUMNS A,
+			    (
+                SELECT *
+                FROM SYS.USER_COL_COMMENTS
+                WHERE TABLE_NAME NOT LIKE 'BIN%'
+                ) B
+			
+			WHERE 1 = 1
+			AND A.TABLE_NAME = B.TABLE_NAME(+)
+			AND A.COLUMN_NAME = B.COLUMN_NAME
+			AND A.TABLE_NAME = #{TBL_NM}
+			
+			GROUP BY
+			    A.TABLE_NAME
+			) A
+    </select>
+
+	<!-- My Menu 추가 -->
+	<insert id="insertMyMenu" parameterType="java.util.Map">
+		/* FommMenuMapper >> insertMyMenu */
+		INSERT
+		INTO	FOMM_MENU_BKMK_DT
+		(
+			  MENU_ID
+			, USER_ID
+			, FRID
+			, FRDT
+		)
+		VALUES
+		(
+			  #{MENU_ID}
+			, #{USER_ID}
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		)
+	</insert>
+	
+	
+	<!-- My Menu 삭제 -->
+    <update id="removeMyMenu" parameterType="java.util.Map">
+    	/* FommMenuMapper >> removeMyMenu */
+        DELETE
+        FROM	FOMM_MENU_BKMK_DT
+		WHERE	USER_ID = #{USER_ID}
+		AND		MENU_ID = #{MENU_ID}
+    </update>
+    
+    
+    
+    <!-- 사용로그 PK (SLOG_ID) 생성 -->
+	<!-- 세션로그ID: SLOG(4)+YYMMDD(6)+일련번호(6) -->
+	<!-- 사용로그 추가 -->
+	<insert id="insertUserLog" parameterType="java.util.Map">
+		/* FommMenuMapper >> insertUserLog */
+		<selectKey resultType="string" keyProperty="SLOG_ID" order="BEFORE">
+            SELECT  FOMM_USAGE_SLOG_ID.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO	FOMM_USAGE_LOG
+		(
+			  SLOG_ID	--세션로그ID:SLOG(4)+YYMMDD(6)+일련번호(6)
+			, SYYMM		--로그년월
+			, SDAY		--로그일자
+			, SVR_IP	--서버IP
+			, CLIENT_IP	--접속IP
+			, USER_ID	--사번(id)
+			, USER_NAME	--사용자명
+			, REG_STIME	--등록일시
+			, MENU_ID	--메뉴ID (FOMM_MENU_MT PK)
+			, MENU_NM	--메뉴명
+			, MENU_URL	--메뉴URL
+		)
+		VALUES
+		(
+			  #{SLOG_ID}
+			, TO_CHAR(SYSDATE, 'YYYYMM')
+			, TO_CHAR(SYSDATE, 'DD')
+			, #{SVR_IP}
+			, #{CLIENT_IP}
+			, #{USER_ID}
+			, #{USER_NAME}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{MENU_ID}
+			, #{MENU_NM}
+			, #{MENU_URL}
+		)
+	</insert>
+</mapper>

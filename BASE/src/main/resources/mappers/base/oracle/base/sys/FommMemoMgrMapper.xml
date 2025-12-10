@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.com.dao.FommMemoMgrDAO">
+
+    <delete id="removeFommMemo" parameterType="java.util.Map">
+        UPDATE FOMM_MEMO SET
+              DEL_YN      = 'Y'
+            , DEL_TIME    = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        WHERE 1 = 1
+        AND MEMO_ID  = #{MEMO_ID}
+        AND DEL_YN      = 'N'
+    </delete>
+
+    <insert id="insert01" parameterType="java.util.Map">
+        <selectKey resultType="string" keyProperty="MEMO_ID" order="BEFORE">
+        SELECT SEQ_MEMO_ID.NEXTVAL AS MEMO_ID FROM DUAL
+        </selectKey>
+
+        INSERT INTO FOMM_MEMO
+        ( 
+              MEMO_ID
+            , MEMO_TITLE
+            , MEMO_CONTENTS
+            , MEMO_STATUS_CD
+            <if test='MEMO_STATUS_CD == "2"'>
+                , SEND_TIME
+            </if>
+            , ATTACH_YN
+            , DEL_YN
+            , REG_USER_ID
+            , REG_USER_NM
+            , REG_USER_DEPT
+            , NEW_MEMO_YN
+            , LMOD_USER_ID
+            , LMOD_USER_NM
+            , LMOD_USER_DEPT
+            , CREATE_TIME 
+        )
+        VALUES 
+        ( 
+              #{MEMO_ID}
+            , #{MEMO_TITLE}
+            , #{MEMO_CONTENTS}
+            , #{MEMO_STATUS_CD}
+            <if test='MEMO_STATUS_CD == "2"'>
+                , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            </if>
+            , #{ATTACH_YN}
+            , 'N'
+            , #{REG_USER_ID}
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{REG_USER_ID})
+            , (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{REG_USER_ID})
+            , 'Y'
+            , #{REG_USER_ID}
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{REG_USER_ID})
+            , (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{REG_USER_ID})
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        )
+    </insert>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		INSERT INTO FOMM_MEMO_RCV
+        ( 
+             MEMO_RCV_ID
+            , JOB_REV_NO
+            , SEND_GUBUN
+            , RCV_USER_ID
+            , RCV_USER_NM
+            , RCV_USER_DEPT
+            , RCV_TYPE_CD
+            , SND_USER_ID
+            , SND_USER_NM
+            , SND_USER_DEPT
+            , NEW_MEMO_YN
+            , READ_YN
+            , DEL_YN 
+        )
+        SELECT
+              (SELECT NVL(MAX(MEMO_RCV_ID)+1,1) AS MEMO_RCV_ID FROM FOMM_MEMO_RCV)
+            , #{MEMO_ID}
+            , NVL(#{SEND_GUBUN}, '00')
+            , USER_ID
+            , USER_NM
+            , DEPT_CD
+            , #{RCV_TYPE_CD}
+            , #{SND_USER_ID}
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{SND_USER_ID})
+            , (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{SND_USER_ID})
+            , 'Y'
+            , 'N'
+            , 'N'
+        FROM
+            FOMM_USER_MT
+        WHERE 1 = 1
+        AND USER_ID = #{RCV_USER_ID}
+        AND DECODE(SEND_MEMO_YN, '1', 'Y', SEND_MEMO_YN)    = 'Y'
+	</insert>
+
+    <insert id="insert03" parameterType="java.util.Map">
+        <selectKey resultType="string" keyProperty="TRAN_SQNO" order="BEFORE">
+            SELECT
+                NVL(MAX(FN_MEMOTRAN_MT_TRAN_SQ), NULL)
+            FROM
+                    (
+                    SELECT 1
+                    FROM FOMM_USER_MT
+                    WHERE USER_ID = #{RCVR_INDN}
+                    AND DECODE(SEND_MEMO_YN, '1', 'Y', SEND_MEMO_YN) = 'Y'
+                    )
+        </selectKey>
+        INSERT INTO FOMM_MEMOTRAN_MT
+        (
+              TRAN_SQNO
+            , RCVR_INDN
+            , TITLE
+            , CONTENT
+            , TARGET_DATE
+            , SEND_TIME
+            , MAP_PROC_CD
+            , MAP_WF_PROC_CD
+            , SEND_TARGET_YN
+            , SEND_GUBUN
+            , JOB_REV_NO
+        )
+        SELECT
+              #{TRAN_SQNO}
+            , USER_ID
+            , #{TITLE}
+            , #{CONTENT}
+            , NVL(#{TARGET_DATE}, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'))
+            , #{SEND_TIME}
+            , #{MAP_PROC_CD}
+            , #{MAP_WF_PROC_CD}
+            , 'Y'
+            , NVL(#{SEND_GUBUN}, '00')
+            , #{JOB_REV_NO}
+        FROM
+            FOMM_USER_MT
+        WHERE 1 = 1
+        AND USER_ID = #{RCVR_INDN}
+        AND DECODE(SEND_MEMO_YN, '1', 'Y', SEND_MEMO_YN)    = 'Y'
+    </insert>
+
+    <select id="selectFommMemotranMtSendTarget" resultType="HashMap">
+        SELECT *
+        FROM
+            FOMM_MEMOTRAN_MT A
+        WHERE 1 = 1
+        AND SEND_TARGET_YN = 'Y'
+        AND TRAN_SQNO   = #{TRAN_SQNO}       
+        AND A.TITLE IS NOT NULL
+        AND A.CONTENT IS NOT NULL
+
+        ORDER BY
+            A.TRAN_SQNO ASC
+    </select>
+
+    <update id="updateFommMemotranMtSendTime" parameterType="java.util.Map">
+        UPDATE FOMM_MEMOTRAN_MT A SET
+            SEND_TIME = SYSDATE
+        WHERE 1 = 1
+        AND SEND_TARGET_YN = 'Y'
+        AND TRAN_SQNO   = #{TRAN_SQNO}
+        AND A.TITLE IS NOT NULL
+        AND A.CONTENT IS NOT NULL
+    </update>
+
+    <update id="updateFommMemotranMtSendTargetYnN" parameterType="java.util.Map">
+        UPDATE FOMM_MEMOTRAN_MT SET
+            SEND_TARGET_YN = 'N'
+        WHERE 1 = 1
+        AND SEND_TARGET_YN = 'Y'
+        AND TRAN_SQNO   = #{TRAN_SQNO}
+    </update>
+
+</mapper>

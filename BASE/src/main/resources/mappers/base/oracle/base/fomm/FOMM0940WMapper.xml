@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0940WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+	   /* FOMM0940WDAO.select01 */
+       SELECT '' AS CHK
+                ,   '' AS ROWFLAG
+                ,   MG.GROUP_ID
+                ,   MG.GROUP_NM
+                ,   MG.OWNER_ID
+                ,   MG.USE_YN
+                ,   MG.GROUP_TYPE
+                ,   MG.REG_USER_ID
+                ,   MG.REG_USER_NM
+                ,   MG.REG_STIME
+                ,   MG.LMOD_USER_ID
+                ,   MG.LMOD_USER_NM
+                ,   MG.SYSMODTIME
+                ,   (SELECT COUNT(*) FROM FOMM_MEMO_GROUP_USER GU WHERE GU.GROUP_ID = MG.GROUP_ID) AS USER_CNT
+         FROM FOMM_MEMO_GROUP MG
+       WHERE 1=1      
+           <choose>
+                <when test='"".equals(ADMIN_YN) or ADMIN_YN == null or "N".equals(ADMIN_YN)'>
+                     AND OWNER_ID = #{OWNER_ID}
+                     AND GROUP_TYPE = 'P'
+                </when>
+                <otherwise>
+                     AND OWNER_ID IN (#{OWNER_ID},'000000000')
+                </otherwise>
+            </choose>
+          ORDER BY GROUP_ID
+	</select>
+
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+       /* FOMM0940WDAO.select02 */
+       SELECT '' AS CHK
+                ,   '' AS ROWFLAG 
+                ,   GROUP_ID 
+                ,   GU.USER_ID
+                ,   GU.REG_USER_ID
+                ,   GU.REG_USER_NM
+                ,   GU.REG_STIME
+                ,   GU.LMOD_USER_ID
+                ,   GU.LMOD_USER_NM
+                ,   GU.SYSMODTIME 
+                ,   (SELECT DEPT_NM FROM FOMM_DEPT_MT DM 
+                              WHERE DM.DEPT_CD = (SELECT DEPT_CD 
+                                                    FROM FOMM_USER_MT UM
+                                                   WHERE UM.USER_ID = GU.USER_ID 
+                                                  )
+                    )  AS DEPT_NM
+                ,   (SELECT USER_NM 
+                       FROM FOMM_USER_MT UM
+                      WHERE UM.USER_ID = GU.USER_ID 
+                    ) AS USER_NM
+                ,   (SELECT POS_NM 
+                       FROM FOMM_USER_MT UM
+                      WHERE UM.USER_ID = GU.USER_ID 
+                    ) AS POS_NM
+          FROM FOMM_MEMO_GROUP_USER GU
+          WHERE 1=1
+             AND GU.GROUP_ID = #{GROUP_ID}
+         ORDER BY DEPT_NM, POS_NM, USER_NM
+    </select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+ 	 /* FOMM0940WDAO.insert01 */
+     INSERT INTO FOMM_MEMO_GROUP
+     (
+          GROUP_ID
+        , GROUP_NM
+        , OWNER_ID
+        , USE_YN
+        , GROUP_TYPE
+        , REG_USER_ID
+        , REG_USER_NM
+        , REG_STIME
+        , LMOD_USER_ID
+        , LMOD_USER_NM
+        , SYSMODTIME 
+     ) VALUES (
+          (SELECT NVL(MAX(GROUP_ID),0)+1 FROM FOMM_MEMO_GROUP)
+        , #{GROUP_NM}
+        , DECODE(#{GROUP_TYPE}, 'S', '000000000', #{OWNER_ID})
+        , #{USE_YN}
+        , #{GROUP_TYPE}
+        , #{userId}
+        , #{userNm}
+        , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+        , #{userId}
+        , #{userNm}
+        , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+     )
+	</insert>
+	
+    <insert id="insert02" parameterType="java.util.Map">
+     /* FOMM0940WDAO.insert02 */
+     INSERT INTO FOMM_MEMO_GROUP_USER
+     (
+         GROUP_ID
+       , USER_ID
+       , REG_USER_ID
+       , REG_USER_NM
+       , REG_STIME
+       , LMOD_USER_ID
+       , LMOD_USER_NM
+       , SYSMODTIME
+     ) VALUES (
+         #{GROUP_ID}
+       , #{USER_ID}
+       , #{userId}
+       , #{userNm}
+       , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+       , #{userId}
+       , #{userNm}
+       , TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS')
+     )
+    </insert>	
+
+	<update id="modify01" parameterType="java.util.Map">
+ 	 /* FOMM0940WDAO.modify01 */
+ 	 UPDATE FOMM_MEMO_GROUP
+           SET USE_YN = #{USE_YN}
+               ,  GROUP_TYPE = #{GROUP_TYPE}
+               ,  GROUP_NM = #{GROUP_NM}
+               ,  LMOD_USER_ID = #{userId}
+               ,  LMOD_USER_NM = #{userNm}
+               ,  SYSMODTIME = TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS') 
+     WHERE 1=1
+          AND GROUP_ID = #{GROUP_ID}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	 /* FOMM0940WDAO.remove01 */
+     DELETE FROM FOMM_MEMO_GROUP
+      WHERE GROUP_ID = #{GROUP_ID}
+	</delete>
+	
+	<delete id="remove02" parameterType="java.util.Map">
+     /* FOMM0940WDAO.remove02 */
+     DELETE FROM FOMM_MEMO_GROUP_USER
+      WHERE GROUP_ID = #{GROUP_ID}
+           AND USER_ID = #{USER_ID}
+    </delete>
+    
+    <delete id="remove03" parameterType="java.util.Map">
+     /* FOMM0940WDAO.remove03 */
+     DELETE FROM FOMM_MEMO_GROUP_USER
+      WHERE GROUP_ID = #{GROUP_ID}           
+    </delete>    
+
+</mapper>

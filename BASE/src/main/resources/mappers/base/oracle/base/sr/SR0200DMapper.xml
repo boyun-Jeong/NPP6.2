@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR0200DDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  0 AS CHK		/* CHECKBOX 컬럼 */
+	        , '' AS ROWFLAG		/* 행상태 표기를 위한 컬럼 */
+			, REQ_ID	--요청서ID
+			, JOB_TYPE	--작업구분
+			, SYS_TYPE	--시스템구분
+			, SUB_SYS_TYPE	--업무시스템구분
+			, JOB_ID	--작업ID
+			, JOB_NM	--작업명
+			, JOB_RSN	--작업사유
+			, JOB_CONT	--작업내용
+			, JOB_PLAN_SDT	--작업시작일
+			, JOB_PLAN_STIME	--작업시작시분
+			, JOB_PLAN_EDT	--작업종료일
+			, JOB_PLAN_ETIME	--작업종료시분
+			, JOB_PLAN_MH	--작업소요시간
+			, JOB_TGT_RSC	--작업대상자원
+			, JOB_TGT_CI	--작업대상CI
+			, JOB_CNTL_ITEM	--작업관제항목
+			, JOB_TGT_EQMT	--작업대상장비
+			, JOB_SVC_IMPT	--작업서비스영향도
+			, JOB_ADVC_PREP_CONT	--작업사전준비내용
+			, JOB_SET_MTH	--작업설정방안
+			, ETC_CONT1	--기타1
+			, ETC_CONT2	--기타2
+			, ETC_CONT3	--기타3
+			, RMK	--비고
+			, FRID	--최초등록자ID
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자ID
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정 화면ID
+		FROM SR_INFR_ACCNT
+		WHERE 1 = 1
+		AND REQ_ID = #{REQ_ID}
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		INSERT INTO SR_INFR_ACCNT
+		(
+			  REQ_ID	--요청서ID
+			, JOB_TYPE	--작업구분
+			, SYS_TYPE	--시스템구분
+			, SUB_SYS_TYPE	--업무시스템구분
+			, JOB_ID	--작업ID
+			, JOB_NM	--작업명
+			, JOB_RSN	--작업사유
+			, JOB_CONT		--작업내용
+			, JOB_PLAN_SDT	--작업시작일
+			, JOB_PLAN_STIME	--작업시작시분
+			, JOB_PLAN_EDT	--작업종료일
+			, JOB_PLAN_ETIME	--작업종료시분
+			, JOB_PLAN_MH	--작업소요시간
+			, JOB_TGT_RSC	--작업대상자원
+			, JOB_TGT_CI	--작업대상CI
+			, JOB_CNTL_ITEM	--작업관제항목
+			, JOB_TGT_EQMT	--작업대상장비
+			, JOB_SVC_IMPT	--작업서비스영향도
+			, JOB_ADVC_PREP_CONT	--작업사전준비내용
+			, JOB_SET_MTH	--작업설정방안
+			, ETC_CONT1	--기타1
+			, ETC_CONT2	--기타2
+			, ETC_CONT3	--기타3
+			, RMK	--비고
+			, FRID	--최초등록자ID
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자ID
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정 화면ID
+		)
+		VALUES
+		(
+			  #{REQ_ID}
+			, #{JOB_TYPE}
+			, #{SYS_TYPE}
+			, #{SUB_SYS_TYPE}
+			, #{JOB_ID}
+			, #{JOB_NM}
+			, #{JOB_RSN}
+			, #{JOB_CONT}
+			, #{JOB_PLAN_SDT}
+			, #{JOB_PLAN_STIME}
+			, #{JOB_PLAN_EDT}
+			, #{JOB_PLAN_ETIME}
+			, #{JOB_PLAN_MH}
+			, #{JOB_TGT_RSC}
+			, #{JOB_TGT_CI}
+			, #{JOB_CNTL_ITEM}
+			, #{JOB_TGT_EQMT}
+			, #{JOB_SVC_IMPT}
+			, #{JOB_ADVC_PREP_CONT}
+			, #{JOB_SET_MTH}
+			, #{ETC_CONT1}
+			, #{ETC_CONT2}
+			, #{ETC_CONT3}
+			, #{RMK}
+			, #{FRID}
+			, #{FRDT}
+			, #{LMID}
+			, #{LMDT}
+			, #{LMPID}
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE SR_INFR_ACCNT SET
+			  JOB_TYPE = #{JOB_TYPE}	--작업구분
+			, SYS_TYPE = #{SYS_TYPE}	--시스템구분
+			, SUB_SYS_TYPE = #{SUB_SYS_TYPE}	--업무시스템구분
+			, JOB_ID = #{JOB_ID}	--작업ID
+			, JOB_NM = #{JOB_NM}	--작업명
+			, JOB_RSN = #{JOB_RSN}	--작업사유
+			, JOB_CONT = #{JOB_CONT}	--작업내용
+			, JOB_PLAN_SDT = #{JOB_PLAN_SDT}	--작업시작일
+			, JOB_PLAN_STIME = #{JOB_PLAN_STIME}	--작업시작시분
+			, JOB_PLAN_EDT = #{JOB_PLAN_EDT}	--작업종료일
+			, JOB_PLAN_ETIME = #{JOB_PLAN_ETIME}	--작업종료시분
+			, JOB_PLAN_MH = #{JOB_PLAN_MH}	--작업소요시간
+			, JOB_TGT_RSC = #{JOB_TGT_RSC}	--작업대상자원
+			, JOB_TGT_CI = #{JOB_TGT_CI}	--작업대상CI
+			, JOB_CNTL_ITEM = #{JOB_CNTL_ITEM}	--작업관제항목
+			, JOB_TGT_EQMT = #{JOB_TGT_EQMT}	--작업대상장비
+			, JOB_SVC_IMPT = #{JOB_SVC_IMPT}	--작업서비스영향도
+			, JOB_ADVC_PREP_CONT = #{JOB_ADVC_PREP_CONT}	--작업사전준비내용
+			, JOB_SET_MTH = #{JOB_SET_MTH}	--작업설정방안
+			, ETC_CONT1 = #{ETC_CONT1}	--기타1
+			, ETC_CONT2 = #{ETC_CONT2}	--기타2
+			, ETC_CONT3 = #{ETC_CONT3}	--기타3
+			, RMK = #{RMK}	--비고
+			, LMID = #{LMID}	--최종수정자ID
+			, LMDT = #{LMDT}	--최종수정일시
+			, LMPID = #{LMPID}	--최종수정 화면ID
+		WHERE 1 = 1
+		AND REQ_ID = #{REQ_ID}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM SR_INFR_ACCNT
+		WHERE 1 = 1
+		AND REQ_ID = #{REQ_ID}
+	</delete>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  0 AS CHK		/* CHECKBOX 컬럼 */
+	        , '' AS ROWFLAG		/* 행상태 표기를 위한 컬럼 */
+			, A.REQ_ID		--요청서 ID
+			, A.SEQ			--순번
+			, A.REQ_USER_ID	--신청자ID
+			, A.REQ_USER_NM	--신청자명
+			, A.REQ_USER_NM || CASE WHEN A.REQ_USER_ID IS NOT NULL THEN '(' || A.REQ_USER_ID || ')' END AS REQ_USER_INFO
+			, A.REQ_DEPT_CD	--신청자부서ID
+			, A.REQ_DEPT_NM	--신청자부서명
+			, A.SYS_TYPE	--시스템구분
+			, A.ACCNT_NM	--계정명
+			, A.AUTH_NM		--권한명
+			, A.USE_SDT		--사용시작일
+			, A.USE_EDT		--사용종료일
+			, A.CI_ID		--자산ID
+			, A.RMK			--비고
+			, A.FRID		--최초등록자ID
+			, A.FRDT		--최초등록일시
+			, A.LMID		--최종수정자ID
+			, A.LMDT		--최종수정일시
+			, A.LMPID		--최종수정 화면ID
+		FROM SR_INFR_ACCNT_01 A
+		WHERE 1 = 1
+		AND REQ_ID = #{REQ_ID}
+		
+		<if test="SEQ != '' and SEQ != null">
+		AND SEQ = #{SEQ}
+		</if>
+	</select>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		INSERT INTO SR_INFR_ACCNT_01
+		(
+			  REQ_ID	--요청서 ID
+			, SEQ	--순번
+			, REQ_USER_ID	--신청자ID
+			, REQ_USER_NM	--신청자명
+			, REQ_DEPT_CD	--신청자부서ID
+			, REQ_DEPT_NM	--신청자부서명
+			, SYS_TYPE	--시스템구분
+			, ACCNT_NM	--계정명
+			, AUTH_NM	--권한명
+			, USE_SDT	--사용시작일
+			, USE_EDT	--사용종료일
+			, CI_ID	--자산ID
+			, RMK	--비고
+			, FRID	--최종수정자ID
+			, FRDT	--최종수정일시
+			, LMID	--최종수정 화면ID
+			, LMDT
+			, LMPID
+		)
+		VALUES
+		(
+			  #{REQ_ID}
+			, #{SEQ}
+			, #{REQ_USER_ID}
+			, #{REQ_USER_NM}
+			, #{REQ_DEPT_CD}
+			, #{REQ_DEPT_NM}
+			, #{SYS_TYPE}
+			, #{ACCNT_NM}
+			, #{AUTH_NM}
+			, #{USE_SDT}
+			, #{USE_EDT}
+			, #{CI_ID}
+			, #{RMK}
+			, #{FRID}
+			, #{FRDT}
+			, #{LMID}
+			, #{LMDT}
+			, #{LMPID}
+		)
+	</insert>
+
+	<update id="modify02" parameterType="java.util.Map">
+		UPDATE SR_INFR_ACCNT_01 SET
+			  REQ_USER_ID = #{REQ_USER_ID}	--신청자ID
+			, REQ_USER_NM = #{REQ_USER_NM}	--신청자명
+			, REQ_DEPT_CD = #{REQ_DEPT_CD}	--신청자부서ID
+			, REQ_DEPT_NM = #{REQ_DEPT_NM}	--신청자부서명
+			, SYS_TYPE = #{SYS_TYPE}	--시스템구분
+			, ACCNT_NM = #{ACCNT_NM}	--계정명
+			, AUTH_NM = #{AUTH_NM}	--권한명
+			, USE_SDT = #{USE_SDT}	--사용시작일
+			, USE_EDT = #{USE_EDT}	--사용종료일
+			, CI_ID = #{CI_ID}	--자산ID
+			, RMK = #{RMK}	--비고
+			, LMID = #{LMID}	--최종수정 화면ID
+			, LMDT = #{LMDT}
+			, LMPID = #{LMPID}
+		WHERE 1 = 1
+		AND REQ_ID	= #{REQ_ID}
+		AND SEQ		= #{SEQ}
+	</update>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE
+		FROM SR_INFR_ACCNT_01
+		WHERE 1 = 1
+		AND REQ_ID	= #{REQ_ID}
+		AND SEQ		= #{SEQ}
+	</delete>
+	
+	<select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  0 AS CHK			/* CHECKBOX 컬럼 */
+	        , '' AS ROWFLAG		/* 행상태 표기를 위한 컬럼 */
+			, A.REQ_ID			--요청서ID
+			, A.WF_PROC_CD		--진행단계
+			, A.USER_ID			--사번(접수자 처리자 현장관리자)
+			, A.USER_NM			--성명(접수자 처리자 현장관리자)
+			, A.DEPT_CD			--부서코드(접수자 처리자 현장관리자)
+			, A.DEPT_NM			--부서명(접수자 처리자 현장관리자)
+			, A.POS_NM			--직책(접수자 처리자 현장관리자)
+			, A.TELNUM           
+			, A.GUBUN_NM		--처리자구분(접수자 처리자 현장관리자 등)
+			, A.CEGR_ID			--지정 담당자 ID
+			, A.PROC_EXAM_OPIN	--처리의견
+			, A.PROC_DATE		--처리일시
+			, A.PROC_SDTIME		--처리시작일시
+			, A.PROC_EDTIME		--처리종료일시
+			, A.RMK				--비고
+			, A.FRID			--최초등록자ID
+			, A.FRDT			--최초등록일시
+			, A.LMID			--최종수정자ID
+			, A.LMDT			--최종수정일시
+			, A.LMPID			--최종수정 화면ID
+		FROM SR_REV_PROC A
+		WHERE 1 = 1
+		AND A.REQ_ID		= #{REQ_ID}
+		AND A.WF_PROC_CD	= #{WF_PROC_CD}
+	</select>
+	
+</mapper>

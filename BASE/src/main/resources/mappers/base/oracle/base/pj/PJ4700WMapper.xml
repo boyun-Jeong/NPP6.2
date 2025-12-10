@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ4700WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.RPPR_ID
+			, A.RPPR_NO
+			, A.RPPR_NAME
+			, A.RPPR_TYPE_CD
+			, A.PJT_ID
+			, A.BIZ_ID
+			, D.BIZ_NAME
+			, A.PERIOD
+			, A.PLAN_SDATE
+			, A.PLAN_EDATE
+			, A.ACTL_SDATE
+			, A.ACTL_EDATE
+			, A.CHG_USER_NM
+			, A.DEV_USER_ID
+			, A.DEV_USER_NM
+			, A.DEV_USER_DEPT
+			, A.PL_USER_ID
+			, A.PL_USER_NM
+			, A.PL_USER_DEPT
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, A.RPPR_DESC
+			, A.REMARK
+			, B.PJT_NAME AS PJT_NAME
+			, C.PJT_ID      AS P_PJT_ID 
+			, C.PJT_NAME AS P_PJT_NAME
+			, E.SCR_NO_INFO
+			, E.SCR_NAME_INFO
+			, F.BTJB_NO_INFO
+			, F.BTJB_NAME_INFO
+			, G.FUNC_NO_INFO
+			, G.FUNC_NAME_INFO
+			, H.REQ_NO_INFO
+			, H.REQ_NAME_INFO
+
+		FROM
+			  PJ_RPTPRG A   
+			, PJ_PROJECT B
+			, PJ_PROJECT C
+			, PJ_BIZ D
+			, (
+			  SELECT
+				  EE.PJT_ID
+				, EE.RPPR_ID
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.SCR_NO) ORDER BY FF.SCR_NO, FF.SCR_ID).EXTRACT('//text()').GETCLOBVAL(),2) AS SCR_NO_INFO
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.SCR_NAME) ORDER BY FF.SCR_NO, FF.SCR_ID).EXTRACT('//text()').GETCLOBVAL(),2) AS SCR_NAME_INFO
+			  FROM
+				  PJ_RPPR_SCR_MAP EE
+				, PJ_SCREEN FF
+			  WHERE 1 = 1
+			  AND EE.SCR_ID     = FF.SCR_ID
+              AND EE.PJT_ID     = FF.PJT_ID
+			  AND EE.PJT_ID     = #{SUB_PJT_ID} 
+
+			  GROUP BY
+			  	  EE.PJT_ID
+			  	, EE.RPPR_ID
+			  ) E
+			, (
+			  SELECT
+				  EE.PJT_ID
+				, EE.RPPR_ID
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.BTJB_NO) ORDER BY FF.BTJB_NO, FF.BTJB_ID).EXTRACT('//text()').GETCLOBVAL(),2) AS BTJB_NO_INFO
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.BTJB_NAME) ORDER BY FF.BTJB_NO, FF.BTJB_ID).EXTRACT('//text()').GETCLOBVAL(),2) AS BTJB_NAME_INFO
+			  FROM
+			  	  PJ_RPPR_BTJB_MAP EE
+				, PJ_BATCHJOB FF
+			  WHERE 1 = 1
+			  AND EE.BTJB_ID	= FF.BTJB_ID
+               AND EE.PJT_ID	= FF.PJT_ID
+               AND EE.PJT_ID	= #{SUB_PJT_ID}
+
+			  GROUP
+			  	  BY EE.PJT_ID
+				, EE.RPPR_ID
+			  ) F
+			, (
+			  SELECT
+				  EE.PJT_ID
+				, EE.RPPR_ID
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.FUNC_NO) ORDER BY FF.FUNC_NO, FF.FUNC_ID).EXTRACT('//text()').GETCLOBVAL(),2) AS FUNC_NO_INFO
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.FUNC_NAME) ORDER BY FF.FUNC_NO, FF.FUNC_ID).EXTRACT('//text()').GETCLOBVAL(),2) AS FUNC_NAME_INFO
+			  FROM
+			  	  PJ_RPPR_FUNC_MAP EE
+				, PJ_FUNCTION FF
+			  WHERE 1 = 1
+			  AND EE.FUNC_ID	= FF.FUNC_ID
+               AND EE.PJT_ID	= FF.PJT_ID
+               AND EE.PJT_ID	= #{SUB_PJT_ID}
+
+			  GROUP
+			  	  BY EE.PJT_ID
+				, EE.RPPR_ID
+			  ) G
+			, (
+			  SELECT
+				  EE.PJT_ID
+				, EE.RPPR_ID
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.REQ_NO) ORDER BY FF.REQ_NO, FF.REQ_ID).EXTRACT('//text()').GETCLOBVAL(),2) AS REQ_NO_INFO
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.REQ_NAME) ORDER BY FF.REQ_NO, FF.REQ_ID).EXTRACT('//text()').GETCLOBVAL(),2) AS REQ_NAME_INFO
+			  FROM
+				  PJ_RPPR_REQ_MAP EE
+				, PJ_REQMENT FF
+
+			  WHERE 1 = 1
+			  AND EE.REQ_ID	= FF.REQ_ID
+              AND EE.PJT_ID	= FF.PJT_ID
+              AND EE.PJT_ID	= #{SUB_PJT_ID}
+
+			  GROUP BY
+				  EE.PJT_ID
+				, EE.RPPR_ID
+			  ) H
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND B.PARENT_ID	= C.PJT_ID
+		AND A.PJT_ID	= D.PJT_ID
+		AND A.BIZ_ID	= D.BIZ_ID
+		AND A.PJT_ID	= E.PJT_ID(+)
+		AND A.RPPR_ID	= E.RPPR_ID(+)   
+		AND A.PJT_ID	= F.PJT_ID(+)
+		AND A.RPPR_ID	= F.RPPR_ID(+)   
+		AND A.PJT_ID	= G.PJT_ID(+)
+		AND A.RPPR_ID	= G.RPPR_ID(+)   
+		AND A.PJT_ID	= H.PJT_ID(+)
+		AND A.RPPR_ID	= H.RPPR_ID(+)
+		AND A.PJT_ID	= #{SUB_PJT_ID} 
+
+		<if test="BIZ_ID != '' and BIZ_ID != null">
+		AND A.BIZ_ID	= #{BIZ_ID}
+		</if>
+
+		<if test="RPPR_NO != '' and RPPR_NO != null">
+		AND UPPER(A.RPPR_NO) LIKE '%' || UPPER(#{RPPR_NO}) || '%'
+		</if>
+
+		<if test="RPPR_NM != '' and RPPR_NM != null">
+		AND UPPER(A.RPPR_NAME) LIKE '%' || UPPER(#{RPPR_NM}) || '%'
+		</if>
+		
+		<if test="RPPR_TYPE_CD != '' and RPPR_TYPE_CD != null">
+		AND A.RPPR_TYPE_CD	= #{RPPR_TYPE_CD}
+		</if>
+
+		<if test="CHG_USER_NM != '' and CHG_USER_NM != null">
+		AND UPPER(A.CHG_USER_NM) LIKE '%' || UPPER(#{CHG_USER_NM}) || '%'
+		</if>
+
+		<if test="DEV_USER_NM != '' and DEV_USER_NM != null">
+		AND UPPER(A.DEV_USER_NM) LIKE '%' || UPPER(#{DEV_USER_NM}) || '%'
+		</if>
+
+		<if test="PL_USER_NM != '' and PL_USER_NM != null">
+		AND UPPER(A.PL_USER_NM) LIKE '%' || UPPER(#{PL_USER_NM}) || '%'
+		</if>
+
+		<if test="SCR_NO != '' and SCR_NO != null">
+		AND A.RPPR_ID IN
+						(
+						SELECT
+							AA.RPPR_ID
+						FROM
+							  PJ_RPPR_SCR_MAP AA
+							, PJ_SCREEN BB
+						WHERE 1 = 1
+						AND AA.PJT_ID	= BB.PJT_ID
+						AND AA.SCR_ID	= BB.SCR_ID
+						AND AA.PJT_ID	= #{SUB_PJT_ID}
+						AND UPPER(BB.SCR_NO) LIKE UPPER('%' || #{SCR_NO} || '%')
+						)
+		</if>
+
+		<if test="BTJB_NO != '' and BTJB_NO != null">
+		AND A.RPPR_ID IN
+						(
+						SELECT
+							AA.RPPR_ID
+						FROM
+							  PJ_RPPR_BTJB_MAP AA
+							, PJ_BATCHJOB BB
+						WHERE 1 = 1
+						AND AA.PJT_ID	= BB.PJT_ID
+						AND AA.BTJB_ID	= BB.BTJB_ID
+						AND AA.PJT_ID	= #{SUB_PJT_ID}
+						AND UPPER(BB.BTJB_NO) LIKE UPPER('%' || #{BTJB_NO} || '%')
+						)
+		</if>
+
+		<if test="FUNC_NO != '' and FUNC_NO != null">
+		AND A.RPPR_ID IN
+						(
+						SELECT
+							AA.RPPR_ID
+						FROM
+							  PJ_RPPR_FUNC_MAP AA
+							, PJ_FUNCTION BB
+						WHERE 1 = 1
+						AND AA.PJT_ID	= BB.PJT_ID
+						AND AA.FUNC_ID	= BB.FUNC_ID
+						AND AA.PJT_ID	= #{SUB_PJT_ID}
+						AND UPPER(BB.FUNC_NO) LIKE UPPER('%' || #{FUNC_NO} || '%')
+						)
+		</if>
+
+		<if test="REQ_NO != '' and REQ_NO != null">
+		AND A.RPPR_ID IN
+						(
+						SELECT
+							AA.RPPR_ID
+						FROM
+							  PJ_RPPR_REQ_MAP AA
+							, PJ_REQMENT BB
+						WHERE 1 = 1
+						AND AA.PJT_ID	= BB.PJT_ID
+						AND AA.REQ_ID	= BB.REQ_ID
+						AND AA.PJT_ID	= #{SUB_PJT_ID}
+						AND UPPER(BB.REQ_NO) LIKE UPPER('%' || #{REQ_NO} || '%')
+						)
+		</if>
+
+		<choose>
+			<when test='"PLAN".equals(DATE_GBN)'>
+				<if test="(SDATE != '' and SDATE != null) or (EDATE != '' and EDATE != null)">
+		AND (
+			 A.PLAN_SDATE BETWEEN #{SDATE} AND #{EDATE} OR
+			 A.PLAN_EDATE BETWEEN #{SDATE} AND #{EDATE}
+			)
+				</if>
+			</when>
+			<when test='"ACTL".equals(DATE_GBN)'>
+				<if test="(SDATE != '' and SDATE != null) or (EDATE != '' and EDATE != null)">
+		AND (
+			 A.ACTL_SDATE BETWEEN #{SDATE} AND #{EDATE} OR
+			 A.ACTL_EDATE BETWEEN #{SDATE} AND #{EDATE}
+			)
+				</if>
+			</when>
+		</choose>
+
+		ORDER BY
+			A.RPPR_NO, A.RPPR_ID
+	</select>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_RPPR_SCR_MAP
+  		WHERE 1 = 1
+  		AND RPPR_ID = #{RPPR_ID}
+	</delete>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_RPPR_BTJB_MAP
+  		WHERE 1 = 1
+  		AND RPPR_ID = #{RPPR_ID}
+	</delete>
+
+	<delete id="remove03" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_RPPR_FUNC_MAP
+  		WHERE 1 = 1
+  		AND RPPR_ID = #{RPPR_ID}
+	</delete>
+
+	<delete id="remove04" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_RPPR_REQ_MAP
+  		WHERE 1 = 1
+  		AND RPPR_ID = #{RPPR_ID}
+	</delete>
+
+	<delete id="remove05" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_RPTPRG
+  		WHERE 1 = 1
+  		AND RPPR_ID = #{RPPR_ID}
+	</delete>
+
+</mapper>

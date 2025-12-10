@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ5000PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.UTEST_ID
+			, A.UTEST_NO
+			, A.UTEST_NAME
+			, A.UTEST_TYPE_CD
+			, A.PJT_ID
+			, A.BIZ_ID
+			, A.RESULT_CD
+			, A.PRG_REF_CD
+			, A.PRG_REF_ID
+			, CASE
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD01' THEN D.SCR_NO
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD02' THEN E.RPPR_NO
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD03' THEN F.INF_NO
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD04' THEN G.BTPR_NO
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD05' THEN I.PRG_NO
+				ELSE ''
+			  END AS PRG_REF_NO
+			, CASE
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD01' THEN D.SCR_NAME
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD02' THEN E.RPPR_NAME
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD03' THEN F.INF_NAME
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD04' THEN G.BTPR_NAME             
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD05' THEN I.PRG_NAME
+				ELSE ''
+			  END AS PRG_REF_NAME
+			, A.DEV_USER_ID
+			, A.DEV_USER_NM
+			, A.DEV_USER_DEPT
+			, A.DEV_TEST_PDATE
+			, A.DEV_TEST_ADATE
+			, A.TESTER_ID
+			, A.TESTER_NM
+			, A.TESTER_DEPT
+			, A.TESTER_PDATE
+			, A.TESTER_ADATE
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, B.PJT_NAME AS PJT_NAME
+			, C.PJT_ID   AS P_PJT_ID 
+			, C.PJT_NAME AS P_PJT_NAME
+
+		FROM
+			  PJ_UNIT_TEST A   
+			, PJ_PROJECT B
+			, PJ_PROJECT C
+			, PJ_SCREEN D
+			, PJ_RPTPRG E
+			, PJ_INTERFACE F
+			, PJ_BATCHPRG G
+			, PJ_PROGRAM I
+
+		WHERE 1 = 1
+		AND A.PJT_ID		= B.PJT_ID
+		AND B.PARENT_ID		= C.PJT_ID
+		AND A.PRG_REF_ID	= D.SCR_ID(+)
+		AND A.PJT_ID		= D.PJT_ID(+)
+		AND A.PRG_REF_ID	= E.RPPR_ID(+)
+		AND A.PJT_ID		= E.PJT_ID(+)
+		AND A.PRG_REF_ID	= F.INF_ID(+)
+		AND A.PJT_ID		= F.PJT_ID(+)
+		AND A.PRG_REF_ID	= G.BTPR_ID(+)
+		AND A.PJT_ID		= G.PJT_ID(+)
+		AND A.PRG_REF_ID	= I.PRG_ID(+)
+		AND A.PJT_ID		= I.PJT_ID(+)
+		AND A.UTEST_ID		= #{UTEST_ID}    
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.UTDFT_ID
+			, A.UTEST_ID
+			, A.PJT_ID
+			, A.BIZ_ID
+			, A.UTDFT_NO
+			, A.UTDFT_NAME
+			, A.UTDFT_TYPE_CD
+			, A.UTDFT_RCV_CD
+			, A.UTDFT_ACT_CD
+			, A.DFT_USER_ID
+			, A.DFT_USER_NM
+			, A.DFT_USER_DEPT
+			, A.DFT_REG_DATE
+			, A.UTDFT_DESC
+			, A.ACT_USER_ID
+			, A.ACT_USER_NM
+			, A.ACT_USER_DEPT
+			, A.ACT_PDATE
+			, A.ACT_ADATE
+			, A.ACT_DESC
+			, A.CONF_USER_ID
+			, A.CONF_USER_NM
+			, A.CONF_USER_DEPT
+			, A.CONF_DATE
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.SYSMODTIME
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT      
+
+		FROM
+			PJ_UT_DEFECT A
+
+		WHERE 1 = 1
+		AND A.UTEST_ID	= #{UTEST_ID}
+		<!-- AND A.PJT_ID	= #{PJT_ID} -->
+
+		ORDER BY
+			A.UTDFT_NO, A.UTDFT_ID
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="UTEST_ID" order="BEFORE">
+			SELECT
+				'PJUT' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(UTEST_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_UNIT_TEST
+   			WHERE 1 = 1
+   			AND UTEST_ID LIKE 'PJUT%'
+			AND LENGTH(UTEST_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_UNIT_TEST
+		(  
+			  UTEST_ID
+			, UTEST_NO
+			, UTEST_NAME
+			, UTEST_TYPE_CD
+			, PJT_ID
+			, BIZ_ID
+			, RESULT_CD
+			, PRG_REF_CD
+			, PRG_REF_ID
+			, DEV_USER_ID
+			, DEV_USER_NM
+			, DEV_USER_DEPT
+			, DEV_TEST_PDATE
+			, DEV_TEST_ADATE
+			, TESTER_ID
+			, TESTER_NM
+			, TESTER_DEPT
+			, TESTER_PDATE
+			, TESTER_ADATE
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  #{UTEST_ID}
+			, #{UTEST_NO}
+			, #{UTEST_NAME}
+			, #{UTEST_TYPE_CD}
+			, #{PJT_ID}
+			, #{BIZ_ID}
+			, #{RESULT_CD}
+			, #{PRG_REF_CD}
+			, #{PRG_REF_ID}
+			, #{DEV_USER_ID}
+			, #{DEV_USER_NM}
+			, #{DEV_USER_DEPT}
+			, #{DEV_TEST_PDATE}
+			, #{DEV_TEST_ADATE}
+			, #{TESTER_ID}
+			, #{TESTER_NM}
+			, #{TESTER_DEPT}
+			, #{TESTER_PDATE}
+			, #{TESTER_ADATE}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_UNIT_TEST SET
+			  UTEST_NO			= #{UTEST_NO}
+            , UTEST_NAME		= #{UTEST_NAME}
+            , UTEST_TYPE_CD		= #{UTEST_TYPE_CD}
+            , BIZ_ID			= #{BIZ_ID}
+            , RESULT_CD			= #{RESULT_CD}
+            , PRG_REF_CD		= #{PRG_REF_CD}
+            , PRG_REF_ID		= #{PRG_REF_ID}
+            , DEV_USER_ID		= #{DEV_USER_ID}
+            , DEV_USER_NM		= #{DEV_USER_NM}
+            , DEV_USER_DEPT		= #{DEV_USER_DEPT}
+            , DEV_TEST_PDATE	= #{DEV_TEST_PDATE}
+            , DEV_TEST_ADATE	= #{DEV_TEST_ADATE}
+            , TESTER_ID			= #{TESTER_ID}
+            , TESTER_NM			= #{TESTER_NM}
+            , TESTER_DEPT		= #{TESTER_DEPT}
+            , TESTER_PDATE		= #{TESTER_PDATE}
+            , TESTER_ADATE		= #{TESTER_ADATE}
+
+            , LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+
+		WHERE 1 = 1
+		AND UTEST_ID	= #{UTEST_ID}			
+	</update>
+
+</mapper>

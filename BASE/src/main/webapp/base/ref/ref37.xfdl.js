@@ -1,0 +1,637 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("ref37");
+            this.set_titletext("알림테스트");
+            this.getSetter("classname").set("ref06");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1620,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsFommNotiSendMt", this);
+            obj._setContents("<ColumnInfo><Column id=\"SEND_NO\" type=\"STRING\" size=\"256\"/><Column id=\"SEND_GUBUN\" type=\"STRING\" size=\"256\"/><Column id=\"TITLE\" type=\"STRING\" size=\"256\"/><Column id=\"SEND_USER_ID\" type=\"STRING\" size=\"256\"/><Column id=\"SEND_USER_NM\" type=\"STRING\" size=\"256\"/><Column id=\"SEND_DEPT_CD\" type=\"STRING\" size=\"256\"/><Column id=\"SEND_DEPT_NM\" type=\"STRING\" size=\"256\"/><Column id=\"SEND_TYPE_CD\" type=\"STRING\" size=\"256\"/><Column id=\"MSG_CONTS\" type=\"STRING\" size=\"256\"/><Column id=\"SEND_DTIME\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsUserList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSendTypeCd", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsSendGubun", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsAlarm", this);
+            obj._setContents("<ColumnInfo><Column id=\"USER_ID\" type=\"STRING\" size=\"256\"/><Column id=\"ALARM_TYPE_CD\" type=\"STRING\" size=\"256\"/><Column id=\"ALARM_REF\" type=\"STRING\" size=\"256\"/><Column id=\"ALARM_CONTS\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsAlarmTypeCd", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divUser",null,"0","415",null,"0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static21","0","0","150","24",null,null,null,null,null,null,this.divUser.form);
+            obj.set_taborder("0");
+            obj.set_text("수신자 목록");
+            obj.set_cssclass("sta_WF_gridTitle");
+            this.divUser.addChild(obj.name, obj);
+
+            obj = new Static("Static00_00_00","0","24",null,"10","0",null,null,null,null,null,this.divUser.form);
+            obj.set_taborder("1");
+            obj.set_background("rgba(173,142,219,0.4)");
+            obj.set_text("10");
+            obj.set_textAlign("center");
+            obj.set_verticalAlign("middle");
+            obj.set_font("normal 12pt/normal \"Arial\"");
+            obj.set_visible("false");
+            this.divUser.addChild(obj.name, obj);
+
+            obj = new Grid("grdUserList","0","Static00_00_00:0",null,null,"0","0",null,null,null,null,this.divUser.form);
+            obj.set_taborder("2");
+            obj.set_binddataset("dsUserList");
+            obj.set_cellsizingtype("col");
+            obj.set_autofittype("col");
+            obj.set_cssclass("grd_WF_normal");
+            obj.set_autoupdatetype("none");
+            obj._setContents("<Formats><Format id=\"multiSel\"><Columns><Column size=\"40\"/><Column size=\"48\"/><Column size=\"100\"/><Column size=\"90\"/><Column size=\"150\"/></Columns><Rows><Row size=\"32\" band=\"head\"/><Row size=\"32\"/></Rows><Band id=\"head\"><Cell displaytype=\"checkboxcontrol\" edittype=\"checkbox\"/><Cell col=\"1\" text=\"No.\"/><Cell col=\"2\" text=\"사번(ID)\"/><Cell col=\"3\" text=\"성명\"/><Cell col=\"4\" text=\"부서명\"/></Band><Band id=\"body\"><Cell displaytype=\"checkboxcontrol\" text=\"bind:CHK\" edittype=\"checkbox\"/><Cell col=\"1\" expr=\"currow+1\"/><Cell col=\"2\" text=\"bind:USER_ID\" edittype=\"none\"/><Cell col=\"3\" text=\"bind:USER_NM\" edittype=\"none\"/><Cell col=\"4\" text=\"bind:DEPT_NM\" edittype=\"none\" textAlign=\"left\"/></Band></Format><Format id=\"singleSel\"><Columns><Column size=\"100\"/><Column size=\"90\"/><Column size=\"140\"/><Column size=\"150\"/><Column size=\"100\"/><Column size=\"150\"/><Column size=\"107\"/><Column size=\"70\"/></Columns><Rows><Row size=\"32\" band=\"head\"/><Row size=\"32\"/></Rows><Band id=\"head\"><Cell text=\"사번(ID)\"/><Cell col=\"1\" text=\"성명\"/><Cell col=\"2\" text=\"소속명\"/><Cell col=\"3\" text=\"부서명\"/><Cell col=\"4\" text=\"직급\"/><Cell col=\"5\" text=\"직책(역할)\"/><Cell col=\"6\" text=\"내선번호\"/><Cell col=\"7\" text=\"상태\"/></Band><Band id=\"body\"><Cell text=\"bind:USER_ID\" edittype=\"none\"/><Cell col=\"1\" text=\"bind:USER_NM\" edittype=\"none\"/><Cell col=\"2\" text=\"bind:CO_NM\" edittype=\"none\"/><Cell col=\"3\" text=\"bind:DEPT_NM\" edittype=\"none\"/><Cell col=\"4\" text=\"bind:POS_NM\" edittype=\"none\"/><Cell col=\"5\" text=\"bind:ROLE_NM\" edittype=\"none\"/><Cell col=\"6\" text=\"bind:TELNUM\" edittype=\"none\"/><Cell col=\"7\" text=\"bind:USE_YN\"/></Band></Format></Formats>");
+            this.divUser.addChild(obj.name, obj);
+
+            obj = new Div("divGrdTopBtn",null,"0","125","24","0",null,null,null,null,null,this.divUser.form);
+            obj.set_taborder("3");
+            obj.set_visible("true");
+            obj.set_isButtonGroup("true");
+            this.divUser.addChild(obj.name, obj);
+
+            obj = new Button("btnDelete",null,"0","60",null,"0","0",null,null,null,null,this.divUser.form.divGrdTopBtn.form);
+            obj.set_taborder("0");
+            obj.set_text("삭제");
+            obj.set_cssclass("btn_WF_del");
+            this.divUser.form.divGrdTopBtn.addChild(obj.name, obj);
+
+            obj = new Button("btnAdd",null,"0","60","24","65",null,null,null,null,null,this.divUser.form.divGrdTopBtn.form);
+            obj.set_taborder("1");
+            obj.set_text("추가");
+            obj.set_cssclass("btn_WF_add");
+            this.divUser.form.divGrdTopBtn.addChild(obj.name, obj);
+
+            obj = new Div("divSend","0","0",null,"305","divUser:10",null,null,null,null,null,this);
+            obj.set_taborder("1");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static01_01","0","33",null,"34","0",null,null,null,null,null,this.divSend.form);
+            obj.set_taborder("10");
+            obj.set_cssclass("sta_WF_inputBg");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new Static("Static01","0","0",null,"34","0",null,null,null,null,null,this.divSend.form);
+            obj.set_taborder("0");
+            obj.set_cssclass("sta_WF_inputBg");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new Static("stcTitle","0","0","130","34",null,null,null,null,null,null,this.divSend.form);
+            obj.set_taborder("1");
+            obj.set_text("알림 이름");
+            obj.set_cssclass("sta_WF_inputTitle_E");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new Static("stcSendUserInfo","50%","0","130","34",null,null,null,null,null,null,this.divSend.form);
+            obj.set_taborder("3");
+            obj.set_text("발신자");
+            obj.set_cssclass("sta_WF_inputTitle");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new Edit("edtTitle","stcTitle:5","5",null,"24","stcSendUserInfo:5",null,null,null,null,null,this.divSend.form);
+            obj.set_taborder("2");
+            obj.set_cssclass("edt_WF_normal");
+            obj.set_validationGroup("input01");
+            obj.set_validation("알림이름;NULL");
+            obj.set_text("");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new Static("stcSendTypeCd","0","33","130","34",null,null,null,null,null,null,this.divSend.form);
+            obj.set_taborder("5");
+            obj.set_text("통보매체");
+            obj.set_cssclass("sta_WF_inputTitle_E");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new Static("stcSendUserInfoI","stcSendUserInfo:5","5",null,"20","5",null,null,null,null,null,this.divSend.form);
+            obj.set_taborder("4");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new Static("stcSendNo","50%","33","130","34",null,null,null,null,null,null,this.divSend.form);
+            obj.set_taborder("11");
+            obj.set_text("전송구분");
+            obj.set_cssclass("sta_WF_inputTitle_E");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new CheckBoxSet("chkSetSendTypeCd","stcSendTypeCd:5","38",null,"24","stcSendNo:5",null,null,null,null,null,this.divSend.form);
+            obj.set_taborder("6");
+            obj.set_innerdataset("dsSendTypeCd");
+            obj.set_codecolumn("CMM_CD");
+            obj.set_datacolumn("CMM_CD_NM");
+            obj.set_direction("horizontal");
+            obj.set_cssclass("chk_WF_normal");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new Static("stcMsgConts","0","66","130",null,null,"0",null,null,null,null,this.divSend.form);
+            obj.set_taborder("7");
+            obj.set_text("알림 내용");
+            obj.set_cssclass("sta_WF_inputTitle_E");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new Static("Static01_00","129.00","66",null,null,"0","0",null,null,null,null,this.divSend.form);
+            obj.set_taborder("8");
+            obj.set_cssclass("sta_WF_inputBg");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new TextArea("txaMsgConts","stcMsgConts:5.00","71",null,null,"5","5",null,null,null,null,this.divSend.form);
+            obj.set_taborder("9");
+            obj.set_validationGroup("input01");
+            obj.set_validation("알림 내용;NULL");
+            obj.set_acceptstab("true");
+            obj.set_text("");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new Button("btnSend",null,"38","57","24","5",null,null,null,null,null,this.divSend.form);
+            obj.set_taborder("12");
+            obj.set_text("발송");
+            obj.set_tooltiptext("Cron식 유효성 체크");
+            obj.set_cursor("pointer");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new Button("btnReset",null,"38","57","24","btnSend:5",null,null,null,null,null,this.divSend.form);
+            obj.set_taborder("13");
+            obj.set_text("초기화");
+            obj.set_tooltiptext("Cron식 유효성 체크");
+            obj.set_cursor("pointer");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new Combo("cboSendGubun","stcSendNo:5","38","115","24",null,null,null,null,null,null,this.divSend.form);
+            obj.set_taborder("14");
+            obj.set_innerdataset("dsSendGubun");
+            obj.set_codecolumn("CMM_CD");
+            obj.set_datacolumn("CMM_CD_NM");
+            obj.set_cssclass("cbo_WF_normal");
+            obj.set_validationGroup("input01");
+            obj.set_validation("전송구분;NULL");
+            obj.set_value("");
+            obj.set_index("-1");
+            obj.set_text("");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new Edit("edtSendNo","cboSendGubun:2","38",null,"24","203",null,null,null,null,null,this.divSend.form);
+            obj.set_taborder("15");
+            obj.set_cssclass("edt_WF_normal");
+            obj.set_validationGroup("input01");
+            obj.set_inputtype("number");
+            obj.set_inputfilter("alpha,comma,sign,space,symbol,dot");
+            obj.set_visible("false");
+            obj.set_text("");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new Button("btnSendAlarm",null,"5","105","24","5",null,null,null,null,null,this.divSend.form);
+            obj.set_taborder("16");
+            obj.set_text("알람발송");
+            this.divSend.addChild(obj.name, obj);
+
+            obj = new Combo("cboAlarmTypeCd",null,"5","113","24","btnSendAlarm:5",null,null,null,null,null,this.divSend.form);
+            obj.set_taborder("17");
+            obj.set_innerdataset("dsAlarmTypeCd");
+            obj.set_codecolumn("CMM_CD");
+            obj.set_datacolumn("CMM_CD_NM");
+            obj.set_cssclass("cbo_WF_normal");
+            obj.set_value("");
+            obj.set_index("-1");
+            obj.set_text("");
+            this.divSend.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this.divUser.form.divGrdTopBtn.form
+            obj = new Layout("default","",0,0,this.divUser.form.divGrdTopBtn.form,function(p){});
+            this.divUser.form.divGrdTopBtn.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.divUser.form
+            obj = new Layout("default","",0,0,this.divUser.form,function(p){});
+            this.divUser.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.divSend.form
+            obj = new Layout("default","",0,0,this.divSend.form,function(p){});
+            this.divSend.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divSend.form.Static01","value","dsFommScheduleJobMt","TITLE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divSend.form.Static01","text","dsFommScheduleJobMt","REG_USER_INFO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divSend.form.edtTitle","value","dsFommNotiSendMt","TITLE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item3","divSend.form.chkSetSendTypeCd","value","dsFommNotiSendMt","SEND_TYPE_CD");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item4","divSend.form.txaMsgConts","value","dsFommNotiSendMt","MSG_CONTS");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item5","divSend.form.stcSendUserInfoI","text","dsFommNotiSendMt","SEND_USER_INFO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item7","divSend.form.edtSendNo","value","dsFommNotiSendMt","SEND_NO");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item8","divSend.form.cboSendGubun","value","dsFommNotiSendMt","SEND_GUBUN");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("ref37.xfdl", function() {
+        /***********************************************************************************
+        * 화면(명)		︰ 알림 서비스
+        * 메뉴(경로)	︰ 공통
+        * 화면 설명	︰
+        * 작성자		︰ WEMB
+        * 작성일		︰
+        * 수정이력		︰
+        *------------------------------------------------------------------
+        * 수정일		작성자		이력
+        *------------------------------------------------------------------
+        * 2023.04.00	WEMB		최초작성
+        *------------------------------------------------------------------
+        ***********************************************************************************/
+        /***********************************************************************************
+         * Script Include
+         ***********************************************************************************/
+
+        /***********************************************************************************
+         * Form Variable
+         ***********************************************************************************/
+
+        /***********************************************************************************
+         * Form Function
+         ***********************************************************************************/
+        this.form_onload = function(obj, e)
+        {
+        	this.gfnFormOnLoad(obj, this.fnInit);
+        }
+
+        this.fnInit = function()
+        {
+        	this.fnReset();
+
+        	this.fnGetCmmCd();
+        }
+
+        // 필요시 폼관련 이벤트는 여기 추가
+        /***********************************************************************************
+         * Common Function
+         ***********************************************************************************/
+        this.fnAlarm = function()
+        {
+        	var sTranId = "send";										// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+            var sService = "ALARM/send";								// 서비스명
+            var sInDs = "dsAlarm=dsAlarm";								// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+            var sOutDs = "";											// 서버에서 수신할 데이타셋
+            var sArg = "";												// 서버 @ParamVariable 인자와 맵핑됨
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        this.fnSend = function()
+        {
+        	var sTranId = "send";														// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+            var sService = "TestSend/send";												// 서비스명
+            var sInDs = "dsFommNotiSendMt=dsFommNotiSendMt:A dsUserList=dsUserList:A";	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+            var sOutDs = "";															// 서버에서 수신할 데이타셋
+            var sArg = "";																// 서버 @ParamVariable 인자와 맵핑됨
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        // 공통 저장 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+        this.fnDelete = function(objDs)
+        {
+        	objDs.set_enableevent(false);
+        	objDs.set_filterstr("CHK=='1'");
+
+        	for(var i = objDs.rowcount-1; i >= 0; i--) objDs.deleteRow(i);
+
+        	objDs.set_filterstr("");
+        	objDs.set_enableevent(true);
+        }
+        /***********************************************************************************
+         * CallBack Event
+         ***********************************************************************************/
+        // Transaction 디폴트 콜백함수
+        this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+        {
+        	// 에러메세지 처리
+        	if (nErrorCode < 0)
+        	{
+        		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+        		Ex.core.error(this, param);
+        		return;
+        	}
+
+        	// 각 Transaction별 CallBack 처리
+        	switch (sSvcId)
+        	{
+        		case "send" :
+        			Ex.core.toast(this, "발송 처리 되었습니다.");
+        			break;
+        	}
+        }
+
+        // 팝업 디폴트 콜백함수
+        this.fnPopupAfter = function(pID, varValue)
+        {
+        	if( Ex.isEmpty(varValue) ) return;
+
+        	switch(pID)
+        	{
+        		case "sendUserPop" :
+        			trace("varValue:\n" + varValue + " val:[" + varValue.indexOf("Dataset id=") + "]");
+        			if(varValue.indexOf("Dataset id=") > -1)
+        			{
+        				this.dsUserList.loadXML(varValue);
+        			}
+        			break;
+        	}
+        }
+        // alert/confirm/error 메시지창 디폴트 콜백함수
+        this.fnMsgAfter = function(mID, varValue)
+        {
+        	// TO DO alertCard_No
+        	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+        	// alert/error : 무조건 true 반환
+        	// confirm     : true/false 선택적 반환
+        	if(!varValue) return;
+
+        	switch(mID)
+        	{
+        		case "saveConfirm" :
+        			this.fnSend();
+        			break;
+
+        		case "saveAlarmConfirm" :
+        			this.dsAlarm.clearData();
+        			for(var i=0; i<this.dsUserList.rowcount; i++)
+        			{
+        				this.dsAlarm.addRow();
+        				this.dsAlarm.setColumn(0, "USER_ID", 		this.dsUserList.getColumn(i, "USER_ID"));
+        				this.dsAlarm.setColumn(0, "ALARM_TYPE_CD", this.divSend.form.cboAlarmTypeCd.value);
+        				this.dsAlarm.setColumn(0, "ALARM_CONTS",	this.divSend.form.txaMsgConts.value);
+        			}
+        			this.fnAlarm();
+        			break;
+
+        		case "titleAlertI" :
+        			this.divSend.form.edtTitle.setFocus();
+        			break;
+
+        		case "alarmTypeCdAlertI" :
+        			this.divSend.form.cboAlarmTypeCd.setFocus();
+        			break;
+
+        		case "msgContsCdAlertI" :
+        			this.divSend.form.txaMsgConts.setFocus();
+        			break;
+
+        	}
+        }
+
+        /***********************************************************************************
+         * User Function
+         ***********************************************************************************/
+        this.fnReset = function()
+        {
+        	this.dsFommNotiSendMt.clearData();
+        	this.dsFommNotiSendMt.setAddRow();
+        	this.dsFommNotiSendMt.setColumn(0, "SEND_USER_ID", Ex.util.getSession('gvUserId'));
+        	this.dsFommNotiSendMt.setColumn(0, "SEND_USER_NM", Ex.util.getSession('gvUserNm'));
+        	this.dsFommNotiSendMt.setColumn(0, "SEND_DEPT_CD", Ex.util.getSession('gvDeptCd'));
+        	this.dsFommNotiSendMt.setColumn(0, "SEND_DEPT_NM", Ex.util.getSession('gvDeptNm'));
+        	this.divSend.form.stcSendUserInfoI.set_text(Ex.util.getSession('gvUserNm') + "(" + Ex.util.getSession('gvUserId') + ")");
+        	this.divSend.form.edtTitle.setFocus();
+        }
+
+        this.fnGetCmmCd = function()
+        {
+        	var oParam = {
+        		upCmmCd : ['ALARM_TYPE_CD',		'SEND_TYPE_CD',		'SEND_GUBUN'													]	// 조회할 상위코드
+        		,codeDiv: ['CMM_CD',			'BASIS_CD',			'CMM_CD'														]	// 조회할 코드의 업무구분
+        		,optStr	: ['SEL',				'',					'SEL'															]	// ALL: '- 전체 -'; SEL: '- 선택 -'
+        		,useYn	: ['Y',					'Y',				'Y'																]	// 사용여부
+        		,filter	: ['',					"CMM_CD!='SLIDE'",	"CMM_CD=='04' || CMM_CD=='05' || CMM_CD=='06' || CMM_CD=='07'"	]	// filterStr
+        		,objDs	: [this.dsAlarmTypeCd,	this.dsSendTypeCd,	this.dsSendGubun												]	// copy dataset
+        	};
+        	Ex.util.getCmmCode(oParam);	// 공통코드 getter util
+        };
+
+        this.fnCheckValidateAlarm = function()
+        {
+        	trace("this.fnCheckValidateAlarm()~~~~~~~~~~~~~~");
+        	if( Ex.isEmpty(this.divSend.form.cboAlarmTypeCd.value) )
+        	{
+        		var param = {
+        			  id	: "alarmTypeCdAlertI"					//fnMsgAfter에서 식별자로 사용되는 ID
+        			, msg	: "알림항목이 선택되지 않았습니다."	//메시지 내용
+        			, arrparam : []									//메시지의 변수에 들어갈 실제값
+        			, msgtype : "I"									//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        		};
+        		Ex.core.alert(this, param);
+        		return false;
+        	}
+
+        	if( Ex.isEmpty(this.dsFommNotiSendMt.getColumn(0, "MSG_CONTS")) )
+        	{
+        		var param = {
+        			  id	: "msgContsCdAlertI"						//fnMsgAfter에서 식별자로 사용되는 ID
+        			, msg	: "11001"									//메시지 내용
+        			, arrparam : [this.divSend.form.stcMsgConts.text]	//메시지의 변수에 들어갈 실제값
+        			, msgtype : "I"										//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        		};
+        		Ex.core.alert(this, param);
+        		return false;
+        	}
+
+        	if(this.dsUserList.rowcount == 0)
+        	{
+        		var param = {
+        			  id	: "essSendTypeCdAlertI"							//fnMsgAfter에서 식별자로 사용되는 ID
+        			, msg	: "수신자 목록이 지정되지 않았습니다."		//메시지 내용
+        			, arrparam : []											//메시지의 변수에 들어갈 실제값
+        			, msgtype : "I"											//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        		};
+        		Ex.core.alert(this, param);
+        		return false;
+        	}
+        	return true;
+        }
+
+        this.fnCheckValidate = function()
+        {
+        	trace("this.fnCheckValidate()~~~~~~~~~~~~~~");
+        	var rtn = Ex.util.checkValidate(this.divSend, "input01");
+        	if(!rtn) return false;
+
+        	if( Ex.isEmpty(this.dsFommNotiSendMt.getColumn(0, "SEND_TYPE_CD")) )
+        	{
+        		var param = {
+        			  id	: "essSendTypeCdAlertI"							//fnMsgAfter에서 식별자로 사용되는 ID
+        			, msg	: "11001"										//메시지 내용
+        			, arrparam : [this.divSend.form.stcSendTypeCd.text]		//메시지의 변수에 들어갈 실제값
+        			, msgtype : "I"											//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        		};
+        		Ex.core.alert(this, param);
+        		return false;
+        	}
+
+        	if(this.dsUserList.rowcount == 0)
+        	{
+        		var param = {
+        			  id	: "essSendTypeCdAlertI"							//fnMsgAfter에서 식별자로 사용되는 ID
+        			, msg	: "수신자 목록이 지정되지 않았습니다."		//메시지 내용
+        			, arrparam : []											//메시지의 변수에 들어갈 실제값
+        			, msgtype : "I"											//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        		};
+        		Ex.core.alert(this, param);
+        		return false;
+        	}
+
+        	/*
+        	if(this.dsFommNotiSendMt.getColumn(0, "SEND_GUBUN") == "05" ||
+        	   this.dsFommNotiSendMt.getColumn(0, "SEND_GUBUN") == "06" ||
+        	   this.dsFommNotiSendMt.getColumn(0, "SEND_GUBUN") == "07") {
+
+        		if( Ex.isEmpty(this.dsFommNotiSendMt.getColumn(0, "SEND_NO")) )
+        		{
+        			var param = {
+        				  id	: "essSendTypeCdAlertI"							//fnMsgAfter에서 식별자로 사용되는 ID
+        				, msg	: "전송구분이 [게시글, 댓글, 답글]인 경우 SEND_NO 게시물 번호."		//메시지 내용
+        				, arrparam : []											//메시지의 변수에 들어갈 실제값
+        				, msgtype : "I"											//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        			};
+        			Ex.core.alert(this, param);
+        		}
+        	}
+        	*/
+        	return true;
+        }
+
+        /***********************************************************************************
+         * Component Event
+         ***********************************************************************************/
+         // 공통 onclick : component
+        this.fnCommOnclick = function(obj, e)
+        {
+        	switch(obj.name)
+        	{
+        		case "btnReset" :	// 초기화
+        			this.fnReset();
+        			break;
+
+        		case "btnSendAlarm" :
+        			if( this.fnCheckValidateAlarm() )
+        			{
+        				var param = {
+        					  id : "saveAlarmConfirm"
+        					, msg : "알람을 발송하시겠습니까?"
+        					, arrparam : ['']
+        					, msgtype : "I"
+        				};
+        				Ex.core.confirm(this, param);
+        			}
+        			break;
+
+        		case "btnSend" :	// 발송
+        			if( this.fnCheckValidate() )
+        			{
+        				var param = {
+        					  id : "saveConfirm"
+        					, msg : "통보 알림을 발송하시겠습니까?"
+        					, arrparam : ['']
+        					, msgtype : "I"
+        				};
+        				Ex.core.confirm(this, param);
+        			}
+        			break;
+
+        		case "btnAdd" :		//추가
+        			Ex.core.popup(
+        				this,						// <--- 팝업 실행 스코프
+        				"sendUserPop",				// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+        				"fomm::FOMM0900_P01.xfdl",	// <--- 팝업창 오픈 Url
+        				{
+        					title : "수신자 등록",
+        					pTgDs : this.dsUserList
+        				},							// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+        				"autosize"					// <--- width/height/autosize/modeless(프레임 처리 옵션)
+        			);
+        			break;
+
+        		case "btnDelete" :	//삭제
+        			this.fnDelete(this.dsUserList);
+        			break;
+        	}
+        }
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divUser.form.grdUserList.addEventHandler("onlbuttondown",this.grdOnCellClick,this);
+            this.divUser.form.divGrdTopBtn.form.btnDelete.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.divUser.form.divGrdTopBtn.form.btnAdd.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.divSend.form.btnSend.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.divSend.form.btnReset.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.divSend.form.btnSendAlarm.addEventHandler("onclick",this.fnCommOnclick,this);
+        };
+        this.loadIncludeScript("ref37.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

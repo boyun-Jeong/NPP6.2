@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ3800PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.REQ_ID
+			, A.REQ_NO
+			, A.REQ_NAME
+			, A.PJT_ID
+			, A.BIZ_ID
+			, A.REQ_PROCESS
+			, A.REQ_ACTIVITY
+			, A.REQ_TYPE_CD
+			, A.REQ_CONTENTS
+			, A.REQ_IMPL_DESC
+			, A.RESTRICTIONS
+			, A.REQ_USER_NM
+			, A.REQ_USER_DEPT
+			, A.ACCEPT_YN
+			, A.CONF_DATE
+			, A.CONF_YN
+			, A.CONF_CONTENTS
+			, A.CHG_PART
+			, A.CHG_USER_NM
+			, A.REG_BASIS
+			, A.DLVR_NAME
+			, A.CHG_ST_CD
+			, A.REMARK
+			, A.INSPECT_CRITERIA
+			, A.INSPECT_YN
+			, A.INSPECT_STIME
+			, A.INSPECT_USER_ID
+			, A.INS_USER_NM
+			, A.INS_USER_DEPT
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, B.PJT_NAME AS PJT_NAME
+			, C.PJT_ID   AS P_PJT_ID
+			, C.PJT_NAME AS P_PJT_NAME
+
+		FROM
+			  PJ_REQMENT A
+			, PJ_PROJECT B
+			, PJ_PROJECT C
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND B.PARENT_ID	= C.PJT_ID
+		AND A.REQ_ID	= #{REQ_ID}
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="REQ_ID" order="BEFORE">
+			SELECT
+				'PJRE' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(REQ_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_REQMENT
+   			WHERE 1 = 1
+   			AND REQ_ID LIKE 'PJRE%'
+			AND LENGTH(REQ_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_REQMENT
+		(  
+			  REQ_ID
+			, REQ_NO
+			, REQ_NAME
+			, PJT_ID
+			, BIZ_ID
+			, REQ_PROCESS
+			, REQ_ACTIVITY
+			, REQ_TYPE_CD
+			, REQ_CONTENTS
+			, REQ_IMPL_DESC
+			, RESTRICTIONS
+			, CONF_DATE
+			, REQ_USER_NM
+			, REQ_USER_DEPT
+			, ACCEPT_YN
+			, CONF_YN
+			, CONF_CONTENTS
+			, CHG_PART
+			, CHG_USER_NM
+			, REG_BASIS
+			, DLVR_NAME
+			, CHG_ST_CD
+			, REMARK
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  #{REQ_ID} 
+			, #{REQ_NO}
+			, #{REQ_NAME}
+			, #{PJT_ID}
+			, #{BIZ_ID}
+			, #{REQ_PROCESS}
+			, #{REQ_ACTIVITY}
+			, #{REQ_TYPE_CD}
+			, #{REQ_CONTENTS}
+			, #{REQ_IMPL_DESC}
+			, #{RESTRICTIONS}
+			, #{CONF_DATE}
+			, #{REQ_USER_NM}
+			, #{REQ_USER_DEPT}
+			, #{ACCEPT_YN}
+			, #{CONF_YN}
+			, #{CONF_CONTENTS}
+			, #{CHG_PART}
+			, #{CHG_USER_NM}
+			, #{REG_BASIS}
+			, #{DLVR_NAME}
+			, #{CHG_ST_CD}
+			, #{REMARK}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_REQMENT SET
+			  REQ_NO			= #{REQ_NO}
+			, REQ_NAME			= #{REQ_NAME}
+			, PJT_ID			= #{PJT_ID}
+			, BIZ_ID			= #{BIZ_ID}
+			, REQ_PROCESS		= #{REQ_PROCESS}
+			, REQ_ACTIVITY		= #{REQ_ACTIVITY}
+			, REQ_TYPE_CD		= #{REQ_TYPE_CD}
+			, REQ_CONTENTS		= #{REQ_CONTENTS}
+			, REQ_IMPL_DESC		= #{REQ_IMPL_DESC}
+			, RESTRICTIONS		= #{RESTRICTIONS}
+			, CONF_DATE			= #{CONF_DATE}
+			, REQ_USER_NM		= #{REQ_USER_NM}
+			, REQ_USER_DEPT		= #{REQ_USER_DEPT}
+			, ACCEPT_YN			= #{ACCEPT_YN}
+			, CONF_YN			= #{CONF_YN}
+			, CONF_CONTENTS		= #{CONF_CONTENTS}
+			, CHG_PART			= #{CHG_PART}
+			, CHG_USER_NM		= #{CHG_USER_NM}
+			, REG_BASIS			= #{REG_BASIS}
+			, DLVR_NAME			= #{DLVR_NAME}
+			, CHG_ST_CD			= #{CHG_ST_CD}
+			, REMARK			= #{REMARK}
+
+			, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+			
+		WHERE 1 = 1		
+		AND REQ_ID	= #{REQ_ID}
+	</update>
+
+</mapper>

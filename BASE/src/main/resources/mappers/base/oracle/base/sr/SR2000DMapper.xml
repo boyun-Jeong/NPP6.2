@@ -1,0 +1,1320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR2000DDAO">
+
+	<!-- 사용안함 )) 서브 프로젝트 신규 요청서 구성원 -->
+    <select id="selectInitSrMaSubMbr" parameterType="java.util.Map" resultType="java.util.Map">
+    /* SR2000DMapper >> selectInitSrMaSubMbr */
+		SELECT
+			 'I'		 	ROWFLAG
+			, '' 			REQ_ID
+			, USER_ID		MBR_USER_ID
+			, USER_NM		MBR_USER_NM
+			, DEPT_CD		MBR_DEPT_CD
+			, DEPT_NM		MBR_DEPT_NM
+			, 11			ROLE_CD			/* 마스터 프로젝트의 PM == 서브 프로젝트의 요청자 */
+			, ''			ACTION
+		FROM FOMM_USER_MT A
+		WHERE 1 = 1
+        AND EXISTS
+				(
+					SELECT 1
+					FROM SR_MA_BA_IT_REV B
+					WHERE 1 = 1
+					AND REQ_ID  = #{REQ_ID}
+					AND A.USER_ID = B.PM_USER_ID
+				)
+		UNION				
+				
+		SELECT
+			 'I'		 	ROWFLAG
+			, '' 			REQ_ID
+			, USER_ID      MBR_USER_ID
+			, USER_NM      MBR_USER_NM
+			, DEPT_CD      MBR_DEPT_CD
+			, DEPT_NM      MBR_DEPT_NM
+			, 32           ROLE_CD			/* 마스터 프로젝트의 BA (1명) */
+			, ''			ACTION
+
+		FROM FOMM_USER_MT A
+		WHERE 1 = 1
+        AND EXISTS
+				(
+					SELECT 1
+					FROM SR_MA_BA_IT_REV B
+					WHERE 1 = 1
+					AND REQ_ID  = #{REQ_ID}
+					AND A.USER_ID = B.BA_USER_ID
+				)
+	</select>
+	
+	<update id="updateSrMaPrj" parameterType="java.util.Map">
+        /* SR2000DMapper >> updateSrMaPrj , chgDtSrMaPrj */
+        
+        UPDATE SR_MA_PRJ SET 
+
+			 LMID = #{LMID}
+			, LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMPID = #{LMPID}
+			
+		<if test="PROGRESS_PER != '' and PROGRESS_PER != null">
+			, PROGRESS_PER = #{PROGRESS_PER}
+		</if>
+		<if test="PRJ_STAT_CD != '' and PRJ_STAT_CD != null">
+			, PRJ_STAT_CD = #{PRJ_STAT_CD}
+		</if>
+		<if test= " 'chgDt'.equals(PRJ_END_DT) " >
+			, PRJ_END_DT = (SELECT JOB_REQ_DT FROM SR_BASE_INFO WHERE REQ_ID = #{REQ_ID})
+		</if>
+		
+		WHERE 1 = 1
+		
+		<choose>
+			<when test= " 'chgDt'.equals(PRJ_END_DT) " >
+		AND REQ_ID = #{REF_REQ_ID}
+			</when>
+			<otherwise>
+		AND REQ_ID = #{REQ_ID}
+			</otherwise>
+		</choose>
+		
+	</update>
+	
+	
+	<!-- 마스터/서브 프로젝트 종료일 변경 -->
+	<update id="chgDtSrMaPrj" parameterType="java.util.Map">
+        /* SR2000DMapper >> chgDtSrMaPrj */
+        
+        DECLARE
+            V_PRJ_END_DT SR_MA_PRJ.PRJ_END_DT%TYPE;
+            V_MAX_PRJ_END_DT SR_MA_PRJ.PRJ_END_DT%TYPE;
+
+        BEGIN
+        
+			SELECT 
+				PRJ_END_DT
+			INTO
+                V_PRJ_END_DT
+			FROM
+			    SR_MA_PRJ
+			WHERE 1 = 1
+			AND DEL_YN  = 'N'
+			AND REQ_ID = #{REF_REQ_ID}
+            ;
+        
+        	SELECT 
+				MAX(PRJ_END_DT)
+			INTO
+                V_MAX_PRJ_END_DT
+			FROM
+			    SR_MA_PRJ
+			WHERE 1 = 1
+			AND DEL_YN  = 'N'
+			AND MASTER_REQ_ID = #{MASTER_REQ_ID}
+            ;
+            
+			UPDATE SR_BASE_INFO SET 
+
+				REQ_WISH_DT		= V_PRJ_END_DT
+				WHERE REQ_ID    = #{REF_REQ_ID}
+			;
+			
+        	UPDATE SR_MA_PRJ SET 
+
+				 LMID = #{LMID}
+				, LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, LMPID = #{LMPID}
+				
+				, PRJ_END_DT	= V_MAX_PRJ_END_DT
+				WHERE REQ_ID    = #{MASTER_REQ_ID}
+				AND EXISTS
+				(
+		
+				SELECT 1
+		    	FROM 
+		    		SR_MA_PRJ 
+		    	WHERE 1 = 1 
+		    	AND REQ_ID = #{MASTER_REQ_ID}
+                AND PRJ_END_DT	<![CDATA[<>]]> V_MAX_PRJ_END_DT
+		    	)
+			;
+		
+        	UPDATE SR_MA_BA_IT_REV SET 
+
+				PRJ_END_DT		= V_MAX_PRJ_END_DT
+				WHERE REQ_ID    = #{MASTER_REQ_ID}
+				AND EXISTS
+				(
+		
+				SELECT 1
+		    	FROM 
+		    		SR_MA_PRJ 
+		    	WHERE 1 = 1 
+		    	AND REQ_ID = #{MASTER_REQ_ID}
+                AND PRJ_END_DT	<![CDATA[<>]]> V_MAX_PRJ_END_DT
+		    	)
+			;
+		
+			UPDATE SR_BASE_INFO SET 
+
+				REQ_WISH_DT		= V_MAX_PRJ_END_DT
+				WHERE REQ_ID    = #{MASTER_REQ_ID}
+				AND EXISTS
+				(
+		
+				SELECT 1
+		    	FROM 
+		    		SR_MA_PRJ 
+		    	WHERE 1 = 1 
+		    	AND REQ_ID = #{MASTER_REQ_ID}
+                AND REQ_WISH_DT	<![CDATA[<>]]> V_MAX_PRJ_END_DT
+		    	)
+			;
+			
+		END;
+	</update>
+	
+	<!-- 변경신청 목록 (서브프로젝트 REQ_ID를 참조한 요청서 목록) -->
+	<select id="selectSrBaseInfo_subPrj" parameterType="java.util.Map" resultType="java.util.Map">
+        /* SR2000DMapper >> selectSrBaseInfo_subPrj */
+        
+        SELECT 
+    
+		      A.REQ_ID					--요청서ID
+		    , A.REQ_TMPLAT_ID			--요청서양식ID
+		    , A.REQ_TMPLAT_VER			--요청서양식버전
+		    , (
+				SELECT REQ_TMPLAT_NM 
+		    	FROM WF_REQ_TMPLAT_HT 
+		    	WHERE REQ_ID = A.REQ_ID 
+		    	AND REQ_TMPLAT_ID = A.REQ_TMPLAT_ID 
+		    	AND REQ_TMPLAT_VER = A.REQ_TMPLAT_VER
+		    ) REQ_TMPLAT_NM
+
+		    , A.REQ_EM_YN				--긴급요청여부
+		    , A.WF_PROC_CD				--진행단계
+		    , (
+              SELECT WF_PROC_NM
+              FROM WF_REQ_TMPLAT_PROC_HT
+              WHERE 1 = 1
+              AND REQ_TMPLAT_ID     = A.REQ_TMPLAT_ID
+              AND REQ_TMPLAT_VER    = A.REQ_TMPLAT_VER
+              AND WF_PROC_CD        = A.WF_PROC_CD)    AS WF_PROC_NM
+              
+		    , A.REQ_STAT_CD				--요청서진행상태코드
+			, (
+              SELECT CMM_CD_NM
+              FROM FOMM_CMM_CD_MT
+              WHERE 1 = 1
+              AND CODE_DIV      = 'WORKFLOW_CD'
+              AND UP_CMM_CD     = 'REQ_STAT_CD'
+              AND CMM_CD        = A.REQ_STAT_CD
+              AND LANG_CD       = 'KR')    AS REQ_STAT_NM
+              
+		    , A.TITLE					--제목
+		    , A.REQ_USER_ID				--요청자ID
+		    , A.REQ_USER_NM				--요청자명
+		    , A.REQ_DEPT_CD				--요청자부서ID
+		    , A.REQ_DEPT_NM				--요청자부서명
+		    , A.REQ_DATE				--요청일시
+		    , A.REQ_WISH_DT				--희망완료일
+		    , A.REQ_WISH_TIME			--희망완료시분
+		    , A.JOB_REQ_DT				--작업요청일
+		    , A.JOB_REQ_TIME			--작업요청시분
+		    , A.PROC_COMP_DATE			--완료일시
+		    , A.DEL_YN					--삭제여부
+		    , A.CONTENTS				--요청서내용
+			
+		    , A.REF_REQ_ID				--참조요청서ID
+		    
+		FROM SR_BASE_INFO A
+		WHERE 1=1
+		AND A.DEL_YN != 'Y'
+		--AND A.REQ_TMPLAT_ID IN ('WFT240108','WFT240107')
+		AND A.REF_REQ_ID = #{REQ_ID}
+		ORDER BY A.REQ_ID DESC
+	</select>
+	
+	<!-- 마스터 진행률 평균 업데이트 -->
+	<update id="updateAvgProgressPer" parameterType="java.util.Map">
+        /* SR2000DMapper >> updateAvgProgressPer */
+		UPDATE SR_MA_PRJ SET
+		
+         	LMID = #{LMID}
+			, LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMPID = #{LMPID}
+			, PROGRESS_PER	=
+                    (
+                    SELECT AVG(NVL(PROGRESS_PER, 0))
+                    FROM
+                        SR_MA_PRJ
+                    WHERE 1 = 1
+                    AND DEL_YN  = 'N'
+                    AND MASTER_REQ_ID = #{MASTER_REQ_ID}
+                    AND PRJ_STAT_CD <![CDATA[<>]]> '97'
+                    )
+			WHERE REQ_ID    = #{MASTER_REQ_ID}
+		
+	</update>
+	
+	<!-- 정상-D등급(간소화) : 최종 서브프로젝트 종료시점에 정상종료 경우 자동으로 마스터프로젝트 종료하고 PMO종료단계로 이동함 -->
+	
+	<!-- 최종 서브프로젝트 종료 시점인 지 확인 : 진행중인 서브 프로젝트 cnt -->
+	<select id="selectIngSubPrjCnt" parameterType="java.util.Map" resultType="Integer">
+        /* SR2000DMapper >> selectIngSubPrjCnt */
+        
+        SELECT COUNT(*)
+        FROM SR_MA_PRJ
+		WHERE 1=1
+		AND PRJ_STAT_CD <![CDATA[<>]]> 99
+		AND MASTER_REQ_ID 	= ( SELECT MASTER_REQ_ID 
+								FROM SR_MA_PRJ 
+								WHERE 1=1 
+								AND REQ_ID = #{REQ_ID} 
+							  )
+		        
+	</select>
+	
+	
+	
+	<!-- 시나리오 -->
+	
+	<select id="selectSrMaPrjTsDtl" parameterType="java.util.Map" resultType="java.util.Map">
+        /* SR2000DMapper >> selectSrMaPrjTsDtl */
+		
+		SELECT
+			 ''		ROWFLAG
+			, A.REQ_ID			--요청서ID
+			, A.SCENR_SEQ
+			, A.SCENR_ID		--시나리오ID
+			, A.SCENR_NM		--시나리오명
+			, A.SCENR_LV		--레벨
+			,
+			  CASE
+                WHEN SCENR_LV = 2
+                THEN (SELECT COUNT(*) FROM SR_MA_PRJ_TS_DTL B 
+                	WHERE B.SCENR_ID = A.SCENR_ID 
+                	AND B.SCENR_LV = 3
+                	AND B.DEL_YN != 'Y' )
+				END	SCENR_CNT
+			
+			, A.SCENR_CHK		--체크확인사항
+			, A.SCENR_RSL		--처리내용(결과값)
+			, A.ROLE_CD			--역할코드
+			, A.SCENR_COMP_DT 	--시나리오 작성 완료여부
+			, A.SCENR_PRG		--시나리오 관련 프로그램
+			
+			, CASE
+				WHEN A.SCENR_COMP_DT IS NOT NULL AND A.SCENR_LV = 1
+				THEN (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD='ACTOR_CD' AND CMM_CD = A.ROLE_CD) || '/' || A.SCENR_NM
+			END	SCENR_COMP
+			
+			, A.DEL_YN			--삭제여부
+			, A.MBR_USER_ID		--담당자ID
+			, A.FRID			--최초등록자
+			, A.FRDT			--최초등록일시
+			, A.LMID			--최종수정자
+			, A.LMDT			--최종수정일시
+			
+		FROM SR_MA_PRJ_TS_DTL A
+		WHERE 1 = 1
+		AND A.DEL_YN != 'Y'
+		AND A.REQ_ID		= #{REQ_ID}
+		<if test="ROLE_CD != '' and ROLE_CD != null">
+		AND A.ROLE_CD		= #{ROLE_CD}
+		</if>
+		<if test="MBR_USER_ID != '' and MBR_USER_ID != null">
+		AND A.MBR_USER_ID	= #{MBR_USER_ID}
+		</if>
+		<if test="SCENR_NM != '' and SCENR_NM != null">
+		AND A.SCENR_NM 		= #{SCENR_NM}
+		</if>
+		<if test=" 'MBR'.equals(MBR) ">
+		AND A.SCENR_LV 		= 1
+		</if>
+		
+		ORDER BY A.ROLE_CD, A.MBR_USER_ID, A.SCENR_ID, A.SCENR_LV
+	</select>
+	
+	<insert id="insertSrMaPrjTsDtl" parameterType="java.util.Map">
+        /* SR2000DMapper >> insertSrMaPrjTsDtl */
+		
+		INSERT INTO SR_MA_PRJ_TS_DTL
+		(
+			  REQ_ID		--요청서ID
+			, SCENR_SEQ
+			, SCENR_ID		--시나리오ID
+			, SCENR_NM		--시나리오명
+			, SCENR_LV		--레벨
+			, SCENR_CHK		--체크확인사항
+			, SCENR_RSL		--처리내용(결과값)
+			, ROLE_CD		--역할코드
+			, SCENR_PRG		--시나리오 관련 프로그램
+			, MBR_USER_ID	--담당자ID
+			
+			, FRID			--최초등록자
+			, LMID			--최종수정자
+		)
+		VALUES
+		(
+			  #{REQ_ID}
+			, (SELECT NVL(MAX(SCENR_SEQ)+1,1) FROM SR_MA_PRJ_TS_DTL  )
+			, #{SCENR_ID}
+			, NVL(#{SCENR_NM},(SELECT SCENR_NM FROM SR_MA_PRJ_TS_DTL WHERE REQ_ID = #{REQ_ID} AND SCENR_ID = #{SCENR_ID} AND SCENR_LV = '2'))
+			, #{SCENR_LV}
+			, #{SCENR_CHK}
+			, #{SCENR_RSL}
+			, #{ROLE_CD}
+			, #{SCENR_PRG}		--시나리오 관련 프로그램
+			, #{MBR_USER_ID}
+			, #{LMID}
+			, #{LMID}
+		)
+		
+	</insert>
+
+	<update id="updateSrMaPrjTsDtl" parameterType="java.util.Map">
+        /* SR2000DMapper >> updateSrMaPrjTsDtl */
+        
+		UPDATE SR_MA_PRJ_TS_DTL SET
+			
+			SCENR_NM = #{SCENR_NM}		--시나리오명
+
+			, SCENR_PRG = #{SCENR_PRG}		--시나리오 관련 프로그램
+			, SCENR_CHK = #{SCENR_CHK}		--체크확인사항
+			, SCENR_RSL = #{SCENR_RSL}		--처리내용(결과값)
+		
+		<if test="SCENR_COMP_DT != '' and SCENR_COMP_DT != null">
+			<choose>
+				<when test="SCENR_COMP_DT == 99">
+			, SCENR_COMP_DT = NULL --시나리오 작성 완료여부
+				</when>
+				<otherwise>
+			, SCENR_COMP_DT = #{SCENR_COMP_DT} --시나리오 작성 완료여부
+				</otherwise>
+			</choose>
+		</if>
+		<if test="DEL_YN != '' and DEL_YN != null">
+			, DEL_YN = #{DEL_YN}			--삭제여부
+		</if>
+			, LMID = #{LMID}				--최종수정자
+			, LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			
+		WHERE 1 = 1
+		<choose>
+			<when test="SCENR_SEQ != '' and SCENR_SEQ != null">
+		AND SCENR_SEQ 	= #{SCENR_SEQ}
+			</when>
+			<otherwise>
+		AND REQ_ID 		= #{REQ_ID}
+		AND ROLE_CD 	= #{ROLE_CD}
+		AND SCENR_LV	= #{SCENR_LV}
+		AND MBR_USER_ID = #{MBR_USER_ID}
+			</otherwise>
+		</choose>	
+			
+	</update>
+
+	<update id="mergeSrMaPrjTsDtl" parameterType="java.util.Map">
+        /* SR2000DMapper >> mergeSrMaPrjTsDtl */
+		
+		MERGE 
+		INTO 	SR_MA_PRJ_TS_DTL A
+		USING 	DUAL 
+		ON		
+		(
+				A.REQ_ID		= #{REQ_ID} 
+		AND		A.MBR_USER_ID	= #{MBR_USER_ID}
+		AND		A.ROLE_CD 		= #{ROLE_CD}
+		)
+		WHEN MATCHED THEN
+		
+		UPDATE SET
+			
+			  LMID = #{LMID}
+			, LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		
+		WHEN NOT MATCHED THEN
+		INSERT 
+		(
+			  REQ_ID		--요청서ID
+			, SCENR_SEQ		--시나리오 SEQ
+			, SCENR_ID		--시나리오ID
+			, SCENR_NM		--시나리오명
+			, SCENR_LV		--레벨
+			, ROLE_CD		--역할코드
+			, MBR_USER_ID	--담당자ID
+			
+			, FRID			--최초등록자
+			, LMID			--최종수정자
+		)
+		VALUES
+		(
+			  #{REQ_ID}
+			, (SELECT NVL(MAX(SCENR_SEQ)+1,1) FROM SR_MA_PRJ_TS_DTL  )
+			, #{MBR_USER_ID}
+			, #{MBR_USER_NM}
+			, '1'
+			, #{ROLE_CD}
+			, #{MBR_USER_ID}
+			
+			, #{LMID}
+			, #{LMID}
+		)
+	</update>
+	
+	<delete id="removeSrMaPrjTsDtl" parameterType="java.util.Map">
+        /* SR2000DMapper >> deleteSrMaPrjTsDtl */		
+		DELETE
+		FROM SR_MA_PRJ_TS_DTL
+		WHERE 1 = 1
+		<choose>
+			<when test="SCENR_SEQ != '' and SCENR_SEQ != null">
+		AND SCENR_SEQ 	= #{SCENR_SEQ}
+			</when>
+			<otherwise>
+		AND REQ_ID 		= #{REQ_ID}
+		AND ROLE_CD 	= #{ROLE_CD}
+		AND MBR_USER_ID = #{MBR_USER_ID}
+			</otherwise>
+		</choose>	
+	</delete>
+	
+	
+	<delete id="clearSrMaPrjTsDtlRslt" parameterType="java.util.Map">
+		DELETE 
+		FROM SR_MA_PRJ_TS_RESULT
+		WHERE 1 = 1
+		AND REQ_ID = #{REQ_ID}
+       	
+	</delete>
+	
+    <insert id="insertSrMaPrjTsDtlRslt" parameterType="java.util.Map">
+        /* SR2000DMapper >> insertSrMaPrjTsDtlRslt */
+	        INSERT INTO SR_MA_PRJ_TS_RESULT
+	        (
+	              REQ_ID    	--요청서ID
+	            , PRJ_ID    	--서브프로젝트ID
+	            , SCENR_ID  	--시나리오ID
+	            , SCENR_SEQ 	--일련번호
+	            , SCENR_NM  	--시나리오명
+	            , SCENR_LV  	--레벨
+	            , MBR_USER_ID   --구성원ID
+	            --, MBR_USER_NM   --구성원이름
+	            
+	            , SCENR_CHK 	--체크확인사항
+	            , SCENR_RSL 	--처리내용(결과값)
+	            , SCENR_PRG		--시나리오 관련 프로그램
+	            , ROLE_CD   	--역할코드
+	            
+	            , DELETABLE        --수정가능여부
+	            , FRID  --최초등록자
+	            , LMID  --최종수정자
+	        )
+	        VALUES
+	        (
+	              #{REQ_ID}
+	            , (SELECT PRJ_ID FROM SR_MA_PRJ WHERE REQ_ID = #{REQ_ID})
+	            , #{SCENR_ID}
+	            , (SELECT NVL(MAX(SCENR_SEQ)+1,1) FROM SR_MA_PRJ_TS_RESULT)
+	            , #{SCENR_NM}
+	            , #{SCENR_LV}
+	            , #{MBR_USER_ID}
+	           -- , # {MBR_USER_NM}
+	           
+	            , #{SCENR_CHK}
+	            , #{SCENR_RSL}
+	            , #{SCENR_PRG}
+	            , #{ROLE_CD}
+	            
+	            , 'N'
+	            , #{LMID}
+	            , #{LMID}
+	        )
+    </insert>
+	<!-- 구성원 변경 -->
+	
+	<select id="selectSrMaPrjMberHistList" parameterType="java.util.Map" resultType="java.util.Map">
+        /* SR2000DMapper >> selectSrMaPrjMberHistList */
+		SELECT
+			  PRJ_ID				--프로젝트ID
+			, REQ_ID				--요청서ID
+			, HT_SEQ				--이력순번
+			, ROWFLAG				--구분
+			, MBR_USER_ID			--구성원사번
+			, MBR_USER_NM			--구성원명
+			, MBR_DEPT_CD			--구성원부서코드
+			, MBR_DEPT_NM			--구성원부서명
+			, ROLE_CD				--역할
+			, ACTION				--업무
+			, RMK					--비고
+			, FRID					--등록자ID
+			, TO_CHAR(TO_TIMESTAMP(FRDT, 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD HH24:MI:SS')  DT
+			, FRDT					--등록일시
+			, LMID					--수정자ID
+			, LMDT					--수정일시
+			, LMPID					--최종수정화면ID
+		FROM SR_MA_PRJ_MBER_HIST
+		WHERE 1 = 1
+		AND ROWFLAG IS NOT NULL
+		
+		<if test="PRJ_ID != '' and PRJ_ID != null">
+		AND PRJ_ID = #{PRJ_ID}
+		</if>
+		<if test="REQ_ID != '' and REQ_ID != null">
+		AND REQ_ID = #{REQ_ID}
+		</if>
+		ORDER BY LMDT DESC
+	</select>
+
+	<insert id="insertSrMaPrjMberHist" parameterType="java.util.Map">
+        /* SR2000DMapper >> insertSrMaPrjMberHist */
+		INSERT INTO SR_MA_PRJ_MBER_HIST
+			(
+			  PRJ_ID				--프로젝트ID
+			, REQ_ID				--요청서ID
+			, HT_SEQ				--이력순번
+			, ROWFLAG				--구분
+			, MBR_USER_ID			--구성원사번
+			, MBR_USER_NM			--구성원명
+			, MBR_DEPT_CD			--구성원부서코드
+			, MBR_DEPT_NM			--구성원부서명
+			, ROLE_CD				--역할
+			, ACTION				--업무
+			, RMK					--비고
+			
+			, FRID					--등록자ID
+			, FRDT					--등록일시
+			, LMID					--수정자ID
+			, LMDT					--수정일시
+			, LMPID					--최종수정화면ID
+		)
+		VALUES
+		(
+			  #{PRJ_ID}
+			, #{REQ_ID}
+			, (SELECT NVL(MAX(TO_NUMBER(HT_SEQ))+1,1) FROM SR_MA_PRJ_MBER_HIST WHERE PRJ_ID = #{PRJ_ID})
+			, #{ROWFLAG}
+			, #{MBR_USER_ID}
+			, #{MBR_USER_NM}
+			, #{MBR_DEPT_CD}
+			, #{MBR_DEPT_NM}
+			, #{ROLE_CD}
+			, #{ACTION}
+			, #{RMK}
+			
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		)
+		
+	</insert>
+
+	
+	<!-- 이행신청 -->
+
+    <select id="selectSrMaRelsReq" parameterType="java.util.Map" resultType="java.util.Map">
+        /* SR2000DMapper >> selectSrMaRelsReq */
+        
+		SELECT
+		
+			  '0'		AS CHK
+			, ''		AS ROWFLAG
+			, REQ_ID				--요청서ID
+			, RELS_DT				--이행일자
+			, RELS_TM				--이행시간
+			, RIMS_YN				--형상관리(RIMS)여부(Y/N)
+			, SECURE_GRADE_NM		--보안등급명
+			, DANGER_GRADE_NM		--위험등급명
+			, CONT_INTRO			--개요
+			, CONT_RISK				--위험요소
+			, CONT_MONITOR			--모니터링방안
+			, CONT_PGM				--변경대상프로그램매체
+			, CONT_RECOV			--장애대체복구예상시간
+			, CONT_SCHDL			--향후일정
+			, FRID					--등록자ID
+			, FRDT					--등록일시
+			, LMID					--수정자ID
+			, LMDT					--수정일시
+			, LMPID					--최종수정화면ID
+		FROM SR_MA_RELS_REQ
+		WHERE 1 = 1
+		<if test="REQ_ID != '' and REQ_ID != null">
+		AND REQ_ID = #{REQ_ID}
+		</if>
+
+	</select>
+	
+	<insert id="insertSrMaRelsReq" parameterType="java.util.Map">
+        /* SR2000DMapper >> insertSrMaRelsReq */
+		INSERT INTO SR_MA_RELS_REQ
+		(
+			  REQ_ID				--요청서ID
+			, RELS_DT				--이행일자
+			, RELS_TM				--이행시간
+			, RIMS_YN				--형상관리(RIMS)여부(Y/N)
+			, SECURE_GRADE_NM		--보안등급명
+			, DANGER_GRADE_NM		--위험등급명
+			, CONT_INTRO			--개요
+			, CONT_RISK				--위험요소
+			, CONT_MONITOR			--모니터링방안
+			, CONT_PGM				--변경대상프로그램매체
+			, CONT_RECOV			--장애대체복구예상시간
+			, CONT_SCHDL			--향후일정
+			
+			, FRID					--등록자ID
+			, FRDT					--등록일시
+			, LMID					--수정자ID
+			, LMDT					--수정일시
+			, LMPID					--최종수정화면ID
+		)
+		VALUES
+		(
+			  #{REQ_ID}
+			, #{RELS_DT}
+			, #{RELS_TM}
+			, #{RIMS_YN}
+			, #{SECURE_GRADE_NM}
+			, #{DANGER_GRADE_NM}
+			, #{CONT_INTRO}
+			, #{CONT_RISK}
+			, #{CONT_MONITOR}
+			, #{CONT_PGM}
+			, #{CONT_RECOV}
+			, #{CONT_SCHDL}
+			
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		)
+	</insert>
+	
+	<update id="updateSrMaRelsReq" parameterType="java.util.Map">
+        /* SR2000DMapper >> updateSrMaRelsReq */
+        UPDATE SR_MA_RELS_REQ SET
+			
+			 RELS_DT = #{RELS_DT}					--이행일자
+			, RELS_TM = #{RELS_TM}					--이행시간
+			, RIMS_YN = #{RIMS_YN}					--형상관리(RIMS)여부(Y/N)
+			, SECURE_GRADE_NM = #{SECURE_GRADE_NM}	--보안등급명
+			, DANGER_GRADE_NM = #{DANGER_GRADE_NM}	--위험등급명
+			, CONT_INTRO = #{CONT_INTRO}			--개요
+			, CONT_RISK = #{CONT_RISK}				--위험요소
+			, CONT_MONITOR = #{CONT_MONITOR}		--모니터링방안
+			, CONT_PGM = #{CONT_PGM}				--변경대상프로그램매체
+			, CONT_RECOV = #{CONT_RECOV}			--장애대체복구예상시간
+			, CONT_SCHDL = #{CONT_SCHDL}			--향후일정
+
+			, LMID = #{LMID}						--수정자ID
+			, LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--수정일시
+			, LMPID = #{LMPID}						--최종수정화면ID
+		WHERE 1 = 1
+		AND REQ_ID = #{REQ_ID}
+        
+	</update>
+	
+	<delete id="deleteSrMaRelsReq" parameterType="java.util.Map">
+        /* SR2000DMapper >> deleteSrMaRelsReq */
+		DELETE
+		FROM SR_MA_RELS_REQ
+		WHERE 1 = 1
+		AND REQ_ID = #{REQ_ID}
+	</delete>
+	
+	<!-- 이행 후 점검 체크리스트 -->	
+    <select id="selectSrMaRelschkDtl" parameterType="java.util.Map" resultType="java.util.Map">
+        /* SR2000DMapper >> selectSrMaRelschkDtl */
+        
+		SELECT
+		
+			  '0'		AS CHK
+			, ''		AS ROWFLAG
+			, REQ_ID					--요청서ID
+			, DTL_SEQ					--상세순번
+			, CHK_DT					--점검일자
+			, CHK_TM					--점검시간
+			, CHK_USER_ID				--점검자ID
+			, CHK_USER_NM				--점검자이름
+			, CHK_DEPT_NM				--점검자부서명
+			, CONT_SCREEN				--점검화면
+			, CONT_METHOD				--점검방법
+			, CONT_COMMENT				--점검의견
+			, CONT_DESC					--
+			
+			, FRID						--등록자ID
+			, FRDT						--등록일시
+			, LMID						--수정자ID
+			, LMDT						--수정일시
+			, LMPID						--최종수정화면ID
+		FROM SR_MA_RELSCHK_DTL
+		WHERE 1 = 1
+		<if test="REQ_ID != '' and REQ_ID != null">
+		AND REQ_ID = #{REQ_ID}
+		</if>
+		<if test="DTL_SEQ != '' and DTL_SEQ != null">
+		AND DTL_SEQ = #{DTL_SEQ}
+		</if>
+
+	</select>
+	
+	<insert id="insertSrMaRelschkDtl" parameterType="java.util.Map">
+        /* SR2000DMapper >> insertSSrMaRelschkDtl */
+		INSERT INTO SR_MA_RELSCHK_DTL
+		(
+			  REQ_ID					--요청서ID
+			, DTL_SEQ					--상세순번
+			, CHK_DT					--점검일자
+			, CHK_TM					--점검시간
+			, CHK_USER_ID				--점검자ID
+			, CHK_USER_NM				--점검자이름
+			, CHK_DEPT_NM				--점검자부서명
+			, CONT_SCREEN				--점검화면
+			, CONT_METHOD				--점검방법
+			, CONT_COMMENT				--점검의견
+			, CONT_DESC
+			
+			, FRID						--등록자ID
+			, FRDT						--등록일시
+			, LMID						--수정자ID
+			, LMDT						--수정일시
+			, LMPID						--최종수정화면ID
+		)
+		VALUES
+		(
+			  #{REQ_ID}
+			, (SELECT NVL(MAX(DTL_SEQ)+1,1) FROM SR_MA_RELSCHK_DTL  )
+			, #{CHK_DT}
+			, #{CHK_TM}
+			, #{CHK_USER_ID}
+			, #{CHK_USER_NM}
+			, #{CHK_DEPT_NM}
+			, #{CONT_SCREEN}
+			, #{CONT_METHOD}
+			, #{CONT_COMMENT}
+			, #{CONT_DESC}
+			
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		)
+	</insert>
+	
+	<update id="updateSrMaRelschkDtl" parameterType="java.util.Map">
+        /* SR2000DMapper >> updateSrMaRelschkDtl */
+        
+        UPDATE SR_MA_RELSCHK_DTL SET
+			  REQ_ID = #{REQ_ID}				--요청서ID
+			, DTL_SEQ = #{DTL_SEQ}				--상세순번
+			, CHK_DT = #{CHK_DT}				--점검일자
+			, CHK_TM = #{CHK_TM}				--점검시간
+			, CHK_USER_ID = #{CHK_USER_ID}		--점검자ID
+			, CHK_USER_NM = #{CHK_USER_NM}		--점검자이름
+			, CHK_DEPT_NM = #{CHK_DEPT_NM}		--점검자부서명
+			, CONT_SCREEN = #{CONT_SCREEN}		--점검화면
+			, CONT_METHOD = #{CONT_METHOD}		--점검방법
+			, CONT_COMMENT = #{CONT_COMMENT}	--점검의견
+			, CONT_DESC = #{CONT_DESC}	--점검의견
+			
+			, LMID = #{LMID}					--수정자ID
+			, LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--수정일시
+			, LMPID = #{LMPID}					--최종수정화면ID
+		WHERE 1 = 1
+		<if test="REQ_ID != '' and REQ_ID != null">
+		AND REQ_ID = #{REQ_ID}
+		</if>
+		<if test="DTL_SEQ != '' and DTL_SEQ != null">
+		AND DTL_SEQ = #{DTL_SEQ}
+		</if>
+        
+	</update>
+	
+	<delete id="deleteSrMaRelschkDtl" parameterType="java.util.Map">
+        /* SR2000DMapper >> deleteSrMaRelschkDtl */
+		DELETE
+		FROM SR_MA_RELSCHK_DTL
+		WHERE 1 = 1
+		AND REQ_ID = #{REQ_ID}
+		AND DTL_SEQ = #{DTL_SEQ}
+	</delete>
+	
+	<!-- 접수/처리 담당자 조회 (구성원) -->
+    <select id="selectCgerSrMaPrjSub" parameterType="java.util.Map" resultType="java.util.Map">
+     /* selectCgerSrMaPrjSub  */
+     	WITH MBER AS (
+     	
+     	<choose>
+			<when test=" 'ALL'.equals(ROLE) ">
+
+		    SELECT *
+		    FROM SR_MA_PRJ_MBER
+		    WHERE 1 = 1
+		    AND REQ_ID  = #{REQ_ID}
+		    AND ROLE_CD = '3'
+		    
+		    UNION ALL
+		    
+		    SELECT *
+		    FROM SR_MA_PRJ_MBER
+		    WHERE 1 = 1
+		    AND REQ_ID  = #{REQ_ID}
+		    AND ROLE_CD IN ('11','32','202')
+			AND MBR_USER_ID <![CDATA[<>]]> (    
+											SELECT MBR_USER_ID
+				                            FROM SR_MA_PRJ_MBER
+				                            WHERE 1 = 1
+				                            AND REQ_ID  = 'TT202411100010' 
+				                            AND ROLE_CD ='3'
+				                          ) 
+			</when>
+			
+			<otherwise>
+		    SELECT *
+		    FROM SR_MA_PRJ_MBER
+		    WHERE 1 = 1
+		    AND REQ_ID  = #{REQ_ID}
+		    AND ROLE_CD IN (
+		    <if test=" 'REQ'.equals(ROLE) ">
+		                    '11'
+		    </if>
+		    <if test=" 'BA'.equals(ROLE) ">
+		                    '32'
+		    </if>
+		    <if test=" 'IT'.equals(ROLE) ">
+		                    '202'
+		    </if>
+		    <if test=" 'PL'.equals(ROLE) ">
+		                    '3'
+		    </if>
+		    		)  		
+		    </otherwise>
+     	</choose>
+ 		)
+        SELECT
+              'WF_FUNC_04'  AS WF_FUNC_CD 
+            , USER_ID
+		    , B.ROLE_CD 
+
+		<if test=" 'ALL'.equals(ROLE) ">     
+			, CASE 
+				WHEN B.ROLE_CD = '3' 
+				THEN 'Y' ELSE 'N' 
+			  END 		AS APV_BTN_YN
+		</if>
+
+        FROM
+            FOMM_USER_MT A
+            , MBER B
+        WHERE 1 = 1
+        AND USE_YN  = 'Y'
+        AND A.USER_ID = B.MBR_USER_ID
+    </select>
+	
+	<select id="selectCgerSrMaPrjSub_TL" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              'WF_FUNC_04'  AS WF_FUNC_CD 
+            , A.USER_ID
+		FROM
+		  FOMM_USER_MT A,
+		  FOMM_DEPT_MT B
+		WHERE 1 = 1
+		AND B.DEPT_CD           = A.DEPT_CD
+		AND B.DEPT_MANAGER_ID   = A.USER_ID
+		AND B.DEPT_CD IN 
+		(
+		    SELECT DEPT_CD
+		    FROM FOMM_USER_MT C
+		    WHERE USER_ID IN
+		        (
+		        SELECT  MBR_USER_ID 
+                FROM    SR_MA_PRJ_MBER D
+		        WHERE   1 = 1
+		        AND     D.REQ_ID 	= #{REQ_ID}
+		<if test=" 'PL'.equals(ROLE) ">
+				AND		D.ROLE_CD 	= '3'
+		</if>
+		<if test=" 'BA'.equals(ROLE) ">
+				AND 	D.ROLE_CD 	= '32'
+		</if>
+		<if test=" 'REQ'.equals(ROLE) ">
+				AND 	D.ROLE_CD 	= '11'
+		</if>
+		<if test=" 'IT'.equals(ROLE) ">
+				AND 	D.ROLE_CD 	= '202'
+		</if>
+		        )
+		)
+	</select>	
+	
+	<!-- 결재자 조회 -->
+	 
+ 	<select id="selectApprsubPrjRole" parameterType="java.util.Map" resultType="java.util.Map">
+    /* SR2000DMapper >> selectApprsubPrjRole */
+    
+		SELECT
+              A.MBR_USER_ID     AS USER_ID
+        FROM
+              SR_MA_PRJ_MBER A
+            , FOMM_USER_MT B
+
+        WHERE 1 = 1
+        AND A.MBR_USER_ID   = B.USER_ID
+        AND A.REQ_ID        = #{REQ_ID}
+		<if test=" 'PL'.equals(ROLE) ">
+					AND A.ROLE_CD = '3'
+		</if>
+		<if test=" 'BA'.equals(ROLE) ">
+					AND A.ROLE_CD = '32'
+		</if>
+		<if test=" 'REQ'.equals(ROLE) ">
+					AND A.ROLE_CD = '11'
+		</if>
+		<if test=" 'IT'.equals(ROLE) ">
+					AND A.ROLE_CD = '202'
+		</if>
+				
+	</select>
+	
+	<!-- 결재자 조회-->
+	
+    <select id="selectApprSrMaSub" parameterType="java.util.Map" resultType="java.util.Map">
+    /* SR2000DMapper >> selectApprSrMaSub */
+		SELECT
+            USER_ID
+            , USER_NM
+            , DEPT_NM
+            , POS_NM
+            , 1 AS APPR_SEQ  --ROW_NUMBER() OVER(ORDER BY USER_ID)   AS APPR_SEQ 
+            
+        FROM
+            FOMM_USER_MT A
+        WHERE 1 = 1
+        AND USE_YN  = 'Y'
+        
+		AND A.USER_ID IN
+				(
+					SELECT MBR_USER_ID
+                    FROM SR_MA_PRJ_MBER 
+                    WHERE 1 = 1
+					AND REQ_ID  = #{REQ_ID}
+		<if test=" 'PL'.equals(ROLE) ">
+					AND ROLE_CD = '3'
+		</if>
+		<if test=" 'BA'.equals(ROLE) ">
+					AND ROLE_CD = '32'
+		</if>
+		<if test=" 'REQ'.equals(ROLE) ">
+					AND ROLE_CD = '11'
+		</if>
+		<if test=" 'IT'.equals(ROLE) ">
+					AND ROLE_CD = '202'
+		</if>
+				)
+	</select>
+	
+	<select id="selectApprSrMaSubTeamLeader" parameterType="java.util.Map" resultType="java.util.Map">
+    /* SR2000DMapper >> selectApprSrMaSubTeamLeader */
+    
+		SELECT
+	         1 AS APPR_SEQ  --ROW_NUMBER() OVER(ORDER BY A.USER_ID)   AS APPR_SEQ 
+			, A.USER_ID
+            , A.USER_NM
+            , A.DEPT_NM
+            , A.POS_NM
+		FROM
+		  FOMM_USER_MT A,
+		  FOMM_DEPT_MT B
+		WHERE 1 = 1
+		AND B.DEPT_CD           = A.DEPT_CD
+		AND B.DEPT_MANAGER_ID   = A.USER_ID
+		AND B.DEPT_CD IN 
+		(
+		    SELECT DEPT_CD
+		    FROM FOMM_USER_MT C
+		    WHERE USER_ID IN
+		        (
+		        SELECT  MBR_USER_ID 
+                FROM    SR_MA_PRJ_MBER D
+		        WHERE   1 = 1
+		        AND     D.REQ_ID 	= #{REQ_ID}
+		<if test=" 'PL'.equals(ROLE) ">
+				AND		D.ROLE_CD 	= '3'
+		</if>
+		<if test=" 'BA'.equals(ROLE) ">
+				AND 	D.ROLE_CD 	= '32'
+		</if>
+		<if test=" 'REQ'.equals(ROLE) ">
+				AND 	D.ROLE_CD 	= '11'
+		</if>
+		<if test=" 'IT'.equals(ROLE) ">
+				AND 	D.ROLE_CD 	= '202'
+		</if>
+		        )
+		)
+		
+	</select>
+
+	<select id="selectApprPMO" parameterType="java.util.Map" resultType="java.util.Map">
+	/* SR2000DMapper >> selectApprPMO */
+	
+		SELECT
+		    USER_ID
+		    , USER_NM
+		    , DEPT_NM
+		    , POS_NM
+		    , 1 AS APPR_SEQ  --ROW_NUMBER() OVER(ORDER BY USER_ID)   AS APPR_SEQ 
+		
+		FROM
+		    FOMM_USER_MT A
+		WHERE 1 = 1
+		AND USE_YN  = 'Y'
+		
+		AND EXISTS
+		(
+		
+			SELECT 1
+			FROM 
+			    FOMM_AUTH_EXTD_MT M
+			WHERE 1 = 1 
+			AND  M.DEST_CD = A.USER_ID
+			AND  M.EXTD_GB = '10' /* 00:기준, 10:사용자, 20:부서 */
+			AND  EXTD_ID = 'EXTD_PMO'
+		)
+	</select>
+	
+	<select id="selectApprSrMaPrjPM" parameterType="java.util.Map" resultType="java.util.Map">
+		/* SR2000DMapper >> selectApprSrMaPrjPM */
+    	SELECT
+            USER_ID
+            , USER_NM
+            , DEPT_NM
+            , POS_NM
+            , 1 AS APPR_SEQ  --ROW_NUMBER() OVER(ORDER BY USER_ID)   AS APPR_SEQ 
+            
+        FROM
+            FOMM_USER_MT A
+        WHERE 1 = 1
+        AND USE_YN  = 'Y'
+        
+		AND EXISTS
+				(
+		
+				SELECT 1
+		    	FROM 
+		    		SR_MA_PRJ 
+		    	WHERE 1 = 1 
+		    	AND REQ_ID = #{MASTER_REQ_ID}
+		    	AND CGER_USER_ID = A.USER_ID 
+		    	)
+	</select>
+	
+	
+	<select id="selectSrMaPrj" parameterType="java.util.Map" resultType="java.util.Map">
+        /* SR2000DMapper >> selectSrMaPrj */
+		
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.PRJ_ID	--프로젝트ID
+			, A.REQ_ID	--요청서ID
+			, A.MASTER_SUB_DIV_CD	--마스터/서브구분코드
+			, A.MASTER_PRJ_ID	--마스터 프로젝트ID
+			, A.MASTER_REQ_ID	--마스터 요청서ID
+			, A.PRJ_NM	--프로젝트명
+			, A.PRJ_STR_DT	--프로젝트기간(시작일)
+			, A.PRJ_END_DT	--프로젝트기간(종료일)
+			, A.CGER_DEPT_CD	--담당부서코드
+			, A.CGER_DEPT_NM	--담당부서명
+			, A.CGER_USER_ID	--담당자사번
+			, A.CGER_USER_NM	--담당자명
+			, A.PRJ_STAT_CD	--프로젝트상태코드
+			, ( SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE 1=1
+				AND UP_CMM_CD = 'S_PRJ_STATUS' AND CMM_CD = A.PRJ_STAT_CD
+			   ) 	PRJ_STAT_NM
+			   
+			, A.PRJ_SUMMARY	--프로젝트 개요
+			, A.PROGRESS_PER	--진행률
+			, '진행률(' || A.PROGRESS_PER || '%)' 	AS PROGRESS_INFO
+			
+			, A.DEL_YN	--삭제여부
+			, A.RMK	--비고
+			, A.FRID	--등록자ID
+			, A.FRDT	--등록일시
+			, A.LMID	--수정자ID
+			, A.LMDT	--수정일시
+			, A.LMPID	--최종수정화면ID
+			<!-- , CSR_GRADE	 -->
+            
+            , B.REQ_TMPLAT_ID
+            
+		
+		FROM
+			 SR_MA_PRJ A 
+			,SR_BASE_INFO B
+		
+		WHERE 1 = 1
+        AND A.REQ_ID = B.REQ_ID      
+        AND B.DEL_YN = 'N'
+        
+		AND A.REQ_ID = #{REQ_ID}
+	</select>
+	
+	<!-- REQ_TMPLAT_ID 구하기 ( 마스터프로젝트 / 서브프로젝트의 요청서 유형  ) -->
+	
+	<select id="selectReqTmplatId" parameterType="java.util.Map" resultType="string">
+		SELECT REQ_TMPLAT_ID FROM SR_BASE_INFO WHERE REQ_ID = #{REF_REQ_ID}
+	</select>
+	<!-- 형상관리 (요청관리 서브 프로젝트 정보 전달) -->
+	
+	<insert id="insertViPmsChgPfmc" parameterType="java.util.Map">
+	/* SR2000DMapper >> insertViPmsChgPfmc */
+	
+	/* SUBSTR(T.SVC_DTL_CD,1,5) = WFSR0 (일반 )  /WFSR1 (비정기  ) /WFSR2 (비상 ) /WFSR3 (폐기 ) 
+	  WSO_DMD_ORGN_NAME : 요청부서(팀) 입력 /  CHG_DMD_ORGN_NAME : 수행부서(팀) 입력 /  CHG_DMD_UP_ORGN_NAME : 수행본부 입력
+	  ROLE_CD = (UP_CMM_CD = 'ACTOR_CD') >> 3:PL, 11:요청자, 32:BA, 202:IT담당자 
+	
+	  CSR_DIV_CD = 1.정상-프로젝트, 2정상-일반 ,  CHG_TY = ( 1:프로젝트, 2:정상, 3:비정기, 4:비상, 6:폐기 ) 
+	  (SELECT X.CSR_DIV_CD FROM SR_MA_BA_IT_REV X WHERE X.REQ_ID = B.REF_REQ_ID ) == 마스터프로젝트 CSR_DIV_CD 확인
+	*/
+	
+        INSERT INTO VI_PMS_CHG_PFMC
+		( PJ_NO, DEV_CHG_NO, WSO_DMD_ORGN_NAME, CHG_DMD_ORGN_NAME, CHG_DMD_UP_ORGN_NAME, MPR_NO, CHG_TY, CHG_RSN, CHG_NAME, CHG_CNT, CHG_STT, SYS_TCD )	
+        SELECT
+             M.PRJ_ID                               AS PJ_NO
+             , 1                                    AS DEV_CHG_NO
+             , B.REQ_DEPT_NM                        AS WSO_DMD_ORGN_NAME
+             , U.DEPT_NM                            AS CHG_DMD_ORGN_NAME
+             , (SELECT TRIM(DEPT_NM) FROM FOMM_DEPT_MT WHERE DEPT_CD = D.UP_DEPT_CD) AS CHG_DMD_UP_ORGN_NAME
+             , M.MBR_USER_ID                        AS MPR_NO
+			<!-- , B.REF_REQ_ID -->
+			<!-- , SUBSTR(T.SVC_DTL_CD,1,5) -->
+             , CASE WHEN SUBSTR(T.SVC_DTL_CD,1,5) = 'WFSR0' THEN 
+                        (SELECT X.CSR_DIV_CD FROM SR_MA_BA_IT_REV X WHERE X.REQ_ID = B.REF_REQ_ID )
+                    WHEN SUBSTR(T.SVC_DTL_CD,1,5) = 'WFSR1' THEN '3'
+                    WHEN SUBSTR(T.SVC_DTL_CD,1,5) = 'WFSR2' THEN '4'
+                    WHEN SUBSTR(T.SVC_DTL_CD,1,5) = 'WFSR3' THEN '6'
+                END CHG_TY
+             , NULL                                 AS CHG_RSN
+             , B.TITLE                              AS CHG_NAME
+             , B.CONTENTS                           AS CHG_CNT
+             , '1'                                  AS CHG_STT
+             , 'SPP'                                AS SYS_TCD
+        FROM SR_BASE_INFO B
+        INNER JOIN WF_REQ_TMPLAT_HT T   ON B.REQ_TMPLAT_ID = T.REQ_TMPLAT_ID AND B.REQ_TMPLAT_VER = T.REQ_TMPLAT_VER
+        INNER JOIN SR_MA_PRJ_MBER M     ON M.REQ_ID = B.REQ_ID 
+        INNER JOIN FOMM_USER_MT U  ON U.USER_ID = M.MBR_USER_ID AND M.ROLE_CD = '3'
+        LEFT OUTER JOIN FOMM_DEPT_MT D  ON D.DEPT_CD = U.DEPT_CD
+        WHERE M.PRJ_ID = (SELECT PRJ_ID FROM SR_MA_PRJ WHERE MASTER_SUB_DIV_CD = 'S' AND REQ_ID = #{REQ_ID})
+        AND NOT EXISTS 
+        (
+            SELECT 1 FROM vi_PMS_CHG_PFMC WHERE PJ_NO = M.PRJ_ID
+        )
+		
+    </insert>
+    
+    <update id="updateViPmsChgPfmc" parameterType="java.util.Map">
+        /* SR2000DMapper >> updateViPmsChgPfmc */
+        UPDATE vi_PMS_CHG_PFMC SET
+
+			 CHG_STT = #{CHG_STT}						/* 9 : 이행완료 */
+			
+		WHERE 1=1
+		AND PJ_NO = (SELECT PRJ_ID FROM SR_MA_PRJ WHERE REQ_ID = #{REQ_ID})
+		AND CHG_STT <![CDATA[<>]]> #{CHG_STT}
+	</update>
+	
+	<!-- Rims 체크 -->
+	
+	<select id="selectRimsMigrCnt" parameterType="java.util.Map" resultType="Integer">
+        /* SR2000DMapper >> "selectRimsMigrCnt" selectExecCnt */
+        
+		SELECT
+			COUNT(*) AS CNT
+		FROM 
+			CMR1000 T1
+		WHERE 
+			T1.CR_STATUS != '3'
+		AND T1.CR_QRYCD = '04'
+		<if test="CR_STATUS != '' and CR_STATUS != null">
+		AND T1.CR_STATUS = #{CR_STATUS}
+		</if>
+		AND CR_PRJNO IN
+					( 
+						SELECT 
+							PRJ_ID
+						FROM 
+							SR_MA_PRJ
+						WHERE 
+							REQ_ID = #{REQ_ID}
+					)
+	</select>
+	
+	<select id="selectRimsMigrNendCnt" parameterType="java.util.Map" resultType="Integer">
+        /* SR2000DMapper >> selectRimsMigrNendCnt*/
+	
+		SELECT
+			COUNT(*) AS CNT
+		FROM 
+			CMR1000 TB1 
+		WHERE TB1.CR_STATUS IN ('0', '8')
+		AND TB1.CR_QRYCD		= '04'
+		AND TB1.CR_PRJNO		= (SELECT 
+										PRJ_ID
+									FROM 
+										SR_MA_PRJ
+									WHERE 
+										REQ_ID = #{REQ_ID}
+									)
+		AND TB1.CR_PRJNO IS NOT NULL
+		AND TB1.CR_EMGCD IN('01', '02', '03', '04', '05') /* 림스 변경구분*/
+	</select>
+	
+	
+	<select id="selectExecCnt" parameterType="java.util.Map" resultType="Integer">
+		SELECT COUNT(*)
+		FROM CMR1000 TB1
+			, CMR9900 TB2
+		WHERE TB1.CR_ACPTNO = TB2.CR_ACPTNO
+		AND TB1.CR_STATUS <![CDATA[<>]]> '3'
+		AND TB1.CR_QRYCD = '04'
+		AND TB1.CR_PRJNO IS NOT NULL
+		AND TB2.CR_TEAM='SYSED'
+		AND TB2.CR_CONFDATE IS NOT NULL
+		AND TB1.CR_PRJNO = (SELECT 
+								PRJ_ID
+							FROM 
+								SR_MA_PRJ
+							WHERE 
+								REQ_ID = #{REQ_ID}
+							)
+//TODO 조건 보완 
+
+/*							
+		AND TB2.CR_CONFDATE <![CDATA[>]]> TO_DATE( (
+													SELECT MAX(LMDT) 
+													FROM SR_WF_PROC 
+													WHERE REQ_ID = # {REQ_ID}
+													),'YYYY/MM/DD HH24:MI:SS')
+/*
+		AND TB2.CR_CONFDATE <![CDATA[>]]> ( SELECT MAX(ENTRY_DT)
+											FROM PM_SR_HISTORY
+											WHERE SR_MNG_NO = ( SELECT 
+																	PRJ_ID
+																FROM 
+																	SR_MA_PRJ
+																WHERE 
+																	REQ_ID = # {REQ_ID}
+																)
+											AND SR_STATUS = '79'			-- 요청 상태
+											AND APPR_STATUS = 'C')			-- 결재 상태
+*/
+	</select>
+	
+</mapper>

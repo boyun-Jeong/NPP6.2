@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.homeWidget.dao.widgetAMDAO">
+	
+	<!--  분류 TREE -->
+	<sql id="MsClassTree">
+		WITH CLASS_TREE AS (
+		    SELECT    CLASS_ID
+		            , CLASS_NM
+					, UP_CLASS_ID
+					, LEVEL AS LVL
+					, REGEXP_SUBSTR(SYS_CONNECT_BY_PATH(CLASS_ID, ','), '[^,]+', 1, 1) AS LVL1_CLASS_ID
+					, REGEXP_SUBSTR(SYS_CONNECT_BY_PATH(CLASS_NM, ','), '[^,]+', 1, 1) AS LVL1_CLASS_NM
+					, REGEXP_SUBSTR(SYS_CONNECT_BY_PATH(CLASS_ID, ','), '[^,]+', 1, 2) AS LVL2_CLASS_ID
+					, REGEXP_SUBSTR(SYS_CONNECT_BY_PATH(CLASS_NM, ','), '[^,]+', 1, 2) AS LVL2_CLASS_NM
+			FROM	  MS_CLASS
+			WHERE	1=1
+		    AND		USE_YN = 'Y'
+			
+			START WITH 	UP_CLASS_ID = 'ROOT'
+			CONNECT BY	PRIOR CLASS_ID = UP_CLASS_ID
+			
+			ORDER SIBLINGS BY	ORD_NUM ASC
+		)
+		
+	</sql>
+		
+	
+	<!-- HW/SW 현황 조회 -->
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* widgetAMMapper >> select01 */
+		<include refid="MsClassTree"/>
+		SELECT	  TO_CHAR(NVL(SUM(DECODE(LVL1_CLASS_ID, '10000000', 1, 0)), 0), 'FM9,999') AS HW_CNT
+				, TO_CHAR(NVL(SUM(DECODE(LVL1_CLASS_ID, '20000000', 1, 0)), 0), 'FM9,999') AS SW_CNT
+		
+		FROM	AM_ASSET 	ASS
+		INNER JOIN CLASS_TREE	CLT 
+		ON 		ASS.CLASS_ID = CLT.CLASS_ID
+		
+		WHERE	1=1
+		AND		ASS.ASSET_STAT_CD NOT IN('01', '05')
+  		AND 	LVL1_CLASS_ID IN('10000000', '20000000') 	/* HW : 10000000, SW : 20000000 */
+    </select>
+	
+	<!-- HW/SW 분류별 현황 조회 -->
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* widgetAMMapper >> select02 */
+		<include refid="MsClassTree"/>
+		SELECT	  LVL2_CLASS_ID 	AS CLASS_ID
+				, LVL2_CLASS_NM 	AS CLASS_NM
+				, COUNT(*) 			AS TOT_CNT
+				, SUM(CASE WHEN ASS.ASSET_STAT_CD IN('02') THEN 1 ELSE 0 END) 			AS RUN_CNT
+				, SUM(CASE WHEN ASS.ASSET_STAT_CD IN('03') THEN 1 ELSE 0 END) 			AS IDLE_CNT
+				, SUM(CASE WHEN ASS.ASSET_STAT_CD NOT IN('02', '03') THEN 1 ELSE 0 END) AS OTHER_CNT
+		FROM	  	AM_ASSET ASS
+					INNER JOIN 	CLASS_TREE CLT ON ASS.CLASS_ID = CLT.CLASS_ID
+		WHERE	1=1
+				AND		ASS.ASSET_STAT_CD NOT IN('01', '05')
+				AND		LVL1_CLASS_ID = #{LVL1_CLASS_ID} 	/* HW : 10000000, SW : 20000000 */
+		GROUP BY  LVL2_CLASS_ID, LVL2_CLASS_NM
+    </select>
+    
+    
+    <!-- 구성범주별 현황(운영) -->
+    <select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* widgetAMMapper >> select03 */
+    	SELECT	  A.CMM_CD
+    			, A.CMM_CD_NM
+    			, A.SORT_ORDR
+    			, TO_CHAR(NVL(SUM(CASE WHEN CI_ID IS NOT NULL THEN 1 ELSE 0 END), 0), 'FM9,999') AS CNT
+		FROM
+		          (
+		            SELECT  * 
+		            FROM    FOMM_CMM_CD_MT
+		            WHERE   1=1
+		            AND     CODE_DIV = 'SVC_MNG_CD'
+		            AND     UP_CMM_CD = 'CI_TYPE_CD'
+		            AND     USE_YN = 'Y'
+		          ) A
+		        , (
+		            SELECT  *
+		            FROM    SV_CI_MT
+		            WHERE   CI_STAT_CD IN ('01')
+		          ) B
+		WHERE   1=1
+		AND     A.CMM_CD = B.CI_TYPE_CD(+)
+		
+		GROUP BY A.CMM_CD, A.CMM_CD_NM, A.SORT_ORDR
+		ORDER BY A.SORT_ORDR
+    	
+    </select>
+    
+    
+    
+    
+    
+    
+    
+    
+</mapper>

@@ -1,0 +1,182 @@
+var sUrl = this.getOwnerFrame().url;
+var screenId = ' - (' + sUrl.substring(sUrl.indexOf('::')+2, sUrl.indexOf('.xfdl')) + ')';
+
+Ex.util.getSession('gvAdminYn')
+
+if( Ex.isEmpty(dsSearchCond.colinfos["DEPT_STATUS"]) )
+{
+	dsSearchCond.addColumn("DEPT_STATUS", "string"); 
+}
+
+//스크롤 같이 이동 시작
+this.fnCommOnvscroll = function(obj:nexacro.Grid,e:nexacro.ScrollEventInfo)
+{
+	var targetGrid;
+	if(obj.id == "grdPlanAmt")		targetGrid = this.divContent.form.grdAmtA;
+	else if(obj.id == "grdAmtA")	targetGrid = this.divContent.form.grdPlanAmt;
+	targetGrid.vscrollbar.set_pos(e.pos);
+};
+//스크롤 같이 이동 끝
+	
+date	yyyy-MM-dd HH:mm:ss
+var days = Ex.util.getDiffDay(this.dsCond.getColumn(0, "START_DATE"), this.dsCond.getColumn(0, "END_DATE"));
+fromDt = Ex.util.getMaskFormatString(Ex.util.addDate(Ex.util.strToDate(Ex.util.today()), -30), "yyyyMMdd");
+if(days < 0)
+	{
+		var attrNm = this.divContent.form.divSearchArea.form.stcSearchDate.text;
+		
+		var param = {
+			  id	: "wrongDaysAlertI"										//fnMsgAfter에서 식별자로 사용되는 ID
+			, msg	: attrNm + "날짜 기간 범위가 올바르지 않습니다. "	//메시지 내용
+			, arrparam : [""]												//메시지의 변수에 들어갈 실제값
+			, msgtype : "I"													//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+		};
+		Ex.core.alert(this, param);
+		return false;
+	}
+
+
+if(!Ex.util.checkValidate(this, "input01")) return;
+var rtn = this.Grid00.checkValidate(true);
+
+//그리드 행추가 포커스
+objDs.set_rowposition(rowPos);
+this.grdList.showEditor(true);		// 그리드 편집모드로 변경
+this.grdList.setCellPos(3, rowPos);	// 그리드 셀 포커스 이동
+
+그리드 헤더 필수 입력 css [grdHCell_WF_essential]
+grdBCell_WF_danger		red
+grdBCell_WF_info		blue
+
+grdBCell_WF_boldP_info
+grdBCell_WF_bold_info
+grdBCell_WF_event
+
+DUE_CHK == -1 ? "grdBCell_WF_boldP_danger" : DUE_CHK == 0 ? "grdBCell_WF_boldP_info" : "grdBCell_WF_boldP"
+CHK == -1 ? "grdBCell_WF_boldP_danger" : CHK == 0 ? "grdBCell_WF_boldP_info" : "grdBCell_WF_boldP"
+
+var param = {
+					msg	: "해당 메뉴는 IT(개발자 포함) 전용 메뉴입니다."	//메시지 내용
+					, arrparam : []												//메시지의 변수에 들어갈 실제값
+					, msgtype : "I"												//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+				};
+				Ex.core.alert(this, param);
+				return false;
+Ex.util.getSession('gvItDeptYn')
+startsWith
+_getCurrentStyleInheritValue("font")
+
+var objSize = nexacro.getTextSize(this.staAuthTitle.text, this.staAuthTitle._getCurrentStyleInheritValue("font"));
+var nWidth = parseInt(objSize.nx) + 20;
+this.staAuthTitle.set_width(nWidth);
+
+[JAVA]
+Map<String, Object> outMap = new HashMap<>();
+List<Map<String, Object>> rtnListAll = new ArrayList<Map<String,Object>>();
+
+dsCgerCond.setChangeStructureWithData(true);
+dsCgerCond.addColumn("NEXT_WF_PROC_CD", 1);	
+dsCgerCond.setChangeStructureWithData(false);
+
+[NEXA]
+if(this.dsFormInfo.colinfos[btnAttrInfoArr[0] + "_TEXT"] == "[object DSColumnInfo]")
+
+--요청서 팝업 하단 버튼 사용자 제어
+if(e.row > - 1 && e.cell == obj.getBindCellIndex("body", "REQ_ID"))
+{
+	var dsRow = obj.getDatasetRow(e.row);
+	var reqTmplatId = obj.getBindDataset().getColumn(dsRow, "REQ_TMPLAT_ID");
+	var reqTmplatVer = obj.getBindDataset().getColumn(dsRow, "REQ_TMPLAT_VER");
+	var reqId = obj.getBindDataset().getColumn(dsRow, "REQ_ID");
+
+	/*버튼 종류 : REG_BTN_YN(등록), CANCEL_BTN_YN(회수), DEL_BTN_YN(삭제), SAVE_BTN_YN(임시저장), REV_BTN_YN(접수), REV_RTRN_BTN(반려[접수]), APV_BTN_YN(승인[결재]), RTRN_BTN_YN(반려[결재])
+	Ex.core.popup(
+		this,											// <--- 팝업 실행 스코프
+		"srReqWritePop",								// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+		"sr::SR0000_W.xfdl",							// <--- 팝업창 오픈 Url
+		{
+			pREQ_ID			: reqId,
+			pREQ_TMPLAT_ID	: reqTmplatId,
+			pREQ_TMPLAT_VER	: reqTmplatVer,
+			pBTN_CONTROL	: "Y",
+			pBTN_ARR		: ["SAVE_BTN:Y:즈장"]
+		},												// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+		//"width=1500,height=817,useCloseButton=false"	// <--- width/height/modeless(프레임 처리 옵션)
+		"autosize,useCloseButton=false"
+	);
+}
+
+//초기 화면 조회 시점 값에 따른 하단 버튼 제어 함수
+this.setWfBtnControll = function(mapWfProcCd)
+{
+	var btnArr = new Array();
+
+	/*버튼 종류 : REG_BTN_YN(등록), CANCEL_BTN_YN(회수), DEL_BTN_YN(삭제), SAVE_BTN_YN(임시저장), REV_BTN_YN(접수), REV_RTRN_BTN(반려[접수]), APV_BTN_YN(승인[결재]), RTRN_BTN_YN(반려[결재])*/
+	if(mapWfProcCd == "CHM0005")
+	{
+		if(this.dsWfChm3.getColumn(0,'CONF_MANAGE_CHK') =='N')
+		{
+			btnArr.push("REV_BTN_YN:다음단계로 진행");
+		}
+
+		if(Ex.util.getMenuAuth(this, 'admin') == 'Y'){ //관리자  
+			btnArr.push("REV_BTN_YN:다음단계로 진행");
+			btnArr.push("REV_RTRN_BTN");
+		}
+	}
+	return btnArr;
+}
+
+
+if(retObj.getClass() == com.nexacro.uiadapter.spring.core.data.metadata.support.MapMetaData.class) {
+		    	    					MapMetaData metaData = (MapMetaData) retObj;
+		    	    					outMap.put(outDsNm, metaData);
+		    	    				}
+
+for (int i = 0; i < selectObj.size(); i++) {
+
+						for (String name : selectObj.get(i).keySet()) {
+
+							if (name.indexOf("_MapMeta_") > -1) { // 조회된 데이터가 없는 경우는 MapMeta가 붙어서 넘어온다.
+								String dsNm = name.replaceAll("_MapMeta_", "");
+								// log.debug("gubun : [" + gubun + "] dsNm ::::: " + dsNm);
+								DataSet ds = new DataSet(dsNm);
+								Map<String, Object> map = (Map<String, Object>) selectObj.get(i).get(name);
+
+								for (String colNm : map.keySet())
+									ds.addColumn(colNm, 1);
+								// for (int j = 0; j < ds.getColumnCount(); j++) {
+								// log.debug("_MapMeta_ name:[" + dsNm + "] j=" + j + " ColumnName:[" +
+								// ds.getColumn(j).getName() + "]");
+								// }
+								result.addDataSet(ds);
+
+							} else {
+								result.addDataSet(name, selectObj.get(i).get(name));
+							}
+						}
+					}
+					
+					for (int i = 0; i < selectObj.size(); i++) {
+
+						for (String name : selectObj.get(i).keySet()) {
+
+							if (name.indexOf("_MapMeta_") > -1) { // 조회된 데이터가 없는 경우는 MapMeta가 붙어서 넘어온다.
+								String dsNm = name.replaceAll("_MapMeta_", "");
+								// log.debug("[SRCommServiceImpl]-prePostSelectProc() gubun : [" + gubun + "] dsNm ::::: " + dsNm);
+								DataSet ds = new DataSet(dsNm);
+								Map<String, Object> map = (Map<String, Object>) selectObj.get(i).get(name);
+
+								for (String colNm : map.keySet())
+									ds.addColumn(colNm, 1);
+								// for (int j = 0; j < ds.getColumnCount(); j++) {
+								// log.debug("[SRCommServiceImpl]-prePostSelectProc() _MapMeta_ name:[" + dsNm + "] j=" + j + " ColumnName:[" +
+								// ds.getColumn(j).getName() + "]");
+								// }
+								result.addDataSet(ds);
+
+							} else {
+								result.addDataSet(name, selectObj.get(i).get(name));
+							}
+						}
+					}

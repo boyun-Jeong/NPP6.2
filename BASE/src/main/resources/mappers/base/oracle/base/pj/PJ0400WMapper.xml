@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0400WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.REPORT_ID 
+			, A.REPORT_TYPE_CD 
+			, A.REPORT_NAME 
+			, A.PJT_ID 
+			, B.PJT_NAME 
+			, A.CONTENTS 
+			, A.REG_STIME 
+			, A.REG_USER_ID 
+			, A.REG_USER_NM 
+			, A.REG_USER_DEPT 
+			, A.LMOD_SDATE 
+			, A.LMOD_USER_ID 
+			, A.LMOD_USER_NM 
+			, A.LMOD_USER_DEPT 
+		FROM
+			PJ_REPORT A,
+			PJ_PROJECT B 
+
+		WHERE 1 = 1
+		AND A.PJT_ID = B.PJT_ID
+		AND A.PJT_ID = #{PJT_ID}
+
+		<if test="REPORT_TYPE_CD != '' and REPORT_TYPE_CD != null">
+		AND A.REPORT_TYPE_CD = #{REPORT_TYPE_CD} 
+		</if>
+		
+		<if test="REP_NM != '' and REP_NM != null">
+		AND UPPER(A.REPORT_NAME) LIKE '%' || UPPER(#{REP_NM}) || '%'
+		</if>
+
+		<if test="REG_USER_NM != '' and REG_USER_NM != null">
+		AND UPPER(A.REG_USER_NM) LIKE '%'|| UPPER(#{REG_USER_NM}) || '%'
+		</if>
+
+		<if test="REG_STIME != '' and REG_STIME != null and REG_ETIME != '' and REG_ETIME != null">
+		AND SUBSTR(A.REG_STIME, 1, 8) BETWEEN #{REG_STIME} AND #{REG_ETIME}
+		</if>
+
+		ORDER BY
+			A.REG_STIME DESC, A.REPORT_ID DESC
+	</select>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_REPORT 
+		WHERE REPORT_ID = #{REPORT_ID}
+	</delete>
+
+</mapper>

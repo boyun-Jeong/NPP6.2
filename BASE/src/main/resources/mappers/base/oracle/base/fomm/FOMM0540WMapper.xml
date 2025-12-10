@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0540WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              SEND_NO   --전송번호
+            , TITLE --제목(알림이름)
+            , SEND_USER_ID  --발신자ID
+            , SEND_USER_NM  --발신자명
+            , SEND_DEPT_CD  --발신자 부서코드
+            , SEND_DEPT_NM  --발신자 부서명
+            , SEND_TYPE_CD  --발신매체코드
+            , REPLACE(REPLACE(SEND_TYPE_CD, 'TALK', '헤아림TALK'), 'MEMO', '쪽지')   AS SEND_TYPE_NM
+            , MSG_CONTS --알람내용
+            , SEND_DTIME    --발송일시
+
+        FROM FOMM_NOTI_SEND_MT
+        WHERE 1 = 1
+
+        <if test="SEND_NO != '' and SEND_NO != null">
+        AND SEND_NO = #{SEND_NO}
+        </if>
+
+        ORDER BY
+            SEND_NO DESC
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+        <selectKey resultType="string" keyProperty="SEND_NO" order="BEFORE">
+            SELECT NVL(MAX(SEND_NO), 0) + 1 FROM FOMM_NOTI_SEND_MT
+        </selectKey>
+        INSERT INTO FOMM_NOTI_SEND_MT
+        (
+              SEND_NO   --전송번호
+            , TITLE --제목(알림이름)
+            , RECV_DIV_CD		--수신구분(USER : 수신자목록, IT : IT지원부 전체)
+            , SEND_USER_ID  --발신자ID
+            , SEND_USER_NM  --발신자명
+            , SEND_DEPT_CD  --발신자 부서코드
+            , SEND_DEPT_NM  --발신자 부서명
+            , SEND_TYPE_CD  --발신매체코드
+            , MSG_CONTS --알람내용
+            , SEND_DTIME    --발송일시
+        )
+        VALUES
+        (
+              #{SEND_NO}
+            , #{TITLE}
+            , #{RECV_DIV_CD}
+            , #{SEND_USER_ID}
+            , #{SEND_USER_NM}
+            , #{SEND_DEPT_CD}
+            , #{SEND_DEPT_NM}
+            , #{SEND_TYPE_CD}
+            , #{MSG_CONTS}
+            , NVL(#{SEND_DTIME}, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'))
+        )
+	</insert>
+
+</mapper>

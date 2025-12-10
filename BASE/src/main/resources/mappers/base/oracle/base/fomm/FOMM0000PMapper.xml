@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0000PDAO">
+	
+	<!-- sitemap 조회 -->
+    <select id="selectSiteMap" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0000PMapper >> selectSiteMap */
+    	SELECT	*
+    	FROM
+    	(
+	    	SELECT	  ALL_MENU.NO
+					, ALL_MENU.MENU_ID
+					, ALL_MENU.MENU_NM
+					, ALL_MENU.UP_MENU_ID
+					, ALL_MENU.SCREEN_ID
+					, ALL_MENU.MENU_URL
+					, ALL_MENU.MENU_LVL
+					, ALL_MENU.MENU_PATH
+					, ALL_MENU.MENU_PATH_NM
+					, NVL(MY_MENU.READ_YN, 'N')			AS READ_YN
+					, NVL2(FAV_MENU.MENU_ID, 'Y', 'N') 	AS FAVORITE_YN
+					
+			FROM (
+					SELECT	  ROWNUM AS NO
+							, A.*
+							, SYS_CONNECT_BY_PATH(A.MENU_ID, '/^') AS MENU_PATH
+							, SYS_CONNECT_BY_PATH(A.MENU_NM, '/^') AS MENU_PATH_NM
+					FROM	FOMM_MENU_MT A
+					WHERE	USE_YN = 'Y'
+					CONNECT BY PRIOR MENU_ID = UP_MENU_ID
+					START WITH MENU_ID = 0
+					ORDER SIBLINGS BY SORT_ORDR
+				  ) ALL_MENU
+				, ( 
+					SELECT    MENU_ID
+				            , DECODE(COUNT(CASE WHEN READ_YN = 'Y' THEN 1 END),         0, 'N', 'Y') AS READ_YN
+			        FROM      FOMM_AUTH_MENU_DT
+			        WHERE     AUTH_ID IN (
+			                    SELECT AUTH_ID
+			                    FROM   FOMM_AUTH_USER_DT
+			                    WHERE  USER_ID = #{USER_ID}
+			                  )
+			        GROUP BY MENU_ID
+			      ) MY_MENU
+			    , ( SELECT  *
+		            FROM    FOMM_MENU_BKMK_DT 
+		            WHERE   USER_ID = #{USER_ID}		/* 로그인ID */
+		          ) FAV_MENU
+		          
+			WHERE	1=1
+			AND		ALL_MENU.MENU_ID	= MY_MENU.MENU_ID(+)
+			AND		MY_MENU.MENU_ID		= FAV_MENU.MENU_ID(+)
+		)
+		WHERE	1=1
+		AND		READ_YN = 'Y'
+		<if test="GBN != null and GBN != ''">
+			<choose>
+				<when test='GBN.equals("SITEMAP")'>
+					AND	1=1
+				</when>
+				<when test='GBN.equals("FAVORITE")'>
+					AND	MENU_ID IN (
+							SELECT	DISTINCT A.MENU_ID
+							FROM	FOMM_MENU_MT A
+							WHERE	A.USE_YN = 'Y'
+							CONNECT BY PRIOR A.UP_MENU_ID = A.MENU_ID
+							START WITH A.MENU_ID IN (SELECT MENU_ID FROM FOMM_MENU_BKMK_DT WHERE USER_ID = #{USER_ID})
+						)
+				</when>
+			</choose>
+		</if>
+		<if test="MENU_NM != null and MENU_NM != ''">
+			AND		MENU_ID IN (
+						SELECT	MENU_ID
+						FROM	FOMM_MENU_MT
+						WHERE	USE_YN = 'Y'
+						CONNECT BY PRIOR UP_MENU_ID = MENU_ID
+						START WITH INSTR(UPPER(MENU_NM), UPPER(#{MENU_NM})) > 0
+					)
+		</if>
+		
+		ORDER BY NO
+    </select>
+    
+    
+	<!-- SPP 사용자 정보 조회 -->
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0000PMapper >> select01 */
+        SELECT
+        		  0 AS CHK			/* CHECKBOX 컬럼 */
+	            , '' AS ROWFLAG		/* 행상태 표기를 위한 컬럼 */
+	            , A.USER_ID	--사번
+				, A.USER_NM	--사용자명
+				, A.CO_CD	--회사코드
+				, A.CO_NM	--회사명
+				, A.DEPT_CD	--부서코드
+				, A.DEPT_NM	--부서명
+				, A.POS_CD	--직급코드
+				, A.POS_NM	--직급명
+				, A.ROLE_CD	--직책코드
+				, A.ROLE_NM	--직책명
+				, A.EMAIL_ADR	--이메일주소
+				
+				, NVL(
+					REGEXP_REPLACE(
+						  TRIM(REPLACE(A.MOBILE_NUM, '-', ''))
+						, CASE
+							WHEN LENGTH(TRIM(REPLACE(A.MOBILE_NUM, '-', ''))) = 0 THEN '(.+)(.{4})'
+							ELSE '(02|.{3})(.+)(.{4})'
+						  END
+						, CASE
+							WHEN LENGTH(TRIM(REPLACE(A.MOBILE_NUM, '-', ''))) = 0 THEN '\1-\2'
+							ELSE '\1-\2-\3'
+						  END
+					)
+					, ''
+				  ) AS MOBILE_NUM
+				, NVL(
+					REGEXP_REPLACE(
+						  TRIM(REPLACE(A.TELNUM, '-', ''))
+						, CASE
+							WHEN LENGTH(TRIM(REPLACE(A.TELNUM, '-', ''))) = 0 THEN '(.+)(.{4})'
+							ELSE '(02|.{3})(.+)(.{4})'
+						  END
+						, CASE
+							WHEN LENGTH(TRIM(REPLACE(A.TELNUM, '-', ''))) = 0 THEN '\1-\2'
+							ELSE '\1-\2-\3'
+						  END
+					)
+					, ''
+				  ) AS TELNUM
+				  
+				, A.USER_PW	--패스워드
+				, A.PW_INIT_DT	--패스워드 초기일시
+				, A.PW_EXP_DT	--패스워드 만료일시
+				, A.EXPIRE_DATE	--계정만료일
+				, A.USE_YN	--사용여부
+				, A.RMK	--비고
+				, A.FRID	--최초등록자ID
+				, A.FRDT	--최초등록일시
+				, A.LMID	--최종수정자ID
+				, A.LMDT	--최종수정일시
+				, A.LMPID	--최종수정 화면ID
+				, A.LANG_CD	--언어코드
+				, A.LAST_LOGIN_TIME	--최종로그인일시
+				, A.UP_DEPT_CD	--상위부서코드
+				, A.PASSWD_INCORRECT_CNT	--사진이미지(원본파일명)
+<!-- 				, A.USER_TYPE -->
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM				/* 최초등록자 */
+	            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM				/* 최종수정자 */
+		FROM	  FOMM_USER_MT A
+				
+		WHERE	  1=1
+		AND 	A.USER_ID	= #{USER_ID}
+    </select>
+    
+    
+    <!-- SPP 사용자 대직 조회 -->
+    <select id="selectAgency" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0000PMapper >> selectAgency */
+    	SELECT	  '0' AS CHK
+    				, '' AS ROWFLAG
+<!--     				, A.* -->
+<!--     				, (SELECT C.USER_NM FROM FOMM_USER_MT C WHERE C.USER_ID = A.AGENCY_USER_ID)	AS AGENCY_USER_NM -->
+    				, B.USER_NM
+    	FROM		
+<!--     				FOMM_AGENCY_INFO A -->
+					FOMM_USER_MT	B
+    	WHERE	1=1
+<!--     	AND		A.USER_ID = B.USER_ID -->
+    	AND		B.USER_ID = #{USER_ID}
+<!--     	AND		A.AGENCY_SEQ = '1' -->
+    </select>
+    
+
+    <!-- SPP 사용자 수정 -->
+    <update id="modify01" parameterType="java.util.Map">
+    	/* FOMM0000PMapper >> modify01 */
+        UPDATE FOMM_USER_MT 
+        SET		  USER_NM = #{USER_NM}	--사용자명
+					, CO_CD = #{CO_CD}	--회사코드
+					, CO_NM = #{CO_NM}	--회사명
+					, DEPT_CD = #{DEPT_CD}	--부서코드
+					, DEPT_NM = #{DEPT_NM}	--부서명
+					, POS_CD = #{POS_CD}	--직급코드
+					, POS_NM = #{POS_NM}	--직급명
+					, ROLE_CD = #{ROLE_CD}	--직책코드
+					, ROLE_NM = #{ROLE_NM}	--직책명
+					, EMAIL_ADR = #{EMAIL_ADR}	--이메일주소
+					, TELNUM = #{TELNUM}	--내선전화번호
+					, MOBILE_NUM = #{MOBILE_NUM}	--휴대폰번호
+					, USER_PW = #{USER_PW}	--패스워드
+					, PW_INIT_DT = #{PW_INIT_DT}	--패스워드 초기일시
+					, PW_EXP_DT = #{PW_EXP_DT}	--패스워드 만료일시
+					, EXPIRE_DATE = #{EXPIRE_DATE}	--계정만료일
+					, USE_YN = #{USE_YN}	--사용여부
+					, RMK = #{RMK}	--비고
+					, LMID = #{LMID}	--최종수정자ID
+					, LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+					, LMPID = #{LMPID}	--최종수정 화면ID
+					, LANG_CD = #{LANG_CD}	--언어코드
+					, LAST_LOGIN_TIME = #{LAST_LOGIN_TIME}	--최종로그인일시
+					, UP_DEPT_CD = #{UP_DEPT_CD}	--상위부서코드
+					, PASSWD_INCORRECT_CNT = #{PASSWD_INCORRECT_CNT}	--사진이미지(원본파일명)
+				WHERE	USER_ID = #{USER_ID}
+    </update>
+
+
+
+	<!-- SPP 대직 추가/수정 -->
+    <update id="modify02" parameterType="java.util.Map">
+    	/* FOMM0000PMapper >> modify02 */
+    	INSERT INTO FOMM_AGENCY_INFO
+		(
+			  USER_ID	--위임자ID
+			, AGENCY_SEQ	--등록순번
+			, AGENCY_SDT	--위임시작일자
+			, AGENCY_EDT	--위임종료일자
+			, AGENCY_USER_ID	--위임받는사람ID
+			, AGENCY_DUTY_NM	--직급명
+			, AGENCY_DEPT_NM	--팀명
+			, AGENCY_DESC	--대행사유
+			, IS_ACTIVE	--사용여부 날짜가 겹치지 말아야한다
+			, IS_STOP	--중지여부
+			, STOP_DT	--중지일자
+			, FRID	--최초등록자ID
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자ID
+			, LMDT	--최종수정일시
+			, AGENCY_RESN_CD
+		)
+		VALUES
+		(
+			  #{USER_ID}
+			, (	SELECT TO_NUMBER(NVL(MAX(AGENCY_SEQ), 0))+1 
+				FROM FOMM_AGENCY_INFO 
+				WHERE USER_ID = #{USER_ID}
+			  )
+			, #{AGENCY_SDT}
+			, #{AGENCY_EDT}
+			, #{AGENCY_USER_ID}
+			, #{AGENCY_DUTY_NM}
+			, #{AGENCY_DEPT_NM}
+			, #{AGENCY_DESC}
+			, #{IS_ACTIVE}
+			, #{IS_STOP}
+			, #{STOP_DT}
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{AGENCY_RESN_CD}
+		)
+			
+    </update>
+    
+    
+    
+	<!-- SPP 부서 정보 TREE용 조회 -->
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0000PMapper >> select02 */
+        SELECT
+               0 AS CHK        /* CHECKBOX 컬럼 */
+              ,'' AS ROWFLAG   /* 행상태 표기를 위한 컬럼 */
+              ,M.DEPT_CD         AS DEPT_CD           /* 부서코드 */
+              ,M.DEPT_NM         AS DEPT_NM           /* 부서명 */
+              ,M.DEPT_MANAGER_ID AS DEPT_MANAGER_ID   /* 부서장ID */
+              ,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = M.DEPT_MANAGER_ID) AS DEPT_MANAGER_NM  /* 부서장명 */
+              ,M.UP_DEPT_CD      AS UP_DEPT_CD        /* 상위부서코드 */
+              ,(SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = M.UP_DEPT_CD) AS UP_DEPT_NM  /* 상위부서명 */
+              ,LEVEL AS DEPT_LEVEL
+              /* ,M.DEPT_LEVEL      AS DEPT_LEVEL */       /* 부서레벨 */
+              ,M.DEPT_ENG_NAME   AS DEPT_ENG_NAME     /* 부서영문명 */
+              ,M.OPEN_DT         AS OPEN_DT           /* 개점일 */
+              ,M.CLOSE_DT        AS CLOSE_DT          /* 폐점일 */
+              ,M.SORT_ORDER      AS SORT_ORDER        /* 정렬순서 */
+              ,M.DEPT_STATUS     AS DEPT_STATUS       /* 부서상태 */
+              ,DECODE(M.DEPT_STATUS,'1','유효','폐쇄')     AS STATUS_NM       /* 부서상태 */
+              ,CONNECT_BY_ISLEAF AS LT
+          FROM FOMM_DEPT_MT M  WHERE 1=1
+
+       <!-- <if test="DEPT_STATUS != '' and DEPT_STATUS != null">
+           AND M.DEPT_STATUS = #{DEPT_STATUS}
+       </if> -->
+
+		<if test='"BIZ".equals(GBN)'>
+		AND DEPT_BIZ_YN = 'Y'
+		</if>
+       
+		<if test="DEPT_NM != '' and DEPT_NM != null">
+		<!-- AND ( UPPER(M.DEPT_CD) LIKE '%' || UPPER(#{DEPT_NM}) || '%' OR UPPER(M.DEPT_NM) LIKE '%' || UPPER(#{DEPT_NM}) || '%') -->
+		 AND M.DEPT_CD IN (
+                    SELECT  DISTINCT DEPT_CD
+                    FROM    FOMM_DEPT_MT
+                    WHERE   1=1
+                    <!-- AND       DEPT_STATUS = '1' -->
+                    CONNECT BY PRIOR UP_DEPT_CD = DEPT_CD
+                    <if test="DEPT_STATUS != '' and DEPT_STATUS != null">
+                             AND DEPT_STATUS = #{DEPT_STATUS}
+                    </if>
+                    START WITH INSTR(UPPER(DEPT_NM), UPPER(#{DEPT_NM})) > 0
+                    <if test="DEPT_STATUS != '' and DEPT_STATUS != null">
+                             AND DEPT_STATUS = #{DEPT_STATUS}
+                    </if>
+               )
+		</if>
+
+       <choose>
+           <when test="DEPT_CD != '' and DEPT_CD != null">
+         START WITH M.DEPT_CD = #{DEPT_CD}
+           </when>
+           <otherwise>
+         START WITH M.DEPT_CD = '70073'
+           </otherwise>
+       </choose>
+       
+       CONNECT BY PRIOR M.DEPT_CD = M.UP_DEPT_CD
+       <if test="DEPT_STATUS != '' and DEPT_STATUS != null">
+           AND M.DEPT_STATUS = #{DEPT_STATUS}
+       </if>
+
+         ORDER SIBLINGS BY M.SORT_ORDER
+    </select>
+    
+    
+  
+
+
+
+
+    <!-- SPP 부서 권한그룹 추가 -->
+    <insert id="insert01" parameterType="java.util.Map">
+        /* FOMM0000PMapper >> insert01 */
+        INSERT INTO FOMM_AUTH_DEPT_DT
+        (
+              AUTH_ID  /* 그룹권한 코드 */
+            , DEPT_CD  /* 부서 코드 */
+            , RMK      /* 비고 */
+
+            , FRID     /* 최초등록자 */
+            , FRDT     /* 최초등록일시 */
+            , LMID     /* 최종수정자 */
+            , LMDT     /* 최종수정일시 */
+            , LMPID    /* 최종수정화면ID */
+        )
+        VALUES
+        (
+              #{AUTH_ID}  /* 그룹권한 코드 */
+            , #{DEPT_CD}  /* 부서 코드 */
+            , #{RMK}      /* 비고 */
+
+            , #{FRID}     /* 최초등록자 */
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}     /* 최종수정자 */
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMPID}    /* 최종수정화면ID */
+        )
+    </insert>
+
+    <!-- SPP 부서 권한그룹 삭제 -->
+    <delete id="remove01" parameterType="java.util.Map">
+        /* FOMM0000PMapper >> remove01 */
+        DELETE FROM	FOMM_AUTH_DEPT_DT
+         WHERE DEPT_CD = #{DEPT_CD}
+           AND AUTH_ID = #{AUTH_ID}
+    </delete>
+
+
+    <!-- SPP 확장 권한그룹 추가 -->
+    <insert id="insert02" parameterType="java.util.Map">
+        /* FOMM0000PMapper >> insert02 */
+        INSERT INTO FOMM_AUTH_EXTD_DT
+        (
+              AUTH_ID  /* 그룹권한 코드 */
+            , EXTD_ID  /* 확장권한 코드 */
+            , RMK      /* 비고 */
+
+            , FRID     /* 최초등록자 */
+            , FRDT     /* 최초등록일시 */
+            , LMID     /* 최종수정자 */
+            , LMDT     /* 최종수정일시 */
+            , LMPID    /* 최종수정화면ID */
+        )
+        VALUES
+        (
+              #{AUTH_ID}  /* 그룹권한 코드 */
+            , #{EXTD_ID}  /* 부서 코드 */
+            , #{RMK}      /* 비고 */
+
+            , #{FRID}     /* 최초등록자 */
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}     /* 최종수정자 */
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMPID}    /* 최종수정화면ID */
+        )
+    </insert>
+
+    <!-- SPP 확장 권한그룹 삭제 -->
+    <delete id="remove02" parameterType="java.util.Map">
+        /* FOMM0000PMapper >> remove02 */
+        DELETE FROM FOMM_AUTH_EXTD_DT
+         WHERE EXTD_ID = #{EXTD_ID}
+           AND AUTH_ID = #{AUTH_ID}
+    </delete>
+
+    <!-- SPP 부서 정보 TREE용 조회 -->
+    <select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FOMM0000PMapper >> select03 */
+        SELECT
+               0 AS CHK        /* CHECKBOX 컬럼 */
+              ,'' AS ROWFLAG   /* 행상태 표기를 위한 컬럼 */
+              ,M.DEPT_CD         AS DEPT_CD           /* 부서코드 */
+              ,M.DEPT_NM         AS DEPT_NM           /* 부서명 */
+              ,M.DEPT_MANAGER_ID AS DEPT_MANAGER_ID   /* 부서장ID */
+              ,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = M.DEPT_MANAGER_ID) AS DEPT_MANAGER_NM  /* 부서장명 */
+              ,M.UP_DEPT_CD      AS UP_DEPT_CD        /* 상위부서코드 */
+              ,(SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = M.UP_DEPT_CD) AS UP_DEPT_NM  /* 상위부서명 */
+              ,M.DEPT_LEVEL      AS DEPT_LEVEL        /* 부서레벨 */
+              ,M.DEPT_ENG_NAME   AS DEPT_ENG_NAME     /* 부서영문명 */
+              ,M.OPEN_DT         AS OPEN_DT           /* 개점일 */
+              ,M.SORT_ORDER      AS SORT_ORDER        /* 정렬순서 */
+        FROM
+            FOMM_DEPT_MT M
+
+        WHERE 1 = 1
+        <if test="DEPT_STATUS != '' and DEPT_STATUS != null">
+        AND M.DEPT_STATUS = #{DEPT_STATUS}
+       </if>
+
+		<if test='"BIZ".equals(GBN)'>
+		AND DEPT_BIZ_YN = 'Y'
+		</if>
+
+        <if test="DEPT_CD != '' and DEPT_CD != null">
+        AND UPPER(M.DEPT_CD) LIKE UPPER('%' || #{DEPT_CD} || '%')
+        </if>
+
+        <if test="DEPT_NM != '' and DEPT_NM != null">
+        AND UPPER(M.DEPT_NM) LIKE UPPER('%' || #{DEPT_NM} || '%')
+        </if>
+        
+        <if test="DEPT_CD_NM != '' and DEPT_CD_NM != null">
+		AND ( UPPER(M.DEPT_CD) LIKE UPPER(#{DEPT_CD_NM}) || '%' OR UPPER(M.DEPT_NM) LIKE UPPER(#{DEPT_CD_NM}) || '%')
+        </if>
+
+    </select>
+
+    <select id="select04" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FOMM0000PMapper >> select04 */
+        SELECT
+               0 AS CHK        /* CHECKBOX 컬럼 */
+              ,'' AS ROWFLAG   /* 행상태 표기를 위한 컬럼 */
+              ,M.DEPT_CD         AS DEPT_CD           /* 부서코드 */
+              ,M.DEPT_NM         AS DEPT_NM           /* 부서명 */
+              ,M.DEPT_MANAGER_ID AS DEPT_MANAGER_ID   /* 부서장ID */
+              ,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = M.DEPT_MANAGER_ID) AS DEPT_MANAGER_NM  /* 부서장명 */
+              ,M.UP_DEPT_CD      AS UP_DEPT_CD        /* 상위부서코드 */
+              ,(SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = M.UP_DEPT_CD) AS UP_DEPT_NM  /* 상위부서명 */
+              ,M.DEPT_LEVEL      AS DEPT_LEVEL        /* 부서레벨 */
+              ,M.DEPT_ENG_NAME   AS DEPT_ENG_NAME     /* 부서영문명 */
+              ,M.OPEN_DT         AS OPEN_DT           /* 개점일 */
+              ,M.CLOSE_DT        AS CLOSE_DT          /* 폐점일 */
+              ,M.SORT_ORDER      AS SORT_ORDER        /* 정렬순서 */
+              ,M.DEPT_STATUS     AS DEPT_STATUS       /* 부서상태 */
+        FROM
+            FOMM_DEPT_MT M
+
+        WHERE 1 = 1
+        <if test="DEPT_STATUS != '' and DEPT_STATUS != null">
+		AND M.DEPT_STATUS = #{DEPT_STATUS}
+		</if>
+       
+        <if test="GBN != '' and GBN != null">
+        AND M.DEPT_TYPE > 40
+	       <choose>
+	             <when test="'IV'.equals(GBN)">   
+	                 AND M.DEPT_IV_YN = 'Y'
+	             </when>
+	            <otherwise>
+	                  AND M.DEPT_BIZ_YN = 'Y'
+	            </otherwise>
+            </choose>
+        </if>
+
+		<if test="DEPT_CD != '' and DEPT_CD != null">
+        AND UPPER(DEPT_CD) LIKE UPPER('%' || #{DEPT_CD} || '%')
+        </if>
+
+        <if test="DEPT_NM != '' and DEPT_NM != null">
+        AND UPPER(DEPT_NM) LIKE UPPER('%' || #{DEPT_NM} || '%')
+        </if>
+
+        <if test="DEPT_CD_NM != '' and DEPT_CD_NM != null">
+        AND ( UPPER(DEPT_CD) LIKE UPPER(#{DEPT_CD_NM}) || '%' OR UPPER(DEPT_NM) LIKE UPPER(#{DEPT_CD_NM}) || '%')
+        </if>
+
+    </select>
+
+
+    <!-- SPP 부서 정보 TREE용 조회 -->
+    <select id="select05" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FOMM0000PMapper >> select02 */
+        SELECT
+               0 AS CHK        /* CHECKBOX 컬럼 */
+              ,'' AS ROWFLAG   /* 행상태 표기를 위한 컬럼 */
+              ,M.DEPT_CD         AS DEPT_CD           /* 부서코드 */
+              ,M.DEPT_NM         AS DEPT_NM           /* 부서명 */
+              ,M.DEPT_MANAGER_ID AS DEPT_MANAGER_ID   /* 부서장ID */
+              ,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = M.DEPT_MANAGER_ID) AS DEPT_MANAGER_NM  /* 부서장명 */
+              ,M.UP_DEPT_CD      AS UP_DEPT_CD        /* 상위부서코드 */
+              ,(SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = M.UP_DEPT_CD) AS UP_DEPT_NM  /* 상위부서명 */
+              ,M.DEPT_LEVEL      AS DEPT_LEVEL        /* 부서레벨 */
+              ,M.DEPT_ENG_NAME   AS DEPT_ENG_NAME     /* 부서영문명 */
+              ,M.OPEN_DT         AS OPEN_DT           /* 개점일 */
+              ,M.CLOSE_DT        AS CLOSE_DT          /* 폐점일 */
+              ,M.SORT_ORDER      AS SORT_ORDER        /* 정렬순서 */
+              ,M.DEPT_STATUS     AS DEPT_STATUS       /* 부서상태 */
+              ,DECODE(M.DEPT_STATUS,'1','유효','폐쇄')     AS STATUS_NM       /* 부서상태 */
+          FROM FOMM_DEPT_MT M  
+         WHERE 1=1
+
+       <if test='DEPT_STATUS == "N"'>
+           AND M.DEPT_STATUS IN ('Y','1')
+       </if>
+
+       <if test="DEPT_NM != '' and DEPT_NM != null">
+           AND UPPER(M.DEPT_NM) LIKE UPPER('%' || #{DEPT_NM} || '%')
+       </if>
+       
+       <choose>
+           <when test="UP_CMM_CD != '' and UP_CMM_CD != null">
+         START WITH M.DEPT_CD = (SELECT CMM_CD FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = #{UP_CMM_CD} )
+           </when>
+           <otherwise>
+         START WITH M.DEPT_CD = '005'
+           </otherwise>
+       </choose>
+       
+       CONNECT BY PRIOR M.DEPT_CD = M.UP_DEPT_CD
+       ORDER SIBLINGS BY M.SORT_ORDER
+    </select>
+    
+    
+      <!-- SPP 추진부서 정보 TREE용 조회 -->
+    <select id="select06" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FOMM0000PMapper >> select06 */
+		       
+		WITH DEPT AS(
+		              SELECT DEPT_CD,
+		                    DEPT_NM,
+		                    UP_DEPT_CD,
+		                    RMK,
+		                    FRID,
+		                    FRDT,
+		                    LMID,
+		                    LMDT,
+		                    LMPID,
+		                    COMP_ID,
+		                    DEPT_ENG_NAME,
+		                    DEPT_LEVEL,
+		                    DEPT_ABBR_NAME,
+		                    DEPT_STATUS,
+		                    DEPT_TYPE,
+		                    DEPT_SUB_YN,
+		                    DEPT_BIZ_YN,
+		                    DEPT_MANAGER_ID,
+		                    FULL_PATH,
+		                    SORT_ORDER,
+		                    COST_DEPT_ID,
+		                    OPEN_DT,
+		                    CLOSE_DT,
+		                    DEPT_SR_DEPT_YN,
+		                    DEPT_IV_YN,
+		                    CASE WHEN DEPT_TYPE > 40 THEN '1' ELSE '0' END LT
+		                FROM FOMM_DEPT_MT M
+		               WHERE 1=1
+		                 AND M.DEPT_STATUS IN ('Y','1')
+		                <choose>
+                            <when test="'IV'.equals(GBN)">   
+		                        AND DEPT_IV_YN = 'Y' 
+		                    </when>
+				           <otherwise>
+				                 AND DEPT_BIZ_YN = 'Y'
+				           </otherwise>
+		              </choose>  
+		                 
+		              <if test="DEPT_NM != '' and DEPT_NM != null">
+		                   AND UPPER(M.DEPT_NM) LIKE UPPER('%' || #{DEPT_NM} || '%')
+		              </if>
+		              <if test="DEPT_STATUS != '' and DEPT_STATUS != null">
+		                   AND M.DEPT_STATUS = #{DEPT_STATUS}
+		              </if>
+   
+		             )
+		    ,DEPT2 AS (
+		              SELECT DISTINCT 
+		                    DEPT_CD,
+		                    DEPT_NM,
+		                    UP_DEPT_CD,
+		                    RMK,
+		                    FRID,
+		                    FRDT,
+		                    LMID,
+		                    LMDT,
+		                    LMPID,
+		                    COMP_ID,
+		                    DEPT_ENG_NAME,
+		                    DEPT_LEVEL,
+		                    DEPT_ABBR_NAME,
+		                    DEPT_STATUS,
+		                    DEPT_TYPE,
+		                    DEPT_SUB_YN,
+		                    DEPT_BIZ_YN,
+		                    DEPT_MANAGER_ID,
+		                    FULL_PATH,
+		                    SORT_ORDER,
+		                    COST_DEPT_ID,
+		                    OPEN_DT,
+		                    CLOSE_DT,
+		                    DEPT_SR_DEPT_YN,
+		                    DEPT_IV_YN,
+		                    CONNECT_BY_ISLEAF AS LT
+		                FROM FOMM_DEPT_MT T1
+		               WHERE 1=1
+		               START WITH T1.DEPT_CD IN (SELECT DEPT_CD FROM DEPT)
+		             CONNECT BY PRIOR T1.UP_DEPT_CD = T1.DEPT_CD 
+		             )
+		   SELECT
+		               0 AS CHK        /* CHECKBOX 컬럼 */
+		              ,'' AS ROWFLAG   /* 행상태 표기를 위한 컬럼 */
+		               ,M.DEPT_type       AS DEPT_type           /* 부서코드 */
+		              ,M.DEPT_CD         AS DEPT_CD           /* 부서코드 */
+		              ,M.DEPT_NM         AS DEPT_NM           /* 부서명 */
+		              ,M.DEPT_MANAGER_ID AS DEPT_MANAGER_ID   /* 부서장ID */
+		              ,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = M.DEPT_MANAGER_ID) AS DEPT_MANAGER_NM  /* 부서장명 */
+		              ,M.UP_DEPT_CD      AS UP_DEPT_CD        /* 상위부서코드 */
+		              ,(SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = M.UP_DEPT_CD) AS UP_DEPT_NM  /* 상위부서명 */
+		              ,M.DEPT_LEVEL      AS DEPT_LEVEL        /* 부서레벨 */
+		              ,M.DEPT_ENG_NAME   AS DEPT_ENG_NAME     /* 부서영문명 */
+		              ,M.OPEN_DT         AS OPEN_DT           /* 개점일 */
+		              ,M.CLOSE_DT        AS CLOSE_DT          /* 폐점일 */
+		              ,M.SORT_ORDER      AS SORT_ORDER        /* 정렬순서 */
+		              ,M.DEPT_STATUS     AS DEPT_STATUS       /* 부서상태 */
+		              ,DECODE(M.DEPT_STATUS,'1','유효','폐쇄')     AS STATUS_NM       /* 부서상태 */
+		              , DECODE(D.LT ,'1','1','0') AS LT /* 마지막행 */
+		          FROM DEPT2 M  , DEPT D WHERE M.DEPT_CD = D.DEPT_CD(+)
+		    ORDER BY SORT_ORDER
+    </select>
+
+</mapper>

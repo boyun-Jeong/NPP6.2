@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0170WDAO">
+	
+	<!-- SPP 단어 코드 조회 -->
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0170WMapper >> select01 */
+    	SELECT
+    		  0		AS CHK
+			, ''	AS ROWFLAG
+			, WORD_NO
+			, SYS_LANG_CD
+			, SYS_WORD
+			, SEL_LANG_CD
+			, SEL_WORD   
+    	FROM
+    		(
+	    	SELECT
+				  WORD_NO
+				, 'KR'										AS SYS_LANG_CD
+				, MAX(CASE WHEN LANG_CD = 'KR' THEN WORD END) AS SYS_WORD
+				, 'KR'										AS SEL_LANG_CD
+				, MAX(CASE WHEN LANG_CD = 'KR' THEN WORD END)	AS SEL_WORD
+			FROM
+				FOMM_CMM_WORD_MT
+			<where> 
+			1 = 1
+			<if test="WORD_NO != null and WORD_NO != ''">
+			AND WORD_NO = #{WORD_NO}
+			</if>
+	
+			<if test="WORD != null and WORD != ''">
+			AND UPPER(WORD) LIKE UPPER('%' || #{WORD} || '%')
+			</if>
+			
+			GROUP BY
+				WORD_NO
+			)
+		ORDER BY
+			SYS_WORD
+		</where>
+    </select>
+    
+        
+    <!-- SPP 단어 내용 조회 -->
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0170WMapper >> select02 */
+    	SELECT	  0 AS CHK
+    			, CASE WHEN B.WORD_NO IS NULL THEN 'I' ELSE '' END AS DATA_ROWFLAG
+    			, '' AS ROWFLAG
+		    	, #{SEL_WORD_NO}	AS WORD_NO
+				, A.CMM_CD  		AS LANG_CD
+				, B.WORD
+				, B.RMK
+				, B.FRID
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = B.FRID) AS FRNM				/* 최초등록자 */
+				, B.FRDT
+				, B.LMID
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = B.LMID) AS LMNM				/* 최종수정자 */
+				, B.LMDT
+				, B.LMPID
+		FROM	(	SELECT	* 
+					FROM 	FOMM_CMM_CD_MT 
+					WHERE 	UP_CMM_CD = 'LANG_CD'
+					AND		USE_YN	= 'Y'
+					AND		LANG_CD = 'KR'
+				) A
+        LEFT
+        OUTER
+        JOIN      (SELECT * FROM FOMM_CMM_WORD_MT WHERE WORD_NO = #{SEL_WORD_NO}) B
+        ON        A.CMM_CD  = B.LANG_CD
+				
+		WHERE	1=1
+
+		ORDER BY
+    		A.SORT_ORDR
+    </select>
+
+	<!-- SPP 시스템 기준 언어 단어 중복 여부 체크 -->
+    <select id="select03" parameterType="java.util.Map" resultType="Integer">
+    	SELECT COUNT(1)
+    	FROM FOMM_CMM_WORD_MT
+    	WHERE LANG_CD	= 'KR'
+    	AND WORD = #{WORD}
+    </select>
+    
+    <!-- SPP 단어 코드 추가 -->
+    <insert id="insert01" parameterType="java.util.Map">
+    	<selectKey resultType="string" keyProperty="WORD_NO" order="BEFORE">
+        	SELECT NVL(MAX(WORD_NO), 10000)+1 FROM FOMM_CMM_WORD_MT        
+    	</selectKey>
+
+		/* FOMM0170WMapper >> insert01 */
+		INSERT INTO FOMM_CMM_WORD_MT
+		(
+			  WORD_NO			--단어번호
+			, LANG_CD			--언어코드
+			, WORD				--단어
+			, RMK				--비고
+			, FRID				--최초등록자
+			, FRDT				--최종등록일시
+			, LMID				--최종수정자
+			, LMDT				--최종수정일시
+			, LMPID				--최종수정화면ID
+		)
+		VALUES
+		(
+			  #{WORD_NO}
+			, 'KR'
+			, #{WORD}
+			, #{RMK}
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		)
+    </insert>
+
+    <!-- SPP 단어 코드 삭제 (단어 내용 FOMM_CMM_CD_DT) 모두 삭제 -->
+    <update id="remove01" parameterType="java.util.Map">
+    	/* FOMM0170WMapper >> remove01 */
+    	DELETE
+	    FROM	FOMM_CMM_WORD_MT
+	    WHERE	WORD_NO = #{WORD_NO}
+    </update>
+
+	<update id="modify02" parameterType="java.util.Map">
+		MERGE 
+		INTO FOMM_CMM_WORD_MT A
+		USING DUAL
+		ON
+		(
+				A.WORD_NO	= #{WORD_NO}
+			AND A.LANG_CD	= 'KR'
+		)
+
+		WHEN MATCHED THEN
+			UPDATE SET
+			  WORD		= #{WORD}
+			, RMK		= #{RMK}
+			, LMID		= #{LMID}
+			, LMDT		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMPID		= #{LMPID}
+
+		 WHEN NOT MATCHED THEN
+			INSERT
+			(
+			 WORD_NO
+			,LANG_CD
+			,WORD
+			,RMK
+			,FRID
+			,FRDT
+			,LMPID
+		    )
+			VALUES
+			(
+			 #{WORD_NO}
+			,'KR'
+			,#{WORD}
+			,#{RMK}
+			,#{LMID}
+			,TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			,#{LMPID}
+			)
+	</update>
+
+    <!-- SPP 코드 삭제 -->
+    <update id="remove02" parameterType="java.util.Map">
+    	/* FOMM0170WMapper >> remove02 */
+        DELETE
+        FROM	FOMM_CMM_WORD_MT
+        WHERE	WORD_NO = #{WORD_NO}
+		AND	  	LANG_CD = 'KR'
+    </update>
+</mapper>

@@ -1,0 +1,1784 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("frTop");
+            this.set_titletext("Top Menu frame");
+            this.set_scrolltype("none");
+            this.set_cssclass("frm_top");
+            this.getSetter("classname").set("top");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1920,100);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsTop", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsMiddleMenu", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsCond", this);
+            obj._setContents("<ColumnInfo><Column id=\"MY_MENU_YN\" type=\"STRING\" size=\"256\"/><Column id=\"USER_ID\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsLangCd", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsUserList", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsAlarmCnt", this);
+            obj._setContents("<ColumnInfo><Column id=\"USER_ID\" type=\"STRING\" size=\"256\"/><Column id=\"ALARM_CNT\" type=\"STRING\" size=\"256\"/><Column id=\"MEMO_CNT\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Static("Static01",null,null,"5","10","99","34",null,null,null,null,this);
+            obj.set_taborder("0");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staTopBg","-6","2",null,"55","6",null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_text("");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staMenuBg","0","54","100.00%","46",null,null,null,null,null,null,this);
+            obj.set_taborder("2");
+            obj.set_background("linear-gradient(to right,rgb(31,83,143),rgb(64,130,206)) rgb(103,170,247)");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnTopPrev",null,"54","20","46","110",null,null,null,null,null,this);
+            obj.set_taborder("5");
+            obj.set_cssclass("btn_TPF_prev");
+            obj.set_tabstop("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divMenu","40","55",null,"45","btnTopPrev:0",null,null,null,null,null,this);
+            obj.set_taborder("3");
+            obj.set_tabstop("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnSiteMap",null,"54","50","46","35",null,null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_cssclass("btn_TPF_sitemap");
+            obj.set_tabstop("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnTopNext","btnTopPrev:0","54","20","46",null,null,null,null,null,null,this);
+            obj.set_taborder("6");
+            obj.set_cssclass("btn_TPF_next");
+            obj.set_tabstop("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnTopFont","0.00","175","330","50",null,null,null,null,null,null,this);
+            obj.set_taborder("7");
+            obj.set_text("대메뉴 폰트 계산용 - 지우지 말 것");
+            obj.set_visible("false");
+            obj.set_cssclass("btn_TPF_menuLv1");
+            obj.set_tabstop("false");
+            obj.set_font("bold 15px \"KoPubL\"");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnMiddleFont","0.00","225","330","50",null,null,null,null,null,null,this);
+            obj.set_taborder("8");
+            obj.set_text("중메뉴 폰트 계산용 - 지우지 말 것");
+            obj.set_visible("false");
+            obj.set_cssclass("btn_TPF_menuLv2");
+            obj.set_tabstop("false");
+            obj.set_font("bold 18px \"KoPubL\"");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnLogout",null,"15","24","24","45",null,null,null,null,null,this);
+            obj.set_taborder("9");
+            obj.set_cssclass("btn_TPF_logout");
+            obj.set_tabstop("false");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staLogo","40.00","0","156","55",null,null,null,null,null,null,this);
+            obj.set_taborder("10");
+            obj.set_edge("");
+            obj.set_background("url(\'theme://NHSB_IMAGE_SET/HOME/BI.png\') no-repeat left center");
+            obj.set_cursor("pointer");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcLine01",null,"21","2","13","79",null,null,null,null,null,this);
+            obj.set_taborder("11");
+            obj.set_cssclass("sta_TPF_line");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnChangeLang",null,"15","25","24","90",null,null,null,null,null,this);
+            obj.set_taborder("26");
+            obj.set_cssclass("btn_TPF_btn_TPF_language");
+            obj.set_tooltiptext("메시지 작성");
+            obj.set_tabstop("false");
+            obj.set_text("");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcLine02",null,"21","2","13","125",null,null,null,null,null,this);
+            obj.set_taborder("25");
+            obj.set_cssclass("sta_TPF_line");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnFavorite",null,"15","90","24","146",null,null,null,null,null,this);
+            obj.set_taborder("12");
+            obj.set_cssclass("btn_TPF_dropBox");
+            obj.set_text("관련시스템");
+            obj.set_tabstop("false");
+            obj.set_visible("false");
+            obj.set_tooltiptext("관련시스템 펼치기");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcLine03",null,"21","2","13","246",null,null,null,null,null,this);
+            obj.set_taborder("14");
+            obj.set_cssclass("sta_TPF_line");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnSearch",null,"15","55","24","257",null,null,null,null,null,this);
+            obj.set_taborder("13");
+            obj.set_cssclass("btn_TPF_dropBox");
+            obj.set_text("검색");
+            obj.set_tooltiptext("검색 펼치기");
+            obj.set_tabstop("false");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcLine04",null,"21","2","13","322",null,null,null,null,null,this);
+            obj.set_taborder("15");
+            obj.set_cssclass("sta_TPF_line");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnHyperlink",null,"11","120","32","330",null,null,null,null,null,this);
+            obj.set_taborder("16");
+            obj.set_text("IT-위키");
+            obj.set_tooltiptext("링크로 이동");
+            obj.set_tabstop("false");
+            obj.set_visible("false");
+            obj.set_background("url(\'theme://NHSB_IMAGE_SET/HOME/top-myboard.png\') no-repeat left center");
+            obj.set_font("bold 10px \"KoPubL\"");
+            obj.set_padding("0px 0px 0px 30px");
+            obj.set_border("0px none");
+            obj.set_cursor("pointer");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcLine05",null,"21","2","13","483",null,null,null,null,null,this);
+            obj.set_taborder("17");
+            obj.set_cssclass("sta_TPF_line");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcLine08",null,"21","2","13","825",null,null,null,null,null,this);
+            obj.set_taborder("18");
+            obj.set_cssclass("sta_TPF_line");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnSetting",null,"15","25","24","494",null,null,null,null,null,this);
+            obj.set_taborder("20");
+            obj.set_cssclass("btn_TPF_setting");
+            obj.set_tooltiptext("설정");
+            obj.set_tabstop("false");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcLine06",null,"21","2","13","529",null,null,null,null,null,this);
+            obj.set_taborder("21");
+            obj.set_cssclass("sta_TPF_line");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcPartNm",null,"15","60","24","535",null,null,null,null,null,this);
+            obj.set_taborder("22");
+            obj.set_text("______");
+            obj.set_visible("false");
+            obj.set_cssclass("sta_TPF_part");
+            obj.set_cursor("pointer");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcUserNm",null,"15","40","24","590",null,null,null,null,null,this);
+            obj.set_taborder("23");
+            obj.set_text("___");
+            obj.set_cssclass("sta_TPF_user");
+            obj.set_visible("false");
+            obj.set_cursor("pointer");
+            obj.set_usedecorate("true");
+            this.addChild(obj.name, obj);
+
+            obj = new ImageViewer("imvUser",null,"14","26","26","640",null,null,null,null,null,this);
+            obj.set_taborder("24");
+            obj.set_image("url(\'theme://NHSB_IMAGE_SET/HOME/icon-user.png\')");
+            obj.set_border("0px");
+            obj.set_tabstop("false");
+            obj.set_visible("false");
+            obj.set_cursor("pointer");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcLine07",null,"21","2","13","676",null,null,null,null,null,this);
+            obj.set_taborder("27");
+            obj.set_cssclass("sta_TPF_line");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Combo("cboUsers",null,"16","129","24","682",null,null,null,null,null,this);
+            obj.set_taborder("28");
+            obj.set_codecolumn("USER_ID");
+            obj.set_datacolumn("USER_INFO");
+            obj.set_innerdataset("dsUserList");
+            obj.set_cssclass("cbo_WF_normal");
+            obj.set_visible("false");
+            obj.set_value("1");
+            obj.set_index("0");
+            obj.set_text("이정빈(1)");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcLine09",null,"21","2","13","871",null,null,null,null,null,this);
+            obj.set_taborder("19");
+            obj.set_cssclass("sta_TPF_line");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnMSG",null,"0","25",null,"836","50",null,null,null,null,this);
+            obj.set_taborder("30");
+            obj.set_tooltiptext("메시지");
+            obj.set_tabstop("false");
+            obj.set_visible("false");
+            obj.set_border("0px none");
+            obj.set_background("url(\'theme://NHSB_IMAGE_SET/HOME/main-top-icon-bubble.png\') no-repeat center center");
+            obj.set_text("");
+            obj.set_cursor("pointer");
+            this.addChild(obj.name, obj);
+
+            obj = new PopupDiv("pdvMyMenu","1511","120","357","270",null,null,null,null,null,null,this);
+            obj.set_visible("false");
+            obj.set_cssclass("pdv_TPF_myMenuBg");
+            obj.set_background("");
+            obj.getSetter("taborder").set("0");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcLine07_00","staLogo:10","22","2","13",null,null,null,null,null,null,this);
+            obj.set_taborder("29");
+            obj.set_cssclass("sta_TPF_line");
+            obj.set_visible("true");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static00","stcLine07_00:10.00","13","53","32",null,null,null,null,null,null,this);
+            obj.set_taborder("33");
+            obj.set_text("ITSM");
+            obj.set_color("#0058c3");
+            obj.set_font("bold 18px \'KoPubL\'");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("btnAlarm",null,"0","25",null,"882","50",null,null,null,null,this);
+            obj.set_taborder("32");
+            obj.set_accessibilityrole("button");
+            obj.set_cursor("pointer");
+            obj.set_visible("false");
+            obj.set_background("url(\'theme://NHSB_IMAGE_SET/HOME/main-top-icon-alarm.png\') no-repeat center center");
+            obj.set_border("0px none");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcMsgCnt",null,"17","15","15","831",null,null,null,null,null,this);
+            obj.set_taborder("31");
+            obj.set_cssclass("sta_TPF_messageCntBg");
+            obj.set_tooltiptext("메시지");
+            obj.set_visible("false");
+            obj.set_text("0");
+            obj.set_textAlign("center");
+            obj.set_verticalAlign("middle");
+            obj.set_font("bold 10px/normal \"KoPubL\"");
+            obj.set_background("orange");
+            obj.set_borderRadius("20px 20px");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcAlarmCnt",null,"17","15","15","877",null,null,null,null,null,this);
+            obj.set_taborder("34");
+            obj.set_cssclass("sta_TPF_messageCntBg");
+            obj.set_tooltiptext("메시지");
+            obj.set_visible("false");
+            obj.set_text("0");
+            obj.set_textAlign("center");
+            obj.set_verticalAlign("middle");
+            obj.set_font("bold 10px/normal \"KoPubL\"");
+            obj.set_background("orange");
+            obj.set_borderRadius("20px 20px");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcAutoInMsg","16","115","24","34",null,null,null,null,null,null,this);
+            obj.set_taborder("35");
+            obj.set_textAlign("center");
+            obj.set_text("●");
+            obj.set_color("RED");
+            obj.set_verticalAlign("middle");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnSessOut","stcAutoInMsg:10.00","115","57","34",null,null,null,null,null,null,this);
+            obj.set_taborder("36");
+            obj.set_text("세션종료");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnConnect","btnSessOut:2.00","115","53","34",null,null,null,null,null,null,this);
+            obj.set_taborder("37");
+            obj.set_text("연결");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnDisConnect","btnConnect:2.00","115","53","34",null,null,null,null,null,null,this);
+            obj.set_taborder("38");
+            obj.set_text("해제");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnToastTest","btnDisConnect:2.00","116","50","32",null,null,null,null,null,null,this);
+            obj.set_taborder("40");
+            obj.set_text("toast");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcCurtain","0","0","10",null,null,"staMenuBg:0",null,null,null,null,this);
+            obj.set_taborder("39");
+            obj.set_background("white");
+            this.addChild(obj.name, obj);
+
+            obj = new WebBrowser("webExcelDown","330","-1","100","40",null,null,null,null,null,null,this);
+            obj.set_taborder("41");
+            obj.set_border("1px solid crimson");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this.divMenu
+            obj = new Layout("default","",0,0,this.divMenu.form,function(p){});
+            this.divMenu.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.pdvMyMenu
+            obj = new Layout("default","",0,0,this.pdvMyMenu.form,function(p){});
+            this.pdvMyMenu.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this
+            obj = new Layout("default","",this._adjust_width,this._adjust_height,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.addIncludeScript("frTop.xfdl","lib::lib_CommSlide.xjs");
+        this.registerScript("frTop.xfdl", function() {
+        /***********************************************************************************
+        * 화면(명)	︰ Top Frame
+        * 메뉴(경로)	︰ 공통
+        * 화면 설명	︰
+        * 작성자		︰ WEMB
+        * 작성일		︰ 2023.04.06
+        * 수정이력		︰
+        *------------------------------------------------------------------
+        * 수정일		작성자		이력
+        *------------------------------------------------------------------
+        * 2023.04.06	WEMB		최초작성
+        *------------------------------------------------------------------
+        ***********************************************************************************/
+        /***********************************************************************************
+         * Script Include
+         ***********************************************************************************/
+        this.executeIncludeScript("lib::lib_CommSlide.xjs"); /*include "lib::lib_CommSlide.xjs"*/;	// slide 관련 include
+
+        /***********************************************************************************
+         * Form Variable
+         ***********************************************************************************/
+        this.objApp = nexacro.getApplication();
+        this.BTNMENU = [];
+
+        this.session;
+        this.pdvMiddleMenu;
+
+        // 웹소켓 전역변수
+        this.webSocket;
+        this.formObj;
+
+        // 표기할 slide Queue
+        this.arrSlide = [];
+        /***********************************************************************************
+         * Form Function
+         ***********************************************************************************/
+        this.frTop_onload = function(obj, e)
+        {
+        	this.stcCurtain.set_width(this.getOffsetWidth());	// 깜빡임 방지용
+        	this.gfnFormOnLoad(this, this.fnInit);
+        	this.formObj = obj;
+        }
+
+        this.fnInit = function()
+        {
+        	this.divMenu.form.set_scrollbarsize(0);
+
+        	// websoket
+        	this.connect(this);	//WebSocket 연결
+
+        	// data search
+        	this.fnSelectComCodeDataAll();
+        	this.fnCreateTopMenu();
+        	this.fnSelectAlarmCnt(); // 알림 개수 조회
+        }
+
+        this.form_onsize = function(obj, e)
+        {
+        	this.fnShowBtn();
+        	this.resetScroll();
+        }
+
+        this.form_onmousemove = function(obj, e)
+        {
+        	if( e.clientY < this.divMenu.getOffsetTop() )
+        	{
+        		if( this.pdvMiddleMenu )
+        			this.pdvMiddleMenu.closePopup();
+        	}
+        }
+
+        /***********************************************************************************
+         * Common Function
+         ***********************************************************************************/
+        // 공통 코드/메시지/단어 조회
+        this.fnSelectComCodeDataAll = function()
+        {
+            var sTranId = "selectComCodeDataAll";																		// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+            var sService = "util/selectComCodeDataAll";																	// 서비스명
+            var sInDs = "";																								// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+            var sOutDs = "gdsCode=gdsCode gdsMessage=gdsMessage gdsWord=gdsWord gdsFommAgencyInfo=gdsFommAgencyInfo";	// 서버에서 수신할 데이타셋
+            var sArg = "";																								// 서버 @ParamVariable 인자와 맵핑됨
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        // 알림 개수 조회
+        this.fnSelectAlarmCnt = function()
+        {
+        	this.dsCond.setColumn(this.dsCond.rowposition, 'USER_ID', Ex.util.getSession('gvUserId'));
+
+        	var sTranId = "selectAlarmCnt";										// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+            var sService = "util/selectAlarmCnt";								// 서비스명
+            var sInDs = "dsCond=dsCond";										// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+            var sOutDs = "dsAlarmCnt=dsAlarmCnt";								// 서버에서 수신할 데이타셋
+            var sArg = "";														// 서버 @ParamVariable 인자와 맵핑됨
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        /***********************************************************************************
+         * CallBack Event
+         ***********************************************************************************/
+        // Transaction 디폴트 콜백함수
+        this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+        {
+        	// 에러메세지 처리
+        	if (nErrorCode < 0)
+        	{
+        		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+        		Ex.core.error(this, param);
+        		return;
+        	}
+
+        	// 각 Transaction별 CallBack 처리
+        	switch (sSvcId)
+        	{
+        		case "selectComCodeDataAll" :
+        			//trace("selectComCodeDataAll~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        			// 사용자/대직자 표기
+        			this.fnSetUserDisp();
+
+        			// 컴포넌트 visible && align 처리
+        			this.fnSetCompVisible();
+
+        			// 다국어 처리
+        			this.fnSetMultiLang();
+
+        			// Go Home
+        			var objApp = nexacro.getApplication();
+        			objApp.MAIN_TAB.set_formurl("Frame::frTab.xfdl");	// MDI TAB
+
+        			//trace("objApp.MAIN_HOME.width : " + objApp.MAIN_HOME.width + " objApp.MAIN_HOME.height: " + objApp.MAIN_HOME.height);
+        			objApp.MAIN_HOME.form.fnInit("Frame::frHome_NHSB.xfdl");
+
+        			this.stcCurtain.set_visible(false);	// 정렬 깜빡임 방지용
+        			break;
+
+        		// 알림 개수 조회
+        		case "selectAlarmCnt" :
+        			break;
+
+        		case "changeUser" :
+        			location.href = this.objApp.gvHost + 'spp/index.html';
+        			break;
+        	}
+        }
+
+        // 팝업 디폴트 콜백함수
+        this.fnPopupAfter = function(pID,varValue)
+        {
+        	if( Ex.isEmpty(varValue) )	return;
+
+        	switch(pID)
+        	{
+        		case "siteMapPop" :
+        			var obj = {menuId : varValue};
+        			this.fnOpenMenu(obj);
+        			break;
+
+        		case "userInfoPop" :
+        			if( varValue == 'ad' )
+        			{
+        				var rowpos = this.objApp.gdsMenu.findRow('SCREEN_ID', 'FOMM0241_W');
+        				if( rowpos >= 0 )
+        					Ex.core.openLink(this, this.objApp.gdsMenu.getColumn(rowpos, 'MENU_ID'), '');
+        			}
+        			break;
+        	}
+        }
+
+        // alert/confirm/error 메시지창 디폴트 콜백함수
+        this.fnMsgAfter = function(mID, varValue)
+        {
+        	if(!varValue) return;
+
+        	switch(mID)
+        	{
+        		case "logoutConfirm" :
+        			nexacro.getApplication().gvIsSessionOut = "Y";
+        			location.href = this.objApp.gvHost + 'logout';
+        			break;
+
+        		case "sppAuthExpire" :
+        			var fRow = this.dsUserList.findRow("USER_ID", Ex.util.getSession('gvOrgUserId'));
+        			//trace("sppAuthExpire fRow ::: " + fRow);
+        			var evt = nexacro.ItemChangeEventInfo;
+        			evt.postvalue = this.dsUserList.getColumn(fRow, "USER_ID");
+        			this.cboOnItemChanged(this.cboUsers, evt);
+        			break;
+        	}
+        }
+
+        /***********************************************************************************
+         * User Function
+         ***********************************************************************************/
+        // 사용자/대무자 표기
+        this.fnSetUserDisp = function()
+        {
+        	this.dsUserList.assign(this.objApp.gdsFommAgencyInfo);
+
+        	this.session = Ex.util.getSession('session');
+        	var sUserNm = this.session.gvUserNm + "님";
+        	var sCoNm	= this.session.gvCoNm;
+        	var sDeptNm	= this.session.gvDeptNm;
+
+        	if( !Ex.isEmpty(sUserNm) )
+        	{
+        		// 사용자명
+        		if(Ex.util.getSession('gvUserId') != Ex.util.getSession('gvOrgUserId'))
+        		{
+        			sUserNm += "<fc v='red'>[대직중]</fc>";
+        		}
+        		this.stcUserNm.set_text(sUserNm);
+
+        		var objSize = nexacro.getTextSize( this.stcUserNm.getDisplayText(), this.stcUserNm._getCurrentStyleInheritValue("font"));
+        		var nWidth = parseInt(objSize.nx) + 10;
+        		this.stcUserNm.set_width(nWidth);
+
+        		// 회사/부서명
+        		if(Ex.isEmpty(sCoNm))
+        		{
+        			this.stcPartNm.set_text('('+ sDeptNm + ')');
+        		} else {
+        			this.stcPartNm.set_text('(' + sCoNm + '/' + sDeptNm + ')');
+        		}
+
+        		objSize = nexacro.getTextSize( this.stcPartNm.getDisplayText(), this.stcPartNm._getCurrentStyleInheritValue("font"));
+        		nWidth = parseInt(objSize.nx) + 10;
+        		this.stcPartNm.set_width(nWidth);
+
+        		this.stcUserNm.set_right(this.stcPartNm.getOffsetRight() + this.stcPartNm.getOffsetWidth());
+        	}
+
+        	var fRow = this.dsUserList.findRow("USER_ID", Ex.util.getSession('gvUserId'));
+        	if(fRow == -1)
+        	{
+        		var param = {id : "sppAuthExpire", msg : "★위험 권한이 만료되었거나 위임 권한이 존재하지 않습니다."};
+        		Ex.core.error(this, param);
+        		return;
+        	}
+        	else
+        	{
+        		this.cboUsers.set_index(fRow);
+        	}
+        }
+
+        // 최초 다국어 처리
+        this.fnSetMultiLang = function()
+        {
+        	// 공통코드 조회
+        	var oParam = {
+        		upCmmCd : ['LANG_CD']
+        		,codeDiv: ['CMM_CD']
+        		,optStr	: ['']
+        		,useYn	: ['Y']
+        		,filter	: ['']
+        		,objDs	: [this.dsLangCd]
+        	}
+        	Ex.util.getCmmCode(oParam);
+
+        	this.fnChangeLangIcon(this.session.gvSelLangCd);
+        	this.fnChangeLang();
+        }
+
+        // 현재 언어 아이콘 setting
+        this.fnChangeLangIcon = function(curLangCd)
+        {
+        	var rowPos = this.dsLangCd.findRow('CMM_CD', curLangCd);
+        	if( rowPos >= 0 )
+        	{
+        		this.btnChangeLang.set_tooltiptext(this.dsLangCd.getColumn(rowPos, 'CMM_CD_NM'));
+        		var imgUrl = Ex.isNvl(this.dsLangCd.getColumn(rowPos, 'ITM_VAL_1'), "url('theme://SPP_IMAGE_SET/TPF/btn_TPF_lang_ETC.png')");
+        		//this.btnChangeLang.set_background("transparent " + imgUrl + " no-repeat center center");
+        		this.btnChangeLang.set_background(imgUrl);
+        	}
+        }
+
+        // 컴포넌트 visible && align 처리
+        this.fnSetCompVisible = function()
+        {
+        	var cbUsersComp;
+        	if(this.dsUserList.rowcount > 0)	cbUsersComp = "cboUsers";
+
+        	var topRightIcon = [
+        		//[comp, visible]
+        		["btnLogout", true], ["stcLine01", true], ["btnChangeLang", false], ["stcLine02", false],	//[0~3]
+        		["btnFavorite", true], ["stcLine03", true], ["btnSearch", false], ["stcLine04", false],		//[4~7]
+        		["btnHyperlink", true], ["stcLine05", false], ["btnSetting", false], ["stcLine06", true],		//[8~11]
+        		["stcPartNm", true], ["stcUserNm", true], ["imvUser", true], ["stcLine07", true],			//[12~15]
+        		["cboUsers", false], ["stcLine08", false], ["btnMSG", true], ["stcLine09", true],			//[16~19]
+        		["btnAlarm", true]																			//[20]
+        	];
+
+        	if( !Ex.isEmpty(cbUsersComp) )
+        	{
+        		if(this.dsUserList.rowcount > 1)
+        		{
+        			topRightIcon[16][1] = true;	//cboUsers
+        			topRightIcon[17][1] = true;	//stcLine08
+        		}
+        	}
+
+        	if(nexacro.getApplication().gvIsUseMultiLang == "Y")
+        	{
+        		topRightIcon[2][1] = true;	//btnChangeLang
+        		topRightIcon[3][1] = true;	//stcLine02
+        	}
+
+        	for(var i=0; i<topRightIcon.length; i++)
+        	{
+        		if(!topRightIcon[i][1])
+        		{
+        			this[topRightIcon[i][0]].set_width(0);
+        			//trace(topRightIcon[i][0] + " width zero");
+        		}
+        	}
+
+        	var setRight = nexacro.toNumber(this[topRightIcon[0][0]].right);
+
+        	//trace("Start " + topRightIcon[0][0] + " setRight : " +setRight);
+
+        	for(var i=1; i<topRightIcon.length; i++)
+        	{
+        		var width = nexacro.toNumber(this[topRightIcon[i-1][0]].width);
+        		setRight += width + (topRightIcon[i-1][1] ? 10 : 0);
+        		this[topRightIcon[i][0]].set_right(setRight);
+
+        		if( this[topRightIcon[i][0]].id == 'stcUserNm' )
+        		{
+        			this.stcPartNm.set_width( this.stcPartNm.getOffsetWidth() + 10 );
+        		}
+        	}
+        	this.stcMsgCnt.set_right(nexacro.toNumber(this.btnMSG.right) - 7);
+        	this.stcAlarmCnt.set_right(nexacro.toNumber(this.btnAlarm.right) - 7);
+
+        	for(var i=0; i<topRightIcon.length; i++)
+        	{
+        		this[topRightIcon[i][0]].set_visible(topRightIcon[i][1]);
+        	}
+        }
+
+        // 현재 선택 언어로 다국어 변환
+        this.fnChangeLang = function()
+        {
+        	Ex.core._set(this);
+        }
+
+        // 대메뉴 draw
+        this.fnCreateTopMenu = function()
+        {
+        	this.BTNMENU = [];
+
+        	var cmps = this.divMenu.form.components;
+        	for(var i = (cmps.length-1); i >= 0; i--)
+        	{
+        		var cmpName = cmps[i].name;
+        		var rtn = this.divMenu.removeChild(cmpName);
+        		rtn.destroy();
+        		rtn = null;
+        	}
+
+        	this.objApp.gdsMenu.set_filterstr("MENU_LVL=='1'");
+        	this.dsTop.copyData(this.objApp.gdsMenu, true);
+
+        	this.objApp.gdsMenu.filter("");
+        	var nCnt = this.dsTop.rowcount;
+        	var nWidth	= 82;	// 임시 setting
+        	var nLeft	= 0;
+        	var nTop 	= 0;
+        	var nHeight = this.divMenu.getOffsetHeight();
+        	var nMargin = 40;
+        	var menuId = "";
+        	var menuNm = "";
+        	var oBtn = null;
+
+        	for(var i = 0; i < nCnt; i++)
+        	{
+        		menuId = this.dsTop.getColumn(i, "MENU_ID")||'';
+        		menuNm = this.dsTop.getColumn(i, "MENU_NM")||'';
+
+        		var objSize = nexacro.getTextSize( menuNm, this.btnTopFont.font);
+        		nWidth = parseInt(objSize.nx) + 10;
+
+        		oBtn = new Button();
+        		oBtn.init('btnMenu_'+i, nLeft, nTop, nWidth, nHeight, null, null);
+        		oBtn.set_tabstop(false);
+        		oBtn.isChgLang = false;
+        		oBtn.set_text(Ex.core.msg(menuNm));
+
+        		oBtn.menuId = menuId;
+
+        		oBtn.addEventHandler("onclick",			this.btnMenu_onclick, this);
+        		//oBtn.addEventHandler("onmouseenter", 	this.btnMenu_onmouseenter, 	this);
+        		oBtn.set_cssclass("btn_TPF_menuLv1");
+
+        		this.divMenu.addChild('btnMenu_'+i, oBtn);
+        		oBtn.show();
+
+        		nLeft += nWidth + nMargin;	// Left 재계산
+        		this.BTNMENU.push(oBtn);
+        	}
+
+        	///Ex.moveCenter(this.divMenu,this.BTNMENU);
+        	this.fnShowBtn();
+        }
+
+        this.fnShowMenuPopup = function(obj)
+        {
+        	//style 적용
+        // 	var comps = this.divMenu.form.components;
+        // 	for( var i=0; i < comps.length; i++ )
+        // 	{
+        // 		if( obj.name.indexOf('btnMenu_') > -1 )
+        // 		{
+        // 			if( comps[i].name === obj.name )
+        // 			{
+        // 				comps[i].set_cssclass("btn_TF_GnbS");
+        // 			}
+        // 			else
+        // 			{
+        // 				comps[i].set_cssclass("btn_TF_GnbN");
+        // 			}
+        // 		}
+        // 	}
+        	this.fnCreateMiddleMenu(obj);
+        }
+
+        // 중메뉴 draw
+        this.fnCreateMiddleMenu = function(obj)
+        {
+        	if( obj.name == "btnServiceMenu" )	// 즐겨찾기 최근메뉴 동적 추가
+        	{
+        		if( this.objApp.gdsUsedMenu.rowcount != 0 )
+        		{
+        			this.dsMiddleMenu.clearData();
+        			this.dsMiddleMenu.copyData(this.objApp.gdsMyMenu, true);
+        			this.dsMiddleMenu.insertRow(0);
+        			this.dsMiddleMenu.setColumn(0,"MENU_LVL",2);
+        			this.dsMiddleMenu.setColumn(0,"MENU_ID",2000);
+        			this.dsMiddleMenu.setColumn(0,"MENU_NM","즐겨찾기");
+
+        			var nRow = this.dsMiddleMenu.addRow();
+        			this.dsMiddleMenu.setColumn(nRow,"MENU_LVL",2);
+        			this.dsMiddleMenu.setColumn(nRow,"MENU_ID",3000);
+        			this.dsMiddleMenu.setColumn(nRow,"MENU_NM","최근메뉴");
+
+        			this.dsMiddleMenu.appendData(this.objApp.gdsUsedMenu, true);
+        		}
+        	}
+        	else	// 실제 메뉴 setting
+        	{
+        		var sMenuGrp = obj.menuId;	// 대메뉴 버튼(메뉴)의 id
+
+        		var sMenuNm = obj.text;
+        		this.objApp.gdsMenu.filter("MENU_LVL>'1' && LVL1_MENU_ID=='" + sMenuGrp + "'");		// 대메뉴별 중/소메뉴 filter
+        		this.dsMiddleMenu.copyData(this.objApp.gdsMenu,true);
+        		this.objApp.gdsMenu.filter("");
+        	}
+
+        	// Popup Div 메뉴 동적생성
+        	if( !Ex.isEmpty(this.components["pdvMiddleMenu"]) )
+        	{
+        		var objPdv = this.components["pdvMiddleMenu"];
+        		var rtn = this.removeChild("pdvMiddleMenu");
+        		rtn.destroy();
+        		rtn = null;
+        	}
+
+        	var nX = 0;
+        	var nY = this.divMenu.getOffsetHeight();
+        	var nW = this.getOffsetWidth();
+        	var nH = 150;
+
+        	var objPopMenudiv;
+        	objPopMenudiv = new PopupDiv("pdvMiddleMenu", nX, nY, nW, nH);
+        	objPopMenudiv.set_cssclass("pdv_TPF_menuBg");
+        	objPopMenudiv.addEventHandler("oncloseup", this.pdvMiddleMenuOnCloseup, this);
+        	//objPopMenudiv.set_enableevent(false);
+        	this.addChild("pdvMiddleMenu", objPopMenudiv);
+
+        	objPopMenudiv.show();
+        	objPopMenudiv.pname = sMenuNm;
+
+        	if( objPopMenudiv.isPopup() == false )
+        	{
+        		objPopMenudiv.trackPopupByComponent(this.divMenu, 0, nY, nW, nH, "", false );
+        	}
+        	this.fnChangeMiddleMenu();
+        }
+
+        this.pdvMiddleMenuOnCloseup = function(obj,e)
+        {
+        	var menuComp = this.divMenu.form.components;
+        	for(var i=0; i<menuComp.length; i++)
+        	{
+        		if(menuComp[i].id.indexOf("btnMenu_") > -1)	menuComp[i].set_color("#ffffff");
+        	}
+        }
+
+        this.fnChangeMiddleMenu = function()
+        {
+         	var comps = this.pdvMiddleMenu.form.components;
+        	for(var i = comps.length-1; i >= 0; i--)
+         	{
+        		var rtn = this.pdvMiddleMenu.removeChild(comps[i].name);
+        		rtn.destroy();
+        		rtn = null;
+        	}
+
+        	var nL_default = 40;
+        	var nL = 40;
+        	var nT = 10;
+        	var nW = 0;
+        	var nH = 30;
+
+        	var nCalL = 0; 		// left 계산용
+        	var nCalT = 0; 		// top 계산용
+
+        	var nMaxH = 0; 		// pdv 높이 계산용
+        	var nCnt = 0; 		// 가로 배치 계산용 누적 카운트
+        	var nMaxCnt = 9; 	// 가로 배치 최대 카운트
+        	var nArrLength = []; // 가로로 나열되는 열별 최대 텍스트 사이즈
+
+        	var sMenuId = '';
+        	var sMenuNm = '';
+        	var sMenuLvl = '';
+        	var sMenuUrl = '';
+
+        	var objBtn = null;
+
+        	var cssClass = "";
+
+        	// 열별 max사이즈 수집(nArrLength)
+        	// 1번 for <-- 2번 for문을 기준으로 1번 문장을 동일하게 업데이트 할것
+        	for(var i = 0; i < this.dsMiddleMenu.rowcount; i++)
+        	{
+        		sMenuId	= this.dsMiddleMenu.getColumn(i, "MENU_ID")||''.toString();
+        		sMenuNm	= this.dsMiddleMenu.getColumn(i, "MENU_NM")||''.toString();
+        		sMenuLvl= this.dsMiddleMenu.getColumn(i, "MENU_LVL")||''.toString();
+        		sMenuUrl= this.dsMiddleMenu.getColumn(i, "MENU_URL")||''.toString();
+
+        		if(sMenuLvl == '2')	nCnt++;
+        		//else if(sMenuLvl == '3')
+
+        		// 참고 -> [1] : 1열 , [2] : 2열 , [3] : 3열 , [0] : 4열(마지막열, 나머지가 0인열)
+        		var objSize = nexacro.getTextSize(sMenuNm, this.btnMiddleFont.font);	// this.btnMIddleFont.font == btn_TPF_menuLv1.css 와 동일하게 설정해 놓고 계산할 것
+        		var nLen = nArrLength[nCnt % nMaxCnt]||0;
+        		if( nLen < objSize.nx + 50 )
+        			nArrLength[nCnt % nMaxCnt] = objSize.nx + 50;  // 한글,영문,특문,숫자 혼용 및 폰트 없을때를 위한 대충의 여유분 보정치
+
+        		if( nCnt % nMaxCnt == 0 )
+        		{
+        			// nMaxCnt마다 개행
+        			nCnt = 0;
+        		}
+        	}
+
+        	// 기본값설정 : nL_default , nL , nCalL , nCalT
+        	for(var i = 0; i < nArrLength.length; i++)
+        		nL_default = nL_default + nArrLength[i]||0;
+
+        	//nL_default = parseInt(this.pdvMiddleMenu.getOffsetWidth()/2) - parseInt(nL_default/2);	// default center
+        	nL_default = 40;		// left default margin 20으로 그리기(left정렬)
+        	if( nL_default < 40 ) nL_default = 40;
+
+        	nL = nL_default;
+        	nCalL = nL;
+        	nCalT = nT;
+
+        	nCnt = 0;
+
+        	// 2번 for : draw
+        	for(var i = 0; i < this.dsMiddleMenu.rowcount; i++)
+        	{
+        		sMenuId	= this.dsMiddleMenu.getColumn(i, "MENU_ID");
+        		sMenuNm	= this.dsMiddleMenu.getColumn(i, "MENU_NM");
+        		sMenuLvl= this.dsMiddleMenu.getColumn(i, "MENU_LVL");
+        		sMenuUrl= this.dsMiddleMenu.getColumn(i, "MENU_URL");
+
+        		var isUrl = false;
+        		if( (sMenuUrl||'').substring(0, 4).toUpperCase() == 'HTTP' )
+        			isUrl = true;
+
+        		if(sMenuLvl == '2') {	// 중메뉴
+        			nCnt++;
+        			if( i != 0 ) {
+        				nL = nCalL;
+        				nT = nCalT;
+        			}
+        			nT += 10;
+        			cssClass = "btn_TPF_menuLv2";
+        		}
+        		else if( sMenuLvl == '3') {		// 소메뉴(실제화면)
+        			if(isUrl)	// hyperlink
+        				cssClass = "btn_TPF_menuLv3Link";
+        			else		// normal menu
+        				cssClass = "btn_TPF_menuLv3";
+        		}
+
+        		nW = nArrLength[nCnt % nMaxCnt];
+
+        		objBtn = new Button();
+        		objBtn.init("btn"+sMenuId, nL, nT, nW, (sMenuLvl=='3'?nH-5:nH), null, null);
+        		this.pdvMiddleMenu.addChild("btn"+sMenuId, objBtn);
+        		objBtn.set_textAlign("left middle");
+
+        		objBtn.set_cssclass(cssClass);
+
+        		objBtn.isChgLang = false;
+        		objBtn.set_text(Ex.core.msg(sMenuNm));
+        		if(isUrl)
+        			objBtn.set_tooltiptext(sMenuUrl);
+
+        		objBtn.addEventHandler("onclick", this.btnOpenMenu_onclick, this);
+        		objBtn.show();
+
+        		if( sMenuLvl == '2' )
+        		{
+        			// 중메뉴 구분선 추가
+        			var stcLv2LineId = 'stcLv2Line_'+i;
+        			if( !this.pdvMiddleMenu.form.components[stcLv2LineId] ) {
+        				var stcLv2Line = new Static();
+        				stcLv2Line.init(stcLv2LineId, nCalL, objBtn.getOffsetBottom() + 5, objBtn.getOffsetWidth()-30, 1, null, null);
+        				stcLv2Line.set_background('#dfdfdf');
+        				this.pdvMiddleMenu.addChild(stcLv2LineId, stcLv2Line);
+        				stcLv2Line.show();
+        			}
+
+        			// 점 표기
+        			var stcDotId = 'stcLv2Dot_' + i;
+        			if( !this.pdvMiddleMenu.form.components[stcDotId] ) {
+        				var stcLv2Dot = new Static();
+        				stcLv2Dot.init(stcDotId, nCalL, stcLv2Line.getOffsetTop() - 3, 8, 3, null, null);
+        				stcLv2Dot.set_background('#5656cb');
+        				this.pdvMiddleMenu.addChild(stcDotId, stcLv2Dot);
+        				stcLv2Dot.show();
+        			}
+
+
+        			// 중메뉴 하위 마진 추가
+        			nT += 20;
+        		}
+
+        		if( sMenuLvl == '2' )
+        			nT += nH;
+        		else
+        			nT += nH-5;
+
+        		if( nMaxH < nT )
+        			nMaxH = nT;
+
+        		if( sMenuId.indexOf("_USED") > -1 ) 	// 열었던 메뉴(최근메뉴)
+        			sMenuId = sMenuId.substr(0,sMenuId.length-5);
+
+        		// objBtn 버튼에 옵션설정.
+        		objBtn.col = nCnt % nMaxCnt; // 열위치
+        		objBtn.menuUrl = sMenuUrl||'';
+        		objBtn.menuId = sMenuId;
+
+        		if( nCnt % nMaxCnt == 0 ) {
+        			// nMaxCnt마다 개행
+        			nCnt = 0;
+        			nCalT = nMaxH + nH;
+        			nCalL = nL_default;
+        		} else {
+        			nCalL = nL + nW;
+        		}
+        	}
+
+        	// 하단 여백을 위한 생성(nH 만큼)
+        	var objBottomGap = new Static();
+        	objBottomGap.init("_stcBottomGap", nL_default, nMaxH, nW, 20);
+        	this.pdvMiddleMenu.addChild("_stcBottomGap", objBottomGap);
+        	objBottomGap.show();
+
+        	// 하단 갭 생성으로 한번더 높이 를 더한다.
+        	nMaxH = nMaxH + 20 + 1; // nMaxH + 하단갭 + 여유분보정치
+        	if( nMaxH < 100 )
+        		nMaxH = 100;
+        	else if( nMaxH > 300 )	// 중메뉴 팝업 최대 크기
+        		nMaxH = 300;
+
+        	this.pdvMiddleMenu.set_height(nMaxH);
+        	this.pdvMiddleMenu.form.resetScroll();
+        }
+
+        this.fnShowBtn = function()
+        {
+        	if( this.BTNMENU.length > 1 )
+        	{
+        		if( this.BTNMENU[0] && this.BTNMENU[0].getOffsetLeft() < 0 )
+        		{
+        			this.btnTopPrev.set_visible(true);
+        		}
+        		else
+        		{
+        			this.btnTopPrev.set_visible(false);
+        		}
+
+        		if( this.BTNMENU[this.BTNMENU.length-1] && this.BTNMENU[this.BTNMENU.length-1].getOffsetRight() > this.divMenu.getOffsetWidth() )
+        		{
+        			this.btnTopNext.set_visible(true);
+        		}
+        		else
+        		{
+        			this.btnTopNext.set_visible(false);
+        		}
+        	}
+        }
+
+        this.fnMoveOneByOne = function( strDirection )
+        {
+        	// resize이벤트 발생시 버튼은 항상 center정렬로 초기화된다.
+        	// strDirection : "PREV" , "NEXT" -> 2 option only
+        	var divMenuWidth = this.divMenu.getOffsetWidth();
+        	if( strDirection == "PREV" )
+        	{
+        		var nLeft = null;
+        		var nRight = null;
+        		var nWidth = null;
+        		for(var i= (this.BTNMENU.length-1); i >= 0; i--)
+        		{
+        			nLeft = this.BTNMENU[i].left;
+        			nRight = this.BTNMENU[i].getOffsetRight();
+        			if( nRight <= 0 )
+        			{
+        				// 좌측경계를 넘어가 보이지 않을때
+        				nWidth = this.BTNMENU[i].width;
+        				break;
+        			}
+        			else if( nLeft < 0 && nRight > 0 )
+        			{
+        				// 좌측경계에 걸쳐 있을때
+        				nWidth = parseInt(this.BTNMENU[i].width) - parseInt(nRight);
+        				break;
+        			}
+        		}
+
+        		if( nLeft < 0 && nWidth != null )
+        		{
+        			for(var i=0;i<this.BTNMENU.length;i++)
+        			{
+        				this.BTNMENU[i].set_left(this.BTNMENU[i].left + nWidth);
+        			}
+        		}
+        	}
+        	else if( strDirection == "NEXT" )
+        	{
+        		var nLeft = null;
+        		var nRight = null;
+        		var nWidth = null;
+        		for(var i=0;i<this.BTNMENU.length;i++)
+        		{
+        			nLeft = this.BTNMENU[i].left;
+        			nRight = this.BTNMENU[i].getOffsetRight();
+        			if( nLeft >= divMenuWidth )
+        			{
+        				// 우측경계를 넘어가 보이지 않을때
+        				nWidth  = this.BTNMENU[i].width;
+        				break;
+        			}
+        			else if( nLeft < divMenuWidth && divMenuWidth < nRight )
+        			{
+        				// 우측경계에 걸쳐 있을때
+        				nWidth = parseInt(nRight) - parseInt(divMenuWidth);
+        				break;
+        			}
+        		}
+
+        		if( (nLeft >= divMenuWidth || (nLeft < divMenuWidth && divMenuWidth < nRight) ) && nWidth!=null )
+        		{
+        			for(var i=0;i<this.BTNMENU.length;i++)
+        			{
+        				this.BTNMENU[i].set_left(this.BTNMENU[i].left - nWidth);
+        			}
+        		}
+        	}
+        }
+
+        this.fnOpenMenu = function(obj)
+        {
+        	var sMenuId 	= obj.menuId;
+        	//trace('sMenuId :: ' + sMenuId);
+        	var nRow		= this.objApp.gdsMenu.findRow("MENU_ID", sMenuId);
+        	var sMenuUrl   	= this.objApp.gdsMenu.getColumn(nRow, "MENU_URL");
+
+        	if(!Ex.isEmpty(sMenuUrl))
+        	{
+        		if( this.pdvMiddleMenu ) {
+        			if( this.pdvMiddleMenu.toString().toUpperCase() == '[OBJECT POPUPDIV]' )
+        				this.pdvMiddleMenu.closePopup();
+        			else if (this.pdvMiddleMenu.toString().toUpperCase() == '[OBJECT DIV]') {
+        				this.pdvMiddleMenu.destroy();
+        			}
+        		}
+
+        		var objParam = {};
+        		objParam.menuId = sMenuId;
+        		objParam.menuUrl = sMenuUrl;
+        		Ex.core.openMenu(objParam);
+        	} else {
+        		trace("연결된 업무화면이 없습니다.");
+        	}
+        }
+
+        // 최근메뉴 설정
+        this.fnSetUsedMenu = function(oMenuInfo)
+        {
+        	if( Ex.isEmpty(oMenuInfo) ) return;
+        	var sMenuId = oMenuInfo.menuId;
+        	var sMenuNm = oMenuInfo.menuNm;
+        	var sMenuUrl = oMenuInfo.menuUrl;
+
+        	if( this.objApp.gdsUsedMenu.findRow("MENU_ID", sMenuId) > -1 )
+        		return;
+        	if( this.objApp.gdsUsedMenu.findRow("MENU_ID", sMenuId+"_USED") > -1 )
+        		return;
+
+        	var nRow = this.objApp.gdsUsedMenu.addRow();
+        	this.objApp.gdsUsedMenu.setColumn(nRow, "MENU_ID", sMenuId + "_USED" ); // 즐겨찾기와 충돌방지를위해 접미사 추가
+        	this.objApp.gdsUsedMenu.setColumn(nRow, "MENU_NM", sMenuNm);
+        	this.objApp.gdsUsedMenu.setColumn(nRow, "MENU_LVL", 3);
+        	this.objApp.gdsUsedMenu.setColumn(nRow, "MENU_URL", sMenuUrl);
+
+        	var str = this.objApp.gdsUsedMenu.saveCSV();
+        	Ex.util.setStoredItem("USEDMENU_"+"1111", str );
+        }
+
+        // 최근메뉴 가져오기
+        this.fnGetUsedMenu = function()
+        {
+        	// "USEDMENU_"+"1111" :  prefix + 사용자별키
+        	var str = Ex.util.getStoredItem("USEDMENU_"+"1111" );
+        	if( Ex.isEmpty(str) ) return;
+
+        	var nLoadCnt = this.objApp.gdsUsedMenu.loadCSV(str);
+        	var fRow = -1;
+        	this.objApp.gdsUsedMenu.set_enableevent(false);
+        	for(var i = (this.objApp.gdsUsedMenu.rowcount-1); i >= 0; i--)
+        	{
+        		// 실메뉴와 비교후 갱신
+        		var strMenuId = this.objApp.gdsUsedMenu.getColumn(i, "MENU_ID");
+        		fRow = this.objApp.gdsMenu.findRow("MENU_ID", strMenuId.toString().substr(0, strMenuId.length-5) );
+        		if( fRow > -1 )
+        			this.objApp.gdsUsedMenu.setColumn(i, "MENU_NM", this.objApp.gdsMenu.getColumn(fRow, "MENU_NM") );
+        		else
+        			this.objApp.gdsUsedMenu.deleteRow(i);
+        	}
+        	this.objApp.gdsUsedMenu.set_enableevent(true);
+
+        	// 갱신된 메뉴 재 설정
+        	var str = this.objApp.gdsUsedMenu.saveCSV();
+        	Ex.util.setStoredItem("USEDMENU_"+"1111", str );
+        }
+
+        // 즐겨찾기(mymenu) 설정
+        this.fnSetMyMenu = function(oMenuInfo)
+        {
+        	if( Ex.isEmpty(oMenuInfo) )
+        		return;
+
+        	var sMenuId = oMenuInfo.menuId;
+        	var sMenuNm = oMenuInfo.menuNm;
+        	var sMenuUrl = oMenuInfo.menuUrl;
+
+        	var fRow = this.objApp.gdsMyMenu.findRow("MENU_ID", sMenuId);
+        	if( fRow > -1 && oMenuInfo.myMenuCreate == "N" )
+        	{	// 삭제
+        		this.objApp.gdsMyMenu.setDeleteRow(fRow);
+        	}
+        	else
+        	{	// 추가
+        		var nRow = this.objApp.gdsMyMenu.setAddRow();
+        		this.objApp.gdsMyMenu.setColumn(nRow, "MENU_ID", sMenuId);
+        		this.objApp.gdsMyMenu.setColumn(nRow, "MENU_NM", sMenuNm);
+        		this.objApp.gdsMyMenu.setColumn(nRow, "MENU_LVL", 3);
+        		this.objApp.gdsMyMenu.setColumn(nRow, "MENU_URL", sMenuUrl);
+        	}
+
+        	this.dsCond.setColumn(this.dsCond.rowposition, 'MY_MENU_YN', 'Y');
+        	this.dsCond.setColumn(this.dsCond.rowposition, 'USER_ID', Ex.util.getSession('gvUserId'));
+        	var sTranId = "saveMyMenu";
+            var sService = "FommMenu/saveMyMenu";
+            var sInDs = "gdsMyMenu=gdsMyMenu:U dsCond=dsCond";
+            var sOutDs = "gdsMyMenu=gdsMyMenu";
+            var sArg = "";
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        // 즐겨찾기(mymenu) 가져오기
+        this.fnGetMyMenu = function()
+        {
+        	this.dsCond.setColumn(this.dsCond.rowposition, 'MY_MENU_YN', 'Y');
+        	this.dsCond.setColumn(this.dsCond.rowposition, 'USER_ID', Ex.util.getSession('gvUserId'));
+        	var sTranId = "getMyMenu";
+            var sService = "FommMenu/selectUserMenu";
+            var sInDs = "dsCond=dsCond";
+            var sOutDs = "gdsMyMenu=gdsMenu";
+            var sArg = "";
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        this.connect = function (sCope, gubun)
+        {
+        	//trace("this.connect() sCope.id : " + sCope.id);
+        	if(gubun != "CLOSE")
+        	{
+        		var wsUrl = nexacro.replaceAll(nexacro.getApplication().xadl, "spp/SppApp.xadl.js", "");
+        			wsUrl = nexacro.replaceAll(wsUrl, "https://", "");
+        			wsUrl = nexacro.replaceAll(wsUrl, "http://", "");
+        		var ip		= wsUrl.split(":")[0];
+        		var port	= nexacro.replaceAll(wsUrl.split(":")[1], "/", "");
+        		//trace("wsUrl:[" + wsUrl + "] ip:[" + ip + "] port:[" + port + "]");
+
+        		var connectUrl = "";
+        		//if("10.120.120.62" == ip || "10.120.15.29" == ip || "itsmdev.nhfire.co.kr" == ip || "itsm.nhfire.co.kr" == ip)
+        		if("10.120.120.62" == ip || "10.120.15.29" == ip)
+        		{
+        			connectUrl = "ws://" + ip + ":18080/spp/ws/itsm/" + Ex.util.getSession('gvUserId');
+        		}
+        		else
+        		{
+        			connectUrl = "ws://" + wsUrl + "spp/ws/itsm/" + Ex.util.getSession('gvUserId');
+        		}
+
+        		if( Ex.isEmpty(sCope.webSocket) )
+        		{
+        			sCope.webSocket = new WebSocket(connectUrl);
+        		}
+        		//trace("sCope.webSocket:[" + sCope.webSocket + "]");
+        	}
+
+        	//웹 소켓이 연결되었을 때 호출되는 이벤트
+        	sCope.webSocket.onopen = function(event)
+        	{
+        		console.log('접속되었습니다.');
+        		//console.log('접속되었습니다. connectUrl:[' + connectUrl + ']');
+        		sCope.sendMessage(sCope, '접속되었습니다.');
+        	};
+
+        	//웹 소켓에서 메시지가 날라왔을 때 호출되는 이벤트
+        	sCope.webSocket.onmessage = function(event)
+        	{
+        		if(event != null)
+        		{
+        			sCope.sendMessage(sCope, event.data);
+        		}
+        	};
+
+        	//접속이 종료된 후 수행하는 부분
+        	sCope.webSocket.onclose = function()
+        	{
+        		sCope.sendMessage(sCope, "CLOSE");
+        		sCope.webSocket = undefined;
+        		console.log('Closed!');
+        	};
+
+        	sCope.webSocket.onerror = function(event)
+        	{
+        		if(event != null)
+        		{
+        			sCope.sendMessage(sCope, "onerror " + event.data);
+        		}
+        	};
+
+        	if(gubun == "CLOSE")
+        	{
+        		sCope.webSocket.close();
+        		sCope.webSocket = undefined;
+        	}
+        };
+
+        this.sendMessage = function (sCope, val)
+        {
+        	trace("this.connect() sendMessage() val : " + val);
+        	if(!Ex.isEmpty(val))
+        	{
+        		if(val == "접속되었습니다.")
+        		{
+        			sCope.stcAutoInMsg.set_color("lawngreen");
+        		}
+        		else if(val == "CLOSE")
+        		{
+        			sCope.stcAutoInMsg.set_color("RED");
+        		}
+        		else
+        		{
+        			//trace('============================		fnCommAddSlide call		==================================');
+        			var splitKey = '¶';
+        			var arrVal	= val.split('¶');
+        			var type	= arrVal[0];
+        			var message = arrVal[1];
+        			//trace('type ::'  + type + '\nmessage :: ' + message);
+        			if( type == '01' )	// 슬라이드
+        			{
+        				this.fnCommAddSlide(arrVal[1]);		// lib_CommSlide
+        			}
+        			else if( type == '02' || type == '03' )	// 알림
+        			{
+        				// 알림/쪽지 도착 toast
+        				var sType = '';
+        				if( type == '02' )	sType = '알림';
+        				else	sType = '쪽지';
+
+        				var sMsg = '새로운 ' + sType + '이(가) 도착했습니다';
+        				Ex.core.toast(this, sMsg, null, {toastType:'W'});
+
+        				// 알림/쪽지 건수 재조회
+        				this.fnSelectAlarmCnt();
+        			}
+        		}
+        	}
+        };
+
+        /***********************************************************************************
+         * Component Event
+         ***********************************************************************************/
+        // 공통 onclick event
+        this.fnCommOnclick = function(obj, e)
+        {
+        	switch(obj.name)
+        	{
+        		case "btnSessOut" :
+        			var sTranId = "sessOut";            // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+        			var sService = "sessOut";           // 서비스명
+        			var sInDs = "";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+        			var sOutDs = "";					// 서버에서 수신할 데이타셋
+        			var sArg = "";						// 서버 @ParamVariable 인자와 맵핑됨
+        			Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        			break;
+
+        		case "staLogo" :	// Logo click
+        			this.objApp.afnSetFrame("HOME");
+        			break;
+
+        		case "btnLogout" :	// Logout button
+        			Ex.core.confirm(this, {id:'logoutConfirm', msg:'10008', msgtype:'I', arrparam:['로그아웃']});
+        			break;
+
+        		case "btnFavorite" :	// 즐겨찾기 펼치기 button
+        			var dsSystemList = new Dataset();
+        			var oParam = {
+        				upCmmCd : ['HYPERLINK_LIST_CD']
+        				,codeDiv: ['BASIS_CD']
+        				,optStr	: ['']
+        				,useYn	: ['Y']
+        				,filter	: ['']
+        				,objDs	: [dsSystemList]
+        			}
+        			Ex.util.getCmmCode(oParam);
+
+        			var	height = dsSystemList.rowcount * 32 + 5;
+        			this.pdvMyMenu.set_width(130);
+        			this.pdvMyMenu.set_height(height);
+        			var nLeft = obj.getOffsetRight() - this.pdvMyMenu.getOffsetWidth() + 20;
+        			this.pdvMyMenu.set_url('Frame::frTop_D02.xfdl');
+        			this.pdvMyMenu.trackPopup(nLeft, obj.getOffsetBottom()+5);
+        			break;
+
+        		case "btnSearch" :		// 검색 펼치기 button
+        			/*
+        			this.pdvMyMenu.set_width(300);
+        			this.pdvMyMenu.set_height(32 + 2);
+
+        			var nLeft = obj.getOffsetRight() - this.pdvMyMenu.getOffsetWidth() + 20;
+        			this.pdvMyMenu.set_url('Frame::frTop_D03.xfdl');
+        			this.pdvMyMenu.trackPopup(nLeft, obj.getOffsetBottom()+5);
+        			*/
+        			Ex.core.popup(	this,
+        						'unifiedSearchPop',
+        						"Frame::frTop_P02.xfdl",             		// <--- 팝업창 오픈 Url
+        						{ title:Ex.core.word('통합검색')},     	// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+        						"autosize"                  // <--- width/height/modeless(프레임 처리 옵션)
+        			);
+        			break;
+
+        		case "btnHyperlink" :	// 외부링크 button
+        			var dsSystemList = new Dataset();
+        			/* 상면관리에서 WIKI로 변경
+        			var oParam = {
+        				upCmmCd : ['RNB_URL_CD']
+        				,codeDiv: ['BASIS_CD']
+        				,optStr	: ['']
+        				,useYn	: ['Y']
+        				,filter	: ['']
+        				,objDs	: [dsSystemList]
+        			}
+        			Ex.util.getCmmCode(oParam);
+        			if( dsSystemList.rowcount ) {
+        				var sUrl 	= dsSystemList.getColumn(1, 'ITM_VAL_1');
+        				var param	= dsSystemList.getColumn(1, 'ITM_VAL_2') || "";
+        				system.execBrowser(sUrl + param);
+        			}
+        			*/
+        			//IT지원부인 경우만 사용가능
+        			if(Ex.util.getSession('gvItDeptYn') == "Y")
+        			{
+        				var oParam = {
+        					upCmmCd : ['HYPERLINK_LIST_CD']
+        					,codeDiv: ['BASIS_CD']
+        					,optStr	: ['']
+        					,useYn	: ['']
+        					,filter	: ['CMM_CD=="02"']
+        					,objDs	: [dsSystemList]
+        				}
+        				Ex.util.getCmmCode(oParam);
+        				if(dsSystemList.rowcount > 0)
+        				{
+        					var sUrl = dsSystemList.getColumn(0, 'ITM_VAL_1');
+        					sUrl += '?USER_ID=' + Ex.util.getSession('gvUserId');
+        					system.execBrowser(sUrl);
+        				}
+        			}
+        			else
+        			{
+        				var param = {
+        					msg	: "해당 메뉴는 IT(개발자 포함) 전용 메뉴입니다."	//메시지 내용
+        					, arrparam : []												//메시지의 변수에 들어갈 실제값
+        					, msgtype : "I"												//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        				};
+        				Ex.core.alert(this, param);
+        				return false;
+        			}
+        			break;
+
+        		case "btnMsgWR" :		// 메시지 작성 button
+        			break;
+
+        		case "btnMSG" :			// 메시지 button
+        		case "stcMsgCnt" :
+        			var obj = {menuId : 684};
+        			this.fnOpenMenu(obj);
+        			break;
+
+        		case "btnAlarm" :       	// 알람 button
+        		case "stcAlarmCnt" :		// 알람 count static
+        			var obj = {menuId : 738};
+        			this.fnOpenMenu(obj);
+        			break;
+
+        		case "btnNotice" :		// 공지사항 버튼
+        			break;
+
+        		case "btnSetting" :		// 설정 버튼
+        		case "stcUserNm" :
+        		case "stcPartNm" :
+        		case "imvUser" :
+        			Ex.core.popup(
+        				this,						// <--- 팝업 실행 스코프
+        				"userInfoPop",					// <--- 팝업창 아이디(반드시 영문으로 입력 처리)
+        				"fomm::FOMM0000_P02.xfdl",	// <--- 팝업창 오픈 Url
+        				{
+        					  title 	: "나의 정보 관리"
+        					, pUserId	: Ex.util.getSession('gvUserId')
+        					, pPopType	: 'U'
+        				},						// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+        				"autosize"	// <--- width/height/modeless(프레임 처리 옵션)
+        			);
+        		break;
+
+        		case "btnChangeLang" :	// 언어선택 버튼
+        			var	height = this.dsLangCd.rowcount * 32 + 3;
+        			this.pdvMyMenu.set_width(150);
+        			this.pdvMyMenu.set_height(height);
+        			var nLeft = obj.getOffsetRight() - this.pdvMyMenu.getOffsetWidth() + 20;
+        			this.pdvMyMenu.set_url('Frame::frTop_D01.xfdl');
+        			this.pdvMyMenu.trackPopup(nLeft, obj.getOffsetBottom()+5);
+        			break;
+
+        		case "btnSiteMap" :
+        			Ex.core.popup(
+        				this,
+        				'siteMapPop',
+        				"Frame::frTop_P01.xfdl",             // <--- 팝업창 오픈 Url
+        				{
+        					title:Ex.core.word('사이트맵')
+        				},     								// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+        				"autosize"                  		// <--- width/height/modeless(프레임 처리 옵션)
+        			);
+        			break;
+
+        		case "btnConnect" :
+        			this.connect(this.formObj);	//연결
+        			break;
+
+        		case "btnDisConnect" :			//해제
+        			if( !Ex.isEmpty(this.webSocket) )
+        			{
+        				this.connect(this.formObj, "CLOSE");
+        			}
+        // 			else
+        // 			{
+        // 				trace("this.webSocket is Empty");
+        // 			}
+        			break;
+        	}
+        }
+
+        // 소메뉴 클릭
+        this.btnOpenMenu_onclick = function(obj, e)
+        {
+        	this.fnOpenMenu(obj);
+        }
+
+        // 중메뉴 오픈
+        this.btnMenu_onclick = function(obj, e)
+        {
+        	var menuComp = this.divMenu.form.components;
+        	for(var i=0; i<menuComp.length; i++)
+        	{
+        		if(menuComp[i].id.indexOf("btnMenu_") > -1)
+        		{
+        			//bold 15px "KoPubL"
+        			if(obj.id != menuComp[i].id)
+        			{
+        				menuComp[i].set_color("#ffffff");
+        			}
+        			else
+        			{
+        				menuComp[i].set_color("#f9dd71");
+        			}
+        		}
+        	}
+        	this.fnShowMenuPopup(obj);
+        }
+
+        this.btnMenu_onmouseenter = function(obj, e)
+        {
+        	this.fnShowMenuPopup(obj);
+        }
+
+        // 중메뉴 닫기
+        this.pdvMiddleMenu_onmouseleave = function(obj, e)
+        {
+        	if(e.fromobject.name == "pdvMiddleMenu" && e.clienty > 0)	obj.closePopup();
+        }
+
+        // 화면 줄었을 시 메뉴 다음 버튼
+        this.btnTopNext_onclick = function(obj, e)
+        {
+        	this.fnMoveOneByOne("NEXT");
+        	this.fnShowBtn();
+        }
+
+        // 화면 줄었을 시 메뉴 이전 버튼
+        this.btnTopPrev_onclick = function(obj, e)
+        {
+        	this.fnMoveOneByOne("PREV");
+        	this.fnShowBtn();
+        }
+
+        this.btnServiceMenu_onclick = function(obj, e)
+        {
+        	this.fnGetMyMenu();
+        	this.fnGetUsedMenu();
+        	this.fnCreateMiddleMenu(obj);
+        }
+
+        this.cboOnItemChanged = function(obj,e)
+        {
+        	//trace("[frTop]this.cboOnItemChanged() obj.id : " + obj.id + " gvUserId : " + Ex.util.getSession('gvUserId') + " gvOrgUserId : " + Ex.util.getSession('gvOrgUserId') + " e.postvalue : " + e.postvalue);
+        	if(obj.id == "cboUsers")
+        	{
+        		if(e.postvalue != Ex.util.getSession('gvOrgUserId') || e.postvalue != Ex.util.getSession('gvUserId'))
+        		{
+        			var sTranId = "changeUser";			// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+        			var sService = "changeUser";		// 서비스명
+        			var sInDs = "";						// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+        			var sOutDs = "";					// 서버에서 수신할 데이타셋
+        			var sArg = "userId=" + e.postvalue;	// 서버 @ParamVariable 인자와 맵핑됨
+        			Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        		}
+        	}
+        };
+
+        this.PopupDiv00_btnLogout_onclick = function(obj, e)
+        {
+            var sTranId = "logout";                          // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+            var sService = "logout";                         // 서비스명
+            var sInDs = "";                  // 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+            var sOutDs = "";           // 서버에서 수신할 데이타셋
+            var sArg = "";                                  // 서버 @ParamVariable 인자와 맵핑됨
+            var sCallback = "";                             //
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg, sCallback);
+        }
+
+        this.pdvMyMenu_oncloseup = function(obj,e)
+        {
+        	obj.set_url('');
+        	var curLangCd = Ex.util.getSession('gvSelLangCd');
+        	this.fnChangeLangIcon(curLangCd);
+        };
+
+        this.dsAlarmCnt_onvaluechanged = function(obj,e)
+        {
+        	// 알람
+        	var alarmCnt =  nexacro.toNumber(obj.getColumn(0, "ALARM_CNT"), 0);
+        	if( alarmCnt == 0 )
+        	{
+        		this.stcAlarmCnt.set_visible(false);
+        	}
+        	else
+        	{
+        		this.stcAlarmCnt.text = alarmCnt;
+        		this.stcAlarmCnt.set_visible(true);
+        	}
+
+        	// 쪽지
+        	var memoCnt =  nexacro.toNumber(obj.getColumn(0, "MEMO_CNT"), 0);
+        	if( memoCnt == 0 )
+        	{
+        		this.stcMsgCnt.set_visible(false);
+        	}
+        	else
+        	{
+        		this.stcMsgCnt.text = memoCnt;
+        		this.stcMsgCnt.set_visible(true);
+        	}
+        };
+
+        this.btnToastTest_onclick = function(obj,e)
+        {
+        	Ex.core.toast(this, 'testing toast message with frame types', null, {toastType:'W'});
+        };
+
+        this.frTop_onrbuttonup = function(obj,e)
+        {
+        	if(e.ctrlkey && e.shiftkey)
+        	{
+        		this.stcAutoInMsg.set_top(12);
+        		this.stcAutoInMsg.set_left(0);
+        		this.btnSessOut.set_top(12);
+        		this.btnConnect.set_top(12);
+        		this.btnDisConnect.set_top(12);
+        		this.stcAutoInMsg.set_visible(!this.stcAutoInMsg.visible);
+        		this.btnSessOut.set_visible(!this.btnSessOut.visible);
+        		this.btnConnect.set_visible(!this.btnConnect.visible);
+        		this.btnDisConnect.set_visible(!this.btnDisConnect.visible);
+
+        		this.btnToastTest.set_top(12);
+        		this.btnToastTest.set_visible(!this.btnToastTest.visible);
+        	}
+        };
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.frTop_onload,this);
+            this.addEventHandler("onsize",this.form_onsize,this);
+            this.addEventHandler("onrbuttonup",this.frTop_onrbuttonup,this);
+            this.addEventHandler("onbindingvaluechanged",this.fnBindChanged,this);
+            this.addEventHandler("onkeyup",this.frTop_onkeyup,this);
+            this.btnTopPrev.addEventHandler("onclick",this.btnTopPrev_onclick,this);
+            this.btnSiteMap.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.btnTopNext.addEventHandler("onclick",this.btnTopNext_onclick,this);
+            this.btnLogout.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.staLogo.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.btnChangeLang.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.btnFavorite.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.btnSearch.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.btnHyperlink.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.btnSetting.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.stcPartNm.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.stcUserNm.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.imvUser.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.cboUsers.addEventHandler("onitemchanged",this.cboOnItemChanged,this);
+            this.btnMSG.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.pdvMyMenu.addEventHandler("oncloseup",this.pdvMyMenu_oncloseup,this);
+            this.btnAlarm.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.stcMsgCnt.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.stcAlarmCnt.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.stcAutoInMsg.addEventHandler("onclick",this.stcAutoInMsg_onclick,this);
+            this.btnSessOut.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.btnConnect.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.btnDisConnect.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.btnToastTest.addEventHandler("onclick",this.btnToastTest_onclick,this);
+            this.dsAlarmCnt.addEventHandler("onvaluechanged",this.dsAlarmCnt_onvaluechanged,this);
+        };
+        this.loadIncludeScript("frTop.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

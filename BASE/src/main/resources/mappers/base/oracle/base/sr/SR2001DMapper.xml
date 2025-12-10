@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR2001DDAO">
+
+     <!-- 산출물 유형 조회-->
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+         SELECT    
+                   METHOD_ID
+                  ,METHOD_NM
+                  ,METHOD_DESC
+         FROM MS_METHOD
+         WHERE 1=1
+         AND USE_YN = 'Y'
+    </select>
+    
+         <!-- 산출물 목록 조회-->
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+       SELECT 
+                b.METHODITEM_ID ,
+                b.METHODITEM_NM ,
+                a.METHOD_ID,
+                '' AS MASTER_PRJ_ID,
+                b.ACT_STEP_CD       ,
+                '' AS PRJ_ID,  --프로젝트ID
+				'' AS REQ_ID,  --요청서ID
+				'' AS ATTACH_FILE, --첨부파일명
+				'' AS METHOD_CONFIRM_YN,   --확정YN
+                b.ACT_STEP_SUB_CD   ,
+                b.METHODITEM_DESC   ,
+                b.GRDA_ESSN_YN  ,
+                b.GRDB_ESSN_YN  ,
+                b.GRDC_ESSN_YN  ,
+                b.GRDD_ESSN_YN  ,
+                b.PRJ_ESSN_YN       ,
+                b.MUST_ESSN_YN  ,
+                b.GRDA_REGI_PTM ,
+                b.GRDB_REGI_PTM ,
+                b.GRDC_REGI_PTM ,
+                b.GRDD_REGI_PTM ,
+                b.PRJ_REGI_PTM  ,
+                b.GRDA_REGI_PTM_CD,
+                b.GRDB_REGI_PTM_CD,
+                b.GRDC_REGI_PTM_CD,
+                b.GRDD_REGI_PTM_CD,
+                b.PRJ_REGI_PTM_CD,
+                b.USE_YN    ,    
+                '' AS DANGER_GRADE,
+                '' AS GRATEMP_Y,
+                '' AS GRATEMP_N, 
+                (SELECT sort_ordr 
+                 FROM FOMM_CMM_CD_MT       
+                WHERE 1=1
+                  AND UP_CMM_CD = 'ACT_STEP_CD'
+                  AND b.ACT_STEP_CD = CMM_CD) AS SORT_ORDR  
+         FROM MS_METHOD_TMPL a , MS_METHOD_ITEM b 
+        WHERE 1=1
+          AND a.METHODITEM_ID = b.METHODITEM_ID
+          order by SORT_ORDR, TO_number(METHODITEM_ID)
+    </select>
+         <!-- 저장된 산출물 조회-->
+    <select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT
+              '' AS GRATEMP_Y
+            , '' AS GRATEMP_N 
+            , METHOD_ID --산출물방법론ID 
+            , METHODITEM_ID --산출물ID 
+            , METHODITEM_NM 
+            , MASTER_PRJ_ID --마스터 프로젝트 ID
+            , PRJ_ID    --프로젝트ID
+            , REQ_ID    --요청서ID
+            , DECODE(B.FCNT, 1, B.ORG_FILE_NM, NULL, B.ORG_FILE_NM, B.ORG_FILE_NM || ' 외'||TO_CHAR(B.FCNT-1, '99') || '건') AS ATTACH_FILE
+            , METHOD_CONFIRM_YN --확정YN
+            , DANGER_GRADE  --위험등급
+            , ACT_STEP_CD   --단계코드
+            , ACT_STEP_SUB_CD   --세부단계코드
+            , METHODITEM_DESC   --산출물설명
+            , GRDA_ESSN_YN  --A등급필수여부
+            , GRDB_ESSN_YN  --B등급필수여부
+            , GRDC_ESSN_YN  --C등급필수여부
+            , GRDD_ESSN_YN  --D등급필수여부
+            , PRJ_ESSN_YN   --프로젝트필수여부
+            , MUST_ESSN_YN  --필수제한여부
+            , GRDA_REGI_PTM --A등급등록시점
+            , GRDB_REGI_PTM --B등급등록시점
+            , GRDC_REGI_PTM --C등급등록시점
+            , GRDD_REGI_PTM --D등급등록시점
+            , PRJ_REGI_PTM  --프로젝트등록시점
+            , GRDA_REGI_PTM_CD
+            , GRDB_REGI_PTM_CD
+            , GRDC_REGI_PTM_CD
+            , GRDD_REGI_PTM_CD
+            , PRJ_REGI_PTM_CD
+            , TO_CHAR(TO_DATE(FRDT,'YYYYMMDDHH24MISS'),'YYYY-MM-DD') as FRDT  --최초등록일시
+            , FRID  --최초등록자
+            , (SELECT MAX((SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID)) AS LMID 
+                  FROM FOMM_ATCHFILE_MT A
+                  WHERE 1=1
+                  AND PK1 = PRJ_ID
+                  AND PK2 = METHODITEM_ID
+                  AND DEL_YN ='N') as LMID
+            ,TO_CHAR(TO_DATE((SELECT MAX(LMDT)  
+                  FROM FOMM_ATCHFILE_MT A
+                  WHERE 1=1
+                  AND PK1 = PRJ_ID
+                  AND PK2 = METHODITEM_ID
+                  AND DEL_YN ='N'),'YYYYMMDDHH24MISS'),'YYYY-MM-DD') as LMDT
+            , LMPID --최종수정화면ID
+        FROM SR_MA_PRJ_METHODITEM A,
+        (
+            SELECT
+                PK1                     ,
+                PK2                     ,
+                COUNT(*)                AS FCNT,
+                MAX(FILE_NM) KEEP(DENSE_RANK FIRST ORDER BY FRDT) AS ORG_FILE_NM,
+                MAX(NVL(LMDT, FRDT))    AS LMOD_ATTACH_TIME
+            FROM
+                FOMM_ATCHFILE_MT
+            WHERE 1 = 1
+            AND KEY_TBL = 'SR2000_T02_DetailList'
+            AND DEL_YN  = 'N'
+            AND TEMP_YN = 'N'
+            GROUP BY PK1,PK2
+            ) B
+        WHERE 1 = 1
+        AND A.PRJ_ID = B.PK1(+)
+        AND A.METHODITEM_ID = B.PK2(+)
+
+        AND PRJ_ID = #{PRJ_ID}
+          order by  TO_number(METHODITEM_ID)
+    </select>
+         <!-- 체크리스트 목록 조회-->
+    <select id="select04" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT            
+             '' AS CHKLST_ID    --표준체크리스트ID
+            ,'선택' AS CHKLST_NM  --체크리스트명
+        FROM dual
+        UNION ALL
+        SELECT            
+             CHKLST_ID  --표준체크리스트ID
+            ,CHKLST_NM  --체크리스트명
+        FROM FOMM_CHKLST
+        WHERE 1 = 1
+        AND USE_YN ='Y'
+        <if test="SRGRD_CHKLST != '' and SRGRD_CHKLST != null">
+        AND CHKLST_ID IN ( SELECT CMM_CD FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = #{SRGRD_CHKLST} AND USE_YN = 'Y' )
+        </if>
+        
+        
+    </select>
+             <!-- 테스트 시나리오  조회-->
+    <select id="selectSrMaPrjTsDtlRslt" parameterType="java.util.Map" resultType="java.util.Map">
+    /* SR2001DMapper >> selectSrMaPrjTsDtlRslt */
+    
+		SELECT
+			  '' AS ROWFLAG
+			, 0 AS CHK
+			, REQ_ID    	--요청서ID
+			, PRJ_ID    	--서브프로젝트ID
+			, SCENR_ID  	--시나리오ID
+			, SCENR_SEQ 	--일련번호
+			, SCENR_NM  	--시나리오명
+			, SCENR_LV  	--레벨
+			, MBR_USER_ID   --구성원ID
+			, MBR_USER_NM   --구성원이름
+			, SCENR_CHK 	--체크확인사항
+			, SCENR_RSL 	--처리내용(결과값)
+			, SCENR_PRG
+			, ROLE_CD   	--역할코드
+			, DEL_YN    	--삭제여부
+			, SCENR_STAT    --제외구분
+			, DELETABLE 	--수정가능여부
+
+			, CASE
+				WHEN SCENR_LV = 2
+				THEN (
+						SELECT COUNT(*) FROM SR_MA_PRJ_TS_RESULT B 
+				                WHERE 1=1
+				                AND B.SCENR_ID = A.SCENR_ID
+		                		AND B.SCENR_LV = 3
+				                --AND B.DEL_YN != 'Y' 
+					  )
+			  END		SCENR_CNT
+			
+			--, BOARD_ID
+			,(
+				SELECT BOARD_NO
+				FROM FOMM_BOARD_MT
+				WHERE 1=1 
+				AND TITLE = TO_CHAR(SCENR_SEQ) 
+				AND DEL_YN 	= 'N'
+				AND ROWNUM =1
+			) BOARD_ID
+			,(
+				SELECT LMDT
+				FROM FOMM_BOARD_MT 
+				WHERE 1=1 
+				AND TITLE = TO_CHAR(SCENR_SEQ) 
+				AND DEL_YN ='N' 
+				AND ROWNUM =1
+			) BOARD_ID_DT
+			
+			--, AT_CNT 
+			,(
+		        SELECT COUNT(*) 
+		        FROM FOMM_ATCHFILE_MT
+		        WHERE 1=1 
+		        AND PK1		= PRJ_ID 
+		        AND PK2		= TO_CHAR(SCENR_SEQ) 
+		        AND KEY_TBL = 'SR2000_T02_TC' 
+		        AND DEL_YN 	= 'N'
+		     ) AT_CNT
+ 			,(
+		        SELECT MAX(LMDT)
+		        FROM FOMM_ATCHFILE_MT
+		        WHERE 1=1 
+		        AND PK1		= PRJ_ID 
+		        AND PK2		= TO_CHAR(SCENR_SEQ) 
+		        AND KEY_TBL = 'SR2000_T02_TC' 
+		        AND DEL_YN 	= 'N'
+		     ) AT_CNT_DT
+			
+			, SCENR_COMP_DT
+			
+			, RMK   		--비고
+			, FRID  		--최초등록자
+			, FRDT  		--최초등록일시
+			, LMID  		--최종수정자
+			, LMDT  		--최종수정일시
+			
+		FROM SR_MA_PRJ_TS_RESULT A
+		WHERE 1 = 1
+		  
+		AND REQ_ID = #{REQ_ID}
+
+        ORDER BY SCENR_ID DESC, SCENR_LV DESC
+         
+    </select>
+
+     <!-- 프로그램 목록  조회-->
+    <select id="select06" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT '' rnum
+                     , '' crPrjno
+                     , '' crAcptno
+                     ,''  crSerno
+                     , '' cmSysmsg
+                     ,''  cmCodename1
+                     , '' crRsrcname
+                     , '' cmCodename2
+                     , '' cmDirpath
+                     , '' crStory
+                     , '' crAcptdate
+                     , '' crEddate
+                     , '' totalCnt
+                  FROM dual
+    </select>
+
+     <!-- 보안성 검토  조회-->
+    <select id="select07" parameterType="java.util.Map" resultType="java.util.Map">
+			select 
+			              B.REQ_ID  --요청서 ID
+			            , B.WF_PROC_CD  --진행단계
+			            , B.REQ_STAT_CD --요청서진행상태코드
+			            , (  SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE 1=1 AND B.REQ_STAT_CD = CMM_CD AND UP_CMM_CD ='REQ_STAT_CD') AS REQ_STAT_NM
+			            , A.CONT01  --내용-요청사항
+			            , A.CONT02  --내용-작업내용 
+			            , A.CONT03  --내용-기타사항1 체크리스트 번호
+			            , (SELECT CHKLST_NM FROM FOMM_CHKLST WHERE 1=1 AND CHKLST_ID = A.CONT03) CHKLST_NM
+			            , A.CONT04  --내용-기타사항2
+			            , A.CONT05  --내용-기타사항3
+			            , B.TITLE   --제목
+			            , B.REQ_USER_ID --요청자ID
+			            , B.REQ_USER_NM --요청자명
+			            , B.REQ_DEPT_CD --요청자부서ID
+			            , B.REQ_DEPT_NM --요청자부서명
+			            , A.REF_REQ_ID  --참조요청번호
+			            , A.REF_REG_USER_ID --참조요청번호작성자
+			            , A.REF_IT_USER_ID  --참조요청번호IT담당자
+			            , B.REQ_WISH_DT --희망완료일
+			            , B.DEL_YN  --삭제여부
+			            , B.CONTENTS    --요청서내용
+                        , TO_CHAR(TO_DATE(B.FRDT,'YYYYMMDDHH24MISS'),'YYYY-MM-DD') AS CREATE_DT  --등록일시
+                        , PRE_CONF_USER_ID  --사전협의자ID
+			            , PRE_CONF_USER_NM  --사전협의자명
+			            , PRE_CONF_DEPT_CD  --사전협의자부서ID
+			            , PRE_CONF_DEPT_NM  --사전협의자부서명
+			            , RMK   --비고
+			            , LM_USER_NM    --수정자명
+			            , LM_DEPT_CD    --수정자부서ID
+			            , LM_DEPT_NM    --수정자부서명
+			            , CANCEL_POSS_YN    --회수가능여부
+			
+			from SR_CH_ITPT_CONTS_REQ A , SR_BASE_INFO B
+			WHERE 1=1
+            AND A.REQ_ID = B.REQ_ID
+	        AND CONT04 = #{PRJ_ID}
+    </select>
+   
+        <!-- 시나리오  조회-->
+    <select id="select08" parameterType="java.util.Map" resultType="java.util.Map">
+            SELECT
+                     '' AS ROWFLAG
+                    , 0 AS CHK
+                    , (select count(*) from FOMM_ATCHFILE_MT WHERE 1=1 AND PK2=TO_CHAR(SCENR_SEQ) AND KEY_TBL ='SR2000_T02_TC' AND DEL_YN ='N') as AT_CNT
+                    , (select BOARD_NO from FOMM_BOARD_MT WHERE 1=1 AND TITLE = TO_CHAR(SCENR_SEQ) AND DEL_YN ='N' AND ROWNUM =1) as BOARD_ID
+                    , REQ_ID        --요청서ID
+                    , SCENR_ID      --시나리오ID
+                    , SCENR_NM      --시나리오명
+                    , SCENR_LV      --레벨
+                    , SCENR_CHK     --체크확인사항
+                    , SCENR_RSL     --처리내용(결과값)
+                    , SCENR_STAT    --제외구분
+                    , ROLE_CD       --역할코드
+                    , SCENR_PRG
+                    , DEL_YN        --삭제여부
+                    , MBR_USER_ID   --담당자ID
+                    , SCENR_SEQ
+                    , (SELECT USER_NM FROM FOMM_USER_MT A WHERE 1=1 AND B.MBR_USER_ID = A.USER_ID) MBR_USER_NM   --담당자NM
+                    , FRID          --최초등록자
+                    , FRDT          --최초등록일시
+                    , LMID          --최종수정자
+                    , LMDT          --최종수정일시
+                FROM SR_MA_PRJ_TS_DTL B
+                WHERE 1 = 1
+                AND DEL_YN != 'Y'
+              
+                AND REQ_ID = #{REQ_ID}
+                ORDER BY SCENR_LV
+    </select>
+    
+        <!-- 시나리오  조회-->
+    <select id="select10" parameterType="java.util.Map" resultType="java.util.Map">
+            SELECT  0 AS CHK        /* CHECKBOX 컬럼 */
+              , '' AS ROWFLAG   /* 행상태 표기를 위한 컬럼 */
+              , M.EXTD_ID       /* 확장권한 코드 */
+              , M.EXTD_NM       /* 확장권한명 */
+              , A.USER_ID       /* 사번 */
+              , A.USER_ID     AS DEST_CD /* 사번 */
+              , A.USER_NM       /* 사용자명 */
+              , A.ROLE_NM       /* 직책 */
+              , A.DEPT_NM       /* 부서명 */
+              , M.EXTD_GB
+              , A.TELNUM        /* 내선명 */
+              , M.USE_YN
+          FROM  FOMM_AUTH_EXTD_MT M
+               ,FOMM_USER_MT      A
+         WHERE  M.DEST_CD = A.USER_ID
+           AND  M.EXTD_GB = '10' /* 00:기준, 10:사용자, 20:부서 */
+           AND  EXTD_ID in ('EXTD_PMO','EXTD_CMO','EXTD_ITPT_MNG')
+         AND USER_ID =#{USER_ID}
+    </select>
+        <!-- 연관프로젝트 조회-->
+    <select id="select11" parameterType="java.util.Map" resultType="java.util.Map">
+            SELECT 
+                '' AS PRJ_ID,
+                '' AS REQ_ID,
+                '- 선택 -' AS REF_PRJ_NM,
+                '' AS MASTER_SUB_DIV_CD,
+                '' AS MASTER_PRJ_ID,
+                '' AS MASTER_REQ_ID,
+                '' AS PRJ_NM,
+                '' AS PRJ_STR_DT,
+                '' AS PRJ_END_DT,
+                '' AS CGER_DEPT_CD,
+                '' AS REF_PRJ_ID
+            FROM 
+                DUAL
+            UNION ALL
+            SELECT 
+                PRJ_ID,
+                REQ_ID,
+                '[' ||PRJ_ID ||'] ' || PRJ_NM AS REF_PRJ_NM,
+                MASTER_SUB_DIV_CD,
+                MASTER_PRJ_ID,
+                MASTER_REQ_ID,
+                PRJ_NM,
+                PRJ_STR_DT,
+                PRJ_END_DT,
+                CGER_DEPT_CD,
+                REF_PRJ_ID
+            FROM 
+                SR_MA_PRJ
+            WHERE 1=1 
+            AND MASTER_PRJ_ID  = #{MASTER_PRJ_ID}
+            AND PRJ_ID NOT IN #{PRJ_ID}
+            AND PRJ_STAT_CD in ('99','4') /*완료,이행확정*/
+    </select>
+        <!-- 연관프로젝트 조회 (존재유무)-->
+    <select id="select12" parameterType="java.util.Map" resultType="java.util.Map">
+            SELECT 
+                PRJ_ID,
+                REQ_ID,
+                '[' ||PRJ_ID ||'] ' || PRJ_NM AS REF_PRJ_NM,
+                MASTER_SUB_DIV_CD,
+                MASTER_PRJ_ID,
+                MASTER_REQ_ID,
+                PRJ_NM,
+                PRJ_STR_DT,
+                PRJ_END_DT,
+                CGER_DEPT_CD,
+                REF_PRJ_ID
+            FROM 
+                SR_MA_PRJ
+            WHERE 1=1 
+            AND PRJ_ID  = #{PRJ_ID}
+    </select>
+    
+	<insert id="insert01" parameterType="java.util.Map">
+	/* SR2001D >> SR_MA_PRJ_METHODITEM */
+		INSERT INTO SR_MA_PRJ_METHODITEM
+			(
+              METHOD_ID --산출물방법론ID 
+            , METHODITEM_ID --산출물ID 
+            , METHODITEM_NM
+            , MASTER_PRJ_ID --마스터 프로젝트 ID
+            , PRJ_ID    --프로젝트ID
+            , REQ_ID    --요청서ID
+            , ATTACH_FILE   --첨부파일명
+            , METHOD_CONFIRM_YN --확정YN
+            , DANGER_GRADE  --위험등급
+            , ACT_STEP_CD   --단계코드
+            , ACT_STEP_SUB_CD   --세부단계코드
+            , METHODITEM_DESC   --산출물설명
+            , GRDA_ESSN_YN  --A등급필수여부
+            , GRDB_ESSN_YN  --B등급필수여부
+            , GRDC_ESSN_YN  --C등급필수여부
+            , GRDD_ESSN_YN  --D등급필수여부
+            , PRJ_ESSN_YN   --프로젝트필수여부
+            , MUST_ESSN_YN  --필수제한여부
+            , GRDA_REGI_PTM --A등급등록시점
+            , GRDB_REGI_PTM --B등급등록시점
+            , GRDC_REGI_PTM --C등급등록시점
+            , GRDD_REGI_PTM --D등급등록시점
+            , PRJ_REGI_PTM  --프로젝트등록시점
+            , GRDA_REGI_PTM_CD
+            , GRDB_REGI_PTM_CD
+            , GRDC_REGI_PTM_CD
+            , GRDD_REGI_PTM_CD
+            , PRJ_REGI_PTM_CD
+            , FRDT  --최초등록일시
+            , FRID  --최초등록자
+            , LMDT  --최종수정일시
+            , LMID  --최종수정자
+            , LMPID --최종수정화면ID
+        )
+        VALUES
+        (
+              #{METHOD_ID}
+            , #{METHODITEM_ID}
+            , #{METHODITEM_NM}
+            , #{MASTER_PRJ_ID}
+            , #{PRJ_ID}
+            , #{REQ_ID}
+            , #{ATTACH_FILE}
+            , #{METHOD_CONFIRM_YN}
+            , #{DANGER_GRADE}
+            , #{ACT_STEP_CD}
+            , #{ACT_STEP_SUB_CD}
+            , #{METHODITEM_DESC}
+            , #{GRDA_ESSN_YN}
+            , #{GRDB_ESSN_YN}
+            , #{GRDC_ESSN_YN}
+            , #{GRDD_ESSN_YN}
+            , #{PRJ_ESSN_YN}
+            , #{MUST_ESSN_YN}
+            , #{GRDA_REGI_PTM}
+            , #{GRDB_REGI_PTM}
+            , #{GRDC_REGI_PTM}
+            , #{GRDD_REGI_PTM}
+            , #{PRJ_REGI_PTM}
+            , #{GRDA_REGI_PTM_CD}
+            , #{GRDB_REGI_PTM_CD}
+            , #{GRDC_REGI_PTM_CD}
+            , #{GRDD_REGI_PTM_CD}
+            , #{PRJ_REGI_PTM_CD}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , #{LMPID}
+        )
+	</insert>
+    <insert id="insert03" parameterType="java.util.Map">
+    /*DELETABLE 추가*/
+	        INSERT INTO SR_MA_PRJ_TS_RESULT
+	        (
+	              REQ_ID    --요청서ID
+	            , PRJ_ID    --서브프로젝트ID
+	            , SCENR_ID  --시나리오ID
+	            , SCENR_SEQ --일련번호
+	            , SCENR_NM  --시나리오명
+	            , SCENR_LV  --레벨
+	            , MBR_USER_ID   --구성원ID
+	            , MBR_USER_NM   --구성원이름
+	            , SCENR_CHK --체크확인사항
+	            , SCENR_RSL --처리내용(결과값)
+
+	            , SCENR_STAT    --제외구분
+	            , SCENR_PRG
+	            , SCENR_COMP_DT --완료일자
+	            , ROLE_CD   --역할코드
+	            
+	            , RMK   --비고
+	            , FRID  --최초등록자
+	            , LMID  --최종수정자
+	        )
+	        VALUES
+	        (
+	              #{REQ_ID}
+	            , (SELECT PRJ_ID FROM SR_MA_PRJ WHERE REQ_ID = #{REQ_ID})
+	            , #{SCENR_ID}
+	            , (SELECT NVL(MAX(SCENR_SEQ)+1,1) FROM SR_MA_PRJ_TS_RESULT)
+	            , #{SCENR_NM}
+	            , #{SCENR_LV}
+	            , #{MBR_USER_ID}
+	            , #{MBR_USER_NM}
+	            , #{SCENR_CHK}
+	            , #{SCENR_RSL}
+	            , #{SCENR_STAT}
+	            , #{SCENR_PRG}
+	            , #{SCENR_COMP_DT}
+	            , #{ROLE_CD}
+	            
+	            , #{RMK}
+	            , #{LMID}
+	            , #{LMID}
+	        )
+    </insert>
+    
+     <insert id="insert04" parameterType="java.util.Map">
+      /* 사용하는 쿼리인가요 ? */
+            INSERT INTO SR_MA_PRJ_TS_RESULT
+            (
+                  REQ_ID    --요청서ID
+                , PRJ_ID    --서브프로젝트ID
+                , SCENR_ID  --시나리오ID
+                , SCENR_SEQ --일련번호
+                , SCENR_NM  --시나리오명
+                , SCENR_LV  --레벨
+                , MBR_USER_ID   --구성원ID
+                , MBR_USER_NM   --구성원이름
+                , SCENR_CHK --체크확인사항
+                , SCENR_RSL --처리내용(결과값)
+                , BOARD_ID  --결과(웹에디터 저장완료/대기)
+                , SCENR_STAT    --제외구분
+                , SCENR_PRG
+                , SCENR_COMP_DT --완료일자
+                , ROLE_CD   --역할코드
+                , AT_CNT    --첨부파일유무
+                , RMK   --비고
+                , FRID  --최초등록자
+                , LMID  --최종수정자
+            )
+            VALUES
+            (
+                  #{REQ_ID}
+                , #{PRJ_ID}
+                , #{SCENR_ID}
+                , (SELECT NVL(MAX(SCENR_SEQ)+1,1) FROM SR_MA_PRJ_TS_RESULT)
+                , #{SCENR_NM}
+                , #{SCENR_LV}
+                , #{MBR_USER_ID}
+                , #{MBR_USER_NM}
+                , #{SCENR_CHK}
+                , #{SCENR_RSL}
+                , #{BOARD_ID}
+                , #{SCENR_STAT}
+                , #{SCENR_PRG}
+                , #{SCENR_COMP_DT}
+                , #{ROLE_CD}
+                , #{AT_CNT}
+                , #{RMK}
+                , #{LMID}
+                , #{LMID}
+            )
+    </insert>
+    <update id="modify01" parameterType="java.util.Map">
+           UPDATE SR_MA_PRJ_TS_RESULT SET
+             SCENR_NM = #{SCENR_NM}    							--시나리오명
+            , SCENR_CHK = #{SCENR_CHK}  						--체크확인사항
+            , SCENR_RSL = #{SCENR_RSL}  						--처리내용(결과값)
+            , SCENR_STAT = #{SCENR_STAT}  						--
+
+            , BOARD_ID = #{BOARD_ID}    						--결과(웹에디터 저장완료/대기)
+            , SCENR_COMP_DT = #{SCENR_COMP_DT}  --완료일자
+            , AT_CNT = #{AT_CNT}    							--첨부파일유무
+            , LMID = #{LMID}    								--최종수정자
+            , LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')    	--최종수정일시
+            , SCENR_PRG = #{SCENR_PRG}  						--관련프로그램명
+        WHERE 1 = 1
+        <if test="REQ_ID != '' and REQ_ID != null">
+        AND REQ_ID = #{REQ_ID}
+        </if>
+        <if test="SCENR_SEQ != '' and SCENR_SEQ != null">
+        AND SCENR_SEQ = #{SCENR_SEQ}
+        </if>
+    </update>
+    <update id="modify04" parameterType="java.util.Map">
+           UPDATE SR_MA_PRJ_METHODITEM set 
+			  GRDA_ESSN_YN  = #{GRDA_ESSN_YN}
+			, GRDB_ESSN_YN  = #{GRDB_ESSN_YN}
+			, GRDC_ESSN_YN  = #{GRDC_ESSN_YN}
+			, GRDD_ESSN_YN  = #{GRDD_ESSN_YN}
+			, PRJ_ESSN_YN   = #{PRJ_ESSN_YN}
+			WHERE  1=1 
+			AND PRJ_ID = #{PRJ_ID}
+            AND METHODITEM_ID = #{METHODITEM_ID}
+
+    </update>
+    <update id="modify05" parameterType="java.util.Map">
+          UPDATE FOMM_BOARD_MT SET DEL_YN ='Y'
+          WHERE TITLE = TO_CHAR(#{SCENR_SEQ})
+
+    </update>
+    <update id="modify06" parameterType="java.util.Map">
+          UPDATE FOMM_ATCHFILE_MT SET DEL_YN = 'Y'
+          WHERE 1=1
+          AND KEY_TBL ='SR2000_T02_TC'
+          AND PK2 = TO_CHAR(#{SCENR_SEQ})
+    </update>
+    
+    <update id="modify07" parameterType="java.util.Map">
+	      UPDATE SR_MA_PRJ SET REF_PRJ_ID = #{REF_PRJ_ID}
+	      WHERE 1=1 
+	      AND PRJ_ID = #{PRJ_ID}
+    </update>
+    
+	<delete id="remove01" parameterType="java.util.Map">
+        DELETE
+        FROM SR_MA_PRJ_TS_RESULT
+        WHERE 1 = 1
+        <if test="REQ_ID != '' and REQ_ID != null">
+        AND REQ_ID = #{REQ_ID}
+        </if>
+        <if test="SCENR_SEQ != '' and SCENR_SEQ != null">
+        AND SCENR_SEQ = #{SCENR_SEQ}
+        </if>
+	</delete>
+
+</mapper>

@@ -1,0 +1,13 @@
+﻿{
+	"name": "ExLib",
+	"version": "17.0.1.3600",
+	"description": "ExLib for nexacro",
+	"license": "",
+	"scripts": [        
+        "ExLib/core.js",
+        "ExLib/util.js",
+		"ExLib/define.js"
+	]
+}
+//@ sourceURL=ExLib.json
+

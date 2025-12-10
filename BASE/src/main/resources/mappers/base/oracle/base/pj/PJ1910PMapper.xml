@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ1910PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		 SELECT
+			  '0' AS CHK 
+			, A.PJT_ID 
+			, A.PJT_NAME
+			, A.PJT_STATUS_CD 
+			, A.PJT_DESC 
+			, A.PJT_EXEC_CD 
+			, A.IN_PM_USER_ID 
+			, A.IN_PM_USER_NM 
+			, A.IN_PM_DEPT 
+			, A.OUT_PM_USER_ID 
+			, A.OUT_PM_USER_NM 
+			, A.OUT_CPY_ID 
+			, A.OUT_CPY_NAME 
+			, A.UPMU_USER_ID 
+			, A.UPMU_USER_NM 
+			, A.UPMU_USER_DEPT 
+			, A.PJT_STIME
+			, A.PJT_ETIME
+			, A.PJT_TYPE_CD 
+			, A.PJT_SIZE_CD 
+			, A.PJT_DEV_CD 
+			, A.PJT_STD_YN 
+			, A.PJT_OPEN_DATE 
+			, A.CONTRT_ID 
+			, A.DEV_AMOUNT 
+			, A.DEV_MM 
+			, A.HW_AMOUNT 
+			, A.SW_AMOUNT 
+			, A.TOT_AMOUNT 
+			, A.REG_STIME 
+			, A.REG_USER_ID 
+			, A.REG_USER_NM 
+			, A.REG_USER_DEPT 
+			, A.SYSMODTIME 
+			, A.LMOD_USER_ID 
+			, A.LMOD_USER_NM 
+			, A.LMOD_USER_DEPT 
+			, A.CONTRACT_ID 
+			, A.CONTRACT_NO 
+			, A.OUT_PM_DEPT 
+			, A.SUB_PJT_NO 
+			, A.SUB_PJT_YN 
+			, A.PARENT_ID 
+			, A.WEIGHT 
+			, A.PJT_NAME AS ORG_PJT_NAME 
+			, A.SPV_YN
+
+		FROM 
+			PJ_PROJECT A
+
+		WHERE 1 = 1
+		AND A.PJT_ID = #{PJT_ID}
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		WITH PJT AS
+		(
+			SELECT
+				PJT_ETIME
+			FROM PJ_PROJECT
+			WHERE PJT_ID = #{PJT_ID}
+		)
+		SELECT
+			  '0' AS CHK
+			, '' AS ROWFLAG
+			, LIST.QA_LIST_ID
+			, ITEM.QA_ITEM_ID
+			, RST.QA_RST_ID  			
+			, #{PJT_ID} PJT_ID
+			, ITEM.QA_ITEM_NM
+			, ITEM.QA_ITEM_BASIS
+			, ITEM.QA_ITEM_TGT_VAL
+			, RST.QA_ITEM_VALUE
+			, RST.REMARK
+
+		FROM 
+			PJ_QA_LIST LIST,
+			PJ_QA_ITEM ITEM,
+			PJT, 
+       		(SELECT QA_ITEM_ID, QA_RST_ID, QA_ITEM_VALUE, REMARK FROM PJ_QA_RST WHERE PJT_ID = #{PJT_ID}) RST
+
+		WHERE 1 = 1
+		AND LIST.QA_LIST_ID = ITEM.QA_LIST_ID
+		AND ITEM.QA_ITEM_ID	= RST.QA_ITEM_ID(+)
+		AND LIST.ACT_STIME <![CDATA[<=]]> PJT.PJT_ETIME
+		AND LIST.ACT_ETIME	>= PJT.PJT_ETIME
+	</select>
+
+	<select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0' AS CHK
+			, QA_RST_ID
+			, QA_ITEM_ID
+			, QA_LIST_ID
+			, QA_ITEM_NM
+			, PJT_ID
+			, QA_ITEM_VALUE
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+			, REMARK
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		FROM 
+			PJ_QA_RST
+
+		WHERE 1 = 1
+		AND PJT_ID = #{PJT_ID}
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="QA_RST_ID" order="BEFORE">
+			SELECT
+				'PJQR' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(QA_RST_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_QA_RST
+   			WHERE 1 = 1
+   			AND QA_RST_ID LIKE 'PJQR%'
+			AND LENGTH(PJT_ID) = 16
+		</selectKey>
+		
+		INSERT INTO PJ_QA_RST 
+		(
+			  QA_RST_ID
+			, QA_ITEM_ID
+			, QA_LIST_ID
+			, QA_ITEM_NM
+			, PJT_ID
+			, QA_ITEM_VALUE
+			, REMARK
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+			
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  #{QA_RST_ID}
+			, #{QA_ITEM_ID}
+			, #{QA_LIST_ID}
+			, #{QA_ITEM_NM}
+			, #{PJT_ID}
+			, #{QA_ITEM_VALUE}
+			, #{REMARK}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_QA_RST SET
+			  QA_ITEM_VALUE		= #{QA_ITEM_VALUE} 
+			, REMARK			= #{REMARK}
+
+			, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		WHERE 1 = 1
+		AND QA_RST_ID = #{QA_RST_ID}
+	</update>
+
+</mapper>

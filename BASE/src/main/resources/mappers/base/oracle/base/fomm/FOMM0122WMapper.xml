@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0122WDAO">
+
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT 
+		    DISTINCT EXTD_ID AS CMM_CD,
+		    EXTD_NM AS CMM_CD_NM
+		FROM FOMM_AUTH_EXTD_MT
+		WHERE 1=1
+		AND USE_YN ='Y'
+		ORDER BY EXTD_NM
+    </select>
+    
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT  
+            DISTINCT AUTH_ID AS CMM_CD,
+            AUTH_NM AS CMM_CD_NM 
+        FROM FOMM_AUTH_MT
+        WHERE 1=1
+        AND USE_YN ='Y'
+        ORDER BY AUTH_NM
+    </select>
+
+    <select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              FRAH.AUTH_HT_ID   --권한변경이력. AUHT + 년월일(8) + SEQ_HIST_ID(5)
+            , FRAH.USER_ID  --사용자ID
+            , FRAH.AUTH_ID  --권한그룹ID
+            , FRAH.AUTH_GRP_GB  --권한그룹유형(G:권한그룹 X:확장그룹)
+            , CASE WHEN AUTH_GRP_GB = 'G' THEN '권한그룹' ELSE '확장그룹' END AUTH_GRP_NM
+            , CASE WHEN AUTH_GRP_GB = 'G' THEN (SELECT AUTH_NM FROM FOMM_AUTH_MT FAM WHERE 1=1 AND FAM.AUTH_ID =  FRAH.AUTH_ID) 
+              WHEN AUTH_GRP_GB = 'X' THEN (SELECT DISTINCT EXTD_NM FROM FOMM_AUTH_EXTD_MT FAEM WHERE 1=1 AND FAEM.EXTD_ID =  FRAH.AUTH_ID) 
+                END AS AUTH_NM
+            , FRAH.AUTH_ACT_GB  --등록/해지구분(A:권한등록 D:권한해지)
+            , CASE WHEN AUTH_ACT_GB = 'A' THEN '권한등록' ELSE '권한해지' END AUTH_ACT_NM
+            , FRAH.REQ_ID   --권한신청서ID(REQ_ID)
+            ,(SELECT TITLE FROM SR_BASE_INFO SBI WHERE 1=1 AND SBI.REQ_ID = FRAH.REQ_ID ) as TITLE
+            , FRAH.USER_NM  --사용자이름
+            , FRAH.DEPT_ID  --사용자부서ID
+            , FRAH.DEPT_NM  -- 
+            , FRAH.RMK  -- 
+            , FRAH.FRID -- 등록자
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = FRAH.FRID) AS FRNM  /* 최초등록자 */
+            , FRAH.FRDT -- 
+            , FRAH.LMID -- 
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = FRAH.LMID) AS LMNM  /* 수정자 */
+            , FRAH.LMDT -- 
+            , FRAH.LMPID    -- 
+        FROM FOMM_REQ_AUTH_HT FRAH
+        WHERE 1 = 1
+        <if test="AUTH_HT_ID != '' and AUTH_HT_ID != null">
+        AND FRAH.AUTH_HT_ID = #{AUTH_HT_ID}
+        </if>
+        <if test="AUTH_ID != '' and AUTH_ID != null">
+        AND FRAH.AUTH_ID = #{AUTH_ID}
+        </if>
+        <if test="AUTH_GRP_GB != '' and AUTH_GRP_GB != null and AUTH_GRP_GB !='ALL'">
+        AND FRAH.AUTH_GRP_GB = #{AUTH_GRP_GB}
+        </if>
+        <if test="USER_ID != '' and USER_ID != null">
+        AND FRAH.USER_ID = #{USER_ID}
+        </if>
+        <if test="DEPT_ID != '' and DEPT_ID != null">
+        AND FRAH.DEPT_ID = #{DEPT_ID}
+        </if>
+        <if test="AUTH_ACT_GB != '' and AUTH_ACT_GB != null and AUTH_ACT_GB != 'ALL'">
+        AND FRAH.AUTH_ACT_GB = #{AUTH_ACT_GB}
+        </if>
+        ORDER BY FRAH.FRDT DESC
+    </select>
+
+    <select id="select04" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT 
+		    *
+		FROM (
+		    SELECT 
+		        '' AS CHK,
+		        '' AS ROWFLAG,
+		        FAEM.DEST_CD AS USER_ID,
+		        (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = FAEM.DEST_CD) AS USER_NM,
+		        (SELECT DEPT_ID FROM FOMM_USER_MT WHERE USER_ID = FAEM.DEST_CD) AS DEPT_ID,
+		        (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = FAEM.DEST_CD) AS DEPT_NM,
+		        'X' AS AUTH_GRP_GB, -- 유형 X 확장 , G 그룹
+		        '확장그룹' AS AUTH_GB_NM, -- 유형 X 확장 , G 그룹
+		        FAEM.EXTD_ID AS AUTH_ID,
+		        FAEM.EXTD_NM AUTH_NM
+		    FROM FOMM_AUTH_EXTD_MT FAEM
+		    WHERE 1=1
+		    AND FAEM.EXTD_GB ='10'
+		     UNION ALL
+		    SELECT 
+		        '' AS CHK,
+		        '' AS ROWFLAG,
+		        FAUD.USER_ID,
+		        (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = FAUD.USER_ID) AS USER_NM,
+		        (SELECT DEPT_ID FROM FOMM_USER_MT WHERE USER_ID = FAUD.USER_ID) AS DEPT_ID,
+		        (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = FAUD.USER_ID) AS DEPT_NM,
+		        'G' AS AUTH_GRP_GB, -- 유형 X 확장 , G 그룹
+		        '권한그룹' AS AUTH_GB_NM, -- 유형 X 확장 , G 그룹
+		        AUTH_ID,
+		        (SELECT AUTH_NM FROM FOMM_AUTH_MT FAM WHERE 1=1 AND FAM.AUTH_ID =  FAUD.AUTH_ID) as AUTH_NM
+		    FROM FOMM_AUTH_USER_DT FAUD
+		    WHERE 1=1
+		)
+		WHERE 1=1
+        <if test="USER_ID != '' and USER_ID != null">
+	    AND USER_ID = #{USER_ID}
+		</if>
+		<if test="AUTH_GRP_GB != '' and AUTH_GRP_GB != null">
+		AND AUTH_GRP_GB = #{AUTH_GRP_GB}
+		</if>
+		<if test="AUTH_ID != '' and AUTH_ID != null">
+		AND AUTH_ID = #{AUTH_ID}
+		</if>
+        ORDER BY AUTH_NM , USER_NM
+    </select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+        INSERT INTO FOMM_REQ_AUTH_HT
+        (
+              AUTH_HT_ID    --권한변경이력. AUHT + 년월일(8) + SEQ_HIST_ID(5)
+            , USER_ID   --사용자ID
+            , AUTH_ID   --권한그룹ID
+            , AUTH_GRP_GB   --권한그룹유형(G:권한그룹 X:확장그룹)
+            , AUTH_ACT_GB   --등록/해지구분(A:권한등록 D:권한해지)
+            , REQ_ID    --권한신청서ID(REQ_ID)
+            , USER_NM   --사용자이름
+            , DEPT_ID   --사용자부서ID
+            , DEPT_NM   -- 
+            , RMK   -- 
+            , FRID  -- 
+            , FRDT  -- 
+            , LMID  -- 
+            , LMDT  -- 
+            , LMPID -- 
+        )
+        VALUES
+        (
+              (SELECT 'AUTH'|| TO_CHAR(SYSDATE,'YYYYMMDD') ||LPAD(NVL(TO_NUMBER(MAX(SUBSTR(AUTH_HT_ID,13)))+1,1),5,0) AUTH_HT_ID 
+                FROM FOMM_REQ_AUTH_HT
+		        WHERE 1=1
+		        AND TO_CHAR(TO_DATE(FRDT,'YYYYMMDDHH24MISS'),'YYYYMMDD') = to_char(SYSDATE,'YYYYMMDD')
+	          )
+            , #{USER_ID}
+            , #{AUTH_ID}
+            , #{AUTH_GRP_GB}
+            , #{AUTH_ACT_GB}
+            , #{REQ_ID}
+            , #{USER_NM}
+            , #{DEPT_ID}
+            , #{DEPT_NM}
+            , #{RMK}
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMPID}
+        )
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+        UPDATE FOMM_REQ_AUTH_HT SET 
+             REQ_ID = #{REQ_ID}
+            ,LMID = #{LMID}
+            ,LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        WHERE 1=1
+        AND AUTH_HT_ID = #{AUTH_HT_ID}
+        AND AUTH_ID = #{AUTH_ID}
+
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	</delete>
+
+</mapper>

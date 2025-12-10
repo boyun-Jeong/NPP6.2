@@ -1,0 +1,2416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SRCommDAO">
+
+    <select id="execSelectQueryString" parameterType="java.util.Map" resultType="java.util.Map">
+        ${QUERY_STRING}
+    </select>
+
+    <insert id="execQueryString" parameterType="java.util.Map">
+        ${QUERY_STRING}
+    </insert>
+
+    <select id="selectRegTblQuery" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+            (
+            SELECT
+                'SELECT ' || CHR(13)||CHR(10) || CHR(9) || '  ' || '''' || '0' || '''' || CHR(9) || 'AS CHK' ||
+                CHR(13)||CHR(10) || CHR(9) || ', ' || '''''' || CHR(9) || 'AS ROWFLAG' || CHR(13)||CHR(10) || CHR(9) ||
+                --', ' || LISTAGG('A.' || COLUMN_NAME, CHR(13)||CHR(10) || CHR(9) || ', ') WITHIN GROUP (ORDER BY COLUMN_ID) || CHR(13)||CHR(10) || CHR(13)||CHR(10) ||
+                ', ' || XMLAGG(XMLELEMENT(A, ('A.' || COLUMN_NAME || CHR(13)||CHR(10) || CHR(9) || ', ')) ORDER BY COLUMN_ID).EXTRACT('//text()').GETCLOBVAL() || CHR(13)||CHR(10) || CHR(13)||CHR(10) ||
+                
+                'FROM' || CHR(13)||CHR(10) || CHR(9) || TABLE_NAME || ' A ' || CHR(13)||CHR(10) || CHR(13)||CHR(10) ||
+                'WHERE 1 = 1' || CHR(13)||CHR(10) ||
+                'AND ' ||
+                (
+                SELECT XMLAGG(XMLELEMENT(A, (E.COLUMN_NAME || ' = ' || '#' || '{' || E.COLUMN_NAME || '}' || CHR(13)||CHR(10) || 'AND ')) ORDER BY E.POSITION).EXTRACT('//text()').GETCLOBVAL() AS PK_COLS
+                FROM    
+                ALL_CONSTRAINTS  D,
+                ALL_CONS_COLUMNS E
+                WHERE 1 = 1
+                AND D.OWNER           = E.OWNER
+                AND D.CONSTRAINT_NAME = E.CONSTRAINT_NAME
+                AND D.TABLE_NAME      = B.TABLE_NAME
+                AND D.CONSTRAINT_TYPE = 'P'
+                AND E.COLUMN_NAME     = 'REQ_ID'
+                )
+            FROM ALL_TAB_COLUMNS B
+            WHERE TABLE_NAME = A.TNAME
+            GROUP BY
+                TABLE_NAME
+            )   AS SELECT_QUERY,
+            (
+            SELECT
+                'INSERT INTO ' || TABLE_NAME || CHR(13)||CHR(10) ||
+                '(' || CHR(13)||CHR(10) || CHR(9) || '  ' ||
+                XMLAGG(XMLELEMENT(A, (COLUMN_NAME || CHR(13)||CHR(10) || CHR(9) || ', ')) ORDER BY COLUMN_ID).EXTRACT('//text()').GETCLOBVAL() || CHR(13)||CHR(10) ||
+                ')' || CHR(13)||CHR(10) ||
+                'VALUES' || CHR(13)||CHR(10) || 
+                '(' || CHR(13)||CHR(10) || CHR(9) || '  ' ||
+                XMLAGG(XMLELEMENT(A,
+                    CASE
+                        WHEN COLUMN_NAME IN ('FRID', 'LMID') THEN '#' || '{LMID}'
+                        WHEN COLUMN_NAME IN ('FR_USER_NM', 'LM_USER_NM') THEN '(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #' || '{LMID})'
+                        WHEN COLUMN_NAME IN ('FR_DEPT_CD', 'LM_DEPT_CD') THEN '(SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #' || '{LMID})'
+                        WHEN COLUMN_NAME IN ('FR_DEPT_NM', 'LM_DEPT_NM') THEN '(SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #' || '{LMID})'
+                        WHEN COLUMN_NAME IN ('FRDT', 'LMDT') THEN 'TO_CHAR(SYSDATE, ''YYYYMMDDHH24MISS'')'
+                        ELSE '#' || '{' || COLUMN_NAME || '}'
+                    END
+                    || CHR(13)||CHR(10) || CHR(9) || ', ') ORDER BY COLUMN_ID).EXTRACT('//text()').GETCLOBVAL() || CHR(13)||CHR(10) || ')'
+                
+            FROM ALL_TAB_COLUMNS
+            WHERE TABLE_NAME = A.TNAME
+            GROUP BY
+                TABLE_NAME
+            ) AS INSERT_QUERY,
+            (
+            SELECT
+                'UPDATE ' || TABLE_NAME || ' SET ' || CHR(13)||CHR(10) || CHR(9) || '  ' ||
+                XMLAGG(XMLELEMENT(A,
+                    COLUMN_NAME || ' = ' ||
+                    CASE
+                        WHEN COLUMN_NAME = 'LM_USER_NM' THEN '(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #' || '{LMID})'
+                        WHEN COLUMN_NAME = 'LM_DEPT_CD' THEN '(SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #' || '{LMID})'
+                        WHEN COLUMN_NAME = 'LM_DEPT_NM' THEN '(SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #' || '{LMID})'
+                        WHEN COLUMN_NAME = 'LMDT' THEN 'TO_CHAR(SYSDATE, ''YYYYMMDDHH24MISS'')'
+                        ELSE '#' || '{' || COLUMN_NAME || '}'
+                    END        
+                    || CHR(13)||CHR(10) || CHR(9) || ', ') ORDER BY COLUMN_ID).EXTRACT('//text()').GETCLOBVAL() || ' ' || CHR(13)||CHR(10) || CHR(13)||CHR(10) ||
+                'WHERE 1 = 1' || CHR(13)||CHR(10) ||
+                'AND ' ||
+                (
+                SELECT XMLAGG(XMLELEMENT(A, (E.COLUMN_NAME || ' = ' || '#' || '{' || E.COLUMN_NAME || '}' || CHR(13)||CHR(10) || 'AND ')) ORDER BY E.POSITION).EXTRACT('//text()').GETCLOBVAL() AS PK_COLS
+                FROM    
+                ALL_CONSTRAINTS  D,
+                ALL_CONS_COLUMNS E
+                WHERE 1 = 1
+                AND D.OWNER           = E.OWNER
+                AND D.CONSTRAINT_NAME = E.CONSTRAINT_NAME
+                AND D.TABLE_NAME      = B.TABLE_NAME
+                AND D.CONSTRAINT_TYPE = 'P'
+                ) AS QUERY
+            FROM ALL_TAB_COLUMNS B
+            WHERE 1 = 1
+            AND TABLE_NAME = A.TNAME
+            AND COLUMN_NAME NOT IN ('FRID', 'FR_USER_NM', 'FR_DEPT_CD', 'FR_DEPT_NM', 'FRDT')
+            AND NOT EXISTS
+                        (
+                        SELECT 1
+                        FROM    
+                        ALL_CONSTRAINTS  D,
+                        ALL_CONS_COLUMNS E
+                        WHERE 1 = 1
+                        AND D.OWNER             = E.OWNER
+                        AND D.CONSTRAINT_NAME   = E.CONSTRAINT_NAME
+                        AND D.CONSTRAINT_TYPE   = 'P'
+                        AND D.TABLE_NAME        = B.TABLE_NAME
+                        AND E.COLUMN_NAME       = B.COLUMN_NAME
+                        )
+        
+            GROUP BY
+                TABLE_NAME
+            ) AS UPDATE_QUERY,
+            'DELETE' || CHR(13)||CHR(10) ||
+            'FROM ' || TNAME || ' ' || CHR(13)||CHR(10) ||
+            'WHERE 1 = 1' || CHR(13)||CHR(10) ||
+            'AND ' ||
+            (
+            SELECT XMLAGG(XMLELEMENT(A, (E.COLUMN_NAME || ' = ' || '#' || '{' || E.COLUMN_NAME || '}' || CHR(13)||CHR(10) || CHR(13) || 'AND ')) ORDER BY E.POSITION).EXTRACT('//text()').GETCLOBVAL() AS PK_COLS
+                FROM    
+                ALL_CONSTRAINTS  D,
+                ALL_CONS_COLUMNS E
+                WHERE 1 = 1
+                AND D.OWNER           = E.OWNER
+                AND D.CONSTRAINT_NAME = E.CONSTRAINT_NAME
+                AND D.TABLE_NAME      = A.TNAME
+                AND D.CONSTRAINT_TYPE = 'P'
+             )  AS DELETE_QUERY
+        FROM
+            TAB A
+        WHERE 1 = 1
+        AND A.TNAME NOT LIKE 'BIN%'
+        AND A.TABTYPE   = 'TABLE'
+        AND A.TNAME     = #{TBL_NM}
+    </select>
+
+    <select id="selectReqRegTblInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              A.REQ_TMPLAT_ID
+            , A.WF_PROC_CD
+            , A.TBL_NM
+            , A.DATASET_NM
+            , A.INC_TEMP_SAVE_YN  --임시저장포함여부
+            , A.WF_PROC_AGREE_YN  --단계일치여부
+            , A.USE_YN            --사용여부
+            , A.TBL_DESC
+            , A.SELECT_QUERY
+            , A.INSERT_QUERY
+            , A.UPDATE_QUERY
+            , A.DELETE_QUERY
+            , A.RMK
+
+        FROM
+              WF_REG_TBL_IFNO_HT A
+            , WF_REQ_TMPLAT_PROC_HT B
+
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+        AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+        AND A.WF_PROC_CD        = B.WF_PROC_CD
+        AND A.REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+        AND A.REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+
+        <choose>
+            <when test='"SAVE".equals(GUBUN)'>
+                <if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+        AND (
+             A.WF_PROC_CD = #{WF_PROC_CD}
+                    <if test="WF_FUNC_CD != '' and WF_FUNC_CD != null">
+             OR
+             INSTR
+             (
+                (
+                SELECT
+                    LISTAGG(    /* DISTINCT */
+                        CASE
+                            WHEN #{WF_FUNC_CD} = 'WF_FUNC_04'
+                            THEN SCREEN_EDIT
+                            WHEN #{WF_FUNC_CD} = 'WF_FUNC_01' OR #{WF_FUNC_CD} = 'WF_FUNC_02'
+                            THEN EDIT
+                            ELSE NULL
+                        END, ', ') WITHIN GROUP (ORDER BY SEQ)
+                FROM WF_REQ_TMPLAT_PROC_HT X
+                WHERE 1 = 1
+                AND X.REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+                AND X.REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+                AND X.WF_PROC_CD    = #{WF_PROC_CD}
+                ), A.WF_PROC_CD
+            ) > 0
+                    </if>
+           )
+        AND (
+             (A.WF_PROC_AGREE_YN = 'Y' AND A.WF_PROC_CD = #{WF_PROC_CD}) OR
+             (A.WF_PROC_AGREE_YN = 'N' AND 1 = 1)
+            )
+                </if>
+            </when>
+            <otherwise>
+            AND B.SEQ  <![CDATA[<=]]> (SELECT SEQ FROM WF_REQ_TMPLAT_PROC_HT WHERE REQ_TMPLAT_ID = B.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = B.REQ_TMPLAT_VER AND WF_PROC_CD = #{WF_PROC_CD})
+            </otherwise>
+
+        </choose>
+
+        AND A.USE_YN = 'Y'
+
+        <if test='REQ_ID != "" and REQ_ID != null and !REQ_ID.startsWith("REQ_")'>
+        AND EXISTS
+                    (
+                    SELECT 1
+                    FROM
+                        (
+                        SELECT
+                              #{REQ_ID}         AS REQ_ID
+                            , 'WF_PROC_1000'    AS WF_PROC_CD
+                            , 1                 AS SEQ
+                            , 'N'               AS WF_PROC_SKIP_YN
+                            
+                        FROM
+                            DUAL
+    
+                        UNION
+    
+                        SELECT
+                              REQ_ID
+                            , WF_PROC_CD
+                            , SEQ
+                            , WF_PROC_SKIP_YN
+                        FROM SR_WF_PROC
+                        WHERE 1 = 1
+                        AND WF_PROC_SKIP_YN = 'N'
+                        AND REQ_ID          = #{REQ_ID}
+                        
+                        UNION
+                        
+                        SELECT
+                              #{REQ_ID}     AS REQ_ID
+                            , #{WF_PROC_CD} AS WF_PROC_CD
+                            , (SELECT SEQ FROM WF_REQ_TMPLAT_PROC_HT WHERE REQ_TMPLAT_ID = #{REQ_TMPLAT_ID} AND REQ_TMPLAT_VER = #{REQ_TMPLAT_VER} AND WF_PROC_CD = #{WF_PROC_CD}) AS SEQ
+                            , 'N'           AS WF_PROC_SKIP_YN
+
+                        FROM
+                            DUAL
+                        ) X
+                    WHERE 1 = 1
+                    AND A.WF_PROC_CD       = X.WF_PROC_CD
+                    )
+                    
+        </if>
+
+        ORDER BY
+            B.SEQ,
+            A.ORDR
+    </select>
+
+    <select id="selectReqProcSvcInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              A.REQ_TMPLAT_ID
+            , A.WF_PROC_CD
+            , A.FUNC
+            , A.PROC_GUBUN
+            , A.SEQ
+            , A.PRE_GUBUN
+            , A.INC_TEMP_SAVE_YN
+            , A.WF_PROC_AGREE_YN
+            , A.USE_YN
+            , A.SVC_NM
+            , A.IN_DATASET
+            , A.OUT_DATASET
+            , A.RMK
+
+        FROM
+              WF_REQ_PROC_SVC_HT A
+            , WF_REQ_TMPLAT_PROC_HT B
+
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+        AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+        AND A.WF_PROC_CD        = B.WF_PROC_CD
+        AND A.REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+        <choose>
+            <when test="REQ_TMPLAT_VER != '' and REQ_TMPLAT_VER != null">
+        AND A.REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+            </when>
+            <otherwise>
+                <choose>
+                    <when test='REQ_ID != "" and REQ_ID != null and !REQ_ID.startsWith("REQ_")'>
+        AND A.REQ_TMPLAT_VER    = (SELECT REQ_TMPLAT_VER FROM SR_BASE_INFO WHERE REQ_ID = #{REQ_ID})
+                    </when>
+                    <otherwise>
+        AND A.REQ_TMPLAT_VER    = (SELECT REQ_TMPLAT_VER FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = #{REQ_TMPLAT_ID} AND CUR_VER_YN = 'Y')
+                    </otherwise>
+                </choose>
+            </otherwise>
+        </choose>
+
+        AND A.USE_YN = 'Y'
+
+        <choose>
+            <when test='"TEMP".equals(SAVE_GUBUN)'>
+        AND A.INC_TEMP_SAVE_YN = 'Y'
+            </when>
+            <when test='"REG".equals(SAVE_GUBUN)'>
+                <choose>
+                    <when test='"SELECT".equals(PROC_GUBUN)'>
+        AND A.FUNC = 'ALL'
+                    </when>
+                    <otherwise>
+        AND A.FUNC = 'WF_FUNC_00'    
+                    </otherwise>
+                </choose>
+            </when>
+            <when test='"REV".equals(SAVE_GUBUN)'>
+                <choose>
+                    <when test='"SELECT".equals(PROC_GUBUN)'>
+        AND A.FUNC = 'ALL'
+                    </when>
+                    <otherwise>
+        AND A.FUNC = 'WF_FUNC_04'    
+                    </otherwise>
+                </choose>        
+            </when>
+            <when test='"SCRN_RTRN".equals(SAVE_GUBUN)'>
+                <choose>
+                    <when test='"SELECT".equals(PROC_GUBUN)'>
+        AND A.FUNC = 'ALL'
+                    </when>
+                    <otherwise>
+        AND A.FUNC = 'WF_FUNC_04'    
+                    </otherwise>
+                </choose>
+            </when>
+            <when test='"APV".equals(SAVE_GUBUN)'>
+                <choose>
+                    <when test='"SELECT".equals(PROC_GUBUN)'>
+        AND A.FUNC = 'ALL'
+                    </when>
+                    <otherwise>
+        AND A.FUNC = 'WF_FUNC_01'    
+                    </otherwise>
+                </choose>
+            </when>
+            <when test='"RTRN".equals(SAVE_GUBUN)'>
+                <choose>
+                    <when test='"SELECT".equals(PROC_GUBUN)'>
+        AND A.FUNC = 'ALL'
+                    </when>
+                    <otherwise>
+        AND A.FUNC = 'WF_FUNC_01'    
+                    </otherwise>
+                </choose>
+            </when>
+        </choose>
+
+        <if test='PROC_GUBUN != "" and PROC_GUBUN != null'>
+        AND A.PROC_GUBUN    = #{PROC_GUBUN}
+        </if>
+
+        <if test="PRE_GUBUN != '' and PRE_GUBUN != null">
+        AND A.PRE_GUBUN     = #{PRE_GUBUN}
+        </if>
+
+        <if test="FR_BK_GUBUN != '' and FR_BK_GUBUN != null">
+        AND A.FR_BK_GUBUN = #{FR_BK_GUBUN}
+        </if>
+
+        <choose>
+            <!-- 저장, 승인 , 접수 -->
+            <when test='"SAVE".equals(PROC_GUBUN) or "SAVE-END".equals(PROC_GUBUN)'>
+                <if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+        AND (
+             A.WF_PROC_CD = #{WF_PROC_CD}
+                    <if test='!"RTRN".equals(SAVE_GUBUN) and !"SCRN_RTRN".equals(SAVE_GUBUN)'>
+             OR
+             INSTR
+             (
+                (
+                SELECT
+                        LISTAGG(    /* DISTINCT */
+                        CASE
+                            WHEN #{SAVE_GUBUN} IN ('TEMP', 'REG', 'REV')
+                            THEN SCREEN_EDIT
+                            WHEN #{SAVE_GUBUN} = 'APV'
+                            THEN EDIT
+                            ELSE NULL
+                        END, ', ') WITHIN GROUP (ORDER BY SEQ)  AS AA
+                FROM WF_REQ_TMPLAT_PROC_HT X
+                WHERE 1 = 1
+                AND X.REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+                <choose>
+                    <when test="REQ_TMPLAT_VER != '' and REQ_TMPLAT_VER != null">
+                AND X.REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+                    </when>
+                    <otherwise>
+                        <choose>
+                            <when test='REQ_ID != "" and REQ_ID != null and !REQ_ID.startsWith("REQ_")'>
+                AND X.REQ_TMPLAT_VER    = (SELECT REQ_TMPLAT_VER FROM SR_BASE_INFO WHERE REQ_ID = #{REQ_ID})
+                            </when>
+                            <otherwise>
+                AND X.REQ_TMPLAT_VER    = (SELECT REQ_TMPLAT_VER FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = #{REQ_TMPLAT_ID} AND CUR_VER_YN = 'Y')
+                            </otherwise>
+                        </choose>
+                    </otherwise>
+                </choose>
+                AND X.WF_PROC_CD    = #{WF_PROC_CD}
+                ), A.WF_PROC_CD
+            ) > 0
+                    </if>
+                   )
+                AND (
+                     (A.WF_PROC_AGREE_YN = 'Y' AND A.WF_PROC_CD = #{WF_PROC_CD}) OR
+                     (A.WF_PROC_AGREE_YN = 'N' AND 1 = 1)
+                    )
+                </if>
+            </when>
+            <when test='"SELECT".equals(PROC_GUBUN)'>
+            AND B.SEQ <![CDATA[<=]]> (SELECT SEQ FROM WF_REQ_TMPLAT_PROC_HT WHERE REQ_TMPLAT_ID = B.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = B.REQ_TMPLAT_VER AND WF_PROC_CD = #{WF_PROC_CD})
+            </when>
+            <when test='"RTRN".equals(PROC_GUBUN)'>
+            AND A.WF_PROC_CD = #{WF_PROC_CD}
+            </when>
+        </choose>
+
+        <if test='REQ_ID != "" and REQ_ID != null and !REQ_ID.startsWith("REQ_")'>
+        AND EXISTS
+                    (
+                    SELECT 1
+                    FROM
+                        (
+                        SELECT
+                              #{REQ_ID}         AS REQ_ID
+                            , 'WF_PROC_1000'    AS WF_PROC_CD
+                            , 1                 AS SEQ
+                            , 'N'               AS WF_PROC_SKIP_YN
+                            
+                        FROM
+                            DUAL
+    
+                        UNION
+    
+                        SELECT
+                              REQ_ID
+                            , WF_PROC_CD
+                            , SEQ
+                            , WF_PROC_SKIP_YN
+                        FROM SR_WF_PROC
+                        WHERE 1 = 1
+                        AND WF_PROC_SKIP_YN = 'N'
+                        AND REQ_ID          = #{REQ_ID}
+                        
+                        UNION
+                        
+                        SELECT
+                              #{REQ_ID}     AS REQ_ID
+                            , #{WF_PROC_CD} AS WF_PROC_CD
+                            , (SELECT SEQ FROM WF_REQ_TMPLAT_PROC_HT WHERE REQ_TMPLAT_ID = #{REQ_TMPLAT_ID} AND REQ_TMPLAT_VER = #{REQ_TMPLAT_VER} AND WF_PROC_CD = #{WF_PROC_CD}) AS SEQ
+                            , 'N'           AS WF_PROC_SKIP_YN
+
+                        FROM
+                            DUAL
+                        ) X
+                    WHERE 1 = 1
+                    AND A.WF_PROC_CD       = X.WF_PROC_CD
+                    )
+                    
+        </if>
+
+        ORDER BY
+            B.SEQ,
+            A.FUNC,
+            A.PROC_GUBUN,
+            DECODE(A.PRE_GUBUN, 'BF', 1, 'CU', 2, 'AF', 3),
+            A.SEQ
+    </select>
+
+    <select id="selectWfProcCdList" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              'WF_PROC_1000'    AS CMM_CD
+            , '등록'            AS CMM_CD_NM
+            , 1                 AS STAGE_ORDR
+            , 1                 AS ORDR
+        FROM DUAL
+
+        UNION ALL
+
+        SELECT
+              A.WF_PROC_CD  AS CMM_CD
+            , B.CMM_CD_NM   AS CMM_CD_NM
+            , ROW_NUMBER() OVER(ORDER BY WF_PROC_CD)    AS STAGE_ORDR
+            , B.SORT_ORDR
+
+        FROM
+            WF_WORKFLOW_DT A,
+            FOMM_CMM_CD_MT B
+
+        WHERE 1 = 1
+        AND A.WF_PROC_CD    = B.CMM_CD
+        AND WF_ID           = #{WF_ID}  <!-- 'WF20230524001' -->
+
+        ORDER BY
+            3, 4
+    </select>
+    
+    <update id="mergeSrWfProc" parameterType="java.util.Map">
+            MERGE
+            INTO    SR_WF_PROC A
+            USING   DUAL
+            ON      (A.REQ_ID = #{REQ_ID} AND A.WF_PROC_CD = #{WF_PROC_CD})
+       
+            WHEN MATCHED THEN
+            UPDATE  SET
+                SEQ             = 
+                                (
+                                    SELECT SEQ
+                                    FROM WF_REQ_TMPLAT_PROC_HT B
+                                    WHERE 1 = 1
+                                    AND B.REQ_TMPLAT_ID    = #{REQ_TMPLAT_ID}
+                                    AND B.REQ_TMPLAT_VER   = #{REQ_TMPLAT_VER}
+                                    AND WF_PROC_CD         = #{NEXT_WF_PROC_CD}
+                                )
+                ,LMID           = #{LMID}
+                ,LMDT           = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                     
+            WHEN NOT MATCHED THEN
+            INSERT 
+            (
+                 REQ_ID
+                ,WF_PROC_CD
+                ,SEQ
+                ,FRID
+                ,FRDT
+                ,LMID
+                ,LMDT
+            )
+            VALUES
+            (
+                  #{REQ_ID}
+                , #{WF_PROC_CD}
+                , (
+                      SELECT SEQ
+                      FROM WF_REQ_TMPLAT_PROC_HT B
+                      WHERE 1 = 1
+                      AND (B.REQ_TMPLAT_ID, B.REQ_TMPLAT_VER) IN (SELECT REQ_TMPLAT_ID, REQ_TMPLAT_VER FROM SR_BASE_INFO WHERE REQ_ID = #{REQ_ID})
+                      AND WF_PROC_CD = #{WF_PROC_CD}
+                  )
+                , #{LMID}
+                , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                , #{LMID}
+                , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            )
+    </update>
+
+    <insert id="insertWfProcHist" parameterType="java.util.Map">
+        <selectKey resultType="Integer" keyProperty="WF_HIST_SEQ" order="BEFORE">
+            SELECT NVL(MAX(TO_NUMBER(WF_HIST_SEQ)), 0)+1 FROM WF_PROC_HIST WHERE PROC_NUMBER = #{PROC_NUMBER}
+        </selectKey>
+
+        INSERT INTO WF_PROC_HIST A
+        (
+              PROC_NUMBER   --프로세스번호
+            , WF_HIST_SEQ   --히스토리키값
+            , WF_PROC_CD    --워크플로우단계코드
+            , APPR_LVL_SEQ  --결재차수 
+            , APPR_GRP_SEQ  --결재그룹번호
+            , APPR_NM       --처리명칭
+            , APPR_STAT_CD  --승인상태
+            , APPR_COMMENT  --승인/반려의견
+            , APPR_GBN_CD   --결재자구분코드
+
+            , SRM_USER_ID   --처리이력변경 사용자ID
+            , SRM_USER_NM   --처리이력변경 사용자
+            , SRM_DEPT_CD   --처리이력변경 사용자 부서코드
+            , SRM_DEPT_NM   --처리이력변경 사용자 부서명
+            , SRM_JBC_JNAME --처리이력변경 사용자 직명
+            , SRM_TELNUM    --처리이력변경 사용자 내선번호
+
+            , ORG_USER_ID   --원처리자ID(대무처리시) 
+            , ORG_USER_NM   --원처리자명(대무처리시)
+            , ORG_DEPT_CD   --원처리자부서코드(대무처리시) 
+            , ORG_DEPT_NM   --원처리자부서명(대무처리시)
+            , ORG_JBC_JNAME --원처리자직명(대무처리시)
+            , ORG_TELNUM    --원처리자내선번호(대무처리시)
+            , DAEJIC_YN     --대직처리여부 
+            , REG_STIME     --등록일시
+        )
+        VALUES
+        (
+              #{PROC_NUMBER}
+            , (SELECT NVL(MAX(TO_NUMBER(WF_HIST_SEQ)), 0)+1 FROM WF_PROC_HIST WHERE PROC_NUMBER = #{PROC_NUMBER})
+            , #{WF_PROC_CD}
+            , NVL(#{APPR_LVL_SEQ}, (SELECT APPR_LVL_SEQ FROM WF_APPROVAL_MT WHERE REQ_ID = #{PROC_NUMBER} AND WF_PROC_CD = #{WF_PROC_CD} AND SEQ = #{SEQ}))
+            , NVL(#{APPR_GRP_SEQ}, NVL((SELECT APPR_LVL_SEQ FROM WF_APPROVAL_MT WHERE REQ_ID = #{PROC_NUMBER} AND WF_PROC_CD = #{WF_PROC_CD} AND SEQ = #{SEQ}), 1))
+            , NVL(#{APPR_NM},
+                    NVL(
+                        (
+                        SELECT REPLACE(APPR_NM, '\n', ' ')
+                        FROM WF_REQ_APPV_HT B
+                        WHERE 1 = 1
+                        AND EXISTS
+                                  (
+                                  SELECT 1
+                                  FROM SR_BASE_INFO C
+                                  WHERE 1 = 1
+                                  AND C.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+                                  AND C.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+                                  AND C.REQ_ID            = #{PROC_NUMBER}
+                                  )
+                        AND WF_PROC_CD    = #{WF_PROC_CD}
+                        AND APPR_LVL_SEQ  = (SELECT APPR_LVL_SEQ FROM WF_APPROVAL_MT WHERE REQ_ID = #{PROC_NUMBER} AND WF_PROC_CD = #{WF_PROC_CD} AND SEQ = #{SEQ})
+                        ),
+                        (
+                        SELECT REPLACE(WF_PROC_NM, '\n', ' ')
+                        FROM WF_REQ_TMPLAT_PROC_HT B
+                        WHERE 1 = 1
+                        AND EXISTS
+                                  (
+                                  SELECT 1
+                                  FROM SR_BASE_INFO C
+                                  WHERE 1 = 1
+                                  AND C.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+                                  AND C.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+                                  AND C.REQ_ID              = #{PROC_NUMBER}
+                                  )
+                        AND WF_PROC_CD   = #{WF_PROC_CD}
+                        )
+                    )
+              )
+            , #{APPR_STAT_CD}   /* 결재상태코드[APPR_STAT_CD] - APST_00:[반려], APST_01:[승인대기], APST_02:[검토대기], APST_90:[등록], APST_99:[승인] */
+            , #{APPR_COMMENT}
+            , #{APPR_GBN_CD}    /* 결재자구분코드[APPR_GBN_CD] - A00:[등록자], A01:[기안자], A02:[승인자], R01:[검토자] */
+
+            , #{SRM_USER_ID}
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{SRM_USER_ID})
+            , (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{SRM_USER_ID})
+            , (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{SRM_USER_ID})
+            , (SELECT POS_NM FROM FOMM_USER_MT WHERE USER_ID = #{SRM_USER_ID})
+            , (SELECT TELNUM FROM FOMM_USER_MT WHERE USER_ID = #{SRM_USER_ID})
+
+            <choose>
+                <when test='!SRM_USER_ID.equals(ORG_USER_ID)'>
+            , #{ORG_USER_ID}
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{ORG_USER_ID})
+            , (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{ORG_USER_ID})
+            , (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{ORG_USER_ID})
+            , (SELECT POS_NM FROM FOMM_USER_MT WHERE USER_ID = #{ORG_USER_ID})
+            , (SELECT TELNUM FROM FOMM_USER_MT WHERE USER_ID = #{ORG_USER_ID})
+                </when>
+                <otherwise>
+            , null
+            , null
+            , null
+            , null
+            , null
+            , null
+                </otherwise>
+            </choose>
+
+            <choose>
+                <when test='!SRM_USER_ID.equals(ORG_USER_ID)'>            
+            , 'Y'
+                </when>
+                <otherwise>
+            , 'N'
+                </otherwise>
+            </choose>
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        )
+    </insert>
+    
+    <select id="selectRevProc" parameterType="java.util.Map" resultType="java.util.Map">        
+        SELECT
+              ''    AS ROWFLAG
+            , REQ_ID            --요청서ID
+            , WF_PROC_CD        --진행단계
+            , USER_ID           --사번(접수자 처리자 현장관리자)
+            , USER_NM           --성명(접수자 처리자 현장관리자)
+            , DEPT_CD           --부서코드(접수자 처리자 현장관리자)
+            , DEPT_NM           --부서명(접수자 처리자 현장관리자)
+            , POS_NM            --직책(접수자 처리자 현장관리자)
+            , GUBUN_NM          --처리자구분(접수자 처리자 현장관리자 등)
+            , CEGR_ID           --지정 담당자 ID)
+            , PROC_EXAM_OPIN    --처리의견
+            , PROC_DATE         --처리일시
+            , PROC_SDTIME       --처리시작일시
+            , PROC_EDTIME       --처리종료일시
+            , RMK               --비고
+            , FRID              --최초등록자ID
+            , FRDT              --최초등록일시
+            , LMID              --최종수정자ID
+            , LMDT              --최종수정일시
+            , LMPID             --최종수정 화면ID
+
+        FROM
+            SR_REV_PROC
+
+        WHERE 1 = 1
+        AND REQ_ID      = #{REQ_ID}
+        AND WF_PROC_CD  = #{WF_PROC_CD}
+    </select>
+
+    <insert id="insertSrCgerDt" parameterType="java.util.Map">
+        INSERT INTO SR_CGER_DT
+        (
+              REQ_ID
+            , WF_PROC_CD
+            , SEQ
+            , WF_FUNC_CD
+            , WF_FUNC_NM
+            , ESS_YN
+            , USER_ID
+            , APV_BTN_YN
+            , RTRN_BTN_YN
+            , SAVE_BTN_YN
+            , APV_BTN_TEXT
+            , RTRN_BTN_TEXT
+            , SAVE_BTN_TEXT
+            , ROLE_CD 
+            , RMK
+            
+            , FRID
+            , FRDT
+            , LMID
+            , LMDT
+            , LMPID
+        )
+        VALUES
+        (
+              #{REQ_ID}
+            , #{WF_PROC_CD}
+            , (SELECT NVL(MAX(SEQ), 0) + 1 FROM SR_CGER_DT WHERE REQ_ID = #{REQ_ID} AND WF_PROC_CD = #{WF_PROC_CD})
+            , NVL(#{WF_FUNC_CD}, 'WF_FUNC_04') 
+            , NVL(
+                NVL(
+                    #{WF_FUNC_NM},
+                    (
+                    SELECT CGER_NM
+                    FROM WF_REQ_TMPLAT_PROC_HT A
+                    WHERE 1 = 1
+                    AND EXISTS
+                            (
+                            SELECT 1
+                            FROM SR_BASE_INFO B
+                            WHERE 1 = 1
+                            AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+                            AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+                            AND A.WF_PROC_CD        = B.WF_PROC_CD
+                            AND B.REQ_ID            = #{REQ_ID}
+                            )
+                    )
+              ), (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'WF_FUNC_CD' AND CMM_CD = 'WF_FUNC_04' AND LANG_CD = 'KR'))
+            , NVL(#{ESS_YN}, 'N')
+            , #{USER_ID}
+            , NVL(NVL(#{APV_BTN_YN}, (SELECT SCREEN_APV_BTN_YN FROM WF_REQ_TMPLAT_PROC_HT A WHERE EXISTS(SELECT 1 FROM SR_BASE_INFO B WHERE REQ_ID = #{REQ_ID} AND B.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND B.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER) AND WF_PROC_CD = #{WF_PROC_CD})), 'N')
+            , NVL(NVL(#{RTRN_BTN_YN}, (SELECT SCREEN_RTRN_BTN_YN FROM WF_REQ_TMPLAT_PROC_HT A WHERE EXISTS(SELECT 1 FROM SR_BASE_INFO B WHERE REQ_ID = #{REQ_ID} AND B.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND B.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER) AND WF_PROC_CD = #{WF_PROC_CD})), 'N')
+            , NVL(NVL(#{SAVE_BTN_YN}, (SELECT SCREEN_SAVE_BTN_YN FROM WF_REQ_TMPLAT_PROC_HT A WHERE EXISTS(SELECT 1 FROM SR_BASE_INFO B WHERE REQ_ID = #{REQ_ID} AND B.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND B.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER) AND WF_PROC_CD = #{WF_PROC_CD})), 'N')
+            , NVL(NVL(#{APV_BTN_TEXT}, (SELECT SCREEN_APV_BTN_TEXT FROM WF_REQ_TMPLAT_PROC_HT A WHERE EXISTS(SELECT 1 FROM SR_BASE_INFO B WHERE REQ_ID = #{REQ_ID} AND B.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND B.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER) AND WF_PROC_CD = #{WF_PROC_CD})), 'N')
+            , NVL(NVL(#{RTRN_BTN_TEXT}, (SELECT SCREEN_RTRN_BTN_TEXT FROM WF_REQ_TMPLAT_PROC_HT A WHERE EXISTS(SELECT 1 FROM SR_BASE_INFO B WHERE REQ_ID = #{REQ_ID} AND B.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND B.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER) AND WF_PROC_CD = #{WF_PROC_CD})), 'N')
+            , NVL(NVL(#{SAVE_BTN_TEXT}, (SELECT SCREEN_SAVE_BTN_TEXT FROM WF_REQ_TMPLAT_PROC_HT A WHERE EXISTS(SELECT 1 FROM SR_BASE_INFO B WHERE REQ_ID = #{REQ_ID} AND B.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND B.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER) AND WF_PROC_CD = #{WF_PROC_CD})), 'N')
+            , #{ROLE_CD}
+            , #{RMK}
+
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMPID}
+        )
+    </insert>
+
+    <delete id="removeSrCgerDt" parameterType="java.util.Map">
+        DELETE
+        FROM SR_CGER_DT
+        WHERE 1 = 1
+        AND REQ_ID      = #{REQ_ID}
+        AND WF_PROC_CD  = #{WF_PROC_CD}
+    </delete>
+
+    <insert id="callPrSrReqWfProcNext" statementType="CALLABLE" parameterType="java.util.Map">
+        <![CDATA[
+        {
+            call PR_SR_REQ_WF_PROC_NEXT
+            (
+                 #{SAVE_GUBUN, mode=IN, jdbcType=VARCHAR, javaType=string}
+                ,#{REQ_ID, mode=IN, jdbcType=VARCHAR, javaType=string}
+                ,#{USER_ID, mode=IN, jdbcType=VARCHAR, javaType=string}
+                ,#{WF_PROC_CD, mode=IN, jdbcType=VARCHAR, javaType=string}
+                ,#{NEXT_WF_PROC_CD, mode=IN, jdbcType=VARCHAR, javaType=string}
+                ,#{NEXT_WF_FUNC_CD, mode=IN, jdbcType=VARCHAR, javaType=string}
+                ,#{LMPID, mode=IN, jdbcType=VARCHAR, javaType=string}
+                ,#{OUT_RTN_CD, mode=OUT, jdbcType=INTEGER, javaType=int}
+                ,#{OUT_RTN_MSG, mode=OUT, jdbcType=VARCHAR, javaType=string}
+            )
+        }]]>
+    </insert>
+
+    <insert id="callPrSrRevProc" statementType="CALLABLE" parameterType="java.util.Map">
+        <![CDATA[
+        { call PR_SR_REV_PROC(
+             #{SAVE_GUBUN, mode=IN, jdbcType=VARCHAR, javaType=string}
+            ,#{REQ_ID, mode=IN, jdbcType=VARCHAR, javaType=string}
+            ,#{WF_PROC_CD, mode=IN, jdbcType=VARCHAR, javaType=string}
+            ,#{USER_ID, mode=IN, jdbcType=VARCHAR, javaType=string}
+            ,#{ORG_USER_ID, mode=IN, jdbcType=VARCHAR, javaType=string}
+            ,#{GUBUN_NM, mode=IN, jdbcType=VARCHAR, javaType=string}
+            ,#{PROC_EXAM_OPIN, mode=IN, jdbcType=VARCHAR, javaType=string}
+            ,#{CEGR_ID, mode=IN, jdbcType=VARCHAR, javaType=string}
+            ,#{PROC_DATE, mode=IN, jdbcType=VARCHAR, javaType=string}
+            ,#{PROC_SDTIME, mode=IN, jdbcType=VARCHAR, javaType=string}
+            ,#{PROC_EDTIME, mode=IN, jdbcType=VARCHAR, javaType=string}
+            ,#{RMK, mode=IN, jdbcType=VARCHAR, javaType=string}
+            ,#{LOGIN_ID, mode=IN, jdbcType=VARCHAR, javaType=string}
+            ,#{LMPID, mode=IN, jdbcType=VARCHAR, javaType=string}
+            ,#{OUT_RTN_CD, mode=OUT, jdbcType=INTEGER, javaType=int}
+            ,#{OUT_RTN_MSG, mode=OUT, jdbcType=VARCHAR, javaType=string})}]]>
+    </insert>
+
+<!--     <insert id="callPrScrnRtnProc" parameterType="java.util.Map" statementType="CALLABLE"> -->
+<!--         <![CDATA[ -->
+<!--         { -->
+<!--             call PR_SR_REQ_WF_PROC_BACK -->
+<!--             ( -->
+<!--                 #{REQ_ID, mode=IN, jdbcType=VARCHAR}, -->
+<!--                 #{WF_PROC_CD, mode=IN, jdbcType=VARCHAR}, -->
+<!--                 'SCREEN_RTRN', -->
+<!--                 #{RTN_DESC, mode=IN, jdbcType=VARCHAR}, -->
+<!--                 #{USER_ID, mode=IN, jdbcType=VARCHAR}, -->
+<!--                 #{ORG_USER_ID, mode=IN, jdbcType=VARCHAR}, -->
+<!--                 #{LMPID, mode=IN, jdbcType=VARCHAR}, -->
+<!--                 #{OUT_RTN_CD, mode=OUT, jdbcType=INTEGER, javaType=int}, -->
+<!--                 #{OUT_RTN_MSG, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String} -->
+<!--             ) -->
+<!--         }]]> -->
+<!--     </insert> -->
+
+    <insert id="callPrScrnRtnProc" parameterType="java.util.Map" statementType="CALLABLE">
+        <![CDATA[
+        {
+            call PR_SR_REQ_WF_PROC_BACK
+            (
+                #{REQ_ID, mode=IN, jdbcType=VARCHAR},
+                #{WF_PROC_CD, mode=IN, jdbcType=VARCHAR},
+                -1,
+                #{USER_ID, mode=IN, jdbcType=VARCHAR},
+                #{ORG_USER_ID, mode=IN, jdbcType=VARCHAR},
+                'SCREEN_RTRN',
+                #{RTN_DESC, mode=IN, jdbcType=VARCHAR},
+                #{LMPID, mode=IN, jdbcType=VARCHAR},
+                #{OUT_RTN_CD, mode=OUT, jdbcType=INTEGER, javaType=int},
+                #{OUT_RTN_MSG, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+            )
+        }]]>
+    </insert>
+
+    <select id="selectOtherRevUserCnt" parameterType="java.util.Map" resultType="String">
+        SELECT CASE WHEN COUNT(1) > 0 THEN 'Y' ELSE 'N' END
+        FROM SR_REV_PROC
+        WHERE 1 = 1
+        AND REQ_ID      = #{REQ_ID}
+        AND WF_PROC_CD  = #{WF_PROC_CD}
+        AND USER_ID     <![CDATA[<>]]> #{USER_ID}
+    </select>
+
+    <!-- 요청서 히스토리맵 조회 -->
+    <select id="selectWfHistMap" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              A.REQ_ID
+            , A.WF_PROC_CD AS CUR_WF_PROC_CD
+            , DECODE(B.WF_PROC_CD, A.WF_PROC_CD, 'Y', 'N') AS CUR_WF_PROC_YN
+            , A.REQ_STAT_CD
+            , B.WF_PROC_CD
+            , B.WF_PROC_NM
+            , B.NEXT_WF_PROC_CD
+            , B.SEQ
+            , B.URL
+            , B.SKIP_YN
+            , B.SKIP_OPT
+            , B.SCREEN_RTRN
+            , B.FUNC
+            , B.FUNC_NM
+            , B.CGER
+            , B.CGER_NM
+            , B.RTRN
+            , B.RVER_CNT
+
+        FROM
+              SR_BASE_INFO A
+            , WF_REQ_TMPLAT_PROC_HT B
+
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+        AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+        AND A.REQ_ID            = #{REQ_ID}
+        AND NOT EXISTS
+                    (
+                    SELECT 1
+                    FROM
+                        (
+                        SELECT WF_PROC_CD
+                        FROM
+                            WF_REQ_TMPLAT_PROC_HT A
+                        WHERE 1 = 1
+                        AND EXISTS
+                                (
+                                SELECT 1
+                                FROM SR_BASE_INFO B
+                                WHERE 1 = 1
+                                AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+                                AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+                                AND A.WF_PROC_CD        <![CDATA[<=]]> B.WF_PROC_CD
+                                AND B.REQ_ID            = #{REQ_ID}
+                                )
+                        AND NOT EXISTS
+                                    (
+                                    SELECT 1
+                                    FROM
+                                        (
+                                        SELECT
+                                            DISTINCT
+                                            WF_PROC_CD
+                                        FROM
+                                            (
+                                            SELECT 'WF_PROC_1000' AS WF_PROC_CD
+                                            FROM DUAL
+                                            
+                                            UNION ALL
+                                            
+                                            SELECT
+                                                REGEXP_SUBSTR(NVL(WF_PROC_CD, 'WF_PROC_1000'), '[^,]+', 1, LEVEL) AS WF_PROC_CD
+                                            FROM
+                                                (
+                                                SELECT
+                                                    <!-- WF_PROC_CD || ',' || NEXT_WF_PROC_CD    AS WF_PROC_CD -->
+                                                    WF_PROC_CD
+                                                FROM SR_WF_PROC
+                                                WHERE 1 = 1
+                                                AND REQ_ID = #{REQ_ID}
+                                                )
+                                            CONNECT BY LEVEL <![CDATA[<=]]> LENGTH(REGEXP_REPLACE(NVL(WF_PROC_CD, 'WF_PROC_1000'), '[^,]+','')) + 1
+                                            )
+                                        ) X
+                                    WHERE 1 = 1
+                                    AND A.WF_PROC_CD = X.WF_PROC_CD
+                                    )
+                        ) X
+                    WHERE 1 = 1
+                    AND B.WF_PROC_CD = X.WF_PROC_CD
+                    )
+        
+        ORDER BY
+            SEQ
+    </select>
+
+    <!-- 해당 요청서의 다음 단계를 구한다. -->
+    <select id="selectNextWfProcCd" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT REGEXP_SUBSTR(A.NEXT_WF_PROC_CD, '[^,]+', 1, LEVEL) AS WF_PROC_CD
+        FROM
+            (
+            SELECT    
+                NEXT_WF_PROC_CD
+            FROM
+                WF_REQ_TMPLAT_PROC_HT A
+            WHERE 1 = 1
+            AND REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID}
+            AND REQ_TMPLAT_VER  = #{REQ_TMPLAT_VER}
+            AND WF_PROC_CD      = #{WF_PROC_CD}
+            ) A
+        CONNECT BY LEVEL <![CDATA[<=]]> LENGTH(REGEXP_REPLACE(A.NEXT_WF_PROC_CD, '[^,]+','')) + 1
+    </select>
+
+    <select id="selectNextWfProcSvcInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+             SKIP_YN
+            ,SKIP_OPT
+            ,MAP_WF_PROC_CD
+            ,WF_PROC_NM
+        FROM
+            WF_REQ_TMPLAT_PROC_HT
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+        AND REQ_TMPLAT_VER  = #{REQ_TMPLAT_VER}
+        AND WF_PROC_CD         = #{WF_PROC_CD}
+    </select>
+
+    <!-- 요청서 히스토리맵 내용 조회 -->
+    <select id="selectWfHistMapConts" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT    PROC_NUMBER
+                , WF_HIST_SEQ
+                , APPR_LVL_SEQ
+                , APPR_GRP_SEQ
+                , WF_PROC_CD
+                , APPR_STAT_CD
+                , NVL((SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'APPR_STAT_CD' AND CMM_CD = APPR_STAT_CD AND LANG_CD = 'KR')
+                    , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'APPR_STAT_CD' AND CMM_CD = APPR_STAT_CD AND LANG_CD = 'KR')
+                     ) AS APPR_STAT_NM 
+                , APPR_COMMENT
+                , APPR_GBN_CD
+                , NVL((SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'APPR_GBN_CD' AND CMM_CD = APPR_GBN_CD AND LANG_CD = 'KR')
+                    , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'APPR_GBN_CD' AND CMM_CD = APPR_GBN_CD AND LANG_CD = 'KR')
+                     ) AS APPR_GBN_NM
+                , SRM_USER_ID
+                , SRM_USER_NM
+                , SRM_JBC_JNAME
+                , SRM_DEPT_NM
+                , REG_STIME
+                , TO_CHAR(TO_DATE(REG_STIME, 'YYYYMMDDHH24MISS'), 'YY-MM-DD HH24:MI') AS REG_STIME_NM
+
+        FROM
+            WF_PROC_HIST
+
+        WHERE 1 = 1
+        <if test='REQ_ID != "" and REQ_ID != null and !REQ_ID.startsWith("REQ_")'>
+            AND     PROC_NUMBER = #{REQ_ID}
+        </if>
+        
+        ORDER BY TO_NUMBER(WF_HIST_SEQ) ASC
+    </select>
+
+    <!-- 요청서 히스토리맵 내용 Flow 조회 -->
+    <select id="selectWfHistFlow" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* SRCommMapper >> selectWfHistFlow */
+        SELECT
+              A.GUBUN
+            , A.REQ_TMPLAT_ID
+            , A.REQ_TMPLAT_VER
+            , A.WF_PROC_CD
+            , A.MAP_WF_PROC_CD
+            , A.SEQ
+            , A.CGER_TYPE_CD
+            , A.APPR_LVL_SEQ
+            
+            <choose>
+                <when test='REQ_ID != "" and REQ_ID != null and !REQ_ID.startsWith("REQ_")'>
+            , B.REQ_ID
+            , CASE
+                WHEN A.WF_PROC_CD = 'WF_PROC_9999'
+                THEN
+                    CASE
+                        WHEN B.WF_PROC_CD = 'WF_PROC_9999' AND B.REQ_STAT_CD <![CDATA[<>]]> 'RQST99'
+                        THEN (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = B.REQ_STAT_CD AND LANG_CD = 'KR')
+                        ELSE A.WF_PROC_NM
+                    END
+                ELSE A.WF_PROC_NM
+              END   AS WF_PROC_NM
+            , CASE
+                WHEN A.WF_PROC_CD = 'WF_PROC_9999'
+                THEN
+                    CASE
+                        WHEN B.WF_PROC_CD = 'WF_PROC_9999' AND B.REQ_STAT_CD <![CDATA[<>]]> 'RQST99'
+                        THEN (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = B.REQ_STAT_CD AND LANG_CD = 'KR')
+                        ELSE A.WF_PROC_NM_STR
+                    END
+                ELSE A.WF_PROC_NM_STR
+              END   AS WF_PROC_NM_STR
+            , CASE
+                WHEN B.REQ_STAT_CD = 'RQST11'   --결재중
+                THEN
+                    CASE
+                        WHEN A.GUBUN = 2 AND A.WF_PROC_CD = B.WF_PROC_CD
+                        THEN
+                            CASE
+                                WHEN
+                                    (
+                                    SELECT MIN(APPR_LVL_SEQ)
+                                    FROM 
+                                        WF_APPROVAL_MT
+                                    WHERE REQ_ID = B.REQ_ID AND WF_PROC_CD = B.WF_PROC_CD AND APPR_STAT_CD = 'APST_01'
+                                    ) = A.APPR_LVL_SEQ
+                                THEN 'Y'
+                                ELSE 'N'
+                            END
+                        ELSE 'N' END
+                ELSE CASE WHEN A.GUBUN = 1 AND A.WF_PROC_CD   = B.WF_PROC_CD THEN 'Y' ELSE 'N' END
+              END AS CUR_WF_PROC_YN
+              
+            , NVL(C.WF_PROC_SKIP_YN, 'N') WF_PROC_SKIP_YN
+<!--             , CASE -->
+<!--                 WHEN A.GUBUN = 1 -->
+<!--                 THEN NVL(C.WF_PROC_SKIP_YN, 'N') -->
+<!--                 WHEN A.GUBUN = 2 -->
+<!--                 THEN -->
+<!--                     CASE -->
+<!--                         WHEN A.SEQ <![CDATA[<]]> -->
+<!--                                         ( -->
+<!--                                         SELECT SEQ -->
+<!--                                         FROM WF_REQ_TMPLAT_PROC_HT -->
+<!--                                         WHERE REQ_TMPLAT_ID = B.REQ_TMPLAT_ID -->
+<!--                                         AND REQ_TMPLAT_VER = B.REQ_TMPLAT_VER -->
+<!--                                         AND WF_PROC_CD = B.WF_PROC_CD -->
+<!--                                         ) -->
+<!--                         THEN -->
+<!--                             ( -->
+<!--                             SELECT CASE WHEN COUNT(*) > 0 THEN 'N' ELSE 'Y' END -->
+<!--                             FROM WF_APPROVAL_MT -->
+<!--                             WHERE 1 = 1 -->
+<!--                             AND REQ_ID          = B.REQ_ID -->
+<!--                             AND WF_PROC_CD      = A.WF_PROC_CD -->
+<!--                             AND APPR_LVL_SEQ    = A.APPR_LVL_SEQ -->
+<!--                             AND APPR_STAT_CD    = 'APST_99' -->
+<!--                             ) -->
+<!--                         ELSE 'N' -->
+<!--                     END -->
+<!--               END WF_PROC_SKIP_YN -->
+			, NVL(B.RTRN_APPV_YN, 'N') AS RTRN_APPV_YN
+			, CASE
+            		WHEN B.LAST_RTRN_YN = 'Y'
+            		THEN 
+                		CASE
+                			WHEN B.RTRN_WF_PROC_CD	= A.WF_PROC_CD
+                			THEN
+                				CASE
+                					WHEN B.RTRN_APPV_YN = 'Y'
+                					THEN
+                						CASE
+                							WHEN A.GUBUN = 2 AND A.WF_PROC_CD = B.RTRN_WF_PROC_CD AND A.APPR_LVL_SEQ = H.APPR_LVL_SEQ
+                							THEN 'Y'
+                							ELSE 'N'
+                						END
+                					ELSE
+                						CASE WHEN A.GUBUN = 1 AND A.WF_PROC_CD = B.RTRN_WF_PROC_CD AND H.PROC_NUMBER IS NOT NULL THEN 'Y' ELSE 'N' END
+                				END
+                			ELSE 'N'
+                		END
+                	ELSE 'N'
+			  END AS CUR_RTRN_YN
+			  
+<!--             , CASE -->
+<!--                 WHEN B.LAST_RTRN_YN = 'Y' -->
+<!--                 THEN -->
+<!--                     CASE -->
+<!--                         WHEN NVL(B.MAP_WF_PROC_CD, ' ') <![CDATA[<>]]> ' ' -->
+<!--                         THEN -->
+<!--                             CASE WHEN A.MAP_WF_PROC_CD = B.RTRN_MAP_WF_PROC_CD AND H.PROC_NUMBER IS NOT NULL THEN 'Y' ELSE 'N' END -->
+<!--                         ELSE -->
+<!--                             CASE -->
+<!--                                 WHEN A.GUBUN = 1 AND A.WF_PROC_CD = B.RTRN_WF_PROC_CD AND H.APPR_LVL_SEQ IS NULL THEN 'Y' -->
+<!--                                 WHEN A.GUBUN = 2 AND A.WF_PROC_CD = B.RTRN_WF_PROC_CD AND A.APPR_LVL_SEQ = H.APPR_LVL_SEQ THEN 'Y' -->
+<!--                                 ELSE 'N' -->
+<!--                             END -->
+<!--                     END -->
+<!--                 ELSE 'N' -->
+<!--               END   AS CUR_RTRN_YN -->
+                </when>
+                <otherwise>
+            , NULL  AS REQ_ID
+            , A.WF_PROC_NM
+            , CASE WHEN A.GUBUN = 1 AND A.WF_PROC_CD = 'WF_PROC_1000' THEN 'Y' ELSE 'N' END AS CUR_WF_PROC_YN
+            , 'N'   AS WF_PROC_SKIP_YN
+            , 'N'   AS CUR_RTRN_YN
+                </otherwise>
+            </choose>
+            , A.SCRN_TYPE
+
+        FROM
+            (
+            SELECT
+                  1 AS GUBUN
+                , A.REQ_TMPLAT_ID
+                , A.REQ_TMPLAT_VER
+                , A.WF_PROC_CD
+                , A.MAP_WF_PROC_CD
+                , A.SEQ
+                , A.CGER_TYPE_CD
+                , 0 AS APPR_LVL_SEQ
+                , REPLACE(A.WF_PROC_NM, '\n', CHR(13) || CHR(10))   AS WF_PROC_NM
+                , REPLACE(A.WF_PROC_NM, '\n', ' ')  AS WF_PROC_NM_STR
+                , CASE
+                    WHEN A.WF_PROC_CD = 'WF_PROC_9999'
+                    THEN CASE WHEN A.URL IS NOT NULL THEN 'D' ELSE A.SCRN_TYPE END
+                    ELSE CASE WHEN A.WF_PROC_CD = 'WF_PROC_1000' THEN 'D' ELSE A.SCRN_TYPE END
+                  END AS SCRN_TYPE
+        
+            FROM
+                  WF_REQ_TMPLAT_PROC_HT A        
+        
+            WHERE 1 = 1
+            AND A.REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+            AND A.REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+            AND ( (A.WF_PROC_CD IN ('WF_PROC_1000', 'WF_PROC_9020', 'WF_PROC_9999') AND 1 = 1) OR (A.WF_PROC_CD <![CDATA[<>]]> 'WF_PROC_1000' AND A.CGER IS NOT NULL) )
+
+            UNION ALL
+
+            SELECT
+                  2 AS GUBUN
+                , A.REQ_TMPLAT_ID
+                , A.REQ_TMPLAT_VER
+                , A.WF_PROC_CD
+                , B.MAP_WF_PROC_CD
+                , A.SEQ
+                , NULL  AS CGER_TYPE_CD
+                , B.APPR_LVL_SEQ
+                , REPLACE(B.APPR_NM, '\n', CHR(13) || CHR(10))   AS WF_PROC_NM
+                , REPLACE(B.APPR_NM, '\n', ' ')  AS WF_PROC_NM_STR
+                , 'X'   AS SCRN_TYPE
+            FROM
+                  WF_REQ_TMPLAT_PROC_HT A
+                , WF_REQ_APPV_HT B
+            WHERE 1 = 1
+            AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+            AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+            AND A.WF_PROC_CD        = B.WF_PROC_CD
+            AND A.REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+            AND A.REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+            ) A
+        
+          <if test='REQ_ID != "" and REQ_ID != null and !REQ_ID.startsWith("REQ_")'>
+          , SR_BASE_INFO B
+          , SR_WF_PROC C
+          , (
+            SELECT PROC_NUMBER, WF_PROC_CD, NVL(APPR_LVL_SEQ, 0) AS APPR_LVL_SEQ
+            FROM WF_PROC_HIST
+            WHERE 1 = 1
+            AND PROC_NUMBER     = #{REQ_ID}
+            AND WF_HIST_SEQ     = (SELECT MAX(TO_NUMBER(WF_HIST_SEQ)) FROM WF_PROC_HIST WHERE PROC_NUMBER = #{REQ_ID})
+            AND APPR_STAT_CD    = 'APST_00'
+            ) H
+            </if>
+        
+        WHERE 1 = 1
+
+        <if test='REQ_ID != "" and REQ_ID != null and !REQ_ID.startsWith("REQ_")'>
+        AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+        AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+        AND B.REQ_ID            = C.REQ_ID(+)
+        AND A.WF_PROC_CD        = C.WF_PROC_CD(+)
+        AND B.REQ_ID            = H.PROC_NUMBER(+)
+        AND B.REQ_ID            = #{REQ_ID}
+        </if>
+
+        ORDER BY
+            A.SEQ, A.APPR_LVL_SEQ
+    </select>
+
+    <select id="selectWfHistExtdNm" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              A.EXTD_ID 
+            , MAX((SELECT MAX(EXTD_NM) FROM FOMM_AUTH_EXTD_MT WHERE EXTD_ID = A.EXTD_ID AND EXTD_GB = '00')) AS EXTD_NM
+        FROM
+            WF_REQ_TMPLAT_CGER_EXTD_HT A
+
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID}
+        AND REQ_TMPLAT_VER  = #{REQ_TMPLAT_VER}
+        AND WF_PROC_CD      = #{WF_PROC_CD}
+        
+        GROUP BY
+            A.EXTD_ID
+    </select>
+
+    <select id="selectWfHistProcCont" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+            A.PROC_NUMBER AS REQ_ID,
+            
+            <choose>
+                <when test='"1".equals(GUBUN) or "2".equals(GUBUN)'>
+                        CASE
+                            WHEN A.APPR_LVL_SEQ IS NULL AND A.WF_PROC_CD IN ('WF_PROC_1000', 'WF_PROC_9999')
+                            THEN ''
+                            ELSE A.SRM_USER_NM
+                        END ||
+                        CASE WHEN A.SRM_TELNUM IS NOT NULL THEN '(내선 : ' || A.SRM_TELNUM || ')' END || 
+                        CASE
+                        		WHEN A.DAEJIC_YN  = 'Y'
+                        		THEN
+                        				' [(代)' || A.ORG_USER_NM ||
+                        				CASE WHEN A.ORG_TELNUM IS NOT NULL THEN '(내선 : ' || A.ORG_TELNUM  || ')' END || ']'
+                        END
+                AS PROC_INFO,
+                </when>
+                <otherwise>
+            NULL    AS PROC_INFO,
+                </otherwise>
+            </choose>
+
+            <choose>
+                <when test='"1".equals(GUBUN) or "2".equals(GUBUN)'>
+                        CASE
+                            WHEN A.APPR_COMMENT IS NOT NULL
+                            THEN
+                            		CASE
+                            			WHEN NOT(B.REQ_TMPLAT_ID IN ('WFT250027', 'WFT240159') AND A.WF_PROC_CD = 'WF_PROC_2040')
+                            			THEN '[결재의견 : '
+                            			ELSE '['
+                            		END
+                        END ||
+                        SUBSTRB(REPLACE(REPLACE(A.APPR_COMMENT, CHR(13), ''), CHR(10), ' '), 1, 240)  ||
+                        CASE WHEN LENGTHB(A.APPR_COMMENT) > 240 THEN '...' END ||
+                        CASE
+                            WHEN A.APPR_COMMENT IS NOT NULL
+                            THEN ']'
+                        END
+                AS PROC_CONTS,
+                </when>
+                <otherwise>
+                NULL    AS PROC_CONTS,
+                </otherwise>
+            </choose>
+            A.APPR_COMMENT
+        FROM
+            WF_PROC_HIST A,
+            SR_BASE_INFO B
+        
+        WHERE 1 = 1
+        AND A.PROC_NUMBER   = B.REQ_ID
+        AND A.PROC_NUMBER = #{REQ_ID}
+        AND A.WF_PROC_CD  = #{WF_PROC_CD}
+        <choose>
+            <when test='"1".equals(GUBUN)'>
+        AND A.APPR_LVL_SEQ IS NULL
+            </when>
+            <when test='"2".equals(GUBUN)'>
+        AND A.APPR_LVL_SEQ = #{APPR_LVL_SEQ}
+            </when>
+            <otherwise>
+        AND 1 <![CDATA[<>]]> 1
+            </otherwise>
+        </choose>
+        AND A.WF_HIST_SEQ =
+                        (
+                        SELECT
+                            MAX(TO_NUMBER(WF_HIST_SEQ))
+                        FROM
+                            WF_PROC_HIST B
+                        WHERE 1 = 1
+                        AND B.PROC_NUMBER   = A.PROC_NUMBER
+                        AND B.WF_PROC_CD    = A.WF_PROC_CD
+                        <choose>
+                            <when test='"1".equals(GUBUN)'>
+                        AND B.APPR_LVL_SEQ IS NULL
+                            </when>
+                            <when test='"2".equals(GUBUN)'>
+                        AND B.APPR_LVL_SEQ = #{APPR_LVL_SEQ}
+                            </when>
+                        </choose>
+                        )
+    </select>
+
+    <select id="selectLastApprvalYn" parameterType="java.util.Map" resultType="String">
+        SELECT
+            <choose>
+                <when test='"WF_FUNC_01".equals(WF_FUNC_CD)'>
+            CASE
+                WHEN APST_01_CNT = 1 AND APST_ALL_CNT - APST_99_CNT - APST_01_CNT = 0   --(승인대기가 1건이고 총 결재 건수 - 총 승인 건수 - 승인대기 건수 = 0)
+                THEN 'Y'
+                ELSE 'N'
+            END
+                </when>
+                <when test='"WF_FUNC_02".equals(WF_FUNC_CD)'>
+            CASE
+                WHEN RVER_CNT - APST_99_CNT = 1 --(전체 검토할 건수 - 총 승인 건수 = 1) 
+                THEN 'Y'
+                ELSE 'N'
+            END
+                </when>
+            </choose>
+                
+        FROM
+            (
+            SELECT 
+                (-- 전체 검토할 건수
+                SELECT RVER_CNT
+                FROM WF_REQ_TMPLAT_PROC_HT A
+                WHERE 1 = 1
+                AND EXISTS
+                        (
+                        SELECT 1
+                        FROM SR_BASE_INFO B
+                        WHERE 1 = 1
+                        AND B.REQ_TMPLAT_ID     = A.REQ_TMPLAT_ID
+                        AND B.REQ_TMPLAT_VER    = A.REQ_TMPLAT_VER
+                        AND B.WF_PROC_CD        = A.WF_PROC_CD
+                        AND B.REQ_ID            = #{REQ_ID}
+                        AND B.WF_PROC_CD        = #{WF_PROC_CD}
+                        )
+                )   AS RVER_CNT,
+                (-- 전체 결재 대상 건수
+                SELECT COUNT(*)
+                FROM WF_APPROVAL_MT
+                WHERE 1 = 1
+                AND REQ_ID          = #{REQ_ID}
+                AND WF_PROC_CD      = #{WF_PROC_CD}
+                AND APPR_GBN_CD NOT IN ('A00', 'A01')
+                )   AS APST_ALL_CNT,
+                (-- 결재대기 건수
+                SELECT COUNT(*)
+                FROM WF_APPROVAL_MT
+                WHERE 1 = 1
+                AND REQ_ID          = #{REQ_ID}
+                AND WF_PROC_CD      = #{WF_PROC_CD}
+                AND APPR_STAT_CD    = 'APST_01'
+                )   AS APST_01_CNT,
+                (-- 결재승인 건수
+                SELECT COUNT(*)
+                FROM WF_APPROVAL_MT
+                WHERE 1 = 1
+                AND REQ_ID          = #{REQ_ID}
+                AND WF_PROC_CD      = #{WF_PROC_CD}
+                AND APPR_STAT_CD    = 'APST_99'
+                )   AS APST_99_CNT
+            FROM DUAL
+            )
+    </select>
+
+    <insert id="insertWfApprovalMt" parameterType="java.util.Map">
+        INSERT INTO WF_APPROVAL_MT
+        (
+              REQ_ID            --요청번호
+            , WF_PROC_CD        --워크플로우단계코드
+            , APPR_LVL_SEQ      --결재차수
+            , APPR_GRP_SEQ      --결재그룹번호
+            , APPR_SEQ          --승인순서
+            , APPR_GBN_CD       --결재자구분코드
+            , APPR_STAT_CD      --승인상태
+            , USER_ID           --승인자ID
+            , USER_NM           --승인자
+            , DEPT_CD           --승인자부서ID
+            , DEPT_NM           --승인자부서명
+            , POS_NM            --승인자직급
+            
+            , APV_BTN_YN
+            , RTRN_BTN_YN
+            , SAVE_BTN_YN
+            , APV_BTN_TEXT
+            , RTRN_BTN_TEXT
+            , SAVE_BTN_TEXT
+            , ROLE_CD
+            , DIRECT_YN
+
+            , REG_TIME          --등록일시
+        )
+        SELECT
+              #{REQ_ID}
+            , #{WF_PROC_CD}
+            , #{APPR_LVL_SEQ}
+            , NVL(#{APPR_GRP_SEQ}, 1)
+            , #{APPR_SEQ}
+            , 'A02'             AS APPR_GBN_CD      /* 결재 첫번째는 A01(기안자), 이후에는 A02(승인자) */
+            , 'APST_01'         AS APPR_STAT_CD
+            , A.USER_ID
+            , A.USER_NM
+            , A.DEPT_CD
+            , A.DEPT_NM
+            , A.POS_NM
+            
+            , NVL(#{APV_BTN_YN}, (SELECT APV_BTN_YN FROM WF_REQ_TMPLAT_PROC_HT A WHERE EXISTS(SELECT 1 FROM SR_BASE_INFO B WHERE REQ_ID = #{REQ_ID} AND B.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND B.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER) AND WF_PROC_CD = #{WF_PROC_CD}))
+            , NVL(#{RTRN_BTN_YN}, (SELECT RTRN_BTN_YN FROM WF_REQ_TMPLAT_PROC_HT A WHERE EXISTS(SELECT 1 FROM SR_BASE_INFO B WHERE REQ_ID = #{REQ_ID} AND B.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND B.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER) AND WF_PROC_CD = #{WF_PROC_CD}))
+            , NVL(#{SAVE_BTN_YN}, (SELECT SAVE_BTN_YN FROM WF_REQ_TMPLAT_PROC_HT A WHERE EXISTS(SELECT 1 FROM SR_BASE_INFO B WHERE REQ_ID = #{REQ_ID} AND B.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND B.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER) AND WF_PROC_CD = #{WF_PROC_CD}))
+            , NVL(#{APV_BTN_TEXT}, (SELECT APV_BTN_TEXT FROM WF_REQ_TMPLAT_PROC_HT A WHERE EXISTS(SELECT 1 FROM SR_BASE_INFO B WHERE REQ_ID = #{REQ_ID} AND B.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND B.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER) AND WF_PROC_CD = #{WF_PROC_CD}))
+            , NVL(#{RTRN_BTN_TEXT}, (SELECT RTRN_BTN_TEXT FROM WF_REQ_TMPLAT_PROC_HT A WHERE EXISTS(SELECT 1 FROM SR_BASE_INFO B WHERE REQ_ID = #{REQ_ID} AND B.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND B.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER) AND WF_PROC_CD = #{WF_PROC_CD}))
+            , NVL(#{SAVE_BTN_TEXT}, (SELECT SAVE_BTN_TEXT FROM WF_REQ_TMPLAT_PROC_HT A WHERE EXISTS(SELECT 1 FROM SR_BASE_INFO B WHERE REQ_ID = #{REQ_ID} AND B.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND B.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER) AND WF_PROC_CD = #{WF_PROC_CD}))
+            , #{ROLE_CD}
+            , NVL(#{DIRECT_YN}, 'N')
+
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  --등록일시
+        FROM
+            FOMM_USER_MT A
+        WHERE 1 = 1
+
+        <choose>
+            <when test='"02".equals(APPR_PROC_DIV_CD)'>  <!-- 요청자 팀장 -->
+        AND EXISTS
+                (
+                SELECT 1                  
+                FROM
+                    FOMM_DEPT_MT B,
+                    FOMM_USER_MT C
+                WHERE 1 = 1
+                AND B.DEPT_CD           = C.DEPT_CD
+                AND B.DEPT_MANAGER_ID   = A.USER_ID
+                AND EXISTS
+                        (
+                        SELECT 1
+                        FROM SR_BASE_INFO D
+                        WHERE 1 = 1
+                        AND D.REQ_ID        = #{REQ_ID}
+                        AND D.REQ_USER_ID   = C.USER_ID
+                        )
+                )
+            </when>
+
+            <when test='"03".equals(APPR_PROC_DIV_CD)'>  <!-- 담당자 팀장 -->
+        AND EXISTS
+                (
+                SELECT 1                  
+                FROM
+                    FOMM_DEPT_MT B,
+                    FOMM_USER_MT C
+                WHERE 1 = 1
+                AND B.DEPT_CD           = C.DEPT_CD
+                AND B.DEPT_MANAGER_ID   = A.USER_ID
+                AND EXISTS
+                        (
+                        SELECT 1
+                        FROM SR_CGER_DT D
+                        WHERE 1 = 1
+                        AND D.REQ_ID        = #{REQ_ID}
+                        AND D.USER_ID       = #{USER_ID}
+                        AND D.USER_ID       = C.USER_ID
+                        AND D.WF_FUNC_CD    = 'WF_FUNC_04'
+                        AND D.WF_PROC_CD    = (SELECT WF_PROC_CD FROM SR_BASE_INFO WHERE REQ_ID = #{REQ_ID})
+                        )
+                )
+            </when>
+        
+            <when test='"04".equals(APPR_PROC_DIV_CD)'>  <!-- 본부장 -->
+        AND EXISTS
+                (
+                SELECT 1
+                FROM 
+                    (
+                    SELECT
+                          (SELECT DEPT_MANAGER_ID FROM FOMM_DEPT_MT WHERE DEPT_TYPE >= '40' /* 부서구분 30:본부, 20:부문 */ AND DEPT_CD = B.UP_DEPT_CD ) AS BON_MANAGER_ID -- 본부장
+                        , (SELECT DEPT_MANAGER_ID FROM FOMM_DEPT_MT WHERE DEPT_CD = C.DEPT_CD ) AS TEAM_MANAGER_ID -- 팀장
+                    FROM
+                          FOMM_DEPT_MT B
+                        , FOMM_USER_MT C
+                    WHERE 1 = 1
+                    AND B.DEPT_CD   = C.DEPT_CD
+                    AND C.USER_ID   = #{USER_ID}
+                    ) B
+                WHERE 1 = 1
+                AND CASE
+                        WHEN B.BON_MANAGER_ID IS NULL
+                        THEN TEAM_MANAGER_ID
+                        ELSE BON_MANAGER_ID
+                    END = A.USER_ID
+                )
+            </when>
+            
+            <when test='"99".equals(APPR_PROC_DIV_CD)'>
+        AND USER_ID = #{USER_ID}
+            </when>     
+        </choose>
+
+    </insert>
+
+    <!-- 역할자 목록 조회 -->
+    <select id="selectAuthExtdUser" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              USER_ID
+            , 'N'   AS ESS_YN
+
+        FROM
+            (
+            SELECT
+                  DEST_CD   AS USER_ID
+            FROM
+                FOMM_AUTH_EXTD_MT
+    
+            WHERE 1 = 1
+            AND EXTD_ID =
+                        (
+                        SELECT EXTD_ID
+                        FROM WF_REQ_TMPLAT_CGER_EXTD_HT
+                        WHERE 1 = 1
+                        AND REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID}
+                        AND REQ_TMPLAT_VER  = #{REQ_TMPLAT_VER}
+                        AND WF_PROC_CD      = #{NEXT_WF_PROC_CD}
+                        )
+            AND EXTD_GB = '10'  --확장권한구분(00:기준,10:사용자,20:부서)
+            AND USE_YN  = 'Y'
+            
+            UNION
+            
+            SELECT
+                USER_ID
+            FROM
+                FOMM_USER_MT A
+
+            WHERE 1 = 1
+            AND USER_TYPE   = '1'   /* 직원 */ 
+            AND USE_YN      = 'Y'
+            AND TO_CHAR(SYSDATE, 'YYYYMMDD')  <![CDATA[ <= ]]> A.EXPIRE_DATE
+            AND EXISTS
+                    (
+                    SELECT 1
+                    FROM FOMM_AUTH_EXTD_MT B
+                    WHERE 1 = 1
+                    AND B.EXTD_ID   =
+                                    (
+                                    SELECT EXTD_ID
+                                    FROM WF_REQ_TMPLAT_CGER_EXTD_HT
+                                    WHERE 1 = 1
+                                    AND REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID}
+                                    AND REQ_TMPLAT_VER  = #{REQ_TMPLAT_VER}
+                                    AND WF_PROC_CD      = #{NEXT_WF_PROC_CD}
+                                    )
+                    AND B.DEST_CD   = A.DEPT_CD 
+                    AND B.EXTD_GB   = '20'  --확장권한구분(00:기준,10:사용자,20:부서)
+                    AND B.USE_YN    = 'Y'
+                    )
+            )
+    </select>
+
+    <select id="selectCgerListByDept" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              #{REQ_ID}     AS REQ_ID
+            , #{NEXT_WF_FUNC_CD}    AS WF_FUNC_CD 
+            , (SELECT CGER_NM FROM WF_REQ_TMPLAT_PROC_HT WHERE REQ_TMPLAT_ID = #{REQ_TMPLAT_ID} AND REQ_TMPLAT_VER = #{REQ_TMPLAT_VER} AND WF_PROC_CD = #{NEXT_WF_PROC_CD}) AS WF_FUNC_NM
+            , 'N'   AS ESS_YN
+            , USER_ID
+        FROM
+            FOMM_USER_MT
+        WHERE 1 = 1
+        AND USE_YN  = 'Y'
+
+        <choose>
+            <when test='USER_TYPE != "" and USER_TYPE != null'>
+                <choose>
+                    <when test='"34".equals(USER_TYPE)'>
+        AND USER_TYPE IN ('3', '4')
+                    </when>
+                    <otherwise>
+        AND USER_TYPE = #{USER_TYPE}
+                    </otherwise>
+                </choose>
+
+            </when>
+            <otherwise>
+        AND USER_TYPE = '1'
+            </otherwise>
+        </choose>
+
+        AND DEPT_CD = #{DEPT_CD}
+    </select>
+
+    <select id="selectSrCgerDtCnt" parameterType="java.util.Map" resultType="Integer">
+        /* SrComm >> selectSrCgerDtCnt */
+        SELECT COUNT(1)
+        FROM SR_CGER_DT
+        WHERE 1 = 1
+        AND REQ_ID      = #{REQ_ID}
+        AND WF_PROC_CD  = #{WF_PROC_CD}
+
+        <if test="USER_ID != '' and USER_ID != null">
+        AND USER_ID     = #{USER_ID}
+        </if>
+    </select>
+    
+    <select id="selectSrCgerDt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* SrComm >> selectSrCgerDt */
+        SELECT
+              A.REQ_ID                                        --요청서ID
+            , A.WF_PROC_CD                                    --워크플로우단계코드
+            , A.SEQ                                           --순번
+            , A.WF_FUNC_CD                                    --워크플로우기능코드
+            , A.WF_FUNC_NM                                    --워크플로우기능명
+            , A.ESS_YN                                        --필수여부(검토 기능 시)
+            , A.USER_ID                                       --사용자ID(검토/담당자(사용자선택) 시)
+            , A.ROLE_CD                                       --역할(UP_CMM_CD =ACTOR_CD  3:PL 11:요청자 32:BA 202:IT담당자)-[※SR요청관리만사용]
+            , A.RMK                                           --비고
+            , A.FRID                                          --최초등록자ID
+            , A.FRDT                                          --최초등록일시
+            , A.LMID                                          --최종수정자ID
+            , A.LMDT                                          --최종수정일시
+            , A.LMPID                                         --최종수정화면ID
+
+        FROM
+              SR_CGER_DT A
+            , SR_BASE_INFO B
+
+        WHERE 1 = 1
+        AND A.REQ_ID                    = B.REQ_ID
+        AND A.REQ_ID                    = #{REQ_ID}
+        AND A.WF_PROC_CD           = #{WF_PROC_CD}
+
+        <if test="USER_ID != '' and USER_ID != null">
+        AND A.USER_ID           = #{USER_ID}
+        </if>
+
+    </select>
+
+    <select id="selectSrCgerDtAuth" parameterType="java.util.Map" resultType="java.util.Map">
+        /* SrComm >> selectSrCgerDtAuth */
+        SELECT
+              A.USER_ID                                                 --사용자ID(검토/담당자(사용자선택) 시)
+            , NVL(MAX(C.SCREEN_APV_BTN_YN), 'N')      AS APV_BTN_YN     --승인(접수)버튼사용여부
+            , NVL(MAX(C.SCREEN_RTRN_BTN_YN), 'N')     AS RTRN_BTN_YN     --반려버튼사용여부
+            , NVL(MAX(C.SCREEN_SAVE_BTN_YN), 'N')     AS SAVE_BTN_YN     --저장버튼사용여부
+            , NVL(MAX(C.SCREEN_APV_BTN_TEXT), '접수')  AS APV_BTN_TEXT    --승인(접수)버튼-텍스트
+            , NVL(MAX(C.SCREEN_RTRN_BTN_TEXT), '반려') AS RTRN_BTN_TEXT   --반려버튼-텍스트
+            , NVL(MAX(C.SCREEN_SAVE_BTN_TEXT), '저장') AS SAVE_BTN_TEXT   --저장버튼-텍스트
+
+        FROM
+              SR_CGER_DT A
+            , SR_BASE_INFO B
+            , WF_REQ_TMPLAT_PROC_HT C
+
+        WHERE 1 = 1
+        AND A.REQ_ID            = B.REQ_ID
+        AND B.REQ_TMPLAT_ID     = C.REQ_TMPLAT_ID
+        AND B.REQ_TMPLAT_VER    = C.REQ_TMPLAT_VER
+        AND A.WF_PROC_CD        = C.WF_PROC_CD
+        AND A.REQ_ID            = #{REQ_ID}
+        AND A.WF_PROC_CD        = #{WF_PROC_CD}
+
+        <if test="USER_ID != '' and USER_ID != null">
+        AND A.USER_ID     = #{USER_ID}
+        </if>
+
+        GROUP BY
+            A.USER_ID
+    </select>
+
+    <select id="selectWfApprovalMtCnt" parameterType="java.util.Map" resultType="Integer">
+        /* SrComm >> selectWfApprovalMtCnt */
+        SELECT COUNT(1)
+        FROM WF_APPROVAL_MT A
+        WHERE 1 = 1
+        AND REQ_ID  = #{REQ_ID}
+        AND APPR_GBN_CD = 'A02'
+
+        <choose>
+            <when test="APV_WF_PROC_CD_ARR != '' and APV_WF_PROC_CD_ARR != null">
+        AND A.WF_PROC_CD IN
+                <foreach collection="APV_WF_PROC_CD_ARR" item="apvWfProcCd" open="(" close=")" separator=",">
+                #{apvWfProcCd}
+                </foreach>
+            </when>
+            <otherwise>
+                <choose>
+                    <when test="WF_PROC_CD != '' and WF_PROC_CD != null">
+        AND A.WF_PROC_CD  = #{WF_PROC_CD}
+                    </when>
+                    <otherwise>
+        AND 1 <![CDATA[<>]]> 1
+                    </otherwise>                    
+                </choose>
+            </otherwise>
+        </choose>
+
+        <if test="APPR_LVL_SEQ != '' and APPR_LVL_SEQ != null">
+        AND A.APPR_LVL_SEQ  = #{APPR_LVL_SEQ}
+        </if>
+
+    </select>
+
+    <select id="selectWfApprovalMt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* SrComm >> selectWfApprovalMt */
+        SELECT
+              A.REQ_ID                                          --요청번호
+            , A.WF_PROC_CD                                      --워크플로우단계코드
+            , A.APPR_LVL_SEQ                                    --결재차수
+            , A.APPR_GRP_SEQ                                    --결재그룹번호
+            , A.APPR_SEQ                                        --승인순서
+            , A.APPR_STAT_CD                                    --결재상태
+            , A.APPR_GBN_CD                                     --결재자구분코드
+            , A.USER_ID                                         --승인자ID
+            , (
+              SELECT MAX(CASE WHEN R.USER_ID = A.USER_ID THEN 'Y' ELSE 'N' END)
+              FROM WF_APPROVAL_MT R
+              WHERE 1 = 1
+              AND R.REQ_ID				= A.REQ_ID
+              AND R.WF_PROC_CD	= A.WF_PROC_CD
+              AND R.APPR_LVL_SEQ	= A.APPR_LVL_SEQ
+              AND R.SEQ = (
+              						SELECT MIN(SEQ)
+              						FROM WF_APPROVAL_MT X
+              						WHERE 1 = 1
+              						AND X.REQ_ID				= R.REQ_ID
+              						AND X.WF_PROC_CD		= R.WF_PROC_CD
+              						AND X.APPR_LVL_SEQ		= R.APPR_LVL_SEQ
+              						AND X.APPR_STAT_CD	= 'APST_01'
+              						)
+              ) AS APPV_YN
+            , A.USER_NM                                         --승인자
+            , A.DEPT_CD                                         --승인자부서ID
+            , A.DEPT_NM                                         --승인자부서명
+            , A.POS_NM                                          --승인자직급
+            , A.APPR_STIME                                      --승인일시
+            , A.APPR_DESC                                       --결재사유(검토의견)
+            , A.DAEJIC_USER_ID                                  --대리결재자ID
+            , A.DAEJIC_USER_NM                                  --대리결재자명
+            , A.DAEJIC_DEPT_CD                                  --대리결재자부서ID
+            , A.DAEJIC_DEPT_NM                                  --대리결재자부서
+            , A.DAEJIC_POS_NM                                   --대리결재자직급
+            , A.ROLE_CD                                         --역할(UP_CMM_CD =ACTOR_CD  3:PL 11:요청자 32:BA 202:IT담당자)-[※SR요청관리만사용]
+            , A.DIRECT_YN                                       --결재자직접(수동)지정여부            
+            , NVL(C.APV_BTN_YN, 'N')  AS APV_BTN_YN             --승인버튼사용여부
+            , NVL(C.RTRN_BTN_YN, 'N') AS RTRN_BTN_YN            --반려버튼사용여부
+            , NVL(C.SAVE_BTN_YN, 'N') AS SAVE_BTN_YN            --저장버튼사용여부
+            , NVL(C.APV_BTN_TEXT, '접수') AS APV_BTN_TEXT        --승인버튼-텍스트
+            , NVL(C.RTRN_BTN_TEXT, '반려')    AS RTRN_BTN_TEXT   --반려버튼-텍스트
+            , NVL(C.SAVE_BTN_TEXT, '저장')    AS SAVE_BTN_TEXT   --저장버튼-텍스트            
+            , A.REG_TIME                                        --등록일시
+
+        FROM
+              WF_APPROVAL_MT A
+            , SR_BASE_INFO B
+            , WF_REQ_TMPLAT_PROC_HT C
+
+        WHERE 1 = 1
+        AND A.REQ_ID            = B.REQ_ID
+        AND B.REQ_TMPLAT_ID     = C.REQ_TMPLAT_ID
+        AND B.REQ_TMPLAT_VER    = C.REQ_TMPLAT_VER
+        AND A.WF_PROC_CD        = C.WF_PROC_CD
+        AND A.REQ_ID            = #{REQ_ID}
+        AND A.WF_PROC_CD        = #{WF_PROC_CD}
+        AND A.USER_ID           = #{USER_ID}
+        AND A.SEQ               = #{SEQ}
+        AND A.APPR_STAT_CD IN ('APST_01', 'APST_02')
+    </select>
+
+    <select id="selectAppvUserInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              REQ_ID
+            , WF_PROC_CD
+            , SEQ
+            , APPR_LVL_SEQ
+            , APPR_GRP_SEQ
+            , APPR_SEQ
+            , USER_ID
+            , USER_NM
+            , DEPT_CD
+            , DEPT_NM
+            , POS_NM
+            , ROLE_CD
+            , DIRECT_YN
+            , CREATE_USER_ID
+
+          FROM
+            WF_APPROVAL_MT
+
+          WHERE 1 = 1
+          AND REQ_ID        = #{REQ_ID}
+          AND WF_PROC_CD    = #{WF_PROC_CD}
+          AND SEQ           = #{SEQ}
+    </select>
+
+    <select id="selectAppvInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              REQ_TMPLAT_ID
+            , REQ_TMPLAT_VER
+            , WF_PROC_CD
+            , APPR_LVL_SEQ
+            , MAP_WF_PROC_CD
+            , APPR_NM
+            , APPR_DIRECT_YN
+            , APPR_PROC_DIV_CD
+            , APPR_PROG_DIV_CD
+            , SVC_NM
+        FROM
+            WF_REQ_APPV_HT
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID}
+        AND REQ_TMPLAT_VER  = #{REQ_TMPLAT_VER}
+        AND WF_PROC_CD      = #{WF_PROC_CD}
+        AND APPR_LVL_SEQ    = #{APPR_LVL_SEQ}
+        
+    </select>
+    
+
+    <!-- 현재 결재 SEQ 기준 다음 결재를 조회 -->
+    <select id="selectNextAppvUser" parameterType="java.util.Map" resultType="java.util.Map">
+
+        SELECT
+              REQ_ID
+            , WF_PROC_CD
+            , SEQ
+            , APPR_LVL_SEQ
+            , APPR_GRP_SEQ
+            , APPR_SEQ
+            , USER_ID
+
+        FROM
+                (
+                SELECT
+                      C.*
+                    , DENSE_RANK() OVER(PARTITION BY REQ_ID, WF_PROC_CD, APPR_LVL_SEQ, APPR_GRP_SEQ ORDER BY APPR_SEQ) AS RNK
+                FROM
+                    WF_APPROVAL_MT C
+    
+                WHERE 1 = 1
+                AND APPR_GBN_CD    = 'A02' /* 승인자 */
+                AND REQ_ID             = #{REQ_ID}
+                AND WF_PROC_CD    = #{WF_PROC_CD}
+                <choose>
+                    <when test='SEQ != "" and SEQ != null and !"-1".equals(SEQ)'>
+                AND APPR_GRP_SEQ    = (SELECT APPR_GRP_SEQ FROM WF_APPROVAL_MT WHERE REQ_ID = #{REQ_ID} AND WF_PROC_CD = #{WF_PROC_CD} AND SEQ = #{SEQ})
+                    </when>
+                    <otherwise>
+                AND APPR_GRP_SEQ    = NVL(#{APPR_GRP_SEQ}, 1)
+                    </otherwise>
+                </choose>
+
+
+                AND APPR_STAT_CD    = 'APST_01'
+                <if test='SEQ != "" and SEQ != null and !"-1".equals(SEQ)'>
+                AND SEQ <![CDATA[<>]]> #{SEQ}
+                </if>
+
+                AND APPR_LVL_SEQ    =
+                                                    (
+                                                    SELECT MIN(APPR_LVL_SEQ)
+                                                    FROM WF_APPROVAL_MT
+                                                    WHERE 1 = 1
+                                                    AND REQ_ID             = C.REQ_ID
+                                                    AND WF_PROC_CD     = C.WF_PROC_CD
+                                                    AND APPR_STAT_CD   = C.APPR_STAT_CD
+                                                    )
+                )
+        WHERE RNK = 1
+    </select>
+
+    <select id="selectCurrentApprLvlSeq" parameterType="java.util.Map" resultType="Integer">
+        SELECT
+            NVL(MIN(APPR_LVL_SEQ), -1)   AS APPR_LVL_SEQ
+          FROM
+            (
+            SELECT
+                  C.*
+                , DENSE_RANK() OVER(PARTITION BY REQ_ID, WF_PROC_CD, APPR_LVL_SEQ, APPR_GRP_SEQ ORDER BY APPR_SEQ) AS RNK
+            FROM
+                WF_APPROVAL_MT C
+
+            WHERE 1 = 1
+            AND REQ_ID          = #{REQ_ID}
+            AND WF_PROC_CD      = #{WF_PROC_CD}
+            AND APPR_STAT_CD    = 'APST_01'
+            AND APPR_LVL_SEQ    =
+                                (
+                                SELECT MIN(APPR_LVL_SEQ)
+                                FROM WF_APPROVAL_MT
+                                WHERE 1 = 1
+                                AND REQ_ID         = C.REQ_ID
+                                AND WF_PROC_CD     = C.WF_PROC_CD
+                                AND APPR_STAT_CD   = C.APPR_STAT_CD
+                                )
+            )
+          WHERE RNK = 1
+    </select>
+
+    <insert id="insertEmptySetWfProc" parameterType="java.util.Map">
+        BEGIN
+        
+            FOR CUR IN
+            (
+                SELECT
+                    A.REQ_ID,
+                    B.WF_PROC_CD,
+                    B.SEQ,
+                    <choose>
+                        <when test="WF_PROC_CD != '' and WF_PROC_CD != null">
+                    CASE WHEN B.WF_PROC_CD = #{WF_PROC_CD} THEN 'N' ELSE 'Y' END  AS WF_PROC_SKIP_YN
+                        </when>
+                        <otherwise>
+                    CASE WHEN B.WF_PROC_CD = A.WF_PROC_CD THEN 'N' ELSE 'Y' END  AS WF_PROC_SKIP_YN
+                        </otherwise>
+                    </choose>
+            FROM
+                SR_BASE_INFO A,
+                WF_REQ_TMPLAT_PROC_HT B
+
+            WHERE 1 = 1
+            AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+            AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+            AND A.REQ_ID                    = #{REQ_ID}
+
+            <choose>
+                <when test="WF_PROC_CD != '' and WF_PROC_CD != null">
+            AND B.SEQ   <![CDATA[<=]]> (SELECT SEQ FROM WF_REQ_TMPLAT_PROC_HT WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = A.REQ_TMPLAT_VER AND WF_PROC_CD = #{WF_PROC_CD})
+                </when>
+                <otherwise>
+            AND B.SEQ   <![CDATA[<=]]> (SELECT SEQ FROM WF_REQ_TMPLAT_PROC_HT WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = A.REQ_TMPLAT_VER AND WF_PROC_CD = A.WF_PROC_CD)
+                </otherwise>
+            </choose>
+
+            AND NOT EXISTS
+                                (
+                                SELECT 1
+                                FROM SR_WF_PROC C
+                                WHERE 1 = 1
+                                AND C.REQ_ID            = A.REQ_ID
+                                AND C.WF_PROC_CD    = B.WF_PROC_CD 
+                                )
+
+                ORDER BY B.SEQ
+            )
+            LOOP
+        
+                INSERT INTO SR_WF_PROC
+                (
+                      REQ_ID
+                    , WF_PROC_CD
+                    , SEQ
+                    , WF_PROC_SKIP_YN
+                    , FRID
+                    , FRDT
+                    , LMID
+                    , LMDT 
+                )
+                VALUES
+                (
+                      CUR.REQ_ID
+                    , CUR.WF_PROC_CD
+                    , CUR.SEQ
+                    , CUR.WF_PROC_SKIP_YN
+                    , #{LMID}
+                    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                    , #{LMID}
+                    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                )
+                ;
+            
+            END LOOP;
+        
+        END;
+    </insert>
+
+    <insert id="insertEmptyWfProcEnd" parameterType="java.util.Map">
+        DECLARE
+            V_CONF_SEQ  WF_REQ_TMPLAT_PROC_HT.SEQ%TYPE;
+        
+        BEGIN
+        
+            SELECT SEQ
+            INTO V_CONF_SEQ
+            FROM
+                WF_REQ_TMPLAT_PROC_HT A
+            WHERE 1 = 1
+            AND EXISTS
+                    (
+                    SELECT 1
+                    FROM SR_BASE_INFO B
+                    WHERE 1 = 1
+                    AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+                    AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+                    AND B.REQ_ID            = #{REQ_ID}
+                    )
+            AND A.WF_PROC_CD    = 'WF_PROC_9999'
+            ;
+            
+            FOR CUR IN
+            (
+                SELECT
+                      WF_PROC_CD
+                    , SEQ
+                    , V_CONF_SEQ    AS LAST_SEQ
+                FROM
+                    WF_REQ_TMPLAT_PROC_HT A
+                WHERE 1 = 1
+                AND EXISTS
+                        (
+                        SELECT 1
+                        FROM
+                              SR_BASE_INFO B
+                        WHERE 1 = 1
+                        AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+                        AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+                        AND B.REQ_ID            = #{REQ_ID}
+                        )
+                AND NOT EXISTS
+                            (
+                            SELECT 1
+                            FROM
+                                  SR_BASE_INFO B
+                                , SR_WF_PROC C
+                            WHERE 1 = 1
+                            AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+                            AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+                            AND B.REQ_ID            = C.REQ_ID
+                            AND A.WF_PROC_CD        = C.WF_PROC_CD
+                            AND B.REQ_ID            = #{REQ_ID}
+                            )
+                AND SEQ <![CDATA[<=]]> V_CONF_SEQ
+                ORDER BY
+                    SEQ
+            )
+            LOOP
+        
+                INSERT INTO SR_WF_PROC
+                (
+                      REQ_ID
+                    , WF_PROC_CD
+                    , SEQ
+                    , WF_PROC_SKIP_YN
+                    , FRID
+                    , FRDT
+                    , LMID
+                    , LMDT 
+                )
+                VALUES
+                (
+                      #{REQ_ID}
+                    , CUR.WF_PROC_CD
+                    , CUR.SEQ
+                    , CASE WHEN CUR.WF_PROC_CD = 'WF_PROC_1000' THEN 'N' ELSE CASE WHEN CUR.SEQ = CUR.LAST_SEQ THEN 'N' ELSE 'Y' END END
+                    , #{LMID}
+                    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                    , #{LMID}
+                    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                )
+                ;
+            
+            END LOOP;
+        
+        END;
+    </insert>
+
+    <select id="selectSrCgerSubDt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* SrComm >> selectSrCgerSubDt */
+        SELECT
+              REQ_ID                                        --요청서ID
+            , WF_PROC_CD                                    --워크플로우단계코드
+            , SEQ                                           --순번
+            , USER_ID                                       --사용자ID(검토/담당자(사용자선택) 시)
+            , ROLE_CD                                       --역할(UP_CMM_CD =ACTOR_CD  3:PL 11:요청자 32:BA 202:IT담당자)-[※SR요청관리만사용]
+            , RMK                                           --비고
+            , FRID                                          --최초등록자ID
+            , FRDT                                          --최초등록일시
+            , LMID                                          --최종수정자ID
+            , LMDT                                          --최종수정일시
+            , LMPID                                         --최종수정화면ID
+
+        FROM SR_CGER_SUB_DT
+        WHERE 1 = 1
+        AND REQ_ID      = #{REQ_ID}
+        AND WF_PROC_CD  = #{WF_PROC_CD}
+
+        <if test="USER_ID != '' and USER_ID != null">
+        AND USER_ID     = #{USER_ID}
+        </if>
+
+        <if test="SEQ != '' and SEQ != null">
+        AND SEQ     = #{SEQ}
+        </if>
+    </select>
+
+    <select id="selectSrCgerSubDtAuth" parameterType="java.util.Map" resultType="java.util.Map">
+        /* SrComm >> selectSrCgerSubDtAuth */
+        SELECT
+              USER_ID
+
+        FROM SR_CGER_SUB_DT
+        WHERE 1 = 1
+        AND REQ_ID      = #{REQ_ID}
+        AND WF_PROC_CD  = #{WF_PROC_CD}
+
+        <if test="USER_ID != '' and USER_ID != null">
+        AND USER_ID     = #{USER_ID}
+        </if>
+
+        GROUP BY
+            USER_ID
+    </select>
+
+    <insert id="insertSrCgerSubDt" parameterType="java.util.Map">
+        /* SrComm >> insertSrCgerSubDt */
+        <selectKey resultType="Integer" keyProperty="SEQ" order="BEFORE">
+            SELECT NVL(MAX(SEQ), 0) + 1 AS SEQ FROM SR_CGER_SUB_DT WHERE REQ_ID = #{REQ_ID} AND WF_PROC_CD = #{WF_PROC_CD}
+        </selectKey>
+        INSERT INTO SR_CGER_SUB_DT
+        (
+              REQ_ID
+            , WF_PROC_CD
+            , SEQ
+            , USER_ID
+            , ROLE_CD 
+            , RMK
+            
+            , FRID
+            , FRDT
+            , LMID
+            , LMDT
+            , LMPID
+        )
+        VALUES
+        (
+              #{REQ_ID}
+            , #{WF_PROC_CD}
+            , #{SEQ}
+            , #{USER_ID}
+            , #{ROLE_CD}
+            , #{RMK}
+
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMPID}
+        )
+    </insert>
+
+    <delete id="removeSrCgerSubDt" parameterType="java.util.Map">
+        DELETE
+        FROM SR_CGER_SUB_DT
+        WHERE 1 = 1
+        AND REQ_ID      = #{REQ_ID}
+        AND WF_PROC_CD  = #{WF_PROC_CD}
+        
+        <if test="USER_ID != '' and USER_ID != null">
+        AND USER_ID     = #{USER_ID}
+        </if>
+
+        <if test="SEQ != '' and SEQ != null">
+        AND SEQ     = #{SEQ}
+        </if>
+
+    </delete>
+    
+    <select id="selectBaseRtrnWfProcCd" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              MAX(DECODE(#{RTRN_DIV}, 'SCRN_RTRN', B.SCREEN_RTRN, 'RTRN', B.RTRN, NULL)) AS RTRN_WF_PROC_CD
+
+            , MAX(
+                CASE
+                    WHEN 'WF_PROC_1000' = DECODE(#{RTRN_DIV}, 'SCRN_RTRN', B.SCREEN_RTRN, 'RTRN', B.RTRN, NULL)
+                    THEN 'WF_FUNC_00'
+                    ELSE
+                      (
+                      SELECT
+                        CASE WHEN CGER = 'true' THEN 'WF_FUNC_04' ELSE CASE WHEN WF_PROC_CD = 'WF_PROC_9020' THEN 'WF_FUNC_04' ELSE FUNC END END
+                      FROM
+                        WF_REQ_TMPLAT_PROC_HT C
+                      WHERE 1 = 1
+                      AND C.REQ_TMPLAT_ID   = B.REQ_TMPLAT_ID
+                      AND C.REQ_TMPLAT_VER  = B.REQ_TMPLAT_VER
+                      AND C.WF_PROC_CD      = DECODE(#{RTRN_DIV}, 'SCRN_RTRN', B.SCREEN_RTRN, 'RTRN', B.RTRN, NULL)
+                      )
+                END
+              ) AS RTRN_WF_FUNC_CD
+              
+            , NVL(MAX(
+              (
+              SELECT WF_PROC_SKIP_YN
+              FROM
+                SR_WF_PROC C
+              WHERE 1 = 1
+              AND C.REQ_ID      = #{REQ_ID}
+              AND C.WF_PROC_CD  = DECODE(#{RTRN_DIV}, 'SCRN_RTRN', B.SCREEN_RTRN, 'RTRN', B.RTRN, NULL)
+              
+              )), 'N') AS WF_PROC_SKIP_YN
+        FROM
+              SR_BASE_INFO A
+            , WF_REQ_TMPLAT_PROC_HT B
+
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+        AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+        AND A.WF_PROC_CD        = B.WF_PROC_CD
+        AND A.REQ_ID            = #{REQ_ID}
+    </select> 
+
+    <select id="selectSrWfProcRtrnCheck" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT A.SEQ, A.WF_PROC_SKIP_YN, A.WF_PROC_CD, C.CGER, C.FUNC, C.SCREEN_RTRN, C.RTRN
+        FROM
+              SR_WF_PROC A
+            , SR_BASE_INFO B
+            , WF_REQ_TMPLAT_PROC_HT C
+
+        WHERE 1 = 1
+        AND A.REQ_ID            = B.REQ_ID
+        AND A.WF_PROC_CD        = C.WF_PROC_CD
+        AND B.REQ_TMPLAT_ID     = C.REQ_TMPLAT_ID
+        AND B.REQ_TMPLAT_VER    = C.REQ_TMPLAT_VER
+        AND A.REQ_ID            = #{REQ_ID}
+        
+        <if test="RTRN_WF_PROC_CD != '' and RTRN_WF_PROC_CD != null">
+        AND A.SEQ     <![CDATA[<=]]> (SELECT SEQ FROM SR_WF_PROC WHERE REQ_ID = A.REQ_ID AND WF_PROC_CD = #{RTRN_WF_PROC_CD})
+        </if>
+        
+        <if test="RTRN_SEQ != '' and RTRN_SEQ != null">
+        AND A.SEQ   <![CDATA[<=]]> #{RTRN_SEQ}
+        </if>
+        
+        <if test="CHK_WF_PROC_CD != '' and CHK_WF_PROC_CD != null">
+        AND A.WF_PROC_CD        = #{CHK_WF_PROC_CD}
+        </if>
+
+        ORDER BY
+            A.SEQ DESC
+    </select>
+
+    <select id="selectUpUserInfo" parameterType="java.util.Map" resultType="String">
+        SELECT FN_FOMM_UP_USER_INFO(#{USER_ID}, #{UP_GUBUN}, #{GUBUN})
+        FROM DUAL
+    </select>
+
+<!--     <select id="selectReqMapWfProcCd" parameterType="java.util.Map" resultType="java.util.Map"> -->
+<!--         SELECT -->
+<!--               A.MAP_PROC_CD -->
+<!--             , A.MAP_WF_PROC_CD -->
+<!--             , A.NEXT_MAP_WF_PROC_CD -->
+<!--             , NVL(CUR.SEND_SMS_YN, 'N')     AS CUR_SEND_SMS_YN -->
+<!--             , NVL(CUR.SEND_TALK_YN, 'N')    AS CUR_SEND_TALK_YN -->
+<!--             , NVL(CUR.SEND_MEMO_YN, 'N')    AS CUR_SEND_MEMO_YN -->
+<!--             , NVL(NEXT.SEND_SMS_YN, 'N')    AS NEXT_SEND_SMS_YN -->
+<!--             , NVL(NEXT.SEND_TALK_YN, 'N')   AS NEXT_SEND_TALK_YN -->
+<!--             , NVL(NEXT.SEND_MEMO_YN, 'N')   AS NEXT_SEND_MEMO_YN -->
+<!--         FROM -->
+<!--                 ( -->
+<!--                SELECT -->
+<!--                       A.REQ_TMPLAT_ID -->
+<!--                     , MAX(MAP_PROC_CD)       AS MAP_PROC_CD -->
+<!--                    , MAX(MAP_WF_PROC_CD) AS MAP_WF_PROC_CD -->
+<!--                    , MAX(CASE -->
+<!--                        WHEN 'WF_FUNC_01' = #{NEXT_WF_FUNC_CD} -->
+<!--                        THEN -->
+<!--                            ( -->
+<!--                            SELECT -->
+<!--                                MAP_WF_PROC_CD -->
+<!--                            FROM -->
+<!--                                WF_REQ_APPV_HT B -->
+<!--                            WHERE 1 = 1 -->
+<!--                            AND B.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID -->
+<!--                            AND B.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER -->
+<!--                            AND B.APPR_LVL_SEQ  = 1 -->
+<!--                            AND B.WF_PROC_CD        = #{NEXT_WF_PROC_CD} -->
+<!--                            ) -->
+<!--                        WHEN 'WF_FUNC_04' = #{NEXT_WF_FUNC_CD} -->
+<!--                        THEN -->
+<!--                            ( -->
+<!--                            SELECT -->
+<!--                                MAP_WF_PROC_CD -->
+<!--                            FROM -->
+<!--                                WF_REQ_TMPLAT_PROC_HT B -->
+<!--                            WHERE 1 = 1 -->
+<!--                            AND B.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID -->
+<!--                            AND B.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER -->
+<!--                            AND B.WF_PROC_CD        = #{NEXT_WF_PROC_CD} -->
+<!--                            ) -->
+<!--                      END)    AS NEXT_MAP_WF_PROC_CD -->
+            
+<!--                FROM -->
+<!--                    SR_BASE_INFO A -->
+<!--                WHERE 1 = 1 -->
+<!--                AND A.REQ_ID = #{REQ_ID} -->
+<!--                GROUP BY A.REQ_TMPLAT_ID -->
+<!--                 ) A, -->
+<!--                 FOMM_NOTI_MNG_MT CUR, -->
+<!--                 FOMM_NOTI_MNG_MT NEXT -->
+
+<!--         WHERE 1 = 1 -->
+<!--         AND A.REQ_TMPLAT_ID     = CUR.REQ_TMPLAT_ID(+) -->
+<!--         AND CUR.WF_PROC_CD(+)   = #{WF_PROC_CD} -->
+<!--         AND A.MAP_PROC_CD       = CUR.MAP_PROC_CD(+) -->
+<!--         AND A.MAP_WF_PROC_CD    = CUR.MAP_WF_PROC_CD(+) -->
+
+<!--         AND A.REQ_TMPLAT_ID         = NEXT.REQ_TMPLAT_ID(+) -->
+<!--         AND NEXT.WF_PROC_CD(+)      = #{NEXT_WF_PROC_CD}        -->
+<!--         AND A.MAP_PROC_CD           = NEXT.MAP_PROC_CD(+) -->
+<!--         AND A.NEXT_MAP_WF_PROC_CD   = NEXT.MAP_WF_PROC_CD(+)         -->
+<!--     </select> -->
+
+    <select id="selectAppvDraftUser" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT MAX(USER_ID) AS USER_ID
+        FROM
+            WF_APPROVAL_MT
+        WHERE 1 = 1
+        AND REQ_ID          = #{REQ_ID}
+        AND WF_PROC_CD  = #{WF_PROC_CD}        
+        AND APPR_GBN_CD = 'A01' /* 기안자 */
+    </select>
+
+    <select id="selectAppvWfApprLvlSeq" parameterType="java.util.Map" resultType="Integer">
+		    SELECT
+			      NVL(MIN(APPR_LVL_SEQ), -1) APPR_LVL_SEQ
+<!-- 			    , LISTAGG(WF_PROC_CD || '/' || APPR_LVL_SEQ || '/' || APPR_SEQ || '/' || SEQ || '/' || USER_ID || '/' || APPR_STAT_CD, ', ') WITHIN GROUP (ORDER BY APPR_LVL_SEQ, APPR_SEQ, SEQ) AS APPR_INFO -->
+			FROM
+			    WF_APPROVAL_MT A
+			WHERE 1 = 1
+			AND A.REQ_ID        = #{REQ_ID}
+			AND A.WF_PROC_CD    = #{WF_PROC_CD}
+			AND A.APPR_GBN_CD   = 'A02'
+			AND EXISTS
+			        (
+			        SELECT 1
+			        FROM WF_APPROVAL_MT B
+			        WHERE 1 = 1
+			        AND B.REQ_ID        = A.REQ_ID
+			        AND B.WF_PROC_CD    = A.WF_PROC_CD
+			        AND B.SEQ           = A.SEQ
+			        AND B.APPR_STAT_CD <![CDATA[<>]]> 'APST_99'      --승인내역 제외
+			        AND NVL(B.APPR_STAT_CD, 'APST_01') = 'APST_01'    --NULL 또는 승인대기 내역만
+			        AND NOT EXISTS
+			                    (
+			                    --반려가 존재하는 결재선 요청서는 제외
+			                    SELECT 1
+			                    FROM WF_APPROVAL_MT C
+			                    WHERE 1 = 1
+			                    AND C.REQ_ID        = B.REQ_ID
+			                    AND C.APPR_STAT_CD  = 'APST_00'
+			                    )
+			        )
+    </select>
+
+    <select id="selectFnSrReqMapWfProc" parameterType="java.util.Map" resultType="String">
+        SELECT FN_SR_REQ_MAP_WF_PROC(#{REQ_ID}, #{WF_PROC_CD}, #{APPR_LVL_SEQ}, #{GUBUN}) AS RTN_VAL
+        FROM DUAL
+    </select>
+
+	<select id="selectCgerUserInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT LISTAGG(DISTINCT B.USER_NM || CASE WHEN B.TELNUM IS NOT NULL THEN '(내선 : ' || B.TELNUM || ')' END, ', ') WITHIN GROUP (ORDER BY B.USER_NM) AS PROC_INFO
+		FROM
+    		SR_CGER_DT A,
+    		FOMM_USER_MT B
+		WHERE 1 = 1
+		AND A.USER_ID			= B.USER_ID
+		AND A.REQ_ID			= #{REQ_ID}
+		AND A.WF_PROC_CD	= #{WF_PROC_CD}
+	</select>
+
+	<select id="selectApvUserInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			LISTAGG(A.USER_NM || CASE WHEN B.TELNUM IS NOT NULL THEN '(내선 : ' || B.TELNUM || ')' END, ', ') WITHIN GROUP (ORDER BY SEQ) AS PROC_INFO,
+			SUM(CASE WHEN A.APPR_STAT_CD = 'APST_99' THEN 1 END) AS APPV_CNT
+		FROM
+    		WF_APPROVAL_MT A,
+    		FOMM_USER_MT B
+		WHERE 1 = 1
+		AND A.USER_ID			= B.USER_ID
+		AND A.APPR_GBN_CD	= 'A02'
+		AND A.REQ_ID			= #{REQ_ID}
+		AND A.WF_PROC_CD	= #{WF_PROC_CD}
+		AND A.APPR_LVL_SEQ	= #{APPR_LVL_SEQ}
+	</select>
+</mapper>

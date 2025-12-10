@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ5200PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.UTDFT_ID
+			, A.UTEST_ID
+			, D.UTEST_NO
+			, D.UTEST_NAME
+			, A.PJT_ID
+			, A.BIZ_ID
+			, A.UTDFT_NO
+			, A.UTDFT_NAME
+			, A.UTDFT_TYPE_CD
+			, A.UTDFT_DESC
+			, A.UTDFT_RCV_CD
+			, A.UTDFT_ACT_CD
+			, A.DFT_USER_ID
+			, A.DFT_USER_NM
+			, A.DFT_USER_DEPT
+			, A.DFT_REG_DATE
+			, A.ACT_USER_ID
+			, A.ACT_USER_NM
+			, A.ACT_USER_DEPT
+			, A.ACT_PDATE
+			, A.ACT_ADATE
+			, A.ACT_DESC
+			, A.CONF_USER_ID
+			, A.CONF_USER_NM
+			, A.CONF_USER_DEPT
+			, A.CONF_DATE
+			, A.UTDFT_RCV_DESC
+			, A.REMARK
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.SYSMODTIME
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, B.PJT_NAME AS PJT_NAME
+			, C.PJT_ID   AS P_PJT_ID 
+			, C.PJT_NAME AS P_PJT_NAME
+			, CASE WHEN D.PRG_REF_CD = 'PJUTSTB1' THEN E.SCR_NO
+			       WHEN D.PRG_REF_CD = 'PJUTSTB2' THEN F.RPPR_NO
+			       WHEN D.PRG_REF_CD = 'PJUTSTB3' THEN G.INF_NO
+			       WHEN D.PRG_REF_CD = 'PJUTSTB4' THEN H.BTPR_NO
+			       ELSE ''
+			  END AS PRG_REF_NO
+			, CASE WHEN D.PRG_REF_CD = 'PJUTSTB1' THEN E.SCR_NAME
+			       WHEN D.PRG_REF_CD = 'PJUTSTB2' THEN F.RPPR_NAME
+			       WHEN D.PRG_REF_CD = 'PJUTSTB3' THEN G.INF_NAME
+			       WHEN D.PRG_REF_CD = 'PJUTSTB4' THEN H.BTPR_NAME
+			       ELSE ''
+			  END AS PRG_REF_NAME
+
+		FROM
+			  PJ_UT_DEFECT A
+			, PJ_PROJECT B   
+			, PJ_PROJECT C
+			, PJ_UNIT_TEST D
+			, PJ_SCREEN E
+			, PJ_RPTPRG F
+			, PJ_INTERFACE G
+			, PJ_BATCHPRG  H
+
+		WHERE 1 = 1
+		AND A.PJT_ID		= B.PJT_ID
+		AND B.PARENT_ID		= C.PJT_ID
+		AND A.UTEST_ID		= D.UTEST_ID(+)
+		AND A.PJT_ID		= D.PJT_ID(+)
+		AND D.PRG_REF_ID	= E.SCR_ID(+)
+		AND D.PJT_ID		= E.PJT_ID(+)
+		AND D.PRG_REF_ID	= F.RPPR_ID(+)
+		AND D.PJT_ID		= F.PJT_ID(+)
+		AND D.PRG_REF_ID	= G.INF_ID(+)
+		AND D.PJT_ID		= G.PJT_ID(+)
+		AND D.PRG_REF_ID	= H.BTPR_ID(+)
+		AND D.PJT_ID		= H.PJT_ID(+)
+		AND A.UTDFT_ID		= #{UTDFT_ID}
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="UTDFT_ID" order="BEFORE">
+			SELECT
+				'PJUD' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(UTDFT_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_UT_DEFECT
+   			WHERE 1 = 1
+   			AND UTDFT_ID LIKE 'PJUD%'
+			AND LENGTH(UTDFT_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_UT_DEFECT
+		(
+			  UTDFT_ID
+			, UTEST_ID
+			, PJT_ID
+			, BIZ_ID
+			, UTDFT_NO
+			, UTDFT_NAME
+			, UTDFT_TYPE_CD
+			, UTDFT_DESC
+			, UTDFT_RCV_CD
+			, UTDFT_ACT_CD
+			, DFT_USER_ID
+			, DFT_USER_NM
+			, DFT_USER_DEPT
+			, DFT_REG_DATE
+			, ACT_USER_ID
+			, ACT_USER_NM
+			, ACT_USER_DEPT
+			, ACT_PDATE
+			, ACT_ADATE
+			, ACT_DESC
+			, CONF_USER_ID
+			, CONF_USER_NM
+			, CONF_USER_DEPT
+			, CONF_DATE
+			, UTDFT_RCV_DESC
+			, REMARK
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+
+			, SYSMODTIME
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  #{UTDFT_ID} 
+			, #{UTEST_ID}
+			, #{PJT_ID}
+			, #{BIZ_ID}
+			, #{UTDFT_NO}
+			, #{UTDFT_NAME}
+			, #{UTDFT_TYPE_CD}
+			, #{UTDFT_DESC}
+			, #{UTDFT_RCV_CD}
+			, #{UTDFT_ACT_CD}
+			, #{DFT_USER_ID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{DFT_USER_ID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{DFT_USER_ID})
+			, #{DFT_REG_DATE}
+			, #{ACT_USER_ID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{ACT_USER_ID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{ACT_USER_ID})
+			, #{ACT_PDATE}
+			, #{ACT_ADATE}
+			, #{ACT_DESC}
+			, #{CONF_USER_ID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{CONF_USER_ID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{CONF_USER_ID})
+			, #{CONF_DATE}
+			, #{UTDFT_RCV_DESC}
+			, #{REMARK}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		  UPDATE PJ_UT_DEFECT SET
+              UTDFT_NO			= #{UTDFT_NO}
+            , UTDFT_NAME		= #{UTDFT_NAME}
+            , UTDFT_TYPE_CD		= #{UTDFT_TYPE_CD}
+            , UTDFT_DESC		= #{UTDFT_DESC}
+            , UTDFT_RCV_CD		= #{UTDFT_RCV_CD}
+            , UTDFT_ACT_CD		= #{UTDFT_ACT_CD}
+            , DFT_USER_ID		= #{DFT_USER_ID}
+            , DFT_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{DFT_USER_ID})
+            , DFT_USER_DEPT		= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{DFT_USER_ID})
+            , DFT_REG_DATE		= #{DFT_REG_DATE}
+            , ACT_USER_ID		= #{ACT_USER_ID}
+            , ACT_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{ACT_USER_ID})
+            , ACT_USER_DEPT		= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{ACT_USER_ID})
+            , ACT_PDATE			= #{ACT_PDATE}
+            , ACT_ADATE			= #{ACT_ADATE}
+            , ACT_DESC			= #{ACT_DESC}
+            , CONF_USER_ID		= #{CONF_USER_ID}
+            , CONF_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{CONF_USER_ID})
+            , CONF_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{CONF_USER_ID})
+            , CONF_DATE			= #{CONF_DATE}
+            , UTDFT_RCV_DESC	= #{UTDFT_RCV_DESC}
+            , REMARK			= #{REMARK}
+
+            , SYSMODTIME		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+
+		WHERE 1 = 1
+		AND UTDFT_ID	= #{UTDFT_ID}
+		AND UTEST_ID	= #{UTEST_ID}
+		AND PJT_ID		= #{PJT_ID}
+	</update>
+
+</mapper>

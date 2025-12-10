@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ1200WDAO">
+
+<!-- 	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map"> -->
+	<select id="select01" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, ''	AS TEMP_CHECKLIST_ID
+			, A.CHECKLIST_ID
+			, A.STAGE_CD
+			, A.USE_YN
+			, A.ACT_STIME
+			, A.ACT_ETIME
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, B.CNT
+		FROM
+			PJ_CHECKLIST A,
+			(
+			SELECT
+				CHECKLIST_ID, COUNT(*) AS CNT
+			FROM
+				PJ_CHECKITEM
+			GROUP BY CHECKLIST_ID
+			) B 
+
+		WHERE 1 = 1
+		AND A.CHECKLIST_ID = B.CHECKLIST_ID(+)
+
+		ORDER BY
+			A.CHECKLIST_ID
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK 
+			, ''	AS ROWFLAG
+			, ''	AS TEMP_CHECKLIST_ID
+			, A.CHECKITEM_ID
+			, A.CHECKLIST_ID
+			, A.CHECKITEM_CD
+			, A.ORD_NO
+			, A.CHECKITEM_NM
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+
+		FROM
+			PJ_CHECKITEM A
+
+		WHERE 1 = 1
+		AND A.CHECKLIST_ID	= #{CHECKLIST_ID}
+
+		ORDER BY
+			A.CHECKITEM_ID
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="CHECKLIST_ID" order="BEFORE">
+			SELECT
+				'PJCL' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(CHECKLIST_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_CHECKLIST
+   			WHERE 1 = 1
+   			AND CHECKLIST_ID LIKE 'PJCL%'
+			AND LENGTH(CHECKLIST_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_CHECKLIST 
+		(
+			  CHECKLIST_ID
+			, STAGE_CD
+			, USE_YN
+			, ACT_STIME
+			, ACT_ETIME
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  #{CHECKLIST_ID}
+			, {STAGE_CD}
+			, {USE_YN}
+			, {ACT_STIME}
+			, {ACT_ETIME}
+			 
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_CHECKLIST SET
+			  STAGE_CD			= #{STAGE_CD}
+			, USE_YN			= #{USE_YN}
+			, ACT_STIME			= #{ACT_STIME}
+			, ACT_ETIME			= #{ACT_ETIME}
+
+			, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+		WHERE 1 = 1
+		AND CHECKLIST_ID = #{CHECKLIST_ID}
+	</update>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="CHECKITEM_ID" order="BEFORE">
+			SELECT
+				'PJCI' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(CHECKITEM_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_CHECKITEM
+   			WHERE 1 = 1
+   			AND CHECKITEM_ID LIKE 'PJCI%'
+			AND LENGTH(CHECKITEM_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_CHECKITEM 
+		(
+			  CHECKITEM_ID
+			, CHECKLIST_ID
+			, CHECKITEM_CD
+			, CHECKITEM_NM
+			
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  #{CHECKITEM_ID} 
+			, #{CHECKLIST_ID}
+			, #{CHECKITEM_CD}
+			, #{CHECKITEM_NM}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify02" parameterType="java.util.Map">
+		UPDATE PJ_CHECKITEM SET
+			  CHECKITEM_CD		= #{CHECKITEM_CD} 
+			, CHECKITEM_NM		= #{CHECKITEM_NM} 		 
+			, ORD_NO			= #{ORD_NO}
+
+			, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+
+		WHERE 1 = 1
+		AND CHECKLIST_ID	= #{CHECKLIST_ID}
+		AND CHECKITEM_ID	= #{CHECKITEM_ID}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_CHECKLIST
+		WHERE 1 = 1
+		AND CHECKLIST_ID = #{CHECKLIST_ID}
+	</delete>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE FROM PJ_CHECKITEM
+		WHERE 1 = 1
+		AND CHECKLIST_ID = #{CHECKLIST_ID}
+	</delete>
+
+	<delete id="remove03" parameterType="java.util.Map">
+		DELETE FROM PJ_CHECKITEM
+		WHERE 1 = 1
+		AND CHECKLIST_ID	= #{CHECKLIST_ID}
+		AND CHECKITEM_ID	= #{CHECKITEM_ID}
+	</delete>
+
+</mapper>

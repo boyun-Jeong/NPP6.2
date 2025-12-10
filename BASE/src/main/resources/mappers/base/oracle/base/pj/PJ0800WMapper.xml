@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0800WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		/* PJ0800WMapper >> select01 */
+		SELECT
+			  '0' AS CHK
+			, '' AS ROWFLAG 
+			, A.PJT_ID 
+			, A.PJT_NAME 
+			, A.PJT_STATUS_CD 
+			, A.PJT_DESC 
+			, A.PJT_EXEC_CD 
+			, A.IN_PM_USER_ID 
+			, A.IN_PM_USER_NM 
+			, A.IN_PM_DEPT 
+			, A.OUT_PM_USER_ID 
+			, A.OUT_PM_USER_NM 
+			, A.OUT_CPY_ID 
+			, A.OUT_CPY_NAME 
+			, A.UPMU_USER_ID 
+			, A.UPMU_USER_NM 
+			, A.UPMU_USER_DEPT 
+			, A.PJT_STIME 
+			, A.PJT_ETIME 
+			, A.PJT_TYPE_CD 
+			, A.PJT_SIZE_CD 
+			, A.PJT_DEV_CD 
+			, A.PJT_STD_YN 
+			, A.PJT_OPEN_DATE 
+			, A.CONTRT_ID 
+			, A.DEV_AMOUNT 
+			, A.DEV_MM 
+			, A.HW_AMOUNT 
+			, A.SW_AMOUNT 
+			, A.TOT_AMOUNT 
+			, A.REG_STIME 
+			, A.REG_USER_ID 
+			, A.REG_USER_NM 
+			, A.REG_USER_DEPT 
+			, A.SYSMODTIME 
+			, A.LMOD_USER_ID 
+			, A.LMOD_USER_NM 
+			, A.LMOD_USER_DEPT 
+			, A.CONTRACT_ID 
+			, A.CONTRACT_NO 
+			, A.OUT_PM_DEPT 
+			, A.SUB_PJT_NO 
+			, A.SUB_PJT_YN 
+			, A.PARENT_ID 
+			, CASE WHEN A.PJT_ID = #{PJT_ID} THEN ( SELECT SUM(WEIGHT) FROM PJ_PROJECT WHERE 1=1 AND PARENT_ID = #{PJT_ID} AND SUB_PJT_YN = 'Y' )
+			       ELSE A.WEIGHT
+			  END AS WEIGHT      
+			, (SELECT COUNT(*) FROM PJ_WBS WHERE PJT_ID = A.PJT_ID ) AS WBS_CNT
+
+		FROM
+			PJ_PROJECT A
+
+		WHERE 1 = 1
+		AND (A.PARENT_ID = #{PJT_ID} OR A.PJT_ID = #{PJT_ID})
+		AND (NVL(A.SUB_PJT_YN, 'N') = 'N' OR NVL(A.SUB_PJT_YN, 'N') LIKE #{SUB_PJT_YN})
+
+		ORDER BY
+			NVL(A.SUB_PJT_NO, 0), A.PJT_NAME 
+	</select>
+
+</mapper>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0000WDAO">
+
+	<select id="selectSubPjtInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  A.PJT_ID
+			, A.PJT_NAME
+			, A.PJT_STATUS_CD
+			, A.PJT_DESC
+			, A.PJT_EXEC_CD
+			, A.IN_PM_USER_ID
+			, A.IN_PM_USER_NM
+			, A.IN_PM_DEPT
+			, A.OUT_PM_USER_ID
+			, A.OUT_PM_USER_NM
+			, A.OUT_CPY_ID
+			, A.OUT_CPY_NAME
+			, A.UPMU_USER_ID
+			, A.UPMU_USER_NM
+			, A.UPMU_USER_DEPT
+			, A.PJT_STIME
+			, A.PJT_ETIME
+			, A.PJT_TYPE_CD
+			, A.PJT_SIZE_CD
+			, A.PJT_DEV_CD
+			, A.PJT_STD_YN
+			, A.PJT_OPEN_DATE
+			, A.CONTRT_ID
+			, A.DEV_AMOUNT
+			, A.DEV_MM
+			, A.HW_AMOUNT
+			, A.SW_AMOUNT
+			, A.TOT_AMOUNT
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.SYSMODTIME
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT 
+			, A.CONTRACT_ID 
+			, A.CONTRACT_NO 
+			, A.OUT_PM_DEPT 
+			, B.PJT_ID AS PARENT_ID
+			, B.PJT_NAME AS PARENT_NM
+			, NVL(C.LVL, 0)					AS LVL
+			, NVL(C.WBS_CODE, 1)			AS WBS_CODE
+			, NVL(C.WBS_NAME, A.PJT_NAME)	AS WBS_NAME
+			, C.PLAN_SDATE					AS PLAN_SDATE
+			, C.PLAN_EDATE					AS PLAN_EDATE
+			, C.EXE_USER_NM					AS EXE_USER_NM
+			, C.CHG_USER_NM					AS CHG_USER_NM
+			, C.WBS_DESC					AS WBS_DESC
+			, C.WEIGHT						AS WEIGHT
+			, C.ACTL_CMPL_RATE				AS ACTL_CMPL_RATE
+			, C.CALC_DATE					AS CALC_DATE
+			, NVL(C.VERSION, '0.0')			AS VERSION
+		FROM 
+			PJ_PROJECT A,
+			PJ_PROJECT B,
+			(
+			SELECT
+				  C.PJT_ID				AS PJT_ID
+				, C.LVL					AS LVL
+				, C.WBS_CODE			AS WBS_CODE
+				, C.WBS_NAME			AS WBS_NAME
+				, C.PLAN_SDATE			AS PLAN_SDATE
+				, C.PLAN_EDATE			AS PLAN_EDATE
+				, C.EXE_USER_NM			AS EXE_USER_NM
+				, C.CHG_USER_NM			AS CHG_USER_NM
+				, C.WBS_DESC			AS WBS_DESC
+				, C.WEIGHT				AS WEIGHT
+				, C.ACTL_CMPL_RATE		AS ACTL_CMPL_RATE
+				, D.CALC_DATE			AS CALC_DATE
+				, D.VERSION				AS VERSION
+
+			FROM
+				PJ_WBS C,
+				PJ_WBS_TOT D
+			WHERE 1 = 1
+			AND C.PJT_ID	= D.PJT_ID
+			AND C.PARENT_ID	= #{PARENT_ID}
+			AND C.LVL		= 0
+			) C
+
+		WHERE 1=1
+		AND A.PARENT_ID = B.PJT_ID
+		AND A.PARENT_ID	= #{PARENT_ID}
+		AND A.PJT_ID	= C.PJT_ID(+)
+
+		ORDER BY
+			TO_NUMBER(A.SUB_PJT_NO)
+	</select>
+
+	<select id="selectPjtWBSLvlInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  A.LVL				AS LVL
+			, TO_CHAR(A.LVL+1)	AS NAME 
+		FROM PJ_WBS A 
+
+		WHERE 1 = 1
+		AND A.PARENT_ID = #{PARENT_ID}
+
+		GROUP
+			BY A.LVL
+     
+		ORDER
+			BY LVL
+	</select>
+
+	<select id="selectProjectBiz" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT 
+			  A.BIZ_ID
+			, A.BIZ_NAME
+			, A.PJT_ID
+			, B.PJT_NAME
+			, A.BIZ_DESC
+			, A.ORD_NUM
+			, A.USE_YN
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.SYSMODTIME
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+
+		FROM
+			  PJ_BIZ A
+			, PJ_PROJECT B
+
+		WHERE 1 = 1
+		AND A.PJT_ID = B.PJT_ID
+		AND A.PJT_ID = #{PJT_ID}
+		AND A.USE_YN = 'Y'
+
+		ORDER BY
+	 		A.ORD_NUM
+	</select>
+
+</mapper>

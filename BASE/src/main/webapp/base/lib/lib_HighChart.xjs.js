@@ -1,0 +1,704 @@
+//XJS=lib_HighChart.xjs
+(function()
+{
+    return function(path)
+    {
+        var obj;
+    
+        // User Script
+        this.registerScript(path, function() {
+        // include "lib::lib_HighChart.xjs";
+        // HighChart 공통 라이브러리
+
+        //
+        var exportingEnabled;
+        exportingEnabled  = "\n exporting: {";
+        exportingEnabled += "\n	    enabled: false";
+        exportingEnabled += "\n },";
+
+
+        // Basic Column chart
+        /* oParam = {
+         *	  fontFamily		: (String) 차트 font family
+         * 	, title				: (String) 차트 title
+         *	, align				: (String) title align 'center'|'left'|'right'
+         *	, subtitle			: (String) 차트 sub title
+         *	, subalign			: (String) subtitle align 'center'|'left'|'right'
+         *	, xAxis				: (String Array) x축 표기명
+         *	, valuesuffix		: (String) 접미어
+         *	, objDs				: (Dataset)	dataset
+         *	, datalabel			: (Boolean)	그래프 건수 표기(true/false)
+         *	, yAxis				: {
+        							(String)	title	: [title1, 	title2,		...],
+        							(String)	valueCol: [col1,	col2,		...],
+        							(String)	color	: [color1,	color2,		...],		// series별 color
+        							(String)	colorCol: [col1,	col2,		...]		// optional; data별 color 처리를 위한 color 컬럼명
+        						  }
+         *	, legend			: '' -> true, 'false' -> false
+         * }
+         */
+         this.hcfnGetBasicColumnChart = function(oParam)
+         {
+        	oParam = oParam||{};
+
+        	var chartScript = '';
+        	chartScript += "Highcharts.chart('divChart', ";
+        	chartScript += "\n{";
+        	chartScript += "\n	chart: {";
+        	chartScript += "\n		type: 'column'";
+        								if( !Ex.isEmpty(oParam.fontFamily) ) {	// font setting
+        									chartScript += ",";
+        									chartScript += "\n		style: {";
+        									chartScript += "\n			fontFamily: '" + oParam.fontFamily + "'";
+        									chartScript += "\n		}";
+        								}
+        	chartScript += "\n	},";
+        	chartScript += "\n	title: {";
+        	chartScript += "\n		text: '" + (Ex.isEmpty(oParam.title)? '' : oParam.title) + "',";
+        	chartScript += "\n		align: '" + (Ex.isEmpty(oParam.align)? 'center' : oParam.align) + "'";
+        	chartScript += "\n	},";
+        	chartScript += "\n	subtitle: {";
+        	chartScript += "\n		text: '" + (Ex.isEmpty(oParam.subtitle)? '' : oParam.subtitle) + "',";
+        	chartScript += "\n		align: '" + (Ex.isEmpty(oParam.align)? 'center' : oParam.align) + "'";
+        	chartScript += "\n	},";
+            chartScript += "\n	xAxis: {";
+        	chartScript += "\n		categories: [";
+        							for(var i = 0; i < oParam.xAxis.length; i++) {
+        								chartScript += "'" + oParam.xAxis[i] + "'";
+        								if( i < oParam.xAxis.length-1 )	chartScript += ",";
+        							}
+        	chartScript += "\n		],";
+        	chartScript += "\n		crosshair: true";
+        	chartScript += "\n	},";
+        	chartScript += "\n	yAxis: {";
+        	chartScript += "\n		min: 0,";
+        	chartScript += "\n		title: {";
+        	chartScript += "\n			text: '" + (Ex.isEmpty(oParam.yAxis.title)? '' : oParam.yAxis.title) + "'";
+        	chartScript += "\n		}";
+        	chartScript += "\n	},";
+            chartScript += "\n	tooltip: {";
+        	chartScript += "\n		valueSuffix: '" + (Ex.isEmpty(oParam.valueSuffix)? '' : oParam.valueSuffix) + "'";
+        	chartScript += "\n	},";
+        	chartScript += exportingEnabled;
+        	chartScript += "\n	plotOptions: {";
+        	chartScript += "\n		column: {";
+        	chartScript += "\n			pointPadding: " + 0.2 + ",";
+        	chartScript += "\n			borderWidth: " + 0 + ",";
+        	chartScript += "\n			dataLabels: {";
+        	chartScript += "\n				enabled:" + (Ex.isEmpty(oParam.datalabel)? false : oParam.datalabel);
+        	chartScript += "\n			}";
+        	chartScript += "\n		}";
+        	chartScript += "\n	},";
+        	chartScript += "\n	legend: {";
+        	chartScript += "\n		enabled: " + (Ex.isEmpty(oParam.legend)? true : oParam.legend) + ",";
+        	chartScript += "\n		layout: 'horizontal',";
+        	chartScript += "\n		align: 'center',";
+        	chartScript += "\n		x: 0,";
+        	chartScript += "\n		verticalAlign: 'top',";
+        	chartScript += "\n		y: 0,";
+        	chartScript += "\n		floating: false,";
+        	chartScript += "\n	},";
+        	chartScript += "\n	series: [";
+        		for(var i = 0; i < oParam.yAxis.title.length; i++) {
+        			chartScript += "\n		{";
+        			chartScript += "\n			name: '" + oParam.yAxis.title[i] + "',";
+        			//[Nexacro 17] chartScript += "\n			color: " + (Ex.isEmpty(oParam.yAxis.color[i])? 'Highcharts.getOptions().colors[' + i + ']' : ("'" + oParam.yAxis.color[i] + "'") ) + ",";
+        			/* NexacroN */ chartScript += "\n			color: " + (Ex.isEmpty(oParam.yAxis.color[i])? 'this.Highcharts.getOptions().colors[' + i + ']' : ("'" + oParam.yAxis.color[i] + "'") ) + ",";
+        			chartScript += "\n			data: [";
+        				for(var j = 0; j < oParam.objDs.rowcount; j++) {
+        					chartScript += "{y:" + (oParam.objDs.getColumn(j, oParam.yAxis.valueCol[i])||0) + ",";
+        					chartScript += "color: '" + (oParam.objDs.getColumn(j, oParam.yAxis.colorCol[i])||'') + "'";
+        					chartScript += "}";
+        					if(j < oParam.objDs.rowcount-1)	chartScript += ",";
+        				}
+        			chartScript += "]";
+        			chartScript += "\n		}";
+        			if(i < oParam.yAxis.title.length-1)	chartScript += ",";
+        		}
+        	chartScript += "\n	]";
+        	chartScript += "\n});";
+
+        	return chartScript;
+         }
+
+
+
+        // Basic bar chart
+        /* oParam = {
+         *	  fontFamily		: (String) 차트 font family
+         * 	, title				: (String) 차트 title
+         *	, align				: (String) title align 'center'|'left'|'right'
+         *	, subtitle			: (String) 차트 sub title
+         *	, subalign			: (String) subtitle align 'center'|'left'|'right'
+         *  , gridLineWidth		: (Integer) 그리드 내부 보더 사이즈
+         *  , xAxisText			: (String) x축 text
+         *	, xAxis				: (String Array) x축 표기명
+         *	, valuesuffix		: (String) 접미어
+         *	, objDs				: (Dataset)	dataset
+         *	, datalabel			: (Boolean)	그래프 건수 표기(true/false)
+         *	, borderRadius		: (Float, 0.1~1) bar 모서리 radius
+         *	, min				: (float) y축 최소값
+         *	, max				: (float) y축 최대값
+         *	, yAxisText			: (String)	y축 text
+         *	, yAxis				: {
+        							(String)	title		: [title1, 	title2,		...],
+        							(String)	valueCol	: [col1,	col2,		...],
+        							(String)	color		: [color1,	color2,		...],		// series별 color
+        							(String)	colorCol	: [col1,	col2,		...]		// optional; data별 color 처리를 위한 color 컬럼명
+        						  }
+         *	, legend			:
+         * }
+         */
+         this.hcfnGetBasicBarChart = function(oParam)
+         {
+        	oParam = oParam||{};
+
+        	var chartScript = '';
+        	chartScript += "Highcharts.chart('divChart', ";
+        	chartScript += "\n{";
+        	chartScript += "\n	chart: {";
+        	chartScript += "\n		type: 'bar'";
+        			if( !Ex.isEmpty(oParam.fontFamily) ) {	// font setting
+        				chartScript += ",";
+        				chartScript += "\n		style: {";
+        				chartScript += "\n			fontFamily: '" + oParam.fontFamily + "'";
+        				chartScript += "\n		}";
+        			}
+        	chartScript += "\n	},";
+        	chartScript += "\n	title: {";
+        	chartScript += "\n		text: '" + (Ex.isEmpty(oParam.title)? '' : oParam.title) + "',";
+        	chartScript += "\n		align: '" + (Ex.isEmpty(oParam.align)? 'center' : oParam.align) + "'";
+        	chartScript += "\n	},";
+        	chartScript += "\n	subtitle: {";
+        	chartScript += "\n		text: '" + (Ex.isEmpty(oParam.subtitle)? '' : oParam.subtitle) + "',";
+        	chartScript += "\n		align: '" + (Ex.isEmpty(oParam.align)? 'center' : oParam.align) + "'";
+        	chartScript += "\n	},";
+            chartScript += "\n	xAxis: {";
+        	chartScript += "\n		categories: [";
+        							for(var i = 0; i < oParam.xAxis.length; i++) {
+        								chartScript += "'" + oParam.xAxis[i] + "'";
+        								if( i < oParam.xAxis.length-1 )	chartScript += ",";
+        							}
+        	chartScript += "\n		],";
+        	chartScript += "\n		title : {";
+        	chartScript += "\n			text : '" + (Ex.isEmpty(oParam.xAxisText)? '' : oParam.xAxisText) + "',";
+        	chartScript += "\n		},";
+        	chartScript += "\n		gridLineWidth: " + (Ex.isEmpty(oParam.gridLineWidth)? 0 : oParam.gridLineWidth) + ",";
+        	chartScript += "\n		lineWidth: 0";
+        	chartScript += "\n	},";
+        	chartScript += "\n	yAxis: {";
+        		if( !Ex.isEmpty(oParam.min) )	chartScript += "\n		min: " + oParam.min + ",";
+        		if( !Ex.isEmpty(oParam.max) )	chartScript += "\n		max: " + oParam.max + ",";
+        	chartScript += "\n		title: {";
+        	chartScript += "\n			text: '" + (Ex.isEmpty(oParam.yAxisText)? '' : oParam.yAxisText) + "'";
+        	chartScript += "\n		},";
+        	chartScript += "\n		labels: {";
+            chartScript += "\n		        overflow: 'justify'";
+            chartScript += "\n		    },";
+            chartScript += "\n			gridLineWidth: " + (Ex.isEmpty(oParam.gridLineWidth)? 0 : oParam.gridLineWidth) + ",";
+        	chartScript += "\n	},";
+        	chartScript += "\n	tooltip: {";
+        	chartScript += "\n		valueSuffix: '" + (Ex.isEmpty(oParam.valueSuffix)? '' : oParam.valueSuffix) + "'";
+        	chartScript += "\n	},";
+        	chartScript += exportingEnabled;
+        	chartScript += "\n	plotOptions: {";
+            chartScript += "\n	    bar: {";
+            chartScript += "\n	        borderRadius: '" + (Ex.isEmpty(oParam.borderRadius)? 0 : oParam.borderRadius) + "%',";
+            chartScript += "\n	        dataLabels: {";
+            chartScript += "\n				enabled:" + oParam.datalabel||false;
+            chartScript += "\n	        },";
+            chartScript += "\n	        groupPadding: 0.1";
+            chartScript += "\n	    }";
+            chartScript += "\n	},";
+        	chartScript += "\n	legend: {";
+        	chartScript += "\n		enabled: " + (Ex.isEmpty(oParam.legend)? true : oParam.legend) + ",";
+        	chartScript += "\n		layout: 'horizontal',";
+        	chartScript += "\n		align: 'center',";
+        	chartScript += "\n		x: 0,";
+        	chartScript += "\n		verticalAlign: 'top',";
+        	chartScript += "\n		y: 0,";
+        	chartScript += "\n		floating: false,";
+        	//[Nexacro 17] chartScript += "\n		backgroundColor: Highcharts.defaultOptions.legend.backgroundColor ||'transparent'";
+        	/* NexacroN */ chartScript += "\n		backgroundColor: this.Highcharts.defaultOptions.legend.backgroundColor ||'transparent'";
+        	chartScript += "\n	},";
+        	chartScript += "\n	credits: {";
+            chartScript += "\n	    enabled: true";
+            chartScript += "\n	},";
+        	chartScript += "\n	series: [";
+        		for(var i = 0; i < oParam.yAxis.valueCol.length; i++) {
+        			chartScript += "\n{";
+        			chartScript += "\n	name: '" + (Ex.isEmpty(oParam.yAxis.title[i])? '' : oParam.yAxis.title[i]) + "',";
+        			//[Nexacro 17] chartScript += "\n	color: " + (Ex.isEmpty(oParam.yAxis.color[i])? 'Highcharts.getOptions().colors[' + i + ']' : ("'" + oParam.yAxis.color[i] + "'") ) + ",";
+        			/* NexacroN */ chartScript += "\n	color: " + (Ex.isEmpty(oParam.yAxis.color[i])? 'this.Highcharts.getOptions().colors[' + i + ']' : ("'" + oParam.yAxis.color[i] + "'") ) + ",";
+        			chartScript += "\n	data: [";
+        				for(var j = 0; j < oParam.objDs.rowcount; j++) {
+        					chartScript += "{y:" + (oParam.objDs.getColumn(j, oParam.yAxis.valueCol[i])||0) + ",";
+        					chartScript += "color: '" + (oParam.objDs.getColumn(j, oParam.yAxis.colorCol[i])||"") + "'";
+        					chartScript += "}";
+        					if(j < oParam.objDs.rowcount-1)	chartScript += ",";
+        				}
+        			chartScript += "]";
+        			chartScript += "\n		}";
+        			if(i < oParam.yAxis.title.length-1)	chartScript += ",";
+        		}
+        	chartScript += "\n	]";
+        	chartScript += "\n});";
+
+        	return chartScript;
+        }
+
+
+        // Line chart
+        /* oParam = {
+         *	  fontFamily		: (String) 차트 font family
+         * 	, title				: (String) 차트 title
+         *	, align				: (String) title align 'center'|'left'|'right'
+         *	, subtitle			: (String) 차트 sub title
+         *	, subalign			: (String) subtitle align 'center'|'left'|'right'
+         *	, xAxis				: (String Array) x축 표기명
+         *	, datalabel			: (Boolean)	그래프 건수 표기(true/false)
+         *	, min				: (float) y축 최소값
+         *	, max				: (float) y축 최대값
+         *	, yAxis				: {
+        							(String)	title	: [title1, 	title2,		...],
+        							(Dataset)	objDs	: [ds1,		ds2,		...],		// dataset
+        							(String)	valueCol: [col1,	col2,		...],
+        							(String)	color	: [color1,	color2,		...]
+        						  }
+         * }
+         */
+         this.hcfnGetLineChart = function(oParam)
+         {
+        	oParam = oParam||{};
+
+        	var chartScript = '';
+        	chartScript += "Highcharts.chart('divChart', ";
+        	chartScript += "\n{";
+        	chartScript += "\n	chart: {";
+        	chartScript += "\n		type: 'line'";
+        								if( !Ex.isEmpty(oParam.fontFamily) ) {	// font setting
+        									chartScript += ",";
+        									chartScript += "\n		style: {";
+        									chartScript += "\n			fontFamily: '" + oParam.fontFamily + "'";
+        									chartScript += "\n		}";
+        								}
+        	chartScript += "\n	},";
+        	chartScript += "\n	title: {";
+        	chartScript += "\n		text: '" + (Ex.isEmpty(oParam.title)? '' : oParam.title) + "',";
+        	chartScript += "\n		align: '" + (Ex.isEmpty(oParam.align)? 'center' : oParam.align) + "'";
+        	chartScript += "\n	},";
+        	chartScript += "\n	subtitle: {";
+        	chartScript += "\n		text: '" + (Ex.isEmpty(oParam.subtitle)? '' : oParam.subtitle) + "',";
+        	chartScript += "\n		align: '" + (Ex.isEmpty(oParam.align)? 'center' : oParam.align) + "'";
+        	chartScript += "\n	},";
+            chartScript += "\n	xAxis: {";
+        	chartScript += "\n		categories: [";
+        							for(var i = 0; i < oParam.xAxis.length; i++) {
+        								chartScript += "'" + oParam.xAxis[i] + "'";
+        								if( i < oParam.xAxis.length-1 )	chartScript += ",";
+        							}
+        	chartScript += "\n		],";
+        	chartScript += "\n		crosshair: true";
+        	chartScript += "\n	},";
+        	chartScript += "\n	yAxis: {";
+        		if( !Ex.isEmpty(oParam.min) )	chartScript += "\n		min: " + oParam.min + ",";
+        		if( !Ex.isEmpty(oParam.max) )	chartScript += "\n		max: " + oParam.max + ",";
+        	chartScript += "\n		title: {";
+        	chartScript += "\n			text: '" + '' + "'";
+        	chartScript += "\n		}";
+        	chartScript += "\n	},";
+            chartScript += "\n	plotOptions: {";
+        	chartScript += "\n		line: {";
+        	chartScript += "\n			dataLabels: {";
+        	chartScript += "\n				enabled:" + oParam.datalabel||false;
+        	chartScript += "\n			},";
+        	chartScript += "\n			enableMouseTracking: false";
+        	chartScript += "\n		}";
+        	chartScript += "\n	},";
+        	chartScript += "\n	series: [";
+        		  for(var i = 0; i < oParam.yAxis.objDs.rowcount; i++) {
+        			chartScript += "\n		{";
+        			if( !Ex.isEmpty(oParam.yAxis.title) )
+        			{
+        				chartScript += "\n			name: '" + oParam.yAxis.objDs.getColumn(i, oParam.yAxis.title) + "',";
+        			}
+        			else
+        			{
+        				chartScript += "\n			name: '',";
+        			}
+
+        			if(oParam.yAxis.color)
+        			{
+        				//[Nexacro 17] chartScript += "\n			color: " + (Ex.isEmpty(oParam.yAxis.color[i])? 'Highcharts.getOptions().colors[' + i + ']' : ("'" + oParam.yAxis.color[i] + "'") ) + ",";
+        				/* NexacroN */ chartScript += "\n			color: " + (Ex.isEmpty(oParam.yAxis.color[i])? 'this.Highcharts.getOptions().colors[' + i + ']' : ("'" + oParam.yAxis.color[i] + "'") ) + ",";
+        			}
+        			chartScript += "\n			data: [";
+        				for(var j = 0; j < oParam.valCol.length; j++) {
+        					chartScript += oParam.yAxis.objDs.getColumn(i, oParam.valCol[j])||0;
+        					if(j < oParam.valCol.length-1)	chartScript += ",";
+        				}
+        			chartScript += "]";
+        			chartScript += "\n		}";
+        			if(i < oParam.yAxis.objDs.rowcount-1)	chartScript += ",";
+        		}
+        	chartScript += "\n	]";
+        	chartScript += "\n});";
+        	return chartScript;
+         }
+
+
+        // Line chart 2 _ hcl custom
+        /* oParam = {
+         *	  fontFamily		: (String) 차트 font family
+         * 	, title				: (String) 차트 title
+         *	, align				: (String) title align 'center'|'left'|'right'
+         *	, subtitle			: (String) 차트 sub title
+         *	, subalign			: (String) subtitle align 'center'|'left'|'right'
+         *	, xAxis				: (String Array) x축 표기명
+         *	, datalabel			: (Boolean)	그래프 건수 표기(true/false)	-> 없으면 false
+         *	, marker			: (Boolean)	그래프 마커 표기(true/false)	-> 없으면 true
+         *	, min				: (float) y축 최소값
+         *	, max				: (float) y축 최대값
+         *	, yAxis				: {
+        							(String)	title	: [title1, 	title2,		...],
+        							(Dataset)	objDs	: [ds1,		ds2,		...],		// dataset
+        							(String)	valueCol: [col1,	col2,		...],
+        							(String)	color	: [color1,	color2,		...]
+        						  }
+         *	, legend			: '' -> true, 'false' -> false
+         *	, legend_align		: '' -> center
+         *	, legend_vertical	: '' -> top
+         * }
+         */
+         this.hcfnGetLineChart2 = function(oParam)
+         {
+        	oParam = oParam||{};
+
+        	var chartScript = '';
+        	chartScript += "Highcharts.chart('divChart', ";
+        	chartScript += "\n{";
+        	chartScript += "\n	chart: {";
+        	chartScript += "\n		type: 'line'";
+        								if( !Ex.isEmpty(oParam.fontFamily) ) {	// font setting
+        									chartScript += ",";
+        									chartScript += "\n		style: {";
+        									chartScript += "\n			fontFamily: '" + oParam.fontFamily + "'";
+        									chartScript += "\n		}";
+        								}
+        	chartScript += "\n	},";
+        	chartScript += "\n	title: {";
+        	chartScript += "\n		text: '" + (Ex.isEmpty(oParam.title)? '' : oParam.title) + "',";
+        	chartScript += "\n		align: '" + (Ex.isEmpty(oParam.align)? 'center' : oParam.align) + "'";
+        	chartScript += "\n	},";
+        	chartScript += "\n	subtitle: {";
+        	chartScript += "\n		text: '" + (Ex.isEmpty(oParam.subtitle)? '' : oParam.subtitle) + "',";
+        	chartScript += "\n		align: '" + (Ex.isEmpty(oParam.align)? 'center' : oParam.align) + "'";
+        	chartScript += "\n	},";
+            chartScript += "\n	xAxis: {";
+        	chartScript += "\n		categories: [";
+        							for(var i = 0; i < oParam.xAxis.length; i++) {
+        								chartScript += "'" + oParam.xAxis[i] + "'";
+        								if( i < oParam.xAxis.length-1 )	chartScript += ",";
+        							}
+        	chartScript += "\n		],";
+        	chartScript += "\n		crosshair: true";
+        	chartScript += "\n	},";
+        	chartScript += "\n	yAxis: {";
+        		if( !Ex.isEmpty(oParam.min) )	chartScript += "\n		min: " + oParam.min + ",";
+        		if( !Ex.isEmpty(oParam.max) )	chartScript += "\n		max: " + oParam.max + ",";
+        	chartScript += "\n		title: {";
+        	chartScript += "\n			text: '" + '' + "'";
+        	chartScript += "\n		}";
+        	chartScript += "\n	},";
+            chartScript += "\n	tooltip: {";
+        	chartScript += "\n		valueSuffix: '" + (Ex.isEmpty(oParam.valueSuffix)? '' : oParam.valueSuffix) + "',";
+        	//chartScript += "\n		pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br>{point.y}',";
+        	chartScript += "\n		shared: true";
+        	chartScript += "\n	},";
+        	chartScript += exportingEnabled;
+            chartScript += "\n	plotOptions: {";
+        	chartScript += "\n		line: {";
+        	chartScript += "\n			dataLabels: {";
+        	chartScript += "\n				enabled:" + (Ex.isEmpty(oParam.datalabel)? false : oParam.datalabel);
+        	chartScript += "\n			},";
+        	chartScript += "\n			marker: {";
+        	chartScript += "\n				enabled:" + (Ex.isEmpty(oParam.marker)? true : oParam.marker);
+        	chartScript += "\n			},";
+        	//chartScript += "\n			enableMouseTracking: false";
+        	chartScript += "\n		}";
+        	chartScript += "\n	},";
+        	chartScript += "\n	legend: {";
+        	chartScript += "\n		enabled: " + (Ex.isEmpty(oParam.legend)? true : oParam.legend) + ",";
+        	chartScript += "\n		layout: 'horizontal',";
+        	chartScript += "\n		align: '" + (Ex.isEmpty(oParam.legend_align)? 'center' : oParam.legend_align) + "',";
+        	chartScript += "\n		x: 0,";
+        	chartScript += "\n		verticalAlign: '" + (Ex.isEmpty(oParam.legend_vertical)? 'top' : oParam.legend_vertical) + "',";
+        	chartScript += "\n		y: 0,";
+        	chartScript += "\n		floating: false,";
+        	//[Nexacro 17] chartScript += "\n		backgroundColor: Highcharts.defaultOptions.legend.backgroundColor ||'transparent'";
+        	/* NexacroN */ chartScript += "\n		backgroundColor: this.Highcharts.defaultOptions.legend.backgroundColor ||'transparent'";
+        	chartScript += "\n	},";
+        	chartScript += "\n	series: [";
+        		  for(var i = 0; i < oParam.yAxis.objDs.rowcount; i++) {
+        			chartScript += "\n		{";
+        			if( !Ex.isEmpty(oParam.yAxis.title) )
+        			{
+        				chartScript += "\n			name: '" + oParam.yAxis.objDs.getColumn(i, oParam.yAxis.title) + "',";
+        			}
+        			else
+        			{
+        				chartScript += "\n			name: '',";
+        			}
+
+        			if(oParam.yAxis.color)
+        			{
+        				//[Nexacro 17] chartScript += "\n			color: " + (Ex.isEmpty(oParam.yAxis.color[i])? 'Highcharts.getOptions().colors[' + i + ']' : ("'" + oParam.yAxis.color[i] + "'") ) + ",";
+        				/* NexacroN */ chartScript += "\n			color: " + (Ex.isEmpty(oParam.yAxis.color[i])? 'this.Highcharts.getOptions().colors[' + i + ']' : ("'" + oParam.yAxis.color[i] + "'") ) + ",";
+        			}
+        			chartScript += "\n			data: [";
+        				for(var j = 0; j < oParam.valCol.length; j++) {
+        					chartScript += oParam.yAxis.objDs.getColumn(i, oParam.valCol[j])||0;
+        					if(j < oParam.valCol.length-1)	chartScript += ",";
+        				}
+        			chartScript += "]";
+        			chartScript += "\n		}";
+        			if(i < oParam.yAxis.objDs.rowcount-1)	chartScript += ",";
+        		}
+        	chartScript += "\n	]";
+        	chartScript += "\n});";
+        	return chartScript;
+         }
+
+
+        // pie 2D chart
+        /* oParam = {
+         *	  fontFamily		: (String) 차트 font family
+         * 	, title				: (String) 차트 title
+         *	, subtitle			: (String) 차트 subtitle
+         *	, align				: (String) title/subtitle align 'center'|'left'|'right'
+         *	, valueSuffix		: (String) value 접미어
+         *	, allowPointSelect	: (Boolean) true/false
+         *	, cursor			: (String) 커서타입 'pointer'
+         *	, colors			: (String Array) 색상코드 배열
+         *	, seiresName		: (String) 시리즈 표기명
+         * }
+         * objDs{Dataset}		: 차트 표기할 dataset
+         * nameCol{String} 		: dataset 컬럼 중 명칭 표기 컬럼명
+         * valueCol{String} 	: dataset 컬럼 중 data 표기 컬럼명
+         */
+        this.hcfnGetPie2DChart = function(oParam, objDs, nameCol, valueCol)
+        {
+        	oParam = oParam||{};
+
+        	var chartScript = '';
+        	chartScript += "Highcharts.chart('divChart', ";
+        	chartScript += "\n{";
+        	chartScript += "\n	chart: {";
+        	chartScript += "\n		plotBackgroundColor: null,";
+        	chartScript += "\n		plotBorderWidth: null,";
+        	chartScript += "\n		plotShadow: false,";
+        	chartScript += "\n		type: 'pie'";
+        								if( !Ex.isEmpty(oParam.fontFamily) ) {	// font setting
+        									chartScript += ",";
+        									chartScript += "\n		style: {";
+        									chartScript += "\n			fontFamily: '" + oParam.fontFamily + "'";
+        									chartScript += "\n		}";
+        								}
+        	chartScript += "\n	},";
+        	chartScript += "\n	title: {";
+        	chartScript += "\n		text: '" + (Ex.isEmpty(oParam.title)? '' : oParam.title) + "',";
+        	chartScript += "\n		align: '" + (Ex.isEmpty(oParam.align)? 'center' : oParam.align) + "'";
+        	chartScript += "\n	},";
+        	chartScript += "\n	tooltip: {";
+        	chartScript += "\n		pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'";
+        	chartScript += "\n	},";
+        	chartScript += "\n	legend: {";
+        	chartScript += "\n		enabled : false";
+        	chartScript += "\n	},";
+        	chartScript += exportingEnabled;
+        	chartScript += "\n	accessibility: {";
+        	chartScript += "\n		point: {";
+        	chartScript += "\n			valueSuffix: '" + (Ex.isEmpty(oParam.valueSuffix)? '%' : oParam.valueSuffix) + "'";
+        	chartScript += "\n		}";
+        	chartScript += "\n	},";
+        	chartScript += "\n	plotOptions: {";
+        	chartScript += "\n		pie: {";
+        	chartScript += "\n			allowPointSelect: " + (Ex.isEmpty(oParam.allowPointSelect)? true : oParam.allowPointSelect) + ",",
+        	chartScript += "\n			cursor: '" + (Ex.isEmpty(oParam.cursor)? 'pointer' : oParam.cursor) + "',";
+        									if( !Ex.isEmpty(oParam.colors) )	// color setting
+        									{
+        										if( oParam.colors.length >= 1) {
+        											chartScript += "\n			colors: [";
+        											for(var i = 0; i < oParam.colors.length; i++) {
+        												chartScript += "'" + oParam.colors[i];
+        												if( i == oParam.colors.length - 1 )	chartScript += "'";
+        												else								chartScript += "',";
+        											}
+        											chartScript += "],";
+        										}
+        									}
+        	chartScript += "\n			dataLabels: {";
+        	chartScript += "\n				enabled: true,";
+        	chartScript += "\n				distance: 2,";
+        	chartScript += "\n				format: '<b>{point.name}</b><br>{point.percentage:.1f}%'";
+        	chartScript += "\n			}";
+        	chartScript += "\n		}";
+        	chartScript += "\n	},";
+        	chartScript += "\n	series: [{";
+        	chartScript += "\n		name: '" + (Ex.isEmpty(oParam.seiresName)? 'Percentage' : oParam.seiresName) + "',";
+        	chartScript += "\n		colorByPoint: true,";
+        	chartScript += "\n		data: [";
+        								for(var i = 0; i < objDs.rowcount; i++) {
+        									chartScript += "\n{";
+        									chartScript += "name: '" + objDs.getColumn(i, nameCol) + "', ";
+        									chartScript += "y: " + parseFloat(objDs.getColumn(i, valueCol)) + "";
+        									if( i < objDs.rowcount-1 )	chartScript += "},";
+        									else						chartScript += "}";
+        								}
+        	chartScript += "\n		]";
+        	chartScript += "\n	}]";
+        	chartScript += "\n});";
+
+        	return chartScript;
+        }
+
+
+        // Multi axes chart
+        /* oParam = {
+         *	  fontFamily		: 차트 font family
+         * 	, title				: 차트 title
+         *	, align				: title align 'center'|'left'|'right'
+         *	, subtitle			: 차트 subtitle
+         *	, subalign			: subtitle align 'center'|'left'|'right'
+         *	, xAxis				: (String Array) x축 표기명
+         *	, enableLabel		: (boolean) 수치 표기 true/false
+         *	, yAxis				: {
+        							(String)	type		: [type1,	type2,		...],
+        							(Dataset)	dataset		: [ds1, 	ds2,		...],
+        							(String)	valueCol	: [col1,	col2,		...],
+        							(number)	min			: [min1,	min2,		...],
+        							(number)	max			: [max1,	max2,		...],
+        							(String)	title		: [title1, 	title2,		...],
+        							(String)	prefix		: [prefix1,	prefix2,	...],
+        							(String)	color		: [color1,	color2,		...]
+        						  }
+         *	, legend			:
+         * }
+         */
+        this.hcfnGetMultiAxesChart = function(oParam)
+        {
+        	oParam = oParam||{};
+
+        	var chartScript = '';
+        	chartScript += "Highcharts.chart('divChart', ";
+        	chartScript += "\n{";
+        	chartScript += "\n	chart: {";
+        	chartScript += "\n		zoomType: 'xy'";
+        	chartScript += "\n	},";
+        	chartScript += "\n	title: {";
+        	chartScript += "\n		text: '" + (Ex.isEmpty(oParam.title)? '' : oParam.title) + "',";
+        	chartScript += "\n		align: '" + (Ex.isEmpty(oParam.align)? 'center' : oParam.align) + "'";
+        	chartScript += "\n	},";
+        	chartScript += "\n	subtitle: {";
+        	chartScript += "\n 		text: '" + (Ex.isEmpty(oParam.subtitle)? '' : oParam.subtitle) + "',";
+        	chartScript += "\n		align: '" + (Ex.isEmpty(oParam.subalign)? 'center' : oParam.subalign) + "'";
+        	chartScript += "\n	},";
+        	chartScript += "\n	xAxis: [{";
+        	chartScript += "\n		categories: [";
+        							for(var i = 0; i < oParam.xAxis.length; i++) {
+        								chartScript += "'" + oParam.xAxis[i] + "'";
+        								if( i < oParam.xAxis.length-1 )	chartScript += ",";
+        							}
+        	chartScript += "],";
+        	chartScript += "\n		crosshair: true";
+        	chartScript += "\n	}],";
+        	chartScript += "\n	yAxis: [";
+        		for(var i = 0; i < oParam.yAxis.dataset.length; i++) {
+        			chartScript += "\n{";
+        			if( !Ex.isEmpty(oParam.yAxis.min) )		chartScript += "\n	min:" + oParam.yAxis.min[i] + ",";
+        			if( !Ex.isEmpty(oParam.yAxis.max) )		chartScript += "\n	max:" + oParam.yAxis.max[i] + ",";
+        			chartScript += "\n	labels: {";
+        				if( oParam.yAxis.enable == false )		chartScript += "\n		enabled:" + oParam.yAxis.enable + ",";
+        			chartScript += "\n		format: '{value}" + (Ex.isEmpty(oParam.yAxis.prefix[i])? '' : oParam.yAxis.prefix[i]) + "',";
+        			chartScript += "\n		style: {";
+        			//[Nexacro 17] chartScript += "\n			color: " + (Ex.isEmpty(oParam.yAxis.color[i])? 'Highcharts.getOptions().colors[' + i + ']' : ("'" + oParam.yAxis.color[i] + "'") ) + ",";
+        			/* NexacroN */ chartScript += "\n			color: " + (Ex.isEmpty(oParam.yAxis.color[i])? 'this.Highcharts.getOptions().colors[' + i + ']' : ("'" + oParam.yAxis.color[i] + "'") ) + ",";
+        			chartScript += "\n		}";
+        			chartScript += "\n	},";
+        			chartScript += "\n	title: {";
+        				if( oParam.yAxis.enable == false )		chartScript += "\n		enabled:" + oParam.yAxis.enable + ",";
+        			chartScript += "\n		text: '" + (Ex.isEmpty(oParam.yAxis.title[i])? '' : oParam.yAxis.title[i]) + "',";
+        			chartScript += "\n		style: {";
+        			//[Nexacro 17] chartScript += "\n			color: " + (Ex.isEmpty(oParam.yAxis.color[i])? 'Highcharts.getOptions().colors[' + i + ']' : ("'" + oParam.yAxis.color[i] + "'") ) + ",";
+        			/* NexacroN */ chartScript += "\n			color: " + (Ex.isEmpty(oParam.yAxis.color[i])? 'this.Highcharts.getOptions().colors[' + i + ']' : ("'" + oParam.yAxis.color[i] + "'") ) + ",";
+        			chartScript += "\n		}";
+        			chartScript += "\n	},";
+        			chartScript += "\n	opposite: " + !(i == 0);
+        			chartScript += "\n}";
+        			if( i < oParam.yAxis.dataset.length-1 )	chartScript += ",";
+        		}
+        	chartScript += "\n	],";
+        	chartScript += "\n	tooltip: {";
+        	chartScript += "\n		shared: true";
+        	chartScript += "\n	},";
+        	chartScript += exportingEnabled;
+        	chartScript += "\n	legend: {";
+        	chartScript += "\n		layout: 'horizontal',";
+        	chartScript += "\n		align: 'center',";
+        	chartScript += "\n		x: 0,";
+        	chartScript += "\n		verticalAlign: 'top',";
+        	chartScript += "\n		y: 0,";
+        	chartScript += "\n		floating: false,";
+        	//[Nexacro 17] chartScript += "\n		backgroundColor: Highcharts.defaultOptions.legend.backgroundColor ||'transparent'";
+        	/* NexacroN */ chartScript += "\n		backgroundColor: this.Highcharts.defaultOptions.legend.backgroundColor ||'transparent'";
+        	chartScript += "\n	},";
+
+        	chartScript += "\n	plotOptions: {";
+        	chartScript += "\n		series: {";
+        	chartScript += "\n			dataLabels: {";
+        	chartScript += "\n				enabled: " + oParam.enableLabel||true;
+        	chartScript += "\n			}";
+        	chartScript += "\n		}";
+        	chartScript += "\n	},";
+
+        	chartScript += "\n	series: [";
+        		for(var i = 0; i < oParam.yAxis.dataset.length; i++) {
+        			chartScript += "\n{";
+        			chartScript += "\n	name: '" + (Ex.isEmpty(oParam.yAxis.title[i])? '' : oParam.yAxis.title[i]) + "',";
+        			chartScript += "\n	type: '" + (Ex.isEmpty(oParam.yAxis.type[i])? 'column' : oParam.yAxis.type[i]) + "',";
+        				if( !Ex.isEmpty(oParam.fontFamily) ) {	// font setting
+        					chartScript += "\n		style: {";
+        					chartScript += "\n			fontFamily: '" + oParam.fontFamily + "'";
+        					chartScript += "\n		},";
+        				}
+        			//[Nexacro 17] chartScript += "\n	color: " + (Ex.isEmpty(oParam.yAxis.color[i])? 'Highcharts.getOptions().colors[' + i + ']' : ("'" + oParam.yAxis.color[i] + "'") ) + ",";
+        			/* NexacroN */ chartScript += "\n	color: " + (Ex.isEmpty(oParam.yAxis.color[i])? 'this.Highcharts.getOptions().colors[' + i + ']' : ("'" + oParam.yAxis.color[i] + "'") ) + ",";
+        			if(i == 0 || i == 1) {
+        				chartScript += "\n	yAxis: " + (i+1) + ",";
+        			}
+        			chartScript += "\n	data: [";
+        				var ds = oParam.yAxis.dataset[i];
+        				for(var j = 0; j < ds.rowcount; j++) {
+        					chartScript += ds.getColumn(j, oParam.yAxis.valueCol[i]);
+        					if( j < ds.rowcount-1 )	chartScript += ",";
+        				}
+        			chartScript += "],";
+        			chartScript += "\n	tooltip: {";
+        			chartScript += "\n		valueSuffix: '" + (Ex.isEmpty(oParam.yAxis.prefix[i])? '' : oParam.yAxis.prefix[i]) + "'";
+        			chartScript += "\n	}";
+        			chartScript += "\n}";
+        			if( i < oParam.yAxis.dataset.length-1 )	chartScript += ",";
+        		}
+        	chartScript += "\n	]";
+        	chartScript += "\n});";
+
+        	return chartScript;
+        }
+        });
+    
+        this.loadIncludeScript(path);
+        
+        obj = null;
+    };
+}
+)();

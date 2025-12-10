@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0250WDAO">
+
+	<!-- 회의 조회 -->
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT	*
+		FROM
+		(
+			SELECT	  '0' AS CHK
+					, '' AS ROWFLAG
+					, A.MEET_ID	--회의 ID 년월일(8)+일련번호(5)
+					, A.MEET_NO	--회의 번호
+					, A.TITLE	--회의제목
+					, A.REF_ID	--회의참조 ID
+					, A.MEET_STIME	--회의시작시각
+					, A.MEET_ETIME	--회의종료시각
+					, A.CONTENTS	--회의내용
+					, A.MEET_TYPE_CD	--회의종류
+					, A.CLOSE_YN	--회의록열람완료
+					, A.MEET_LOC	--회의장소  
+					, A.DETRM_CONTS	--결정사항  
+					, A.PENDG_CONTS	--미결사항  
+					, A.ISSUE_CONTS	--이슈사항  
+					, A.FRID	--최초등록자ID
+					, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID)	AS FRNM
+					, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID)	AS FR_DEPTNM
+					, A.FRDT	--최초등록일시
+					, TO_CHAR(TO_DATE(A.FRDT, 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD HH24:MI:SS')	AS FRDT_NM	--최초등록일시
+					, A.LMID	--최종수정자ID
+					, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID)	AS LMNM
+					, A.LMDT	--최종수정일시
+					
+					, B.CNT
+					, NVL(B.ATN_USER_NM || CASE WHEN B.CNT > 1 THEN '외 ' || TO_CHAR(B.CNT - 1) || '명' END, '-') AS ATTN_CNT
+                    , NVL(B.NOT_READ || '', '-') AS NOT_READ
+					, DECODE(B.CONF_CNT, B.CNT, B.CONF_TIME, NULL) AS CONF_TIME
+					, REQ_ID               -- 요청서번호
+                    , BRIEF                  -- 회의요약
+                    , MNG_DEPT_NM   -- 주관부서
+                    , MNG_DEPT_CD   -- 주관부서코드
+                    , MNG_USER_ID    -- 주관자ID
+                    , MNG_USER_NM   -- 주관자
+			FROM
+				FOMM_MEET_MT A,
+				(
+				SELECT
+					  MEET_ID
+					, SUM(CASE WHEN ATN_USER_CD = 'Y' THEN 1 END) AS CNT
+					, MAX(CASE WHEN ATN_USER_CD = 'Y' THEN ATN_USER_NM END) 	AS ATN_USER_NM
+					, SUM(DECODE(CONF_TIME, NULL, 1, 0))    AS NOT_READ
+					, SUM(DECODE(CONF_TIME, NULL, 0, 1))    AS CONF_CNT
+					, MAX(CASE
+						WHEN #{USER_ID} IS NOT NULL
+						THEN CASE WHEN ATN_USER_CD = #{USER_ID} AND CONF_TIME IS NOT NULL THEN CONF_TIME END
+						ELSE CONF_TIME
+                      END) AS CONF_TIME
+				FROM FOMM_MEET_ATTND 
+                WHERE NVL(DEL_YN, 'N')	= 'N'
+                GROUP BY MEET_ID
+                ) B
+					  
+			WHERE	1 = 1
+			AND		A.MEET_ID = B.MEET_ID(+)
+			AND		NVL(A.DEL_YN, 'N')	= 'N'
+			
+			<choose>
+				<when test='"W,A".equals(GUBUN)'>
+			AND (
+					A.MNG_USER_ID = #{USER_ID} OR
+					EXISTS
+							(
+							SELECT	1
+							FROM	FOMM_MEET_ATTND D
+							WHERE	1 = 1
+							AND 	A.MEET_ID		= D.MEET_ID
+							AND NVL(D.DEL_YN, 'N')	= 'N' 
+							AND 	D.ATN_USER_ID	= #{USER_ID}
+							)
+					)
+				</when>
+				<when test='"W".equals(GUBUN)'>
+			AND A.MNG_USER_ID = #{USER_ID}
+				</when>
+				<when test='"A".equals(GUBUN)'>
+			AND EXISTS
+							(
+							SELECT	1
+							FROM	FOMM_MEET_ATTND D
+							WHERE	1 = 1
+							AND 	A.MEET_ID		= D.MEET_ID
+							AND NVL(D.DEL_YN, 'N')	= 'N' 
+							AND 	D.ATN_USER_ID	= #{USER_ID}
+							)
+				</when>
+				<otherwise>
+			AND 1 = 1
+				</otherwise>
+			</choose>
+
+			<if test="MEET_ID != '' and MEET_ID != null">
+				AND A.MEET_ID = #{MEET_ID}
+			</if>
+
+			<if test="REQ_ID != '' and REQ_ID != null">
+                AND A.REQ_ID = #{REQ_ID}
+            </if>
+		) A
+
+		WHERE	1=1
+		<if test="SDATE != '' and SDATE != null">
+			AND SUBSTR(MEET_STIME, 1, 8) <![CDATA[>=]]> #{SDATE}
+		</if>
+		<if test="EDATE != '' and EDATE != null">
+			AND SUBSTR(MEET_ETIME, 1, 8) <![CDATA[<=]]> #{EDATE}
+		</if>
+		
+		<if test="MEET_NO != '' and MEET_NO != null">
+			AND UPPER(MEET_NO) LIKE UPPER('%' || #{MEET_NO} || '%')
+		</if>
+		<if test="TITLE != '' and TITLE != null">
+			AND UPPER(TITLE) LIKE UPPER('%' || #{TITLE} || '%')
+		</if>
+		
+		<if test="MNG_USER_ID != '' and MNG_USER_ID != null">
+			AND MNG_USER_ID = #{MNG_USER_ID}
+		</if>
+		
+		<if test="REG_USER_NM != '' and REG_USER_NM != null">
+			AND UPPER(FRNM) LIKE UPPER('%' || #{REG_USER_NM} || '%')
+		</if>
+		
+		ORDER BY MEET_STIME DESC,  MEET_ETIME DESC, MEET_ID DESC
+	</select>
+
+	<!-- 참석자 조회 -->
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT	*
+		FROM
+		(
+			SELECT	  '0' AS CHK
+					, '' AS ROWFLAG
+					, MEET_ATTND_ID		--회의참여자 ID 년월일(8)+000+SEQ_FOMM.nextval(5)
+					, MEET_ID			--회의 ID
+					, ATN_USER_ID	--참여자 열람자 ID
+					, ATN_USER_NM	--참여자 열람자 이름
+					, ATN_USER_DEPT	--참여자 열람자 부서이름
+					, NVL(ATN_USER_CD, 'N') AS ATN_USER_CD	--참여/열람 구분코드
+					, READ_YN		--열람여부
+					, READ_TIME		--열람시각
+					, CONF_YN		--확인여부
+					, DECODE(CONF_YN, 'Y', '1', '0') AS CONF_CHK
+					, CONF_TIME		--확인시각
+					, DIS_REASON	--비동의 사유
+					, LMID			--최종수정자ID
+					, LMDT			--최종수정일시
+					, LMUSERNM	--최종수정자명
+					, LMDEPTNM	--최종수정자부서명
+					
+			FROM	FOMM_MEET_ATTND
+			WHERE 	MEET_ID = #{MEET_ID} 
+			AND NVL(DEL_YN, 'N')	= 'N'
+			<if test="REQ_ID != '' and REQ_ID != null">
+                AND REQ_ID = #{REQ_ID}
+            </if>
+		)
+		WHERE	1=1
+		<if test='ATTND != null and "10".equals(ATTND)'>
+			AND CONF_TIME IS NULL
+		</if>
+<!-- 		<choose> -->
+<!-- 			<when test='"NAME".equals(SEARCH_TYPE)'> -->
+<!-- 				AND UPPER(ATN_USER_NM) LIKE '%' || UPPER(#{SEARCH_TEXT}) || '%' -->
+<!-- 			</when> -->
+<!-- 			<when test='"TEAM".equals(SEARCH_TYPE)'> -->
+<!-- 				AND UPPER(ATN_USER_DEPT) LIKE '%' || UPPER(#{SEARCH_TEXT}) || '%' -->
+<!-- 			</when> -->
+<!-- 		</choose> -->
+
+		ORDER BY	ATN_USER_NM
+	</select>
+	
+	<!-- 불참자 조회 -->
+    <select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT  *
+        FROM
+        (
+            SELECT    '0' AS CHK
+                    , '' AS ROWFLAG
+                    , MEET_ATTND_ID     --회의참여자 ID 년월일(8)+000+SEQ_FOMM.nextval(5)
+                    , MEET_ID           --회의 ID
+                    , ATN_USER_ID   --참여자 열람자 ID
+                    , ATN_USER_NM   --참여자 열람자 이름
+                    , ATN_USER_DEPT --참여자 열람자 부서이름
+                    , ATN_USER_CD   --참여/열람 구분코드
+                    , READ_YN       --열람여부
+                    , READ_TIME     --열람시각
+                    , CONF_YN       --확인여부
+                    , DECODE(CONF_YN, 'Y', '1', '0') AS CONF_CHK
+                    , CONF_TIME     --확인시각
+                    , DIS_REASON    --비동의 사유
+                    , LMID          --최종수정자ID
+                    , LMDT          --최종수정일시
+                    , LMUSERNM  --최종수정자명
+                    , LMDEPTNM  --최종수정자부서명
+                    , OPINION
+                    
+            FROM    FOMM_MEET_ATTND
+            WHERE   1 = 1
+            AND MEET_ID = #{MEET_ID}
+            AND NVL(DEL_YN, 'N')	= 'N' 
+            <if test="REQ_ID != '' and REQ_ID != null">
+                AND REQ_ID = #{REQ_ID}
+            </if>
+                AND ATN_USER_CD = 'N'
+        )
+        WHERE   1=1
+        <if test='ATTND != null and "10".equals(ATTND)'>
+            AND CONF_TIME IS NULL
+        </if>
+        <choose>
+            <when test='"NAME".equals(SEARCH_TYPE)'>
+                AND UPPER(ATN_USER_NM) LIKE '%' || UPPER(#{SEARCH_TEXT}) || '%'
+            </when>
+            <when test='"TEAM".equals(SEARCH_TYPE)'>
+                AND UPPER(ATN_USER_DEPT) LIKE '%' || UPPER(#{SEARCH_TEXT}) || '%'
+            </when>         
+        </choose>
+
+        ORDER BY    ATN_USER_NM
+    </select>
+
+<!-- 참석자 조회 FOMM0280_P01 용-->
+    <select id="select04" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT  *
+        FROM
+        (
+            SELECT    '0' AS CHK
+                    , '' AS ROWFLAG
+                    , MEET_ATTND_ID     --회의참여자 ID 년월일(8)+000+SEQ_FOMM.nextval(5)
+                    , MEET_ID           --회의 ID
+                    , ATN_USER_ID   --참여자 열람자 ID
+                    , ATN_USER_NM   --참여자 열람자 이름
+                    , ATN_USER_DEPT --참여자 열람자 부서이름
+                    , ATN_USER_CD   --참여/열람 구분코드
+                    , READ_YN       --열람여부
+                    , READ_TIME     --열람시각
+                    , CONF_YN       --확인여부
+                    , DECODE(CONF_YN, 'Y', '1', '0') AS CONF_CHK
+                    , CONF_TIME     --확인시각
+                    , DIS_REASON    --비동의 사유
+                    , LMID          --최종수정자ID
+                    , LMDT          --최종수정일시
+                    , LMUSERNM  --최종수정자명
+                    , LMDEPTNM  --최종수정자부서명
+                    , CASE WHEN CONF_TIME IS NULL THEN 'N' ELSE 'Y' END AS CONFIRM_YN
+                    , OPINION
+                    
+            FROM    FOMM_MEET_ATTND
+            WHERE   MEET_ID = #{MEET_ID}
+            AND		NVL(DEL_YN, 'N')	= 'N'
+            <if test="REQ_ID != '' and REQ_ID != null">
+                AND REQ_ID = #{REQ_ID}
+            </if>
+                AND NVL(ATN_USER_CD, 'N') = 'N'
+        )
+        WHERE   1=1
+        <if test='ATTND != null and "10".equals(ATTND)'>
+            AND CONF_TIME IS NULL
+        </if>
+        <choose>
+            <when test='"NAME".equals(SEARCH_TYPE)'>
+                AND UPPER(ATN_USER_NM) LIKE '%' || UPPER(#{SEARCH_TEXT}) || '%'
+            </when>
+            <when test='"TEAM".equals(SEARCH_TYPE)'>
+                AND UPPER(ATN_USER_DEPT) LIKE '%' || UPPER(#{SEARCH_TEXT}) || '%'
+            </when>         
+        </choose>
+
+        ORDER BY    ATN_USER_NM
+    </select>
+    
+    <!-- 불참자 조회 FOMM0280_P01 용-->
+    <select id="select06" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT  *
+        FROM
+        (
+            SELECT    '0' AS CHK
+                    , '' AS ROWFLAG
+                    , MEET_ATTND_ID     --회의참여자 ID 년월일(8)+000+SEQ_FOMM.nextval(5)
+                    , MEET_ID           --회의 ID
+                    , ATN_USER_ID   --참여자 열람자 ID
+                    , ATN_USER_NM   --참여자 열람자 이름
+                    , ATN_USER_DEPT --참여자 열람자 부서이름
+                    , ATN_USER_CD   --참여/열람 구분코드
+                    , READ_YN       --열람여부
+                    , READ_TIME     --열람시각
+                    , CONF_YN       --확인여부
+                    , DECODE(CONF_YN, 'Y', '1', '0') AS CONF_CHK
+                    , CONF_TIME     --확인시각
+                    , DIS_REASON    --비동의 사유
+                    , LMID          --최종수정자ID
+                    , LMDT          --최종수정일시
+                    , LMUSERNM  --최종수정자명
+                    , LMDEPTNM  --최종수정자부서명
+                    , CASE WHEN CONF_TIME IS NULL THEN 'N' ELSE 'Y' END AS CONFIRM_YN
+                    , OPINION
+                    
+            FROM    FOMM_MEET_ATTND
+            WHERE   MEET_ID = #{MEET_ID}
+            AND		NVL(DEL_YN, 'N')	= 'N' 
+            <if test="REQ_ID != '' and REQ_ID != null">
+                AND REQ_ID = #{REQ_ID}
+            </if>
+                AND ATN_USER_CD = 'N'
+        )
+        WHERE   1=1
+        <if test='ATTND != null and "10".equals(ATTND)'>
+            AND CONF_TIME IS NULL
+        </if>
+        <choose>
+            <when test='"NAME".equals(SEARCH_TYPE)'>
+                AND UPPER(ATN_USER_NM) LIKE '%' || UPPER(#{SEARCH_TEXT}) || '%'
+            </when>
+            <when test='"TEAM".equals(SEARCH_TYPE)'>
+                AND UPPER(ATN_USER_DEPT) LIKE '%' || UPPER(#{SEARCH_TEXT}) || '%'
+            </when>         
+        </choose>
+
+        ORDER BY    ATN_USER_NM
+    </select>
+    
+
+    <!-- 회의 조회  관리자용 FOMM0280_W -->
+    <select id="select05" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT  *
+        FROM
+        (
+            SELECT    '0' AS CHK
+                    , '' AS ROWFLAG
+                    , A.MEET_ID --회의 ID 년월일(8)+일련번호(5)
+                    , A.MEET_NO --회의 번호
+                    , A.TITLE   --회의제목
+                    , A.REF_ID  --회의참조 ID
+                    , A.MEET_STIME  --회의시작시각
+                    , A.MEET_ETIME  --회의종료시각
+                    , A.CONTENTS    --회의내용
+                    , A.MEET_TYPE_CD    --회의종류
+                    , A.CLOSE_YN    --회의록열람완료
+                    , A.MEET_LOC    --회의장소  
+                    , A.DETRM_CONTS --결정사항  
+                    , A.PENDG_CONTS --미결사항  
+                    , A.ISSUE_CONTS --이슈사항  
+                    , A.FRID    --최초등록자ID
+                    , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM
+                    , (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FR_DEPTNM
+                    , A.FRDT    --최초등록일시
+                    , TO_CHAR(TO_DATE(A.FRDT, 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD HH24:MI:SS') AS FRDT_NM  --최초등록일시
+                    , A.LMID    --최종수정자ID
+                    , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM
+                    , A.LMDT    --최종수정일시
+                    
+                    , B.CNT
+                    , NVL(B.ATN_USER_NM || CASE WHEN B.CNT > 1 THEN '외 ' || TO_CHAR(B.CNT - 1) || '명' END, '-') AS ATTN_CNT
+                    , NVL(B.NOT_READ || '', '-') AS NOT_READ
+                    , B.CONF_TIME
+                    , REQ_ID               -- 요청서번호
+                    , BRIEF                  -- 회의요약
+                    , MNG_DEPT_NM   -- 주관부서
+                    , MNG_DEPT_CD   -- 주관부서코드
+                    , MNG_USER_ID    -- 주관자ID
+                    , MNG_USER_NM   -- 주관자
+            FROM
+            	FOMM_MEET_MT A,
+				(
+				SELECT
+					  MEET_ID
+					, SUM(CASE WHEN ATN_USER_CD = 'Y' THEN 1 END) AS CNT
+					, MAX(CASE WHEN ATN_USER_CD = 'Y' THEN ATN_USER_NM END) 	AS ATN_USER_NM
+					, SUM(DECODE(CONF_TIME, NULL, 1, 0))    AS NOT_READ
+					, SUM(DECODE(CONF_TIME, NULL, 0, 1))    AS CONF_CNT
+					, MAX(CASE
+						WHEN #{USER_ID} IS NOT NULL
+						THEN CASE WHEN ATN_USER_CD = #{USER_ID} AND CONF_TIME IS NOT NULL THEN CONF_TIME END
+						ELSE CONF_TIME
+                      END) AS CONF_TIME
+				FROM FOMM_MEET_ATTND 
+                WHERE NVL(DEL_YN, 'N')	= 'N'
+                GROUP BY MEET_ID
+                 ) B 
+                      
+            WHERE   1 = 1
+            AND A.MEET_ID = B.MEET_ID(+)
+            AND 	NVL(A.DEL_YN, 'N')	= 'N'
+
+            <if test="MEET_ID != '' and MEET_ID != null">
+                AND A.MEET_ID = #{MEET_ID}
+            </if>
+        ) A
+        
+        WHERE   1=1
+        <if test="SDATE != '' and SDATE != null">
+            AND SUBSTR(MEET_STIME, 1, 8) <![CDATA[>=]]> #{SDATE}
+        </if>
+        <if test="EDATE != '' and EDATE != null">
+            AND SUBSTR(MEET_ETIME, 1, 8) <![CDATA[<=]]> #{EDATE}
+        </if>
+        
+        <if test="MEET_NO != '' and MEET_NO != null">
+            AND UPPER(MEET_NO) LIKE UPPER('%' || #{MEET_NO} || '%')
+        </if>
+        <if test="TITLE != '' and TITLE != null">
+            AND UPPER(TITLE) LIKE UPPER('%' || #{TITLE} || '%')
+        </if>
+        <if test="REG_USER_NM != '' and REG_USER_NM != null">
+            AND UPPER(FRNM) LIKE UPPER('%' || #{REG_USER_NM} || '%')
+        </if>
+        
+        ORDER BY MEET_STIME DESC,  MEET_ETIME DESC, MEET_ID DESC
+    </select>
+
+	<!-- 회의 PK (MEET_ID) 생성 -->
+	<!-- 회의 ID, 년월일(8)+일련번호(5) -->
+	<sql id="selectMeetId">
+		SELECT	TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(TO_CHAR(NVL(MAX(TO_NUMBER(SUBSTR(MEET_ID, 9))), 0)+1), 5, '0')	AS MEET_ID
+		FROM	FOMM_MEET_MT
+		WHERE	1=1
+		AND		SUBSTR(MEET_ID, 1, 8) = TO_CHAR(SYSDATE, 'YYYYMMDD')
+	</sql>
+	
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="MEET_ID" order="BEFORE">
+			<include refid="selectMeetId"></include>
+		</selectKey>
+		INSERT INTO FOMM_MEET_MT
+		(
+			  MEET_ID	--회의 ID 년월일(8)+일련번호(5)
+			, MEET_NO	--회의 번호
+			, TITLE	--회의제목
+			, REF_ID	--회의참조 ID
+			, MEET_STIME	--회의시작시각
+			, MEET_ETIME	--회의종료시각
+			, CONTENTS	--회의내용
+			, MEET_TYPE_CD	--회의종류
+			, CLOSE_YN	--회의록열람완료
+			, MEET_LOC	--회의장소  
+			, DETRM_CONTS	--결정사항  
+			, PENDG_CONTS	--미결사항  
+			, ISSUE_CONTS	--이슈사항  
+			, FRID	--최초등록자ID
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자ID
+			, LMDT	--최종수정일시
+			, REQ_ID -- 요청서번호
+            , BRIEF -- 회의요약
+            , MNG_DEPT_NM -- 주관부서
+            , MNG_DEPT_CD -- 주관부서코드
+            , MNG_USER_ID -- 주관자ID
+            , MNG_USER_NM -- 주관자
+            , DEL_YN
+		)
+		VALUES
+		(
+			  #{MEET_ID}
+			, #{MEET_ID}
+			, #{TITLE}
+			, #{REF_ID}
+			, #{MEET_STIME}
+			, #{MEET_ETIME}
+			, #{CONTENTS}
+			, #{MEET_TYPE_CD}
+			, #{CLOSE_YN}
+			, #{MEET_LOC}
+			, #{DETRM_CONTS}
+			, #{PENDG_CONTS}
+			, #{ISSUE_CONTS}
+			, #{FRID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{REQ_ID}
+            , #{BRIEF}
+            , #{MNG_DEPT_NM}
+            , #{MNG_DEPT_CD}
+            , #{MNG_USER_ID}
+            , #{MNG_USER_NM}
+            , 'N'
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE	FOMM_MEET_MT 
+		SET	  TITLE 		= #{TITLE}	--회의제목
+			, REF_ID 		= #{REF_ID}	--회의참조 ID
+			, MEET_STIME 	= #{MEET_STIME}	--회의시작시각
+			, MEET_ETIME 	= #{MEET_ETIME}	--회의종료시각
+			, CONTENTS 		= #{CONTENTS}	--회의내용
+			, MEET_TYPE_CD 	= #{MEET_TYPE_CD}	--회의종류
+			, CLOSE_YN 		= #{CLOSE_YN}	--회의록열람완료
+			, MEET_LOC 		= #{MEET_LOC}	--회의장소  
+			, DETRM_CONTS 	= #{DETRM_CONTS}	--결정사항  
+			, PENDG_CONTS 	= #{PENDG_CONTS}	--미결사항  
+			, ISSUE_CONTS 	= #{ISSUE_CONTS}	--이슈사항  
+			, LMID 	= #{LMID}	--최종수정자ID
+			, LMDT 	= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최종수정일시
+			, BRIEF = #{BRIEF} -- 회의요약
+            , MNG_DEPT_NM = #{MNG_DEPT_NM} -- 주관부서
+            , MNG_DEPT_CD = #{MNG_DEPT_CD} -- 주관부서코드
+            , MNG_USER_ID  = #{MNG_USER_ID} -- 주관자ID
+            , MNG_USER_NM = #{MNG_USER_NM} -- 주관자
+		WHERE	MEET_ID 	= #{MEET_ID}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		UPDATE FOMM_MEET_MT SET
+			  DEL_YN	= 'Y'
+			, LMID      = #{LMID}   --최종수정자ID
+            , LMDT      = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  --최종수정일시
+		WHERE   MEET_ID = #{MEET_ID}
+	</delete>
+
+	
+	<insert id="insert02" parameterType="java.util.Map">
+		
+		INSERT INTO FOMM_MEET_ATTND
+		(
+			  MEET_ATTND_ID
+			, MEET_ID	--회의 ID
+			, ATN_USER_ID	--참여자 열람자 ID
+			, ATN_USER_NM	--참여자 열람자 이름
+			, ATN_USER_DEPT	--참여자 열람자 부서이름
+			, ATN_USER_CD	--참여/열람 구분코드
+			, READ_YN	--열람여부
+			, READ_TIME	--열람시각
+			, CONF_YN	--확인여부
+			, CONF_TIME	--확인시각
+			, DIS_REASON	--비동의 사유
+			, LMID	--최종수정자ID
+			, LMDT	--최종수정일시
+			, LMUSERNM	--최종수정자명
+			, LMDEPTNM	--최종수정자부서명
+			, OPINION -- 검토의견
+		)
+		VALUES
+		(
+			  (	SELECT	TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(TO_CHAR(NVL(MAX(TO_NUMBER(SUBSTR(MEET_ATTND_ID, 9))), 0)+1), 5, '0')	AS MEET_ATTND_ID
+				FROM	FOMM_MEET_ATTND
+				WHERE	1=1
+				AND		SUBSTR(MEET_ATTND_ID, 1, 8) = TO_CHAR(SYSDATE, 'YYYYMMDD')
+			  )
+			, #{MEET_ID}
+			, #{ATN_USER_ID}
+			, #{ATN_USER_NM}
+			, #{ATN_USER_DEPT}
+			, #{ATN_USER_CD}
+			, 'N'			--알람발송여부
+			, #{READ_YN}
+			, #{READ_TIME}
+			, #{CONF_YN}
+			, CASE WHEN (#{CONF_YN} = 'Y' OR #{DIS_REASON} IS NOT NULL)
+				THEN TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			  END 
+			, #{DIS_REASON}
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMNM}
+			, #{LM_DEPTNM}
+			, #{OPINION}
+		)
+	</insert>
+
+	<update id="modify02" parameterType="java.util.Map">
+		UPDATE	FOMM_MEET_ATTND 
+		SET	  ATN_USER_ID 		= #{ATN_USER_ID}	--참여자 열람자 ID
+			, ATN_USER_NM 		= #{ATN_USER_NM}	--참여자 열람자 이름
+			, ATN_USER_DEPT 	= #{ATN_USER_DEPT}	--참여자 열람자 부서이름
+			, ATN_USER_CD 		= #{ATN_USER_CD}	--참여/열람 구분코드
+			, READ_YN 			= #{READ_YN}	--열람여부
+			, READ_TIME 		= #{READ_TIME}	--열람시각
+			, CONF_YN 			= #{CONF_YN}	--확인여부
+			, CONF_TIME 		= CASE WHEN (#{CONF_YN} = 'Y' OR #{DIS_REASON} IS NOT NULL)
+									THEN TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+								  END 
+			, DIS_REASON 		= #{DIS_REASON}	--비동의 사유
+			, LMID 		= #{LMID}	--최종수정자ID
+			, LMDT 		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최종수정일시
+			, LMUSERNM 	= #{LMNM}	--최종수정자명
+			, LMDEPTNM 	= #{LM_DEPTNM}	--최종수정자부서명
+			, OPINION = #{OPINION}
+		WHERE	MEET_ATTND_ID 	= #{MEET_ATTND_ID}	--회의참여자 ID 년월일(8)+000+SEQ_FOMM.nextval(5)
+		AND		MEET_ID			= #{MEET_ID}		--회의 ID
+	</update>
+
+<update id="modify03" parameterType="java.util.Map">
+
+        UPDATE  FOMM_MEET_ATTND 
+        SET
+             LMID      = #{LMID}   --최종수정자ID
+            , LMDT      = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  --최종수정일시
+            , LMUSERNM  = #{LMNM}   --최종수정자명
+            , LMDEPTNM  = #{LM_DEPTNM}  --최종수정자부서명
+            
+            <choose>
+                <when test='U_TYPE.equals("NN")'>
+	                 , CONF_YN           = 'Y'    --확인여부
+	                 , CONF_TIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                </when>
+                <when test='U_TYPE.equals("YY")'>
+	                , OPINION       = #{OPINION}
+	                , CONF_YN     = 'Y'    --확인여부
+                </when>
+                <when test='U_TYPE.equals("YYY")'>
+	                , OPINION       = #{OPINION}
+	                , CONF_YN     = 'Y'    --확인여부
+	                , CONF_TIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                </when>
+            </choose>
+            WHERE   
+            MEET_ID         = #{MEET_ID}        --회의 ID
+                AND MEET_ATTND_ID   = #{MEET_ATTND_ID}  --회의참여자 ID 년월일(8)+000+SEQ_FOMM.nextval(5)
+                AND     ATN_USER_ID = #{ATN_USER_ID}        -- 참석자 ID
+    </update>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE
+		FROM	FOMM_MEET_ATTND
+		WHERE	1=1
+		<choose>
+			<when test='DEL_GBN != null and DEL_GBN.equals("MEET")'>	-- 회의 삭제
+				AND	MEET_ID			= #{MEET_ID}		--회의 ID
+			</when>
+			<otherwise>		-- 특정 참석자 삭제
+				AND	MEET_ATTND_ID 	= #{MEET_ATTND_ID}	--회의참여자 ID 년월일(8)+000+SEQ_FOMM.nextval(5)
+			</otherwise>
+		</choose>
+	</delete>
+
+	<update id="remove03" parameterType="java.util.Map">
+		UPDATE FOMM_MEET_ATTND SET
+			  DEL_YN	= 'Y'
+			, LMID      = #{LMID}   --최종수정자ID
+            , LMDT      = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  --최종수정일시
+        WHERE   1=1
+        AND NVL(DEL_YN, 'N')	= 'N'
+        <choose>
+            <when test='DEL_GBN != null and DEL_GBN.equals("MEET")'>    -- 회의 삭제
+                AND MEET_ID         = #{MEET_ID}        --회의 ID
+            </when>
+            <otherwise>     -- 특정 참석자 삭제
+                AND MEET_ATTND_ID   = #{MEET_ATTND_ID}  --회의참여자 ID 년월일(8)+000+SEQ_FOMM.nextval(5)
+            </otherwise>
+        </choose>
+    </update>
+	
+</mapper>

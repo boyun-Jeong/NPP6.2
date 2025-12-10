@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR9921WDAO">
+    
+   
+    <select id="select00" parameterType="java.util.Map" resultType="java.util.Map">
+        /* SR9921WDAO.select00 */   
+        WITH TV_BASE AS (
+             <include refid="selectBase"/>
+        )
+        <if test="REQ_DEPT_CD != '' and REQ_DEPT_CD != null">
+          , TV_EXTD AS             
+          (
+                SELECT BS.REQ_ID
+                   ,   EX.EXTD_ID
+                  FROM WF_REQ_TMPLAT_CGER_EXTD_DT EX
+                    ,  (SELECT REQ_ID
+                            ,  REQ_TMPLAT_ID
+                          FROM TV_BASE
+                         WHERE 1=1
+                           AND  NVL(REQ_DEPT_CD,'NO_CD') NOT IN (SELECT DEPT_CD 
+                                                                   FROM FOMM_DEPT_MT
+                                                                  WHERE 1=1 
+                                                                    AND INSTR(DEPT_CD,'ZZ',1) = 0
+                                                                   START WITH DEPT_CD = #{REQ_DEPT_CD}
+                                                                  CONNECT BY PRIOR  DEPT_CD = UP_DEPT_CD
+                                                                )
+                        ) BS 
+                 WHERE 1=1
+                   AND EX.REQ_TMPLAT_ID = BS.REQ_TMPLAT_ID 
+                   AND EX.EXTD_ID IS NOT NULL                       
+          )
+         </if>
+        SELECT COUNT(CASE WHEN REQ_STAT_CD = 'RQST00' THEN 1 END) AS TEMP
+           ,   COUNT(CASE WHEN REQ_STAT_CD IN ('RQST01' ,'RQST11', 'RQST21') THEN 1 END) AS ING
+           ,   COUNT(CASE WHEN REQ_STAT_CD IN ('RQST11', 'RQST21') THEN 1 END) AS APPR 
+           ,   COUNT(CASE WHEN REQ_STAT_CD = 'RQST91' THEN 1 END) AS REJT
+           ,   COUNT(CASE WHEN REQ_STAT_CD = 'RQST99' THEN 1 END) AS COMPL
+           ,   COUNT(CASE WHEN REQ_STAT_CD IN ('RQST98','RQST97') THEN 1 END) AS CNCL
+           ,   COUNT(*) AS TOT
+          FROM (
+                  <include refid="baseWhere"/>
+               )
+    </select>
+    
+    <!-- WF 요청함 목록 조회 -->
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+          /* SR9921WDAO.select01 */
+          WITH TV_BASE AS (
+          <include refid="selectBase"/>
+          )
+          <if test="REQ_DEPT_CD != '' and REQ_DEPT_CD != null">
+          , TV_EXTD AS             
+          (
+                SELECT BS.REQ_ID
+                   ,   EX.EXTD_ID
+                  FROM WF_REQ_TMPLAT_CGER_EXTD_DT EX
+                    ,  (SELECT REQ_ID
+                            ,  REQ_TMPLAT_ID
+                          FROM TV_BASE
+                         WHERE 1=1
+                           AND  NVL(REQ_DEPT_CD,'NO_CD') NOT IN (SELECT DEPT_CD 
+                                                                   FROM FOMM_DEPT_MT
+                                                                  WHERE 1=1 
+                                                                    AND INSTR(DEPT_CD,'ZZ',1) = 0
+                                                                   START WITH DEPT_CD = #{REQ_DEPT_CD}
+                                                                  CONNECT BY PRIOR  DEPT_CD = UP_DEPT_CD
+                                                                )
+                        ) BS 
+                 WHERE 1=1
+                   AND EX.REQ_TMPLAT_ID = BS.REQ_TMPLAT_ID 
+                   AND EX.EXTD_ID IS NOT NULL                       
+          )
+          </if>
+          <include refid="baseWhere"/>  
+         
+    </select>
+    
+    <sql id="selectBase">
+        SELECT
+              0 AS CHK         
+            , ''    AS ROWFLAG
+            , CASE WHEN B.REQ_USER_ID = #{SESS_USER_ID} THEN 'Y' ELSE 'N' END AS MY_REQ
+            , B.REQ_ID
+            , A.REQ_TMPLAT_ID                                                                                                               <!-- 요청서양식ID  -->
+            , A.REQ_TMPLAT_VER                                                                                                              <!-- 버전  -->
+            , B.WF_PROC_CD                                                                                                                  <!--진행단계 -->
+            , (
+              SELECT REPLACE(WF_PROC_NM, '\n', ' ')
+              FROM WF_REQ_TMPLAT_PROC_HT
+              WHERE REQ_TMPLAT_ID = B.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = B.REQ_TMPLAT_VER AND WF_PROC_CD = B.WF_PROC_CD)    AS WF_PROC_NM   <!-- 진행단계명 -->
+            , B.UP_WF_PROC_CD                                                                                                               <!-- 상위단계코드 -->
+            , B.REQ_STAT_CD                                                                                                                 <!-- 요청서 상태  -->
+            , B.REQ_STAT_NM || CASE WHEN B.LAST_RTRN_YN = 'Y' THEN '(반려)' END   AS REQ_STAT_NM  --요청서진행상태명
+            , A.CUR_VER_YN                                                                                                                  <!-- 현재사용버전여부 -->
+            , A.REQ_TMPLAT_NM                                                                                                               <!-- 요청서양식명 -->
+            , A.SVC_CD                                                                                                                      <!-- 서비스유형코드 -->
+            , A.SVC_DTL_CD
+            , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'SVC_CD' AND CMM_CD = A.SVC_CD AND LANG_CD = 'KR')
+              ||
+              CASE
+                WHEN A.SVC_DTL_CD IS NOT NULL
+                THEN (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = A.SVC_CD AND CMM_CD = A.SVC_DTL_CD AND LANG_CD = 'KR')
+              END   AS SVC_CD_NM                                                                                                            <!-- 서비스 > 서비스상세 -->
+            
+            , B.TITLE
+            , B.REQ_EM_YN
+            , B.REQ_USER_ID
+            , B.REQ_USER_NM
+            , B.REQ_DEPT_CD
+            
+            , B.REQ_DATE
+            , B.REQ_WISH_DT
+            , B.REQ_WISH_TIME
+            , CASE
+                WHEN B.REQ_WISH_DT IS NOT NULL
+                THEN RPAD((B.REQ_WISH_DT || NVL(B.REQ_WISH_TIME, '2359')), 14, '0')
+                ELSE ''
+              END   AS REQ_WISH_DT_NM                                                                                                         <!-- 완료희망일시명 -->
+            , CASE
+                WHEN B.REQ_WISH_DT IS NOT NULL
+                THEN B.REQ_WISH_DT ||
+                    CASE
+                        WHEN B.REQ_WISH_TIME IS NOT NULL
+                        THEN REQ_WISH_TIME || '시'
+                    END
+                ELSE ''
+              END   AS REQ_WISH_DTIME
+            , B.DEL_YN
+            
+            , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'SVC_CD' AND CMM_CD = A.SVC_CD AND LANG_CD = 'KR')   AS SVC_NM                  <!-- 서비스유형명 -->
+            , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = A.SVC_CD AND CMM_CD = A.SVC_DTL_CD AND LANG_CD = 'KR')   AS SVC_DTL_NM          <!-- 서비스유형상세명 -->
+            , A.WF_ID                                                                                                                       <!-- 워크플로우ID -->
+            , A.REQ_INFO_TYPE_CD                                                                                                            <!-- 요청서 기본정보 타입코드 -->
+            , (SELECT ITM_VAL_1 FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'REQ_INFO_TYPE_CD' AND CMM_CD = A.REQ_INFO_TYPE_CD AND LANG_CD = 'KR')   AS SR_INFO_URL  <!-- 요청서 기본정보 화면 URL -->
+            , A.REQ_URL                                                                                                                     <!--요청서URL-->
+            , A.ATTACH_USE_YN                                                                                                               <!--첨부파일 사용여부-->
+            , A.USE_YN                                                                                                                      <!--사용여부-->
+            , A.REQ_DESC                                                                                                                    <!--작성요령-->
+            
+            , B.RMK                                                                                                                         <!--비고-->
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = B.FRID) AS FRNM                                                             <!--최초등록자-->
+            , TO_DATE(B.FRDT, 'YYYYMMDDHH24MISS') AS FRDT                                                                                   <!--최초등록일시-->
+            , B.LMID                                                                                                                        <!--최종수정자ID-->
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = B.LMID) AS LMNM                                                             <!--수정자-->
+            , TO_DATE(B.LMDT, 'YYYYMMDDHH24MISS') AS LMDT                                                                                   <!--최종수정일시-->
+            , B.LMPID                                                                                                                       <!--최종수정 화면ID-->
+            , #{menuType} AS menuType
+        FROM
+              WF_REQ_TMPLAT_HT A
+            , ( SELECT    B.*
+                        , DECODE(   NVL(B.WF_PROC_CD, 'WF_PROC_1000'), 
+                                    'WF_PROC_1000', 'WF_PROC_1000',     <!-- 등록 > 등록 -->
+                                    'WF_PROC_9999', 'WF_PROC_9999',     <!-- 종료 > 종료 -->
+                                    (SELECT UP_CMM_CD FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'WF_PROC_CD' AND CMM_CD = B.WF_PROC_CD)        <!-- 상위단계코드 -->
+                          ) AS UP_WF_PROC_CD            <!-- 상위 단계 코드 -->
+                FROM
+                   SR_BASE_INFO B
+                WHERE NVL(DEL_YN, 'N') = 'N'
+              ) B
+            
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID   = B.REQ_TMPLAT_ID
+        AND A.REQ_TMPLAT_VER  = B.REQ_TMPLAT_VER
+
+        <if test="REQ_TMPLAT_ID_ARR != '' and REQ_TMPLAT_ID_ARR != null">
+        AND A.REQ_TMPLAT_ID IN
+            <foreach collection="REQ_TMPLAT_ID_ARR" item="reqTmplatId" open="(" close=")" separator=",">
+                #{reqTmplatId}
+            </foreach>
+        </if>
+
+        <if test="SVC_CD != '' and SVC_CD != null">
+        AND A.SVC_CD = #{SVC_CD}
+        </if>
+
+        <if test="SVC_DTL_CD != '' and SVC_DTL_CD != null">
+        AND A.SVC_DTL_CD = #{SVC_DTL_CD}
+        </if>
+
+        <if test="REQ_TMPLAT_NM != '' and REQ_TMPLAT_NM != null">
+        AND UPPER(A.REQ_TMPLAT_NM) LIKE UPPER('%' || #{REQ_TMPLAT_NM} || '%')
+        </if>
+        
+        <if test="REQ_ID != '' and REQ_ID != null">
+        AND UPPER(B.REQ_ID) LIKE UPPER('%' || #{REQ_ID} || '%')
+        </if>
+
+        <if test="TITLE != '' and TITLE != null">
+               <!-- AND UPPER(B.TITLE) LIKE UPPER('%' || #{TITLE} || '%') -->
+               AND            
+               <trim prefix="(" suffix=")" suffixOverrides="OR">
+                   <foreach collection="orStrCond" item="andStrs" open="(" close=")" separator=" OR ">
+                            <trim prefix="(" suffix=")" suffixOverrides="AND">
+                                    <foreach collection="andStrs" item="keyword" open="(" close=")" separator=" AND ">
+                                         UPPER(REPLACE(B.TITLE,' ','')) LIKE '%' ||UPPER(REPLACE(#{keyword},' ',''))|| '%' 
+                                    </foreach>
+                            </trim>
+                    </foreach>
+               </trim>
+        </if>
+
+        <if test="REQ_EM_YN != '' and REQ_EM_YN != null">
+        AND B.REQ_EM_YN = #{REQ_EM_YN}
+        </if>
+
+        <if test="REQ_STAT_CD != '' and REQ_STAT_CD != null">
+        AND B.REQ_STAT_CD = #{REQ_STAT_CD}
+        </if>
+        
+        <if test="UP_WF_PROC_CD != '' and UP_WF_PROC_CD != null">
+        AND B.UP_WF_PROC_CD = #{UP_WF_PROC_CD}
+        </if>
+
+        <if test="DATE_TYPE != '' and DATE_TYPE != null">
+            <if test="START_DATE != '' and START_DATE != null and END_DATE != '' and END_DATE != null">
+
+                <if test="DATE_TYPE == 'REQ_DATE'">     
+                    AND B.REQ_DATE 
+                </if>
+
+                <if test="DATE_TYPE == 'REQ_WISH_DT'">  
+                    AND B.REQ_WISH_DT ||'000000'
+                </if>
+
+                <if test="DATE_TYPE == 'LMDT'"> 
+                    AND A.LMDT 
+                </if>
+        BETWEEN #{START_DATE}||'000000' AND #{END_DATE}||'235959'
+            </if>
+        </if>
+
+        <if test="REQ_USER_NM != '' and REQ_USER_NM != null">
+             AND B.REQ_USER_NM LIKE '%' || #{REQ_USER_NM} || '%'
+        </if>
+        
+        <if test="P_REQ_STAT_CD != '' and P_REQ_STAT_CD != null">
+             <choose>
+                <!-- 임시저장  -->
+                <when test="P_REQ_STAT_CD eq 'TEMP'.toString()"> 
+                      AND B.REQ_STAT_CD = 'RQST00'
+                </when>
+                <!-- 진행중  -->
+                <when test="P_REQ_STAT_CD eq 'ING'.toString()"> 
+                      AND B.REQ_STAT_CD IN ('RQST01' ,'RQST11', 'RQST21')
+                </when>
+                <!-- 결재중  -->
+                <when test="P_REQ_STAT_CD eq 'APPR'.toString()"> 
+                      AND B.REQ_STAT_CD IN ('RQST11', 'RQST21')
+                </when>
+                <!-- 반려  -->
+                <when test="P_REQ_STAT_CD eq 'REJT'.toString()"> 
+                      AND B.REQ_STAT_CD = 'RQST91'
+                </when>
+                <!-- 완료  -->
+                <when test="P_REQ_STAT_CD eq 'COMPL'.toString()"> 
+                      AND B.REQ_STAT_CD = 'RQST99'
+                </when>
+                <!-- 중단/폐기  -->
+                <when test="P_REQ_STAT_CD eq 'CNCL'.toString()">  
+                      AND B.REQ_STAT_CD IN ('RQST98','RQST97')
+                </when>
+             </choose>
+        </if>
+
+
+        <if test="PROC_USER_NM != '' and PROC_USER_NM != null">
+            AND EXISTS
+                    (
+                    SELECT 1
+                    FROM
+                        WF_PROC_HIST H
+                    WHERE 1 = 1
+                    AND H.PROC_NUMBER = B.REQ_ID
+                    AND UPPER(NVL(H.ORG_USER_NM, H.SRM_USER_NM)) LIKE '%' || #{PROC_USER_NM} || '%'
+                     
+                    UNION ALL
+                
+                    SELECT 1
+                    FROM
+                          SR_CGER_DT G
+                        , FOMM_USER_MT U
+
+                    WHERE 1 = 1
+                    AND G.USER_ID  = U.USER_ID
+                    AND G.REQ_ID   = B.REQ_ID
+                    AND UPPER(U.USER_NM) LIKE '%' || #{PROC_USER_NM} || '%'
+                    )
+        </if>
+        
+        <if test="REQ_TYPE != '' and REQ_TYPE != null and REQ_TYPE == 'SVC'">
+        AND (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'SVC_CD' AND CMM_CD = A.SVC_CD AND LANG_CD = 'KR') = '서비스관리'
+        </if>
+        
+        <if test="REQ_STAT_CD != '' and REQ_STAT_CD != null">
+        AND B.REQ_STAT_CD = #{REQ_STAT_CD}
+        </if>  
+          <!-- ORDER BY B.REQ_ID DESC -->
+          ORDER BY B.REQ_DATE DESC
+    </sql>
+    
+    <sql id="baseWhere">
+          SELECT * 
+            FROM TV_BASE
+           WHERE 1=1
+           <if test="REQ_DEPT_CD != '' and REQ_DEPT_CD != null">
+                AND REQ_DEPT_CD IN (SELECT DEPT_CD 
+                                      FROM FOMM_DEPT_MT
+                                     WHERE 1=1 
+                                       AND INSTR(DEPT_CD,'ZZ',1) = 0
+                                       START WITH DEPT_CD = #{REQ_DEPT_CD}
+                                     CONNECT BY PRIOR  DEPT_CD = UP_DEPT_CD
+                                   )
+           <if test="formType eq '120'.toString()">
+               <if test="menuType eq 'A'.toString() or menuType eq 'W'.toString()">
+                   AND REQ_STAT_CD NOT IN ('RQST98','RQST99','RQST97')
+               </if>  
+           </if>  
+           
+                <choose>
+                    <when test='"Y".equals(MYREQ_YN)'>
+                AND REQ_USER_ID =  #{SESS_USER_ID}
+         UNION ALL    
+          SELECT *
+            FROM TV_BASE
+           WHERE 1=1
+             AND REQ_USER_ID <![CDATA[<>]]>  #{SESS_USER_ID}
+             AND REQ_ID IN (
+                                SELECT PROC_NUMBER
+                                  FROM (
+                                           SELECT PROC_NUMBER 
+                                             FROM WF_PROC_HIST
+                                            WHERE 1=1
+                                              AND WF_PROC_CD <![CDATA[<>]]> 'WF_PROC_1000'
+                                              AND APPR_LVL_SEQ IS NULL 
+                                              AND APPR_STAT_CD IN ('APST_00','APST_90')
+                                              AND APPR_GBN_CD IN ('A00','A01')
+                                              AND (SRM_USER_ID = #{SESS_USER_ID} OR ORG_USER_ID = #{SESS_USER_ID})                           
+                                            UNION ALL
+                                            SELECT PROC_NUMBER 
+                                             FROM WF_PROC_HIST
+                                            WHERE 1=1
+                                              AND APPR_LVL_SEQ IS NOT NULL 
+                                              AND APPR_STAT_CD IN ('APST_00','APST_99')
+                                              AND APPR_GBN_CD = 'A02'
+                                              AND (SRM_USER_ID = #{SESS_USER_ID} OR ORG_USER_ID = #{SESS_USER_ID})  
+                                            UNION ALL
+                                            SELECT REQ_ID AS PROC_NUMBER
+                                              FROM WF_APPROVAL_REF_MT
+                                             WHERE 1=1
+                                               AND USER_ID = #{SESS_USER_ID}
+                                            UNION ALL  
+                                            SELECT REQ_ID 
+                                              FROM TV_EXTD
+                                             WHERE 1=1
+                                               AND EXTD_ID IN (
+                                                                  SELECT EXTD_ID 
+                                                                    FROM FOMM_AUTH_EXTD_MT
+                                                                   WHERE 1=1
+                                                                     AND EXTD_GB = '10'
+                                                                     AND DEST_CD = #{SESS_USER_ID}
+                                                                   UNION ALL
+                                                                  SELECT EXTD_ID 
+                                                                    FROM FOMM_AUTH_EXTD_MT
+                                                                   WHERE 1=1
+                                                                     AND EXTD_GB = '20'
+                                                                     AND DEST_CD = (SELECT DEPT_CD 
+                                                                                      FROM FOMM_USER_MT 
+                                                                                     WHERE USER_ID = #{SESS_USER_ID}
+                                                                                   )
+                                                              )                  
+                                       )
+                                 WHERE 1=1          
+                             GROUP BY PROC_NUMBER 
+                           )
+                    </when>
+                    <otherwise>
+         UNION ALL    
+          SELECT *
+            FROM TV_BASE
+           WHERE 1=1
+             AND NVL(REQ_DEPT_CD,'NO_CD') NOT IN (SELECT DEPT_CD 
+                                                    FROM FOMM_DEPT_MT
+                                                   WHERE 1=1 
+                                                     AND INSTR(DEPT_CD,'ZZ',1) = 0
+                                                    START WITH DEPT_CD = #{REQ_DEPT_CD}
+                                                   CONNECT BY PRIOR  DEPT_CD = UP_DEPT_CD
+                                                  )
+             AND REQ_ID IN (
+                                SELECT PROC_NUMBER
+                                  FROM (
+                                           SELECT PROC_NUMBER 
+                                             FROM WF_PROC_HIST
+                                            WHERE 1=1
+                                              AND WF_PROC_CD <![CDATA[<>]]> 'WF_PROC_1000'
+                                              AND APPR_LVL_SEQ IS NULL 
+                                              AND APPR_STAT_CD IN ('APST_00','APST_90')
+                                              AND APPR_GBN_CD IN ('A00','A01')
+                                              AND (SRM_DEPT_CD IN (SELECT DEPT_CD 
+                                                                     FROM FOMM_DEPT_MT
+                                                                    WHERE 1=1 
+                                                                      AND INSTR(DEPT_CD,'ZZ',1) = 0
+                                                                     START WITH DEPT_CD = #{REQ_DEPT_CD}
+                                                                    CONNECT BY PRIOR  DEPT_CD = UP_DEPT_CD
+                                                                   ) OR ORG_DEPT_CD IN (SELECT DEPT_CD 
+                                                                                          FROM FOMM_DEPT_MT
+                                                                                         WHERE 1=1 
+                                                                                           AND INSTR(DEPT_CD,'ZZ',1) = 0
+                                                                                          START WITH DEPT_CD = #{REQ_DEPT_CD}            
+                                                                                         CONNECT BY PRIOR  DEPT_CD = UP_DEPT_CD
+                                                                                        )
+                                                  )                           
+                                            UNION ALL
+                                            SELECT PROC_NUMBER 
+                                             FROM WF_PROC_HIST
+                                            WHERE 1=1
+                                              AND APPR_LVL_SEQ IS NOT NULL 
+                                              AND APPR_STAT_CD IN ('APST_00','APST_99')
+                                              AND APPR_GBN_CD = 'A02'
+                                              AND (SRM_DEPT_CD IN (SELECT DEPT_CD 
+                                                                     FROM FOMM_DEPT_MT
+                                                                    WHERE 1=1 
+                                                                      AND INSTR(DEPT_CD,'ZZ',1) = 0
+                                                                     START WITH DEPT_CD = #{REQ_DEPT_CD}
+                                                                    CONNECT BY PRIOR  DEPT_CD = UP_DEPT_CD
+                                                                   ) OR ORG_DEPT_CD IN (SELECT DEPT_CD 
+                                                                                          FROM FOMM_DEPT_MT
+                                                                                         WHERE 1=1 
+                                                                                           AND INSTR(DEPT_CD,'ZZ',1) = 0
+                                                                                          START WITH DEPT_CD = #{REQ_DEPT_CD}            
+                                                                                         CONNECT BY PRIOR  DEPT_CD = UP_DEPT_CD
+                                                                                        )
+                                                  )  
+                                            UNION ALL
+                                            SELECT REQ_ID AS PROC_NUMBER
+                                              FROM WF_APPROVAL_REF_MT
+                                             WHERE 1=1
+                                               AND USER_ID = #{SESS_USER_ID}
+                                            UNION ALL  
+                                            SELECT REQ_ID 
+                                              FROM TV_EXTD
+                                             WHERE 1=1
+                                               AND EXTD_ID IN (
+                                                                  SELECT EXTD_ID 
+                                                                    FROM FOMM_AUTH_EXTD_MT
+                                                                   WHERE 1=1
+                                                                     AND EXTD_GB = '10'
+                                                                     AND DEST_CD = #{SESS_USER_ID}
+                                                                   UNION ALL
+                                                                  SELECT EXTD_ID 
+                                                                    FROM FOMM_AUTH_EXTD_MT
+                                                                   WHERE 1=1
+                                                                     AND EXTD_GB = '20'
+                                                                     AND DEST_CD = (SELECT DEPT_CD 
+                                                                                      FROM FOMM_USER_MT 
+                                                                                     WHERE USER_ID = #{SESS_USER_ID}
+                                                                                   )
+                                                              )                  
+                                       )
+                                 WHERE 1=1          
+                             GROUP BY PROC_NUMBER 
+                           )
+                    </otherwise>    
+                </choose>
+           </if>
+           
+                      
+           <if test="formType eq '120'.toString()">
+               <if test="menuType eq 'A'.toString() or menuType eq 'W'.toString()">
+                   --AND REQ_STAT_CD NOT IN ('RQST98','RQST99','RQST97')    -- 완료 빠져잇어서 임시로 주석
+                   AND REQ_STAT_CD NOT IN ('RQST98','RQST97')
+               </if>  
+           </if>              
+    </sql>
+    
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+             /* SR9921WDAO.select02 */   
+             WITH TV_BASE AS (  
+                 <include refid="selectBase"/>
+             )
+             SELECT TV.*
+                ,   WH.WF_HIST_SEQ
+                ,   WH.APPR_NM
+                ,   WH.APPR_STAT_CD
+                ,   WH.APPR_COMMENT   
+                ,   WH.REG_STIME
+                ,   WH.SRM_USER_ID 
+                ,   WH.SRM_USER_NM       
+                ,   WH.ORG_USER_ID 
+                ,   WH.ORG_USER_NM     
+                ,   CASE WHEN WH.SRM_USER_ID = #{SESS_USER_ID} AND WH.ORG_USER_ID IS NULL THEN 'M'                        
+                         WHEN WH.SRM_USER_ID <![CDATA[<>]]> #{SESS_USER_ID} AND WH.ORG_USER_ID = #{SESS_USER_ID} THEN 'D' 
+                     END AS PRC_DIV     
+               FROM WF_PROC_HIST WH
+                 ,  TV_BASE TV
+              WHERE 1=1
+                AND WH.PROC_NUMBER = TV.req_id
+                AND WH.WF_PROC_CD <![CDATA[<>]]> 'WF_PROC_1000'
+                AND WH.APPR_LVL_SEQ IS NULL 
+                AND WH.APPR_STAT_CD IN ('APST_00','APST_90')
+                AND WH.APPR_GBN_CD IN ('A00','A01')
+                AND (WH.SRM_USER_ID = #{SESS_USER_ID} OR WH.ORG_USER_ID = #{SESS_USER_ID})
+             ORDER BY WH.PROC_NUMBER, WH.WF_HIST_SEQ
+    </select>
+    
+    <select id="selectAdmin" parameterType="java.util.Map" resultType="java.util.Map">
+             /* SR9921WDAO.selectAdmin */   
+             WITH TV_BASE AS (  
+                 <include refid="selectBase"/>
+             )
+             SELECT * 
+               FROM TV_BASE
+              WHERE 1=1
+           <if test="formType eq '120'.toString()">
+               <if test="menuType eq 'W'.toString()">
+                   AND REQ_STAT_CD NOT IN ('RQST98','RQST99','RQST97')
+               </if>  
+           </if>  
+    </select>
+    
+     <select id="selectAdminCnt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* SR9921WDAO.selectAdminCnt */   
+        WITH TV_BASE AS (
+             <include refid="selectBase"/>
+        )
+        SELECT COUNT(CASE WHEN REQ_STAT_CD = 'RQST00' THEN 1 END) AS TEMP
+           ,   COUNT(CASE WHEN REQ_STAT_CD IN ('RQST01' ,'RQST11', 'RQST21') THEN 1 END) AS ING
+           ,   COUNT(CASE WHEN REQ_STAT_CD IN ('RQST11', 'RQST21') THEN 1 END) AS APPR 
+           ,   COUNT(CASE WHEN REQ_STAT_CD = 'RQST91' THEN 1 END) AS REJT
+           ,   COUNT(CASE WHEN REQ_STAT_CD = 'RQST99' THEN 1 END) AS COMPL
+           ,   COUNT(CASE WHEN REQ_STAT_CD IN ('RQST98','RQST97') THEN 1 END) AS CNCL
+           ,   COUNT(*) AS TOT
+          FROM (
+                    SELECT * 
+                      FROM TV_BASE
+                     WHERE 1=1
+           <if test="formType eq '120'.toString()">
+               <if test="menuType eq 'W'.toString()">
+                   AND REQ_STAT_CD NOT IN ('RQST98','RQST99','RQST97')
+               </if>  
+           </if> 
+               )
+ 
+    </select>
+
+</mapper>

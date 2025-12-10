@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ3910WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0' AS CHK
+			, A.REQ_ID
+			, A.REQ_NO
+			, A.REQ_NAME
+			, A.PJT_ID
+			, A.BIZ_ID
+			, D.BIZ_NAME
+			, A.REQ_PROCESS
+			, A.REQ_ACTIVITY
+			, A.REQ_TYPE_CD
+			, A.REQ_CONTENTS
+			, A.REQ_IMPL_DESC
+			, A.RESTRICTIONS
+			, A.REQ_USER_NM
+			, A.REQ_USER_DEPT
+			, A.ACCEPT_YN
+			, A.CONF_DATE
+			, A.CONF_YN
+			, A.CONF_CONTENTS
+			, A.CHG_PART
+			, A.CHG_USER_NM
+			, A.REG_BASIS
+			, A.DLVR_NAME
+			, A.CHG_ST_CD
+			, A.REMARK
+			, A.INSPECT_CRITERIA
+			, A.INSPECT_YN
+			, A.INSPECT_STIME
+			, A.INSPECT_USER_ID
+			, A.INS_USER_NM
+			, A.INS_USER_DEPT
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, B.PJT_NAME AS PJT_NAME
+			, C.PJT_ID   AS P_PJT_ID
+			, C.PJT_NAME AS P_PJT_NAME
+
+		FROM
+			  PJ_REQMENT A
+			, PJ_PROJECT B
+			, PJ_PROJECT C
+			, PJ_BIZ D
+
+		WHERE 1 = 1
+		AND A.PJT_ID		= B.PJT_ID
+		AND B.PARENT_ID		= C.PJT_ID
+		AND A.PJT_ID		= D.PJT_ID
+		AND A.BIZ_ID		= D.BIZ_ID
+		AND A.PJT_ID		= #{SUB_PJT_ID}
+		AND A.REQ_TYPE_CD	= 'REQ_CLS_CD07'
+		
+
+		<if test="BIZ_ID != '' and BIZ_ID != null">
+		AND A.BIZ_ID		= #{BIZ_ID}
+		</if>
+
+		<if test="REQ_NO != '' and REQ_NO != null">
+		AND UPPER(A.REQ_NO) LIKE '%' || UPPER(#{REQ_NO}) || '%'
+		</if>
+
+		<if test="REQ_NM != '' and REQ_NM != null">
+		AND UPPER(A.REQ_NAME) LIKE '%' || UPPER(#{REQ_NM}) || '%'
+		</if>
+
+		<if test="CHG_ST_CD != '' and CHG_ST_CD != null">
+		AND A.CHG_ST_CD	= #{CHG_ST_CD}
+		</if>
+
+ 		ORDER BY
+			A.REQ_NO, A.REQ_ID
+	</select>
+
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM1000WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+	   SELECT
+		    AUTOSAVE_ID
+		    , USER_ID
+		    , PROCESS_ID
+		    , PROCESS_NM
+		    , TITLE_NM
+		    , PROCESS_TYPE
+		    , SAVE_DT
+		    , AUTOSAVE_CD
+		    , DEL_YN
+		FROM
+		    FOMM_AUTOSAVE
+		WHERE 1=1
+            <if test="TITLE_NM != '' and TITLE_NM != null">
+		      AND TITLE_NM = #{TITLE_NM}
+            </if>
+            <if test="DEL_YN != '' and DEL_YN != null">
+              AND DEL_YN = #{DEL_YN}
+            </if>
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+        INSERT INTO FOMM_AUTOSAVE
+		(
+            AUTOSAVE_ID
+		    , USER_ID
+		    , PROCESS_ID
+		    , PROCESS_NM
+		    , TITLE_NM
+		    , PROCESS_TYPE
+		    , SAVE_DT
+		    , AUTOSAVE_CD
+		    , DEL_YN
+		)VALUES(
+            #{AUTOSAVE_ID}
+            , #{USER_ID}
+            , #{PROCESS_ID}
+            , #{PROCESS_NM}
+            , #{TITLE_NM}
+            , 'SRM'
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , 'RQST00'
+            ,'N'
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		UPDATE FOMM_AUTOSAVE
+		SET       DEL_YN    = 'Y'
+		WHERE AUTOSAVE_ID = #{AUTOSAVE_ID}
+	</delete>
+
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR0140PDAO">
+	 
+	 <!-- SPP 결재 승인 -->
+    <insert id="saveApprove" parameterType="java.util.Map" statementType="CALLABLE" >
+		/* SR0140PMapper >> saveApprove */
+		{
+			CALL	PR_SR_REQ_WF_PROC_APPROVE
+			(
+	            #{REQ_ID,			mode=IN, 	jdbcType=VARCHAR},
+	            #{WF_PROC_CD,		mode=IN, 	jdbcType=VARCHAR},
+	            #{SEQ,              mode=IN,    jdbcType=INTEGER},
+	            #{NEXT_WF_PROC_CD,	mode=IN, 	jdbcType=VARCHAR},
+	            #{NEXT_WF_FUNC_CD,	mode=IN, 	jdbcType=VARCHAR},
+	            #{USER_ID,			mode=IN,	jdbcType=VARCHAR},
+	            #{ORG_USER_ID,		mode=IN,	jdbcType=VARCHAR},
+	            #{APPR_DESC,		mode=IN, 	jdbcType=VARCHAR},
+	            #{LMPID,			mode=IN,	jdbcType=VARCHAR},
+	            #{RTN_CD,			mode=OUT, 	jdbcType=VARCHAR,	javaType=java.lang.String},
+	            #{RTN_MSG,			mode=OUT, 	jdbcType=VARCHAR, 	javaType=java.lang.String}
+	        )
+    	}
+    </insert>
+
+    <!-- SPP 결재 반려 -->
+    <insert id="saveReturn" parameterType="java.util.Map" statementType="CALLABLE">
+		/* SR0140PMapper >> saveReturn */
+		{
+			CALL	PR_SR_REQ_WF_PROC_RETURN
+			(
+	            #{REQ_ID,			mode=IN, 	jdbcType=VARCHAR},
+	            #{WF_PROC_CD,		mode=IN, 	jdbcType=VARCHAR},
+	            #{SEQ,              mode=IN,    jdbcType=INTEGER},
+	            #{USER_ID,			mode=IN,	jdbcType=VARCHAR},
+	            #{ORG_USER_ID,		mode=IN,	jdbcType=VARCHAR},
+	            #{APPR_DESC,		mode=IN, 	jdbcType=VARCHAR},
+	            #{LMPID,			mode=IN,	jdbcType=VARCHAR},
+	            #{RTN_CD,			mode=OUT, 	jdbcType=INTEGER,	javaType=int},
+	            #{RTN_MSG,			mode=OUT, 	jdbcType=VARCHAR, 	javaType=java.lang.String}
+	        )
+    	}
+    </insert>
+
+</mapper>

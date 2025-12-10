@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0610PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			A.MEET_ATTND_ID,
+			A.MEET_ID,
+			A.ATN_USER_ID,
+			A.ATN_USER_NM,
+			A.ATN_USER_DEPT,
+			A.ATN_USER_CD,
+			A.READ_YN,
+			A.READ_TIME,
+			A.CONF_YN,
+			A.CONF_TIME,
+			A.REG_USER_ID,
+			A.REG_USER_NM,
+			A.REG_STIME,
+			A.DIS_REASON
+
+		FROM
+			PJ_MEET_ATTND A
+
+		WHERE 1 = 1
+		AND A.MEET_ID = #{MEET_ID}
+
+		<if test='ATTND != "" and ATTND != null and "10".equals(ATTND)'>
+		AND A.CONF_TIME IS NULL
+		</if>
+
+		<choose>
+			<when test='"NAME".equals(SEARCH_TYPE)'>
+		AND UPPER(A.ATN_USER_NM) LIKE UPPER(#{SEARCH_TEXT}) || '%'
+			</when>
+			<when test='"TEAM".equals(SEARCH_TYPE)'>
+		AND UPPER(A.ATN_USER_DEPT) LIKE '%' || UPPER(#{SEARCH_TEXT}) || '%'
+			</when>			
+		</choose>
+
+		ORDER BY
+			A.ATN_USER_NM
+	</select>
+
+</mapper>

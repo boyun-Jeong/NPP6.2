@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0910WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+	
+	SELECT 
+         0 AS CHK                                           -- 발신함 조회
+        , '' AS ROWFLAG
+        ,M.MEMO_ID                 --  메모 ID
+        ,M.MEMO_TITLE             --  메모 제목
+       -- ,M.MEMO_CONTENTS   --  메모 내용
+        ,M.MEMO_STATUS_CD
+        ,CASE WHEN M.MEMO_STATUS_CD = 1 THEN '임시저장' ELSE '발송완료' END AS MEMO_STATUS_NM  --  메모 상태
+        ,M.SEND_TIME               --  메모 발송 시각
+        ,M.ATTACH_YN              --  첨부파일 여부
+        ,M.DEL_YN                      --  삭제여부
+        ,M.DEL_TIME                 --  삭제시각
+        ,M.REG_USER_ID             --  등록자ID
+        ,M.REG_USER_NM             --  등록자이름
+        ,S.READ_CNT                 -- 수신확인
+        ,S.SUM_RCV_ID               --  받는이 합계
+        ,S.M_RCV_USER_NM       -- 받는사람 다수중 MAX ID
+        ,(CASE WHEN S.SUM_RCV_ID = 1 THEN S.M_RCV_USER_NM
+                 WHEN S.SUM_RCV_ID > 1 THEN S.M_RCV_USER_NM||' 외'||TO_CHAR(S.SUM_RCV_ID -1)  ||'명'
+        END) AS RCV_USER_NM
+        ,M.REG_USER_DEPT           --  등록자부서이름
+        ,M.NEW_MEMO_YN                 --  새글 여부
+        ,M.SYSMODTIME              --  최종수정일시
+        ,M.LMOD_USER_ID           --  최종수정자ID
+        ,M.LMOD_USER_NM         --  최종수정자이름
+        ,M.LMOD_USER_DEPT      --  최종수정자부서이름
+        ,M.CREATE_TIME                 --  최초작성일시
+    FROM
+    FOMM_MEMO M
+        <choose>
+	        <when test='"ALL_RCV".equals(COND_COL) or "RCV".equals(COND_COL)'>
+                ,FOMM_MEMO_RCV R                              --수신자로 조회 할때
+	        </when>
+	        <otherwise>
+	        </otherwise>
+        </choose>
+             ,(
+            SELECT A.MEMO_ID, SUM( CASE WHEN B.READ_YN ='Y'  THEN 1 ELSE 0 END ) ||'/' || COUNT(B.MEMO_RCV_ID) AS READ_CNT
+                ,COUNT(B.MEMO_RCV_ID) AS SUM_RCV_ID
+                ,MAX(RCV_USER_NM) M_RCV_USER_NM
+           FROM FOMM_MEMO A
+           LEFT OUTER JOIN FOMM_MEMO_RCV B
+               ON  ( A.MEMO_ID = B.JOB_REV_NO  AND NVL(B.DEL_YN,'N') = 'N' )
+            GROUP BY A.MEMO_ID    
+        )  S
+    WHERE 1 = 1
+	    AND M.MEMO_ID  = S.MEMO_ID
+	    AND NVL(M.DEL_YN,'N') = 'N'
+	        
+	   <if test="STR_DATE_FROM != '' and STR_DATE_FROM != null and STR_DATE_TO != '' and STR_DATE_TO != null">
+		AND SUBSTR(M.CREATE_TIME, 1, 8)  BETWEEN #{STR_DATE_FROM} AND #{STR_DATE_TO}
+       </if>
+        
+		<choose>
+			<when test='COND_COL  != "" and COND_COL  != null'>
+                <choose>
+					<when test='"ALL_RCV".equals(COND_COL)'>
+		AND M.MEMO_ID = R.JOB_REV_NO
+		AND (M.MEMO_TITLE LIKE '%' ||  #{COND_TEXT} || '%' OR R.RCV_USER_NM LIKE '%' || #{COND_TEXT} || '%')
+                 	</when>
+                 	<when test='"TITLE".equals(COND_COL)'>
+		AND M.MEMO_TITLE LIKE '%' ||  #{COND_TEXT} || '%'
+                    </when>
+                    <when test='"RCV".equals(COND_COL)'>
+		AND M.MEMO_ID = R.JOB_REV_NO
+		AND R.RCV_USER_NM LIKE '%' || #{COND_TEXT} || '%'
+                    </when>
+					<otherwise>
+                    </otherwise>                    
+                </choose>
+			</when>
+		</choose>
+		AND M.REG_USER_ID = #{REG_USER_ID}
+
+		ORDER BY M.CREATE_TIME DESC
+	</select>
+	
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+ 
+	
+		SELECT
+	       	 0 AS CHK                               -- 수신함 조회
+            , '' AS ROWFLAG
+		    ,R.MEMO_RCV_ID
+		    ,R.JOB_REV_NO
+		    ,R.RCV_USER_ID
+		    ,NVL(R.SND_USER_NM, R.SND_USER_ID) AS SND_USER_NM
+		    ,R.RCV_USER_DEPT
+		    ,R.RCV_TYPE_CD
+		    ,R.SND_USER_ID
+		    --,CASE R.SEND_GUBUN WHEN '00' THEN R.SND_USER_NM WHEN '01' THEN 'JOB' WHEN '02' THEN 'RESERVE' END AS SND_USER_NM
+		    ,R.SND_USER_NM
+		    ,R.SND_USER_DEPT
+		    ,R.NEW_MEMO_YN
+		    ,S.READ_CNT                   --  수신확인 카운트
+		    ,R.READ_TIME
+		    ,R.DEL_YN
+		    ,R.DEL_TIME
+		    ,M.MEMO_TITLE           --  메모 제목
+		    ,M.ATTACH_YN           -- 첨부파일여부
+		    ,S.NEW_MEMO_CNT
+		    --,TO_DATE(M.SEND_TIME,'YYYY/MM/DD HH24:MI:SS')               --  메모 발송 시각
+		    ,M.SEND_TIME
+		     --,SUM(CASE WHEN R.NEW_MEMO_YN = 'Y' THEN 1 ELSE 0 END) AS NEW_MEMO_CNT
+		    ,CASE R.READ_YN  WHEN 'N' THEN '미확인'		-- 확인여부(추가)
+                             WHEN 'Y' THEN '확인'
+             END AS READ_YN
+			FROM FOMM_MEMO_RCV R, 
+		        FOMM_MEMO M
+		        ,(
+		            SELECT A.MEMO_ID,SUM( CASE WHEN B.READ_YN ='Y'  THEN 1 ELSE 0 END ) ||'/' || COUNT(B.MEMO_RCV_ID) AS READ_CNT
+		            ,SUM(CASE WHEN B.NEW_MEMO_YN = 'Y' THEN 1 ELSE 0 END) AS NEW_MEMO_CNT
+		            FROM FOMM_MEMO A, FOMM_MEMO_RCV B
+		            WHERE A.MEMO_ID = B.JOB_REV_NO AND B.RCV_TYPE_CD != 'BCC'
+		            GROUP BY A.MEMO_ID
+		        ) S
+		WHERE 1= 1 
+		    AND M.MEMO_ID = R.JOB_REV_NO
+		    AND S.MEMO_ID = R.JOB_REV_NO
+		    AND R.DEL_YN = 'N'
+		    AND R.RCV_USER_ID = #{RCV_USER_ID}
+		    AND M.MEMO_STATUS_CD = '2'
+
+		    <if test="STR_DATE_FROM != '' and STR_DATE_FROM != null and STR_DATE_TO != '' and STR_DATE_TO != null">
+              AND SUBSTR(M.SEND_TIME, 1, 8)  BETWEEN #{STR_DATE_FROM} AND #{STR_DATE_TO}
+            </if>
+
+			<choose>
+				<when test='COND_COL  != "" and COND_COL  != null'>
+	                <choose>
+						<when test='"ALL_SND".equals(COND_COL)'>
+			AND (M.MEMO_TITLE LIKE '%' ||  #{COND_TEXT} || '%' OR R.SND_USER_NM LIKE '%' || #{COND_TEXT} || '%')
+	                 	</when>
+	                 	<when test='"TITLE".equals(COND_COL)'>
+			AND M.MEMO_TITLE LIKE '%' ||  #{COND_TEXT} || '%'
+	                    </when>
+	                    <when test='"SND".equals(COND_COL)'>			
+			AND R.SND_USER_NM LIKE '%' || #{COND_TEXT} || '%'
+	                    </when>
+						<otherwise>
+	                    </otherwise>                    
+	                </choose>
+				</when>
+			</choose>
+
+            <if test='COND_COL  != "" and COND_COL  != null'>
+                 <choose>
+                    <when test='COND_COL == "TITLE"'>
+
+                    </when>
+                    <when test='COND_COL == "SND"'>
+                        
+                    </when>
+                    <otherwise>
+                        
+                    </otherwise>                    
+                </choose>
+            </if>
+        <if test='"N".equals(CONFIRM_YN)'>
+        	and R.READ_YN = #{CONFIRM_YN}
+        </if>
+	   ORDER BY M.SEND_TIME DESC, R.READ_YN
+ </select>
+ 
+<select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+       SELECT 
+            CNT
+            , TO_CHAR(FILE_SIZE, '999,999,999,999.00') FILE_SIZE
+        FROM (
+              SELECT 
+                CNT
+                , NVL(ROUND(FILE_SIZE / 1024, 2), 0) FILE_SIZE
+              FROM 
+              (
+                    SELECT 
+                        COUNT(*) CNT
+                        , SUM(FILE_SIZE / 1024) FILE_SIZE
+                    FROM
+                        FOMM_ATCHFILE_MT
+                    WHERE
+                        PK1 IN
+                                (
+                                    SELECT 
+                                        MEMO_ID
+                                    FROM
+                                        FOMM_MEMO
+                                    WHERE
+                                        REG_USER_ID = #{REG_USER_ID}
+                                        AND DEL_YN = 'N'
+                                )
+              )
+        )      
+ 
+       SELECT 
+            CNT
+            , TO_CHAR(FILE_SIZE, '999,999,999,999.00') FILE_SIZE
+        FROM (
+              SELECT 
+                CNT
+                , NVL(ROUND(FILE_SIZE / 1024, 2), 0) FILE_SIZE
+              FROM 
+              (
+                    SELECT 
+                        COUNT(*) CNT
+                        , SUM(FILE_SIZE / 1024) FILE_SIZE
+                    FROM
+                        FOMM_ATCHFILE_MT
+                    WHERE
+                        PK1 IN
+                                (
+                                    SELECT 
+                                        TO_CHAR(MEMO_ID) AS MEMO_ID
+                                    FROM
+                                        FOMM_MEMO
+                                    WHERE
+                                        REG_USER_ID = #{REG_USER_ID}
+                                        AND DEL_YN = 'N'
+                                )
+              )
+        )      
+ 
+    </select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	 /* FOMM0910 발신함에서 메모삭제 */
+	   UPDATE FOMM_MEMO
+        SET
+            DEL_YN = 'Y'
+            ,DEL_TIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            ,LMOD_USER_ID= #{LMID}
+            ,LMOD_USER_NM = #{LMNM}
+            ,LMOD_USER_DEPT = #{LMDNM}
+            ,SYSMODTIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        WHERE  MEMO_ID = #{MEMO_ID}
+            AND DEL_YN = 'N'    
+	   
+	</delete>
+
+</mapper>

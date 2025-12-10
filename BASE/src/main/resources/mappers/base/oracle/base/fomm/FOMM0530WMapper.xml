@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0530WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+	       SELECT  
+			    TO_CHAR(TRAN_SQNO) AS TRAN_SQNO
+			    , TO_NAME
+			    , TO_PHONE
+			    , FROM_ID
+			    , SUBJECT
+			    , CONTENT
+			    , CASE MSG_TYPE WHEN 'S' THEN 'SMS' WHEN 'L' THEN 'LMS' END AS MSG_TYPE 
+			    , REG_DATE
+			   --, TO_CHAR(REG_DATE,'YYYY-MM-DD HH24:MI:ss') AS REG_DATE2
+			    , SEND_TIME
+			   --, TO_CHAR(SEND_TIME,'YYYY-MM-DD HH24:MI:ss') AS SEND_TIME2
+			   , SEND_GUBUN
+			   , JOB_REV_NO
+			FROM FOMM_SMSTRAN_MT
+			WHERE 1=1
+			<choose>
+                <when test='DateSearchType == "R"'>
+                    AND SUBSTR(TO_CHAR(REG_DATE,'YYYYMMDD HH24:MI:ss'),1,8) BETWEEN #{START_DATE} AND #{END_DATE}
+                </when>
+                <when test='DateSearchType == "S"'>
+                   AND  SUBSTR(TO_CHAR(SEND_TIME,'YYYYMMDD HH24:MI:ss'),1,8) BETWEEN #{START_DATE} AND #{END_DATE}
+                </when>
+            </choose>
+            <if test="SUBJECT != '' and SUBJECT != null">
+               AND SUBJECT LIKE '%' ||  #{SUBJECT} || '%'
+            </if>
+            <if test="CONTENT != '' and CONTENT != null">
+               AND CONTENT LIKE '%' ||  #{CONTENT} || '%'
+            </if>
+            <if test="FROM_ID != '' and FROM_ID != null">
+               AND FROM_ID LIKE '%' ||  #{FROM_ID} || '%'
+            </if>        
+            <if test="TO_NAME != '' and TO_NAME != null">
+               AND TO_NAME LIKE '%' ||  #{TO_NAME} || '%'
+            </if>
+			<if test="TO_PHONE != '' and TO_PHONE != null">
+               AND TO_PHONE LIKE '%' ||  #{TO_PHONE} || '%'
+            </if>
+
+		ORDER BY TRAN_SQNO DESC
+
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	</delete>
+
+</mapper>

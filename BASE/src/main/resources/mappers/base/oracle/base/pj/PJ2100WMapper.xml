@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ2100WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		 SELECT
+			  '0' AS CHK 
+			, A.PJT_ID 
+			, A.PJT_NAME
+			, A.PJT_STATUS_CD 
+			, A.PJT_DESC 
+			, A.PJT_EXEC_CD 
+			, A.IN_PM_USER_ID 
+			, A.IN_PM_USER_NM 
+			, A.IN_PM_DEPT 
+			, A.OUT_PM_USER_ID 
+			, A.OUT_PM_USER_NM 
+			, A.OUT_CPY_ID 
+			, A.OUT_CPY_NAME 
+			, A.UPMU_USER_ID 
+			, A.UPMU_USER_NM 
+			, A.UPMU_USER_DEPT 
+			, SUBSTR(A.PJT_STIME, 1, 4) || '.' || SUBSTR(A.PJT_STIME, 5, 2) || '.' || SUBSTR(A.PJT_STIME, 7, 2) AS PJT_STIME 
+			, SUBSTR(A.PJT_ETIME, 1, 4) || '.' || SUBSTR(A.PJT_ETIME, 5, 2) || '.' || SUBSTR(A.PJT_ETIME, 7, 2) AS PJT_ETIME 
+			, A.PJT_TYPE_CD 
+			, A.PJT_SIZE_CD 
+			, A.PJT_DEV_CD 
+			, A.PJT_STD_YN 
+			, A.PJT_OPEN_DATE 
+			, A.CONTRT_ID 
+			, A.DEV_AMOUNT 
+			, A.DEV_MM 
+			, A.HW_AMOUNT 
+			, A.SW_AMOUNT 
+			, A.TOT_AMOUNT 
+			, A.REG_STIME 
+			, A.REG_USER_ID 
+			, A.REG_USER_NM 
+			, A.REG_USER_DEPT 
+			, A.SYSMODTIME 
+			, A.LMOD_USER_ID 
+			, A.LMOD_USER_NM 
+			, A.LMOD_USER_DEPT 
+			, A.CONTRACT_ID 
+			, A.CONTRACT_NO 
+			, A.OUT_PM_DEPT 
+			, A.SUB_PJT_NO 
+			, A.SUB_PJT_YN 
+			, A.PARENT_ID 
+			, A.WEIGHT 
+			, A.PJT_NAME AS ORG_PJT_NAME
+
+		FROM
+			PJ_PROJECT A
+
+		WHERE 1 = 1
+		AND DECODE(A.SUB_PJT_YN,'Y','Y','N') != 'Y'
+		
+		<if test="PJT_NAME != '' and PJT_NAME != null">
+		AND UPPER(A.PJT_NAME) LIKE UPPER('%' || #{PJT_NAME} || '%')
+		</if>
+
+		<if test="PJT_STATUS_CD != '' and PJT_STATUS_CD != null">
+		AND A.PJT_STATUS_CD = #{PJT_STATUS_CD}
+		</if> 
+    
+		AND SUBSTR(A.PJT_ETIME, 1, 4) = #{PJT_YEAR}
+
+		ORDER BY
+			NVL(A.SUB_PJT_NO, 0), A.PJT_NAME 
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		 SELECT
+			  '0'	AS CHK
+ 			, ''	AS ROWFLAG
+			, A.PHASE_ID
+			, A.PJT_ID
+			, A.PHASE_NAME
+			, A.PHASE_SDATE
+			, A.PHASE_EDATE
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, A.PHASE_DESC
+
+		FROM
+			PJ_PHASE_SCH A
+
+		WHERE 1 = 1 
+		AND A.PJT_ID = #{SEL_PJT_ID}
+
+		ORDER BY
+			A.PHASE_ID
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		INSERT INTO PJ_PHASE_SCH 
+		(
+			  PHASE_ID
+			, PJT_ID
+			, PHASE_NAME
+			, PHASE_SDATE
+			, PHASE_EDATE
+			, PHASE_DESC
+			
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  (
+			  SELECT
+				'PJPH' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(PHASE_ID, -6), 0) )), 0) + 1, 6, 0)
+			  FROM PJ_PHASE_SCH
+			  WHERE 1 = 1
+			  AND PHASE_ID LIKE 'PJPH%'
+			  AND LENGTH(PHASE_ID) = 16
+			  ) 
+			 , #{PJT_ID}
+			 , #{PHASE_NAME} 
+			 , #{PHASE_SDATE} 
+			 , #{PHASE_EDATE}
+			 , #{PHASE_DESC} 
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_PHASE_SCH SET
+			  PHASE_NAME		= #{PHASE_NAME} 
+			, PHASE_SDATE		= #{PHASE_SDATE} 
+			, PHASE_EDATE		= #{PHASE_EDATE}
+			, PHASE_DESC		= #{PHASE_DESC}
+
+			, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+		WHERE 1 = 1
+		AND PHASE_ID = #{PHASE_ID}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_PHASE_SCH 
+		WHERE 1 = 1
+		AND PHASE_ID = #{PHASE_ID}
+	</delete>
+
+</mapper>

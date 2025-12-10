@@ -1,0 +1,100 @@
+﻿.Tab.tab_TBF_mdi
+{
+	background : transparent;
+	border : 0px;
+}
+.Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi
+{
+	background : #F2F2F2;
+	border : 1px solid #b9b9b9, 1px solid #b9b9b9, 2px solid #3697f8, 1px solid #b9b9b9;
+	cursor : pointer;
+	font : 14px 'KoPubL';
+}
+.Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi .tabbuttonitemtext .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi .tabbuttonitemtext
+{
+	font : 14px 'KoPubL';
+}
+.Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi .extrabutton
+{
+	background : url(./SPP_IMAGE_SET/TBF/btn_TBF_MdiX.png) no-repeat center center;
+	cursor : pointer;
+}
+.Static.sta_TBF_mdiBg
+{
+	background : #ffffff;
+	border : 0px, 0px, 2px solid #252c43, 0px;
+}
+.Button.btn_TBF_mdiAllX
+{
+	background : #fafafa URL('./MIRAE_IMAGE_SET/TBF/tab-all.gif') no-repeat center center;
+	border : 0px none;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Tab.tab_TBF_mdi[status=focused]
+{
+	background : transparent;
+	border : 0px;
+}
+.Tab.tab_TBF_mdi[status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+}
+.Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi[status=mouseover]
+{
+	background : #F2F2F2;
+	border : 1px solid #b9b9b9, 1px solid #b9b9b9, 2px solid #3697f8, 1px solid #b9b9b9;
+	cursor : pointer;
+	font : 14px 'KoPubL';
+}
+.Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi[status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8, 1px solid #3697f8, 2px solid white, 1px solid #3697f8;
+	cursor : pointer;
+	color : #0a5dad;
+	font : 14px 'KoPubL';
+}
+.Button.btn_TBF_mdiAllX[status=mouseover]
+{
+	background : #fafafa URL('./MIRAE_IMAGE_SET/TBF/tab-all-over.gif') no-repeat center center;
+	border : 0px none;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_TBF_mdiAllX[status=focused]
+{
+	background : #fafafa URL('./MIRAE_IMAGE_SET/TBF/tab-all-over.gif') no-repeat center center;
+	border : 0px none;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi[userstatus=selected]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8, 1px solid #3697f8, 2px solid white, 1px solid #3697f8;
+	cursor : pointer;
+	color : #0a5dad;
+	font : 14px 'KoPubL';
+}
+.Button.btn_TBF_mdiAllX[userstatus=selected]
+{
+	background : #fafafa URL('./MIRAE_IMAGE_SET/TBF/tab-all.gif') no-repeat center center;
+	border : 0px none;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Tab.tab_TBF_mdi .tabbuttonitemTab.tabbuttonitemTabtab_TBF_mdi[userstatus=selected][status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8, 1px solid #3697f8, 2px solid white, 1px solid #3697f8;
+	cursor : pointer;
+	color : #0a5dad;
+	font : 14px 'KoPubL';
+}

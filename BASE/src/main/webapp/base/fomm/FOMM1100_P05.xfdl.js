@@ -1,0 +1,485 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("FOMM1100_P05");
+            this.set_titletext("서비스별 담당자관리 일괄저장");
+            this.set_scrolltype("none");
+            this.set_cssclass("");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1100,500);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsData", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsCond", this);
+            obj._setContents("<ColumnInfo><Column id=\"CO_NM\" type=\"STRING\" size=\"256\"/><Column id=\"DEPT_NM\" type=\"STRING\" size=\"256\"/><Column id=\"SEARCH_STR\" type=\"STRING\" size=\"256\"/><Column id=\"USER_TYPE\" type=\"STRING\" size=\"256\"/><Column id=\"USE_YN\" type=\"STRING\" size=\"256\"/><Column id=\"ROLE_CD\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"USE_YN\">Y</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsImport", this);
+            obj._setContents("<ColumnInfo><Column id=\"STAFF_ID\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Div("divBottom","0",null,null,"60","0","0",null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_text("");
+            obj.set_cssclass("div_POP_msg_btnbg");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnSave",null,null,"100","32","125","14",null,null,null,null,this.divBottom.form);
+            obj.set_taborder("1");
+            obj.set_text("저장");
+            obj.set_cssclass("btn_WF_primary_save");
+            this.divBottom.addChild(obj.name, obj);
+
+            obj = new Button("btnClose",null,null,"100","32","20","14",null,null,null,null,this.divBottom.form);
+            obj.set_taborder("1");
+            obj.set_text("닫기");
+            obj.set_cssclass("btn_WF_primary_close");
+            this.divBottom.addChild(obj.name, obj);
+
+            obj = new Div("divContent","0","0",null,null,"0","60",null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_text("Div00");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("staUserInfo","20","20","60","24",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("0");
+            obj.set_text("담당자");
+            obj.set_cssclass("sta_WF_gridTitle");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("Static00_00","0","staUserInfo:0",null,"10","0",null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("1");
+            obj.set_background("#e5dbfa");
+            obj.set_text("10");
+            obj.set_textAlign("center");
+            obj.set_verticalAlign("middle");
+            obj.set_font("normal 12pt/normal \"Arial\"");
+            obj.set_visible("false");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("Static00_01","5","0",null,"20","-5",null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("2");
+            obj.set_background("#e5dbfa");
+            obj.set_text("20");
+            obj.set_textAlign("center");
+            obj.set_verticalAlign("middle");
+            obj.set_font("normal 12pt/normal \"Arial\"");
+            obj.set_visible("false");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("Static00_01_00","0","0","20",null,null,"0",null,null,null,null,this.divContent.form);
+            obj.set_taborder("3");
+            obj.set_background("#e5dbfa");
+            obj.set_text("20");
+            obj.set_textAlign("center");
+            obj.set_verticalAlign("middle");
+            obj.set_font("normal 12pt/normal \"Arial\"");
+            obj.set_visible("false");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("Static00_01_00_00",null,"0","20",null,"0","0",null,null,null,null,this.divContent.form);
+            obj.set_taborder("4");
+            obj.set_background("#e5dbfa");
+            obj.set_text("20");
+            obj.set_textAlign("center");
+            obj.set_verticalAlign("middle");
+            obj.set_font("normal 12pt/normal \"Arial\"");
+            obj.set_visible("false");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("Static00_02","0",null,null,"20","0","0",null,null,null,null,this.divContent.form);
+            obj.set_taborder("5");
+            obj.set_background("#e5dbfa");
+            obj.set_text("20");
+            obj.set_textAlign("center");
+            obj.set_verticalAlign("middle");
+            obj.set_font("normal 12pt/normal \"Arial\"");
+            obj.set_visible("false");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("stcCnt","staUserInfo:10","20","60","24",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("6");
+            obj.set_text("0 건");
+            obj.set_cssclass("sta_WF_grdCnt");
+            obj.set_countDataset("dsData");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Div("divGrdTopBtn",null,"20","425","24","Static00_01_00_00:0",null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("7");
+            obj.set_visible("true");
+            obj.set_isButtonGroup("true");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Button("btnDel",null,"0","60","24","0",null,null,null,null,null,this.divContent.form.divGrdTopBtn.form);
+            obj.set_taborder("0");
+            obj.set_text("삭제");
+            obj.set_cssclass("btn_WF_del");
+            obj.set_visible("true");
+            obj.set_cursor("pointer");
+            this.divContent.form.divGrdTopBtn.addChild(obj.name, obj);
+
+            obj = new Button("btnAdd",null,"0","100","24","btnDel:4",null,null,null,null,null,this.divContent.form.divGrdTopBtn.form);
+            obj.set_taborder("1");
+            obj.set_text("엑셀업로드");
+            obj.set_cssclass("btn_WF_excelUp");
+            obj.set_visible("true");
+            obj.set_cursor("pointer");
+            this.divContent.form.divGrdTopBtn.addChild(obj.name, obj);
+
+            obj = new Grid("grdNoti","20","Static00_00:0",null,null,"20","20",null,null,null,null,this.divContent.form);
+            obj.set_taborder("8");
+            obj.set_binddataset("dsData");
+            obj.set_cssclass("grd_WF_normal");
+            obj.set_useCheck("true");
+            obj.set_treeusecheckbox("false");
+            obj.set_treeuseline("false");
+            obj.set_treeinitstatus("expand,null");
+            obj.set_treeusebutton("use");
+            obj.set_treeuseimage("true");
+            obj.set_autofittype("none");
+            obj.set_useSort("true");
+            obj.set_useContext("false");
+            obj.set_suppresslevel("allskip");
+            obj._setContents("<Formats><Format id=\"excel01\"><Columns><Column size=\"48\"/><Column size=\"48\"/><Column size=\"48\"/><Column size=\"180\"/><Column size=\"180\"/><Column size=\"180\"/><Column size=\"250\"/><Column size=\"250\"/><Column size=\"100\"/><Column size=\"140\"/><Column size=\"65\"/><Column size=\"65\"/><Column size=\"65\"/><Column size=\"65\"/><Column size=\"65\"/><Column size=\"65\"/><Column size=\"65\"/></Columns><Rows><Row size=\"24\" band=\"head\"/><Row size=\"32\"/></Rows><Band id=\"head\"><Cell displaytype=\"checkboxcontrol\"/><Cell col=\"1\" text=\"NO\"/><Cell col=\"2\" text=\"행상태\"/><Cell col=\"3\" text=\"서비스유형\"/><Cell col=\"4\" text=\"업무분류(대)코드\"/><Cell col=\"5\" text=\"업무분류(대)명\"/><Cell col=\"6\" text=\"업무분류(중)코드\"/><Cell col=\"7\" text=\"업무분류(중)명\"/><Cell col=\"8\" text=\"사번(ID)\"/><Cell col=\"9\" text=\"담당자명\"/><Cell col=\"10\" text=\"담당자\"/><Cell col=\"11\" text=\"현장대리인\"/><Cell col=\"12\" text=\"QA\"/><Cell col=\"13\" text=\"PL\"/><Cell col=\"14\" text=\"팀장\"/><Cell col=\"15\" text=\"부장\"/><Cell col=\"16\" text=\"기타\"/></Band><Band id=\"body\"><Cell displaytype=\"checkboxcontrol\" text=\"bind:CHK\" edittype=\"checkbox\"/><Cell col=\"1\" text=\"expr:currow+1\"/><Cell col=\"2\" text=\"bind:ROWFLAG\"/><Cell col=\"3\" text=\"bind:SVC_CLSS_CD\" displaytype=\"normal\" calendardateformat=\"yyyy-MM-dd HH:mm:ss\" calendareditformat=\"yyyy-MM-dd HH:mm:ss\" combodataset=\"dsSrType\" combodatacol=\"CMM_CD_NM\" combocodecol=\"CMM_CD\" edittype=\"none\" validation=\"서비스유형;NULL\"/><Cell col=\"4\" text=\"bind:BSE_LVL1_CD\" displaytype=\"normal\" edittype=\"none\" validation=\"업무분류(대)코드;NULL\"/><Cell col=\"5\" text=\"bind:BSE_LVL1_NM\" displaytype=\"normal\" edittype=\"none\"/><Cell col=\"6\" text=\"bind:BSE_LVL2_CD\" expandshow=\"hide\" displaytype=\"normal\" edittype=\"none\" validation=\"업무분류(중)코드;NULL\"/><Cell col=\"7\" text=\"bind:BSE_LVL2_NM\" expandshow=\"hide\" displaytype=\"normal\" edittype=\"none\"/><Cell col=\"8\" text=\"bind:STAFF_ID\" displaytype=\"normal\" edittype=\"none\" validation=\"사번(ID);NULL\"/><Cell col=\"9\" text=\"bind:STAFF_NM\" textAlign=\"center\" displaytype=\"normal\" edittype=\"none\"/><Cell col=\"10\" text=\"bind:LVL1_STAFF_YN\" displaytype=\"checkboxcontrol\" edittype=\"none\"/><Cell col=\"11\" text=\"bind:LVL2_STAFF_YN\" displaytype=\"checkboxcontrol\" edittype=\"none\"/><Cell col=\"12\" displaytype=\"checkboxcontrol\" edittype=\"none\" text=\"bind:LVL3_STAFF_YN\"/><Cell col=\"13\" displaytype=\"checkboxcontrol\" edittype=\"none\" text=\"bind:LVL4_STAFF_YN\"/><Cell col=\"14\" displaytype=\"checkboxcontrol\" edittype=\"none\" text=\"bind:LVL5_STAFF_YN\"/><Cell col=\"15\" text=\"bind:LVL6_STAFF_YN\" displaytype=\"checkboxcontrol\" edittype=\"none\"/><Cell col=\"16\" text=\"bind:LVL7_STAFF_YN\" displaytype=\"checkboxcontrol\" edittype=\"none\"/></Band></Format></Formats>");
+            this.divContent.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this.divBottom.form
+            obj = new Layout("default","",0,0,this.divBottom.form,function(p){});
+            this.divBottom.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.divContent.form.divGrdTopBtn.form
+            obj = new Layout("default","",0,0,this.divContent.form.divGrdTopBtn.form,function(p){});
+            this.divContent.form.divGrdTopBtn.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.divContent.form
+            obj = new Layout("default","",0,0,this.divContent.form,function(p){});
+            this.divContent.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this
+            obj = new Layout("default","",1100,500,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("FOMM1100_P05.xfdl", function() {
+        /***********************************************************************************
+        * 화면(ID)		︰ FOMM1100_P01
+        * 화면(명)		︰ 서비스 담당자 신규등록
+        * 메뉴(경로)	    ︰ 관리자 > 사용자권한관리 > 서비스별 담당자관리
+        * 화면 설명	    ︰ 요청분류 조회
+        * 작성자	    	︰ WEMB
+        * 작성일	    	︰ 2025.02.12
+        * 수정이력		︰
+        *------------------------------------------------------------------
+        * 수정일        작성자		이력
+        *------------------------------------------------------------------
+        * 2025.02.12	 WEMB			최초작성
+        *------------------------------------------------------------------
+        * Description
+
+        ***********************************************************************************/
+
+        /***********************************************************************************
+         * Script Include
+         ***********************************************************************************/
+
+        /***********************************************************************************
+         * Form Variable
+         ***********************************************************************************/
+        this.objApp = nexacro.getApplication();
+        this.pSelType = '';		// 선택구분; 'S':single:단건선택; 'M':multi:다건선택
+
+        /***********************************************************************************
+         * Form Function
+         ***********************************************************************************/
+        this.form_onload = function(obj, e)
+        {
+
+        	// 업무화면 laod 전 공통 처리를 위한 함수.
+        	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+        	this.gfnFormOnLoad(this, this.fnInit);
+        }
+
+        this.fnInit = function()
+        {
+        	this.fnCompInit();		// 컴포넌트 초기화
+        }
+
+        /***********************************************************************************
+         * Common Function
+         ***********************************************************************************/
+        // 검색조건 초기화
+        this.fnSearchReset = function()
+        {
+
+        }
+
+
+        // 일괄 저장
+        this.fnSaveBatch = function()
+        {
+        	var sTranId = "saveBatch";
+            var sService = "FOMM1100W/saveBatch";
+            var sInDs = "dsData=dsData";
+            var sOutDs = "";
+            var sArg = "";
+            Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        this.fnSearch = function()
+        {
+        	// transaction
+        	var sTranId = "selectExlStaffSvcMng";                       // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+            var sService = "FOMM1100W/selectExlStaffSvcMng";            // 서비스명
+            var sInDs = "dsCond=dsCond";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+            var sOutDs = "dsData=dsData";       	// 서버에서 수신할 데이타셋
+            var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        // 공통 저장 func.
+        this.fnSave = function()
+        {
+
+        }
+
+
+        // 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+        this.fnDelete = function(objDs)
+        {
+        	objDs.set_enableevent(false);
+        	objDs.set_filterstr("CHK=='1'");
+
+        	for(var i = objDs.rowcount-1; i >= 0; i--)
+        		objDs.setDeleteRow(i);
+
+        	objDs.set_filterstr("");
+        	objDs.set_enableevent(true);
+        }
+
+
+        /***********************************************************************************
+         * CallBack Event
+         ***********************************************************************************/
+        // Transaction 디폴트 콜백함수
+        this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+        {
+        	// 에러메세지 처리
+        	if (nErrorCode < 0)
+        	{
+        		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+        		Ex.core.error(this, param);
+        		return;
+        	}
+
+        	// 각 Transaction별 CallBack 처리
+        	switch (sSvcId)
+        	{
+        		case "saveBatch" :
+        			Ex.core.pclose(this, "_SAVE_SUSS");
+        			break;
+
+        		case "selectExlStaffSvcMng" :
+        			break;
+        	}
+        }
+
+        // 팝업 디폴트 콜백함수
+        this.fnPopupAfter = function(pID,varValue)
+        {
+        	// TO DO
+        	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+        	switch(pID)
+        	{
+        		case "selectSvcPop" :
+
+        			break;
+        	}
+        }
+
+        // alert/confirm/error 메시지창 디폴트 콜백함수
+        this.fnMsgAfter = function(mID,varValue)
+        {
+        	// TO DO
+        	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+        	// alert/error : 무조건 true 반환
+        	// confirm     : true/false 선택적 반환
+        	if(!varValue)
+        		return;
+
+        	switch(mID)
+        	{
+        		case "saveConfirm" :
+        				this.fnSaveBatch();
+        			break;
+        	}
+        }
+
+        /***********************************************************************************
+         * User Function
+         ***********************************************************************************/
+        // component init
+        this.fnCompInit = function()
+        {
+        	this.divContent.form.grdNoti.displayRowType();
+        	this.fnSearch();
+        }
+
+        this.fnCheckValidate = function()
+        {
+        	return true;
+        }
+        /***********************************************************************************
+         * Component Event
+         ***********************************************************************************/
+        // 공통 onclick : component
+        this.fnCommOnclick = function(obj, e)
+        {
+        	switch(obj.name)
+        	{
+        		case "btnAdd" :
+        			var sSheet = "head=" + "'!A1:N1;'" + "body=" + "'!A2;'"
+        			var ds = "dsImport";
+        			this.dsImport.clearData();
+        			this.gfnImportExcel(this,sSheet,ds);
+        			break;
+
+        		case "btnClose" :			// 닫기
+        			Ex.core.pclose(this);
+        			break;
+
+        		case "btnSave" :		// 저장
+        			if( !Ex.util.isUpdated(this.dsData)) return false;
+
+        			if(!this.fnCheckValidate()) {
+        				return false;
+        			}
+
+        			 this.divContent.form.grdNoti.setCellProperty( "body", 3, "edittype", "normal" );
+        			 this.divContent.form.grdNoti.setCellProperty( "body", 4, "edittype", "normal" );
+        			 this.divContent.form.grdNoti.setCellProperty( "body", 6, "edittype", "normal" );
+        			 this.divContent.form.grdNoti.setCellProperty( "body", 8, "edittype", "normal" );
+
+        			if( !this.divContent.form.grdNoti.checkValidate() ) {
+        				this.divContent.form.grdNoti.setCellProperty( "body", 3, "edittype", "none" );
+        				this.divContent.form.grdNoti.setCellProperty( "body", 4, "edittype", "none" );
+        				this.divContent.form.grdNoti.setCellProperty( "body", 6, "edittype", "none" );
+        				this.divContent.form.grdNoti.setCellProperty( "body", 8, "edittype", "none" );
+        				return false;
+        			}
+
+        			var param = {
+        						id : "saveConfirm"
+        					  , msg : "저장 하시겠습니까?"
+        					  , arrparam : ['']
+        					  , msgtype : "I"};
+        			Ex.core.confirm(this, param);
+        			break;
+
+        		case "btnDel" :
+        			this.fnDelete(this.dsData);
+        			break;
+        	}
+        }
+
+        this.fnImportExcelCallback = function(bSuccess,sImportID,strFileNm)
+        {
+        	// bSuccess 성공/실패를 boolean값으로 리턴한다.
+        	// sImportID는 지정한 경우만 반환한다.
+        	// strFileNm은 성공일경우만 반환한다.
+        	if(bSuccess)
+        	{
+        		//trace("성공");
+        		//this.grdImport.createFormat();
+        		var colNm = ['SVC_CLSS_CD','BSE_LVL1_CD','BSE_LVL2_CD','STAFF_ID','STAFF_NM','BSE_LVL1_NM','BSE_LVL2_NM','LVL1_STAFF_YN','LVL2_STAFF_YN','LVL3_STAFF_YN','LVL4_STAFF_YN','LVL5_STAFF_YN','LVL6_STAFF_YN','LVL7_STAFF_YN']
+        		var val = '';
+
+        		this.dsData.clearData();
+
+        		for(var i=1; i<this.dsImport.rowcount; i++)
+         		{
+        			var nRow = this.dsData.addRow();
+        			var chkCnt = 0;
+
+         			for(var j=0; j<colNm.length; j++)
+         			{
+         				val = this.dsImport.getColumn(i,j);
+        				if (j < 7 ) {
+        					if(Ex.isEmpty(val)) {
+        						chkCnt++;
+        					}
+        				}
+
+        				this.dsData.setColumn(nRow,colNm[j],val);
+        				if(j==colNm.length-1) {
+
+        					if(chkCnt>0) {
+        						this.dsData.deleteRow(nRow);
+        					} else {
+        						this.dsData.setColumn(nRow,"ROWFLAG","I");
+        					}
+        					chkCnt = 0;
+        				}
+         			}
+        		}
+        	}
+        	else
+        	{
+        		trace("엑셀 업로드 실패");
+        	}
+        }
+
+
+        this.fnCommOncolumnchanged = function(obj,e)
+        {
+        	obj.setUpdateRow(e);
+        };
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divBottom.form.btnSave.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.divBottom.form.btnClose.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.divContent.form.divGrdTopBtn.form.btnDel.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.divContent.form.divGrdTopBtn.form.btnAdd.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.divContent.form.grdNoti.addEventHandler("oncellclick",this.grdNoti_oncellclick,this);
+            this.dsData.addEventHandler("oncolumnchanged",this.fnCommOncolumnchanged,this);
+        };
+        this.loadIncludeScript("FOMM1100_P05.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

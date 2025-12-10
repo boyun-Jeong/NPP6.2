@@ -1,0 +1,733 @@
+﻿.PopupDiv.pdv_TPF_menuBg
+{
+	background : #ffffff;
+	border : 0px, 0px, 1px solid #d3d3d3, 0px;
+}
+.PopupDiv.pdv_TPF_myMenuBg
+{
+	background : #ffffff;
+	border : 1px solid #2196F3;
+}
+.Static.sta_TPF_logo
+{
+	background : url('./MIRAE_IMAGE_SET/TPF/ma-spp-top-logo.png') no-repeat 0px center /auto;
+	cursor : pointer;
+}
+.Static.sta_TPF_topBg
+{
+	background : linear-gradient( rgb(4,59,155) , rgb(70,116,254) ) to-right;
+	border : 0px none;
+}
+.Static.sta_TPF_line
+{
+	background : #dfdfdf;
+}
+.Static.sta_TPF_messageCntBg
+{
+	background : url('./SPP_IMAGE_SET/TPF/sta_TPF_MessageCntBg.png') no-repeat center center;
+	cursor : pointer;
+}
+.Static.sta_TPF_user
+{
+	color : #0a5dad;
+	font : bold 12px 'KoPubL';
+}
+.Static.sta_TPF_user .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Static.sta_TPF_part
+{
+	color : #000000;
+	font : bold 12px 'KoPubL';
+}
+.Static.sta_TPF_part .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv1
+{
+	background : transparent;
+	border : 0px, 0px, 3px solid transparent, 0px;
+	color : #ffffff;
+	cursor : pointer;
+	font : bold 15px "KoPubL";
+}
+.Button.btn_TPF_menuLv1 .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv2
+{
+	background : #ffffff;
+	border : 0px;
+	color : #222222;
+	cursor : none;
+	font : bold 18px "KoPubL";
+}
+.Button.btn_TPF_menuLv2 .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv3
+{
+	background : url(./SPP_IMAGE_SET/TPF/bg_TPF_menuLv3.png) no-repeat left center;
+	border : 0px;
+	color : #999999;
+	cursor : pointer;
+	font : bold 13px "KoPubL";
+}
+.Button.btn_TPF_menuLv3 .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv3Link
+{
+	background : url(./SPP_IMAGE_SET/TPF/ico_TPF_hyperlinkMenu.png) no-repeat left 45% /15px;
+	border : 0px;
+	color : #444444;
+	cursor : pointer;
+	font : bold 13px "KoPubL";
+}
+.Button.btn_TPF_menuLv3Link .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_TPF_logout
+{
+	background : url(./NHSB_IMAGE_SET/HOME/icon_19.png) no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_dropBox
+{
+	background : url('./NHSB_IMAGE_SET/HOME/icon_23.png') no-repeat right center;
+	border : 0px;
+	color : #444444;
+	cursor : pointer;
+	font : 14px "KoPubL";
+}
+.Button.btn_TPF_dropBox .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : middle;
+}
+.Button.btn_TPF_hyperlink
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_hyperlink.png') no-repeat right center;
+	border : 0px;
+	color : #444444;
+	cursor : pointer;
+	font : 14px "KoPubL";
+}
+.Button.btn_TPF_hyperlink .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : middle;
+}
+.Button.btn_TPF_message
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_Message.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_messageWR
+{
+	background : transparent url('./SPP_IMAGE_SET/TPF/ico_TPF_Message_WR.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_notice
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_setting
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_Setting.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_btn_TPF_language
+{
+	background : transparent url(./SPP_IMAGE_SET/TPF/btn_TPF_lang_ETC.png) no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_sitemap
+{
+	background : transparent url('./NHSB_IMAGE_SET/HOME/icon_24.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_TPF_prev
+{
+	background : url('./SPP_IMAGE_SET/TPF/btn_TPF_Prev.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_next
+{
+	background : url('./SPP_IMAGE_SET/TPF/btn_TPF_Next.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_menuLv1[status=focused]
+{
+	background : transparent;
+	border : 0px, 0px, 3px solid #F58220, 0px;
+	cursor : pointer;
+	font : bold 15px "KoPubL";
+	color : #ffffff;
+}
+.Button.btn_TPF_menuLv1[status=focused] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv1[status=mouseover]
+{
+	background : transparent;
+	border : 0px, 0px, 3px solid #F58220, 0px;
+	cursor : pointer;
+	font : bold 15px "KoPubL";
+	color : #ffffff;
+}
+.Button.btn_TPF_menuLv1[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv2[status=focused]
+{
+	background : #ffffff;
+	border : 0px;
+	cursor : pointer;
+	font : bold 18px "KoPubL";
+	color : #222222;
+}
+.Button.btn_TPF_menuLv2[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv2[status=mouseover]
+{
+	background : #ffffff;
+	border : 0px;
+	cursor : pointer;
+	font : bold 18px "KoPubL";
+	color : #222222;
+}
+.Button.btn_TPF_menuLv2[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv3[status=focused]
+{
+	background : url(./SPP_IMAGE_SET/TPF/bg_TPF_menuLv3.png) no-repeat left center;
+	border : 0px;
+	color : #999999;
+	cursor : pointer;
+	font : bold 13px "KoPubL";
+}
+.Button.btn_TPF_menuLv3[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv3[status=mouseover]
+{
+	background : url(./SPP_IMAGE_SET/TPF/bg_TPF_menuLv3.png) no-repeat left center;
+	border : 0px;
+	color : #F58220;
+	cursor : pointer;
+	font : bold 13px "KoPubL";
+}
+.Button.btn_TPF_menuLv3[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv3Link[status=focused]
+{
+	background : url(./SPP_IMAGE_SET/TPF/ico_TPF_hyperlinkMenu.png) no-repeat left 45% /15px;
+	border : 0px;
+	color : #444444;
+	cursor : pointer;
+	font : bold 13px "KoPubL";
+}
+.Button.btn_TPF_menuLv3Link[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_TPF_menuLv3Link[status=mouseover]
+{
+	background : url(./SPP_IMAGE_SET/TPF/ico_TPF_hyperlinkMenu.png) no-repeat left 45% /15px;
+	border : 0px;
+	color : #444444;
+	cursor : pointer;
+	font : bold 13px "KoPubL";
+}
+.Button.btn_TPF_menuLv3Link[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_TPF_logout[status=focused]
+{
+	background : url(./NHSB_IMAGE_SET/HOME/icon_19.png) no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_logout[status=mouseover]
+{
+	background : url(./NHSB_IMAGE_SET/HOME/icon_19-hover.png) no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_dropBox[status=focused]
+{
+	background : url('./NHSB_IMAGE_SET/HOME/icon_23.png') no-repeat right center;
+	border : 0px;
+	color : #444444;
+	cursor : pointer;
+	font : 14px "KoPubL";
+}
+.Button.btn_TPF_dropBox[status=focused] .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : middle;
+}
+.Button.btn_TPF_dropBox[status=mouseover]
+{
+	background : url('./NHSB_IMAGE_SET/HOME/icon_23-hover.png') no-repeat right center;
+	border : 0px;
+	color : #444444;
+	cursor : pointer;
+	font : 14px "KoPubL";
+}
+.Button.btn_TPF_dropBox[status=mouseover] .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_TPF_hyperlink[status=focused]
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_hyperlink.png') no-repeat right center;
+	border : 0px;
+	color : #444444;
+	cursor : pointer;
+	font : 14px "KoPubL";
+}
+.Button.btn_TPF_hyperlink[status=focused] .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : middle;
+}
+.Button.btn_TPF_hyperlink[status=mouseover]
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_hyperlink.png') no-repeat right center;
+	border : 0px;
+	color : #444444;
+	cursor : pointer;
+	font : 14px "KoPubL";
+}
+.Button.btn_TPF_hyperlink[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_TPF_message[status=focused]
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_Message.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_message[status=mouseover]
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_Message.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_messageWR[status=focused]
+{
+	background : transparent url('./SPP_IMAGE_SET/TPF/ico_TPF_Message_WR.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_messageWR[status=mouseover]
+{
+	background : transparent url('./SPP_IMAGE_SET/TPF/ico_TPF_Message_WR.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_notice[status=mouseover]
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_notice[status=focused]
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_setting[status=focused]
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_Setting.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_setting[status=mouseover]
+{
+	background : url('./MIRAE_IMAGE_SET/TPF/icon_20-hover.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_btn_TPF_language[status=focused]
+{
+	background : transparent url(./SPP_IMAGE_SET/TPF/btn_TPF_lang_ETC.png) no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_btn_TPF_language[status=mouseover]
+{
+	background : transparent url(./SPP_IMAGE_SET/TPF/btn_TPF_lang_ETC.png) no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_sitemap[status=focused]
+{
+	background : transparent url('./NHSB_IMAGE_SET/HOME/icon_24.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_TPF_sitemap[status=mouseover]
+{
+	background : transparent url('./NHSB_IMAGE_SET/HOME/icon_24-hover.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_TPF_prev[status=focused]
+{
+	background : url('./SPP_IMAGE_SET/TPF/btn_TPF_Prev.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_prev[status=mouseover]
+{
+	background : url('./SPP_IMAGE_SET/TPF/btn_TPF_Prev.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_next[status=focused]
+{
+	background : url('./SPP_IMAGE_SET/TPF/btn_TPF_Next.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_next[status=mouseover]
+{
+	background : url('./SPP_IMAGE_SET/TPF/btn_TPF_Next.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_menuLv1[userstatus=pushed]
+{
+	background : transparent;
+	border : 0px, 0px, 3px solid #F58220, 0px;
+	cursor : pointer;
+	font : bold 15px "KoPubL";
+	color : #ffffff;
+}
+.Button.btn_TPF_menuLv1[userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv1[userstatus=selected]
+{
+	background : transparent;
+	border : 0px, 0px, 3px solid #F58220, 0px;
+	cursor : pointer;
+	font : bold 15px "KoPubL";
+	color : #ffffff;
+}
+.Button.btn_TPF_menuLv1[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv2[userstatus=pushed]
+{
+	background : #ffffff;
+	border : 0px;
+	cursor : pointer;
+	font : bold 18px "KoPubL";
+	color : #222222;
+}
+.Button.btn_TPF_menuLv2[userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv2[userstatus=selected]
+{
+	background : #ffffff;
+	border : 0px;
+	cursor : pointer;
+	font : bold 18px "KoPubL";
+	color : #222222;
+}
+.Button.btn_TPF_menuLv2[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv3[userstatus=pushed]
+{
+	background : url(./SPP_IMAGE_SET/TPF/bg_TPF_menuLv3.png) no-repeat left center;
+	border : 0px;
+	color : #F58220;
+	cursor : pointer;
+	font : bold 13px "KoPubL";
+}
+.Button.btn_TPF_menuLv3[userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv3[userstatus=selected]
+{
+	background : url(./SPP_IMAGE_SET/TPF/bg_TPF_menuLv3.png) no-repeat left center;
+	border : 0px;
+	color : #F58220;
+	cursor : pointer;
+	font : bold 13px "KoPubL";
+}
+.Button.btn_TPF_menuLv3[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_TPF_menuLv3Link[userstatus=pushed]
+{
+	background : url(./SPP_IMAGE_SET/TPF/ico_TPF_hyperlinkMenu.png) no-repeat left 45% /15px;
+	border : 0px;
+	color : #444444;
+	cursor : pointer;
+	font : bold 13px "KoPubL";
+}
+.Button.btn_TPF_menuLv3Link[userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_TPF_menuLv3Link[userstatus=selected]
+{
+	background : url(./SPP_IMAGE_SET/TPF/ico_TPF_hyperlinkMenu.png) no-repeat left 45% /15px;
+	border : 0px;
+	color : #444444;
+	cursor : pointer;
+	font : bold 13px "KoPubL";
+}
+.Button.btn_TPF_menuLv3Link[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_TPF_logout[userstatus=selected]
+{
+	background : url(./NHSB_IMAGE_SET/HOME/icon_19.png) no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_logout[userstatus=pushed]
+{
+	background : url(./NHSB_IMAGE_SET/HOME/icon_19-hover.png) no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_dropBox[userstatus=pushed]
+{
+	background : url('./NHSB_IMAGE_SET/HOME/icon_23-hover.png') no-repeat right center;
+	border : 0px;
+	color : #444444;
+	cursor : pointer;
+	font : 14px "KoPubL";
+}
+.Button.btn_TPF_dropBox[userstatus=pushed] .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_TPF_dropBox[userstatus=selected]
+{
+	background : url('./NHSB_IMAGE_SET/HOME/icon_23-hover.png') no-repeat right center;
+	border : 0px;
+	color : #444444;
+	cursor : pointer;
+	font : 14px "KoPubL";
+}
+.Button.btn_TPF_dropBox[userstatus=selected] .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_TPF_hyperlink[userstatus=pushed]
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_hyperlink.png') no-repeat right center;
+	border : 0px;
+	color : #444444;
+	cursor : pointer;
+	font : 14px "KoPubL";
+}
+.Button.btn_TPF_hyperlink[userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_TPF_hyperlink[userstatus=selected]
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_hyperlink.png') no-repeat right center;
+	border : 0px;
+	color : #444444;
+	cursor : pointer;
+	font : 14px "KoPubL";
+}
+.Button.btn_TPF_hyperlink[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_TPF_message[userstatus=pushed]
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_Message.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_message[userstatus=selected]
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_Message.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_messageWR[userstatus=pushed]
+{
+	background : transparent url('./SPP_IMAGE_SET/TPF/ico_TPF_Message_WR.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_messageWR[userstatus=selected]
+{
+	background : transparent url('./SPP_IMAGE_SET/TPF/ico_TPF_Message_WR.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_notice[userstatus=pushed]
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_notice[userstatus=selected]
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_setting[userstatus=selected]
+{
+	background : url('./SPP_IMAGE_SET/TPF/ico_TPF_Setting.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_setting[userstatus=pushed]
+{
+	background : url('./MIRAE_IMAGE_SET/TPF/icon_20-hover.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_btn_TPF_language[userstatus=pushed]
+{
+	background : transparent url(./SPP_IMAGE_SET/TPF/btn_TPF_lang_ETC.png) no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_btn_TPF_language[userstatus=selected]
+{
+	background : transparent url(./SPP_IMAGE_SET/TPF/btn_TPF_lang_ETC.png) no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_sitemap[userstatus=selected]
+{
+	background : transparent url('./NHSB_IMAGE_SET/HOME/icon_24.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_TPF_sitemap[userstatus=pushed]
+{
+	background : transparent url('./NHSB_IMAGE_SET/HOME/icon_24-hover.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_TPF_prev[userstatus=pushed]
+{
+	background : url('./SPP_IMAGE_SET/TPF/btn_TPF_Prev.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_prev[userstatus=selected]
+{
+	background : url('./SPP_IMAGE_SET/TPF/btn_TPF_Prev.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_next[userstatus=pushed]
+{
+	background : url('./SPP_IMAGE_SET/TPF/btn_TPF_Next.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_next[userstatus=selected]
+{
+	background : url('./SPP_IMAGE_SET/TPF/btn_TPF_Next.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_TPF_menuLv3[status=disabled]
+{
+	background : url(./SPP_IMAGE_SET/TPF/bg_TPF_menuLv3.png) no-repeat left center;
+	border : 0px;
+	color : #dfdfdf;
+	cursor : none;
+	font : bold 13px "KoPubL";
+}
+.Button.btn_TPF_menuLv3[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : line-through;
+}

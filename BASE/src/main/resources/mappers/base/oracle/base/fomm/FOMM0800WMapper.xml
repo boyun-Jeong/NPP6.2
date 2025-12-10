@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0800WDAO">
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+	/* FOMM0800WMapper >> select01 */
+		SELECT TODO_DT
+		    ,TODO_TYPE_CD
+		    ,TODO_TYPE_NM
+		    ,TODO_KEY_ID
+		    ,TODO_REQ_ID
+		    ,TODO_TITLE
+		    ,TODO_USER_ID
+		    ,TODO_USER_NM
+		    ,TODO_DEPT_NM   
+            ,SB.REQ_ID
+		    ,SB.SVC_CD
+		    ,SB.SVC_DTL_CD
+		    ,SB.REQ_TMPLAT_ID
+		  FROM FOMM_TODO_DTL TD
+          INNER JOIN SR_BASE_INFO SB ON SB.REQ_ID = TD.TODO_REQ_ID          
+		 WHERE REG_DT = TO_CHAR(SYSDATE, 'YYYYMMDD')
+           AND TODO_USER_ID IN (
+                SELECT USER_ID FROM FOMM_USER_MT 
+                 WHERE USER_TYPE = '1' 
+                   AND DEPT_CD IN (
+                        SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{SESS_USER_ID} 
+                        )
+           )                      
+	</select>
+
+</mapper>

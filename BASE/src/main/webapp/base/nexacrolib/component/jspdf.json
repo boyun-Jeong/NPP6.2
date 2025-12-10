@@ -1,0 +1,11 @@
+﻿{
+	"name": "jspdf",
+	"version": "0.5.0-beta4",
+	"description": "jspdf.min.js",
+	"license": "",
+	"scripts": [        
+        "jspdf/jspdf.min.js"        
+	]
+}
+//@ sourceURL=jspdf.json
+

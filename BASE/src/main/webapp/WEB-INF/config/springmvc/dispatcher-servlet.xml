@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- DispatcherServlet application context for Application's web tier. -->
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+        
+<!--         <beans xmlns="http://www.springframework.org/schema/beans"  -->
+<!--     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" -->
+<!--     xmlns:p="http://www.springframework.org/schema/p"  -->
+<!--     xmlns:context="http://www.springframework.org/schema/context" -->
+<!--     xmlns:mvc="http://www.springframework.org/schema/mvc" -->
+<!--     xmlns:tx="http://www.springframework.org/schema/tx" -->
+<!--     xsi:schemaLocation="http://www.springframework.org/schema/beans -->
+<!--                            http://www.springframework.org/schema/beans/spring-beans.xsd -->
+<!--                            http://www.springframework.org/schema/context -->
+<!--                            http://www.springframework.org/schema/context/spring-context.xsd -->
+<!--                            http://www.springframework.org/schema/mvc -->
+<!--                            http://www.springframework.org/schema/mvc/spring-mvc.xsd"> -->
+
+    <!-- 정적파일(이미지, 사운드, 동영상, JS, CSS 등등) 경로 셋팅 -->
+    <mvc:resources mapping="/base/**" location="/base/"/>
+
+    <!-- 정적파일(이미지, 사운드, 동영상, JS, CSS 등등) 경로 셋팅 -->
+    <mvc:resources mapping="/excel/**" location="/excel/"/>
+    
+    <mvc:resources mapping="/attachImg/**" location="/attachFiles/upload/images/"/>
+
+    <mvc:resources mapping="/attachFiles/**" location="/attachFiles/"/>
+    
+    <!-- <mvc:resources mapping="/files/**" location="/files/"/> -->
+
+    <!-- The controllers are autodetected POJOs labeled with the @Controller annotation. -->
+    <context:component-scan base-package="com.base.**">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan>
+
+	<!-- LocaleResolver 선언 시작 -->
+    <!-- multi language message Resolver request가 가지고 있는 session으로 부터 locale 정보를 가져온다 -->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <property name="defaultLocale" value="ko" />
+    </bean>
+	<!-- LocaleResolver 선언 끝 -->
+
+	<!-- BEGIN NEXACROPLATFORM CONFIGURATION -->
+	<bean id="nexacroInterceptor" class="com.nexacro.uiadapter.jakarta.core.servlet.NexacroInterceptor"/>
+	<bean id="nexacroFileView" class="com.nexacro.uiadapter.jakarta.core.view.NexacroFileView" />
+    <bean id="nexacroView" class="com.nexacro.uiadapter.jakarta.core.view.NexacroView" >
+        <property name="defaultContentType" value="PlatformXml" />
+        <property name="defaultCharset"     value="UTF-8" />
+    </bean>
+
+	<!-- 넥사크로N RequestMappingHandlerAdapter 구현체 등록 -->
+    <bean class="com.nexacro.uiadapter.jakarta.core.resolve.NexacroRequestMappingHandlerAdapter" p:order="0">
+    	<property name="customArgumentResolvers">
+    		<list>
+    			<bean class="com.nexacro.uiadapter.jakarta.core.resolve.NexacroMethodArgumentResolver" />
+    		</list>
+    	</property>
+    	<property name="customReturnValueHandlers">
+    		<list>
+    			<bean class="com.nexacro.uiadapter.jakarta.core.resolve.NexacroHandlerMethodReturnValueHandler">
+    				<property name="view" ref="nexacroView" />
+    				<property name="fileView" ref="nexacroFileView" />
+    			</bean>
+    		</list>
+    	</property>
+   </bean>
+		<!-- <property name="useRequestCharset" value="all" /> -->
+
+	<!-- 넥사크로N EXCEPTION-RESOLVER 등록 -->
+	<bean id="exceptionResolver" class="com.nexacro.uiadapter.jakarta.core.resolve.NexacroMappingExceptionResolver" p:order="1">
+		<!-- 예외 발생 시 사용할 뷰 이름 -->
+		<property name="view" ref="nexacroView" />
+        <property name="shouldLogStackTrace"  value="true" />   
+        <property name="shouldSendStackTrace" value="true" />
+		<!-- shouldSendStackTrace 가 false 일 경우 nexacro platform으로 전송되는 에러메시지  -->
+        <property name="defaultErrorMsg" value="fail.common.msg" />
+        <property name="messageSource"   ref="messageSource" />   
+    </bean>
+    
+    <!-- XENI (nexacroplatform 엑셀 import/export) Request Mapping -->
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+    <bean id="xeniUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" p:order="0">
+        <property name="mappings">
+            <props>
+                <prop key="/XExportImport">xeniWrappingController</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="xeniWrappingController" class="org.springframework.web.servlet.mvc.ServletWrappingController">
+        <property name="servletClass">
+            <value>com.nexacro.java.xeni.services.GridExportImportServlet</value>
+        </property>
+    </bean>
+    
+<!--     <bean id="xeniQueryUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" p:order="0"> -->
+<!--         <property name="mappings"> -->
+<!--             <props> -->
+<!--                 <prop key="/XExportQuery">xeniQueryWrappingController</prop> -->
+<!--             </props> -->
+<!--         </property> -->
+<!--     </bean> -->
+    
+<!--     <bean id="xeniQueryWrappingController" class="org.springframework.web.servlet.mvc.ServletWrappingController"> -->
+<!--         <property name="servletClass"> -->
+<!--             <value>com.base.fwk.util.GridExportQueryServlet</value> -->
+<!--         </property> -->
+<!--     </bean> -->
+
+	<!-- Session 검사를 하지 않는 URL처리를 위한 HandlerMapping -->
+    <bean id="annotationMapper" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" p:order="1" />
+	<!-- HandlerMappings 선언 끝 -->
+    <!-- END NEXACRO PLATFORM CONFIGURATION -->
+
+	<!-- Hibernate Validation -->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="validationMessageSource" ref="messageSource" />
+    </bean>
+
+	<!-- Multipart Resolver 최대 대략 1기가 바이트까지 업로드가 가능하도록 설정 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"/>
+<!-- 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> -->
+<!--     	<property name="defaultEncoding" value="UTF-8" /> -->
+<!--         <property name="maxUploadSize"   value="-1" /> -->
+<!--         <property name="maxInMemorySize" value="-1" /> -->
+<!--     </bean> -->
+
+    <!--
+        - 추가적인 어떤 맵핑 작업을 하지 않고 URL의 상징적인 view 이름을 사용하는 ViewResolver
+        - 단순 JSP만 사용할 경우 사용이 가능하다.
+        - 보통 해당 클래스를 확장하여 제공하는 별도의 ViewResolver를 사용한다.
+        - This bean configures the 'prefix' and 'suffix' properties of
+        - InternalResourceViewResolver, which resolves logical view names
+        - returned by Controllers. For example, a logical view name of "vets"
+        - will be mapped to "/WEB-INF/jsp/vets.jsp".
+    -->
+    <bean id="urlBasedView" class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="1"
+        p:viewClass="org.springframework.web.servlet.view.JstlView"
+        p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
+     
+    <!-- Controller에서 처리 로직이 없이 바로 view로 이동하는 경우에 사용하는 Controller
+       DispatcherServlet을 거쳐야 하지만, html 위주의 static한 페이지를 보여줄때 사용
+       URL path가 곧 뷰이름이 되며, prefix와 suffix를 지정할수도 있다.
+       <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+            p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />
+     -->
+    <bean id="urlFilenameViewController" class="org.springframework.web.servlet.mvc.UrlFilenameViewController"/>
+</beans>

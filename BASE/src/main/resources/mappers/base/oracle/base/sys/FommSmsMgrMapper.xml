@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.com.dao.FommSmsMgrDAO">
+
+    <insert id="insert01" parameterType="java.util.Map">
+        <selectKey keyProperty="TRAN_SQNO" resultType="Long" order="BEFORE">
+            SELECT
+                NVL(MAX(FN_SMSTRAN_MT_TRAN_SQ), NULL)
+            FROM
+                    (
+                    SELECT 1
+                    FROM FOMM_USER_MT
+                    WHERE USER_ID = #{RCVR_INDN}
+                    AND DECODE(SEND_SMS_YN, '1', 'Y', SEND_SMS_YN) = 'Y'
+                    )
+        </selectKey>
+        INSERT INTO FOMM_SMSTRAN_MT
+        (
+			  TRAN_SQNO
+			, RCVR_INDN
+			, TO_NAME
+			, TO_PHONE
+			, FROM_ID
+			, SUBJECT
+			, TARGET_DATE
+			, SEND_TYPE
+			, CONTENT
+			, MSG_TYPE
+			, MAP_PROC_CD
+			, MAP_WF_PROC_CD
+			, SEND_TARGET_YN
+			, SEND_GUBUN
+            , JOB_REV_NO
+        )
+        SELECT
+              #{TRAN_SQNO}
+             , USER_ID
+             , USER_NM
+             , MOBILE_NUM
+             , #{FROM_ID}
+             , #{SUBJECT}
+              , NVL(#{TARGET_DATE}, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'))
+             , #{SEND_TYPE}
+             , #{CONTENT}
+             , #{MSG_TYPE}
+             , #{MAP_PROC_CD}
+             , #{MAP_WF_PROC_CD}
+            , 'Y' 
+             , NVL(#{SEND_GUBUN}, '00')
+            , #{JOB_REV_NO}
+        FROM
+            FOMM_USER_MT
+        WHERE 1 = 1
+        AND USER_ID          = #{RCVR_INDN}
+        AND DECODE(SEND_SMS_YN, '1', 'Y', SEND_SMS_YN)    = 'Y'
+	</insert>
+
+    <select id="selectFommSmstranMtSendTarget" resultType="HashMap">
+        SELECT *
+        FROM
+            FOMM_SMSTRAN_MT A
+        WHERE 1 = 1
+        AND SEND_TARGET_YN = 'Y'
+        AND TRAN_SQNO   = #{TRAN_SQNO}
+        AND A.TITLE IS NOT NULL
+        AND A.CONTENT IS NOT NULL
+        ORDER BY
+            A.TRAN_SQNO ASC
+    </select>
+
+    <update id="updateFommSmstranMtSendTime" parameterType="java.util.Map">
+        UPDATE FOMM_SMSTRAN_MT A SET
+            SEND_TIME = SYSDATE
+        WHERE 1 = 1
+        AND SEND_TARGET_YN = 'Y'
+        AND TRAN_SQNO   = #{TRAN_SQNO}
+        AND A.TITLE IS NOT NULL
+        AND A.CONTENT IS NOT NULL
+    </update>
+
+    <update id="updateFommSmstranMtSendTargetYnN" parameterType="java.util.Map">
+        UPDATE FOMM_SMSTRAN_MT SET
+            SEND_TARGET_YN = 'N'
+        WHERE 1 = 1
+        AND SEND_TARGET_YN = 'Y'
+        AND TRAN_SQNO   = #{TRAN_SQNO}
+    </update>
+
+</mapper>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ3400WDAO">
+
+	<select id="select01">
+		<include refid="com.base.pj.dao.PJ2400WDAO.selectPjYyyyMmList"/>
+	</select>
+
+	<select id="select02">
+	   /* 2024-10-25 sparrow 조치 - SQL삽입('${}' => '#{}')*/
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.USER_ID
+			, A.PJT_ID
+			, A.ACT_IN_DATE
+			, A.PLAN_OUT_DATE
+			, A.ACT_OUT_DATE
+			, A.PLAN_TOT_MM
+			, A.PARTIN_CD
+			, A.USER_DESC
+			, A.ROLE_CD
+			, A.GRADE_CD
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_STIME
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.SYSMODTIME
+			, A.BIRTHDAY
+			, A.ACT_TOT_MM
+			, A.USER_NM
+			, B.PJT_NAME
+			, C.DEPT_NM
+			, C.CO_NM
+			#{QUERY_STR}
+
+		FROM
+			  PJ_USER A
+		    , PJ_PROJECT B
+		    , FOMM_USER_MT C
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND A.USER_ID	= C.USER_ID(+)
+		AND A.PJT_ID	= #{PJT_ID}
+		
+		<if test="USER_NM != '' and USER_NM != null">
+		AND UPPER(A.USER_NM) LIKE '%' || UPPER(#{USER_NM}) || '%'
+		</if>
+		
+		<if test="PARTIN_CD != '' and PARTIN_CD != null">
+		AND A.PARTIN_CD = #{PARTIN_CD}
+		</if>
+	</select>
+
+	<update id="insert01" parameterType="java.util.Map">
+		<include refid="com.base.pj.dao.PJ2400WDAO.mergeInsertPjUserMmByPjt"/>
+	</update>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_USER_MM SET
+			
+			  PLAN_MM		= NVL(#{PLAN_MM}, 0)
+			, ACT_MM		= NVL(#{ACT_MM}, 0)
+			
+			, LMOD_USER_ID	= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM	= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, SYSMODTIME	= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		WHERE 1 = 1
+		AND PJT_ID	= #{PJT_ID}
+		AND USER_ID	= #{USER_ID}
+		AND YYYYMM	= #{YYYYMM}
+	</update>
+
+	<update id="modify02" parameterType="java.util.Map">
+		UPDATE PJ_USER SET
+			  PLAN_TOT_MM	=
+								(
+								  SELECT NVL(SUM(PLAN_MM), 0)
+								  FROM PJ_USER_MM A
+								  WHERE 1 = 1
+								  AND PJT_ID  = #{PJT_ID}
+								  AND USER_ID = #{USER_ID}
+								  AND EXISTS
+								  			(
+								  			SELECT 1
+								  			FROM
+					            				(
+					            				SELECT
+					            					TO_CHAR(ADD_MONTHS(TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH'), LEVEL-1 ), 'YYYYMM') AS PJT_MONTH
+					            				FROM (SELECT * FROM PJ_PROJECT WHERE PJT_ID = #{PJT_ID})
+					            				CONNECT BY LEVEL <![CDATA[<=]]> MONTHS_BETWEEN(TRUNC(TO_DATE(PJT_ETIME,'YYYYMMDD'),'MONTH'), TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH')) + 1
+					            				) X
+					        				WHERE 1 = 1
+					        				AND X.PJT_MONTH = A.YYYYMM
+											)
+								)
+			, ACT_TOT_MM	=
+								(
+								SELECT NVL(SUM(ACT_MM), 0)
+								FROM PJ_USER_MM A
+								WHERE 1 = 1
+								AND PJT_ID  = #{PJT_ID}
+								AND USER_ID = #{USER_ID}
+								AND EXISTS
+											(
+											SELECT 1
+											FROM
+								       				(
+								       				SELECT
+								       					TO_CHAR(ADD_MONTHS(TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH'), LEVEL-1 ), 'YYYYMM') AS PJT_MONTH
+								       				FROM (SELECT * FROM PJ_PROJECT WHERE PJT_ID = #{PJT_ID})
+								       				CONNECT BY LEVEL <![CDATA[<=]]> MONTHS_BETWEEN(TRUNC(TO_DATE(PJT_ETIME,'YYYYMMDD'),'MONTH'), TRUNC(TO_DATE(PJT_STIME,'YYYYMMDD'),'MONTH')) + 1
+								       				) X
+								   				WHERE 1 = 1
+								   				AND X.PJT_MONTH = A.YYYYMM
+									)
+								)
+			, LMOD_USER_ID	= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM	= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, SYSMODTIME	= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		WHERE 1 = 1
+		AND PJT_ID	= #{PJT_ID}
+		AND USER_ID	= #{USER_ID}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		<include refid="com.base.pj.dao.PJ2400WDAO.deletePjUser"/>		
+	</delete>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		<include refid="com.base.pj.dao.PJ2400WDAO.deletePjUserMm"/>		
+	</delete>
+
+	<delete id="remove03" parameterType="java.util.Map">
+		<include refid="com.base.pj.dao.PJ2400WDAO.deletePjUserMmByPjt"/>
+	</delete>
+
+	<insert id="insertHist" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="SEQ" order="BEFORE">
+			SELECT
+				NVL(MAX(SEQ), 0) + 1
+   			FROM PJ_USER_MM_HIST
+   			WHERE 1 = 1
+   			AND PJT_ID	= #{PJT_ID}
+			AND USER_ID	= #{USER_ID}
+		</selectKey>
+
+		<include refid="com.base.pj.dao.PJ2400WDAO.insertPjUserMmHist"/>
+	</insert>
+
+</mapper>

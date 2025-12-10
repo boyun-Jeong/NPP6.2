@@ -1,0 +1,1604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJHOMEDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT	  PJT_NAME
+				, PJT_STIME
+				, PJT_ETIME
+				, OUT_CPY_NAME
+				, IN_PM_USER_NM
+				, NVL(PLAN_CMPL_RATE, 0) AS PLAN_CMPL_RATE
+				, NVL(ACTL_PLAN_RATE, 0) AS ACTL_PLAN_RATE
+				, NVL(ACTL_CMPL_RATE, 0) AS ACTL_CMPL_RATE 
+       			, RESULT_FLAG
+       			, CALC_DATE
+		FROM	  (
+					SELECT	  P.PJT_NAME
+							, P.PJT_STIME
+							, P.PJT_ETIME
+							, P.OUT_CPY_NAME
+							, P.IN_PM_USER_NM
+							, W.PLAN_CMPL_RATE
+							, W.ACTL_PLAN_RATE
+							, W.ACTL_CMPL_RATE 
+		    				, CASE	WHEN	NVL(W.ACTL_CMPL_RATE,0) <![CDATA[<]]> 100 
+		    						THEN 0 
+		    						ELSE 1 
+		    					END AS RESULT_FLAG
+		    				, CALC_DATE
+		  
+					FROM	  PJ_WBS_TOT	W
+							, PJ_PROJECT	P
+					WHERE	  W.PJT_ID = P.PJT_ID
+<!-- 					AND 	 (P.PJT_ID = #{PJT_ID} OR PARENT_ID = #{PJT_ID} ) -->
+			
+		  			ORDER BY PARENT_ID DESC, SUB_PJT_NO ASC
+				) 
+		
+		WHERE ROWNUM <![CDATA[<=]]> 4
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT	*
+		FROM
+			(
+			SELECT
+				  P.PJT_NAME
+				, M.MILESTONE_NAME
+				, M.MILESTONE_SDATE
+				, ROW_NUMBER() OVER(ORDER BY M.MILESTONE_SDATE) AS NUM
+
+			FROM
+				  PJ_MILESTONE M
+				, PJ_PROJECT P
+
+			WHERE 1 = 1
+			AND M.PJT_ID = P.PJT_ID
+			AND P.PJT_ID = #{PJT_ID}
+			AND P.PARENT_ID IS NULL
+			AND M.MILESTONE_FLAG = 'M'
+			)
+
+		WHERE 1 = 1
+		AND NUM <![CDATA[<=]]> 5
+
+		ORDER BY
+			MILESTONE_SDATE
+	</select>
+
+	<select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  PJT_ID
+			, SUB_ID
+			, PJT_NAME
+			, GUBUN
+			, TITLE
+			, REG_STIME
+			, REG_USER_NM
+			, TYPE_NAME
+
+		FROM
+			(
+			SELECT
+				X.*,
+				RANK() OVER(ORDER BY REG_STIME DESC) AS NUM
+
+			FROM
+				(
+				SELECT
+					  P.PJT_ID
+					, M.MEET_ID AS SUB_ID
+					, P.PJT_NAME
+					, '회의' AS GUBUN
+					, M.TITLE
+					, M.REG_STIME
+					, M.REG_USER_NM
+					, '업무회의' AS TYPE_NAME
+   
+				FROM
+					  PJ_MEETING M
+					, PJ_PROJECT P
+
+				WHERE 1 = 1
+				AND M.PJT_ID	= P.PJT_ID
+				AND P.PJT_ID	= #{PJT_ID}
+   
+				UNION ALL
+   
+				SELECT
+					  P.PJT_ID
+					, R.REPORT_ID AS SUB_ID
+					, P.PJT_NAME, '보고' AS GUBUN
+					, R.REPORT_NAME TITLE, R.REG_STIME
+					, R.REG_USER_NM
+					, (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'PJT_MNG_CD' AND UP_CMM_CD = 'RPT_KIND_CD' AND CMM_CD = R.REPORT_TYPE_CD) AS TYPE_NAME
+				FROM
+					  PJ_REPORT		R
+					, PJ_PROJECT	P
+
+				WHERE 1 = 1
+				AND R.PJT_ID	= P.PJT_ID
+				AND P.PJT_ID	= #{PJT_ID}
+				) X
+			)
+
+		WHERE 1 = 1
+		AND NUM <![CDATA[<=]]> 5
+
+		ORDER BY
+			REG_STIME
+	</select>
+
+	<select id="select04" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  PJT_ID
+			, SUB_ID
+			, PJT_NAME
+			, TITLE
+			, GUBUN
+			, ACK_DATE
+			, DUE_DATE
+			, CHARGE_NM
+			, STATUS_NAME
+		FROM
+			(
+			SELECT
+				X.*,
+				RANK() OVER(ORDER BY DUE_DATE DESC) AS NUM
+			FROM
+				(
+				SELECT
+					  P.PJT_ID
+					, R.RISK_ID AS SUB_ID
+					, P.PJT_NAME
+					, R.RISK_NAME AS TITLE
+					, '위험' AS GUBUN
+					, R.RISK_STIME AS ACK_DATE
+					, R.CPL_PLAN_TIME AS DUE_DATE
+					, R.CHG_USER_NM AS CHARGE_NM
+					, (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'PJT_MNG_CD' AND UP_CMM_CD = 'RSK_STAT_CD' AND CMM_CD = R.RISK_STATUS_CD) AS STATUS_NAME
+
+				FROM
+					  PJ_RISK R
+					, PJ_PROJECT P
+
+				WHERE 1 = 1
+				AND R.PJT_ID	= P.PJT_ID
+				AND P.PJT_ID	= #{PJT_ID}
+
+				UNION ALL
+
+				SELECT
+					  P.PJT_ID
+					, R.ISSUE_ID AS SUB_ID
+					, P.PJT_NAME
+					, R.ISSUE_NAME AS TITLE
+					, '이슈' AS GUBUN
+					, R.ISSUE_STIME AS ACK_DATE
+					, R.CPL_PLAN_TIME AS DUE_DATE
+					, R.CHG_USER_NM AS CHARGE_NM
+					,(SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'PJT_MNG_CD' AND UP_CMM_CD = 'ISU_P_STS_CD' AND CMM_CD = R.ISSUE_STATUS_CD) AS STATUS_NAME
+
+				FROM
+					  PJ_ISSUE R
+					, PJ_PROJECT P
+
+				WHERE 1 = 1
+				AND R.PJT_ID	= P.PJT_ID
+				AND P.PJT_ID	= #{PJT_ID}
+				) X
+			)
+	
+		WHERE 1 = 1
+		AND NUM <![CDATA[<=]]> 4
+
+		ORDER BY
+			ACK_DATE
+	</select>
+	
+	<select id="select05" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  PJT_ID
+			, SUB_ID
+			, PJT_NAME
+			, TITLE
+			, GUBUN
+			, ACK_DATE
+			, DUE_DATE
+			, CHARGE_NM
+			, STATUS_NAME
+			
+		FROM
+			(
+			SELECT
+				  P.PJT_ID
+				, R.ACT_ITEM_ID AS SUB_ID
+				, P.PJT_NAME
+				, R.TITLE
+				, 'Action Item' AS GUBUN
+				, R.REQ_DATE AS ACK_DATE
+				, R.DUE_DATE AS DUE_DATE
+				, R.ACT_USER_NM AS CHARGE_NM
+				, (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'PJT_MNG_CD' AND UP_CMM_CD = 'ACTIT_PRC_STAT_CD' AND CMM_CD = R.ACTION_CD) AS STATUS_NAME
+				, RANK() OVER(ORDER BY R.DUE_DATE DESC) AS NUM
+
+			FROM
+				  PJ_ACTION_ITEM	R
+				, PJ_PROJECT		P
+
+			WHERE 1 = 1
+			AND R.PJT_ID	= P.PJT_ID
+			AND P.PJT_ID	= #{PJT_ID}		
+			)
+		WHERE NUM <![CDATA[<=]]> 4
+		
+		ORDER BY
+			ACK_DATE
+	</select>
+	
+    <select id="select06" parameterType="java.util.Map" resultType="java.util.Map">
+SELECT  BUSI_PLAN_TCD, BUSI_PLAN_PRGS_CD, C.CMM_CD_NM, count(*) as CNT
+FROM ( 
+    SELECT
+                base.REQ_ID                 REQ_ID                      --요청서ID
+                , base.REQ_TMPLAT_ID        REQ_TMPLAT_ID               --요청서양식ID
+                , base.REQ_TMPLAT_VER       REQ_TMPLAT_VER              --요청서양식버전
+                , base.REQ_EM_YN            REQ_EM_YN                   --긴급요청여부
+                , base.WF_PROC_CD           WF_PROC_CD                  --진행단계
+                , ( SELECT  CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD'
+                    AND     CMM_CD = NVL(   base.WF_PROC_CD, 
+                                            (   SELECT  WF_PROC_CD
+                                                FROM    WF_REQ_TMPLAT_PROC_HT X
+                                                WHERE   1 = 1
+                                                AND     X.REQ_TMPLAT_ID = base.REQ_TMPLAT_ID
+                                                AND     X.REQ_TMPLAT_VER = base.REQ_TMPLAT_VER
+                                                AND     SEQ = 1
+                                            )
+                                        )
+                  )                         WF_PROC_NM                  --진행단계명
+                , base.REQ_STAT_CD          REQ_STAT_CD                 --요청서진행상태코드
+                , NVL((SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = base.REQ_STAT_CD )
+                    , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = base.REQ_STAT_CD )
+                     )                      REQ_STAT_NM                 --요청서진행상태명
+                , base.TITLE                TITLE                       --제목
+                , base.REQ_USER_ID          REQ_USER_ID                 --요청자ID
+                , base.REQ_USER_NM          REQ_USER_NM                 --요청자명
+                , base.REQ_DEPT_CD          REQ_DEPT_CD                 --요청자부서ID
+                , base.REQ_DEPT_NM          REQ_DEPT_NM                 --요청자부서명
+                , base.REQ_DATE             REQ_DATE                    --요청일시
+                , base.REQ_WISH_DT          REQ_WISH_DT                 --희망완료일
+                , base.REQ_WISH_TIME        REQ_WISH_TIME               --희망완료시분
+                , base.JOB_REQ_DT           JOB_REQ_DT                  --작업요청일
+                , base.JOB_REQ_TIME         JOB_REQ_TIME                --작업요청시분
+                , base.PROC_COMP_DATE       PROC_COMP_DATE              --완료일시
+                , base.DEL_YN               DEL_YN                      --삭제여부
+                , base.CONTENTS             CONTENTS                    --요청서내용
+                , base.PRE_CONF_USER_ID     PRE_CONF_USER_ID            --사전협의자ID
+                , base.PRE_CONF_USER_NM     PRE_CONF_USER_NM            --사전협의자명
+                , base.PRE_CONF_DEPT_CD     PRE_CONF_DEPT_CD            --사전협의자부서ID
+                , base.PRE_CONF_DEPT_NM     PRE_CONF_DEPT_NM            --사전협의자부서명
+                , base.RMK                  RMK                         --비고
+                , base.FRID                 FRID                        --등록자ID
+                , base.FR_USER_NM           FR_USER_NM                  --등록자명
+                , base.FR_DEPT_CD           FR_DEPT_CD                  --등록자부서ID
+                , base.FR_DEPT_NM           FR_DEPT_NM                  --등록자부서명
+                , base.FRDT                 FRDT                        --등록일시
+                , base.LMID                 LMID                        --수정자ID
+                , base.LM_USER_NM           LM_USER_NM                  --수정자명
+                , base.LM_DEPT_CD           LM_DEPT_CD                  --수정자부서ID
+                , base.LM_DEPT_NM           LM_DEPT_NM                  --수정자부서명
+                , base.LMDT                 LMDT                        --수정일시
+                , base.LMPID                LMPID                       --최종수정화면ID
+                , base.CANCEL_POSS_YN       CANCEL_POSS_YN              --회수가능여부
+                , base.REF_REQ_ID           REF_REQ_ID                  --참조요청서ID
+                , base.E_DOCU_NO            E_DOCU_NO                   --전자결재문서
+                , base.KEY_INFO             KEY_INFO                    --추가키정보
+                , iv.BUSI_NO                BUSI_NO                     --사업번호
+                , iv.BUSI_PLAN_NO           BUSI_PLAN_NO                --사업계획번호
+                , iv.BUSI_PLAN_TCD      BUSI_PLAN_TCD                   --사업계획구분코드 : 투자/운영
+                , iv.BUSI_PLAN_PRGS_CD      BUSI_PLAN_PRGS_CD             --사업계획 진행상태
+                , iv.IS_NEW_YN          IS_NEW_YN                       --신규여부
+                , iv.BDGT_DESC          BDGT_DESC                       --비용산정근거
+                , iv.PLAN_ENTP_NM           PLAN_ENTP_NM                --예정업체명
+                , iv.BUSI_YEAR          BUSI_YEAR                       --사업년도
+                , iv.PLAN_START_DT      PLAN_START_DT                   --예정시작일자
+                , iv.PLAN_END_DT            PLAN_END_DT                 --예정종료일자
+                , iv.REQ_BUSI_PLAN_NO       REQ_BUSI_PLAN_NO            --이전사업번호
+                , (
+                    SELECT LISTAGG((SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'BDGT_ACSJ_CD' AND CMM_CD = BDGT_ACSJ_CD),',') WITHIN GROUP (ORDER BY BDGT_ACSJ_CD)
+                    FROM SR_REQ_IV_BDGT 
+                    WHERE 1=1 
+                    AND REQ_ID = base.REQ_ID
+                    GROUP BY REQ_ID                
+                    )   BDGT_ACSJ_CD_NM                                 --예산계정코드명
+                , (
+                    SELECT LISTAGG(ACSJ_TCD,',') WITHIN GROUP (ORDER BY ACSJ_TCD)
+                    FROM SR_REQ_IV_BDGT 
+                    WHERE 1=1 
+                    AND REQ_ID = base.REQ_ID
+                    GROUP BY REQ_ID
+                    )   ACSJ_TCD                                        --계정과목코드
+                , (
+                    SELECT LISTAGG((SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'CNTC_TCD_CD' AND CMM_CD = ACSJ_TCD),',') WITHIN GROUP (ORDER BY ACSJ_TCD)
+                    FROM SR_REQ_IV_BDGT 
+                    WHERE 1=1 
+                    AND REQ_ID = base.REQ_ID
+                    GROUP BY REQ_ID
+                    )   ACSJ_TCD_NM                                     --계정과목코드명
+                ,(
+                    SELECT SUM(CNFM_BDGT_PAY1 + CNFM_BDGT_PAY2 + CNFM_BDGT_PAY3 + CNFM_BDGT_PAY4)
+                    FROM SR_REQ_IV_BDGT 
+                    WHERE 1=1 
+                    AND REQ_ID = base.REQ_ID
+                    GROUP BY REQ_ID
+                    )   CNFM_BDGT_PAY                                   --확정 예산
+                ,(
+                    SELECT SUM(BDGT_PAY1 + BDGT_PAY2 + BDGT_PAY3 + BDGT_PAY4)
+                    FROM SR_REQ_IV_BDGT 
+                    WHERE 1=1 
+                    AND REQ_ID = base.REQ_ID
+                    GROUP BY REQ_ID
+                    )   BDGT_PAY                                    --예정 예산            
+            FROM SR_BASE_INFO base 
+            JOIN SR_REQ_IV_INFO iv ON base.REQ_ID = iv.REQ_ID   
+            WHERE 1 = 1
+            AND DEL_YN <![CDATA[<>]]> 'Y'
+            AND REQ_STAT_CD IN ('RQST01','RQST11','RQST21','RQST30','RQST99')       -- 목록에 출력하는 요청서 종류 
+            AND  BUSI_YEAR = '2024'
+            --AND WF_PROC_CD != 'WF_PROC_9999'
+            --ORDER BY FRDT DESC;
+) X
+ INNER JOIN FOMM_CMM_CD_MT C ON C.UP_CMM_CD = 'BUSI_PLAN_PRGS_CD' AND BUSI_PLAN_PRGS_CD = CMM_CD 
+GROUP BY BUSI_PLAN_TCD, BUSI_PLAN_PRGS_CD, C.CMM_CD_NM
+ORDER BY BUSI_PLAN_TCD
+    </select>
+       <select id="select07" parameterType="java.util.Map" resultType="java.util.Map">
+WITH SR_CNTR AS (
+            SELECT
+                base.REQ_ID                 REQ_ID                      --요청서ID
+                , base.REQ_TMPLAT_ID        REQ_TMPLAT_ID               --요청서양식ID
+                , base.REQ_TMPLAT_VER       REQ_TMPLAT_VER              --요청서양식버전
+                , base.REQ_EM_YN            REQ_EM_YN                   --긴급요청여부
+                , base.WF_PROC_CD           WF_PROC_CD                  --진행단계
+                , base.REQ_STAT_CD          REQ_STAT_CD                 --요청서진행상태코드
+                , base.TITLE                TITLE                       --제목
+                , base.REQ_USER_ID          REQ_USER_ID                 --요청자ID
+                , base.REQ_USER_NM          REQ_USER_NM                 --요청자명
+                , base.REQ_DEPT_CD          REQ_DEPT_CD                 --요청자부서ID
+                , base.REQ_DEPT_NM          REQ_DEPT_NM                 --요청자부서명
+                , base.REQ_DATE             REQ_DATE                    --요청일시
+                , base.REQ_WISH_DT          REQ_WISH_DT                 --희망완료일
+                , base.REQ_WISH_TIME        REQ_WISH_TIME               --희망완료시분
+                , base.JOB_REQ_DT           JOB_REQ_DT                  --작업요청일
+                , base.JOB_REQ_TIME         JOB_REQ_TIME                --작업요청시분
+                , base.PROC_COMP_DATE       PROC_COMP_DATE              --완료일시
+                , base.DEL_YN               DEL_YN                      --삭제여부
+                , base.CONTENTS             CONTENTS                    --요청서내용
+                , base.PRE_CONF_USER_ID     PRE_CONF_USER_ID            --사전협의자ID
+                , base.PRE_CONF_USER_NM     PRE_CONF_USER_NM            --사전협의자명
+                , base.PRE_CONF_DEPT_CD     PRE_CONF_DEPT_CD            --사전협의자부서ID
+                , base.PRE_CONF_DEPT_NM     PRE_CONF_DEPT_NM            --사전협의자부서명
+                , base.RMK                  RMK                         --비고
+                , base.FRID                 FRID                        --등록자ID
+                , base.FR_USER_NM           FR_USER_NM                  --등록자명
+                , base.FR_DEPT_CD           FR_DEPT_CD                  --등록자부서ID
+                , base.FR_DEPT_NM           FR_DEPT_NM                  --등록자부서명
+                , base.FRDT                 FRDT                        --등록일시
+                , base.LMID                 LMID                        --수정자ID
+                , base.LM_USER_NM           LM_USER_NM                  --수정자명
+                , base.LM_DEPT_CD           LM_DEPT_CD                  --수정자부서ID
+                , base.LM_DEPT_NM           LM_DEPT_NM                  --수정자부서명
+                , base.LMDT                 LMDT                        --수정일시
+                , base.LMPID                LMPID                       --최종수정화면ID
+                , base.CANCEL_POSS_YN       CANCEL_POSS_YN              --회수가능여부
+                , base.REF_REQ_ID           REF_REQ_ID                  --참조요청서ID
+                , base.E_DOCU_NO            E_DOCU_NO                   --전자결재문서
+                , base.KEY_INFO             KEY_INFO                    --추가키정보
+                , cntr.CNTC_NO              CNTC_NO                     --계약번호
+                , cntr.CNTC_CHRG_ID         CNTC_CHRG_ID                --계약담당자ID
+                , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = cntr.CNTC_CHRG_ID   )   CNTC_CHRG_NM                --계약담당자명
+                , cntr.ENTP_CD              ENTP_CD                     --업체코드
+                , cntr.ENTP_NM              ENTP_NM                     --업체명
+                , cntr.ENTP_CHPR_ID         ENTP_CHPR_ID                --업체담당자ID
+                , cntr.CNTC_CD              CNTC_CD                     --계약구분코드 : 투자사업/일반관리비
+                , cntr.CNTC_DATE            CNTC_DATE                   --계약일자
+                , cntr.CNTC_START_DATE      CNTC_START_DATE             --계약시작일
+                , cntr.CNTC_END_DATE        CNTC_END_DATE               --계약종료일
+                , (SELECT CMM_CD AS  FROM FOMM_CMM_CD_MT
+                    WHERE 1=1
+                    AND UP_CMM_CD = 'CNTC_STAT_CD'
+                    AND ITM_VAL_1 = ( SELECT REQ_STAT_CD FROM SR_BASE_INFO WHERE REQ_ID = base.REQ_ID) )             
+                                            CNTC_STAT_CD                --계약상태
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'CNTC_STAT_CD' AND CMM_CD = cntr.CNTC_STAT_CD ) 
+                                            CNTC_STAT_NM                --계약상태명
+                , cntr.BUSI_NO              BUSI_NO                     --사업번호
+                , cntr.CSL_NO               CSL_NO                      --품의번호
+                , cntr.PRJ_ID               PRJ_ID                      --프로젝트ID
+                , cntr.CNTC_FFT_RT          CNTC_FFT_RT                 --계약이행비율
+                , cntr.FLT_FFT_RT           FLT_FFT_RT                  --하자이행비율
+                , cntr.TOT_CNTC_AMT         TOT_CNTC_AMT                --총계약금액
+                , cntr.STAMP_TAX            STAMP_TAX                   --인지세
+                , cntr.TAX_INVOICE_YN       TAX_INVOICE_YN              --세금계산서여부 : 등록=1/미등록=0
+                , cntr.CONF_DATE            CONF_DATE                   --투자예산-최종검수일(정보계쪽 column name CONF_YN으로 전송용)
+                , cntr.AUTO_EXT_YN          AUTO_EXT_YN                 --자동연장여부 : 30063 - 예/아니오
+                , cntr.EXT_TERM             EXT_TERM                    --연장기간 : 월단위
+                , cntr.PAY_CYCLE_CD         PAY_CYCLE_CD                --대금지급주기구분코드 : 30064 - 월/년/기타
+                , cntr.CNTC_CHRG_DEPT_ID    CNTC_CHRG_DEPT_ID           --계약담당부서
+                , (SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = cntr.CNTC_CHRG_DEPT_ID) CNTC_CHRG_DEPT_NM           --계약담당부서명
+                , cntr.PAY_DIV_CD           PAY_DIV_CD                  --지급구분
+                , cntr.CNTC_EXIST_YN        CNTC_EXIST_YN               --계약서유무여부
+                , cntr.CNTC_SECURITY_YN     CNTC_SECURITY_YN            --계약서보안여부
+                , cntr.FN_ITT_CD            FN_ITT_CD                   --금융기관코드
+                , cntr.FN_ITT_NM            FN_ITT_NM                   --금융기관명
+                , cntr.FAC                  FAC                         --금융계좌
+                , cntr.ACHD_NM              ACHD_NM                     --예금주
+                , cntr.MNTC_YN              MNTC_YN                     --유지보수여부
+                , cntr.ENTP_SELT_MTD_CD     ENTP_SELT_MTD_CD            --업체선정방식코드
+                , cntr.BUSI_MNG_NO          BUSI_MNG_NO                 --사업관리번호
+                , cntr.AST_REGI_SCD         AST_REGI_SCD                --자산등록상태코드
+                , cntr.PL_PRSV_DEPT_CD      PL_PRSV_DEPT_CD             --손익부전부서코드
+                , cntr.BDGT_ACSJ_CD         BDGT_ACSJ_CD                --예산계정코드
+                , cntr.ACSJ_CD              ACSJ_CD                     --계정과목유형코드
+                ,(
+                    SELECT LISTAGG((SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'CNTC_TCD_CD' AND CMM_CD = CNTC_TCD_CD),',') WITHIN GROUP (ORDER BY CNTC_TCD_CD)
+                    FROM SR_REQ_CT_CNTR_PAY 
+                    WHERE 1=1 
+                    AND REQ_ID = base.REQ_ID
+                    GROUP BY REQ_ID                 
+                  )                         ACSJ_CD_NM                  --계정과목유형코드명
+            FROM SR_BASE_INFO base
+            JOIN SR_REQ_CT_CNTR cntr    ON base.REQ_ID = cntr.REQ_ID AND base.DEL_YN  <![CDATA[<>]]> 'Y'
+            WHERE 1 = 1
+            AND CNTC_DATE BETWEEN TO_CHAR(SYSDATE -7, 'YYYYMMDD') AND TO_CHAR(SYSDATE, 'YYYYMMDD')
+        )
+        SELECT 
+            CASE WHEN SUBSTR(CNTC_NO,-2) = 
+           (
+                SELECT 
+                    LPAD(MAX(TO_NUMBER(SUBSTR(CNTC_NO,-2))),2,'0')
+                FROM SR_REQ_CT_CNTR 
+                WHERE SUBSTR(CNTC_NO,1,8) = SUBSTR(A.CNTC_NO,1,8)
+            ) THEN 1 ELSE 0 END      SEQ_MAX                                        -- 변경/연장 시 최종 요청서 구하기 (CNTC_NO의 MAX 라면 1 / 아니면 0)
+            , A.CNTC_CD --10.투자예산, 20.운영예산
+       ,CASE A.CNTC_CD WHEN '10' THEN '투자'  WHEN '20' THEN '운영' END AS CNTC_NM--10.투자예산, 20.운영예산
+       ,A.CNTC_NO --계약번호
+       ,A.CNTC_DATE --지급일자
+        FROM SR_CNTR A         
+        WHERE 1=1
+        AND SUBSTR(A.CNTC_NO,-2) ='00'
+        AND A.REQ_STAT_CD IN ('RQST01','RQST11','RQST21','RQST30','RQST99')     -- 목록에 출력하는 요청서 종류
+        ORDER BY A.CNTC_NO DESC
+    </select>
+       <select id="select08" parameterType="java.util.Map" resultType="java.util.Map">
+WITH SR_CNTR AS 
+        (
+            SELECT 
+                base.TITLE                      TITLE                   
+                , cntr.REQ_ID                   PRE_REQ_ID
+                , cntr.CNTC_NO                  CNTC_NO
+                , cntr.CNTC_CD                  CNTC_CD
+                , cntr.CNTC_DATE                CNTC_DATE
+                , cntr.CNTC_START_DATE          CNTC_START_DATE
+                , cntr.CNTC_END_DATE            CNTC_END_DATE
+                , cntr.CNTC_STAT_CD             CNTC_STAT_CD
+                , cntr.ENTP_CD                  ENTP_CD
+                , cntr.ENTP_NM                  ENTP_NM
+                , cntr.TOT_CNTC_AMT             TOT_CNTC_AMT
+                , cntr.BUSI_NO                  BUSI_NO
+                , cntr.CSL_NO                   CSL_NO
+                , cntr.CNTC_CHRG_DEPT_ID        CNTC_CHRG_DEPT_ID
+                , (SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE 1=1 AND DEPT_CD = cntr.CNTC_CHRG_DEPT_ID)         CNTC_CHRG_DEPT_NM 
+                , cntr.CNTC_CHRG_ID             CNTC_CHRG_ID
+                , (SELECT USER_NM FROM FOMM_USER_MT WHERE 1=1 AND USER_ID = cntr.CNTC_CHRG_ID)              CNTC_CHRG_NM
+                , cntr.LMDT                     LMDT
+                , cntr.PAY_CYCLE_CD             PAY_CYCLE_CD
+                , cntr.PAY_DIV_CD               PAY_DIV_CD
+                , pay.BUSI_MNG_NO               BUSI_MNG_NO
+                , pay.PAY_CD                    PAY_CD
+                , pay.PA_SEQ                    PA_SEQ
+                , pay.PA_STAT                   PA_STAT
+                , pay.CNTC_TCD_CD               CNTC_TCD_CD
+            FROM SR_BASE_INFO base
+            JOIN SR_REQ_CT_CNTR cntr    ON base.REQ_ID  = cntr.REQ_ID AND DEL_YN != 'Y'
+            JOIN (
+                    SELECT REQ_ID, PAY_CD, PA_SEQ, CNTC_TCD_CD, BUSI_MNG_NO, PA_STAT
+                    FROM SR_REQ_CT_CNTR_PAY
+                    WHERE 1=1
+                    AND (REQ_ID,CNTC_TCD_CD,PAY_CD) IN (SELECT REQ_ID, CNTC_TCD_CD, MIN(PAY_CD) FROM SR_REQ_CT_CNTR_PAY 
+                                                            WHERE PA_STAT  <![CDATA[<]]>   99 
+                                                            GROUP BY REQ_ID,CNTC_TCD_CD )
+                    )pay                ON base.REQ_ID = pay.REQ_ID AND DEL_YN != 'Y'
+            WHERE 1=1
+            ORDER BY cntr.REQ_ID DESC, pay.PAY_CD  DESC
+        ),
+        SR_BG AS
+        (
+            SELECT a.REQ_ID REQ_ID, a.REQ_TMPLAT_ID REQ_TMPLAT_ID, a.REQ_TMPLAT_VER REQ_TMPLAT_VER, a.REQ_STAT_CD REQ_STAT_CD
+                , b.CNTC_NO         CNTC_NO
+                , b.PAY_DATE        PAY_DATE
+                , b.PAY_AMT         PAY_AMT
+            FROM SR_BASE_INFO a
+            JOIN SR_REQ_CT_PAY_INSPT_BG b ON a.REQ_ID = b.REQ_ID AND DEL_YN != 'Y'
+            WHERE 1=1
+            ORDER BY CNTC_NO DESC
+        ),
+        SR_OP AS
+        (
+            SELECT a.REQ_ID REQ_ID, a.REQ_TMPLAT_ID REQ_TMPLAT_ID, a.REQ_TMPLAT_VER REQ_TMPLAT_VER, a.REQ_STAT_CD REQ_STAT_CD
+                , b.CNTC_NO         CNTC_NO 
+                , b.PAY_DATE        PAY_DATE
+                , b.PAY_AMT         PAY_AMT
+                , b.CONF_START_YM   CONF_START_YM
+                , b.CONF_END_YM     CONF_END_YM
+            FROM SR_BASE_INFO a
+            JOIN SR_REQ_CT_PAY_INSPT_OP b ON a.REQ_ID = b.REQ_ID AND DEL_YN != 'Y'
+            WHERE 1=1
+            ORDER BY CNTC_NO DESC
+        )
+
+SELECT CNTC_CD --10.투자예산, 20.운영예산
+       ,TITLE
+       ,CASE CNTC_CD WHEN '10' THEN '투자'  WHEN '20' THEN '운영' END AS CNTC_NM--10.투자예산, 20.운영예산
+       ,CNTC_NO --계약번호
+       ,PAY_DATE --지급일자
+    FROM (              
+        SELECT 
+             a.TITLE             
+            ,a.PRE_REQ_ID
+            ,a.CNTC_NO
+            ,a.CNTC_CD
+            ,a.CNTC_DATE
+            ,a.CNTC_START_DATE
+            ,a.CNTC_END_DATE
+            ,a.CNTC_STAT_CD
+            ,a.ENTP_NM
+            ,a.TOT_CNTC_AMT
+            ,a.BUSI_NO
+            ,a.CSL_NO
+            ,a.CNTC_CHRG_DEPT_NM 
+            ,a.CNTC_CHRG_NM
+            ,a.LMDT
+            ,a.PAY_CYCLE_CD
+            ,a.BUSI_MNG_NO
+            ,a.PAY_CD
+            ,a.PA_SEQ
+            ,a.PA_STAT
+            ,a.CNTC_TCD_CD
+            ,a.PAY_DIV_CD
+            , COALESCE( b.REQ_ID    ,c.REQ_ID)      REQ_ID
+            , COALESCE( b.REQ_TMPLAT_ID     ,c.REQ_TMPLAT_ID)   REQ_TMPLAT_ID
+            , COALESCE( b.REQ_TMPLAT_VER    ,c.REQ_TMPLAT_VER)  REQ_TMPLAT_VER
+            , COALESCE( b.REQ_STAT_CD   ,c.REQ_STAT_CD)         REQ_STAT_CD
+            , COALESCE( b.PAY_DATE  ,c.PAY_DATE)    PAY_DATE
+            , COALESCE( b.PAY_AMT   ,c.PAY_AMT)     PAY_AMT
+            , COALESCE('', c.CONF_START_YM)         CONF_START_YM
+            , COALESCE('', c.CONF_END_YM)           CONF_END_YM
+        FROM SR_CNTR a
+        LEFT JOIN SR_BG b    ON a.CNTC_NO = b.CNTC_NO
+        LEFT JOIN SR_OP c    ON a.CNTC_NO = c.CNTC_NO
+        WHERE 1=1
+        AND  a.CNTC_DATE BETWEEN TO_CHAR(SYSDATE -7, 'YYYYMMDD') AND TO_CHAR(SYSDATE, 'YYYYMMDD')
+        AND a.CNTC_STAT_CD = '99'       
+    )
+    ORDER BY PAY_DATE DESC, CNTC_NO
+    </select>
+          <select id="select10" parameterType="java.util.Map" resultType="java.util.Map">
+WITH SR_CNTR AS 
+        (
+            SELECT 
+                base.TITLE                      TITLE                   
+                , cntr.REQ_ID                   PRE_REQ_ID
+                , cntr.CNTC_NO                  CNTC_NO
+                , cntr.CNTC_CD                  CNTC_CD
+                , cntr.CNTC_DATE                CNTC_DATE
+                , cntr.CNTC_START_DATE          CNTC_START_DATE
+                , cntr.CNTC_END_DATE            CNTC_END_DATE
+                , cntr.CNTC_STAT_CD             CNTC_STAT_CD
+                , cntr.ENTP_CD                  ENTP_CD
+                , cntr.ENTP_NM                  ENTP_NM
+                , cntr.TOT_CNTC_AMT             TOT_CNTC_AMT
+                , cntr.BUSI_NO                  BUSI_NO
+                , cntr.CSL_NO                   CSL_NO
+                , cntr.CNTC_CHRG_DEPT_ID        CNTC_CHRG_DEPT_ID
+                , (SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE 1=1 AND DEPT_CD = cntr.CNTC_CHRG_DEPT_ID)         CNTC_CHRG_DEPT_NM 
+                , cntr.CNTC_CHRG_ID             CNTC_CHRG_ID
+                , (SELECT USER_NM FROM FOMM_USER_MT WHERE 1=1 AND USER_ID = cntr.CNTC_CHRG_ID)              CNTC_CHRG_NM
+                , cntr.LMDT                     LMDT
+                , cntr.PAY_CYCLE_CD             PAY_CYCLE_CD
+                , cntr.PAY_DIV_CD               PAY_DIV_CD
+                , pay.BUSI_MNG_NO               BUSI_MNG_NO
+                , pay.PAY_CD                    PAY_CD
+                , pay.PA_SEQ                    PA_SEQ
+                , pay.PA_STAT                   PA_STAT
+                , pay.CNTC_TCD_CD               CNTC_TCD_CD
+            FROM SR_BASE_INFO base
+            JOIN SR_REQ_CT_CNTR cntr    ON base.REQ_ID  = cntr.REQ_ID AND DEL_YN != 'Y'
+            JOIN (
+                    SELECT REQ_ID, PAY_CD, PA_SEQ, CNTC_TCD_CD, BUSI_MNG_NO, PA_STAT
+                    FROM SR_REQ_CT_CNTR_PAY
+                    WHERE 1=1
+                    AND (REQ_ID,CNTC_TCD_CD,PAY_CD) IN (SELECT REQ_ID, CNTC_TCD_CD, MIN(PAY_CD) FROM SR_REQ_CT_CNTR_PAY 
+                                                            WHERE PA_STAT  <![CDATA[<]]>   99 
+                                                            GROUP BY REQ_ID,CNTC_TCD_CD )
+                    )pay                ON base.REQ_ID = pay.REQ_ID AND DEL_YN != 'Y'
+            WHERE 1=1
+            ORDER BY cntr.REQ_ID DESC, pay.PAY_CD  DESC
+        ),
+        SR_BG AS
+        (
+            SELECT a.REQ_ID REQ_ID, a.REQ_TMPLAT_ID REQ_TMPLAT_ID, a.REQ_TMPLAT_VER REQ_TMPLAT_VER, a.REQ_STAT_CD REQ_STAT_CD
+                , b.CNTC_NO         CNTC_NO
+                , b.PAY_DATE        PAY_DATE
+                , b.PAY_AMT         PAY_AMT
+            FROM SR_BASE_INFO a
+            JOIN SR_REQ_CT_PAY_INSPT_BG b ON a.REQ_ID = b.REQ_ID AND DEL_YN != 'Y'
+            WHERE 1=1
+            ORDER BY CNTC_NO DESC
+        ),
+        SR_OP AS
+        (
+            SELECT a.REQ_ID REQ_ID, a.REQ_TMPLAT_ID REQ_TMPLAT_ID, a.REQ_TMPLAT_VER REQ_TMPLAT_VER, a.REQ_STAT_CD REQ_STAT_CD
+                , b.CNTC_NO         CNTC_NO 
+                , b.PAY_DATE        PAY_DATE
+                , b.PAY_AMT         PAY_AMT
+                , b.CONF_START_YM   CONF_START_YM
+                , b.CONF_END_YM     CONF_END_YM
+            FROM SR_BASE_INFO a
+            JOIN SR_REQ_CT_PAY_INSPT_OP b ON a.REQ_ID = b.REQ_ID AND DEL_YN != 'Y'
+            WHERE 1=1
+            ORDER BY CNTC_NO DESC
+        )
+
+SELECT CNTC_CD --10.투자예산, 20.운영예산
+       ,CASE CNTC_CD WHEN '10' THEN count(CNTC_CD)  WHEN '20' THEN count(CNTC_CD) END AS CNT--10.투자예산, 20.운영예산
+    FROM (              
+        SELECT 
+             a.TITLE             
+            ,a.PRE_REQ_ID
+            ,a.CNTC_NO
+            ,a.CNTC_CD
+            ,a.CNTC_DATE
+            ,a.CNTC_START_DATE
+            ,a.CNTC_END_DATE
+            ,a.CNTC_STAT_CD
+            ,a.ENTP_NM
+            ,a.TOT_CNTC_AMT
+            ,a.BUSI_NO
+            ,a.CSL_NO
+            ,a.CNTC_CHRG_DEPT_NM 
+            ,a.CNTC_CHRG_NM
+            ,a.LMDT
+            ,a.PAY_CYCLE_CD
+            ,a.BUSI_MNG_NO
+            ,a.PAY_CD
+            ,a.PA_SEQ
+            ,a.PA_STAT
+            ,a.CNTC_TCD_CD
+            ,a.PAY_DIV_CD
+            , COALESCE( b.REQ_ID    ,c.REQ_ID)      REQ_ID
+            , COALESCE( b.REQ_TMPLAT_ID     ,c.REQ_TMPLAT_ID)   REQ_TMPLAT_ID
+            , COALESCE( b.REQ_TMPLAT_VER    ,c.REQ_TMPLAT_VER)  REQ_TMPLAT_VER
+            , COALESCE( b.REQ_STAT_CD   ,c.REQ_STAT_CD)         REQ_STAT_CD
+            , COALESCE( b.PAY_DATE  ,c.PAY_DATE)    PAY_DATE
+            , COALESCE( b.PAY_AMT   ,c.PAY_AMT)     PAY_AMT
+            , COALESCE('', c.CONF_START_YM)         CONF_START_YM
+            , COALESCE('', c.CONF_END_YM)           CONF_END_YM
+        FROM SR_CNTR a
+        LEFT JOIN SR_BG b    ON a.CNTC_NO = b.CNTC_NO
+        LEFT JOIN SR_OP c    ON a.CNTC_NO = c.CNTC_NO
+        WHERE 1=1
+        AND  a.CNTC_DATE BETWEEN TO_CHAR(SYSDATE -7, 'YYYYMMDD') AND TO_CHAR(SYSDATE, 'YYYYMMDD')
+        AND a.CNTC_STAT_CD = '99'       
+    )
+    group by CNTC_CD
+    
+    </select>
+    <select id="select09" parameterType="java.util.Map" resultType="java.util.Map">
+WITH SR_CNTR AS (
+            SELECT
+                base.REQ_ID                 REQ_ID                      --요청서ID
+                , base.REQ_TMPLAT_ID        REQ_TMPLAT_ID               --요청서양식ID
+                , base.REQ_TMPLAT_VER       REQ_TMPLAT_VER              --요청서양식버전
+                , base.REQ_EM_YN            REQ_EM_YN                   --긴급요청여부
+                , base.WF_PROC_CD           WF_PROC_CD                  --진행단계
+                , base.REQ_STAT_CD          REQ_STAT_CD                 --요청서진행상태코드
+                , base.TITLE                TITLE                       --제목
+                , base.REQ_USER_ID          REQ_USER_ID                 --요청자ID
+                , base.REQ_USER_NM          REQ_USER_NM                 --요청자명
+                , base.REQ_DEPT_CD          REQ_DEPT_CD                 --요청자부서ID
+                , base.REQ_DEPT_NM          REQ_DEPT_NM                 --요청자부서명
+                , base.REQ_DATE             REQ_DATE                    --요청일시
+                , base.REQ_WISH_DT          REQ_WISH_DT                 --희망완료일
+                , base.REQ_WISH_TIME        REQ_WISH_TIME               --희망완료시분
+                , base.JOB_REQ_DT           JOB_REQ_DT                  --작업요청일
+                , base.JOB_REQ_TIME         JOB_REQ_TIME                --작업요청시분
+                , base.PROC_COMP_DATE       PROC_COMP_DATE              --완료일시
+                , base.DEL_YN               DEL_YN                      --삭제여부
+                , base.CONTENTS             CONTENTS                    --요청서내용
+                , base.PRE_CONF_USER_ID     PRE_CONF_USER_ID            --사전협의자ID
+                , base.PRE_CONF_USER_NM     PRE_CONF_USER_NM            --사전협의자명
+                , base.PRE_CONF_DEPT_CD     PRE_CONF_DEPT_CD            --사전협의자부서ID
+                , base.PRE_CONF_DEPT_NM     PRE_CONF_DEPT_NM            --사전협의자부서명
+                , base.RMK                  RMK                         --비고
+                , base.FRID                 FRID                        --등록자ID
+                , base.FR_USER_NM           FR_USER_NM                  --등록자명
+                , base.FR_DEPT_CD           FR_DEPT_CD                  --등록자부서ID
+                , base.FR_DEPT_NM           FR_DEPT_NM                  --등록자부서명
+                , base.FRDT                 FRDT                        --등록일시
+                , base.LMID                 LMID                        --수정자ID
+                , base.LM_USER_NM           LM_USER_NM                  --수정자명
+                , base.LM_DEPT_CD           LM_DEPT_CD                  --수정자부서ID
+                , base.LM_DEPT_NM           LM_DEPT_NM                  --수정자부서명
+                , base.LMDT                 LMDT                        --수정일시
+                , base.LMPID                LMPID                       --최종수정화면ID
+                , base.CANCEL_POSS_YN       CANCEL_POSS_YN              --회수가능여부
+                , base.REF_REQ_ID           REF_REQ_ID                  --참조요청서ID
+                , base.E_DOCU_NO            E_DOCU_NO                   --전자결재문서
+                , base.KEY_INFO             KEY_INFO                    --추가키정보
+                , cntr.CNTC_NO              CNTC_NO                     --계약번호
+                , cntr.CNTC_CHRG_ID         CNTC_CHRG_ID                --계약담당자ID
+                , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = cntr.CNTC_CHRG_ID   )   CNTC_CHRG_NM                --계약담당자명
+                , cntr.ENTP_CD              ENTP_CD                     --업체코드
+                , cntr.ENTP_NM              ENTP_NM                     --업체명
+                , cntr.ENTP_CHPR_ID         ENTP_CHPR_ID                --업체담당자ID
+                , cntr.CNTC_CD              CNTC_CD                     --계약구분코드 : 투자사업/일반관리비
+                , cntr.CNTC_DATE            CNTC_DATE                   --계약일자
+                , cntr.CNTC_START_DATE      CNTC_START_DATE             --계약시작일
+                , cntr.CNTC_END_DATE        CNTC_END_DATE               --계약종료일
+                , (SELECT CMM_CD AS  FROM FOMM_CMM_CD_MT
+                    WHERE 1=1
+                    AND UP_CMM_CD = 'CNTC_STAT_CD'
+                    AND ITM_VAL_1 = ( SELECT REQ_STAT_CD FROM SR_BASE_INFO WHERE REQ_ID = base.REQ_ID) )             
+                                            CNTC_STAT_CD                --계약상태
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'CNTC_STAT_CD' AND CMM_CD = cntr.CNTC_STAT_CD ) 
+                                            CNTC_STAT_NM                --계약상태명
+                , cntr.BUSI_NO              BUSI_NO                     --사업번호
+                , cntr.CSL_NO               CSL_NO                      --품의번호
+                , cntr.PRJ_ID               PRJ_ID                      --프로젝트ID
+                , cntr.CNTC_FFT_RT          CNTC_FFT_RT                 --계약이행비율
+                , cntr.FLT_FFT_RT           FLT_FFT_RT                  --하자이행비율
+                , cntr.TOT_CNTC_AMT         TOT_CNTC_AMT                --총계약금액
+                , cntr.STAMP_TAX            STAMP_TAX                   --인지세
+                , cntr.TAX_INVOICE_YN       TAX_INVOICE_YN              --세금계산서여부 : 등록=1/미등록=0
+                , cntr.CONF_DATE            CONF_DATE                   --투자예산-최종검수일(정보계쪽 column name CONF_YN으로 전송용)
+                , cntr.AUTO_EXT_YN          AUTO_EXT_YN                 --자동연장여부 : 30063 - 예/아니오
+                , cntr.EXT_TERM             EXT_TERM                    --연장기간 : 월단위
+                , cntr.PAY_CYCLE_CD         PAY_CYCLE_CD                --대금지급주기구분코드 : 30064 - 월/년/기타
+                , cntr.CNTC_CHRG_DEPT_ID    CNTC_CHRG_DEPT_ID           --계약담당부서
+                , (SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = cntr.CNTC_CHRG_DEPT_ID) CNTC_CHRG_DEPT_NM           --계약담당부서명
+                , cntr.PAY_DIV_CD           PAY_DIV_CD                  --지급구분
+                , cntr.CNTC_EXIST_YN        CNTC_EXIST_YN               --계약서유무여부
+                , cntr.CNTC_SECURITY_YN     CNTC_SECURITY_YN            --계약서보안여부
+                , cntr.FN_ITT_CD            FN_ITT_CD                   --금융기관코드
+                , cntr.FN_ITT_NM            FN_ITT_NM                   --금융기관명
+                , cntr.FAC                  FAC                         --금융계좌
+                , cntr.ACHD_NM              ACHD_NM                     --예금주
+                , cntr.MNTC_YN              MNTC_YN                     --유지보수여부
+                , cntr.ENTP_SELT_MTD_CD     ENTP_SELT_MTD_CD            --업체선정방식코드
+                , cntr.BUSI_MNG_NO          BUSI_MNG_NO                 --사업관리번호
+                , cntr.AST_REGI_SCD         AST_REGI_SCD                --자산등록상태코드
+                , cntr.PL_PRSV_DEPT_CD      PL_PRSV_DEPT_CD             --손익부전부서코드
+                , cntr.BDGT_ACSJ_CD         BDGT_ACSJ_CD                --예산계정코드
+                , cntr.ACSJ_CD              ACSJ_CD                     --계정과목유형코드
+                ,(
+                    SELECT LISTAGG((SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'CNTC_TCD_CD' AND CMM_CD = CNTC_TCD_CD),',') WITHIN GROUP (ORDER BY CNTC_TCD_CD)
+                    FROM SR_REQ_CT_CNTR_PAY 
+                    WHERE 1=1 
+                    AND REQ_ID = base.REQ_ID
+                    GROUP BY REQ_ID                 
+                  )                         ACSJ_CD_NM                  --계정과목유형코드명
+            FROM SR_BASE_INFO base
+            JOIN SR_REQ_CT_CNTR cntr    ON base.REQ_ID = cntr.REQ_ID AND base.DEL_YN  <![CDATA[<>]]>  'Y'
+            WHERE 1 = 1
+            AND CNTC_DATE BETWEEN TO_CHAR(SYSDATE -7, 'YYYYMMDD') AND TO_CHAR(SYSDATE, 'YYYYMMDD')
+        )
+        SELECT 
+             A.CNTC_CD --10.투자예산, 20.운영예산
+       ,CASE A.CNTC_CD WHEN '10' THEN count(A.CNTC_CD)  WHEN '20' THEN count(A.CNTC_CD) END AS CNT--10.투자예산, 20.운영예산
+
+        FROM SR_CNTR A         
+        WHERE 1=1
+        AND SUBSTR(A.CNTC_NO,-2) ='00'
+        AND A.REQ_STAT_CD IN ('RQST01','RQST11','RQST21','RQST30','RQST99')     -- 목록에 출력하는 요청서 종류
+        group BY A.CNTC_CD
+    
+    </select>
+     
+     <select id="select11" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT 
+	         (APV.APV_SUM1+APV.APV_SUM2+APV.APV_SUM3+APV.APV_SUM4+APV.APV_SUM5+APV.APV_SUM6) ||' 건' AS APP_TOT --결재대기 총합
+	        , APV.APV_SUM1  ||' 건'						AS APV_SUM1 	--사업계획요청
+	        , APV.APV_SUM2  ||' 건'						AS APV_SUM2 	--계약/변경요청
+	        , APV.APV_SUM3  ||' 건'						AS APV_SUM3 	--계약검수요청
+	        , APV.APV_SUM4  ||' 건'						AS APV_SUM4 	--요청관리
+	        , APV.APV_SUM5  ||' 건'						AS APV_SUM5 	--장애관리
+	        --, AS APV_SUM4 ||' 건'						--인시던트요청
+	        , APV.APV_SUM6  ||' 건'						AS APV_SUM6 	--IT작업신청
+	        
+	        , (SRM.TOT_1+CHM.TOT_2+BSN.SVC_OBS_SUM+BSN.BSN_SUM1+BSN.BSN_SUM2+BSN.BSN_SUM3) ||' 건'	 AS REQ_ING_TOT		-- 요청진행 총합
+	        , (BSN.BSN_SUM1 + BSN.BSN_SUM2 + BSN.BSN_SUM3)||' 건'									 AS BSN_TOT 		--요청진행(사업계획 /계약/검수 합)
+	        , BSN.BSN_SUM1    	||' 건'					AS BSN_SUM1 	--요청진행 사업계획    
+	        , BSN.BSN_SUM2    	||' 건'					AS BSN_SUM2 	--요청진행 계약      
+	        , BSN.BSN_SUM3   	||' 건'					AS BSN_SUM3 	--요청진행 검수  
+	        , BSN.SVC_OTHER_SUM	||' 건'					AS SVC_OTHER_SUM --서비스수준관리 > 외주평가수행
+	        , BSN.SVC_OBS_SUM	||' 건'					AS SVC_OBS_SUM --인스턴트관리 > 장애
+	        
+	        , SRM.TOT_1		||' 건'						AS SRM_TOT		--요청관리TOT
+	        , SRM.SRM_SUM1 ||' 건' 						AS SRM_SUM1 	--요청관리 정상(일반)
+	        , SRM.SRM_SUM2 ||' 건' 						AS SRM_SUM2 	--요청관리 정상(IT)
+	        , SRM.SRM_SUM3 ||' 건'						AS SRM_SUM3 	--요청관리 정상(IT자체)
+	        , SRM.SRM_SUM4 ||' 건'		 				AS SRM_SUM4 	--요청관리 비정기(현업)
+	        , SRM.SRM_SUM5 ||' 건' 						AS SRM_SUM5 	--요청관리 비정기(IT)
+	        , SRM.SRM_SUM6 ||' 건' 						AS SRM_SUM6 	--요청관리 비정기(IT자체)
+	        , SRM.SRM_SUM7 ||' 건' 						AS SRM_SUM7 	--요청관리 비상(현업)
+	        , SRM.SRM_SUM8 ||' 건'  						AS SRM_SUM8 	--요청관리 비상(IT자체)
+	        , SRM.SRM_SUM9 ||' 건' 						AS SRM_SUM9 	--요청관리 폐기
+	        
+	        , CHM.TOT_2	 	||' 건'  		AS IT_TOT 		--IT작업신청관리전체	
+	        , CHM.CHM_SUM1  ||' 건'  		AS CHM_SUM1 	--IT작업신청관리 서버
+	        , CHM.CHM_SUM2  ||' 건'  		AS CHM_SUM2 	--IT작업신청관리 보안
+	        , CHM.CHM_SUM3  ||' 건'  		AS CHM_SUM3 	--IT작업신청관리 네트워크
+	        , CHM.CHM_SUM4  ||' 건'  		AS CHM_SUM4 	--IT작업신청관리 DB
+	        , CHM.CHM_SUM5  ||' 건'  		AS CHM_SUM5 	--IT작업신청관리 전산원장
+	        , CHM.CHM_SUM6  ||' 건'  		AS CHM_SUM6 	--IT작업신청관리 백업
+	        , CHM.CHM_SUM7  ||' 건'  		AS CHM_SUM7 	--IT작업신청관리 외주직원
+	        , CHM.CHM_SUM8  ||' 건'  		AS CHM_SUM8 	--IT작업신청관리 기타
+	        , CHM.CHM_SUM9  ||' 건'  		AS CHM_SUM9 	--IT작업신청관리 전산기기신청
+	        , CHM.CHM_SUM10 ||' 건'  		AS CHM_SUM10 	--IT작업신청관리 미들웨어
+	        , CHM.CHM_SUM11 ||' 건'  		AS CHM_SUM11 	--IT작업신청관리 IT포털관리
+	        , CHM.CHM_SUM12 ||' 건'  		AS CHM_SUM12 	--IT작업신청관리 프레임워크SW
+	        , CHM.CHM_SUM13 ||' 건'  		AS CHM_SUM13 	--IT작업신청관리 그룹웨어
+	        , CHM.CHM_SUM14 ||' 건'  		AS CHM_SUM14 	--IT작업신청관리 배치
+	        , CHM.CHM_SUM15 ||' 건'  		AS CHM_SUM15 	--IT작업신청관리 업무점검
+	        , CHM.CHM_SUM16 ||' 건' 		AS CHM_SUM16 	--IT작업신청관리 관리시스템
+	FROM   
+	    (
+	        SELECT NVL(SUM(1),0) 													   AS TOT_1
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0100' THEN 1 ELSE 0 END),0)    AS SRM_SUM1 --정상(일반)
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0200' THEN 1 ELSE 0 END),0)    AS SRM_SUM2 --정상(IT)
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0300' THEN 1 ELSE 0 END),0)    AS SRM_SUM3 --정상(IT자체)
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR1100' THEN 1 ELSE 0 END),0)    AS SRM_SUM4 --비정기(현업)
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR1200' THEN 1 ELSE 0 END),0)    AS SRM_SUM5 --비정기(IT)
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR1300' THEN 1 ELSE 0 END),0)    AS SRM_SUM6 --비정기(IT자체)
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR2100' THEN 1 ELSE 0 END),0)    AS SRM_SUM7 --비상(현업)
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR2200' THEN 1 ELSE 0 END),0)    AS SRM_SUM8 --비상(IT자체)
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR3100' THEN 1 ELSE 0 END),0)    AS SRM_SUM9 --폐기
+	
+	        FROM  SR_BASE_INFO A
+	            , WF_REQ_TMPLAT_HT B    
+	        WHERE 1=1
+	        AND A.REQ_TMPLAT_ID         = B.REQ_TMPLAT_ID 
+	        AND A.REQ_TMPLAT_VER        = B.REQ_TMPLAT_VER
+	        AND A.REQ_WISH_DT IS NOT NULL
+	        AND B.SVC_CD='SRM'
+	        AND EXISTS
+	                (
+	                SELECT 1
+	                FROM 
+	                    WF_PROC_HIST H
+	                WHERE 1 = 1
+	                AND A.REQ_ID        = H.PROC_NUMBER
+	                AND (H.ORG_DEPT_CD = #{DEPT_CD} OR H.SRM_DEPT_CD   = #{DEPT_CD} )
+	                )
+	        AND A.REQ_STAT_CD NOT IN ('RQST00','RQST97','RQST98','RQST99') 
+	    ) SRM --요청관리
+	    , 
+	    (
+	        SELECT NVL(SUM(1),0)													   AS TOT_2
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0A00' THEN 1 ELSE 0 END),0)    AS CHM_SUM1 --서버
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0B00' THEN 1 ELSE 0 END),0)    AS CHM_SUM2 --보안
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0C00' THEN 1 ELSE 0 END),0)    AS CHM_SUM3 --네트워크
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0D00' THEN 1 ELSE 0 END),0)    AS CHM_SUM4 --DB
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0E00' THEN 1 ELSE 0 END),0)    AS CHM_SUM5 --전산원장
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0F00' THEN 1 ELSE 0 END),0)    AS CHM_SUM6 --백업
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0G00' THEN 1 ELSE 0 END),0)    AS CHM_SUM7 --외주직원
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0Z00' THEN 1 ELSE 0 END),0)    AS CHM_SUM8 --기타
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0O00' THEN 1 ELSE 0 END),0)    AS CHM_SUM9 --전산기기신청
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0H00' THEN 1 ELSE 0 END),0)    AS CHM_SUM10 --미들웨어
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0I00' THEN 1 ELSE 0 END),0)    AS CHM_SUM11 --IT포털관리
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0J00' THEN 1 ELSE 0 END),0)    AS CHM_SUM12 --프레임워크SW
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0K00' THEN 1 ELSE 0 END),0)    AS CHM_SUM13 --그룹웨어
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0L00' THEN 1 ELSE 0 END),0)    AS CHM_SUM14 --배치
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0M00' THEN 1 ELSE 0 END),0)    AS CHM_SUM15 --업무점검
+	            , NVL(SUM(CASE WHEN B.SVC_DTL_CD = 'WFSR0N00' THEN 1 ELSE 0 END),0)    AS CHM_SUM16 --관리시스템
+	
+	        FROM  SR_BASE_INFO A
+	            , WF_REQ_TMPLAT_HT B    
+	        WHERE 1=1
+	        AND A.REQ_TMPLAT_ID         = B.REQ_TMPLAT_ID 
+	        AND A.REQ_TMPLAT_VER        = B.REQ_TMPLAT_VER
+	        AND A.REQ_WISH_DT IS NOT NULL
+	        AND B.SVC_CD='CHM'
+	        AND EXISTS
+	                (
+	                SELECT 1
+	                FROM 
+	                    WF_PROC_HIST H
+	                WHERE 1 = 1
+	                AND A.REQ_ID        = H.PROC_NUMBER
+	                AND (H.ORG_DEPT_CD = #{DEPT_CD} OR H.SRM_DEPT_CD   = #{DEPT_CD} )
+	                )
+	        AND A.REQ_STAT_CD NOT IN ('RQST00','RQST97','RQST98','RQST99') 
+	    )CHM --IT작업신청
+	    , 
+	    (
+	        SELECT NVL(SUM(CASE WHEN B.SVC_CD='SVC' THEN 1 ELSE 0 END),0) 							   AS TOT_3
+	            , NVL(SUM(CASE WHEN B.SVC_CD='BSN' AND B.SVC_DTL_CD = 'BSN10' THEN 1 ELSE 0 END),0)    AS BSN_SUM1 --사업계획
+	            , NVL(SUM(CASE WHEN B.SVC_CD='BSN' AND B.SVC_DTL_CD = 'BSN20' THEN 1 ELSE 0 END),0)    AS BSN_SUM2 --계약
+	            , NVL(SUM(CASE WHEN B.SVC_CD='BSN' AND B.SVC_DTL_CD = 'BSN30' THEN 1 ELSE 0 END),0)    AS BSN_SUM3 --검수
+				, NVL(SUM(CASE WHEN B.SVC_CD='SVC' AND B.SVC_DTL_CD = '30' THEN 1 ELSE 0 END),0)    	AS SVC_OTHER_SUM -- 서비스 외주평가
+				, NVL(SUM(CASE WHEN B.SVC_CD='SVC' AND B.SVC_DTL_CD = '20' THEN 1 ELSE 0 END),0)    	AS SVC_OBS_SUM --  인스턴스 장애등록
+				--, NVL(SUM(CASE WHEN B.SVC_CD='BSN' AND B.SVC_DTL_CD = 'BSN30' THEN 1 ELSE 0 END),0)    AS INST_TOT --인스턴트 요청진행
+	        FROM  SR_BASE_INFO A
+	            , WF_REQ_TMPLAT_HT B    
+	        WHERE 1=1
+	        AND A.REQ_TMPLAT_ID         = B.REQ_TMPLAT_ID 
+	        AND A.REQ_TMPLAT_VER        = B.REQ_TMPLAT_VER
+	        AND A.REQ_WISH_DT IS NOT NULL
+	        AND EXISTS
+	                (
+	                SELECT 1
+	                FROM 
+	                    WF_PROC_HIST H
+	                WHERE 1 = 1
+	                AND A.REQ_ID        = H.PROC_NUMBER
+	                AND (H.ORG_DEPT_CD = #{DEPT_CD} OR H.SRM_DEPT_CD   = #{DEPT_CD} )
+	                )
+	        AND A.REQ_STAT_CD NOT IN ('RQST00','RQST97','RQST98','RQST99') 
+	        )BSN --서비스
+	        ,(
+	            SELECT 
+	                  NVL(SUM(CASE WHEN B.SVC_CD='BSN' AND B.SVC_DTL_CD = 'BSN10' THEN 1 ELSE 0 END ),0)    AS APV_SUM1 --사업계획 결재중  
+	                , NVL(SUM(CASE WHEN B.SVC_CD='BSN' AND B.SVC_DTL_CD = 'BSN20' THEN 1 ELSE 0 END ),0)    AS APV_SUM2 --계약 결재중  
+	                , NVL(SUM(CASE WHEN B.SVC_CD='BSN' AND B.SVC_DTL_CD = 'BSN30' THEN 1 ELSE 0 END ),0)    AS APV_SUM3 --검수 결재중
+	                , NVL(SUM(CASE WHEN B.SVC_CD='SRM' THEN 1 ELSE 0 END ),0)                               AS APV_SUM4 --요청관리 결재중
+	                , NVL(SUM(CASE WHEN B.SVC_CD='SVC' AND B.SVC_DTL_CD = '20' THEN 1 ELSE 0 END ),0)       AS APV_SUM5 --장애관리 결재중
+	                , NVL(SUM(CASE WHEN B.SVC_CD='CHM' THEN 1 ELSE 0 END ),0)                               AS APV_SUM6 --IT작업신청 결재중
+	        
+	            FROM  SR_BASE_INFO A
+	                , WF_REQ_TMPLAT_HT B
+	                , WF_APPROVAL_MT C
+	            WHERE 1=1
+	            AND A.REQ_TMPLAT_ID         = B.REQ_TMPLAT_ID 
+	            AND A.REQ_TMPLAT_VER        = B.REQ_TMPLAT_VER
+	            AND A.REQ_ID                = C.REQ_ID
+	            AND A.REQ_WISH_DT IS NOT NULL
+	            AND A.REQ_STAT_CD           = 'RQST11'
+	            AND C.DEPT_CD               = #{DEPT_CD}
+	            AND C.APPR_STAT_CD          in ('APST_01','APST_02') 
+	            AND(
+	                 (A.WF_PROC_CD = 'WF_PROC_1000' AND A.REQ_STAT_CD <![CDATA[<>]]> 'RQST00') OR A.WF_PROC_CD <![CDATA[<>]]> 'WF_PROC_1000'
+	                )    
+	            AND (
+			         A.WF_PROC_CD <![CDATA[<>]]> 'WF_PROC_9999' OR
+			         (A.WF_PROC_CD = 'WF_PROC_1000' AND A.REQ_STAT_CD NOT IN('RQST00', 'RQST91')) OR    --등록단계 (임시저장, 반려)상태가 아닌 대상
+			         A.REQ_STAT_CD <![CDATA[<>]]> 'RQST97'                                              --폐기가 아닌 대상
+			        ) 
+	        ) APV  --결재대기
+    </select>
+    <select id="select12" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT
+				A.REQ_ID
+		      , A.TITLE
+		      , A.REQ_USER_NM 
+		      , B.REQ_TMPLAT_NM 
+		      , B.REQ_TMPLAT_VER 
+		      , B.REQ_TMPLAT_ID
+		      , SUBSTR(A.REQ_DATE,5,2) ||'/'|| SUBSTR(A.REQ_DATE,7,2)   AS REQ_DATE
+		      , (CASE WHEN  B.SVC_CD = 'SRM' AND A.REQ_WISH_DT IS NOT NULL THEN SUBSTR(A.REQ_WISH_DT,5,2) ||'/'|| SUBSTR(A.REQ_WISH_DT,7,2) ELSE '' END)AS REQ_WISH_D  
+		      , (
+                SELECT REPLACE(WF_PROC_NM, '\n', ' ')
+                FROM WF_REQ_TMPLAT_PROC_HT P
+                WHERE 1 = 1
+                AND P.REQ_TMPLAT_ID     = A.REQ_TMPLAT_ID
+                AND P.REQ_TMPLAT_VER    = A.REQ_TMPLAT_VER
+                AND P.WF_PROC_CD        = A.WF_PROC_CD
+                )   AS WF_PROC_NM
+		      , (CASE WHEN SUBSTR(A.REQ_WISH_DT,1,8)   <![CDATA[<]]>  TO_CHAR(SYSDATE,'YYYYMMDD') THEN '지연' ELSE '' END) AS CHK_DELAY	
+		FROM  SR_BASE_INFO A
+		    , WF_REQ_TMPLAT_HT B
+		    , WF_PROC_HIST H
+		WHERE 1=1
+		AND A.REQ_TMPLAT_ID         = B.REQ_TMPLAT_ID 
+		AND A.REQ_TMPLAT_VER        = B.REQ_TMPLAT_VER
+		AND A.REQ_ID                = H.PROC_NUMBER
+		--AND A.REQ_WISH_DT IS NOT NULL
+		AND WF_HIST_SEQ 			= (SELECT MAX(TO_NUMBER(WF_HIST_SEQ)) FROM WF_PROC_HIST WHERE PROC_NUMBER=H.PROC_NUMBER)		
+		AND B.SVC_CD IN ('SRM','CHM')
+		AND EXISTS
+		    (
+		    SELECT 1
+		    FROM 
+		        WF_PROC_HIST H
+		    WHERE 1 = 1
+		    AND A.REQ_ID        = H.PROC_NUMBER
+		    AND (H.ORG_DEPT_CD = A.REQ_DEPT_CD OR H.SRM_DEPT_CD   = A.REQ_DEPT_CD)
+		    )
+		AND A.REQ_STAT_CD  <![CDATA[<>]]>  'RQST00'
+		AND A.REQ_DEPT_CD = #{DEPT_CD}			        
+		ORDER BY A.REQ_ID
+    </select>
+    <select id="select13" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT DISTINCT(A.REQ_ID) AS REQ_ID
+	      	, A.TITLE
+	      	, A.REQ_USER_NM 
+	      	, A.REQ_USER_ID 
+	      	, B.REQ_TMPLAT_NM  
+	      	, B.REQ_TMPLAT_VER 
+		    , B.REQ_TMPLAT_ID
+	      	, SUBSTR(A.REQ_DATE,5,2) ||'/'|| SUBSTR(A.REQ_DATE,7,2) ||' ~ '||  SUBSTR(A.REQ_WISH_DT,5,2) ||'/'|| SUBSTR(A.REQ_WISH_DT,7,2) AS PERIOD
+	      	, (
+                SELECT REPLACE(WF_PROC_NM, '\n', ' ')
+                FROM WF_REQ_TMPLAT_PROC_HT P
+                WHERE 1 = 1
+                AND P.REQ_TMPLAT_ID     = A.REQ_TMPLAT_ID
+                AND P.REQ_TMPLAT_VER    = A.REQ_TMPLAT_VER
+                AND P.WF_PROC_CD        = A.WF_PROC_CD
+                )   AS WF_PROC_NM
+	      	, A.WF_PROC_CD
+	      	, S.MBR_USER_ID
+		FROM
+		      SR_BASE_INFO A
+		    , WF_REQ_TMPLAT_HT B
+		    , WF_PROC_HIST H
+		    , SR_MA_PRJ_MBER S
+		WHERE 1=1
+		AND REQ_WISH_DT IS NOT NULL
+		AND A.REQ_TMPLAT_ID = B.REQ_TMPLAT_ID
+		AND A.REQ_USER_ID   = S.MBR_USER_ID
+		AND B.REQ_TMPLAT_ID ='WFT240034' --서브프로젝트
+		AND WF_HIST_SEQ 			= (SELECT MAX(TO_NUMBER(WF_HIST_SEQ)) FROM WF_PROC_HIST WHERE PROC_NUMBER=H.PROC_NUMBER)	
+		AND A.REQ_USER_ID = '3354950'
+		AND A.WF_PROC_CD  <![CDATA[<>]]> 'WF_PROC_9999'
+		AND A.REQ_ID        = S.REQ_ID
+	    AND A.REQ_ID        = H.PROC_NUMBER
+		AND (EXISTS
+		            (
+		            SELECT 1
+	            FROM 
+	                WF_PROC_HIST H
+	            WHERE 1 = 1
+	            AND A.REQ_ID        = H.PROC_NUMBER
+	            AND (H.SRM_USER_ID  = A.REQ_USER_ID OR H.ORG_USER_ID    = A.REQ_USER_ID )
+	            )
+	            
+	     OR EXISTS
+	            (
+	            SELECT 1
+	            FROM 
+	                SR_MA_PRJ_MBER S
+	            WHERE 1 = 1
+                AND A.REQ_ID        = S.REQ_ID 
+	            AND A.REQ_USER_ID   = S.MBR_USER_ID
+	            )   -- SR_MA_PRJ_MBER ( 서브프로젝트 구성원 )        
+	           )
+    </select>
+    <select id="select14" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT '요청 '																 AS SUM_NAME0
+    		  ,'설계 '																 AS SUM_NAME1
+    		  ,'개발 '																 AS SUM_NAME2
+    		  ,'종료 '																 AS SUM_NAME3
+    		  ,'이행신청 '																 AS SUM_NAME4
+		   	  , NVL(SUM(CASE WHEN A.WF_PROC_CD ='WF_PROC_1000' THEN 1 ELSE 0 END),0) AS SUM0    --요청 등록 SUM
+		      , NVL(SUM(CASE WHEN A.WF_PROC_CD ='WF_PROC_2010' THEN 1 ELSE 0 END),0) AS SUM1    --설계단계 SUM
+		      , NVL(SUM(CASE WHEN A.WF_PROC_CD ='WF_PROC_2020' THEN 1 ELSE 0 END),0) AS SUM2    --개발단계 SUM
+		      , NVL(SUM(CASE WHEN A.WF_PROC_CD ='WF_PROC_9999' THEN 1 ELSE 0 END),0) AS SUM3    --종료단계 SUM
+		      , NVL(SUM(CASE WHEN A.WF_PROC_CD ='WF_PROC_9010' THEN 1 ELSE 0 END),0) AS SUM4    --이행모니터링 SUM	
+		   
+		FROM
+		      SR_BASE_INFO A
+		    , WF_REQ_TMPLAT_HT B
+		    , WF_PROC_HIST H
+		WHERE 1=1
+		AND REQ_WISH_DT IS NOT NULL
+		AND A.REQ_TMPLAT_ID = B.REQ_TMPLAT_ID
+		AND B.REQ_TMPLAT_ID ='WFT240034' --서브프로젝트
+		AND A.REQ_ID        = H.PROC_NUMBER
+		AND WF_HIST_SEQ 	= (SELECT MAX(TO_NUMBER(WF_HIST_SEQ)) FROM WF_PROC_HIST WHERE PROC_NUMBER=H.PROC_NUMBER)
+		AND A.REQ_USER_ID ='3354950'
+		AND (
+		     EXISTS
+		            (
+		            SELECT 1
+		            FROM 
+		                WF_PROC_HIST H
+		            WHERE 1 = 1
+		            AND A.REQ_ID        = H.PROC_NUMBER
+		            AND (H.SRM_USER_ID  = A.REQ_USER_ID OR H.ORG_USER_ID    = A.REQ_USER_ID)
+		            )
+		
+		    OR EXISTS
+		            (
+		            SELECT 1
+		            FROM 
+		                SR_MA_PRJ_MBER S
+		            WHERE 1 = 1
+		            AND A.REQ_USER_ID   = S.MBR_USER_ID
+		            )   -- SR_MA_PRJ_MBER ( 서브프로젝트 구성원 )
+		     )
+    </select>
+    <select id="select15" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT  OADEV.CMM_CD  	--전산기기현황
+		      , OADEV.CMM_CD_NM 	AS GBN
+		      , NVL(ASSET.SUM_D,0)  AS CNT
+		FROM 
+		    (
+		    SELECT OADEV_CLS_CD
+		         , NVL(SUM(1),0) AS SUM_D 
+		    FROM SR_CH_OA_ASSET_DTL_REQ
+		    WHERE 1=1          
+		    AND  USER_ID ='s1214461'
+		    GROUP BY OADEV_CLS_CD
+            ORDER BY SUM_D   DESC          
+		    ) ASSET
+		    ,
+		    (
+		    SELECT
+		          A.CMM_CD
+		        , A.CMM_CD_NM
+		    FROM
+		        FOMM_CMM_CD_MT A
+		    WHERE 1 = 1
+		    AND CODE_DIV    = 'IT_WKREQ_CD'
+		    AND UP_CMM_CD   = 'OADEV_CLS_CD'
+		    ) OADEV
+		WHERE 1=1 
+		AND OADEV.CMM_CD = ASSET.OADEV_CLS_CD(+)
+        AND ROWNUM <![CDATA[<]]> 6
+    </select>
+    
+    <select id="select16" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT
+		     TO_CHAR(SYSDATE,'MM') ||'월'                 AS THIS_MONTH
+    		 , TO_CHAR(ADD_MONTHS(SYSDATE,-1),'MM') ||'월'      	AS BEFORE_MONTH
+		     , TO_CHAR(ADD_MONTHS(SYSDATE,-2),'MM') ||'월'      AS LAST_MONTH
+		     
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD <![CDATA[<>]]> 'RQST00' AND A.REQ_DATE  LIKE TO_CHAR(SYSDATE,'YYYMM')||'%' THEN 1 ELSE 0 END) ,0)                 AS THIS_MONTH_REQ       
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD <![CDATA[<>]]> 'RQST00' AND A.REQ_DATE  LIKE TO_CHAR(ADD_MONTHS(SYSDATE,-1),'YYYYMM')||'%' THEN 1 ELSE 0 END) ,0) AS BEFORE_MONTH_REQ     
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD <![CDATA[<>]]> 'RQST00' AND A.REQ_DATE  LIKE TO_CHAR(ADD_MONTHS(SYSDATE,-2),'YYYYMM')||'%' THEN 1 ELSE 0 END) ,0) AS LAST_MONTH_REQ       
+		    
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD = 'RQST99' AND A.REQ_DATE  LIKE TO_CHAR(SYSDATE,'YYYMM')||'%' THEN 1 ELSE 0 END) ,0)                 AS THIS_MONTH_COM       
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD = 'RQST99' AND A.REQ_DATE  LIKE TO_CHAR(ADD_MONTHS(SYSDATE,-1),'YYYYMM')||'%' THEN 1 ELSE 0 END) ,0) AS BEFORE_MONTH_COM      
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD = 'RQST99' AND A.REQ_DATE   LIKE TO_CHAR(ADD_MONTHS(SYSDATE,-2),'YYYYMM')||'%' THEN 1 ELSE 0 END) ,0) AS LAST_MONTH_COM 
+		     
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD NOT IN ('RQST00','RQST97','RQST98','RQST99') AND A.REQ_DATE  LIKE TO_CHAR(SYSDATE,'YYYMMDD')||'%'  THEN 1 ELSE 0 END) ,0) AS DAY_REQ    
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD NOT IN ('RQST00','RQST97','RQST98','RQST99') AND SUBSTR(A.REQ_WISH_DT,1,8)  <![CDATA[<]]> TO_CHAR(SYSDATE,'YYYYMMDD') THEN 1 ELSE 0 END), 0) AS CHK_DELAY	
+		     , (
+		            SELECT NVL(SUM(1),0) AS APPL
+		            FROM  SR_BASE_INFO A
+		                , WF_REQ_TMPLAT_HT B
+		                , WF_APPROVAL_MT C
+		            WHERE 1=1
+		            AND A.REQ_TMPLAT_ID         = B.REQ_TMPLAT_ID 
+		            AND A.REQ_TMPLAT_VER        = B.REQ_TMPLAT_VER
+		            AND A.REQ_ID                = C.REQ_ID
+		            AND A.REQ_WISH_DT IS NOT NULL
+		            AND A.REQ_STAT_CD           = 'RQST11'
+		            AND C.DEPT_CD               = 'K3800'
+		            AND C.APPR_STAT_CD          = 'APST_01'
+		            AND B.SVC_CD IN ('SRM')
+		            AND(
+		                 (A.WF_PROC_CD = 'WF_PROC_1000' AND A.REQ_STAT_CD <![CDATA[<>]]>  'RQST00') OR A.WF_PROC_CD <![CDATA[<>]]>   'WF_PROC_1000'
+		                )    
+		            AND (
+		                 A.WF_PROC_CD <![CDATA[<>]]> 'WF_PROC_9999' OR
+		                 (A.WF_PROC_CD = 'WF_PROC_1000' AND A.REQ_STAT_CD NOT IN('RQST00', 'RQST91')) OR   
+		                 A.REQ_STAT_CD <![CDATA[<>]]>  'RQST97'                                              
+		                )		            
+        		)  AS APPC-- 일일 결재중
+    	FROM  SR_BASE_INFO A
+		     ,WF_REQ_TMPLAT_HT B
+		WHERE 1=1
+		AND A.REQ_TMPLAT_ID         = B.REQ_TMPLAT_ID 
+		AND A.REQ_TMPLAT_VER        = B.REQ_TMPLAT_VER
+		AND A.REQ_WISH_DT IS NOT NULL
+		AND B.SVC_CD IN ('SRM') 
+		
+		AND EXISTS
+		    (
+		    SELECT 1
+		    FROM 
+		        WF_PROC_HIST H
+		    WHERE 1 = 1
+		    AND A.REQ_ID        = H.PROC_NUMBER
+		    AND (H.ORG_DEPT_CD = A.REQ_DEPT_CD OR H.SRM_DEPT_CD   = A.REQ_DEPT_CD)
+		    )
+    	GROUP BY B.SVC_CD
+    </select>
+    <select id="select17" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT TO_CHAR(SYSDATE,'DD') 	||'일'       AS  DAYM4
+    		 , TO_CHAR(SYSDATE-1,'DD') ||'일'      	 AS DAYM3
+		     , TO_CHAR(SYSDATE-2,'DD') ||'일'   		AS DAYM2
+		     , TO_CHAR(SYSDATE-3,'DD') ||'일'   		AS DAYM1
+		     , TO_CHAR(SYSDATE-4,'DD') ||'일'  	 	AS DAYM0
+		     
+		     , NVL(SUM(CASE WHEN A.REQ_DATE  LIKE TO_CHAR(SYSDATE,'YYYMMDD')||'%' THEN 1 ELSE 0 END) ,0)   AS DAYR4  -- 일일요청
+		     , NVL(SUM(CASE WHEN A.REQ_DATE  LIKE TO_CHAR(SYSDATE-1,'YYYMMDD')||'%' THEN 1 ELSE 0 END) ,0) AS DAYR3  -- 일일요청
+		     , NVL(SUM(CASE WHEN A.REQ_DATE  LIKE TO_CHAR(SYSDATE-2,'YYYMMDD')||'%' THEN 1 ELSE 0 END) ,0) AS DAYR2  -- 일일요청
+		     , NVL(SUM(CASE WHEN A.REQ_DATE  LIKE TO_CHAR(SYSDATE-3,'YYYMMDD')||'%' THEN 1 ELSE 0 END) ,0) AS DAYR1  -- 일일요청
+		     , NVL(SUM(CASE WHEN A.REQ_DATE  LIKE TO_CHAR(SYSDATE-4,'YYYMMDD')||'%' THEN 1 ELSE 0 END) ,0) AS DAYR0  -- 일일요청
+		    
+    	FROM  SR_BASE_INFO A
+		     ,WF_REQ_TMPLAT_HT B
+		WHERE 1=1
+		AND A.REQ_TMPLAT_ID         = B.REQ_TMPLAT_ID 
+		AND A.REQ_TMPLAT_VER        = B.REQ_TMPLAT_VER
+		AND A.REQ_WISH_DT IS NOT NULL
+		AND B.SVC_CD IN ('SRM')  -- 요청서
+		AND  A.REQ_STAT_CD <![CDATA[<>]]> 'RQST00'
+		AND EXISTS
+		    (
+		    SELECT 1
+		    FROM 
+		        WF_PROC_HIST H
+		    WHERE 1 = 1
+		    AND A.REQ_ID        = H.PROC_NUMBER
+		    AND (H.ORG_DEPT_CD = A.REQ_DEPT_CD OR H.SRM_DEPT_CD   = A.REQ_DEPT_CD)
+		    )
+    </select>
+     <select id="select18" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT
+    		'서버/DB/백업' 		AS  SUM1_NAME0		--서버/DB/백업
+    		 , '보안/NW/그룹웨어' 	AS  SUM1_NAME1		--서버/DB/백업
+    		 , '원장/SW/외주직원'	AS  SUM1_NAME2		--서버/DB/백업
+    		 , '기타 등등'			AS  SUM1_NAME3				--기타 등등	
+    		 , NVL(SUM(CASE WHEN B.SVC_DTL_CD in( 'WFSR0A00','WFSR0D00','WFSR0F00') THEN 1 ELSE 0 END),0)    AS CHM_SUM0 --서버/DB/백업
+		     , NVL(SUM(CASE WHEN B.SVC_DTL_CD in ('WFSR0B00','WFSR0C00','WFSR0K00') THEN 1 ELSE 0 END),0)    AS CHM_SUM1 --보안/NW/그룹웨어
+		     , NVL(SUM(CASE WHEN B.SVC_DTL_CD in ('WFSR0E00','WFSR0J00','WFSR0G00') THEN 1 ELSE 0 END),0)    AS CHM_SUM2 --전산원장/프레임워크SW/외주직원
+		     , NVL(SUM(CASE WHEN B.SVC_DTL_CD in ('WFSR0Z00','WFSR0O00','WFSR0H00','WFSR0I00','WFSR0L00','WFSR0N00') THEN 1 ELSE 0 END),0)    AS CHM_SUM3 --기타 등등	
+		FROM  SR_BASE_INFO A
+		    , WF_REQ_TMPLAT_HT B    
+		WHERE 1=1
+		AND A.REQ_TMPLAT_ID         = B.REQ_TMPLAT_ID 
+		AND A.REQ_TMPLAT_VER        = B.REQ_TMPLAT_VER
+		AND B.SVC_CD='CHM'
+		AND EXISTS
+		        (
+		        SELECT 1
+		        FROM 
+		            WF_PROC_HIST H
+		        WHERE 1 = 1
+		        AND A.REQ_ID        = H.PROC_NUMBER
+		         AND (H.SRM_USER_ID  = A.REQ_USER_ID OR H.ORG_USER_ID    = A.REQ_USER_ID)
+		        )
+		AND A.REQ_STAT_CD NOT IN ('RQST00','RQST97','RQST98','RQST99') 
+    
+    </select>
+     <select id="select19" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT TO_CHAR(SYSDATE,'MM') ||'월'                     AS THIS_MONTH
+    		 , TO_CHAR(ADD_MONTHS(SYSDATE,-1),'MM') ||'월'      	AS BEFORE_MONTH
+		     , TO_CHAR(ADD_MONTHS(SYSDATE,-2),'MM') ||'월'      AS LAST_MONTH
+		     
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD <![CDATA[<>]]> 'RQST00' AND A.REQ_DATE  LIKE TO_CHAR(SYSDATE,'YYYMM')||'%' THEN 1 ELSE 0 END) ,0)                 AS THIS_MONTH_REQ       --요청 이번달
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD <![CDATA[<>]]> 'RQST00' AND A.REQ_DATE  LIKE TO_CHAR(ADD_MONTHS(SYSDATE,-1),'YYYYMM')||'%' THEN 1 ELSE 0 END) ,0) AS BEFORE_MONTH_REQ     --요청 전달
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD <![CDATA[<>]]> 'RQST00' AND A.REQ_DATE  LIKE TO_CHAR(ADD_MONTHS(SYSDATE,-2),'YYYYMM')||'%' THEN 1 ELSE 0 END) ,0) AS LAST_MONTH_REQ       --요청 전전달
+		    
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD = 'RQST99' AND A.REQ_DATE  LIKE TO_CHAR(SYSDATE,'YYYMM')||'%' THEN 1 ELSE 0 END) ,0)                 AS THIS_MONTH_COM       --이번달
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD = 'RQST99' AND A.REQ_DATE  LIKE TO_CHAR(ADD_MONTHS(SYSDATE,-1),'YYYYMM')||'%' THEN 1 ELSE 0 END) ,0) AS BEFORE_MONTH_COM      --전달
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD = 'RQST99' AND A.REQ_DATE   LIKE TO_CHAR(ADD_MONTHS(SYSDATE,-2),'YYYYMM')||'%' THEN 1 ELSE 0 END) ,0) AS LAST_MONTH_COM        --전전달
+		    
+    	FROM  SR_BASE_INFO A
+		     ,WF_REQ_TMPLAT_HT B
+		WHERE 1=1
+		AND A.REQ_TMPLAT_ID         = B.REQ_TMPLAT_ID 
+		AND A.REQ_TMPLAT_VER        = B.REQ_TMPLAT_VER
+		AND A.REQ_WISH_DT IS NOT NULL
+		AND B.SVC_CD IN ('SRM')  -- 요청서
+		--AND A.REQ_USER_ID =''
+		AND EXISTS
+		    (
+		    SELECT 1
+		    FROM 
+		        WF_PROC_HIST H
+		    WHERE 1 = 1
+		    AND A.REQ_ID        = H.PROC_NUMBER
+		    AND (H.ORG_DEPT_CD = A.REQ_DEPT_CD OR H.SRM_DEPT_CD   = A.REQ_DEPT_CD)
+		    )
+    
+    </select>
+     <select id="select20" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT TO_CHAR(SYSDATE,'MM') ||'월'                     AS THIS_MONTH
+    		 , TO_CHAR(ADD_MONTHS(SYSDATE,-1),'MM') ||'월'      	AS BEFORE_MONTH
+		     , TO_CHAR(ADD_MONTHS(SYSDATE,-2),'MM') ||'월'      AS LAST_MONTH
+		     
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD <![CDATA[<>]]> 'RQST00' AND A.REQ_DATE  LIKE TO_CHAR(SYSDATE,'YYYMM')||'%' THEN 1 ELSE 0 END) ,0)                 AS THIS_MONTH_REQ       --요청 이번달
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD <![CDATA[<>]]> 'RQST00' AND A.REQ_DATE  LIKE TO_CHAR(ADD_MONTHS(SYSDATE,-1),'YYYYMM')||'%' THEN 1 ELSE 0 END) ,0) AS BEFORE_MONTH_REQ     --요청 전달
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD <![CDATA[<>]]> 'RQST00' AND A.REQ_DATE  LIKE TO_CHAR(ADD_MONTHS(SYSDATE,-2),'YYYYMM')||'%' THEN 1 ELSE 0 END) ,0) AS LAST_MONTH_REQ       --요청 전전달
+		    
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD = 'RQST99' AND A.REQ_DATE  LIKE TO_CHAR(SYSDATE,'YYYMM')||'%' THEN 1 ELSE 0 END) ,0)                 AS THIS_MONTH_COM       --이번달
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD = 'RQST99' AND A.REQ_DATE  LIKE TO_CHAR(ADD_MONTHS(SYSDATE,-1),'YYYYMM')||'%' THEN 1 ELSE 0 END) ,0) AS BEFORE_MONTH_COM      --전달
+		     , NVL(SUM(CASE WHEN A.REQ_STAT_CD = 'RQST99' AND A.REQ_DATE   LIKE TO_CHAR(ADD_MONTHS(SYSDATE,-2),'YYYYMM')||'%' THEN 1 ELSE 0 END) ,0) AS LAST_MONTH_COM        --전전달
+		    
+    	FROM  SR_BASE_INFO A
+		     ,WF_REQ_TMPLAT_HT B
+		WHERE 1=1
+		AND A.REQ_TMPLAT_ID         = B.REQ_TMPLAT_ID 
+		AND A.REQ_TMPLAT_VER        = B.REQ_TMPLAT_VER
+		AND A.REQ_WISH_DT IS NOT NULL
+		AND B.SVC_CD IN ('SRM')  -- 요청서
+		--AND A.REQ_USER_ID =''
+		AND EXISTS
+		    (
+		    SELECT 1
+		    FROM 
+		        WF_PROC_HIST H
+		    WHERE 1 = 1
+		    AND A.REQ_ID        = H.PROC_NUMBER
+		    AND (H.ORG_DEPT_CD = A.REQ_DEPT_CD OR H.SRM_DEPT_CD   = A.REQ_DEPT_CD)
+		    )
+    
+    </select>
+    
+     <select id="select21" parameterType="java.util.Map" resultType="java.util.Map">
+      SELECT * FROM (
+           SELECT
+                  A.REQ_ID
+                , A.REQ_TMPLAT_ID
+                , A.REQ_TMPLAT_VER
+                , DECODE(
+                        NVL(A.WF_PROC_CD, 'WF_PROC_1000'),
+                        'WF_PROC_1000', 'WF_PROC_1000',     -- 등록 > 등록
+                        'WF_PROC_9999', 'WF_PROC_9999',     -- 종료 > 종료
+                        ( SELECT UP_CMM_CD FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD'  AND LANG_CD = 'KR' AND CMM_CD = A.WF_PROC_CD START WITH CMM_CD = 'WF_PROC_CD'  CONNECT BY PRIOR CMM_CD = UP_CMM_CD )     -- 상위단계코드
+                        ) AS UP_WF_PROC_CD
+                , A.REQ_STAT_CD
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = A.REQ_STAT_CD AND LANG_CD = 'KR') AS REQ_STAT_NM
+                , A.WF_PROC_CD
+                , (
+                  SELECT REPLACE(WF_PROC_NM, '\n', ' ')
+                  FROM WF_REQ_TMPLAT_PROC_HT
+                  WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = A.REQ_TMPLAT_VER AND WF_PROC_CD = A.WF_PROC_CD
+                  ) AS WF_PROC_NM
+                , B.REQ_TMPLAT_NM
+                , B.SVC_CD
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'SVC_CD' AND CMM_CD = B.SVC_CD AND LANG_CD = 'KR')       AS SVC_NM
+                , B.SVC_DTL_CD
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = B.SVC_CD AND CMM_CD = B.SVC_DTL_CD AND LANG_CD = 'KR')  AS SVC_DTL_NM
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'SVC_CD' AND CMM_CD = B.SVC_CD AND LANG_CD = 'KR') ||
+                  NVL2(
+                        B.SVC_DTL_CD,
+                        ' > '|| (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = B.SVC_CD AND CMM_CD = B.SVC_DTL_CD AND LANG_CD = 'KR'),
+                        '') AS SVC_CD_NM
+                , A.TITLE
+                , A.REQ_USER_ID
+                , A.REQ_USER_NM
+                , A.REQ_DEPT_CD
+                , A.REQ_DEPT_NM
+                , A.REQ_DATE
+                , A.REQ_WISH_DT
+                , A.REQ_WISH_TIME
+                , CASE
+                    WHEN A.REQ_WISH_DT IS NOT NULL
+                    THEN RPAD((A.REQ_WISH_DT || NVL(A.REQ_WISH_TIME, '2359')), 14, '0')
+                    ELSE ''
+                  END   AS REQ_WISH_DT_NM
+                , CASE
+                    WHEN A.REQ_WISH_DT IS NOT NULL
+                    THEN A.REQ_WISH_DT ||
+                        CASE
+                            WHEN A.REQ_WISH_TIME IS NOT NULL
+                            THEN A.REQ_WISH_TIME || '시'
+                        END
+                  END   AS REQ_WISH_DTIME
+                , O.COMPANY_ID
+                , (SELECT COMPANY_NM FROM MS_COMPANY WHERE COMPANY_ID = O.COMPANY_ID ) as COMPANY_NM                
+            FROM
+                SR_BASE_INFO A
+                , WF_REQ_TMPLAT_HT B
+                , SR_REQ_OM_SVC O
+            WHERE 1 = 1
+            AND B.SVC_CD = 'SVC'
+            AND B.SVC_DTL_CD = '30'
+            AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+            AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+            AND O.REQ_ID = A.REQ_ID              
+        ) A
+        WHERE 1=1
+          AND A.WF_PROC_CD = 'WF_PROC_2010'
+          AND A.REQ_STAT_CD = 'RQST01'
+          <if test="COMPANY_ID != '' and COMPANY_ID != null">
+          AND O.COMPANY_ID = #{COMPANY_ID}
+          </if>          
+        ORDER BY A.REQ_DATE DESC            
+    </select>
+
+    <select id="select22" parameterType="java.util.Map" resultType="java.util.Map">
+      SELECT * FROM (
+           SELECT
+                  A.REQ_ID
+                , A.REQ_TMPLAT_ID
+                , A.REQ_TMPLAT_VER
+                , DECODE(
+                        NVL(A.WF_PROC_CD, 'WF_PROC_1000'),
+                        'WF_PROC_1000', 'WF_PROC_1000',     -- 등록 > 등록
+                        'WF_PROC_9999', 'WF_PROC_9999',     -- 종료 > 종료
+                        ( SELECT UP_CMM_CD FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD'  AND LANG_CD = 'KR' AND CMM_CD = A.WF_PROC_CD START WITH CMM_CD = 'WF_PROC_CD'  CONNECT BY PRIOR CMM_CD = UP_CMM_CD )     -- 상위단계코드
+                        ) AS UP_WF_PROC_CD
+                , A.REQ_STAT_CD
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = A.REQ_STAT_CD AND LANG_CD = 'KR') AS REQ_STAT_NM
+                , A.WF_PROC_CD
+                , (
+                  SELECT REPLACE(WF_PROC_NM, '\n', ' ')
+                  FROM WF_REQ_TMPLAT_PROC_HT
+                  WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = A.REQ_TMPLAT_VER AND WF_PROC_CD = A.WF_PROC_CD
+                  ) AS WF_PROC_NM
+                , B.REQ_TMPLAT_NM
+                , B.SVC_CD
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'SVC_CD' AND CMM_CD = B.SVC_CD AND LANG_CD = 'KR')       AS SVC_NM
+                , B.SVC_DTL_CD
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = B.SVC_CD AND CMM_CD = B.SVC_DTL_CD AND LANG_CD = 'KR')  AS SVC_DTL_NM
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'SVC_CD' AND CMM_CD = B.SVC_CD AND LANG_CD = 'KR') ||
+                  NVL2(
+                        B.SVC_DTL_CD,
+                        ' > '|| (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = B.SVC_CD AND CMM_CD = B.SVC_DTL_CD AND LANG_CD = 'KR'),
+                        '') AS SVC_CD_NM
+                , A.TITLE
+                , A.REQ_USER_ID
+                , A.REQ_USER_NM
+                , A.REQ_DEPT_CD
+                , A.REQ_DEPT_NM
+                , A.REQ_DATE
+                , A.REQ_WISH_DT
+                , A.REQ_WISH_TIME
+                , CASE
+                    WHEN A.REQ_WISH_DT IS NOT NULL
+                    THEN RPAD((A.REQ_WISH_DT || NVL(A.REQ_WISH_TIME, '2359')), 14, '0')
+                    ELSE ''
+                  END   AS REQ_WISH_DT_NM
+                , CASE
+                    WHEN A.REQ_WISH_DT IS NOT NULL
+                    THEN A.REQ_WISH_DT ||
+                        CASE
+                            WHEN A.REQ_WISH_TIME IS NOT NULL
+                            THEN A.REQ_WISH_TIME || '시'
+                        END
+                  END   AS REQ_WISH_DTIME
+                , O.COMPANY_ID
+                , (SELECT COMPANY_NM FROM MS_COMPANY WHERE COMPANY_ID = O.COMPANY_ID ) as COMPANY_NM                
+            FROM
+                SR_BASE_INFO A
+                , WF_REQ_TMPLAT_HT B
+                , SR_REQ_OM_SVC O
+            WHERE 1 = 1
+            AND B.SVC_CD = 'SVC'
+            AND B.SVC_DTL_CD = '30'
+            AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+            AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+            AND O.REQ_ID = A.REQ_ID              
+        ) A
+        WHERE 1=1
+          AND A.WF_PROC_CD > 'WF_PROC_2010'
+          AND A.REQ_STAT_CD = 'RQST01'
+          <if test="COMPANY_ID != '' and COMPANY_ID != null">
+          AND O.COMPANY_ID = #{COMPANY_ID}
+          </if>          
+        ORDER BY A.REQ_DATE DESC    
+    </select>
+    
+    <select id="select23" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT     '요청 '      AS SUM_NAME0
+              ,'접수1차 '   AS SUM_NAME1
+              ,'접수2차 '   AS SUM_NAME2
+              ,'처리'      AS SUM_NAME3
+              ,'종료 '      AS SUM_NAME4
+              , NVL(SUM(CASE WHEN A.WF_PROC_CD ='WF_PROC_1000' THEN 1 ELSE 0 END),0) AS SUM0    --요청 등록 SUM
+              , NVL(SUM(CASE WHEN A.WF_PROC_CD ='WF_PROC_2010' THEN 1 ELSE 0 END),0) AS SUM1    --접수1차단계 SUM
+              , NVL(SUM(CASE WHEN A.WF_PROC_CD ='WF_PROC_2020' THEN 1 ELSE 0 END),0) AS SUM2    --접수2차단계 SUM
+              , NVL(SUM(CASE WHEN A.WF_PROC_CD ='WF_PROC_3020' THEN 1 ELSE 0 END),0) AS SUM3    --처리단계 SUM
+              , NVL(SUM(CASE WHEN A.WF_PROC_CD ='WF_PROC_9999' THEN 1 ELSE 0 END),0) AS SUM4    --종료 SUM    
+        FROM
+            SR_BASE_INFO A
+            , WF_REQ_TMPLAT_HT B
+            , SR_REQ_OM_SVC O                
+        WHERE 1 = 1
+       AND B.SVC_CD = 'SVC'
+        AND B.SVC_DTL_CD = '30'
+        AND O.REQ_ID = A.REQ_ID
+        AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+        AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER              
+    </select>
+
+    <select id="select24" parameterType="java.util.Map" resultType="java.util.Map">
+    SELECT     '요청 '      AS SUM_NAME0
+              ,'접수1차 '   AS SUM_NAME1
+              ,'접수2차 '   AS SUM_NAME2
+              ,'처리'      AS SUM_NAME3
+              ,'종료 '      AS SUM_NAME4
+              , NVL(SUM(CASE WHEN A.WF_PROC_CD ='WF_PROC_1000' THEN 1 ELSE 0 END),0) AS SUM0    --요청 등록 SUM
+              , NVL(SUM(CASE WHEN A.WF_PROC_CD ='WF_PROC_2010' THEN 1 ELSE 0 END),0) AS SUM1    --접수1차단계 SUM
+              , NVL(SUM(CASE WHEN A.WF_PROC_CD ='WF_PROC_2020' THEN 1 ELSE 0 END),0) AS SUM2    --접수2차단계 SUM
+              , NVL(SUM(CASE WHEN A.WF_PROC_CD ='WF_PROC_3020' THEN 1 ELSE 0 END),0) AS SUM3    --처리단계 SUM
+              , NVL(SUM(CASE WHEN A.WF_PROC_CD ='WF_PROC_9999' THEN 1 ELSE 0 END),0) AS SUM4    --종료 SUM    
+        FROM
+            SR_BASE_INFO A
+            , WF_REQ_TMPLAT_HT B
+            , SR_REQ_OM_SVC O                
+        WHERE 1 = 1
+        AND B.SVC_CD = 'SVC'
+        AND B.SVC_DTL_CD = '30'
+        AND O.REQ_ID = A.REQ_ID
+        AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+        AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER              
+    
+    </select>
+
+    <select id="select25" parameterType="java.util.Map" resultType="java.util.Map">
+
+      SELECT * FROM (
+           SELECT
+                  A.REQ_ID
+                , A.REQ_TMPLAT_ID
+                , A.REQ_TMPLAT_VER
+                , DECODE(
+                        NVL(A.WF_PROC_CD, 'WF_PROC_1000'),
+                        'WF_PROC_1000', 'WF_PROC_1000',     -- 등록 > 등록
+                        'WF_PROC_9999', 'WF_PROC_9999',     -- 종료 > 종료
+                        ( SELECT UP_CMM_CD FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD'  AND LANG_CD = 'KR' AND CMM_CD = A.WF_PROC_CD START WITH CMM_CD = 'WF_PROC_CD'  CONNECT BY PRIOR CMM_CD = UP_CMM_CD )     -- 상위단계코드
+                        ) AS UP_WF_PROC_CD
+                , A.REQ_STAT_CD
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = A.REQ_STAT_CD AND LANG_CD = 'KR') AS REQ_STAT_NM
+                , A.WF_PROC_CD
+                , (
+                  SELECT REPLACE(WF_PROC_NM, '\n', ' ')
+                  FROM WF_REQ_TMPLAT_PROC_HT
+                  WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = A.REQ_TMPLAT_VER AND WF_PROC_CD = A.WF_PROC_CD
+                  ) AS WF_PROC_NM
+                , B.REQ_TMPLAT_NM
+                , B.SVC_CD
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'SVC_CD' AND CMM_CD = B.SVC_CD AND LANG_CD = 'KR')       AS SVC_NM
+                , B.SVC_DTL_CD
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = B.SVC_CD AND CMM_CD = B.SVC_DTL_CD AND LANG_CD = 'KR')  AS SVC_DTL_NM
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'SVC_CD' AND CMM_CD = B.SVC_CD AND LANG_CD = 'KR') ||
+                  NVL2(
+                        B.SVC_DTL_CD,
+                        ' > '|| (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = B.SVC_CD AND CMM_CD = B.SVC_DTL_CD AND LANG_CD = 'KR'),
+                        '') AS SVC_CD_NM
+                , A.TITLE
+                , A.REQ_USER_ID
+                , A.REQ_USER_NM
+                , A.REQ_DEPT_CD
+                , A.REQ_DEPT_NM
+                , A.REQ_DATE
+                , A.REQ_WISH_DT
+                , A.REQ_WISH_TIME
+                , CASE
+                    WHEN A.REQ_WISH_DT IS NOT NULL
+                    THEN RPAD((A.REQ_WISH_DT || NVL(A.REQ_WISH_TIME, '2359')), 14, '0')
+                    ELSE ''
+                  END   AS REQ_WISH_DT_NM
+                , CASE
+                    WHEN A.REQ_WISH_DT IS NOT NULL
+                    THEN A.REQ_WISH_DT ||
+                        CASE
+                            WHEN A.REQ_WISH_TIME IS NOT NULL
+                            THEN A.REQ_WISH_TIME || '시'
+                        END
+                  END   AS REQ_WISH_DTIME
+                , O.COMPANY_ID
+                , (SELECT COMPANY_NM FROM MS_COMPANY WHERE COMPANY_ID = O.COMPANY_ID ) as COMPANY_NM 
+                , H.REG_STIME
+                , H.SRM_USER_NM AS PROC_USER_NM
+            FROM
+                SR_BASE_INFO A
+                , WF_REQ_TMPLAT_HT B
+                , SR_REQ_OM_SVC O
+                , WF_PROC_HIST H 
+            WHERE 1 = 1
+            AND B.SVC_CD = 'SVC'
+            AND B.SVC_DTL_CD = '30'
+            AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID
+            AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+            AND O.REQ_ID = A.REQ_ID
+            AND H.PROC_NUMBER = A.REQ_ID
+            AND H.WF_HIST_SEQ = (SELECT MAX(TO_NUMBER(WF_HIST_SEQ)) FROM WF_PROC_HIST WHERE PROC_NUMBER=A.REQ_ID)
+        ) A
+        WHERE 1=1
+          AND A.REQ_STAT_CD = 'RQST99'
+        ORDER BY A.REQ_DATE DESC     
+
+    
+    </select>    
+</mapper>

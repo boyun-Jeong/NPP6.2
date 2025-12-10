@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR3000DDAO">
+
+	<select id="selectReq" parameterType="java.util.Map" resultType="java.util.Map">
+	   SELECT 
+		      '0'   AS CHK
+		    , ''    AS ROWFLAG
+		    , A.REQ_ID
+		    , A.REV_DIV_CD
+		    , A.REV_CGER_ID
+		    , A.REV_CGER_NM
+		    , A.REV_DEPT_CD
+		    , A.REV_DEPT_NM
+		    , A.REQ_PURPOSE
+		    , A.CONT_DESC
+		    , A.EXPECT_EFFECT
+		    , A.MNUL_MOD_TARG_YN
+		    , A.RMK
+		    , A.FRID
+		    , A.FRDT
+		    , A.LMID
+		    , A.LMDT
+		    , A.LMPID
+		    , A.REV_CGER_DEPT_NM
+		    , A.OCCR_DT
+		    , A.COGN_DT
+		    , A.PROC_DT
+		    , A.CODE_CGER_ID
+		    , A.CODE_CGER_NM
+		    , A.OCCRTIME
+		    , A.COGNTIME
+		    , A.PROCTIME
+		    , A.SR_EMGB_CD
+		    , A.CSR_GRADE
+		
+		FROM
+		    SR_MA_REQ A 
+		
+		WHERE 1 = 1
+		AND A.REQ_ID = #{REQ_ID}
+	</select>
+	
+    <select id="selectDtl" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT 
+		      '0'   AS CHK
+		    , ''    AS ROWFLAG
+		    , A.REQ_ID
+		    , A.DTL_SEQ
+		    , A.BIZ_ID
+		    , A.BIZ_NM
+		    , A.USER_ID
+		    , A.USER_NM
+		    , A.DEPT_NM
+		    , A.APPR_DT
+		    , A.APPR_ST_CD
+		    , A.APPR_DESC
+		    , A.FRID
+		    , A.FRDT
+		    , A.LMID
+		    , A.LMDT
+		    , A.LMPID
+		
+		FROM
+		    SR_MA_REQ_REFBIZ_DTL A 
+		
+		WHERE 1 = 1
+		AND A.REQ_ID = #{REQ_ID}
+    </select>
+    
+    
+    <select id="selectReqTeamChk" parameterType="java.util.Map" resultType="String">
+	   SELECT 
+	   		CASE WHEN COUNT(1) > 0 THEN 'Y' ELSE 'N' END AS IT_YN
+	   FROM WF_PROC_HIST
+	  WHERE 1=1
+	   	AND PROC_NUMBER		= #{REQ_ID}
+	   	AND WF_PROC_CD 		= 'WF_PROC_2010'
+	   	AND APPR_STAT_CD	='APST_99'
+	   	AND APPR_LVL_SEQ	='2' 
+		
+	</select>
+
+    <insert id="insertSql" parameterType="java.util.Map">
+        INSERT INTO vi_PMS_CHG_PFMC
+		( PJ_NO, DEV_CHG_NO, WSO_DMD_ORGN_NAME, CHG_DMD_ORGN_NAME, CHG_DMD_UP_ORGN_NAME, MPR_NO, CHG_TY, CHG_RSN, CHG_NAME, CHG_CNT, CHG_STT, SYS_TCD )
+		SELECT B.REQ_ID AS PJ_NO
+		     , '1' AS DEV_CHG_NO
+		     , U.DEPT_NM AS WSO_DMD_ORGN_NAME
+		     , U.DEPT_NM AS CHG_DMD_ORGN_NAME
+		     , (SELECT TRIM(DEPT_NM) FROM FOMM_DEPT_MT WHERE DEPT_CD = D.UP_DEPT_CD) AS CHG_DMD_UP_ORGN_NAME
+		     , M.REV_CGER_ID AS MPR_NO
+		     , '4' AS CHG_TY
+		     , NULL AS CHG_RSN
+		     , B.TITLE AS CHG_NAME
+		     , B.CONTENTS AS CHG_CNT
+		     , '1' AS CHG_STT
+		     , 'SPP' AS SYS_TCD     
+		FROM SR_BASE_INFO B INNER JOIN SR_MA_REQ M ON B.REQ_ID = M.REQ_ID
+		INNER JOIN FOMM_USER_MT U ON M.REV_CGER_ID = U.USER_ID
+		INNER JOIN FOMM_DEPT_MT D ON D.DEPT_CD = U.DEPT_CD
+		WHERE B.REQ_ID = #{REQ_ID}
+          AND NOT EXISTS (
+            SELECT PJ_NO FROM vi_PMS_CHG_PFMC WHERE PJ_NO = B.REQ_ID )
+            		
+    </insert>
+
+    <insert id="insertSqlIt" parameterType="java.util.Map">
+        INSERT INTO vi_PMS_CHG_PFMC
+        ( PJ_NO, DEV_CHG_NO, WSO_DMD_ORGN_NAME, CHG_DMD_ORGN_NAME, CHG_DMD_UP_ORGN_NAME, MPR_NO, CHG_TY, CHG_RSN, CHG_NAME, CHG_CNT, CHG_STT, SYS_TCD )
+        SELECT B.REQ_ID AS PJ_NO
+             , '1' AS DEV_CHG_NO
+             , U.DEPT_NM AS WSO_DMD_ORGN_NAME
+             , U.DEPT_NM AS CHG_DMD_ORGN_NAME
+             , (SELECT TRIM(DEPT_NM) FROM FOMM_DEPT_MT WHERE DEPT_CD = D.UP_DEPT_CD) AS CHG_DMD_UP_ORGN_NAME
+             , B.REQ_USER_ID AS MPR_NO
+             , '4' AS CHG_TY
+             , NULL AS CHG_RSN
+             , B.TITLE AS CHG_NAME
+             , B.CONTENTS AS CHG_CNT
+             , '1' AS CHG_STT
+             , 'SPP' AS SYS_TCD     
+        FROM SR_BASE_INFO B INNER JOIN SR_MA_REQ M ON B.REQ_ID = M.REQ_ID
+        INNER JOIN FOMM_USER_MT U ON B.REQ_USER_ID = U.USER_ID
+        INNER JOIN FOMM_DEPT_MT D ON D.DEPT_CD = U.DEPT_CD
+        WHERE B.REQ_ID = #{REQ_ID}
+          AND NOT EXISTS (
+            SELECT PJ_NO FROM vi_PMS_CHG_PFMC WHERE PJ_NO = B.REQ_ID )
+    </insert>
+    
+    <insert id="insertSqlPg" parameterType="java.util.Map">
+        /* 요청관리폐기경우 등록시점 vi_pms_chg_pfmc INSERT처리( CHG_TY = '6' ) */
+         INSERT INTO vi_PMS_CHG_PFMC
+        ( PJ_NO, DEV_CHG_NO, WSO_DMD_ORGN_NAME, CHG_DMD_ORGN_NAME, CHG_DMD_UP_ORGN_NAME, MPR_NO, CHG_TY, CHG_RSN, CHG_NAME, CHG_CNT, CHG_STT, SYS_TCD )
+		SELECT B.REQ_ID AS PJ_NO
+		     , '1' AS DEV_CHG_NO
+		     , U.DEPT_NM AS WSO_DMD_ORGN_NAME
+		     , U.DEPT_NM AS CHG_DMD_ORGN_NAME
+		     , (SELECT TRIM(DEPT_NM) FROM FOMM_DEPT_MT WHERE DEPT_CD = D.UP_DEPT_CD) AS CHG_DMD_UP_ORGN_NAME
+		     , B.REQ_USER_ID AS MPR_NO
+		     , '6' AS CHG_TY
+		     , NULL AS CHG_RSN
+		     , B.TITLE AS CHG_NAME
+		     , B.CONTENTS AS CHG_CNT
+		     , '1' AS CHG_STT
+		     , 'SPP' AS SYS_TCD     
+		FROM SR_BASE_INFO B INNER JOIN WF_REQ_TMPLAT_HT TM ON B.REQ_TMPLAT_ID = TM.REQ_TMPLAT_ID AND TM.SVC_DTL_CD LIKE 'WFSR3%'
+		INNER JOIN FOMM_USER_MT U ON B.REQ_USER_ID = U.USER_ID
+		INNER JOIN FOMM_DEPT_MT D ON D.DEPT_CD = U.DEPT_CD
+		WHERE B.REQ_ID = #{REQ_ID}
+          AND NOT EXISTS (
+            SELECT PJ_NO FROM vi_PMS_CHG_PFMC WHERE PJ_NO = B.REQ_ID )
+
+    </insert>
+
+
+	<insert id="insertReq" parameterType="java.util.Map">
+	   INSERT INTO SR_MA_REQ
+		(
+		      REQ_ID
+		    , REV_DIV_CD
+		    , REV_CGER_ID
+		    , REV_CGER_NM
+		    , REV_DEPT_CD
+		    , REV_DEPT_NM
+		    , REQ_PURPOSE
+		    , CONT_DESC
+		    , EXPECT_EFFECT
+		    , MNUL_MOD_TARG_YN
+		    , RMK
+		    , FRID
+		    , FRDT
+		    , LMID
+		    , LMDT
+		    , LMPID
+		    , REV_CGER_DEPT_NM
+		    , OCCR_DT
+		    , COGN_DT
+		    , PROC_DT
+		    , CODE_CGER_ID
+		    , CODE_CGER_NM
+		    , OCCRTIME
+		    , COGNTIME
+		    , PROCTIME
+		    , SR_EMGB_CD
+		    , CSR_GRADE
+		)
+		VALUES
+		(
+		      #{REQ_ID}
+		    , #{REV_DIV_CD}
+		    , #{REV_CGER_ID}
+		    , #{REV_CGER_NM}
+		    , #{REV_DEPT_CD}
+		    , #{REV_DEPT_NM}
+		    , #{REQ_PURPOSE}
+		    , #{CONT_DESC}
+		    , #{EXPECT_EFFECT}
+		    , #{MNUL_MOD_TARG_YN}
+		    , #{RMK}
+		    , #{LMID}
+		    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		    , #{LMID}
+		    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		    , #{LMPID}
+		    , #{REV_CGER_DEPT_NM}
+		    , #{OCCR_DT}
+		    , #{COGN_DT}
+		    , #{PROC_DT}
+		    , #{CODE_CGER_ID}
+		    , #{CODE_CGER_NM}
+		    , #{OCCRTIME}
+		    , #{COGNTIME}
+		    , #{PROCTIME}
+		    , #{SR_EMGB_CD}
+		    , #{CSR_GRADE}
+		)
+	</insert>
+
+    <insert id="insertDtl" parameterType="java.util.Map">
+        INSERT INTO SR_MA_REQ_REFBIZ_DTL
+		(
+		      REQ_ID
+		    , DTL_SEQ
+		    , BIZ_ID
+		    , BIZ_NM
+		    , USER_ID
+		    , USER_NM
+		    , DEPT_NM
+		    , APPR_DT
+		    , APPR_ST_CD
+		    , APPR_DESC
+		    , FRID
+		    , FRDT
+		    , LMID
+		    , LMDT
+		    , LMPID
+		)
+		VALUES
+		(
+		      #{REQ_ID}
+		    , (SELECT NVL(MAX(DTL_SEQ),0)+1 FROM SR_MA_REQ_REFBIZ_DTL WHERE REQ_ID = #{REQ_ID})
+		    , #{BIZ_ID}
+		    , #{BIZ_NM}
+		    , #{USER_ID}
+		    , #{USER_NM}
+		    , #{DEPT_NM}
+		    , #{APPR_DT}
+		    , #{APPR_ST_CD}
+		    , #{APPR_DESC}
+		    , #{LMID}
+		    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		    , #{LMID}
+		    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		    , #{LMPID}
+		)
+    </insert>
+
+	<update id="modifyReq" parameterType="java.util.Map">
+	   UPDATE SR_MA_REQ SET 
+		      REV_DIV_CD = #{REV_DIV_CD}
+		    , REV_CGER_ID = #{REV_CGER_ID}
+		    , REV_CGER_NM = #{REV_CGER_NM}
+		    , REV_DEPT_CD = #{REV_DEPT_CD}
+		    , REV_DEPT_NM = #{REV_DEPT_NM}
+		    , REQ_PURPOSE = #{REQ_PURPOSE}
+		    , CONT_DESC = #{CONT_DESC}
+		    , EXPECT_EFFECT = #{EXPECT_EFFECT}
+		    , MNUL_MOD_TARG_YN = #{MNUL_MOD_TARG_YN}
+		    , RMK = #{RMK}
+		    , LMID = #{LMID}
+		    , LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		    , LMPID = #{LMPID}
+		    , REV_CGER_DEPT_NM = #{REV_CGER_DEPT_NM}
+		    , OCCR_DT = #{OCCR_DT}
+		    , COGN_DT = #{COGN_DT}
+		    , PROC_DT = #{PROC_DT}
+		    , CODE_CGER_ID = #{CODE_CGER_ID}
+		    , CODE_CGER_NM = #{CODE_CGER_NM}
+		    , OCCRTIME = #{OCCRTIME}
+		    , COGNTIME = #{COGNTIME}
+		    , PROCTIME = #{PROCTIME}
+		    , SR_EMGB_CD = #{SR_EMGB_CD}
+		    , CSR_GRADE = #{CSR_GRADE} 
+		
+		WHERE 1 = 1
+		AND REQ_ID = #{REQ_ID}
+	</update>
+
+    <update id="modifyDtl" parameterType="java.util.Map">
+        UPDATE SR_MA_REQ_REFBIZ_DTL SET 
+		      BIZ_ID = #{BIZ_ID}
+		    , BIZ_NM = #{BIZ_NM}
+		    , USER_ID = #{USER_ID}
+		    , USER_NM = #{USER_NM}
+		    , DEPT_NM = #{DEPT_NM}
+		    , APPR_DT = #{APPR_DT}
+		    , APPR_ST_CD = #{APPR_ST_CD}
+		    , APPR_DESC = #{APPR_DESC}
+		    , LMID = #{LMID}
+		    , LMDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		    , LMPID = #{LMPID} 
+		
+		WHERE 1 = 1
+		AND REQ_ID = #{REQ_ID}
+		AND DTL_SEQ = #{DTL_SEQ}
+    </update>
+
+	<delete id="removeReq" parameterType="java.util.Map">
+	    DELETE
+		FROM SR_MA_REQ 
+		WHERE 1 = 1
+		AND REQ_ID = #{REQ_ID}
+	</delete>
+
+    <delete id="removeDtl" parameterType="java.util.Map">
+        DELETE
+		FROM SR_MA_REQ_REFBIZ_DTL 
+		WHERE 1 = 1
+		AND REQ_ID = #{REQ_ID}
+		AND DTL_SEQ = #{DTL_SEQ}
+    </delete>
+
+
+
+               
+
+    <insert id="insertNwIpMt" parameterType="java.util.Map">
+        /* IT작업신청서 - IP신청신청(사용안함 - procedure 변경하여 처리함) */
+        BEGIN
+
+            FOR CUR IN
+            (
+                SELECT 
+                      A.REQ_ID
+                    , A.DTL_SEQ
+                    , A.REG_CUD_CD
+                    , A.CI_ID
+                    , A.HOST_NM
+                    , A.SYS_IP_CD
+                    , A.USE_IP_CD
+                    , A.ETC_COMMENT
+                    , A.V_IP_YN
+                    , A.IP_ADDR
+                    , A.MAC_ADDR
+                    , A.SERIAL_NO
+                    , A.USAGE_NM
+                    , A.BIZ_USER_ID
+                    , A.BIZ_USER_NM
+                    , A.MNG_USER_ID
+                    , A.MNG_USER_NM
+                    , A.SYS_IPMNG_CD
+                    <!-- , A.REQ_LOC_CD -->
+                    , A.NET_NM
+                    , A.ETH_CHNL_YN
+                    , A.NIC_TYPE_CD
+                    , A.SYS_RACK_NM
+                    , A.NET_RACK_NM
+                    , A.SYS_RACK_POS_CD
+                    , A.NET_RACK_POS_CD
+                    , A.MAIN_SWITCH_NM
+                    , A.MAIN_SWITCH_NO
+                    , A.BKUP_SWITCH_NM
+                    , A.BKUP_SWITCH_NO
+                    , A.IP_ED_DT
+                    , A.RMK
+                    , #{LMID} AS FRID
+                    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')    AS FRDT
+                    , #{LMID} AS LMID
+                    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')    AS LMDT
+                    , #{LMPID} AS LMPID
+                    , (SELECT MAX(REG_STIME) FROM WF_PROC_HIST WHERE PROC_NUMBER = A.REQ_ID ) AS APPR_DT
+                    , 'NWIP' || TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') ||  LPAD(ROWNUM,2,'0') AS NWIP_ID
+                    , (SELECT REQ_USER_ID FROM SR_BASE_INFO B WHERE B.REQ_ID = A.REQ_ID) AS REQ_USER_ID
+                    , (SELECT REQ_USER_NM FROM SR_BASE_INFO B WHERE B.REQ_ID = A.REQ_ID) AS REQ_USER_NM                    
+                FROM
+                    SR_CH_NWIP_DTL_REQ A 
+                WHERE 1 = 1
+                AND A.REQ_ID = #{REQ_ID}
+            )
+            LOOP
+            
+                /* MT 저장 */   
+                INSERT INTO OP_NWIP_MT
+                (
+                    NWIP_ID, REG_USER_ID, REG_USER_NM, APPR_DT,
+                    REQ_ID,DTL_SEQ,REG_CUD_CD,CI_ID,HOST_NM,SYS_IP_CD,USE_IP_CD,ETC_COMMENT,V_IP_YN,IP_ADDR,MAC_ADDR,SERIAL_NO,USAGE_NM,BIZ_USER_ID,BIZ_USER_NM,MNG_USER_ID,MNG_USER_NM,SYS_IPMNG_CD,NET_NM,ETH_CHNL_YN,NIC_TYPE_CD,SYS_RACK_NM,NET_RACK_NM,SYS_RACK_POS_CD,NET_RACK_POS_CD,MAIN_SWITCH_NM,MAIN_SWITCH_NO,BKUP_SWITCH_NM,BKUP_SWITCH_NO,IP_ED_DT,RMK,FRID,FRDT,LMID,LMDT,LMPID
+                )
+                VALUES
+                (
+                    CUR.NWIP_ID, CUR.REQ_USER_ID, CUR.REQ_USER_NM, CUR.APPR_DT,
+                    CUR.REQ_ID, CUR.DTL_SEQ, CUR.REG_CUD_CD, CUR.CI_ID, CUR.HOST_NM, CUR.SYS_IP_CD, CUR.USE_IP_CD, CUR.ETC_COMMENT, CUR.V_IP_YN, CUR.IP_ADDR, CUR.MAC_ADDR, CUR.SERIAL_NO, CUR.USAGE_NM, CUR.BIZ_USER_ID, CUR.BIZ_USER_NM, CUR.MNG_USER_ID, CUR.MNG_USER_NM, CUR.SYS_IPMNG_CD, CUR.NET_NM, CUR.ETH_CHNL_YN, CUR.NIC_TYPE_CD, CUR.SYS_RACK_NM, CUR.NET_RACK_NM, CUR.SYS_RACK_POS_CD, CUR.NET_RACK_POS_CD, CUR.MAIN_SWITCH_NM, CUR.MAIN_SWITCH_NO, CUR.BKUP_SWITCH_NM, CUR.BKUP_SWITCH_NO, CUR.IP_ED_DT, CUR.RMK, CUR.FRID, CUR.FRDT, CUR.LMID, CUR.LMDT, CUR.LMPID
+                );                                
+                 
+            END LOOP;
+        
+        END;
+    </insert>
+    
+    
+    <insert id="insertOmUserMt" parameterType="java.util.Map">
+        /* IT작업신청서 - 외주직원 사번신청(사용안함 - procedure 변경하여 처리함) */
+        BEGIN
+        
+            FOR CUR IN
+            (
+                SELECT 
+                      USER_ID
+                    , USER_NM
+                    , USER_EN_NM
+                    , EMPL_GB_CD
+                    , COMPANY_ID
+                    , COMPANY_NM
+                    , TECH_GRADE_CD
+                    , HP_NO
+                    , DEPT_CD
+                    , DEPT_NM
+                    , CNTC_NO
+                    , CNTC_NM
+                    , CNTC_ED_DT
+                    , REG_ID_DT
+                    , PRE_ID_DT
+                    , EXT_ID_DT
+                    , EXP_ID_DT
+                    , CLOUD_IP_ADDR
+                    , PC_IP_ADDR
+                    , OFFCIE_TEL_NO
+                    , N1_ORG_SMIT_YN
+                    , N2_ORG_SMIT_YN
+                    , RMK
+                    , #{LMID} AS LMID
+                    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')    AS LMDT
+                    , #{LMPID} AS LMPID
+                FROM
+                    SR_CH_IDCARD_DTL_REQ 
+                WHERE 1 = 1
+                AND REQ_ID = #{REQ_ID}
+                AND USER_ID IS NOT NULL
+            )
+            LOOP
+
+                INSERT INTO OM_USER_MT
+                (
+                    USER_ID
+                   ,USER_NM
+                   ,USER_EN_NM
+                   ,OM_DIV
+                   ,COMPANY_ID
+                   ,COMPANY_NM
+                   ,CNTC_GRADE
+                   ,HP_NO
+                   ,DEPT_CD
+                   ,DEPT_NM
+                   ,CNTC_NO
+                   ,CNTC_NM
+                   ,CNTC_ED_DT
+                   ,REG_ID_DT
+                   ,PRE_ID_DT
+                   ,EXT_ID_DT
+                   ,EXP_ID_DT
+                   ,CLOUD_IP_ADDR
+                   ,PC_IP_ADDR
+                   ,OFFCIE_TEL_NO
+                   ,N1_ORG_SMIT_YN
+                   ,N2_ORG_SMIT_YN
+                   ,RMK                   
+                   ,FRID
+                   ,FRDT
+                   ,LMID,LMDT,LMPID
+                )
+                VALUES
+                (
+                    ( CUR.USER_ID
+                   , CUR.USER_NM
+                   , CUR.USER_EN_NM
+                   , CUR.OM_DIV
+                   , CUR.COMPANY_ID
+                   , CUR.COMPANY_NM
+                   , CUR.CNTC_GRADE
+                   , CUR.HP_NO
+                   , CUR.DEPT_CD
+                   , CUR.DEPT_NM
+                   , CUR.CNTC_NO
+                   , CUR.CNTC_NM
+                   , CUR.CNTC_ED_DT
+                   , CUR.REG_ID_DT
+                   , CUR.PRE_ID_DT
+                   , CUR.EXT_ID_DT
+                   , CUR.EXP_ID_DT
+                   , CUR.CLOUD_IP_ADDR
+                   , CUR.PC_IP_ADDR
+                   , CUR.OFFCIE_TEL_NO
+                   , CUR.N1_ORG_SMIT_YN
+                   , CUR.N2_ORG_SMIT_YN
+                   , CUR.LMID, CUR.LMDT
+                   , CUR.LMID, CUR.LMDT, CUR.LMPID
+                )
+                ;
+
+            END LOOP;
+
+        END;
+        
+    </insert>
+    
+    
+
+    <insert id="insertBackupMt" parameterType="java.util.Map">
+        /* IT작업신청서 - 백업신청신청 */
+        BEGIN
+        
+            FOR CUR IN
+            (
+                SELECT 
+                      A.REQ_ID
+                    , A.SEQ
+                    , A.BK_GB_CD
+                    , A.BK_OS_CD
+                    , A.BK_TYPE_CD
+                    , A.BK_CYCLE_CD
+                    , A.BK_STORE_DT
+                    , A.BK_DISPER_YN
+                    , A.BK_DISPER_DT
+                    , A.BK_POLICY_NM
+                    , A.BK_METHOD_NM
+                    , A.BK_TARGET_NM
+                    , A.RMK
+                    , A.CI_ID
+                    , A.HOST_NM
+                    , A.IP_ADDR
+                    , A.HOST_DESC
+                    , A.MNG_USER_ID
+                    , A.MNG_USER_NM
+                    , A.MNG_DEPT_NM
+                    , #{LMID} AS LMID
+                    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')    AS LMDT
+                    , #{LMPID} AS LMPID
+                FROM
+                    SR_CH_BACKUP_REQ A 
+                WHERE 1 = 1
+                AND A.REQ_ID = #{REQ_ID}
+            )
+            LOOP
+
+                INSERT INTO OP_BACKUP_MT
+                (
+                    BACKUP_ID, REQ_ID,SEQ,BK_GB_CD,BK_OS_CD,BK_TYPE_CD,BK_CYCLE_CD,BK_STORE_DT,BK_DISPER_YN,BK_DISPER_DT,BK_POLICY_NM,BK_METHOD_NM,BK_TARGET_NM,RMK,CI_ID,HOST_NM,IP_ADDR,HOST_DESC,MNG_USER_ID,MNG_USER_NM,MNG_DEPT_NM,LMID,LMDT,LMPID
+                )
+                VALUES
+                (
+                    (SELECT 'BKUP' || TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(NVL(MAX(SUBSTR(BACKUP_ID, -6)), 0) + 1, 7, '0') FROM OP_BACKUP_MT),
+                    CUR.REQ_ID, CUR.SEQ, CUR.BK_GB_CD, CUR.BK_OS_CD, CUR.BK_TYPE_CD, CUR.BK_CYCLE_CD, CUR.BK_STORE_DT, CUR.BK_DISPER_YN, CUR.BK_DISPER_DT, CUR.BK_POLICY_NM, CUR.BK_METHOD_NM, CUR.BK_TARGET_NM, CUR.RMK, CUR.CI_ID, CUR.HOST_NM, CUR.IP_ADDR, CUR.HOST_DESC, CUR.MNG_USER_ID, CUR.MNG_USER_NM, CUR.MNG_DEPT_NM, CUR.LMID, CUR.LMDT, CUR.LMPID
+                )
+                ;
+
+            END LOOP;
+
+        END;
+        
+    </insert>
+
+                
+    <insert id="insertOpCloudMt" parameterType="java.util.Map">
+        /* IT작업신청서 - Cloud신청신청 */
+        BEGIN
+        
+            FOR CUR IN
+            (
+                SELECT 
+                     REQ_ID
+                    ,DTL_SEQ
+                    ,REG_CUD_CD
+                    ,REG_UG_CD
+                    ,REG_OS_CD
+                    ,REG_NW01_CD
+                    ,REG_NW02_CD
+                    ,REG_SV_CD
+                    ,USE_ST_DT
+                    ,USE_ED_DT
+                    ,CI_ID
+                    ,HOST_NM
+                    ,CPU_CORE_CNT
+                    ,MEM_GB
+                    ,DSK_GB
+                    ,BIZ_ID
+                    ,BIZ_NM
+                    ,BIZ_USER_ID
+                    ,BIZ_USER_NM
+                    ,RMK
+                    ,(SELECT REQ_DATE FROM SR_BASE_INFO B WHERE B.REQ_ID = #{REQ_ID} ) AS REQ_DATE
+                    ,BIZ_USER_ID AS LMID
+                    ,TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')    AS LMDT
+                    ,#{LMPID} AS LMPID
+                FROM
+                    SR_CH_CLOUD_DTL_REQ 
+                WHERE 1 = 1
+                AND REQ_ID = #{REQ_ID}
+            )
+            LOOP
+
+                INSERT INTO OP_CLOUD_MT
+                (
+                    CLOUD_ID
+                    ,REQ_ID
+                    ,SEQ
+                    ,REG_CUD_CD
+                    ,REG_UG_CD
+                    ,REG_OS_CD
+                    ,REG_NW01_CD
+                    ,REG_NW02_CD
+                    ,REG_SV_CD
+                    ,USE_ST_DT
+                    ,USE_ED_DT
+                    ,CI_ID
+                    ,HOST_NM
+                    ,CPU_CORE_CNT
+                    ,MEM_GB
+                    ,DSK_GB
+                    ,BIZ_ID
+                    ,BIZ_NM
+                    ,BIZ_USER_ID
+                    ,BIZ_USER_NM
+                    ,RMK
+                    ,HST_SEQ
+                    ,REG_OS_TCD
+                    ,REQ_DATE
+                    ,FRID,FRDT,LMID,LMDT,LMPID
+                )
+                VALUES
+                (
+                    'CLD' || TO_CHAR(SYSDATE, 'YYYYMMDD') || LPAD(SEQ_OP_CLOUD_ID.NEXTVAL, 7,'0')
+                    ,CUR.REQ_ID
+                    ,CUR.DTL_SEQ
+                    ,CUR.REG_CUD_CD
+                    ,CUR.REG_UG_CD
+                    ,CUR.REG_OS_CD
+                    ,CUR.REG_NW01_CD
+                    ,CUR.REG_NW02_CD
+                    ,CUR.REG_SV_CD
+                    ,CUR.USE_ST_DT
+                    ,CUR.USE_ED_DT
+                    ,CUR.CI_ID
+                    ,CUR.HOST_NM
+                    ,CUR.CPU_CORE_CNT
+                    ,CUR.MEM_GB
+                    ,CUR.DSK_GB
+                    ,CUR.BIZ_ID
+                    ,CUR.BIZ_NM
+                    ,CUR.BIZ_USER_ID
+                    ,CUR.BIZ_USER_NM
+                    ,CUR.RMK
+                    ,1
+                    ,CUR.REG_OS_CD
+                    ,CUR.REQ_DATE
+                    ,CUR.LMID, CUR.LMDT
+                    ,CUR.LMID, CUR.LMDT, CUR.LMPID
+                )
+                ;
+
+            END LOOP;
+
+        END;
+        
+    </insert>
+
+
+
+    <insert id="call_prc_opNwIpMt" parameterType="java.util.Map" statementType="CALLABLE">
+        /* IT작업신청서 - IP신청 운영현황(OP_NWIP_MT)반영  */
+        { CALL prc_op_nwip_mt( #{REQ_ID, mode=IN, jdbcType=VARCHAR}, #{LMID, mode=IN, jdbcType=VARCHAR}, #{LMPID, mode=IN, jdbcType=VARCHAR} ) }
+    </insert>
+                  
+    <insert id="call_prc_omUserMt_create" parameterType="java.util.Map" statementType="CALLABLE">
+        /* IT작업신청서 - 외주마스터(OM_USER_MT), 사용자마스터 반영 (FOMM_USER_MT)*/
+        { CALL PRC_OM_USER_MT_CREATE( #{REQ_ID, mode=IN, jdbcType=VARCHAR}, #{LMID, mode=IN, jdbcType=VARCHAR}, #{LMPID, mode=IN, jdbcType=VARCHAR} ) }
+    </insert>
+              
+
+                  
+    <insert id="call_prc_omUserMt_update" parameterType="java.util.Map" statementType="CALLABLE">
+        /* IT작업신청서 - 외주마스터(OM_USER_MT), 사용자마스터 반영 (FOMM_USER_MT)*/
+        { CALL PRC_OM_USER_MT_UPDATE( #{REQ_ID, mode=IN, jdbcType=VARCHAR}, #{LMID, mode=IN, jdbcType=VARCHAR}, #{LMPID, mode=IN, jdbcType=VARCHAR} ) }
+    </insert>
+              
+
+</mapper>

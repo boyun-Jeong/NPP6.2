@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0710WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+	<!--
+	    SELECT CMM_CD, CMM_CD_NM, UP_CMM_CD, LEVEL AS LVL, SYS_CONNECT_BY_PATH(CMM_CD_NM, '|') FULLPATH 
+		FROM FOMM_CMM_CD_MT C
+		WHERE LEVEL != 3 AND NVL(USE_YN, 'Y')  = 'Y'
+		CONNECT BY PRIOR C.CD_NO = C.UP_CD_NO
+		START WITH C.UP_CMM_CD  = 'BIZC0000'
+		ORDER SIBLINGS BY SORT_ORDR
+	-->
+	SELECT 'ROOT' CMM_CD, '공통' CMM_CD_NM , 'HEAVEN' UP_CMM_CD, 1 lvl, '|공통' fullpath FROM dual
+    UNION ALL
+    SELECT '00000000' CMM_CD, '공통' CMM_CD_NM , 'ROOT' UP_CMM_CD, 2 lvl, '|공통' fullpath FROM dual
+    UNION ALL 
+    SELECT * FROM 
+    (
+    SELECT CMM_CD, CMM_CD_NM,UP_CMM_CD,LEVEL AS LVL, SYS_CONNECT_BY_PATH(CMM_CD_NM, '|') FULLPATH 
+           FROM FOMM_CMM_CD_MT C
+           WHERE LEVEL != 3 AND NVL(USE_YN, 'Y')  = 'Y'
+        <if test="SRCH_WORD != '' and SRCH_WORD != null">
+            AND CMM_CD_NM LIKE '%' ||  #{SRCH_WORD} || '%'
+        </if>
+           CONNECT BY PRIOR C.CD_NO = C.UP_CD_NO
+           START WITH C.UP_CMM_CD  = 'BIZC0000'
+    ORDER SIBLINGS BY SORT_ORDR
+    )
+	
+	
+	
+	</select>
+	
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+			SELECT 
+		      0 AS CHK
+		    , '' AS ROWFLAG
+		    , VERIF_SEQ
+		    , UPMU_ID1
+		    , UPMU_ID2
+		    , UPMU_ID3
+		    , USE_YN
+		    , VERIF_CONT
+		    , VERIF_REM
+		FROM WF_VERIF_CONT
+		WHERE 1=1
+		    --AND USE_YN = 'Y'
+		    AND UPMU_ID2 = #{CMM_CD}
+		ORDER BY REG_STIME DESC
+			
+    </select>
+    
+	<insert id="insert01" parameterType="java.util.Map">
+	
+				INSERT INTO WF_VERIF_CONT
+			    (
+			    VERIF_SEQ
+			    , UPMU_ID1
+			    , UPMU_ID2
+			    , USE_YN
+			    , VERIF_CONT
+			    , VERIF_REM
+			    , REG_USER_ID
+			    , REG_USER_NM
+			    , REG_STIME
+			    )
+			VALUES
+			    (
+			    (SELECT LPAD(NVL(MAX(VERIF_SEQ)+1,1),12,'0') AS VERIF_SEQ FROM WF_VERIF_CONT)
+			    , #{UPMU_ID1}
+			    , #{UPMU_ID2}
+			    , 'Y'
+			    , #{VERIF_CONT}
+			    , #{VERIF_REM}
+			    , #{LMID}
+			    , #{USERNM}
+			    , TO_CHAR(SYSDATE,'YYYYMMDDHH24MIss')
+			)
+	
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	
+	    UPDATE WF_VERIF_CONT SET
+	       
+              USE_YN                        = #{USE_YN}
+            , VERIF_CONT                 = #{VERIF_CONT}
+            , VERIF_REM                   = #{VERIF_REM}
+            , LMOD_USER_ID            = #{LMID}                                                             --최종수정자ID
+            , LMOD_USER_NM          = #{USERNM}                                                       --최종수정일시
+            , SYSMODTIME               = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')    --최종수정 일시
+
+        WHERE 1 = 1
+            AND VERIF_SEQ   = #{VERIF_SEQ}
+	
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	
+    	DELETE
+        FROM WF_VERIF_CONT
+        WHERE 1 = 1
+        AND VERIF_SEQ   = #{VERIF_SEQ}
+		
+	</delete>
+
+</mapper>

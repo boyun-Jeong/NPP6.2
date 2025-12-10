@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR0020PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		/* SR0020PMapper >> select01 */
+		SELECT
+			  0							AS CHK					/* CHECKBOX 컬럼 */
+			, ''							AS ROWFLAG
+			, A.USER_ID										/* ID(사번) */
+			, A.USER_NM										/* 사용자명 */
+			, A.CO_CD											/* 회사코드 */
+			, A.CO_NM											/* 회사명 */
+			, A.DEPT_CD										/* 부서코드 */
+			, A.DEPT_NM										/* 부서명 */
+			, A.POS_NM										/* 직급명 */
+			, A.ROLE_CD
+			, A.ROLE_NM										/* 역할(직책)명 */
+			, A.TELNUM										/* 내선전화번호 */
+			, A.MOBILE_NUM								/* 핸드폰번호 */
+
+		FROM
+			FOMM_USER_MT A
+
+		WHERE 1=1
+		AND A.USE_YN	= 'Y'
+
+		<if test="SEARCH_DEPT != '' and SEARCH_DEPT != null">
+		AND (UPPER(A.DEPT_CD) LIKE '%' || UPPER(#{SEARCH_DEPT}) || '%' OR A.DEPT_NM LIKE '%' || #{SEARCH_DEPT} || '%')
+		</if>
+
+		<if test="SEARCH_USER != '' and SEARCH_USER != null">
+		AND (UPPER(A.USER_ID) LIKE '%' || UPPER(#{SEARCH_USER}) || '%' OR A.USER_NM LIKE '%' || #{SEARCH_USER} || '%')
+		</if>
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		/* SR0020PMapper >> select02 */
+		SELECT
+			  0																										AS CHK						--CHECKBOX 컬럼
+		    , ''																										AS ROWFLAG
+		    , BOX_SEQ																															--승인선ID
+		    , BOX_USER_ID																													--기안자ID
+			, BOX_DESC																														--승인선 설명
+			, BOX_DESC || CASE WHEN DEFAULT_YN = 'Y' THEN '(기본결재선)' END AS BOX_INFO
+			, DEFAULT_YN																													--기본 결재선 여부
+		FROM WF_APPROVAL_BOX_M
+		WHERE 1 = 1
+		AND BOX_USER_ID = #{BOX_USER_ID}
+
+		ORDER BY
+			TO_NUMBER(BOX_SEQ)
+	</select>
+
+	<select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+		/* SR0020PMapper >> select03 */
+		SELECT
+			  0                  			AS CHK						--CHECKBOX 컬럼
+		    , ''                				AS ROWFLAG
+		    , A.BOX_USER_ID										--결재선 사용자ID
+		    , A.BOX_SEQ												--승인선ID
+		    , B.APPR_SEQ												--승인순서
+		    , B.USER_ID												--승인자ID
+            , B.USER_NM												--승인자명
+            , C.CO_CD
+            , C.CO_NM
+            , B.USER_DEPT_CD		AS DEPT_CD				--승인자부서
+            , B.USER_DEPT_NM		AS DEPT_NM				--승인자부서
+            , B.USER_POS_NM		AS POS_NM				--승인자직급
+            , C.ROLE_CD
+            , C.ROLE_NM
+            , C.TELNUM
+            , C.MOBILE_NUM
+
+		FROM
+			 WF_APPROVAL_BOX_M A
+			,WF_APPROVAL_BOX_D B
+			,FOMM_USER_MT C
+
+		WHERE 1 = 1
+		AND A.BOX_USER_ID	= B.BOX_USER_ID
+		AND A.BOX_SEQ		= B.BOX_SEQ
+		AND B.USER_ID			= C.USER_ID
+		AND C.USE_YN			= 'Y'
+		AND A.BOX_USER_ID	= #{BOX_USER_ID}
+
+		<choose>
+			<when test="IS_DEFAULT != '' and IS_DEFAULT != null">			
+		AND	UPPER(A.DEFAULT_YN) = #{IS_DEFAULT}
+			</when>
+			<otherwise>
+		<if test="BOX_SEQ != '' and BOX_SEQ != null">
+		AND A.BOX_SEQ		= #{BOX_SEQ}
+		</if>
+			</otherwise>
+		</choose>
+
+		ORDER BY
+			B.APPR_SEQ
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="Integer" keyProperty="BOX_SEQ" order="BEFORE">
+        	SELECT NVL(MAX(TO_NUMBER(BOX_SEQ)), 0) + 1 FROM WF_APPROVAL_BOX_M WHERE BOX_USER_ID = #{BOX_USER_ID}
+    	</selectKey>
+		INSERT INTO WF_APPROVAL_BOX_M
+		(
+			  BOX_USER_ID	--결재선 사용자ID
+			, BOX_SEQ			--승인선ID
+			, BOX_DESC		--승인선 설명
+			, DEFAULT_YN	--기본 결재선 여부
+			, FRID
+			, FRDT
+			, LMID
+			, LMDT
+			, LMPID
+		)
+		VALUES
+		(
+			  #{BOX_USER_ID}
+			, #{BOX_SEQ}
+			, #{BOX_DESC}
+			, NVL(#{DEFAULT_YN}, 'N')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		)
+	</insert>
+	
+	<insert id="insert02" parameterType="java.util.Map">
+		<selectKey resultType="Integer" keyProperty="APPR_SEQ" order="BEFORE">
+        	SELECT NVL(MAX(APPR_SEQ), 0) + 1 FROM WF_APPROVAL_BOX_D WHERE BOX_USER_ID = #{BOX_USER_ID} AND BOX_SEQ = #{BOX_SEQ}
+    	</selectKey>
+		INSERT INTO WF_APPROVAL_BOX_D
+		(
+			  BOX_USER_ID		--승인자ID
+			, BOX_SEQ				--승인선ID
+			, APPR_SEQ			--승인순서
+			, USER_ID				--승인자ID
+			, USER_NM			--승인자명
+			, USER_DEPT_CD		--승인자부서
+			, USER_DEPT_NM	--승인자부서
+			, USER_POS_NM		--승인자직급
+			, FRID
+			, FRDT
+			, LMID
+			, LMDT
+			, LMPID
+		)
+		VALUES
+		(
+			  #{BOX_USER_ID}
+			, #{BOX_SEQ}
+			, #{APPR_SEQ}
+			, #{USER_ID}
+			, #{USER_NM}
+			, (SELECT DEPT_CD FROM FOMM_USER_MT WHERE USER_ID = #{USER_ID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{USER_ID})
+			, (SELECT POS_NM FROM FOMM_USER_MT WHERE USER_ID = #{USER_ID})
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE WF_APPROVAL_BOX_M SET
+			  BOX_DESC		= #{BOX_DESC}					--승인선 설명
+			, DEFAULT_YN	= NVL(#{DEFAULT_YN}, 'N')	--기본 결재선 여부
+			, LMID				= #{LMID}
+			, LMDT				= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMPID				= #{LMPID}
+		WHERE 1 = 1
+		AND BOX_USER_ID	= #{BOX_USER_ID}	--기안자ID
+		AND BOX_SEQ		= #{BOX_SEQ}		--승인선ID
+	</update>
+
+	<update id="modify02" parameterType="java.util.Map">
+		UPDATE WF_APPROVAL_BOX_M SET
+			  DEFAULT_YN	= 'N'
+			, LMID				= #{LMID}
+			, LMDT				= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMPID				= #{LMPID}
+		WHERE 1 = 1
+		AND BOX_USER_ID	= #{BOX_USER_ID}	--기안자ID
+		AND DEFAULT_YN	= 'Y'
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM WF_APPROVAL_BOX_M
+		WHERE 1 = 1
+		AND BOX_USER_ID	= #{BOX_USER_ID}	--기안자ID
+		AND BOX_SEQ		= #{BOX_SEQ}		--승인선ID
+	</delete>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE
+		FROM WF_APPROVAL_BOX_D
+		WHERE 1 = 1
+		AND BOX_USER_ID	= #{BOX_USER_ID}
+
+		<if test="BOX_SEQ != '' and BOX_SEQ != null">
+		AND BOX_SEQ		= #{BOX_SEQ}	--승인선ID
+		</if>
+
+		<if test="APPR_SEQ != '' and APPR_SEQ != null">
+        AND APPR_SEQ	= #{APPR_SEQ}	--승인순서
+        </if>
+	</delete>
+
+</mapper>

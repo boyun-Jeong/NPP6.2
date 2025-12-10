@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ3100WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.RISK_ID         
+			, A.RISK_NO         
+			, A.RISK_NAME       
+			, A.PJT_ID          
+			, A.RISK_STATUS_CD  
+			, A.RISK_TYPE_CD    
+			, A.RISK_DESC       
+			, A.RISK_STIME      
+			, A.RISK_IMPACT_CD  
+			, A.RISK_PLAN_CD    
+			, A.RISK_REAL_CD    
+			, A.CPL_PLAN_TIME   
+			, A.CPL_ACT_TIME    
+			, A.CHG_USER_ID     
+			, A.CHG_USER_NM     
+			, A.CHG_USER_DEPT   
+			, A.REG_STIME       
+			, A.REG_USER_ID     
+			, A.REG_USER_NM     
+			, A.REG_USER_DEPT   
+			, A.SYSMODTIME      
+			, A.LMOD_USER_ID    
+			, A.LMOD_USER_NM    
+			, A.LMOD_USER_DEPT  
+			, CASE
+				WHEN NVL(CPL_ACT_TIME,'00000000') != '00000000' OR CPL_PLAN_TIME >= TO_CHAR(SYSDATE, 'YYYYMMDD')
+				THEN 'N'
+				ELSE 'Y'
+			  END AS RISK_DELAY_CD
+
+		FROM
+			PJ_RISK A
+
+		WHERE 1 = 1 
+		AND A.PJT_ID = #{PJT_ID}
+		
+		<if test="RISK_NM != '' and RISK_NM != null">
+		AND UPPER(A.RISK_NAME) LIKE '%'|| UPPER(#{risk_nm}) ||'%'
+		</if>
+
+		<if test="RISK_STATUS_CD != '' and RISK_STATUS_CD != null">
+		AND A.RISK_STATUS_CD = #{RISK_STATUS_CD}
+		</if>
+
+		<if test="RISK_DELAY_CD != '' and RISK_DELAY_CD != null">
+		AND CASE
+				WHEN NVL(CPL_ACT_TIME,'00000000') != '00000000' OR CPL_PLAN_TIME >= TO_CHAR(SYSDATE, 'YYYYMMDD')
+				THEN 'N'
+				ELSE 'Y'
+		END = #{RISK_DELAY_CD}
+		</if>
+
+		ORDER BY
+			A.RISK_ID DESC
+	</select>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_RISK 
+		WHERE RISK_ID = #{RISK_ID}
+	</delete>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE FROM PJ_RISK_ACTION
+		WHERE 1 = 1
+		AND RISK_ID = #{RISK_ID}
+	</delete>
+
+</mapper>

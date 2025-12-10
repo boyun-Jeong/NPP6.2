@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0730WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+	   SELECT 
+	       0 AS CHK
+           , '' AS ROWFLAG
+	       , NAME
+	       , BIGO
+	       , REG_USER_ID
+	       , REG_USER_NM
+	       , REG_STIME
+	       , KEY
+        FROM WF_BACH_OUT
+        WHERE 1=1
+            <if test="NAME != '' and NAME != null">
+               AND NAME LIKE '%' ||  #{NAME} || '%'
+            </if>
+            <if test="REG_USER_NM != '' and REG_USER_NM != null">
+               AND REG_USER_NM LIKE '%' ||  #{REG_USER_NM} || '%'
+            </if>
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+	INSERT INTO WF_BACH_OUT
+	    (
+	    NAME
+	    , BIGO
+	    , REG_USER_ID
+	    , REG_USER_NM
+	    , REG_STIME
+	    , KEY
+	    )
+	VALUES
+	    (
+	    #{NAME}
+	    , #{BIGO}
+	    , #{REG_USER_ID}
+	    , #{REG_USER_NM}
+	    , TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:ss')
+	    , (SELECT NVL(MAX(KEY)+1,1) AS KEY FROM WF_BACH_OUT)
+	    )
+		
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	
+	   UPDATE WF_BACH_OUT SET 
+            NAME = #{NAME}
+            , BIGO = #{BIGO}
+      WHERE 1=1
+        AND KEY = #{KEY}
+    
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	   
+        DELETE
+        FROM WF_BACH_OUT
+        WHERE 1 = 1
+        AND KEY = #{KEY}
+	
+	</delete>
+
+</mapper>

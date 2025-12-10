@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ1000WDAO">
+
+<!-- 	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map"> -->
+	<select id="select01" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, ''	AS TEMP_METHOD_ID
+			, METHOD_ID
+			, METHOD_NAME
+			, USE_YN
+			, SUBSTR(ACT_STIME, 1, 8) AS ACT_STIME 
+			, SUBSTR(ACT_ETIME, 1, 8) AS ACT_ETIME
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+			, METHOD_DESC
+			, METHOD_CLASS_CD
+
+		FROM 
+			PJ_METHOD 
+
+		WHERE 1 = 1
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK 
+			, ''	AS ROWFLAG
+			, ''	AS TEMP_METHOD_ID
+			, A.DELIVERY_ID
+			, A.METHOD_ID
+			, A.STAGE_CD
+			, A.DELIVERY_NAME
+			, A.GRADE_INF
+			, A.GRADE_A
+			, A.GRADE_B
+			, A.GRADE_C
+			, A.CHARGE_CD
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, MAX(B.FILE_SAVE_NM)   AS ORG_FILE_NM
+			<!-- , MAX(B.ORG_FILE_NM) AS ORG_FILE_NM -->
+			, '' AS FILE_IMG
+
+		FROM
+			  PJ_METHOD_DLVR A
+			, FOMM_ATCHFILE_MT B
+			, (SELECT * FROM FOMM_CMM_CD_MT C WHERE CODE_DIV = 'PJT_MNG_CD' AND UP_CMM_CD = 'MNG_STAGE_CD') C
+<!-- 			, SPP_PKG.TBT_PJ_FILE_ATTACH B -->
+<!-- 			, SPP_PKG.TBT_PT_CODE C  -->
+
+		WHERE 1 = 1
+<!-- 		AND A.DELIVERY_ID	= B.REF_ID(+) -->
+		AND A.METHOD_ID		= B.PK1(+)
+		AND A.DELIVERY_ID	= B.PK2(+)
+		AND B.KEY_TBL(+)	= 'PJ_METHOD_DLVR'
+		AND B.DEL_YN(+)		= 'N'
+		AND B.TEMP_YN(+)	= 'N'
+		AND A.STAGE_CD		= C.CMM_CD(+)
+		AND A.METHOD_ID		= #{METHOD_ID} 
+
+		GROUP BY
+			  A.DELIVERY_ID
+			, A.METHOD_ID
+			, A.STAGE_CD
+			, A.DELIVERY_NAME
+			, A.GRADE_INF
+			, A.GRADE_A
+			, A.GRADE_B
+			, A.GRADE_C
+			, A.CHARGE_CD
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, C.SORT_ORDR
+
+		ORDER BY
+			C.SORT_ORDR
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="METHOD_ID" order="BEFORE">
+			SELECT
+				'PJMD' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(METHOD_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_METHOD
+   			WHERE 1 = 1
+   			AND METHOD_ID LIKE 'PJMD%'
+			AND LENGTH(METHOD_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_METHOD 
+		(
+			  METHOD_ID
+			, METHOD_NAME
+			, USE_YN
+			, ACT_STIME
+			, ACT_ETIME
+			, METHOD_DESC
+			, METHOD_CLASS_CD
+			
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+			
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  #{METHOD_ID} 
+			, #{METHOD_NAME}
+			, #{USE_YN}
+			, #{ACT_STIME}
+			, #{ACT_ETIME}
+			, #{METHOD_DESC}
+			, #{METHOD_CLASS_CD}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_METHOD SET
+			  METHOD_NAME		= #D{METHOD_NAME}
+			, USE_YN			= #D{USE_YN}
+			, ACT_STIME			= #D{ACT_STIME}
+			, ACT_ETIME			= #D{ACT_ETIME}
+			, METHOD_DESC		= #D{METHOD_DESC}
+			, METHOD_CLASS_CD	= #D{METHOD_CLASS_CD}
+
+			, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+		WHERE 1 = 1
+		AND METHOD_ID = #{METHOD_ID}
+	</update>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="DELIVERY_ID" order="BEFORE">
+			SELECT
+				'PJDL' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(DELIVERY_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_METHOD_DLVR
+   			WHERE 1 = 1
+   			AND DELIVERY_ID LIKE 'PJDL%'
+			AND LENGTH(DELIVERY_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_METHOD_DLVR 
+		(
+			  DELIVERY_ID
+			, METHOD_ID
+			, STAGE_CD
+			, DELIVERY_NAME
+			, GRADE_INF
+			, GRADE_A
+			, GRADE_B
+			, GRADE_C
+			, CHARGE_CD
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  #{DELIVERY_ID}
+			, #{METHOD_ID}
+			, #{STAGE_CD}
+			, #{DELIVERY_NAME}
+			, #{GRADE_INF}
+			, #{GRADE_A}
+			, #{GRADE_B}
+			, #{GRADE_C}
+			, #{CHARGE_CD}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify02" parameterType="java.util.Map">
+		UPDATE PJ_METHOD_DLVR SET			 
+			  STAGE_CD			= #{STAGE_CD}
+			, DELIVERY_NAME		= #{DELIVERY_NAME}
+			, GRADE_INF			= #{GRADE_INF}
+			, GRADE_A			= #{GRADE_A}
+			, GRADE_B			= #{GRADE_B}
+			, GRADE_C			= #{GRADE_C}
+			, CHARGE_CD			= #{CHARGE_CD}
+
+			, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+
+		WHERE 1 = 1
+		AND METHOD_ID	= #{METHOD_ID}
+		AND DELIVERY_ID = #{DELIVERY_ID}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_METHOD
+		WHERE 1 = 1
+		AND METHOD_ID = #{METHOD_ID}
+	</delete>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE FROM PJ_METHOD_DLVR
+		WHERE 1 = 1
+		AND METHOD_ID = #{METHOD_ID}
+	</delete>
+
+	<delete id="remove03" parameterType="java.util.Map">
+		DELETE FROM PJ_METHOD_DLVR
+		WHERE 1 = 1
+		AND METHOD_ID	= #{METHOD_ID}
+		AND DELIVERY_ID	= #{DELIVERY_ID}
+	</delete>
+
+</mapper>

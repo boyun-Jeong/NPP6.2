@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR6110DDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		/* SR6110DMapper >> select01 */
+		SELECT	  '0' AS CHK
+				, '' AS ROWFLAG
+				, REQ_ID	--요청서ID
+				, JOB_NM	--작업명 
+				, JOB_TYPE	--작업구분 
+				, JOB_CONT	--작업내용 
+				, JOB_PLAN_SDT	--작업시작일 
+				, JOB_PLAN_STIME	--작업시작시분 
+				, JOB_PLAN_EDT	--작업종료일 
+				, JOB_PLAN_ETIME	--작업종료시분 
+				, JOB_PLAN_MH	--작업계획시간 
+				, JOB_TGT_RSC	--작업대상자원 
+				, JOB_TGT_CI	--작업대상CI 
+				, JOB_CNTL_ITEM	--작업관제항목 
+				, JOB_EVNT_GRD	--작업이벤트등급 
+				, JOB_CRTC_SET_MTH	--작업임계치설정방안 
+				, JOB_SEC_PATCH_YN	--작업보안패치여부 
+				, JOB_VACN_INST_YN	--작업백신설치여부 
+				, JOB_DATA_DEL_YN	--작업자료삭제여부 
+				, JOB_SVC_IMPT	--작업서비스영향도 
+				, JOB_ADVC_PREP_CONT	--작업사전준비내용 
+				, JOB_TO_BRANCH_ID	--목적지점/센터 MS_BRANCH 참조
+				, JOB_TO_USER_ID	--처리담당자 COMMON_USER참조
+				, JOB_REQ_DT	--작업요청일자 
+				, JOB_REQ_TIME	--작업요청시간 
+				, JOB_START_BRANCH_ID	--출발지점/센터 MS_BRANCH참조
+				, JOB_INOUT_YN	--반입/반출여부
+				, JOB_TO_USER_NM	--처리담당자명
+				, JOB_TO_USER_DEPT_NM	--처리담당자부서명
+				, CHK_METHOD_CD	--실사방법(PDA/수기)
+				, OUT_FORMAT_YN	--반출DATA삭제여부
+				, OUT_FORMAT_DESC	--반출삭제내용
+				, CONTRACT_ID	--계약ID
+				, CONTRACT_NO	--계약번호
+				, CONTRACT_NM	--계약이름
+				, REF_REQ_ID	--참조요청ID
+				, REF_REQ_TITLE	--참조요청제목
+				, FRIST_INB_YN	--납품입고여부 Y=납품입고
+				, COMPANY_ID	--업체ID
+				, COMPANY_NM	--업체명
+				, REG_DATETIME	--등록자ID 
+				, REG_USER_ID	--등록자명 
+				, REG_USER_NM	--수정자ID 
+				, REG_DEPT_NM	--수정자명 
+				, LMOD_DATETIME
+				, LMOD_USER_ID
+				, LMOD_USER_NM
+				, LMOD_DEPT_NM
+		FROM 	  AM_REQ_JOB
+		WHERE 	  1 = 1
+		<if test="REQ_ID != '' and REQ_ID != null">
+			AND REQ_ID = #{REQ_ID}
+		</if>
+	</select>
+
+
+	<insert id="insert01" parameterType="java.util.Map">
+		/* SR6110DMapper >> insert01 */
+		INSERT INTO AM_REQ_JOB
+		(
+			  REQ_ID	--요청서ID
+			, JOB_TYPE	--작업구분 
+			, JOB_NM	--작업명 
+			, JOB_CONT	--작업내용 
+			, JOB_PLAN_SDT	--작업시작일 
+			, JOB_PLAN_STIME	--작업시작시분 
+			, JOB_PLAN_EDT	--작업종료일 
+			, JOB_PLAN_ETIME	--작업종료시분 
+			, JOB_PLAN_MH	--작업계획시간 
+			, JOB_TGT_RSC	--작업대상자원 
+			, JOB_TGT_CI	--작업대상CI 
+			, JOB_CNTL_ITEM	--작업관제항목 
+			, JOB_EVNT_GRD	--작업이벤트등급 
+			, JOB_CRTC_SET_MTH	--작업임계치설정방안 
+			, JOB_SEC_PATCH_YN	--작업보안패치여부 
+			, JOB_VACN_INST_YN	--작업백신설치여부 
+			, JOB_DATA_DEL_YN	--작업자료삭제여부 
+			, JOB_SVC_IMPT	--작업서비스영향도 
+			, JOB_ADVC_PREP_CONT	--작업사전준비내용 
+			, JOB_TO_BRANCH_ID	--목적지점/센터 MS_BRANCH 참조
+			, JOB_TO_USER_ID	--처리담당자 COMMON_USER참조
+			, JOB_TO_USER_NM	--처리담당자명
+			, JOB_TO_USER_DEPT_NM	--처리담당자부서명
+			, JOB_REQ_DT	--작업요청일자 
+			, JOB_REQ_TIME	--작업요청시간 
+			, JOB_START_BRANCH_ID	--출발지점/센터 MS_BRANCH참조
+			, JOB_INOUT_YN	--반입/반출여부
+			, CHK_METHOD_CD	--실사방법(PDA/수기)
+			, OUT_FORMAT_YN	--반출DATA삭제여부
+			, OUT_FORMAT_DESC	--반출삭제내용
+			, CONTRACT_ID	--계약ID
+			, CONTRACT_NO	--계약번호
+			, CONTRACT_NM	--계약이름
+			, REF_REQ_ID	--참조요청ID
+			, REF_REQ_TITLE	--참조요청제목
+			, FRIST_INB_YN	--납품입고여부 Y=납품입고
+			, COMPANY_ID	--업체ID
+			, COMPANY_NM	--업체명
+			, REG_DATETIME	--등록자ID 
+			, REG_USER_ID	--등록자명 
+			, REG_USER_NM	--수정자ID 
+			, REG_DEPT_NM	--수정자명 
+			, LMOD_DATETIME
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_DEPT_NM
+		)
+		VALUES
+		(
+			  #{REQ_ID}
+			, #{JOB_TYPE}
+			, #{JOB_NM}
+			, NVL(#{JOB_CONT:VARCHAR}, EMPTY_CLOB())
+			, #{JOB_PLAN_SDT}
+			, #{JOB_PLAN_STIME}
+			, #{JOB_PLAN_EDT}
+			, #{JOB_PLAN_ETIME}
+			, #{JOB_PLAN_MH}
+			, #{JOB_TGT_RSC}
+			, #{JOB_TGT_CI}
+			, #{JOB_CNTL_ITEM}
+			, #{JOB_EVNT_GRD}
+			, #{JOB_CRTC_SET_MTH}
+			, #{JOB_SEC_PATCH_YN}
+			, #{JOB_VACN_INST_YN}
+			, #{JOB_DATA_DEL_YN}
+			, #{JOB_SVC_IMPT}
+			, #{JOB_ADVC_PREP_CONT}
+			, #{JOB_TO_BRANCH_ID}
+			, #{JOB_TO_USER_ID}
+			, #{JOB_TO_USER_NM}
+			, #{JOB_TO_USER_DEPT_NM}
+			, #{JOB_REQ_DT}
+			, #{JOB_REQ_TIME}
+			, #{JOB_START_BRANCH_ID}
+			, #{JOB_INOUT_YN}
+			, #{CHK_METHOD_CD}
+			, #{OUT_FORMAT_YN}
+			, #{OUT_FORMAT_DESC}
+			, #{CONTRACT_ID}
+			, #{CONTRACT_NO}
+			, #{CONTRACT_NM}
+			, #{REF_REQ_ID}
+			, #{REF_REQ_TITLE}
+			, #{FRIST_INB_YN}
+			, #{COMPANY_ID}
+			, #{COMPANY_NM}
+			, #{REG_DATETIME}
+			, #{REG_USER_ID}
+			, #{REG_USER_NM}
+			, #{REG_DEPT_NM}
+			, #{LMOD_DATETIME}
+			, #{LMOD_USER_ID}
+			, #{LMOD_USER_NM}
+			, #{LMOD_DEPT_NM}
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		/* SR6110DMapper >> modify01 */
+		UPDATE	AM_REQ_JOB 
+		SET	  JOB_NM 			= #{JOB_NM}	--작업명 
+			, JOB_TYPE 			= #{JOB_TYPE}	--작업구분 
+			, JOB_CONT 			= NVL(#{JOB_CONT:VARCHAR}, EMPTY_CLOB())	--작업내용 
+			, JOB_PLAN_SDT 		= #{JOB_PLAN_SDT}	--작업시작일 
+			, JOB_PLAN_STIME 	= #{JOB_PLAN_STIME}	--작업시작시분 
+			, JOB_PLAN_EDT 		= #{JOB_PLAN_EDT}	--작업종료일 
+			, JOB_PLAN_ETIME 	= #{JOB_PLAN_ETIME}	--작업종료시분 
+			, JOB_PLAN_MH 		= #{JOB_PLAN_MH}	--작업계획시간 
+			, JOB_TGT_RSC 		= #{JOB_TGT_RSC}	--작업대상자원 
+			, JOB_TGT_CI 		= #{JOB_TGT_CI}	--작업대상CI 
+			, JOB_CNTL_ITEM 	= #{JOB_CNTL_ITEM}	--작업관제항목 
+			, JOB_EVNT_GRD 		= #{JOB_EVNT_GRD}	--작업이벤트등급 
+			, JOB_CRTC_SET_MTH 	= #{JOB_CRTC_SET_MTH}	--작업임계치설정방안 
+			, JOB_SEC_PATCH_YN 	= #{JOB_SEC_PATCH_YN}	--작업보안패치여부 
+			, JOB_VACN_INST_YN 	= #{JOB_VACN_INST_YN}	--작업백신설치여부 
+			, JOB_DATA_DEL_YN 	= #{JOB_DATA_DEL_YN}	--작업자료삭제여부 
+			, JOB_SVC_IMPT 		= #{JOB_SVC_IMPT}	--작업서비스영향도 
+			, JOB_ADVC_PREP_CONT = #{JOB_ADVC_PREP_CONT}	--작업사전준비내용 
+			, JOB_TO_BRANCH_ID 	= #{JOB_TO_BRANCH_ID}	--목적지점/센터 MS_BRANCH 참조
+			, JOB_TO_USER_ID 	= #{JOB_TO_USER_ID}	--처리담당자 COMMON_USER참조
+			, JOB_REQ_DT 		= #{JOB_REQ_DT}	--작업요청일자 
+			, JOB_REQ_TIME 		= #{JOB_REQ_TIME}	--작업요청시간 
+			, JOB_START_BRANCH_ID = #{JOB_START_BRANCH_ID}	--출발지점/센터 MS_BRANCH참조
+			, JOB_INOUT_YN 		= #{JOB_INOUT_YN}	--반입/반출여부
+			, JOB_TO_USER_NM 	= #{JOB_TO_USER_NM}	--처리담당자명
+			, JOB_TO_USER_DEPT_NM = #{JOB_TO_USER_DEPT_NM}	--처리담당자부서명
+			, CHK_METHOD_CD 	= #{CHK_METHOD_CD}	--실사방법(PDA/수기)
+			, OUT_FORMAT_YN 	= #{OUT_FORMAT_YN}	--반출DATA삭제여부
+			, OUT_FORMAT_DESC 	= #{OUT_FORMAT_DESC}	--반출삭제내용
+			, CONTRACT_ID 		= #{CONTRACT_ID}	--계약ID
+			, CONTRACT_NO 		= #{CONTRACT_NO}	--계약번호
+			, CONTRACT_NM 		= #{CONTRACT_NM}	--계약이름
+			, REF_PRC_ID 		= #{REF_PRC_ID}	--참조요청ID
+			, REF_SR_BRIEF 		= #{REF_SR_BRIEF}	--참조요청제목
+			, FRIST_INB_YN 		= #{FRIST_INB_YN}	--납품입고여부 Y=납품입고
+			, COMPANY_ID 		= #{COMPANY_ID}	--업체ID
+			, COMPANY_NM 		= #{COMPANY_NM}	--업체명
+			
+			, LMOD_DATETIME 	= #{LMOD_DATETIME}
+			, LMOD_USER_ID 		= #{LMOD_USER_ID}
+			, LMOD_USER_NM 		= #{LMOD_USER_NM}
+			, LMOD_DEPT_NM 		= #{LMOD_DEPT_NM}
+		WHERE REQ_ID = #{REQ_ID}
+ 	</update>
+ 	
+ 	
+</mapper>

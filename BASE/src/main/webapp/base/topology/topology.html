@@ -1,0 +1,133 @@
+<!doctype html>
+<html style="height:100%">
+<head>
+  <title></title>
+
+  <script type="text/javascript" src="js/vis.js"></script>
+  <link href="css/vis-network.min.css" rel="stylesheet" type="text/css" />
+
+  <style type="text/css">
+    #topology {
+      top:0px;
+      width: 100%;      
+      height: 100%;
+      border: 0px solid lightgray;
+     overflow-y:hidden;
+    }
+	
+
+  </style>
+  
+
+  
+</head>
+<body style="height:98%">
+
+<div id="topology"></div>
+
+<script type="text/javascript">
+	window.onload  = function()
+	{
+		setNexaContents("createComplete");
+	}
+	
+	if(!window.NEXACROHTML)	{
+		window.NEXACROHTML = {};
+	}
+
+	window.NEXACROHTML.FireUserNotify = function(userdata)	{
+		if(window.NEXACROWEBBROWSER)	{
+			window.NEXACROWEBBROWSER.on_fire_onusernotify(window.NEXACROWEBBROWSER, userdata);
+		}else	{
+			window.document.title = userdata;
+		}
+	}
+	
+	function setNexaContents(str)
+	{
+		window.NEXACROHTML.FireUserNotify(str);
+	}
+	
+	
+	function setCreateNetwork(dsNodes, dsEdges){
+		// create an array with nodes
+		var nodes = new vis.DataSet(dsNodes);
+		
+		// create an array with edges
+		var edges = new vis.DataSet(dsEdges);
+		
+		// create a network
+		var container = document.getElementById('topology');
+		var data = {
+			nodes: nodes,
+			edges: edges
+		};
+
+		var options = {
+			layout:{randomSeed:1},//보여주는 형태
+			
+			interaction:{hover:false},
+			
+			manipulation: {
+				enabled: false
+			},
+			//mouse over event
+			
+			nodes: {
+				shape: 'dot',
+				scaling: {
+			    	label: {
+			        	min:10,
+			            max:30
+			        },
+					
+			        customScalingFunction: function (min,max,total,value) {
+				  		return value/total;
+					},
+					
+					min:15,
+					max:150
+				}
+			},
+			edges: {
+				smooth: {
+					enabled:true,
+					type:'continuous'
+				}	
+			}
+		};
+
+		var network = new vis.Network(container, data, options);
+		  
+		network.setOptions(options);
+		  
+		//Click Event 설정
+		network.on("click", function (params) {
+			if(null != this.getSelectedNodes() && '' != this.getSelectedNodes()){
+				//팝업 호출
+		        var rtnNodeId = "POP||"+this.getSelectedNodes();
+				//alert(rtnNodeId);
+				setNexaContents(rtnNodeId);
+			}
+		});
+		   network.on("doubleClick", function (params) {
+		       //탭 추가
+		       //var rtnNodeId = "TAB||"+this.getSelectedNodes();
+			//setNexaContents(rtnNodeId);
+		   });
+		
+		network.on("selectNode", function(params) {
+		  if (params.nodes.length == 1) {
+			  if (network.isCluster(params.nodes[0]) == true) {
+				  network.openCluster(params.nodes[0]);
+			  }
+		  }
+		});
+	}
+	
+
+</script>
+
+
+</body>
+</html>

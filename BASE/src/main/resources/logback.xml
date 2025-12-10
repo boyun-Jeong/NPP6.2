@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration scan="true" scanPeriod="30 seconds" debug="true">
+
+<!-- 	<timestamp key="BY_DATE" datePattern="yyyy-MM-dd-HH"/> -->
+
+<!-- 	<property name="LOG_PATH" value="/home/spp23/product/logs" /> -->
+	<property name="LOG_PATH" value="/logs/base" />
+
+	<property name="LOG_FILE_NAME" value="BASE" />
+	
+	<property name="LOG_PATTERN" value="%d{[yyyy.MM.dd HH:mm:ss]} [%-35.35c{1}:%line] %-5p %m%n" />
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${LOG_PATTERN}</pattern>
+		</layout>
+	</appender>
+
+	<appender name="FILE-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/info/${LOG_FILE_NAME}.log</file>
+		<encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        	<fileNamePattern>${LOG_PATH}/info/${LOG_FILE_NAME}.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+        	<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        		<maxFileSize>50MB</maxFileSize>
+        	</timeBasedFileNamingAndTriggeringPolicy>
+        	<maxHistory>60</maxHistory>
+        	<totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    
+    <appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/error/${LOG_FILE_NAME}_ERR.log</file>
+		<filter class = "ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+		<encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        	<fileNamePattern>${LOG_PATH}/error/${LOG_FILE_NAME}_ERR.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+        	<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        		<maxFileSize>50MB</maxFileSize>
+        	</timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+<!--     <appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender"> -->
+<!--         <file>${LOGS_ABSOLUTE_PATH}/error/error-${BY_DATE}.log</file> -->
+<!--         <filter class = "ch.qos.logback.classic.filter.LevelFilter"> -->
+<!--             <level>ERROR</level> -->
+<!--             <onMatch>ACCEPT</onMatch> -->
+<!--             <onMismatch>DENY</onMismatch> -->
+<!--         </filter> -->
+<!--         <encoder> -->
+<!--             <pattern>${LOG_PATTERN}</pattern> -->
+<!--         </encoder> -->
+<!--         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"> -->
+<!--             <fileNamePattern> ./backup/error/error-%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern> -->
+<!--             <maxFileSize>100MB</maxFileSize> -->
+<!--             <totalSizeCap>1GB</totalSizeCap> -->
+<!--             <maxHistory>30</maxHistory> -->
+<!--         </rollingPolicy> -->
+<!--     </appender> -->
+
+	<Logger name="org.springframework" level="INFO" additivity="false">
+		<appender-ref ref="console" />
+		<appender-ref ref="FILE-INFO" />
+		<appender-ref ref="FILE-ERROR" />
+	</Logger>
+
+	<logger name="jdbc" level="OFF"/>
+	<logger name="jdbc.audit" level="OFF"/>
+	<logger name="jdbc.connection" level="OFF"/>
+	<logger name="jdbc.sqlonly" level="OFF"/>
+	<logger name="jdbc.sqltiming" level="INFO"/>
+	<logger name="jdbc.resultset" level="OFF"/>
+	
+	<logger name="jdbc.resultsettable" level="DEBUG" additivity="false">
+		<appender-ref ref="console" />
+        <appender-ref ref="FILE-INFO" />
+        <appender-ref ref="FILE-ERROR" />
+	</logger>
+
+	<Logger name="com.nexacro.xapi" level="ERROR" additivity="false">
+		<appender-ref ref="console" />
+		<appender-ref ref="FILE-INFO" />
+		<appender-ref ref="FILE-ERROR" />
+	</Logger>
+
+	<Logger name="com.base" level="DEBUG" additivity="false">
+		<appender-ref ref="console" />
+		<appender-ref ref="FILE-INFO" />
+		<appender-ref ref="FILE-ERROR" />
+	</Logger>
+
+	<root level="INFO">
+		<appender-ref ref="console" />
+		<appender-ref ref="FILE-INFO"/>
+		<appender-ref ref="FILE-ERROR"/>
+	</root>
+  
+</Configuration>

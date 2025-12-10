@@ -1,0 +1,84 @@
+﻿{
+    "version" : "24.0.0.1",
+    "runtime" :
+    {
+        "target" :
+        {
+            "os" : "windows"
+        },
+        "framework" :
+        [    
+        "./nexacrolib/framework/Framework.js"
+        ],
+        "component" :
+        [    
+        "./nexacrolib/component/CompBase.js",
+        "./nexacrolib/component/ComComp.js",
+        "./nexacrolib/component/Grid.js",
+        "./nexacrolib/component/ListView.js",
+        "./nexacrolib/component/DeviceAPI.js",
+        "./nexacrolib/component/Graphics.js",
+        "./nexacrolib/component/ExLib/core.js",
+        "./nexacrolib/component/ExLib/util.js",
+        "./nexacrolib/component/ExLib/define.js",
+        "./nexacrolib/component/html2canvas/html2canvas.js",
+        "./nexacrolib/component/jspdf/jspdf.min.js",
+        "./nexacrolib/component/jquery/jquery.min.js"
+        ],
+        "environment" :
+        [    
+        {
+        "file":"./environment.xml.js"
+        }
+        ],
+        "screen" :
+        [    
+        {"id":"screen01","type":"desktop","scrollbarsize":"10","icon":"url('')","useproxykeepalive":"true","datatyperule":"2.0","filesecurelevel":"all","networksecurelevel":"all","tracemode":"append","httptimeout":"30","usehttpkeepalive":"true","themeid":"theme::base"}
+        ],
+        "xadl" :
+        [
+        {
+        	"screenid":"screen01",
+        	"launch":"./BaseApp.xadl.js",
+        	"quickview":"./BaseApp.xadl.quickview.js",
+        	"form":[
+        				"./Frame/frLogin.xfdl.js"
+        	]
+        }
+        ],  
+        "protocol" :
+        {
+            "adaptors" :
+            []
+        },
+        "resource" :
+        {
+
+        },
+		"deploy" :
+        {
+
+        },
+        "userfont" :
+        [
+        {
+            "font-family" : "KoPubL",
+            "font-style" : "normal",
+            "font-weight" : "400",
+            "local-font-family" : "KoPubL"
+        },
+        {
+            "font-family" : "KoPubM",
+            "font-style" : "normal",
+            "font-weight" : "400",
+            "local-font-family" : "KoPubM"
+        },
+        {
+            "font-family" : "KoPubB",
+            "font-style" : "normal",
+            "font-weight" : "400",
+            "local-font-family" : "KoPubB"
+        }
+        ]
+    }
+}

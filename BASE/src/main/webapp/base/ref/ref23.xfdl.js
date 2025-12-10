@@ -1,0 +1,234 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("ref23");
+            this.set_titletext("HighChart");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,720);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsChart", this);
+            obj._setContents("<ColumnInfo><Column id=\"Name\" type=\"STRING\" size=\"256\"/><Column id=\"Value\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"Name\">Name1</Col><Col id=\"Value\">10.0</Col></Row><Row><Col id=\"Name\">Name2</Col><Col id=\"Value\">10.0</Col></Row><Row><Col id=\"Name\">Name3</Col><Col id=\"Value\">20</Col></Row><Row><Col id=\"Name\">Name4</Col><Col id=\"Value\">10.0</Col></Row><Row><Col id=\"Name\">Name5</Col><Col id=\"Value\">15</Col></Row><Row><Col id=\"Name\">Name6</Col><Col id=\"Value\">10.0</Col></Row><Row><Col id=\"Name\">Name7</Col><Col id=\"Value\">25</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsChart21", this);
+            obj._setContents("<ColumnInfo><Column id=\"data\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"data\">27.6</Col></Row><Row><Col id=\"data\">28.8</Col></Row><Row><Col id=\"data\">21.7</Col></Row><Row><Col id=\"data\">34.1</Col></Row><Row><Col id=\"data\">29.0</Col></Row><Row><Col id=\"data\">28.4</Col></Row><Row><Col id=\"data\">45.6</Col></Row><Row><Col id=\"data\">51.7</Col></Row><Row><Col id=\"data\">39.0</Col></Row><Row><Col id=\"data\">60.0</Col></Row><Row><Col id=\"data\">28.6</Col></Row><Row><Col id=\"data\">32.1</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsChart22", this);
+            obj._setContents("<ColumnInfo><Column id=\"data\" type=\"STRING\" size=\"256\"/><Column id=\"data2\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"data\">-13.6</Col><Col id=\"data2\">-5</Col></Row><Row><Col id=\"data\">-14.9</Col><Col id=\"data2\">-4</Col></Row><Row><Col id=\"data\">-5.8</Col><Col id=\"data2\">0</Col></Row><Row><Col id=\"data\">-0.7</Col><Col id=\"data2\">-2</Col></Row><Row><Col id=\"data\">3.1</Col><Col id=\"data2\">-1</Col></Row><Row><Col id=\"data\">13.0</Col><Col id=\"data2\">0</Col></Row><Row><Col id=\"data\">14.5</Col><Col id=\"data2\">0</Col></Row><Row><Col id=\"data\">10.8</Col><Col id=\"data2\">4</Col></Row><Row><Col id=\"data\">5.8</Col><Col id=\"data2\">0</Col></Row><Row><Col id=\"data\">-0.7</Col><Col id=\"data2\">4</Col></Row><Row><Col id=\"data\">-11.0</Col><Col id=\"data2\">10</Col></Row><Row><Col id=\"data\">-16.4</Col><Col id=\"data2\">-5</Col></Row></Rows>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new TextArea("TextArea01","540.00","20",null,null,"20","350",null,null,null,null,this);
+            obj.set_taborder("2");
+            obj.set_value("- ref::ref23.xfdl\t\n\n* 하이차트(HighChart) 사용 가이드\n하이차트 사용을 위한 스크립트 가이드를 제공한다.\n\nscript 처리 (자세한 처리는 스크립트 참조)\n1) div배치 후 url setting\n- url속성에 \'comm::comHighChartDiv.xfdl\' 지정\n\n2) 차트 생성을 위한 스크립트 생성\n- comHighChartDiv.xfdl 파일은 \'include \"lib::lib_HighChart.xjs\"\' 하이차트 라이브러리를 include한다.\n- 샘플로 Pie 2D 차트, Dual Axes 차트가 구현되어 있음.\n- 다른 종류의 차트가 필요한 경우 lib_HighChart.xjs파일에 차트를 추가한다. (lib_HighChart.xjs 스크립트 참조)\n- 차트 추가 시 \'https://www.highcharts.com/demo\'에서 스크립트를 참조하여 작성하며, 기본 CORE차트만 사용할 수 있음.\n\n3) 차트 스크립트가 완성되었으면 div의 drawChart()를 호출하여 차트를 그린다.\n- 사용 예시\n  차트 스크립트 얻기\t:: var chartScript = this.divChart.form.hcfnGetPie2DChart(oParam, this.dsChart, \'Name\', \'Value\');\n\t\t\t\t//hcfnGetPie2DChart는 lib::lib_HighChart.xjs에 있음\n  차트 그리기\t\t:: this.divChart.form.drawChart(chartScript);\n\n4) 비고\n- 차트별 옵션이 다르므로 lib::lib_HighChart.xjs 또는 스크립트를 참조하여 파라미터를 올바르게 작성해야 차트가 그려진다.");
+            obj.set_readonly("true");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button00","20","10","120","32",null,null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_text("차트 그리기");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divChart2","20","390","500","300",null,null,null,null,null,null,this);
+            obj.set_taborder("3");
+            obj.set_text("Div00");
+            obj.set_url("comm::comHighChartDiv.xfdl");
+            obj.set_border("1px solid chocolate");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button01","20","354","120","32",null,null,null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_text("차트 그리기");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divChart3","540.00","391","225","129",null,null,null,null,null,null,this);
+            obj.set_taborder("5");
+            obj.set_text("Div00");
+            obj.set_url("comm::comHighChartDiv.xfdl");
+            obj.set_border("1px solid chocolate");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button00_00","775.00","391","120","32",null,null,null,null,null,null,this);
+            obj.set_taborder("6");
+            obj.set_text("차트 그리기");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divChart4","540.00","561","225","129",null,null,null,null,null,null,this);
+            obj.set_taborder("7");
+            obj.set_text("Div00");
+            obj.set_url("comm::comHighChartDiv.xfdl");
+            obj.set_border("1px solid chocolate");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("Button00_00_00","775.00","561","120","32",null,null,null,null,null,null,this);
+            obj.set_taborder("8");
+            obj.set_text("차트 그리기");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divChart","20","47",null,null,"TextArea01:20","373",null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_text("Div00");
+            obj.set_url("comm::comHighChartDiv.xfdl");
+            obj.set_border("1px solid chocolate");
+            this.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this.divChart2
+            obj = new Layout("default","",0,0,this.divChart2.form,function(p){});
+            this.divChart2.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.divChart3
+            obj = new Layout("default","",0,0,this.divChart3.form,function(p){});
+            this.divChart3.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.divChart4
+            obj = new Layout("default","",0,0,this.divChart4.form,function(p){});
+            this.divChart4.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.divChart
+            obj = new Layout("default","",0,0,this.divChart.form,function(p){});
+            this.divChart.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this
+            obj = new Layout("default","",1280,720,this,function(p){});
+            obj.set_mobileorientation("landscape");
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","comm::comHighChartDiv.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("ref23.xfdl", function() {
+
+        this.refChart_onload = function(obj,e)
+        {
+        	// 업무화면 laod 전 공통 처리를 위한 함수.
+        	// 업무단 소스는 fnInit을 onload로 취급하고 fnInit에 기술할 것.
+        	this.gfnFormOnLoad(this, this.fnInit);
+        };
+
+        this.fnInit = function()
+        {
+
+        }
+
+
+
+        this.Button00_onclick = function(obj,e)
+        {
+        	// custom pie chart(donut)
+        	var oParam = {
+        		 colors		: []
+        		,title		: ''
+        		,subtitle	: ''
+        		,objDs		: this.dsChart
+        		,nameCol	: 'Name'
+        		,valueCol	: 'Value'
+        	};
+        	var chartScript = this.divChart.form.miraefnGetPie2DChart(oParam);
+        	trace(chartScript);
+        	this.divChart.form.drawChart(chartScript);
+
+        };
+
+
+        this.Button01_onclick = function(obj,e)
+        {
+        	// custom half donut chart
+        	var oParam = {
+        		 colors		: []
+        		,title		: ''
+        		,subtitle	: ''
+        		,objDs		: this.dsChart
+        		,nameCol	: 'Name'
+        		,valueCol	: 'Value'
+        	};
+        	var chartScript = this.divChart2.form.miraefnGetHalfDonutChart(oParam);
+        	this.divChart2.form.drawChart(chartScript);
+        };
+
+        this.Button00_00_onclick = function(obj,e)
+        {
+        	var oParam = {
+        		  title : 'pie2D chart test'
+        		, colors: ['#dfdfdf', '#111111', '#acacac']
+        		, fontFamily: 'NanumSquareR'
+        	};
+        	var chartScript = this.divChart3.form.hcfnGetPie2DChart(oParam, this.dsChart, 'Name', 'Value');
+        	trace(chartScript);
+        	//this.divChart3.form.drawChart(chartScript);
+        	var width = this.divChart3.getOffsetWidth();
+        	var height = this.divChart3.getOffsetHeight();
+        	trace("width:[" + width + "]height:[" + height + "]");
+        	this.divChart3.resize(100, 100);
+        	this.divChart3.form.drawChart(chartScript);
+        	this.divChart3.resize(width, height);
+        };
+
+        this.Button00_00_00_onclick = function(obj,e)
+        {
+        	var oParam = {
+        		  fontFamily	: 'NanumSquareR'
+        		, title 		: 'MultiAxesChart Test'
+        		, align 		: 'center'
+        		, subtitle 		: 'MultiAxesChart subtitle'
+        		, subalign		: 'center'
+        		, xAxis			: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+        		, yAxis			: {
+        					  title		: ['data1',		'data2',	'data3']
+        					, type		: ['column',	'spline',	'spline']
+        					, dataset	: [this.dsChart21,	this.dsChart22,	this.dsChart22]
+        					, valueCol	: ['data',	'data',		'data2']
+        					, prefix	: ['mm',	'°C',		'cm']
+        					, color		: ['red',	'green',	'blue']
+        		  }
+        	};
+        	var chartScript = this.divChart4.form.hcfnGetMultiAxesChart(oParam);
+        	trace(chartScript);
+        	this.divChart4.form.drawChart(chartScript);
+        };
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.refChart_onload,this);
+            this.Button00.addEventHandler("onclick",this.Button00_onclick,this);
+            this.Button01.addEventHandler("onclick",this.Button01_onclick,this);
+            this.Button00_00.addEventHandler("onclick",this.Button00_00_onclick,this);
+            this.Button00_00_00.addEventHandler("onclick",this.Button00_00_00_onclick,this);
+        };
+        this.loadIncludeScript("ref23.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

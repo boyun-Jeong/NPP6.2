@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.com.dao.FommCodeDAO">
+
+	<!-- 공통코드 전체 조회 -->
+    <select id="selectGetCode" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT
+    		 CD_NO
+    		,LANG_CD
+			,UP_CD_NO
+			,CD_LVL
+			,CMM_CD
+			,UP_CMM_CD
+			,CMM_CD_NM
+			,CMM_CD_DESC
+			,ITM_VAL_1
+			,ITM_VAL_2
+			,ITM_VAL_3
+			,ITM_VAL_4
+			,ITM_VAL_5
+			,CODE_DIV
+			,SORT_ORDR
+			,USE_YN
+			,RMK
+			,FRID
+			,FRDT
+			,LMID
+			,LMDT
+			,LMPID
+    	FROM      FOMM_CMM_CD_MT
+		WHERE     1=1
+        AND       USE_YN = #{USE_YN}
+
+		<if test="CODE_DIV != null and CODE_DIV != ''">
+		AND CODE_DIV = #{CODE_DIV}
+		</if>
+
+		<if test="UP_CMM_CD != null and UP_CMM_CD != ''">
+		AND UP_CMM_CD = #{UP_CMM_CD}
+		</if>
+
+        <if test="CMM_CD != null and CMM_CD != ''">
+        AND CMM_CD = #{CMM_CD}
+        </if>
+
+		AND LANG_CD = 'KR'
+<!-- 		<if test="SEL_LANG_CD != null and SEL_LANG_CD != ''"> -->
+<!-- 		AND LANG_CD = -->
+<!-- 					CASE -->
+<!-- 						WHEN -->
+<!-- 							( -->
+<!-- 							SELECT COUNT(*) -->
+<!-- 							FROM FOMM_CMM_CD_MT -->
+<!-- 							WHERE 1 = 1 -->
+<!-- 							<if test="UP_CMM_CD != null and UP_CMM_CD != ''"> -->
+<!-- 							AND UP_CMM_CD	= #{UP_CMM_CD}							 -->
+<!-- 							</if> -->
+<!-- 							AND LANG_CD		= #{SEL_LANG_CD} -->
+<!-- 							) > 0 -->
+<!-- 						THEN #{SEL_LANG_CD} -->
+<!-- 						ELSE #{SYS_LANG_CD} -->
+<!-- 					END -->
+<!-- 		</if> -->
+
+		ORDER BY
+			SORT_ORDR
+    </select>
+
+    <!-- 공통코드 전체 조회 -->
+    <select id="selectComCode" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT	  A.CD_NO			/* 코드번호 */
+				, A.LANG_CD			/* 언어코드 */
+				, A.UP_CD_NO		/* 상위코드번호 */
+				, A.CMM_CD			/* 공통코드 */
+				, A.UP_CMM_CD		/* 상위코드 */
+				, A.CMM_CD_NM		/* 공통코드명 */
+                , A.CMM_CD_DESC		/* 공통코드 설명 */
+                , NVL(A.CODE_DIV, '') AS CODE_DIV	/* 코드 업무구분(코드 트리 LV1코드를 업무구분으로 사용) */
+				, A.SORT_ORDR		/* 정렬순서 */
+				, A.ITM_VAL_1		/* 항목값1 */
+				, A.ITM_VAL_2		/* 항목값2 */
+				, A.ITM_VAL_3		/* 항목값3 */
+				, A.ITM_VAL_4		/* 항목값4 */
+				, A.ITM_VAL_5		/* 항목값5 */
+				, A.USE_YN			/* 사용여부 */
+				
+				, A.RMK				/* 비고 */
+<!-- 				, A.FRID			/* 최초등록자 ID */ -->
+<!-- 				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM	/* 최초등록자명 */		 -->
+<!-- 				, A.FRDT			/* 최초등록일시 */ -->
+<!-- 				, A.LMID			/* 최종수정자 */ -->
+<!-- 				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM	/* 최종수정자명 */ -->
+<!-- 				, A.LMDT			/* 최종수정일시 */ -->
+<!-- 				, A.LMPID			/* 최종수정화면 ID */ -->
+		FROM      FOMM_CMM_CD_MT A
+		WHERE     1=1
+<!--         AND       A.USE_YN = 'Y' -->
+        AND A.LANG_CD = 'KR'		
+		ORDER BY A.SORT_ORDR ASC
+    </select>
+
+    <!-- 사용자 메세지 조회 -->
+    <select id="selectComMsg" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT
+			MSG_NO
+			${QUERY_STR1}
+		FROM
+		    (
+		    SELECT
+				B.MSG_NO
+		        ${QUERY_STR2}
+
+		    FROM
+		         (SELECT * FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = #{UP_CMM_CD} AND USE_YN = #{USE_YN}) A
+		         
+		    LEFT
+		    OUTER
+		    JOIN FOMM_CMM_MSG_MT B
+		      ON A.CMM_CD   = B.LANG_CD
+		    
+		    GROUP BY
+		        B.MSG_NO
+		    )
+		
+		WHERE MSG_NO IS NOT NULL
+		ORDER BY
+		    MSG_NO
+    </select>
+
+	<!-- 사용자 메세지 조회 -->
+    <select id="selectComWord" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT
+			WORD_NO
+			${QUERY_STR1}
+		FROM
+		    (
+		    SELECT
+				B.WORD_NO
+		        ${QUERY_STR2}
+		    FROM
+		         (SELECT * FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = #{UP_CMM_CD} AND USE_YN = #{USE_YN}) A
+		         
+		    LEFT
+		    OUTER
+		    JOIN FOMM_CMM_WORD_MT B
+		      ON A.CMM_CD   = B.LANG_CD
+		    
+		    GROUP BY
+		        B.WORD_NO
+		    )
+		
+		WHERE WORD_NO IS NOT NULL
+		ORDER BY
+		    WORD_NO
+    </select>
+
+	<select id="selectFommAgencyInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  USER_ID
+			, USER_NM
+			, USER_INFO
+		FROM
+			(
+			SELECT
+				  '1'	AS GUBUN
+				, USER_ID
+				, USER_NM
+				, USER_NM || '(' || USER_ID || ')'	AS USER_INFO
+	
+			FROM FOMM_USER_MT
+			WHERE 1 = 1
+			AND USER_ID	= #{ORG_USER_ID}
+			
+			UNION ALL
+			
+			SELECT
+				  '2'	AS GUBUN
+				, A.USER_ID
+				, B.USER_NM
+				, B.USER_NM || '(' || A.USER_ID || ')'	AS USER_INFO
+	<!-- 			, A.AGENCY_SEQ -->
+	<!-- 			, A.AGENCY_USER_ID -->
+	<!-- 			, A.AGENCY_DUTY_NM -->
+	<!-- 			, A.AGENCY_DEPT_NM -->
+	<!-- 			, A.AGENCY_DESC -->
+	<!-- 			, A.IS_ACTIVE -->
+	<!-- 			, A.IS_STOP -->
+	<!-- 			, A.STOP_DT -->
+	
+			FROM
+				FOMM_AGENCY_INFO A,
+				FOMM_USER_MT B
+	
+			WHERE 1 = 1
+			AND A.USER_ID			= B.USER_ID
+			AND A.AGENCY_USER_ID	= #{ORG_USER_ID}
+			AND TO_CHAR(SYSDATE, 'YYYYMMDD') BETWEEN A.AGENCY_SDT AND A.AGENCY_EDT
+			AND A.IS_ACTIVE			= '1'
+			AND NVL(A.IS_STOP, '0')	= '0'
+		)
+		ORDER BY
+			GUBUN, USER_NM
+	</select>
+
+    <select id="selectJbcPosiList" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT	  JBC_POSI_ID
+            		, JBC_POSI
+        FROM
+            TB_COMMON_POSITION
+        GROUP BY
+              JBC_POSI_ID
+            , JBC_POSI
+        HAVING JBC_POSI_ID IS NOT NULL AND JBC_POSI IS NOT NULL
+
+        ORDER BY
+              JBC_POSI_ID
+            , JBC_POSI
+    </select>
+
+    <select id="selectJbcList" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT 	*
+        FROM    TB_COMMON_POSITION
+        WHERE 	1 = 1
+        AND		JBC_POSI_ID IS NOT NULL
+        AND		JBC_JID IS NOT NULL
+        AND		JBC_JNAME_ORG IS NOT NULL
+        <if test="JBC_POSI_ID != null and JBC_POSI_ID != ''">
+        	AND JBC_POSI_ID = #{JBC_POSI_ID}
+        </if>
+        <if test="JBC_POSI != null and JBC_POSI != ''">	
+        	AND JBC_POSI      = #{JBC_POSI}
+        </if>
+    </select>
+
+    <select id="selectAlarmCnt" parameterType="java.util.Map" resultType="java.util.Map">
+<!-- 	SELECT USER_ID, MEMO_CNT, ALARM_CNT FROM FOMM_ALARM_CNT -->
+<!-- 	WHERE USER_ID = #{USER_ID} -->
+
+		SELECT	(	SELECT	ALARM_CNT
+						FROM		FOMM_ALARM_CNT
+						WHERE	USER_ID = #{USER_ID}
+					)	AS ALARM_CNT
+					, (
+						SELECT	COUNT(*)
+						FROM		FOMM_MEMO_RCV R
+									, FOMM_MEMO M
+									, (
+										SELECT 	  A.MEMO_ID
+												, SUM( CASE WHEN B.READ_YN ='Y'  THEN 1 ELSE 0 END ) ||'/' || COUNT(B.MEMO_RCV_ID) 	AS READ_CNT
+												, SUM(CASE WHEN B.NEW_MEMO_YN = 'Y' THEN 1 ELSE 0 END) 	AS NEW_MEMO_CNT
+										FROM	  FOMM_MEMO A
+												, FOMM_MEMO_RCV B
+										WHERE 	A.MEMO_ID = B.JOB_REV_NO 
+										AND 	B.RCV_TYPE_CD != 'BCC'
+										GROUP BY A.MEMO_ID
+									) S
+						WHERE	1= 1 
+						AND 		M.MEMO_ID = R.JOB_REV_NO
+						AND 		S.MEMO_ID = R.JOB_REV_NO
+						AND 		R.DEL_YN = 'N'
+						AND 		M.MEMO_STATUS_CD = '2'
+						AND 		R.RCV_USER_ID = #{USER_ID}
+						AND		R.READ_YN = 'N'
+					)	AS MEMO_CNT
+		FROM	DUAL
+		
+    </select>
+    
+    <update id="updateAlarmCnt" parameterType="java.util.Map">
+        MERGE INTO FOMM_ALARM_CNT A
+        USING DUAL
+        ON (A.USER_ID = #{USER_ID})
+        WHEN MATCHED THEN
+            UPDATE SET
+                  MEMO_CNT      = NVL((SELECT COUNT(*) FROM FOMM_MEMO_RCV WHERE READ_YN = 'N' AND RCV_USER_ID = #{USER_ID}), 0)
+                , ALARM_CNT     = NVL((SELECT COUNT(*) FROM FOMM_ALARM WHERE CONFIRM_YN = 'N' AND USER_ID = #{USER_ID}), 0)
+                , LAST_CNT_UPDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        WHEN NOT MATCHED THEN
+            INSERT
+            (
+                  USER_ID
+                , MEMO_CNT
+                , ALARM_CNT
+                , LAST_CNT_UPDT
+            )
+            VALUES
+            (
+                  #{USER_ID}
+                , NVL((SELECT COUNT(*) FROM FOMM_MEMO_RCV WHERE READ_YN = 'N' AND RCV_USER_ID = #{USER_ID}), 0)
+                , NVL((SELECT COUNT(*) FROM FOMM_ALARM WHERE CONFIRM_YN = 'N' AND USER_ID = #{USER_ID}), 0)
+                , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            )
+    </update>
+</mapper>

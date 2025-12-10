@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ5100PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT 
+			  A.UTEST_ID
+			, A.UTEST_NO
+			, A.UTEST_NAME
+			, A.UTEST_TYPE_CD
+			, A.PJT_ID
+			, A.BIZ_ID
+			, D.BIZ_NAME
+			, A.RESULT_CD
+			, A.PRG_REF_CD
+			, A.PRG_REF_ID
+			, CASE
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD01' THEN E.SCR_NO
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD02' THEN F.RPPR_NO
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD03' THEN G.INF_NO
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD04' THEN H.BTPR_NO
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD05' THEN I.PRG_NO
+			  END AS PRG_REF_NO
+			, CASE
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD01' THEN E.SCR_NAME
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD02' THEN F.RPPR_NAME
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD03' THEN G.INF_NAME
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD04' THEN H.BTPR_NAME
+				WHEN A.PRG_REF_CD = 'TEST_TARG_CD05' THEN I.PRG_NAME
+			  END AS PRG_REF_NAME
+			, A.DEV_USER_ID
+			, A.DEV_USER_NM
+			, A.DEV_USER_DEPT
+			, A.DEV_TEST_PDATE
+			, A.DEV_TEST_ADATE
+			, A.TESTER_ID
+			, A.TESTER_NM
+			, A.TESTER_DEPT
+			, A.TESTER_PDATE
+			, A.TESTER_ADATE
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, B.PJT_NAME AS PJT_NAME
+			, C.PJT_ID   AS P_PJT_ID 
+			, C.PJT_NAME AS P_PJT_NAME
+
+		FROM
+			  PJ_UNIT_TEST A   
+			, PJ_PROJECT B   
+			, PJ_PROJECT C
+			, PJ_BIZ D
+			, PJ_SCREEN E
+			, PJ_RPTPRG F
+			, PJ_INTERFACE G
+			, PJ_BATCHPRG H
+			, PJ_PROGRAM I
+
+		WHERE 1 = 1
+		AND A.PJT_ID		= B.PJT_ID
+		AND B.PARENT_ID		= C.PJT_ID
+		AND A.PJT_ID		= D.PJT_ID
+		AND A.BIZ_ID		= D.BIZ_ID
+		AND A.PRG_REF_ID	= E.SCR_ID(+)
+		AND A.PJT_ID		= E.PJT_ID(+)
+		AND A.PRG_REF_ID	= F.RPPR_ID(+)
+		AND A.PJT_ID		= F.PJT_ID(+)
+		AND A.PRG_REF_ID	= G.INF_ID(+)
+		AND A.PJT_ID		= G.PJT_ID(+)
+		AND A.PRG_REF_ID	= H.BTPR_ID(+)
+		AND A.PJT_ID		= H.PJT_ID(+)
+		AND A.PRG_REF_ID	= I.PRG_ID(+)
+		AND A.PJT_ID		= I.PJT_ID(+)
+		AND A.PJT_ID		= #{PJT_ID} 
+		AND A.BIZ_ID		= #{BIZ_ID}
+
+		<choose>
+			<when test='"SUM".equals(MODE)'>
+		AND A.TESTER_PDATE <![CDATA[<=]]> #{BDATE}
+        AND (
+			A.TESTER_ADATE IS NULL OR
+			A.TESTER_ADATE > #{BDATE}
+            )
+			</when>
+			<when test='"WEEK".equals(MODE)'>
+		AND A.TESTER_PDATE BETWEEN (SELECT /* 일요일 계산 */TO_CHAR(TO_DATE(#{BDATE},'YYYYMMDD') + (1 - TO_CHAR(TO_DATE(#{BDATE},'YYYYMMDD'),'D')), 'YYYYMMDD') FROM DUAL) AND #{BDATE}
+        AND (
+			A.TESTER_ADATE  IS NULL OR
+			A.TESTER_ADATE NOT BETWEEN (SELECT /* 일요일 계산 */TO_CHAR(TO_DATE(#{BDATE},'YYYYMMDD') + (1 - TO_CHAR(TO_DATE(#{BDATE},'YYYYMMDD'),'D')), 'YYYYMMDD') FROM DUAL) AND #{BDATE}
+             )
+			</when>
+		</choose>
+
+		ORDER BY
+			A.UTEST_NO, A.UTEST_ID
+	</select>
+
+</mapper>

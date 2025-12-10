@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0920WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+	   
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	    /* FOMM0920 수신함에서 메모삭제 */
+	        UPDATE FOMM_MEMO_RCV
+        SET
+            DEL_YN = 'Y'
+            ,DEL_TIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        WHERE  JOB_REV_NO = #{JOB_REV_NO}
+            AND MEMO_RCV_ID = #{MEMO_RCV_ID}
+            AND RCV_USER_ID = #{RCV_USER_ID}
+            AND DEL_YN = 'N'
+	
+	</delete>
+
+</mapper>

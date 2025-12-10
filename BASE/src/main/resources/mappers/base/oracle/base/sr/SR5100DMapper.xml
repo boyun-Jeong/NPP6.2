@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR5100DDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			'0'	AS CHK,
+			''	AS ROWFLAG,
+			REQ_ID,
+			AGREE_COMP_EDT,
+			AGREE_COMP_ETIME,
+			PBM_CATEGORY,
+			UPMU_ID1,
+			UPMU_ID2,
+			UPMU_ID3,
+			CI_ID,
+			CI_NM,
+			RECP_PATH,
+			REQ_CONT,
+			STAT_CD,
+			PLAN_SDT,
+			PLAN_EDT,
+			PLAN_STIME,
+			PLAN_ETIME,
+			PLAN_MH,
+			PROC_PLAN,
+			PROC_SDT,
+			PROC_EDT,
+			PROC_STIME,
+			PROC_ETIME,
+			PROC_CONT,
+			OUTP_MH,
+			KNOW_REG_YN,
+			CAUSE_CONT,
+			TEST_CONT,
+			PROC_COMP_ETIME,
+			PROC_RESULT_TYPE,
+			SOLVED_CONT,
+			CLOSE_ETIME,
+			EVAL_RESULT,
+			EVAL_CONT,
+			REG_USER_ID,
+			REG_USER_NM,
+			REG_STIME,
+			SRL_EXM
+
+		FROM
+			WF_PBM P
+
+		WHERE 1=1
+		AND REQ_ID = #{REQ_ID}		
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		 INSERT INTO WF_PBM
+		(
+			REQ_ID,
+			PBM_CATEGORY,
+			UPMU_ID1,
+			UPMU_ID2,
+			UPMU_ID3,
+			CI_ID,
+			CI_NM,
+			REQ_CONT,
+
+			REG_USER_ID,
+			REG_USER_NM,
+			REG_STIME,
+			LMOD_USER_ID,
+			LMOD_USER_NM,
+			SYSMODTIME
+		)
+		VALUES
+		(
+			#{REQ_ID},
+			#{PBM_CATEGORY},
+			#{UPMU_ID1},
+			#{UPMU_ID2},
+			#{UPMU_ID3},
+			#{CI_ID},
+			#{CI_NM},
+			#{REQ_CONT},
+
+			#{LMID},
+			(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID}),
+			TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'),
+			#{LM_ID},
+			(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID}),
+			TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE WF_PBM SET 
+ 			PBM_CATEGORY	= #{PBM_CATEGORY},
+			UPMU_ID1		= #{UPMU_ID1},
+			UPMU_ID2		= #{UPMU_ID2},
+			UPMU_ID3		= #{UPMU_ID3},
+			CI_ID			= #{CI_ID},
+			CI_NM			= #{CI_NM},
+			REQ_CONT		= #{REQ_CONT},
+
+			LMOD_USER_ID	= #{LMID},
+			LMOD_USER_NM	= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID}),
+			SYSMODTIME		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		WHERE 1=1
+		AND REQ_ID = #{REQ_ID}
+ 	
+		
+	</update>
+</mapper>

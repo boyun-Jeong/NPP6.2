@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR0111WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT	  LVL 					AS MENU_LVL
+					, UP_CMM_CD 		AS UP_MENU_ID
+					, CMM_CD 			AS MENU_ID
+					, CMM_CD_NM 	AS MENU_NM
+					, SORT_ORDR
+					, (SELECT REQ_URL FROM WF_REQ_TMPLAT_MT a WHERE a.REQ_TMPLAT_ID = CMM_CD) AS SR_INFO_URL
+					, 'Y' 					AS READ_YN 
+					, (SELECT REQ_TMPLAT_VER FROM WF_REQ_TMPLAT_HT a WHERE a.REQ_TMPLAT_ID = CMM_CD AND a.CUR_VER_YN = 'Y' ) AS REQ_TMPLAT_VER  
+					, (SELECT ATTACH_USE_YN FROM WF_REQ_TMPLAT_MT a WHERE a.REQ_TMPLAT_ID = CMM_CD) AS ATTACH_USE_YN
+		FROM (
+				SELECT	  1		AS LVL
+                    		, B.UP_CMM_CD
+		                    , SVC_CD      AS CMM_CD
+		                    , B.CMM_CD_NM
+		                    , B.SORT_ORDR
+                FROM		  WF_REQ_TMPLAT_MT A
+                    		, (
+                      			SELECT	*
+                      			FROM
+                        		FOMM_CMM_CD_MT
+                      			WHERE	1=1
+                      			AND CODE_DIV		= 'WORKFLOW_CD'
+                      			AND USE_YN		= 'Y'
+							) B
+				WHERE	1 = 1
+                AND 		B.CMM_CD    = A.SVC_CD
+                AND 		A.DEL_YN    = 'N'
+                AND 		A.USE_YN    = 'Y'
+                GROUP BY
+                    B.UP_CMM_CD,
+                    A.SVC_CD,
+                    B.CMM_CD_NM,
+                    B.SORT_ORDR
+                    
+                UNION ALL
+                SELECT
+                    2               AS LVL,
+                    A.SVC_CD        AS UP_CMM_CD,
+                    A.SVC_DTL_CD    AS CMM_CD,
+                    B.CMM_CD_NM     AS CMM_CD_NM,
+                    B.SORT_ORDR
+                FROM
+                     WF_REQ_TMPLAT_MT A
+                    ,(
+                     SELECT
+                        *
+                     FROM
+                        FOMM_CMM_CD_MT
+                     WHERE 1 = 1
+                     AND CODE_DIV   = 'WORKFLOW_CD'
+                     AND USE_YN     = 'Y'
+                     ) B
+                WHERE 1 = 1
+                AND B.CMM_CD    = A.SVC_DTL_CD
+                AND A.DEL_YN    = 'N'
+                AND A.USE_YN    = 'Y'
+                GROUP BY
+                    A.SVC_CD,
+                    A.SVC_DTL_CD,
+                    B.CMM_CD_NM,
+                    B.SORT_ORDR 
+                UNION ALL
+                SELECT
+                    3 AS LVL,
+                    SVC_DTL_CD  AS UP_CMM_CD,
+                    REQ_TMPLAT_ID   AS CMM_CD,
+                    REQ_TMPLAT_NM   AS CMM_CD_NM,
+                    ROW_NUMBER() OVER(ORDER BY REQ_TMPLAT_ID) AS SORT_ORDR
+                FROM
+                    WF_REQ_TMPLAT_HT
+                WHERE 1 = 1
+                AND CUR_VER_YN  = 'Y'
+                AND USE_YN  = 'Y'
+                GROUP BY
+                    SVC_DTL_CD,
+                    REQ_TMPLAT_ID,
+                    REQ_TMPLAT_NM
+
+                ) b 
+            where 1=1
+            <if test="MENU_NM != '' and MENU_NM != null">   
+	            AND CMM_CD in (
+	            SELECT  distinct MENU_ID
+	                        FROM    (SELECT
+	            LVL AS MENU_LVL
+	            ,UP_CMM_CD AS UP_MENU_ID
+	            ,CMM_CD AS MENU_ID
+	            ,CMM_CD_NM AS MENU_NM
+	            ,SORT_ORDR
+	            ,(SELECT REQ_URL FROM WF_REQ_TMPLAT_MT a WHERE a.REQ_TMPLAT_ID = CMM_CD) AS SR_INFO_URL
+	            ,'Y' AS READ_YN 
+	            ,(SELECT REQ_TMPLAT_VER FROM WF_REQ_TMPLAT_HT a WHERE a.REQ_TMPLAT_ID = CMM_CD) AS REQ_TMPLAT_VER
+	            ,(SELECT ATTACH_USE_YN FROM WF_REQ_TMPLAT_HT a WHERE a.REQ_TMPLAT_ID = CMM_CD) AS ATTACH_USE_YN
+	            FROM
+	                (
+	                SELECT
+	                    1           AS LVL,
+	                    B.UP_CMM_CD,
+	                    SVC_CD      AS CMM_CD,
+	                    B.CMM_CD_NM,
+	                    B.SORT_ORDR
+	                FROM
+	                      WF_REQ_TMPLAT_MT A
+	                    , (
+	                      SELECT *
+	                      FROM
+	                        FOMM_CMM_CD_MT
+	                      WHERE 1 = 1
+	                      AND CODE_DIV  = 'WORKFLOW_CD'
+	                      AND USE_YN    = 'Y'
+	                      ) B
+	                WHERE 1 = 1
+	                AND B.CMM_CD    = A.SVC_CD
+	                AND A.DEL_YN    = 'N'
+	                AND A.USE_YN    = 'Y'
+	                GROUP BY
+	                    B.UP_CMM_CD,
+	                    A.SVC_CD,
+	                    B.CMM_CD_NM,
+	                    B.SORT_ORDR
+	                UNION ALL
+	                SELECT
+	                    2               AS LVL,
+	                    A.SVC_CD        AS UP_CMM_CD,
+	                    A.SVC_DTL_CD    AS CMM_CD,
+	                    B.CMM_CD_NM     AS CMM_CD_NM,
+	                    B.SORT_ORDR
+	                FROM
+	                     WF_REQ_TMPLAT_MT A
+	                    ,(
+	                     SELECT
+	                        *
+	                     FROM
+	                        FOMM_CMM_CD_MT
+	                     WHERE 1 = 1
+	                     AND CODE_DIV   = 'WORKFLOW_CD'
+	                     AND USE_YN     = 'Y'
+	                     ) B
+	                WHERE 1 = 1
+	                AND B.CMM_CD    = A.SVC_DTL_CD
+	                AND A.DEL_YN    = 'N'
+	                AND A.USE_YN    = 'Y'
+	                GROUP BY
+	                    A.SVC_CD,
+	                    A.SVC_DTL_CD,
+	                    B.CMM_CD_NM,
+	                    B.SORT_ORDR 
+	                UNION ALL
+	                SELECT
+	                    3 AS LVL,
+	                    SVC_DTL_CD  AS UP_CMM_CD,
+	                    REQ_TMPLAT_ID   AS CMM_CD,
+	                    REQ_TMPLAT_NM   AS CMM_CD_NM,
+	                    ROW_NUMBER() OVER(ORDER BY REQ_TMPLAT_ID) AS SORT_ORDR
+	                FROM
+	                    WF_REQ_TMPLAT_MT
+	                WHERE 1 = 1
+	                AND DEL_YN  = 'N'
+	                AND USE_YN  = 'Y'
+	                GROUP BY
+	                    SVC_DTL_CD,
+	                    REQ_TMPLAT_ID,
+	                    REQ_TMPLAT_NM
+	
+	                ) b 
+	
+	            CONNECT BY PRIOR CMM_CD = UP_CMM_CD
+				<choose>
+	            	<when test="SVC_CD != null and SVC_CD != ''">
+	            		START WITH CMM_CD = #{SVC_CD}
+	            	</when>
+	            	<otherwise>
+			            START WITH CMM_CD = 'CHM'
+	            	</otherwise>
+	            </choose>
+	            
+	            ORDER SIBLINGS BY SORT_ORDR
+	            )
+	                        WHERE   1=1
+	
+	                        CONNECT BY PRIOR UP_MENU_ID = MENU_ID
+	                        START WITH INSTR(UPPER(MENU_NM), UPPER(#{MENU_NM})) > 0)   
+            </if> 
+            CONNECT BY PRIOR CMM_CD = UP_CMM_CD
+            <choose>
+            	<when test="SVC_CD != null and SVC_CD != ''">
+            		START WITH CMM_CD = #{SVC_CD}
+            	</when>
+            	<otherwise>
+		            START WITH CMM_CD = 'CHM'
+            	</otherwise>
+            </choose>
+            	
+            	
+            ORDER SIBLINGS BY SORT_ORDR
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	</delete>
+
+</mapper>

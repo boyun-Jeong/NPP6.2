@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0210WDAO">
+	
+	<resultMap id="boardMap" type="hashMap" >
+    	<result property="CHK" 				column="CHK" 			jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="ROWFLAG" 			column="ROWFLAG" 		jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="BOARD_NO" 		column="BOARD_NO" 		jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="BOARD_TYPE_CD" 	column="BOARD_TYPE_CD" 	jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="DAT_TYPE_CD" 		column="DAT_TYPE_CD" 	jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="DAT_TYPE_NM" 		column="DAT_TYPE_NM" 	jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="TITLE" 			column="TITLE" 			jdbcType="VARCHAR"	javaType="java.lang.String"/>
+    	<result property="CONTS" 			column="CONTS" 			jdbcType="CLOB"		javaType="java.lang.String"/>
+    	
+    	<result property="BEGIN_DT" 		column="BEGIN_DT" 		jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="BEGIN_DATE"	 	column="BEGIN_DATE" 	jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="BEGIN_TIME" 		column="BEGIN_TIME" 	jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="END_DT" 			column="END_DT" 		jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="END_DATE" 		column="END_DATE" 		jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="END_TIME" 		column="END_TIME" 		jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	
+    	<result property="REGI_DATE" 		column="REGI_DATE" 		jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="POP_YN" 			column="POP_YN" 		jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="CHK_POP_YN" 		column="CHK_POP_YN"		jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="DEL_YN" 			column="DEL_YN" 		jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="READ_CNT" 		column="READ_CNT" 		jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="ATCHFILE_YN" 		column="ATCHFILE_YN"	jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	
+    	<result property="RMK" 				column="RMK" 			jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="FRID" 			column="FRID" 			jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="FRNM" 			column="FRNM" 			jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="FR_DEPT_NM"		column="FR_DEPT_NM" 	jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="FRDT" 			column="FRDT" 			jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="LMID" 			column="LMID" 			jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="LMNM" 			column="LMNM" 			jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="LMDT" 			column="LMDT" 			jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="LMPID" 			column="LMPID" 			jdbcType="VARCHAR" 	javaType="java.lang.String"/>
+    	<result property="REQ_TMPLAT_ID"    column="REQ_TMPLAT_ID"  jdbcType="VARCHAR"  javaType="java.lang.String"/>
+	</resultMap>
+	
+	
+	
+	<!-- SPP 게시판 조회 -->
+    <select id="select01" parameterType="java.util.Map" resultMap="boardMap">
+    	/* FOMM0210WMapper >> select01 */
+    	SELECT	*
+    	FROM
+    	(
+	    	SELECT	  '0' AS CHK
+	    			, '' AS ROWFLAG
+					, BOARD_NO		--게시번호
+					, BOARD_TYPE_CD	--게시물구분코드
+					, DAT_TYPE_CD	--자료구분코드
+					, (SELECT CD.CMM_CD_NM FROM FOMM_CMM_CD_MT CD WHERE CD.UP_CMM_CD = 'DAT_TYPE_CD' AND CD.CODE_DIV = 'CMM_CD' AND CD.CMM_CD = DAT_TYPE_CD) AS DAT_TYPE_NM	--자료구분코드
+					, EXT_COL1
+				
+					, TITLE	--제목
+					, CONTS	--내용
+	
+					, BEGIN_DT	--게시시작일시
+					, SUBSTR(BEGIN_DT, 1, 8) AS BEGIN_DATE
+					, SUBSTR(BEGIN_DT, 9, 4) AS BEGIN_TIME
+					, END_DT	--게시종료일시
+					, SUBSTR(END_DT, 1, 8) AS END_DATE
+					, SUBSTR(END_DT, 9, 4) AS END_TIME
+					
+					, REGI_DATE	--등록일
+					, DECODE(POP_YN, 'Y', '1', '0') AS CHK_POP_YN	--팝업공지여부
+					, POP_YN
+					
+					, DEL_YN	--삭제여부
+					, READ_CNT	--조회수
+					
+					, NVL((	SELECT	'Y' 
+							FROM 	FOMM_ATCHFILE_MT
+							WHERE	KEY_TBL = 'FOMM_BOARD_MT'
+							AND		PK1 	= TO_CHAR(A.BOARD_NO)
+							AND     DEL_YN = 'N'
+							AND		ROWNUM 	= 1
+				  		), 'N') AS ATCHFILE_YN
+					  	
+					, RMK	--비고
+					, FRID	--최초등록자
+					, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM
+					, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FR_DEPT_NM
+					, FRDT	--최초등록일시
+					, LMID	--최종수정자
+					, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM
+					, LMDT	--최종수정일시
+					, LMPID	--최종수정화면ID
+					, REQ_TMPLAT_ID
+			FROM	  FOMM_BOARD_MT A
+			WHERE 	  1=1
+			<if test="BOARD_NO != '' and BOARD_NO != null">
+				AND BOARD_NO = #{BOARD_NO}
+			</if>
+			<if test="MENU_PARAM_CD != '' and MENU_PARAM_CD != null">		-- 메뉴분기 조건 메뉴파라미터코드
+				AND EXT_COL1 = #{MENU_PARAM_CD}
+			</if>
+			<if test="DEL_YN != '' and DEL_YN != null">
+				AND DEL_YN = #{DEL_YN}
+			</if>
+			<if test="BOARD_TYPE_CD != '' and BOARD_TYPE_CD != null">
+				AND BOARD_TYPE_CD = #{BOARD_TYPE_CD}
+			</if>
+			<if test="DAT_TYPE_CD != '' and DAT_TYPE_CD != null">
+				AND DAT_TYPE_CD = #{DAT_TYPE_CD}
+			</if>
+			<if test="TITLE != '' and TITLE != null">
+				AND UPPER(TITLE) LIKE UPPER('%' || #{TITLE} || '%')
+			</if>
+			<if test="POP_YN != '' and POP_YN != null">
+				AND POP_YN = #{POP_YN}
+			</if>
+            
+            <if test="REQ_TMPLAT_ID != '' and REQ_TMPLAT_ID != null">
+                AND REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+            </if>
+			<if test='POST_YN != null and POST_YN.equals("Y")'>		-- 공지중인지
+				AND	DEL_YN != 'Y'
+				AND	( (TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') BETWEEN BEGIN_DT AND END_DT) 
+					  OR
+					  END_DT IS NULL )
+			</if>
+			
+			ORDER BY BOARD_NO DESC
+		)
+		WHERE	1=1
+		<if test="RNUM != '' and RNUM != null">
+			AND ROWNUM <![CDATA[<=]]> #{RNUM}
+		</if>
+		
+		ORDER BY BOARD_NO DESC
+    </select>
+    
+        
+    <!-- SPP 게시판 추가 -->
+    <insert id="insert01" parameterType="java.util.Map">
+    	<selectKey resultType="string" keyProperty="BOARD_NO" order="BEFORE">
+        	SELECT TO_NUMBER(NVL(MAX(BOARD_NO), 0))+1 AS BOARD_NO	FROM FOMM_BOARD_MT
+    	</selectKey>
+
+		/* FOMM0210WMapper >> insert01 */
+		INSERT INTO FOMM_BOARD_MT
+		(
+			  BOARD_NO	--게시번호
+			, BOARD_TYPE_CD	--게시구분코드
+			, DAT_TYPE_CD
+			, TITLE	--제목
+			, CONTS	--내용
+			, EXT_COL1
+			, REGI_DATE	--등록일
+			, BEGIN_DT	--게시시작일시
+			, END_DT	--게시종료일시
+			, POP_YN	--팝업공지여부
+			, DEL_YN	--삭제여부
+			, READ_CNT	--조회수
+			, RMK	--비고
+			, FRID	--최초등록자
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정화면ID
+			, REQ_TMPLAT_ID
+		)
+		VALUES
+		(
+			  #{BOARD_NO}
+			, #{BOARD_TYPE_CD}
+			, #{DAT_TYPE_CD}
+			, #{TITLE}
+			, #{CONTS}
+			, #{EXT_COL1}
+			, TO_CHAR(SYSDATE, 'YYYYMMDD')
+			, NVL2(#{BEGIN_DT}, RPAD(#{BEGIN_DT}, 14, '0'), '')
+			, NVL2(#{END_DT}, RPAD(#{END_DT}, 14, '0'), '')
+			, DECODE(#{CHK_POP_YN}, '1', 'Y', 'N')
+			, 'N'
+			, #{READ_CNT}
+			, #{RMK}
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+			, #{REQ_TMPLAT_ID}
+		)
+    </insert>
+
+    <!-- SPP 게시판 수정 -->
+	<update id="modify01" parameterType="java.util.Map">
+		/* FOMM0210WMapper >> modify01 */
+		UPDATE	  FOMM_BOARD_MT
+		SET		  TITLE			= #{TITLE}	--제목
+				, DAT_TYPE_CD	= #{DAT_TYPE_CD}
+				, CONTS 		= #{CONTS}	--내용
+				, EXT_COL1		= #{EXT_COL1}
+				, BEGIN_DT		= NVL2(#{BEGIN_DT}, RPAD(#{BEGIN_DT}, 14, '0'), '')
+				, END_DT		= NVL2(#{END_DT}, RPAD(#{END_DT}, 14, '0'), '')
+				, POP_YN		= DECODE(#{CHK_POP_YN}, '1', 'Y', 'N')	--팝업공지여부
+				, DEL_YN 		= #{DEL_YN}	--삭제여부
+				, RMK 			= #{RMK}	--비고
+				, LMID 			= #{LMID}	--최종수정자
+				, LMDT 			= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최종수정일시
+				, LMPID 		= #{LMPID}	--최종수정화면ID
+		WHERE	  BOARD_NO = #{BOARD_NO}
+	</update>
+
+
+	<!-- SPP 게시판 삭제 -->
+    <update id="remove01" parameterType="java.util.Map">
+    	/* FOMM0210WMapper >> remove01 */
+    	UPDATE	  FOMM_BOARD_MT 
+		SET		  DEL_YN 	= 'Y'			--삭제여부
+				, LMID 		= #{LMID}	--최종수정자
+				, LMDT 		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--최종수정일시
+				, LMPID 	= #{LMPID}	--최종수정화면ID
+		WHERE	  BOARD_NO = #{BOARD_NO}
+    </update>
+    
+</mapper>

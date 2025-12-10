@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.com.dao.FommMultipartDAO">
+	
+	<!-- 파일목록 조회 -->
+    <select id="selectFileList" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FommMultipartMapper >> selectFileList */
+		SELECT	  '0' AS CHK
+				, '' AS ROWFLAG
+				, '' AS CREATE_KEY
+				, FILE_NO			--파일번호
+				, TMPLAT_YN			-- 템플릿여부
+				, KEY_TBL			--키 테이블명
+				, FLDR_NM			--폴더명
+				, PK1				--PK1
+				, PK2				--PK2
+				, PK3				--PK3
+				
+				<choose>
+				    <when test='"0".equals(EDIT_KEY_RANGE)'>
+                , 'N' AS EDIT_YN
+                    </when>
+				    <when test='"1".equals(EDIT_KEY_RANGE)'>
+                , CASE WHEN PK1 = #{PK1} THEN 'Y' ELSE 'N' END AS EDIT_YN 
+				    </when>
+				    <when test='"2".equals(EDIT_KEY_RANGE)'>
+                , CASE WHEN PK1 = #{PK1} AND PK2 = #{PK2} THEN 'Y' ELSE 'N' END AS EDIT_YN
+				    </when>
+				    <when test='"3".equals(EDIT_KEY_RANGE)'>
+                , CASE WHEN PK1 = #{PK1} AND PK2 = #{PK2} AND PK3 = #{PK3} THEN 'Y' ELSE 'N' END AS EDIT_YN
+				    </when>
+				    <otherwise>
+                , 'Y' AS EDIT_YN
+				    </otherwise>
+
+				</choose>
+				, '' AS FILE_ICON		--파일아이콘
+				, FILE_NM				--파일명
+				, FILE_SAVE_NM			--저장파일명
+				, FILE_PATH				--파일경로
+				, FILE_SIZE				--파일크기
+				, '' AS FILE_SIZE_NM	--파일크기명
+				, DEL_YN 				--삭제여부
+				, EXT_COL_1			-- 추가 항목1
+				, EXT_COL_2			-- 추가 항목2
+				, EXT_COL_3			-- 추가 항목3
+				, EXT_COL_4			-- 추가 항목4
+				, EXT_COL_5			-- 추가 항목5
+				
+				, RMK	--비고
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM	--최초등록자
+				, FRDT	--최초등록일시
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM	--최종수정자
+				, LMDT	--최종수정일시
+				, LMPID	--최종수정화면ID
+		FROM	  FOMM_ATCHFILE_MT A
+		WHERE 	  1=1
+		AND		  DEL_YN	= 'N'
+		AND		  TEMP_YN	= 'N'
+		<if test="FILE_NO != '' and FILE_NO != null">
+			AND FILE_NO = #{FILE_NO}
+		</if>
+		
+		<if test="TMPLAT_YN != null and TMPLAT_YN != ''">
+			AND TMPLAT_YN = #{TMPLAT_YN}
+		</if>
+		
+		<if test="KEY_TBL != '' and KEY_TBL != null">
+			AND KEY_TBL = #{KEY_TBL}
+		</if>
+		<if test="FLDR_NM != '' and FLDR_NM != null">
+			AND FLDR_NM = #{FLDR_NM}
+		</if>
+		
+			AND PK1 = #{SEARCH_KEY1}
+
+		<if test="SEARCH_KEY2 != '' and SEARCH_KEY2 != null">
+			AND PK2 = #{SEARCH_KEY2}
+		</if>
+
+		<if test="SEARCH_KEY3 != '' and SEARCH_KEY3 != null">
+			AND PK3 = #{SEARCH_KEY3}
+		</if>
+
+		<if test="EXT_COL_1 != '' and EXT_COL_1 != null">
+			AND EXT_COL_1 = #{EXT_COL_1}
+		</if>
+		<if test="EXT_COL_2 != '' and EXT_COL_2 != null">
+			AND EXT_COL_2 = #{EXT_COL_2}
+		</if>
+		<if test="EXT_COL_3 != '' and EXT_COL_3 != null">
+			AND EXT_COL_3 = #{EXT_COL_3}
+		</if>
+		<if test="EXT_COL_4 != '' and EXT_COL_4 != null">
+			AND EXT_COL_4 = #{EXT_COL_4}
+		</if>
+		<if test="EXT_COL_5 != '' and EXT_COL_5 != null">
+			AND EXT_COL_5 = #{EXT_COL_5}
+		</if>
+		ORDER BY FILE_NO ASC
+    </select>
+    
+
+	<!-- 첨부파일정보 추가 -->
+	<insert id="insertFileInfo" parameterType="java.util.Map">
+		/* FommMultipartMapper >> insertFileInfo */
+		INSERT INTO FOMM_ATCHFILE_MT
+		(
+			  FILE_NO	--파일번호
+			, TMPLAT_YN	-- 템플릿여부
+			, KEY_TBL	--키 테이블명
+			, FLDR_NM	--폴더명
+			, PK1	--PK1
+			, PK2	--PK2
+			, PK3	--PK3
+			, FILE_NM	--파일명
+			, FILE_SAVE_NM	--저장파일명
+			, FILE_PATH	--파일경로
+			, FILE_SIZE	--파일크기
+			, EXT_COL_1	--항목1
+			, EXT_COL_2	--항목2
+			, EXT_COL_3	--항목3
+			, EXT_COL_4	--항목4
+			, EXT_COL_5	--항목5
+			, TEMP_YN	-- 임시파일여부
+
+			, RMK	--비고
+			, FRID	--최초등록자ID
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자ID
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정화면ID
+		)
+		VALUES
+		(
+		     FOMM_ATCHFILE_MT_FILE_NO.NEXTVAL
+			, NVL(#{TMPLAT_YN}, 'N')
+			, #{KEY_TBL}
+			, #{FLDR_NM}
+			, #{PK1}
+			, #{PK2}
+			, #{PK3}
+			, #{FILE_NM}
+			, #{FILE_SAVE_NM}
+			, #{FILE_PATH}
+			, #{FILE_SIZE}
+			, #{EXT_COL_1}
+			, #{EXT_COL_2}
+			, #{EXT_COL_3}
+			, #{EXT_COL_4}
+			, #{EXT_COL_5}
+			, #{TEMP_YN}
+			
+			, #{RMK}
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		)
+	</insert>
+	
+	
+	<!-- 첨부파일정보 수정 -->
+    <update id="modifyFileInfo" parameterType="java.util.Map">
+    	/* FommMultipartMapper >> modifyFileInfo */
+        UPDATE	FOMM_ATCHFILE_MT
+        SET		EXT_COL_1 = #{EXT_COL_1}
+			  , EXT_COL_2 = #{EXT_COL_2}
+			  , EXT_COL_3 = #{EXT_COL_3}
+			  , EXT_COL_4 = #{EXT_COL_4}
+			  , EXT_COL_5 = #{EXT_COL_5}
+        	  , LMDT 	= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        	  , LMID 	= #{LMID}
+        	  , LMPID 	= #{LMPID}
+		WHERE	FILE_NO = #{FILE_NO}
+    </update>
+    
+    
+    <!-- 첨부파일정보 삭제 -->
+    <update id="removeTempFile" parameterType="java.util.Map">
+    	/* FommMultipartMapper >> removeTempFile */
+    	DELETE
+    	FROM	FOMM_ATCHFILE_MT
+    	WHERE	TEMP_YN = 'Y'
+    </update>
+    
+    
+	<!-- 첨부파일정보 삭제 -->
+    <update id="removeFileInfo" parameterType="java.util.Map">
+    	/* FommMultipartMapper >> removeFileInfo */
+        UPDATE	FOMM_ATCHFILE_MT
+        SET		DEL_YN 	= 'Y'
+        	  , LMDT 	= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        	  , LMID 	= #{LMID}
+        	  , LMPID 	= #{LMPID}
+		WHERE	FILE_NO = #{FILE_NO}
+    </update>
+
+	<update id="removeFileInfo2" parameterType="java.util.Map">
+    	/* FommMultipartMapper >> removeFileInfo */
+        UPDATE	FOMM_ATCHFILE_MT
+        SET		DEL_YN 	= 'Y'
+        	  , LMDT 	= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        	  , LMID 	= #{LMID}
+        	  , LMPID 	= #{LMPID}
+		WHERE	1 = 1
+		AND KEY_TBL	= #{KEY_TBL}
+<!-- 		AND FLDR_NM	= #{FLDR_NM} -->
+		AND PK1		= #{PK1}
+		
+		<if test="PK2 != null and PK2 != ''">
+		AND PK2		= #{PK2}
+		</if>
+		
+		<if test="PK3 != null and PK3 != ''">
+		AND PK3		= #{PK3}
+		</if>
+    </update>
+    
+    <!-- 첨부파일정보 tempKey 치환 -->
+    <update id="replaceTempKey" parameterType="java.util.Map">
+    	/* FommMultipartMapper >> replaceTempKey */
+    	UPDATE	FOMM_ATCHFILE_MT
+    	SET		PK1 	= #{PK1}
+    		  , PK2 	= #{PK2}
+    		  , PK3 	= #{PK3}
+    		  , TEMP_YN = 'N'
+    	WHERE	1 = 1
+    	AND TEMP_YN	= 'Y'
+    	AND KEY_TBL	= #{KEY_TBL}
+<!-- 		AND FLDR_NM	= #{FLDR_NM} -->
+    	AND PK1		= #{TEMP_KEY1}
+
+    	<if test="TEMP_KEY2 != null and TEMP_KEY2 != ''">
+    		AND	PK2 = #{TEMP_KEY2}
+    	</if>
+    	<if test="TEMP_KEY3 != null and TEMP_KEY3 != ''">
+    		AND	PK3 = #{TEMP_KEY3}
+    	</if>
+    </update>
+
+    <!-- 첨부파일정보 tempKey 치환 -->
+    <update id="replaceTempKeyOne" parameterType="java.util.Map">
+        /* FommMultipartMapper >> replaceTempKey */
+        BEGIN
+
+            UPDATE FOMM_ATCHFILE_MT SET
+                PK1     = #{REPLACE_KEY}              
+            WHERE   1 = 1
+            AND PK1     = #{TEMP_KEY}
+            ;
+            
+            UPDATE FOMM_ATCHFILE_MT SET
+                PK2     = #{REPLACE_KEY}              
+            WHERE   1 = 1
+            AND PK2     = #{TEMP_KEY}
+            ;
+            
+            UPDATE FOMM_ATCHFILE_MT SET
+                PK3     = #{REPLACE_KEY}              
+            WHERE   1 = 1
+            AND PK3     = #{TEMP_KEY}
+            ;
+
+        END;
+    </update>
+</mapper>

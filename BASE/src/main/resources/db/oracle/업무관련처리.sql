@@ -1,0 +1,31 @@
+--미사용 워크플로우 관련 삭제 배치
+DECLARE
+  IN_REQ_TMPLAT_ID VARCHAR2(200);
+  OUT_RTN_CD NUMBER;
+  OUT_RTN_MSG VARCHAR2(200);
+
+BEGIN
+
+    FOR CUR IN
+    (
+        SELECT *
+        FROM WF_REQ_TMPLAT_MT
+        WHERE USE_YN = 'N' AND REQ_TMPLAT_ID NOT IN ('WFT250049', 'WFT250048', 'WFT250050', 'WFT250027')
+
+    )
+    LOOP
+
+        IN_REQ_TMPLAT_ID := CUR.REQ_TMPLAT_ID;
+        
+        PR_WF_REQ_TMPLAT_DEL(
+            IN_REQ_TMPLAT_ID => IN_REQ_TMPLAT_ID,
+            OUT_RTN_CD => OUT_RTN_CD,
+            OUT_RTN_MSG => OUT_RTN_MSG
+        );
+
+        DBMS_OUTPUT.PUT_LINE('OUT_RTN_CD = ' || OUT_RTN_CD);
+        DBMS_OUTPUT.PUT_LINE('OUT_RTN_MSG = ' || OUT_RTN_MSG);
+
+    END LOOP;
+
+END;

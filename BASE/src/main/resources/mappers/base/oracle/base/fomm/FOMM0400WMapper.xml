@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0400WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, SATI_QST_ID
+			, ''	AS TEMP_SATI_QST_ID
+			, APP_DATE
+			, USE_YN
+			, TITLE
+			, TITLE || ' [' || SATI_QST_ID || ']'	AS SATI_QST_INFO
+			, REMARK
+			, FRID
+			, FRDT
+			, FRID
+			, FRDT
+		FROM
+			FOMM_SATI_QST_MNG
+
+		WHERE 1 = 1
+
+		<if test="USE_YN != '' and USE_YN != null">
+		AND USE_YN = #{USE_YN}
+		</if>
+
+		ORDER BY
+			SATI_QST_ID
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="SATI_QST_ID" order="BEFORE">
+			SELECT 'SAT' || TO_CHAR(SYSDATE, 'YYYY') || NVL(TRIM(TO_CHAR(MAX(SUBSTR(SATI_QST_ID, 8, 3 )) + 1, '000')), '001') SATI_QST_ID
+			FROM FOMM_SATI_QST_MNG
+			WHERE 1 = 1
+			AND SATI_QST_ID LIKE 'SAT' || TO_CHAR(SYSDATE, 'YYYY') || '%'
+		</selectKey>
+
+		INSERT INTO FOMM_SATI_QST_MNG
+		(
+			SATI_QST_ID,
+			APP_DATE,
+			USE_YN,
+			TITLE,
+			REMARK,
+			FRID,
+			FRDT,
+			LMID,
+			LMDT
+		)
+		VALUES 
+		( 
+			#{SATI_QST_ID},
+			#{APP_DATE},
+			#{USE_YN},
+			#{TITLE},
+			#{REMARK},
+			#{LMID},
+			TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'),
+			#{LMID},
+			TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		 UPDATE FOMM_SATI_QST_MNG SET
+			APP_DATE	= #{APP_DATE},
+			USE_YN		= #{USE_YN},
+			TITLE		= #{TITLE},
+			REMARK		= #{REMARK},
+			LMID		= #{LMID},
+			LMDT		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		WHERE 1 = 1
+		AND SATI_QST_ID = #{SATI_QST_ID}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM FOMM_SATI_QST_MNG
+		WHERE 1 = 1
+		AND SATI_QST_ID = #{SATI_QST_ID}
+	</delete>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, SATI_QST_ID
+			, SEQ
+			, QST_ITEM_DESC
+			, QST_ITEM_TYPE
+			, QST_ITEM_RSP1
+			, QST_ITEM_RSP2
+			, QST_ITEM_RSP3
+			, QST_ITEM_RSP4
+			, QST_ITEM_RSP5
+			, TO_CHAR(QST_ITEM_GRD1) AS QST_ITEM_GRD1
+			, TO_CHAR(QST_ITEM_GRD2) AS QST_ITEM_GRD2
+			, TO_CHAR(QST_ITEM_GRD3) AS QST_ITEM_GRD3
+			, TO_CHAR(QST_ITEM_GRD4) AS QST_ITEM_GRD4
+			, TO_CHAR(QST_ITEM_GRD5) AS QST_ITEM_GRD5
+			, FRID
+			, FRDT
+			, LMID
+			, LMDT
+		FROM
+			FOMM_SATI_QST_ITEM
+
+		WHERE 1 = 1
+		AND SATI_QST_ID = #{SEL_SATI_QST_ID}
+
+        <if test="SEL_SATI_QST_SEQ != '' and SEL_SATI_QST_SEQ != null">
+        AND SEQ = #{SEL_SATI_QST_SEQ}
+        </if>
+
+		ORDER BY
+			SATI_QST_ID,
+			SEQ
+	</select>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="SEQ" order="BEFORE">
+			SELECT
+				NVL(MAX(SEQ), 0)+1
+			FROM FOMM_SATI_QST_ITEM
+			WHERE SATI_QST_ID	= #{SATI_QST_ID}
+		</selectKey>
+		INSERT INTO FOMM_SATI_QST_ITEM
+		(
+			SATI_QST_ID,
+			SEQ,
+			QST_ITEM_DESC,
+			QST_ITEM_TYPE,
+			QST_ITEM_RSP1,
+			QST_ITEM_RSP2,
+			QST_ITEM_RSP3,
+			QST_ITEM_RSP4,
+			QST_ITEM_RSP5,
+			QST_ITEM_GRD1,
+			QST_ITEM_GRD2,
+			QST_ITEM_GRD3,
+			QST_ITEM_GRD4,
+			QST_ITEM_GRD5,
+			FRID,
+			FRDT,
+			LMID,
+			LMDT
+		)
+		VALUES 
+		(
+			#{SATI_QST_ID},
+			#{SEQ},
+			#{QST_ITEM_DESC},
+			#{QST_ITEM_TYPE},
+			#{QST_ITEM_RSP1},
+			#{QST_ITEM_RSP2},
+			#{QST_ITEM_RSP3},
+			#{QST_ITEM_RSP4},
+			#{QST_ITEM_RSP5},
+			#{QST_ITEM_GRD1},
+			#{QST_ITEM_GRD2},
+			#{QST_ITEM_GRD3},
+			#{QST_ITEM_GRD4},
+			#{QST_ITEM_GRD5},
+			#{LMID},
+			TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'),
+			#{LMID},
+			TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		)
+	</insert>
+
+	<update id="modify02" parameterType="java.util.Map">
+		UPDATE FOMM_SATI_QST_ITEM SET 
+			QST_ITEM_DESC	= #{QST_ITEM_DESC},
+			QST_ITEM_TYPE	= #{QST_ITEM_TYPE},
+			QST_ITEM_RSP1	= #{QST_ITEM_RSP1},
+			QST_ITEM_RSP2	= #{QST_ITEM_RSP2},
+			QST_ITEM_RSP3	= #{QST_ITEM_RSP3},
+			QST_ITEM_RSP4	= #{QST_ITEM_RSP4},
+			QST_ITEM_RSP5	= #{QST_ITEM_RSP5},
+			QST_ITEM_GRD1	= #{QST_ITEM_GRD1},
+			QST_ITEM_GRD2	= #{QST_ITEM_GRD2},
+			QST_ITEM_GRD3	= #{QST_ITEM_GRD3},
+			QST_ITEM_GRD4	= #{QST_ITEM_GRD4},
+			QST_ITEM_GRD5	= #{QST_ITEM_GRD5},
+			LMID			= #{LMID},
+			LMDT			= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+
+		WHERE 1 = 1
+		AND SATI_QST_ID = #{SATI_QST_ID}
+		AND SEQ			= #{SEQ}
+	</update>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE FROM FOMM_SATI_QST_ITEM
+		WHERE 1 = 1
+		AND SATI_QST_ID	= #{SATI_QST_ID}
+		AND SEQ			= #{SEQ}
+	</delete>
+
+</mapper>

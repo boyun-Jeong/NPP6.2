@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR1100DDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+          A.REQ_TMPLAT_ID
+        , A.REQ_TMPLAT_VER
+        , B.REQ_ID
+        , A.TITLE
+        , A.REQ_WISH_DT
+        , A.WF_PROC_CD
+	    , B.REV_DIV_CD
+	    , B.REV_CGER_ID
+	    , B.REV_CGER_NM
+	    , B.REV_CGER_DEPT_NM
+	    , B.REV_DEPT_CD
+	    , B.REV_DEPT_NM
+	    , B.REQ_PURPOSE
+	    , B.CONT_DESC
+	    , B.EXPECT_EFFECT
+	    , B.RMK	    
+	
+	FROM
+          SR_BASE_INFO A
+        , SR_MA_REQ B
+	    
+	
+	WHERE 1 = 1
+	AND A.REQ_ID   = B.REQ_ID
+	AND A.REQ_ID   = #{REQ_ID}
+	</select>
+
+    <!-- 서브 프로젝트 예정종료일 변경 이력 -->
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              REQ_ID                --요청서ID
+            , REQ_TMPLAT_ID         --요청서양식ID
+            , REQ_TMPLAT_VER        --요청서양식버전
+            , REQ_EM_YN             --긴급요청여부
+            , WF_PROC_CD            --진행단계
+            , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CMM_CD = WF_PROC_CD AND UP_CMM_CD = 'WF_PROC_CD' ) WF_PROC_NM
+            , REQ_STAT_CD           --요청서진행상태코드
+            , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CMM_CD = REQ_STAT_CD AND UP_CMM_CD = 'REQ_STAT_CD' ) REQ_STAT_NM
+            , TITLE                 --제목
+            , REQ_USER_ID           --요청자ID
+            , REQ_USER_NM           --요청자명
+            , REQ_DEPT_CD           --요청자부서ID
+            , REQ_DEPT_NM           --요청자부서명
+            , REQ_DATE              --요청일시
+            , REQ_WISH_DT           --희망완료일
+            , REQ_WISH_TIME         --희망완료시분
+            , JOB_REQ_DT            --작업요청일
+            , JOB_REQ_TIME          --작업요청시분
+            , PROC_COMP_DATE        --완료일시
+            , DEL_YN                --삭제여부
+            , CONTENTS              --요청서내용
+            
+            , REF_REQ_ID            --참조요청서ID
+            
+        FROM
+            SR_BASE_INFO A
+
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID   = 'WFT240107'
+        AND DEL_YN          = 'N'
+        
+        AND EXISTS
+                (
+                SELECT 1
+                FROM SR_MA_PRJ P
+                WHERE 1 = 1
+                AND P.MASTER_REQ_ID = #{REQ_ID}
+                AND A.REF_REQ_ID    = P.REQ_ID
+                )
+        
+        ORDER BY
+            REQ_ID DESC
+    </select>
+
+    <select id="selectCgerSrMaBaRev" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              BA_USER_ID        AS USER_ID
+            , 1                 AS APPR_SEQ
+
+		FROM
+		    SR_MA_BA_IT_REV
+
+		WHERE REQ_ID    = #{REF_REQ_ID}
+    </select>
+
+</mapper>

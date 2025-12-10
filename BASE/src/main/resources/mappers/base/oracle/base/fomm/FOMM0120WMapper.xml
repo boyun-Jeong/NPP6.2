@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0120WDAO">
+	
+	<!-- SPP 권한그룹 목록 조회 -->
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0120WMapper >> select01 */
+        SELECT    0 AS CHK		    /* CHECKBOX 컬럼 */
+			    , '' AS ROWFLAG		/* 행상태 표기를 위한 컬럼 */
+		        , AUTH_ID           /* 그룹권한 코드 */
+		        , AUTH_NM           /* 그룹권한명 */
+		        , SVC_TYPE_CD		/* 업무구분 */
+		        , AUTH_TYPE_CD      /* 그룹유형코드 */
+		        , ADMIN_YN          /* 관리자여부 */
+		        , USE_YN            /* 사용여부 */
+		        
+		        , RMK				/* 비고 */
+		        , FRID
+		        , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM				/* 최초등록자 */
+		        , FRDT				/* 최초등록일시 */
+		        , LMID
+		        , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM				/* 최종수정자 */
+		        , LMDT				/* 최종수정일시 */
+		        , LMPID				/* 최종수정화면ID */
+		FROM      FOMM_AUTH_MT A
+		WHERE	  1=1
+        <if test="AUTH_ID != '' and AUTH_ID != null">
+        	AND	UPPER(AUTH_ID) LIKE UPPER('%' || #{AUTH_ID} || '%')
+        </if>
+        <if test="AUTH_NM != '' and AUTH_NM != null">
+        	AND	UPPER(AUTH_NM) LIKE UPPER('%' || #{AUTH_NM} || '%')
+        </if>
+        <if test="SVC_TYPE_CD != '' and SVC_TYPE_CD != null">
+        	AND	SVC_TYPE_CD = #{SVC_TYPE_CD}
+        </if>
+        <if test="AUTH_TYPE_CD != '' and AUTH_TYPE_CD != null">
+        	AND	AUTH_TYPE_CD = #{AUTH_TYPE_CD}
+        </if>
+        <if test="ADMIN_YN != '' and ADMIN_YN != null">
+        	AND	ADMIN_YN = #{ADMIN_YN}
+        </if>
+        
+        <if test="USE_YN != '' and USE_YN != null">
+        	AND	USE_YN = #{USE_YN}
+        </if>
+        ORDER BY AUTH_NM
+    </select>
+    
+    
+    <!-- SPP 권한그룹별 사용자 조회 -->
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0120WMapper >> select02 */
+    	SELECT    0 AS CHK		    /* CHECKBOX 컬럼 */
+			    , '' AS ROWFLAG		/* 행상태 표기를 위한 컬럼 */
+		        , A.AUTH_ID         /* 권한그룹 코드 */
+		        , A.USER_ID         /* 사용자 ID */
+		        , B.TELNUM
+		        , MOBILE_NUM
+		        , EMAIL_ADR
+		        , B.USER_NM         /* 사용자명 */
+		        , B.DEPT_NM         /* 부서명 */
+		        , B.ROLE_NM         /* 직책 */
+		        , A.RMK				/* 비고 */
+		        , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM				/* 최초등록자 */
+		        , A.FRDT				/* 최초등록일시 */
+		        , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM				/* 최종수정자 */
+		        , A.LMDT				/* 최종수정일시 */
+		        , A.LMPID				/* 최종수정화면ID */
+		FROM      FOMM_AUTH_USER_DT A
+		        , FOMM_USER_MT B
+		WHERE     1=1
+		AND       A.USER_ID = B.USER_ID
+		AND       A.AUTH_ID = #{SEL_AUTH_ID}
+    </select>
+
+
+
+    <!-- SPP 권한그룹별 부서 조회 -->
+    <select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0120WMapper >> select03 */
+    	SELECT 0 AS CHK		     /* CHECKBOX 컬럼 */
+              ,'' AS ROWFLAG	 /* 행상태 표기를 위한 컬럼 */
+              ,A.AUTH_ID       /* 권한그룹 코드 */
+              ,A.DEPT_CD       /* 부서코드 */
+              ,B.DEPT_NM       /* 부서명 */
+              ,B.UP_DEPT_CD    /* 상위 부서코드 */
+              ,(SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = B.UP_DEPT_CD) AS UP_DEPT_NM
+              ,B.DEPT_MANAGER_ID /* 부서장ID */
+              ,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = B.DEPT_MANAGER_ID) AS DEPT_MANAGER_NM  /* 부서장명 */
+              ,A.RMK				   /* 비고 */
+              ,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM  /* 최초등록자 */
+              ,A.FRDT				/* 최초등록일시 */
+              ,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM  /* 최종수정자 */
+              ,A.LMDT				/* 최종수정일시 */
+              ,A.LMPID				/* 최종수정화면ID */
+          FROM FOMM_AUTH_DEPT_DT A
+		      ,FOMM_DEPT_MT B
+         WHERE 1=1
+           AND A.DEPT_CD = B.DEPT_CD
+           AND A.AUTH_ID = #{SEL_AUTH_ID}
+    </select>
+
+
+
+    <!-- SPP 권한그룹별 확장권한 조회 -->
+    <select id="select04" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0120WMapper >> select04 */
+    	SELECT 0  AS CHK       /* CHECKBOX 컬럼 */
+              ,'' AS ROWFLAG   /* 행상태 표기를 위한 컬럼 */
+              ,M.AUTH_ID    AS AUTH_ID  /* 권한그룹 코드 */
+              ,M.EXTD_ID    AS EXTD_ID  /* 확장권한ID */
+              ,(SELECT EXTD_NM  FROM FOMM_AUTH_EXTD_MT
+                 WHERE EXTD_GB = '00'
+                   AND EXTD_ID = M.EXTD_ID) AS EXTD_NM  /* 확장권한명 */
+              ,M.RMK                    /* 비고 */
+          FROM FOMM_AUTH_EXTD_DT M  WHERE 1=1
+           AND M.AUTH_ID = #{SEL_AUTH_ID}
+    </select>
+
+
+    <!-- SPP 권한그룹 추가 -->
+    <insert id="insert01" parameterType="java.util.Map">
+		/* FOMM0120WMapper >> insert01 */
+		INSERT 
+		INTO  FOMM_AUTH_MT
+		(
+			  AUTH_ID           /* 그룹권한 코드 */
+	        , AUTH_NM           /* 그룹권한명 */
+	        , SVC_TYPE_CD		/* 업무구분 */
+	        , AUTH_TYPE_CD      /* 그룹유형코드 */
+	        , ADMIN_YN          /* 관리자여부 */
+	        , USE_YN            /* 사용여부 */
+	        
+	        , RMK				/* 비고 */
+	        , FRID				/* 최초등록자 */
+	        , FRDT				/* 최초등록일시 */
+	        , LMID				/* 최종수정자 */
+	        , LMDT				/* 최종수정일시 */
+	        , LMPID				/* 최종수정화면ID */
+		)
+		VALUES
+		(
+			  #{AUTH_ID}           /* 그룹권한 코드 */
+	        , #{AUTH_NM}           /* 그룹권한명 */
+	        , #{SVC_TYPE_CD}	   /* 업무구분 */
+	        , #{AUTH_TYPE_CD}      /* 그룹유형코드 */
+	        , #{ADMIN_YN}          /* 관리자여부 */
+	        , #{USE_YN}            /* 사용여부 */
+			
+			, #{RMK}
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		)
+    </insert>
+    
+    <!-- SPP 권한그룹 수정 -->
+    <update id="modify01" parameterType="java.util.Map">
+    	/* FOMM0120WMapper >> modify01 */
+        UPDATE	FOMM_AUTH_MT
+        SET		AUTH_NM			= #{AUTH_NM}
+        	  , SVC_TYPE_CD		= #{SVC_TYPE_CD}
+			  , AUTH_TYPE_CD	= #{AUTH_TYPE_CD}
+			  , ADMIN_YN		= #{ADMIN_YN}
+			  , USE_YN			= #{USE_YN}
+			  , RMK				= #{RMK}
+			  , LMID			= #{LMID}
+			  , LMDT			= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			  , LMPID			= #{LMPID}
+		WHERE	AUTH_ID = #{AUTH_ID}
+    </update>
+    
+    <!-- SPP 권한그룹 삭제 (사용여부N처리) -->
+    <update id="remove01" parameterType="java.util.Map">
+    	/* FOMM0120WMapper >> remove01 */
+        UPDATE	FOMM_AUTH_MT
+        SET		USE_YN		= 'N'
+			  , LMID		= #{LMID}
+			  , LMDT		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			  , LMPID		= #{LMPID}
+		WHERE	AUTH_ID = #{AUTH_ID}
+    </update>
+    
+    
+</mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0310PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+<!-- 			  ( -->
+<!-- 			  SELECT CASE WHEN COUNT(WBS_ID) > 0 THEN '1' ELSE '0' END -->
+<!-- 			  FROM PJ_DLVR_WBS_MAP X -->
+<!-- 			  WHERE 1 = 1 -->
+<!-- 			  AND X.PJT_ID	= A.PJT_ID -->
+<!-- 			  AND X.DLVR_ID	= #{DLVR_ID} -->
+<!-- 			  AND X.WBS_ID = A.WBS_ID -->
+<!-- 			  )	AS CHK -->
+			  '0'	AS CHK
+			, A.WBS_ID
+			, A.WBS_CODE 
+			, A.WBS_NAME 
+			, A.PJT_ID 
+			, A.LVL 
+			, A.PARENT_ID 
+			, A.LEAF_YN 
+			, A.PLAN_SDATE 
+			, A.PLAN_EDATE 
+			, A.PLAN_TOT_WORK 
+			, A.PLAN_WORK 
+			, A.PLAN_CMPL_RATE 
+			, A.WEIGHT 
+			, A.ACTL_SDATE 
+			, A.ACTL_EDATE 
+			, A.ACTL_WORK 
+			, NVL(A.ACTL_CMPL_RATE, 0) AS ACTL_CMPL_RATE 
+			, A.WORK_CMPL_YN 
+			, A.REG_STIME 
+			, A.REG_USER_ID 
+			, A.REG_USER_NM 
+			, A.REG_USER_DEPT 
+			, A.LMOD_SDATE 
+			, A.LMOD_USER_ID 
+			, A.LMOD_USER_NM 
+			, A.LMOD_USER_DEPT 
+			, A.WBS_DESC 
+			, A.ACTL_PLAN_RATE 
+			, A.CHG_USER_NM
+			, 'N' AS IS_LAST_LVL 
+			, 'N' AS IS_CALCU 
+			, NVL(B.CALC_DATE, A.PLAN_EDATE) AS CALC_DATE 
+			, A.OUTPRNT_ORD
+			, 'N' AS CAN_SAVE
+
+		FROM
+			  PJ_WBS A
+			, PJ_WBS_TOT B 
+
+		WHERE 1 = 1
+		AND A.PJT_ID = #{PJT_ID}
+		AND A.PJT_ID = B.PJT_ID(+)
+
+		ORDER BY
+			A.OUTPRNT_ORD, A.WBS_CODE
+	</select>
+
+</mapper>

@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0150WDAO">
+	
+	<!-- FOMM_CMM_CD_MT 기본 select -->
+	<sql id="selectFommCmmCdMt">
+		SELECT	*
+		FROM
+                (
+                SELECT
+                      0 AS CHK
+					, '' AS ROWFLAG
+					, A.CD_NO			--코드번호
+					, A.LANG_CD
+					, A.UP_CD_NO		--상위코드번호
+					, A.CD_LVL		--코드레벨
+					
+					, B.SYS_LANG_CD
+					, B.SEL_LANG_CD
+					, B.SEL_LANG_CMM_CD_NM
+					
+					, A.CMM_CD		--공통코드
+					, A.UP_CMM_CD		--상위코드
+					, (SELECT CMM_CD FROM FOMM_CMM_CD_MT UP WHERE 1=1 AND A.UP_CD_NO = UP.CD_NO AND ROWNUM =1) AS REAL_UP_CMM_CD
+					, B.CMM_CD_NM		--코드명
+					, A.CMM_CD_DESC	--코드설명
+					
+					, A.ITM_VAL_1		--항목값1
+					, A.ITM_VAL_2		--항목값2
+					, A.ITM_VAL_3		--항목값3
+					, A.ITM_VAL_4		--항목값4
+					, A.ITM_VAL_5		--항목값5
+					
+					, A.CODE_DIV		--코드업무구분
+					, A.SORT_ORDR		--정렬순서
+					, A.USE_YN		--사용여부
+					
+					, A.RMK		--비고
+					, A.FRID		--최초등록자
+					, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM				/* 최초등록자 */
+					, A.FRDT		--최초등록일시
+					, A.LMID		--최종수정자
+					, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM				/* 최종수정자 */
+					, A.LMDT		--최종수정일시
+					, A.LMPID		--최종수정화면ID
+			FROM
+                  FOMM_CMM_CD_MT A
+                , (
+                  SELECT
+                      AA.CD_NO
+                    , 'KR'  AS SYS_LANG_CD
+                    , MAX(CASE WHEN AA.LANG_CD = #{SYS_LANG_CD} THEN AA.CMM_CD_NM END) AS CMM_CD_NM
+                    , 'KR' AS SEL_LANG_CD
+                    , MAX(CASE WHEN AA.LANG_CD = #{SEL_LANG_CD} THEN AA.CMM_CD_NM END) AS SEL_LANG_CMM_CD_NM
+                  FROM
+                    FOMM_CMM_CD_MT AA
+                  WHERE 1 = 1
+                  GROUP BY  AA.CD_NO
+                  ) B
+            WHERE 	  1=1
+            AND A.CD_NO = B.CD_NO
+            AND A.LANG_CD = #{SYS_LANG_CD}
+		)
+		WHERE 1=1
+	</sql>
+
+	<!-- SPP 코드 트리 조회 -->
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0150WMapper >> select01 */
+		WITH CMM_TB AS
+		(
+            SELECT
+                  0 AS CHK
+				, '' AS ROWFLAG
+				, ROWNUM AS RNUM
+				, A.CD_NO           --코드번호
+				, A.LANG_CD
+				, A.UP_CD_NO        --상위코드번호
+				, A.CD_LVL      --코드레벨                  
+				, B.SYS_LANG_CD
+				, B.SEL_LANG_CD
+				, B.SEL_LANG_CMM_CD_NM                  
+				, A.CMM_CD      --공통코드
+				, A.UP_CMM_CD       --상위코드
+				, (SELECT CMM_CD FROM FOMM_CMM_CD_MT UP WHERE 1=1 AND A.UP_CD_NO = UP.CD_NO AND ROWNUM =1) AS REAL_UP_CMM_CD
+				, B.CMM_CD_NM       --코드명
+				, A.CMM_CD_DESC --코드설명                  
+				, A.ITM_VAL_1       --항목값1
+				, A.ITM_VAL_2       --항목값2
+				, A.ITM_VAL_3       --항목값3
+				, A.ITM_VAL_4       --항목값4
+				, A.ITM_VAL_5       --항목값5                  
+				, A.CODE_DIV        --코드업무구분
+				, A.SORT_ORDR       --정렬순서
+				, A.USE_YN      --사용여부                  
+				, A.RMK     --비고
+				, A.FRID        --최초등록자
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM             /* 최초등록자 */
+				, A.FRDT        --최초등록일시
+				, A.LMID        --최종수정자
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM             /* 최종수정자 */
+				, A.LMDT        --최종수정일시
+				, A.LMPID       --최종수정화면ID
+
+            FROM
+                  ( SELECT * FROM FOMM_CMM_CD_MT WHERE LANG_CD = 'KR') A
+                , (
+                  SELECT
+                      AA.CD_NO
+                    , 'KR'  AS SYS_LANG_CD
+                    , MAX(CASE WHEN AA.LANG_CD = #{SYS_LANG_CD} THEN AA.CMM_CD_NM END) AS CMM_CD_NM
+                    , 'KR' AS SEL_LANG_CD
+                    , MAX(CASE WHEN AA.LANG_CD = #{SEL_LANG_CD} THEN AA.CMM_CD_NM END) AS SEL_LANG_CMM_CD_NM
+                  FROM FOMM_CMM_CD_MT AA
+                  WHERE 1 = 1
+                  GROUP BY  AA.CD_NO
+                  ) B
+
+            WHERE 1 = 1
+            AND A.CD_NO = B.CD_NO  
+            CONNECT BY PRIOR A.CD_NO = A.UP_CD_NO
+            <choose>
+                <when test="TOP_CD_NO != null and TOP_CD_NO != ''">
+            START WITH A.CD_NO =  #{TOP_CD_NO}
+                </when>
+                <otherwise>
+            START WITH A.CD_NO = '1'
+                </otherwise>
+            </choose>
+            ORDER SIBLINGS BY TO_NUMBER(A.SORT_ORDR)
+        )
+		SELECT A.* 
+		FROM CMM_TB A
+		WHERE 1=1	
+
+		<choose>
+        <when test="CMM_CD_NM != null and CMM_CD_NM != ''">
+		AND A.CD_NO IN
+                                (
+                                SELECT CD_NO /*상위메뉴*/
+                                FROM FOMM_CMM_CD_MT
+                                START WITH UPPER(CMM_CD_NM) LIKE UPPER('%' || #{CMM_CD_NM} || '%')
+                                CONNECT BY NOCYCLE PRIOR UP_CD_NO = CD_NO
+                                UNION
+                                SELECT CD_NO /*하위메뉴*/
+                                FROM FOMM_CMM_CD_MT
+                                START WITH UPPER(CMM_CD_NM) LIKE UPPER('%' || #{CMM_CD_NM} || '%')
+                                CONNECT BY NOCYCLE PRIOR  CD_NO = UP_CD_NO
+                                )
+        </when>
+		<when test="CMM_CD != null and CMM_CD != ''">
+		AND A.CD_NO IN
+                                (
+								SELECT CD_NO /*상위메뉴*/
+								FROM FOMM_CMM_CD_MT
+								START WITH UPPER(CMM_CD) LIKE UPPER('%' || #{CMM_CD} || '%')
+								CONNECT BY NOCYCLE PRIOR UP_CD_NO = CD_NO
+								UNION
+								SELECT CD_NO /*하위메뉴*/
+								FROM FOMM_CMM_CD_MT
+								START WITH UPPER(CMM_CD) LIKE UPPER('%' || #{CMM_CD} || '%')
+								CONNECT BY NOCYCLE PRIOR  CD_NO = UP_CD_NO
+                                )
+		</when>
+		</choose> 
+        ORDER BY RNUM
+    </select>
+    
+        
+    <!-- SPP 하위코드 -->
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0150WMapper >> select02 */
+    	<include refid="selectFommCmmCdMt"/>
+    	AND	LANG_CD = 'KR'
+    	<if test="SEL_UP_CD_NO != null and SEL_UP_CD_NO != ''">
+			AND	  UP_CD_NO = #{SEL_UP_CD_NO}
+		</if>
+		ORDER BY TO_NUMBER(SORT_ORDR) ASC
+    </select>
+    
+    
+    <!-- SPP 선택코드 언어별 조회 -->
+    <select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0150WMapper >> select03 */
+    	SELECT	  0 AS CHK
+		        , '' AS ROWFLAG
+		        , A.CD_NO			--코드번호
+		        , B.CMM_CD AS LANG_CD
+		        , A.CMM_CD		--공통코드
+		        , A.CMM_CD_NM		--코드명
+		        , A.CMM_CD_DESC	--코드설명
+		        
+		FROM	  (
+				  SELECT *
+		          FROM
+		            	FOMM_CMM_CD_MT
+		          WHERE 1 = 1
+		          AND CD_NO = #{SEL_CD_NO}
+		          ) A
+		        , (
+				  SELECT
+				  	  CMM_CD
+					, SORT_ORDR AS LANG_SORT_ORDR
+		            FROM
+		            	FOMM_CMM_CD_MT
+		            WHERE 1 = 1
+		            AND USE_YN    = 'Y'
+		            AND CODE_DIV	= 'CMM_CD'
+		            AND UP_CMM_CD	= 'LANG_CD'
+		            AND CODE_DIV	= 'CMM_CD'
+		            AND	LANG_CD		= 'KR'
+		          ) B
+		WHERE 	  1=1
+		AND		  A.LANG_CD(+) = B.CMM_CD
+		ORDER BY B.LANG_SORT_ORDR
+    </select>
+    
+    
+    
+    <!-- SPP 코드 추가/수정 -->
+    <update id="modify01" parameterType="java.util.Map">
+        BEGIN
+
+	    	/* FOMM0150WMapper >> modify01 */
+	    	MERGE 
+			INTO	FOMM_CMM_CD_MT A
+			USING 	DUAL
+			ON		(A.CD_NO = #{CD_NO} AND A.LANG_CD = 'KR')
+			
+			WHEN MATCHED THEN
+	        	UPDATE
+		        SET	  CMM_CD 		= #{CMM_CD}			--공통코드
+					, CMM_CD_NM 	= #{CMM_CD_NM}		--코드명
+					, CMM_CD_DESC 	= #{CMM_CD_DESC}	--코드설명
+					, ITM_VAL_1 	= #{ITM_VAL_1}		--항목값1
+					, ITM_VAL_2 	= #{ITM_VAL_2}		--항목값2
+					, ITM_VAL_3 	= #{ITM_VAL_3}		--항목값3
+					, ITM_VAL_4 	= #{ITM_VAL_4}		--항목값4
+					, ITM_VAL_5 	= #{ITM_VAL_5}		--항목값5
+					, SORT_ORDR 	= #{SORT_ORDR}		--정렬순서
+					, USE_YN 		= #{USE_YN}			--사용여부
+					
+					, RMK 	= #{RMK}				--비고
+					, LMID 	= #{LMID}				--최종수정자
+					, LMDT 	= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+					, LMPID = #{LMPID}				--최종수정화면ID
+				WHERE CD_NO = #{CD_NO}
+				AND	  LANG_CD = 'KR'
+			
+			WHEN NOT MATCHED THEN
+				INSERT
+				(
+					  CD_NO			--코드번호
+					, LANG_CD		--언어코드
+					, UP_CD_NO		--상위코드번호
+					, CD_LVL		--코드레벨
+					, CMM_CD		--공통코드
+					, UP_CMM_CD		--상위코드
+					, CMM_CD_NM		--코드명
+					, CMM_CD_DESC	--코드설명
+					, ITM_VAL_1	--항목값1
+					, ITM_VAL_2	--항목값2
+					, ITM_VAL_3	--항목값3
+					, ITM_VAL_4	--항목값4
+					, ITM_VAL_5	--항목값5
+					, CODE_DIV	--코드업무구분
+					, SORT_ORDR	--정렬순서
+					, USE_YN	--사용여부
+					
+					, RMK	--비고
+					, FRID	--최초등록자
+					, FRDT	--최초등록일시
+					, LMID	--최종수정자
+					, LMDT	--최종수정일시
+					, LMPID	--최종수정화면ID
+				)
+				VALUES
+				(
+					  NVL( #{CD_NO}, (SELECT MAX(NVL(TO_NUMBER(CD_NO), 0))+1 FROM FOMM_CMM_CD_MT) )
+					, #{LANG_CD}
+					, #{UP_CD_NO}
+					, #{CD_LVL}
+					, #{CMM_CD}
+					, #{UP_CMM_CD}
+					, #{CMM_CD_NM}
+					, #{CMM_CD_DESC}
+					, #{ITM_VAL_1}
+					, #{ITM_VAL_2}
+					, #{ITM_VAL_3}
+					, #{ITM_VAL_4}
+					, #{ITM_VAL_5}
+					, DECODE(#{CODE_DIV}, 'ROOT', #{CMM_CD}, #{CODE_DIV})
+					, #{SORT_ORDR}
+					, #{USE_YN}
+					
+					, #{RMK}
+					, #{LMID}
+					, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+					, #{LMID}
+					, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+					, #{LMPID}
+				)
+				;
+
+	            <if test="CD_NO != null and CD_NO != ''">
+	            UPDATE FOMM_CMM_CD_MT SET
+	                UP_CMM_CD = #{CMM_CD}
+	            WHERE UP_CD_NO = #{CD_NO}
+	            ;
+	            </if>
+
+            END;
+    </update>
+
+    <!-- SPP 코드 삭제 (하위코드 포함 모두 삭제) -->
+    <update id="remove01" parameterType="java.util.Map">
+    	/* FOMM0150WMapper >> remove01 */
+        DELETE
+        FROM	FOMM_CMM_CD_MT
+        WHERE	CD_NO IN
+        		(
+        			SELECT	CD_NO
+        			FROM	FOMM_CMM_CD_MT
+        			CONNECT BY PRIOR CD_NO = UP_CD_NO
+        			START WITH CD_NO = #{CD_NO}
+        		)
+    </update>
+
+</mapper>

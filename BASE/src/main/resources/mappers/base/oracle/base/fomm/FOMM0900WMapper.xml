@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0900WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		<!--
+		  SELECT 
+                DECODE(TRIM(#{MEMO_ID}), NULL, 'COME' || TO_CHAR(SYSDATE, 'YYMMDD') || SEQ_MEMO_ID.NEXTVAL
+                , #{MEMO_ID}) MEMO_ID
+            FROM  DUAL  
+       
+        SELECT MAX(MEMO_ID)+1 AS MEMO_ID FROM FOMM_MEMO 
+ -->
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+	   <selectKey resultType="string" keyProperty="MEMO_ID" order="BEFORE">
+         <!--   
+            SELECT 
+	            DECODE(TRIM(#{MEMO_ID}), NULL, 'COME' || TO_CHAR(SYSDATE, 'YYMMDD') || SEQ_MEMO_ID.NEXTVAL
+	            , #{MEMO_ID}) MEMO_ID
+	        FROM  DUAL  
+	        
+	        SELECT DECODE(MAX(MEMO_ID)+1,NULL,1,0,1,MAX(MEMO_ID)+1) AS MEMO_ID FROM FOMM_MEMO
+	        
+	   	   SELECT NVL(MAX(MEMO_ID)+1,1) AS MEMO_ID FROM FOMM_MEMO
+-->
+        SELECT SEQ_MEMO_ID.NEXTVAL FROM DUAL
+ 
+           
+        </selectKey>
+		INSERT INTO FOMM_MEMO
+		( 
+			MEMO_ID
+			, MEMO_TITLE
+		   	, MEMO_CONTENTS
+		   	, MEMO_STATUS_CD
+			<if test='MEMO_STATUS_CD == "2"'>
+                , SEND_TIME
+            </if>
+			, ATTACH_YN
+			, DEL_YN
+			, DEL_TIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+			, NEW_MEMO_YN
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+			, CREATE_TIME 
+		)
+		VALUES 
+		( 
+    		#{MEMO_ID}
+			, #{MEMO_TITLE}
+			, #{MEMO_CONTENTS}
+			, #{MEMO_STATUS_CD}
+			<if test='MEMO_STATUS_CD == "2"'>
+                , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            </if>
+			, #{ATTACH_YN}
+			, #{DEL_YN}
+			, #{DEL_TIME}
+			, #{REG_USER_ID}
+			, #{REG_USER_NM}
+			, #{REG_USER_DEPT}
+			, #{NEW_MEMO_YN}
+			, #{LMID}
+			, #{LMNM}
+			, #{LMDNM}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		)
+	</insert>
+	
+	<insert id="insert02" parameterType="java.util.Map">
+
+		INSERT INTO FOMM_MEMO_RCV
+		( 
+			MEMO_RCV_ID
+			, JOB_REV_NO
+			, SEND_GUBUN
+			, RCV_USER_ID
+			, RCV_USER_NM
+			, RCV_USER_DEPT
+			, RCV_TYPE_CD
+			, SND_USER_ID
+			, SND_USER_NM
+			, SND_USER_DEPT
+			, NEW_MEMO_YN
+			, READ_YN
+			, READ_TIME
+			, DEL_YN
+			, DEL_TIME 
+		)
+		VALUES 
+		( 
+    		(SELECT NVL(MAX(MEMO_RCV_ID)+1,1) AS MEMO_RCV_ID FROM FOMM_MEMO_RCV)
+			, #{MEMO_ID}
+			, NVL(#{SEND_GUBUN},'00')
+			, #{USER_ID}
+			, #{USER_NM}
+			, #{DEPT_CD}
+			, #{RCV_TYPE_CD}
+			, #{SND_USER_ID}
+			, #{SND_USER_NM}
+			, #{SND_USER_DEPT}
+			, #{NEW_MEMO_YN}
+			, #{READ_YN}
+			, #{READ_TIME}
+			, #{DEL_YN}
+			, #{DEL_TIME} 
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	
+	
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	</delete>
+	
+	<!-- 
+    <select id="selectMemoDeptUser" parameterType="java.util.Map" resultType="java.util.Map">
+             /* FOMM0900WDAO.selectMemoDeptUser */
+             WITH TV_DEPT AS (
+                     SELECT
+                            0 AS CHK        /* CHECKBOX 컬럼 */
+                           ,'' AS ROWFLAG   /* 행상태 표기를 위한 컬럼 */
+                           ,M.DEPT_CD         AS DEPT_CD           /* 부서코드 */
+                           ,M.DEPT_NM         AS DEPT_NM           /* 부서명 */
+                           ,M.DEPT_MANAGER_ID AS DEPT_MANAGER_ID   /* 부서장ID */
+                           ,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = M.DEPT_MANAGER_ID) AS DEPT_MANAGER_NM  /* 부서장명 */
+                           ,M.UP_DEPT_CD      AS UP_DEPT_CD        /* 상위부서코드 */
+                           ,(SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = M.UP_DEPT_CD) AS UP_DEPT_NM  /* 상위부서명 */
+                           ,LEVEL AS DEPT_LEVEL
+                           /* ,M.DEPT_LEVEL      AS DEPT_LEVEL */       /* 부서레벨 */
+                           ,M.DEPT_ENG_NAME   AS DEPT_ENG_NAME     /* 부서영문명 */
+                           ,M.OPEN_DT         AS OPEN_DT           /* 개점일 */
+                           ,M.CLOSE_DT        AS CLOSE_DT          /* 폐점일 */
+                           ,M.SORT_ORDER      AS SORT_ORDER        /* 정렬순서 */
+                           ,M.DEPT_STATUS     AS DEPT_STATUS       /* 부서상태 */
+                           ,DECODE(M.DEPT_STATUS,'1','유효','폐쇄')     AS STATUS_NM       /* 부서상태 */
+                           ,CONNECT_BY_ISLEAF AS LT
+                       FROM FOMM_DEPT_MT M  
+                    WHERE 1=1
+                      START WITH M.DEPT_CD = '70073'
+                    CONNECT BY PRIOR M.DEPT_CD = M.UP_DEPT_CD
+                        AND M.DEPT_STATUS = '1'
+             ) , TV_USER AS(
+                     SELECT
+                               0 AS CHK      /* CHECKBOX 컬럼 */
+                             , '' AS ROWFLAG     /* 행상태 표기를 위한 컬럼 */
+                             , USER_ID           /* ID(사번) */
+                             , USER_NM           /* 사용자명 */
+                             , CO_CD             /* 회사코드 */
+                             , CO_NM             /* 회사명 */
+                             , DEPT_CD           /* 부서코드 */
+                             , DEPT_NM           /* 부서명 */
+                             , POS_NM            /* 직급명 */
+                             , ROLE_NM           /* 역할(직책)명 */
+                             , EMAIL_ADR         /* 이메일주소 */
+                             , TELNUM            /* 사내전화번호 */
+                             , MOBILE_NUM        /* 휴대폰번호 */
+                             , EXPIRE_DATE       /* 계정만료일자 */
+                             , decode(USE_YN    ,'Y','사용','미사용') USE_YN          /* 계정사용여부 */
+                             , RMK               /* 비고 */
+                             , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM               /* 최초등록자 */
+                             , FRDT              /* 최초등록일시 */
+                             , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM               /* 최종수정자 */
+                             , LMDT              /* 최종수정일시 */
+                             , LMPID             /* 최종수정화면ID */
+                             , LANG_CD           /* 사용자 언어코드 */
+                      FROM   FOMM_USER_MT A
+                     WHERE   1=1
+                       AND   USE_YN = 'Y'
+                       <if test="DEPT_NM != '' and DEPT_NM != null">                   
+                          AND UPPER(A.DEPT_NM) LIKE UPPER('%' || #{DEPT_NM} || '%')
+                       </if>
+                       <if test="USER_NM != '' and USER_NM != null">                  
+                          AND UPPER(A.USER_NM) LIKE UPPER('%' || #{USER_NM} || '%')
+                       </if>
+                     ORDER BY USE_YN desc, USER_NM
+             )
+             SELECT '01' AS SCH_TYPE
+                 ,  D.DEPT_CD
+                 ,  MAX(D.DEPT_NM) AS DEPT_NM
+                 , #{DEPT_NM} ||  #{USER_NM} AS SCH_NM 
+               FROM TV_DEPT D
+                 ,  TV_USER U
+              WHERE D.DEPT_CD = U.DEPT_CD
+              GROUP BY  D.DEPT_CD
+              ORDER BY DEPT_NM
+    </select>
+    -->
+
+    <select id="selectMemoDeptUserList" parameterType="java.util.Map" resultType="java.util.Map">
+             /* FOMM0900WDAO.selectMemoDeptUserList */
+             SELECT
+                       0 AS CHK      /* CHECKBOX 컬럼 */
+                     , '' AS ROWFLAG     /* 행상태 표기를 위한 컬럼 */
+                     , USER_ID           /* ID(사번) */
+                     , USER_NM           /* 사용자명 */
+                     , CO_CD             /* 회사코드 */
+                     , CO_NM             /* 회사명 */
+                     , DEPT_CD           /* 부서코드 */
+                     , PT_GETDEPTNM(A.DEPT_CD) AS DEPT_NM            /* 부서명 */
+                     , POS_NM            /* 직급명 */
+                     , ROLE_NM           /* 역할(직책)명 */
+                     , EMAIL_ADR         /* 이메일주소 */
+                     , TELNUM            /* 사내전화번호 */
+                     , MOBILE_NUM        /* 휴대폰번호 */
+                     , EXPIRE_DATE       /* 계정만료일자 */
+                     , decode(USE_YN    ,'Y','사용','미사용') USE_YN          /* 계정사용여부 */
+                     , RMK               /* 비고 */
+                     , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM               /* 최초등록자 */
+                     , FRDT              /* 최초등록일시 */
+                     , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM               /* 최종수정자 */
+                     , LMDT              /* 최종수정일시 */
+                     , LMPID             /* 최종수정화면ID */
+                     , LANG_CD           /* 사용자 언어코드 */
+              FROM   FOMM_USER_MT A
+            WHERE   1=1
+                 AND   USE_YN = 'Y'
+                 <if test="DEPT_CD != '' and DEPT_CD != null">
+                       <!-- AND DEPT_CD = #{DEPT_CD} -->
+                              AND DEPT_CD IN (
+                                                           SELECT DISTINCT DEPT_CD
+                                                              FROM FOMM_DEPT_MT
+                                                            WHERE 1=1
+                                                          CONNECT BY PRIOR DEPT_CD = UP_DEPT_CD
+                                                                  AND DEPT_STATUS = '1'
+                                                            START WITH DEPT_CD = #{DEPT_CD}
+                                                                 AND DEPT_STATUS = '1' 
+                                                         )
+                       
+                 </if>                
+                 <if test="SCH_NM != '' and SCH_NM != null and !'undefined'.equals(SCH_NM)">
+                       AND (UPPER(PT_GETDEPTNM(A.DEPT_CD)) LIKE UPPER('%' || #{SCH_NM} || '%') OR UPPER(A.USER_NM) LIKE UPPER('%' || #{SCH_NM} || '%'))
+                 </if>                  
+             ORDER BY USE_YN desc, USER_NM
+    </select>
+    
+    <select id="selectMemoGrpUser" parameterType="java.util.Map" resultType="java.util.Map">
+             /* FOMM0900WDAO.selectMemoGrpUser */
+             WITH TV_GRP AS (
+             SELECT * 
+               FROM FOMM_MEMO_GROUP
+              WHERE 1=1
+                AND USE_YN = 'Y'
+                AND GROUP_TYPE = 'S'
+               <if test="GROUP_NM != '' and GROUP_NM != null">
+                         AND UPPER(GROUP_NM) LIKE UPPER('%' || #{GROUP_NM} || '%')
+               </if>
+                UNION ALL
+             SELECT * 
+               FROM FOMM_MEMO_GROUP
+              WHERE 1=1
+                AND USE_YN = 'Y'
+                AND GROUP_TYPE = 'P'
+               <if test="GROUP_NM != '' and GROUP_NM != null">
+                          AND UPPER(GROUP_NM) LIKE UPPER('%' || #{GROUP_NM} || '%')
+               </if>
+                AND OWNER_ID = #{OWNER_ID}
+             ) , TV_USER AS(
+                     SELECT
+                               0 AS CHK      /* CHECKBOX 컬럼 */
+                             , '' AS ROWFLAG     /* 행상태 표기를 위한 컬럼 */
+                             , A.USER_ID         /* ID(사번) */
+                             , A.USER_NM         /* 사용자명 */
+                             , A.CO_CD               /* 회사코드 */
+                             , A.CO_NM               /* 회사명 */
+                             , A.DEPT_CD         /* 부서코드 */
+                             , A.DEPT_NM         /* 부서명 */
+                             , A.POS_NM          /* 직급명 */
+                             , A.ROLE_NM         /* 역할(직책)명 */
+                             , A.EMAIL_ADR           /* 이메일주소 */
+                             , A.TELNUM          /* 사내전화번호 */
+                             , A.MOBILE_NUM      /* 휴대폰번호 */
+                             , A.EXPIRE_DATE     /* 계정만료일자 */
+                             , decode(A.USE_YN    ,'Y','사용','미사용') USE_YN            /* 계정사용여부 */
+                             , A.RMK             /* 비고 */
+                             , LMPID             /* 최종수정화면ID */
+                             , LANG_CD           /* 사용자 언어코드 */
+                             , B.GROUP_ID                
+                      FROM   FOMM_USER_MT A
+                        ,    FOMM_MEMO_GROUP_USER B
+                     WHERE   1=1
+                       AND   A.USE_YN = 'Y'   
+                       AND   A.USER_ID = B.USER_ID           
+                      <if test="USER_NM != '' and USER_NM != null">
+                          AND UPPER(A.USER_NM) LIKE UPPER('%' || #{USER_NM} || '%')
+                      </if>
+                     ORDER BY A.USE_YN desc, A.USER_NM
+             )
+             SELECT TG.GROUP_ID
+                 ,  MAX(TG.GROUP_TYPE) AS GROUP_TYPE
+                 ,  MAX(TG.GROUP_NM) AS GROUP_NM    
+                 ,  COUNT(TU.USER_ID) AS CNT
+                 ,  #{GROUP_NM} ||  #{USER_NM} AS SCH_NM 
+               FROM TV_GRP TG
+                 ,  TV_USER TU
+              WHERE 1=1
+                AND TG.GROUP_ID = TU.GROUP_ID
+                GROUP BY TG.GROUP_ID
+    </select>    
+    
+    <select id="selectMemoGrpUserList" parameterType="java.util.Map" resultType="java.util.Map">
+             /* FOMM0900WDAO.selectMemoGrpUserList */
+                     SELECT
+                               0 AS CHK      /* CHECKBOX 컬럼 */
+                             , '' AS ROWFLAG     /* 행상태 표기를 위한 컬럼 */
+                             , A.USER_ID         /* ID(사번) */
+                             , A.USER_NM         /* 사용자명 */
+                             , A.CO_CD               /* 회사코드 */
+                             , A.CO_NM               /* 회사명 */
+                             , A.DEPT_CD         /* 부서코드 */
+                             , PT_GETDEPTNM(A.DEPT_CD) AS DEPT_NM          /* 부서명 */
+                             , A.POS_NM          /* 직급명 */
+                             , A.ROLE_NM         /* 역할(직책)명 */
+                             , A.EMAIL_ADR           /* 이메일주소 */
+                             , A.TELNUM          /* 사내전화번호 */
+                             , A.MOBILE_NUM      /* 휴대폰번호 */
+                             , A.EXPIRE_DATE     /* 계정만료일자 */
+                             , decode(A.USE_YN    ,'Y','사용','미사용') USE_YN            /* 계정사용여부 */
+                             , A.RMK             /* 비고 */
+                             , LMPID             /* 최종수정화면ID */
+                             , LANG_CD           /* 사용자 언어코드 */
+                             , B.GROUP_ID                
+                      FROM   FOMM_USER_MT A
+                        ,    FOMM_MEMO_GROUP_USER B
+                        ,    FOMM_MEMO_GROUP C
+                     WHERE   1=1
+                       AND   B.GROUP_ID = C.GROUP_ID 
+                       AND   A.USER_ID = B.USER_ID  
+                       AND   A.USE_YN = 'Y'   
+                       AND   C.USE_YN = 'Y'
+                      <if test="GROUP_ID != '' and GROUP_ID != null">
+                        AND B.GROUP_ID = #{GROUP_ID}
+                      </if>                
+                      <if test="SCH_NM != '' and SCH_NM != null and !'undefined'.equals(SCH_NM)">
+                       AND (UPPER(C.GROUP_NM) LIKE UPPER('%' || #{SCH_NM} || '%') OR UPPER(A.USER_NM) LIKE UPPER('%' || #{SCH_NM} || '%'))
+                      </if>
+                     ORDER BY A.USE_YN desc, A.USER_NM
+    </select>    	
+    
+    <select id="selectUserRtn" parameterType="java.util.Map" resultType="java.util.Map">
+             /* FOMM0900WDAO.selectUserRtn */
+                     SELECT
+                               0 AS CHK      /* CHECKBOX 컬럼 */
+                             , '' AS ROWFLAG     /* 행상태 표기를 위한 컬럼 */
+                             , A.USER_ID         /* ID(사번) */
+                             , A.USER_NM         /* 사용자명 */
+                             , A.CO_CD               /* 회사코드 */
+                             , A.CO_NM               /* 회사명 */
+                             , A.DEPT_CD         /* 부서코드 */
+                             , A.DEPT_NM         /* 부서명 */
+                             , A.POS_NM          /* 직급명 */
+                             , A.ROLE_NM         /* 역할(직책)명 */
+                             , A.EMAIL_ADR           /* 이메일주소 */
+                             , A.TELNUM          /* 사내전화번호 */
+                             , A.MOBILE_NUM      /* 휴대폰번호 */
+                             , A.EXPIRE_DATE     /* 계정만료일자 */
+                             , decode(A.USE_YN    ,'Y','사용','미사용') USE_YN            /* 계정사용여부 */
+                             , A.RMK             /* 비고 */
+                             , LMPID             /* 최종수정화면ID */
+                             , LANG_CD           /* 사용자 언어코드 */                                
+                      FROM   FOMM_USER_MT A    
+                    WHERE 1=1
+                        AND A.USE_YN = 'Y'
+                       <if test="userList != null and userList.size() > 0">
+                         AND A.USER_ID IN
+                        <foreach collection="userList" item="item" open="(" close=")" separator=",">
+                            #{item.USER_ID}
+                        </foreach>
+                          </if>  
+    </select>   
+    
+    <select id="selectMemoUserSingle" parameterType="java.util.Map" resultType="java.util.Map">
+             /* FOMM0900WDAO.selectMemoUserSingle */
+             WITH TV_DEPT AS (
+                     SELECT
+                            0 AS CHK        /* CHECKBOX 컬럼 */
+                           ,'' AS ROWFLAG   /* 행상태 표기를 위한 컬럼 */
+                           ,M.DEPT_CD         AS DEPT_CD           /* 부서코드 */
+                           ,M.DEPT_NM         AS DEPT_NM           /* 부서명 */
+                           ,M.DEPT_MANAGER_ID AS DEPT_MANAGER_ID   /* 부서장ID */
+                           ,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = M.DEPT_MANAGER_ID) AS DEPT_MANAGER_NM  /* 부서장명 */
+                           ,M.UP_DEPT_CD      AS UP_DEPT_CD        /* 상위부서코드 */
+                           ,(SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = M.UP_DEPT_CD) AS UP_DEPT_NM  /* 상위부서명 */
+                           ,LEVEL AS DEPT_LEVEL
+                           /* ,M.DEPT_LEVEL      AS DEPT_LEVEL */       /* 부서레벨 */
+                           ,M.DEPT_ENG_NAME   AS DEPT_ENG_NAME     /* 부서영문명 */
+                           ,M.OPEN_DT         AS OPEN_DT           /* 개점일 */
+                           ,M.CLOSE_DT        AS CLOSE_DT          /* 폐점일 */
+                           ,M.SORT_ORDER      AS SORT_ORDER        /* 정렬순서 */
+                           ,M.DEPT_STATUS     AS DEPT_STATUS       /* 부서상태 */
+                           ,DECODE(M.DEPT_STATUS,'1','유효','폐쇄')     AS STATUS_NM       /* 부서상태 */
+                           ,CONNECT_BY_ISLEAF AS LT
+                       FROM FOMM_DEPT_MT M  
+                    WHERE 1=1
+                      START WITH M.DEPT_CD = '70073'
+                    CONNECT BY PRIOR M.DEPT_CD = M.UP_DEPT_CD
+                        AND M.DEPT_STATUS = '1'
+             ) , TV_USER AS(
+                     SELECT
+                               0 AS CHK      /* CHECKBOX 컬럼 */
+                             , '' AS ROWFLAG     /* 행상태 표기를 위한 컬럼 */
+                             , USER_ID           /* ID(사번) */
+                             , USER_NM           /* 사용자명 */
+                             , CO_CD             /* 회사코드 */
+                             , CO_NM             /* 회사명 */
+                             , DEPT_CD           /* 부서코드 */
+                             , DEPT_NM           /* 부서명 */
+                             , POS_NM            /* 직급명 */
+                             , ROLE_NM           /* 역할(직책)명 */
+                             , EMAIL_ADR         /* 이메일주소 */
+                             , TELNUM            /* 사내전화번호 */
+                             , MOBILE_NUM        /* 휴대폰번호 */
+                             , EXPIRE_DATE       /* 계정만료일자 */
+                             , decode(USE_YN    ,'Y','사용','미사용') USE_YN          /* 계정사용여부 */
+                             , RMK               /* 비고 */
+                             , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM               /* 최초등록자 */
+                             , FRDT              /* 최초등록일시 */
+                             , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM               /* 최종수정자 */
+                             , LMDT              /* 최종수정일시 */
+                             , LMPID             /* 최종수정화면ID */
+                             , LANG_CD           /* 사용자 언어코드 */
+                      FROM   FOMM_USER_MT A
+                     WHERE   1=1
+                       AND   USE_YN = 'Y'
+                       <if test="DEPT_NM != '' and DEPT_NM != null">                   
+                          AND UPPER(A.DEPT_NM) LIKE UPPER('%' || #{DEPT_NM} || '%')
+                       </if>
+                       <if test="USER_NM != '' and USER_NM != null">                  
+                          AND UPPER(A.USER_NM) LIKE UPPER('%' || #{USER_NM} || '%')
+                       </if>
+                     ORDER BY USE_YN desc, USER_NM
+             )
+             SELECT * FROM TV_USER
+    </select>
+    
+    <select id="selectMemoDeptUser" parameterType="java.util.Map" resultType="java.util.Map">
+             /* FOMM0900WDAO.selectMemoDeptUser */           
+             WITH TV_USER AS(
+                     SELECT
+                               0 AS CHK      /* CHECKBOX 컬럼 */
+                             , '' AS ROWFLAG     /* 행상태 표기를 위한 컬럼 */
+                             , USER_ID           /* ID(사번) */
+                             , USER_NM           /* 사용자명 */
+                             , CO_CD             /* 회사코드 */
+                             , CO_NM             /* 회사명 */
+                             , DEPT_CD           /* 부서코드 */
+                             , PT_GETDEPTNM(A.DEPT_CD) AS DEPT_NM            /* 부서명 */
+                             , POS_NM            /* 직급명 */
+                             , ROLE_NM           /* 역할(직책)명 */
+                             , EMAIL_ADR         /* 이메일주소 */
+                             , TELNUM            /* 사내전화번호 */
+                             , MOBILE_NUM        /* 휴대폰번호 */
+                             , EXPIRE_DATE       /* 계정만료일자 */
+                             , decode(USE_YN    ,'Y','사용','미사용') USE_YN          /* 계정사용여부 */
+                             , RMK               /* 비고 */
+                             , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM               /* 최초등록자 */
+                             , FRDT              /* 최초등록일시 */
+                             , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM               /* 최종수정자 */
+                             , LMDT              /* 최종수정일시 */
+                             , LMPID             /* 최종수정화면ID */
+                             , LANG_CD           /* 사용자 언어코드 */
+                      FROM   FOMM_USER_MT A
+                     WHERE   1=1
+                       AND   USE_YN = 'Y'
+                       <if test="DEPT_NM != '' and DEPT_NM != null">                   
+                          AND UPPER(PT_GETDEPTNM(A.DEPT_CD)) LIKE UPPER('%' || #{DEPT_NM} || '%')
+                       </if>
+                       <if test="USER_NM != '' and USER_NM != null">                  
+                          AND UPPER(A.USER_NM) LIKE UPPER('%' || #{USER_NM} || '%')
+                       </if>
+                     ORDER BY USE_YN desc, USER_NM
+             ) 
+             SELECT
+               0 AS CHK        /* CHECKBOX 컬럼 */
+              ,'' AS ROWFLAG   /* 행상태 표기를 위한 컬럼 */
+              ,M.DEPT_CD         AS DEPT_CD           /* 부서코드 */
+              ,M.DEPT_NM         AS DEPT_NM           /* 부서명 */
+              ,M.DEPT_MANAGER_ID AS DEPT_MANAGER_ID   /* 부서장ID */
+              ,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = M.DEPT_MANAGER_ID) AS DEPT_MANAGER_NM  /* 부서장명 */
+              ,M.UP_DEPT_CD      AS UP_DEPT_CD        /* 상위부서코드 */
+              ,(SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = M.UP_DEPT_CD) AS UP_DEPT_NM  /* 상위부서명 */
+              ,LEVEL AS DEPT_LEVEL
+              /* ,M.DEPT_LEVEL      AS DEPT_LEVEL */       /* 부서레벨 */
+              ,M.DEPT_ENG_NAME   AS DEPT_ENG_NAME     /* 부서영문명 */
+              ,M.OPEN_DT         AS OPEN_DT           /* 개점일 */
+              ,M.CLOSE_DT        AS CLOSE_DT          /* 폐점일 */
+              ,M.SORT_ORDER      AS SORT_ORDER        /* 정렬순서 */
+              ,M.DEPT_STATUS     AS DEPT_STATUS       /* 부서상태 */
+              ,DECODE(M.DEPT_STATUS,'1','유효','폐쇄')     AS STATUS_NM       /* 부서상태 */
+              ,CONNECT_BY_ISLEAF AS LT
+              ,'01' AS SCH_TYPE
+              ,  #{DEPT_NM} ||  #{USER_NM} AS SCH_NM 
+             FROM FOMM_DEPT_MT M  
+             WHERE 1=1
+               AND M.DEPT_CD IN 
+               (
+                     SELECT DISTINCT DEPT_CD
+                       FROM FOMM_DEPT_MT
+                      WHERE 1=1
+                    CONNECT BY PRIOR UP_DEPT_CD = DEPT_CD
+                                 AND DEPT_STATUS = '1'
+                    START WITH DEPT_CD in (SELECT D.DEPT_CD                 
+                                             FROM TV_USER D                                                  
+                                           GROUP BY D.DEPT_CD
+                                          )
+                           AND DEPT_STATUS = '1'
+               )
+         START WITH M.DEPT_CD = '70073'
+       CONNECT BY PRIOR M.DEPT_CD = M.UP_DEPT_CD
+           AND M.DEPT_STATUS = '1'
+         ORDER SIBLINGS BY M.SORT_ORDER
+    </select>        
+
+</mapper>

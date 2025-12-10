@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ2500WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			'0'								AS CHK,
+			''								AS ROWFLAG,
+			NVL(B.USER_ID, A.USER_ID)		AS USER_ID,
+			MAX(NVL(B.USER_NM, A.USER_NM))	AS USER_NM,
+			MAX(B.DEPT_NM)					AS DEPT_NM,
+			MAX(A.PJT_ID)					AS PJT_ID,
+			MAX(A.ACT_IN_DATE)				AS ACT_IN_DATE,
+			MAX(A.PLAN_OUT_DATE)			AS PLAN_OUT_DATE,
+			MAX(A.ACT_OUT_DATE)				AS ACT_OUT_DATE,
+			MAX(A.PLAN_TOT_MM)				AS PLAN_TOT_MM,
+			MAX(A.ACT_TOT_MM)				AS ACT_TOT_MM,
+			MAX(A.PARTIN_CD)				AS PARTIN_CD,
+			MAX(A.USER_DESC)				AS USER_DESC,
+			MAX(A.ROLE_CD)					AS ROLE_CD,
+			MAX(A.GRADE_CD)					AS GRADE_CD,
+			MAX(A.BIRTHDAY)					AS BIRTHDAY,
+			MAX(A.REG_USER_ID)				AS REG_USER_ID,
+			MAX(A.REG_USER_NM)				AS REG_USER_NM,
+			MAX(A.REG_STIME)				AS REG_STIME,
+			MAX(A.LMOD_USER_ID)				AS LMOD_USER_ID,
+			MAX(A.LMOD_USER_NM)				AS LMOD_USER_NM,
+			MAX(A.SYSMODTIME)				AS SYSMODTIME,
+			MAX(A.MGT_FLAG)					AS MGT_FLAG,
+			MAX(B.USER_ID)					AS LOGIN_YN,
+			MAX(B.POS_NM)					AS POS_NM
+
+		FROM
+			<!-- PT_USER B -->
+			FOMM_USER_MT B
+		FULL
+		OUTER
+		JOIN
+			PJ_USER A
+		ON B.USER_ID = A.USER_ID
+
+		WHERE 1 = 1
+
+		<if test="DEPT_NM != '' and DEPT_NM != null">
+		AND UPPER(B.DEPT_NM) LIKE '%' || UPPER(#{DEPT_NM}) || '%'
+		</if>
+
+		<if test="USER_ID != '' and USER_ID != null">
+		AND UPPER(B.USER_ID) LIKE '%' || UPPER(#{USER_ID}) || '%'
+		</if>
+
+		<if test="USER_NM != '' and USER_NM != null">
+		AND UPPER(B.USER_NM) LIKE '%' || UPPER(#{USER_NM}) || '%'
+		</if>
+
+		<if test="POS_NM != '' and POS_NM != null">
+		AND UPPER(B.POS_NM) LIKE '%' || UPPER(#{POS_NM}) || '%'
+		</if>
+
+		GROUP BY
+			NVL(B.USER_NM, A.USER_NM),
+			NVL(B.USER_ID, A.USER_ID)
+
+		ORDER BY
+			NVL(B.USER_NM, A.USER_NM)
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.PJT_ID
+			, PJT_NAME
+			, SUB_PJT_YN 
+			, PJT_STIME
+			, PJT_ETIME
+			, PJT_STATUS_CD
+			, PJT_TYPE_CD
+			, PJT_SIZE_CD
+			, SPV_YN
+			, UPMU_USER_NM
+			, IN_PM_USER_NM
+			, OUT_CPY_NAME
+			, OUT_PM_USER_NM
+			<!-- , CASE WHEN PJT_ETIME >= TO_CHAR(SYSDATE,'YYYYMMDD') THEN '진행중' ELSE '종료' END AS STATUS -->
+			, B.PARTIN_CD
+			, B.ROLE_CD
+			, NVL(B.MGT_FLAG, 'PJT')	AS MGT_FLAG
+			, B.PJT_ID AS PJT_ID
+			, B.USER_ID
+			, B.USER_NM
+
+		FROM
+			PJ_PROJECT A,
+			PJ_USER B
+
+		WHERE 1 = 1
+		AND A.PJT_ID = B.PJT_ID
+		AND B.USER_ID = #{SEL_USER_ID}
+
+		ORDER BY
+			PJT_NAME
+	</select>
+
+</mapper>

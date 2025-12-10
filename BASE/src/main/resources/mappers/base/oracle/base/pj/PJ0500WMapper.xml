@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0500WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG 
+			, A.ACT_ITEM_ID 
+			, A.ACT_ITEM_NO
+			, A.TITLE 
+			, A.PJT_ID 
+			, B.PJT_NAME 
+			, A.MEET_ID 
+			, A.DUE_DATE 
+			, A.CONTENTS 
+			, A.ACTION_CD 
+			, A.CLOSE_DATE 
+			, A.ACT_USER_ID 
+			, A.ACT_USER_NM 
+			, A.ACT_USER_DEPT 
+			, A.REQ_USER_ID 
+			, A.REQ_USER_NM 
+			, A.REQ_USER_DEPT 
+			, A.REQ_DATE 
+			, A.REG_STIME 
+			, A.REG_USER_ID 
+			, A.REG_USER_NM 
+			, A.REG_USER_DEPT 
+			, A.LMOD_SDATE 
+			, A.LMOD_USER_ID 
+			, A.LMOD_USER_NM 
+			, A.LMOD_USER_DEPT
+			, CASE
+				WHEN NVL(A.ACTION_CD, 'AITM_PROC_STS_CD01') = 'AITM_PROC_STS_CD01' 
+                THEN DECODE(GREATEST(TO_CHAR(SYSDATE, 'YYYYMMDD'), SUBSTR(A.DUE_DATE, 1, 8)), TO_CHAR(SYSDATE, 'YYYYMMDD'), '지연', '등록') 
+                WHEN NVL(A.ACTION_CD, 'AITM_PROC_STS_CD01') = 'AITM_PROC_STS_CD02'  
+                THEN DECODE(GREATEST(TO_CHAR(SYSDATE, 'YYYYMMDD'), SUBSTR(A.DUE_DATE, 1, 8)), TO_CHAR(SYSDATE, 'YYYYMMDD'), '지연', '진행중')  
+                ELSE '완료' 
+			  END AS STATUS
+
+		FROM
+			PJ_ACTION_ITEM A,
+			PJ_PROJECT B 
+
+		WHERE 1 = 1
+		AND A.PJT_ID = B.PJT_ID
+		AND A.PJT_ID = #{PJT_ID}
+		
+		<if test="ACT_USER_NM != '' and ACT_USER_NM != null">
+		AND UPPER(A.ACT_USER_NM) LIKE '%' || UPPER(#{ACT_USER_NM}) || '%'
+		</if>
+		
+		<if test="REQ_USER_NM != '' and REQ_USER_NM != null">
+		AND UPPER(A.REQ_USER_NM) LIKE '%' || UPPER(#{REQ_USER_NM}) || '%'
+		</if>
+		
+		<if test="ACTION_CD != '' and ACTION_CD != null">
+		AND A.ACTION_CD = #{ACTION_CD}
+		</if>
+		
+		<if test="TITLE != '' and TITLE != null">
+		AND UPPER(A.TITLE) LIKE '%' || UPPER(#{TITLE}) || '%'
+		</if>    
+
+		ORDER BY
+			A.REQ_DATE DESC, A.ACT_ITEM_ID DESC
+	</select>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_ACTION_ITEM
+	  	WHERE ACT_ITEM_ID = #{ACT_ITEM_ID}
+	</delete>
+	
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE FROM PJ_ACT_ACTION
+		WHERE 1 = 1
+		AND ACT_ITEM_ID = #{ACT_ITEM_ID}		 
+	</delete>
+
+</mapper>

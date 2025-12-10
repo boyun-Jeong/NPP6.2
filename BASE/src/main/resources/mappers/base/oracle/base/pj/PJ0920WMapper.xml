@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0920WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  PJT_ID
+			, PJT_NAME
+			, SUB_PJT_YN 
+			, PJT_STIME
+			, PJT_ETIME
+			, PJT_STATUS_CD
+			, PJT_TYPE_CD
+			, PJT_SIZE_CD
+			, SPV_YN
+			, UPMU_USER_NM
+			, IN_PM_USER_NM
+			, OUT_CPY_NAME
+			, OUT_PM_USER_NM
+<!-- 			, (SELECT DECODE(MAIN_PJT_ID, A.PJT_ID, '1', '0') FROM FOMM_USER_MT WHERE USER_ID = #{USER_ID}) AS MAIN_PROJECT_YN -->
+
+		FROM
+			PJ_PROJECT A
+		
+		WHERE 1 = 1
+		AND (SUB_PJT_YN = 'N' OR SUB_PJT_YN IS NULL)
+	
+		<if test="PJT_YEAR != '' and PJT_YEAR != null">
+		AND #{PJT_YEAR} BETWEEN SUBSTR(PJT_STIME, 1, 4) AND SUBSTR(PJT_ETIME, 1, 4)
+		</if>
+		
+		<if test="PROC_STS_CD != '' and PROC_STS_CD != null">
+		AND PJT_STATUS_CD = #{PROC_STS_CD}
+		</if>
+		
+		<if test="PJT_ID != '' and PJT_ID != null">
+		AND PJT_ID =  #{PJT_ID}
+		</if>	
+	</select>
+
+</mapper>

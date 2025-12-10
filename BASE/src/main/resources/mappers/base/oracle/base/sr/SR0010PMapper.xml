@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR0010PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+		      A.REQ_ID
+		    , A.USER_ID
+		    , B.USER_NM
+		    , B.DEPT_CD
+		    , B.DEPT_NM
+		    , C.PROC_EXAM_OPIN
+		    , C.PROC_DATE
+		    , B.TELNUM
+		    , B.MOBILE_NUM
+		    , B.EMAIL_ADR
+		
+		FROM
+		      SR_CGER_DT A
+		    , FOMM_USER_MT B
+		    , SR_REV_PROC C
+		
+		WHERE 1 = 1
+		AND A.USER_ID       = B.USER_ID
+		AND A.REQ_ID        = C.REQ_ID(+)
+		AND A.WF_PROC_CD    = C.WF_PROC_CD(+)
+		AND A.USER_ID       = C.USER_ID(+)
+		AND A.REQ_ID        = #{REQ_ID}
+		AND A.WF_PROC_CD    = #{WF_PROC_CD}
+
+        GROUP BY
+              A.REQ_ID
+            , A.USER_ID
+            , B.USER_NM
+            , B.DEPT_CD
+            , B.DEPT_NM
+            , C.PROC_EXAM_OPIN
+            , C.PROC_DATE
+            , B.TELNUM
+            , B.MOBILE_NUM
+            , B.EMAIL_ADR
+
+		ORDER BY
+		    B.DEPT_NM, B.USER_NM
+	</select>
+
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              A.REQ_ID
+			, A.WF_PROC_CD
+			, A.SEQ
+			, A.APPR_LVL_SEQ
+            , A.APPR_GRP_SEQ
+			, A.APPR_SEQ
+			, A.APPR_STAT_CD
+			, A.APPR_GBN_CD
+			, A.USER_ID
+			, A.USER_NM
+			, A.DEPT_CD
+			, A.DEPT_NM
+			, A.POS_NM
+			, B.TELNUM
+            , B.MOBILE_NUM
+            , B.EMAIL_ADR
+			, A.APPR_STIME
+			, A.APPR_DESC
+			, A.APV_BTN_YN
+            , A.RTRN_BTN_YN
+            , A.SAVE_BTN_YN
+            , A.APV_BTN_TEXT
+            , A.RTRN_BTN_TEXT
+            , A.SAVE_BTN_TEXT
+            , A.ROLE_CD
+            , A.DIRECT_YN
+            , A.DAEJIC_USER_ID
+            , A.DAEJIC_USER_NM
+            , A.DAEJIC_DEPT_CD
+            , A.DAEJIC_DEPT_NM
+            , A.DAEJIC_POS_NM
+            , (SELECT TELNUM FROM FOMM_USER_MT WHERE USER_ID = A.DAEJIC_USER_ID)    AS DAEJIC_POS_TELNUM
+            , A.REG_TIME
+
+        FROM
+              WF_APPROVAL_MT A
+            , FOMM_USER_MT B
+
+        WHERE 1 = 1
+        AND A.USER_ID       = B.USER_ID
+        AND A.REQ_ID        = #{REQ_ID}
+        AND A.WF_PROC_CD    = #{WF_PROC_CD}
+        AND A.APPR_LVL_SEQ  = #{APPR_LVL_SEQ}
+        
+        ORDER BY
+              A.APPR_GRP_SEQ
+            , A.APPR_SEQ
+    </select>
+
+    <select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* SR0010PMapper >> select03 */
+        SELECT
+		      A.PROC_NUMBER
+		    , B.WF_PROC_CD AS BASE_WF_PROC_CD
+		    , B.REQ_STAT_CD
+		    , A.WF_HIST_SEQ
+		    , A.WF_PROC_CD
+		    , A.APPR_LVL_SEQ
+		    , A.APPR_GRP_SEQ
+		    , A.APPR_NM || CASE WHEN A.APPR_STAT_CD = 'APST_00' THEN (SELECT ' [' || CMM_CD_NM || ']' FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'APPR_STAT_CD' AND CMM_CD = A.APPR_STAT_CD AND LANG_CD = 'KR') END  AS APPR_NM
+		    , A.APPR_STAT_CD
+		    , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'APPR_STAT_CD' AND CMM_CD = A.APPR_STAT_CD AND LANG_CD = 'KR')    AS APPR_STAT_NM
+		    , A.APPR_COMMENT
+		    , A.APPR_GBN_CD
+		    , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'APPR_GBN_CD' AND CMM_CD = A.APPR_GBN_CD AND LANG_CD = 'KR')    AS APPR_GBN_NM
+		    , A.SRM_USER_NM || CASE WHEN A.DAEJIC_YN = 'Y' THEN ' (代)' || A.ORG_USER_NM END  AS SRM_USER_INFO
+		    , CASE
+                WHEN WF_HIST_SEQ = 1
+                THEN ''
+                ELSE
+                    LPAD(
+                   ((EXTRACT(DAY FROM (TO_TIMESTAMP(A.REG_STIME, 'YYYYMMDDHH24MISS') - 
+                                       TO_TIMESTAMP(MIN(A.REG_STIME) OVER(ORDER BY TO_NUMBER(A.WF_HIST_SEQ) ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 'YYYYMMDDHH24MISS')) ) * 24) +
+                     EXTRACT(HOUR FROM (TO_TIMESTAMP(A.REG_STIME, 'YYYYMMDDHH24MISS') -
+                                        TO_TIMESTAMP(MIN(A.REG_STIME) OVER(ORDER BY TO_NUMBER(A.WF_HIST_SEQ) ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 'YYYYMMDDHH24MISS')) )
+                   ),
+                    CASE
+                        WHEN
+                            LENGTH(((EXTRACT(DAY FROM (TO_TIMESTAMP(A.REG_STIME, 'YYYYMMDDHH24MISS') - 
+                                                       TO_TIMESTAMP(MIN(A.REG_STIME) OVER(ORDER BY TO_NUMBER(A.WF_HIST_SEQ) ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 'YYYYMMDDHH24MISS')) ) * 24) +
+                                     EXTRACT(HOUR FROM (TO_TIMESTAMP(A.REG_STIME, 'YYYYMMDDHH24MISS') -
+                                                        TO_TIMESTAMP(MIN(A.REG_STIME) OVER(ORDER BY TO_NUMBER(A.WF_HIST_SEQ) ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 'YYYYMMDDHH24MISS')) )
+                                   )) > 2
+                        THEN 
+                            LENGTH(((EXTRACT(DAY FROM (TO_TIMESTAMP(A.REG_STIME, 'YYYYMMDDHH24MISS') - 
+                                                       TO_TIMESTAMP(MIN(A.REG_STIME) OVER(ORDER BY TO_NUMBER(A.WF_HIST_SEQ) ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 'YYYYMMDDHH24MISS')) ) * 24) +
+                                     EXTRACT(HOUR FROM (TO_TIMESTAMP(A.REG_STIME, 'YYYYMMDDHH24MISS') -
+                                                        TO_TIMESTAMP(MIN(A.REG_STIME) OVER(ORDER BY TO_NUMBER(A.WF_HIST_SEQ) ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 'YYYYMMDDHH24MISS')) )
+                                   ))
+                        ELSE 2
+                    END, '0')   || '시간 ' ||
+              LPAD(EXTRACT(MINUTE FROM (TO_TIMESTAMP(A.REG_STIME, 'YYYYMMDDHH24MISS') -
+                                TO_TIMESTAMP(MIN(A.REG_STIME) OVER(ORDER BY TO_NUMBER(A.WF_HIST_SEQ) ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 'YYYYMMDDHH24MISS')) ), 2, '0') || '분 ' ||
+              LPAD(EXTRACT(SECOND FROM (TO_TIMESTAMP(A.REG_STIME, 'YYYYMMDDHH24MISS') -
+                                TO_TIMESTAMP(MIN(A.REG_STIME) OVER(ORDER BY TO_NUMBER(A.WF_HIST_SEQ) ROWS BETWEEN 1 PRECEDING AND CURRENT ROW), 'YYYYMMDDHH24MISS')) ), 2, '0') || '초'
+              END AS CACU_TIME
+		    , TO_CHAR(TO_DATE(A.REG_STIME, 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD HH24:MI:SS')  AS PROC_DTIME
+		    , A.SRM_USER_ID
+		    , A.SRM_USER_NM
+		    , A.SRM_JBC_JNAME
+		    , A.SRM_DEPT_CD
+		    , A.SRM_DEPT_NM
+		    , A.ORG_USER_ID
+		    , A.ORG_USER_NM
+		    , A.ORG_JBC_JNAME
+		    , A.ORG_DEPT_CD
+		    , A.ORG_DEPT_NM
+		    , A.DAEJIC_YN
+		    , A.MOBL_CONFIRM_STIME
+		    , A.MOBL_APP_NM
+		    , A.REG_STIME
+
+		FROM
+		      WF_PROC_HIST A
+			, SR_BASE_INFO B
+		
+		WHERE 1 = 1
+		AND A.PROC_NUMBER	= B.REQ_ID
+		AND A.PROC_NUMBER   = #{REQ_ID}
+		
+		<choose>
+			<when test='"DESC".equals(HIST_SORT_ORDR)'>
+				ORDER BY   TO_NUMBER(A.WF_HIST_SEQ) DESC
+			</when>
+			<otherwise>
+				ORDER BY   TO_NUMBER(A.WF_HIST_SEQ)
+			</otherwise>
+		 </choose>
+    </select>
+
+	<select id="select04" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* SR0010PMapper >> select04 */
+    	SELECT 
+			A.*
+		FROM
+		    	(
+			    SELECT
+			          A.PROC_NUMBER
+			        , A.WF_HIST_SEQ
+			        , ROW_NUMBER() OVER(PARTITION BY A.WF_PROC_CD, A.APPR_LVL_SEQ ORDER BY TO_NUMBER(A.WF_HIST_SEQ) DESC) AS NUM
+			        , A.WF_PROC_CD
+			        , B.WF_PROC_CD AS BASE_WF_PROC_CD
+			        , B.RTRN_WF_PROC_CD
+			        , B.RTRN_APPV_YN
+			        , B.REQ_STAT_CD
+			        , (SELECT SEQ FROM WF_REQ_TMPLAT_PROC_HT WHERE REQ_TMPLAT_ID = B.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = B.REQ_TMPLAT_VER AND WF_PROC_CD = A.WF_PROC_CD) AS SEQ
+			        , (SELECT SEQ FROM WF_REQ_TMPLAT_PROC_HT WHERE REQ_TMPLAT_ID = B.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = B.REQ_TMPLAT_VER AND WF_PROC_CD = B.WF_PROC_CD) AS BASE_SEQ
+			        , (SELECT SEQ FROM WF_REQ_TMPLAT_PROC_HT WHERE REQ_TMPLAT_ID = B.REQ_TMPLAT_ID AND REQ_TMPLAT_VER = B.REQ_TMPLAT_VER AND WF_PROC_CD = B.RTRN_WF_PROC_CD) AS RTN_SEQ
+			        , CASE WHEN A.APPR_LVL_SEQ IS NULL THEN 1 ELSE 2 END  AS GUBUN
+			        , A.APPR_LVL_SEQ
+			        , A.APPR_GRP_SEQ
+			        , A.APPR_NM || CASE WHEN A.APPR_STAT_CD = 'APST_00' THEN (SELECT ' [' || CMM_CD_NM || ']' FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'APPR_STAT_CD' AND CMM_CD = A.APPR_STAT_CD AND LANG_CD = 'KR') END  AS APPR_NM
+			        , A.APPR_STAT_CD
+			        , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'APPR_STAT_CD' AND CMM_CD = A.APPR_STAT_CD AND LANG_CD = 'KR')    AS APPR_STAT_NM
+			        , A.APPR_COMMENT
+			        , A.APPR_GBN_CD
+			        , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'WORKFLOW_CD' AND UP_CMM_CD = 'APPR_GBN_CD' AND CMM_CD = A.APPR_GBN_CD AND LANG_CD = 'KR')    AS APPR_GBN_NM
+			        , A.SRM_USER_NM ||
+			          CASE
+			          	WHEN B.REQ_TMPLAT_ID IN ('WFT250027', 'WFT240159') AND A.WF_PROC_CD = 'WF_PROC_2040' AND (SELECT TESTER_NM FROM WF_CHM_MARK WHERE REQ_ID	= A.PROC_NUMBER) IS NOT NULL
+			          	THEN  ' (' || (SELECT TESTER_NM FROM WF_CHM_MARK WHERE REQ_ID	= A.PROC_NUMBER) || ')'
+			          	ELSE CASE WHEN A.DAEJIC_YN = 'Y' THEN ' (代)' || A.ORG_USER_NM END
+			          END AS SRM_USER_INFO
+
+			        , TO_CHAR(TO_DATE(A.REG_STIME, 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD HH24:MI:SS')  AS PROC_DTIME
+			        , A.SRM_USER_ID
+			        , A.SRM_USER_NM
+			        , A.SRM_JBC_JNAME
+			        , A.SRM_DEPT_CD
+			        , NVL(A.SRM_DEPT_NM, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = A.SRM_USER_ID)) AS SRM_DEPT_NM
+			        , A.ORG_USER_ID
+			        , A.ORG_USER_NM
+			        , A.ORG_JBC_JNAME
+			        , A.ORG_DEPT_CD
+			        , A.ORG_DEPT_NM
+			        , A.DAEJIC_YN
+			        , A.MOBL_CONFIRM_STIME
+			        , A.MOBL_APP_NM
+			        , A.REG_STIME
+			
+			    FROM
+			          WF_PROC_HIST A,
+			          SR_BASE_INFO B
+			
+			    WHERE 1 = 1    
+			    AND A.PROC_NUMBER	= B.REQ_ID
+			    AND A.PROC_NUMBER   = #{REQ_ID}
+		    	) A,
+		    	(SELECT REQ_ID, COUNT(*) AS CNT FROM WF_APPROVAL_MT WHERE REQ_ID = #{REQ_ID} AND APPR_GBN_CD = 'A02' AND APPR_STAT_CD = 'APST_99' GROUP BY REQ_ID) B
+
+		WHERE 1 = 1
+		AND A.PROC_NUMBER = B.REQ_ID(+)
+		AND NUM = 1
+		AND
+		(
+			(
+			A.REQ_STAT_CD = 'RQST91' AND
+														(
+															A.SEQ <![CDATA[<]]> A.RTN_SEQ OR
+					  										(
+					  									 	A.SEQ = A.RTN_SEQ AND	(
+					  									 												(NVL(A.RTRN_APPV_YN, 'N') = 'Y' AND 1 = 1) OR
+					  									 												(NVL(A.RTRN_APPV_YN, 'N') = 'N' AND A.APPR_LVL_SEQ IS NULL)
+					  									 											)
+                                            						)
+														)
+			) OR
+     		(
+     		A.REQ_STAT_CD <![CDATA[<>]]> 'RQST91' AND
+                                  											(
+	                                  											A.SEQ <![CDATA[<]]> A.BASE_SEQ OR
+	                                  											(
+	                                  											A.SEQ = A.BASE_SEQ AND	(
+	                                  																						(A.REQ_STAT_CD = 'RQST11' AND ( (NVL(B.CNT, 0) > 0 AND 1 = 1) OR (NVL(B.CNT, 0) = 0 AND A.APPR_LVL_SEQ IS NULL) ) ) OR
+	                                  																						(A.REQ_STAT_CD <![CDATA[<>]]> 'RQST11' AND B.CNT = 0 AND A.APPR_LVL_SEQ IS NULL)
+	                                  																					)
+	                                  											)
+	                                  										)
+			)
+		)
+		ORDER BY A.SEQ, A.GUBUN
+	</select>
+</mapper>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR0040DDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  0		AS CHK
+			, ''	AS ROWFLAG
+			, ''	AS GUBUN_NM
+			, ''	AS BASE_WF_PROC_CD
+			, A.REQ_ID				--요청서ID
+			, A.WF_PROC_CD			--진행단계
+			, A.PROC_USER_ID		--요청서 처리자(등록자 포함)
+			, A.REQ_DESC			--요청서 처리내용
+			, A.PROC_USER_NM		--요청서 처리자명
+			, A.PROC_DEPT_CD		--요청서 처리자부서ID
+			, A.PROC_DEPT_NM		--요청서 처리자부서명
+			, A.PROC_DATE			--요청서 처리일시
+			, A.FRID				--최초등록자ID
+			, A.FRDT				--최초등록일시
+			, A.LMID				--최종수정자ID
+			, A.LMDT				--최종수정일시
+			, A.LMPID				--최종수정 화면ID
+
+		FROM SR_BASIC_REQ A
+		WHERE 1 = 1
+		AND A.REQ_ID	= #{REQ_ID}
+		AND WF_PROC_CD	= #{WF_PROC_CD}
+	</select>
+
+	<update id="modify01" parameterType="java.util.Map">
+		MERGE
+        INTO	SR_BASIC_REQ A
+        USING 	DUAL
+        ON		(A.REQ_ID = #{REQ_ID} AND A.WF_PROC_CD = #{WF_PROC_CD})
+        WHEN MATCHED THEN
+        	UPDATE
+        	SET
+	        	  PROC_USER_ID	= #{PROC_USER_ID}	--요청서 처리자(등록자 포함)
+				, REQ_DESC		= #{REQ_DESC}		--요청서 처리내용
+				, PROC_USER_NM	= #{PROC_USER_NM}	--요청서 처리자명
+				, PROC_DEPT_CD	= #{PROC_DEPT_CD}	--요청서 처리자부서ID
+				, PROC_DEPT_NM	= #{PROC_DEPT_NM}	--요청서 처리자부서명
+				, PROC_DATE		= NVL(#{PROC_DATE}, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'))		--요청서 처리일시
+				, LMID			= #{LMID}			--최종수정자ID
+				, LMDT			= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')			--최종수정일시
+				, LMPID			= #{LMPID}			--최종수정 화면ID
+		WHEN NOT MATCHED THEN
+			INSERT
+			(
+				  REQ_ID		--요청서ID
+				, WF_PROC_CD	--진행단계
+				, PROC_USER_ID	--요청서 처리자(등록자 포함)
+				, REQ_DESC		--요청서 처리내용
+				, PROC_USER_NM	--요청서 처리자명
+				, PROC_DEPT_CD	--요청서 처리자부서ID
+				, PROC_DEPT_NM	--요청서 처리자부서명
+				, PROC_DATE		--요청서 처리일시
+				, FRID			--최초등록자ID
+				, FRDT			--최초등록일시
+				, LMID			--최종수정자ID
+				, LMDT			--최종수정일시
+				, LMPID			--최종수정 화면ID
+			)
+			VALUES
+			(
+				  #{REQ_ID}
+				, #{WF_PROC_CD}
+				, #{PROC_USER_ID}
+				, #{REQ_DESC}
+				, #{PROC_USER_NM}
+				, #{PROC_DEPT_CD}
+				, #{PROC_DEPT_NM}
+				, NVL(#{PROC_DATE}, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'))
+				, #{LMID}
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, #{LMID}
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, #{LMPID}
+			)
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM SR_BASIC_REQ
+		WHERE 1 = 1
+		AND REQ_ID		= #{REQ_ID}
+		AND WF_PROC_CD	= #{WF_PROC_CD}
+	</delete>
+
+</mapper>

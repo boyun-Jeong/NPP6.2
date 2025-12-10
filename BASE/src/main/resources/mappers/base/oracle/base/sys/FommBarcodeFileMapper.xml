@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.com.dao.FommBarcodeFileDAO">
+	
+	<!-- 바코드 출력 이력 추가 -->
+	<insert id="insertBarcodeHist" parameterType="java.util.Map">
+		/* FommBarcodeFileMapper >> insertBarcodeHist */
+		INSERT INTO AM_OP_BARPRT_HIST
+		(
+			  PRNT_DATETIME	--발급일시 
+			, AM_ASSET_ID	--자산ID 
+			, ASSET_NO	--자산번호 대중분류코드(3)+분류일련번호(7: MAX+1)
+			, ITEM_ID	--품목ID 
+			, ITEM_NM	--품목명 
+			, SERIAL_NO	--시리얼번호 
+			, CLASS_ID	--분류ID 
+			, MID_CLASS_ID	--중분류ID 
+			, VENDOR_NM	--제조사명 
+			, CONTRACT_ID	--계약ID 계약정보(잠조)
+			, CONTRACT_NO	--계약번호 계약정보(잠조)
+			, CONTRACT_DATE	--계약일자 계약번호 연계정보
+			, CONTRACT_NM	--계약명 계약번호 연계정보
+			, COMPANY_ID	--계약업체명 
+			, COMPANY_NM	--계약업체명 
+			, ASSET_USER_ID	--자산담당자ID 인프라관리자
+			, ASSET_USER_NM	--자산담당자명 인프라관리자
+			, LOCATION_ID	--위치ID 
+			, LOCATION_NM	--위치명 
+			, LOC_SURF_ID	--상면ID 
+			, LOC_SURF_NM	--상면번호 
+			, RACK_ASSET_NO	--랙자산번호 
+			, RACK_UNIT_START_NO	--랙실장시작UNIT번호 
+			, RACK_UNIT_END_NO	--랙실장종료UNIT번호 
+			, RACK_UNIT_USE_QTY	--랙실장UNIT사용개수 
+			
+			, REG_DATETIME	--등록일시
+			, REG_USER_ID	--등록자ID 
+			, REG_USER_NM	--등록자이름 
+			, REG_DEPT_NM	--등록자부서이름 
+		)
+		VALUES
+		(
+			  TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{AM_ASSET_ID}
+			, #{ASSET_NO}
+			, #{ITEM_ID}
+			, #{ITEM_NM}
+			, #{SERIAL_NO}
+			, #{CLASS_ID}
+			, #{CLASS_M}
+			, #{VENDOR_NM}
+			, #{CONTRACT_ID}
+			, #{CONTRACT_NO}
+			, #{CONTRACT_DATE}
+			, #{CONTRACT_NM}
+			, #{COMPANY_ID}
+			, #{COMPANY_NM}
+			, #{ASSET_USER_ID}
+			, #{ASSET_USER_NM}
+			, #{LOCATION_ID}
+			, #{LOCATION_NM}
+			, #{LOC_SURF_ID}
+			, #{LOC_SURF_NM}
+			, #{RACK_ASSET_NO}
+			, #{RACK_UNIT_START_NO}
+			, #{RACK_UNIT_END_NO}
+			, #{RACK_UNIT_USE_QTY}
+			
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+	
+</mapper>

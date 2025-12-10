@@ -1,0 +1,296 @@
+package com.wemb.spp.fwk.util;
+
+import java.net.Inet4Address;
+import java.net.UnknownHostException;
+import javax.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import com.fasoo.adk.packager.WorkPackager;
+
+public class DrmUtil {
+
+	private static Logger log = LoggerFactory.getLogger(DrmUtil.class);
+
+	/**
+     * 파일 암호화
+     * @param orgFilePath
+     * @param orgFileName 	(확장자포함)
+     * @param fileName		(확장자포함)
+     * @return
+     */
+    public static boolean encFasooDrmFile(String orgFilePath, String orgFileName, String fileName) {
+    	
+    	boolean bret = false;
+		boolean iret = false; 
+		int retVal = 0;  // 파일타입 검사결과
+		
+		//DRM Config Information
+		String strFsdinitPath = "/pgm/itsm_prj/fsdinit";
+//		String strCPID = "0000000000012471";
+		String strCPID =  "0100000000003456";
+		String strOrgFilePath = orgFilePath + "/" + orgFileName;
+		//String strFileName = orgFileName;
+		String strEncFilePath = orgFilePath + "/" + fileName;	
+		
+		int extIdx = orgFileName.lastIndexOf(".");				// 확장자
+		String strFileName = orgFileName.substring(0,extIdx); 	// 확장자 제거한 파일명
+		String fileExt = "";
+        if(extIdx == -1){
+        	fileExt = ".txt"; // 확장자
+        }else{
+        	fileExt = fileName.substring(extIdx); // 확장자
+        }
+        
+        //암호화 대상확장자 필터 적용
+        if(fileExt.toLowerCase().equals(".xls") || fileExt.toLowerCase().equals(".xlsx") 
+				|| fileExt.toLowerCase().equals(".doc")
+        		|| fileExt.toLowerCase().equals(".docx") || fileExt.toLowerCase().equals(".ppt") || fileExt.toLowerCase().equals(".pptx")
+        		|| fileExt.toLowerCase().equals(".hwp") || fileExt.toLowerCase().equals(".txt") || fileExt.toLowerCase().equals(".pdf")
+        		|| fileExt.toLowerCase().equals(".csv")){
+
+        	String ip4 = "";
+        	try {
+				ip4 = Inet4Address.getLocalHost().getHostAddress();
+				
+			}catch(UnknownHostException e) {}
+
+			log.debug("[CommonFilter] doFilter() ip4:[" + ip4 + "]");
+			
+			if(!"10.120.120.62".equals(ip4) && !"10.120.15.29".equals(ip4)) {	//개발서버, 운영서버 
+	        	/**
+				 * 로컬테스트
+				 */
+				strFsdinitPath = "C:/Program Files/Fasoo DRM/CW-Packager/fsdinit"; 
+        	}
+        	WorkPackager objWorkPackager = new WorkPackager();
+        	
+        	//파일 암호화 시 target 파일이 이미 존재 할 경우 덮어 쓸지 아니면 새로운 이름으로 생성 할지를 설정
+        	/*
+			=== setOverWriteFlag(true) ===
+			1. 평문파일 폴더(orgfile)와 암호화 한 파일 보관 폴더(encfile)가 동일시
+			동일한 폴더에 평문파일을 암호화 후 변경하여 보관.
+			즉, 서버에는 암호화한 파일만 보관됨
+			
+			2. 평문파일 폴더(orgfile)와 암호화 한 파일 보관 폴더(encfile)가 다를시
+			각각의 폴더에 파일을 저장
+			
+			=== setOverWriteFlag(false) ===
+			1. 평문파일 폴더(orgfile)와 암호화 한 파일 보관 폴더(encfile)가 동일시
+			동일한 폴더에 암호화 파일의 이름을 변경하여 보관.
+			즉, 평문파일명이 test.txt 라면 암호화파일명은 test_1.txt가 됨
+			
+			2. 평문파일 폴더(orgfile)와 암호화 한 파일 보관 폴더(encfile)가 다를시
+			각각의 폴더에 파일을 저장
+        	 */
+        	objWorkPackager.setOverWriteFlag(true);
+        	
+        	retVal = objWorkPackager.GetFileType(strOrgFilePath);
+        	
+        	/*
+			일반 파일의 경우 암호화 진행
+			정상적인 암호화 파일일 경우 암호화과정없이 다운로드 처리해주시면 됩니다.
+			마크애니 파일일 경우 암호화가 불가능 합니다.
+			
+			서버에서 zip파일로 만들어 내릴경우, zip파일로 만들기전에 암호화가 되어야 합니다.
+        	 */
+        	
+        	//파일 확장자 체크( IsSupportFile() ) 로직
+        	iret = objWorkPackager.IsSupportFile(strFsdinitPath,
+        			strCPID,
+        			fileExt);
+        	log.debug("확장자:[" + fileExt + "] 지원 확장자 체크  : "+ iret);
+
+        	//지원 확장자의 경우 암호화 진행
+        	if (iret == true) {
+        		if (retVal == 29) {
+        			//파일 암호화
+        			bret = objWorkPackager.DoPackagingFsn2( 
+        					strFsdinitPath,					//fsdinit 폴더 FullPath 설정
+        					strCPID,						//고객사 Key(default) 
+        					strOrgFilePath,					//암호화 대상 문서 FullPath + FileName
+        					strEncFilePath,					//암호화 된 문서 FullPath + FileName
+        					strFileName+fileExt,			//파일 명 + 확장자
+        					"system",						//사용자 ID
+        					"시스템",						//사용자 명
+        					"system", "시스템", "COMPANY", "전체조직",				//작성자 ID, 작성자명, 작성자 부서코드, 작성자 부서명
+        					"system", "시스템", "COMPANY", "전체조직",				//소유자 ID, 소유자명, 소유자 부서코드, 소유자 부서명
+        					//"2015080614534000021" 			//"1"
+        					"1"
+        					);
+        			
+        			log.debug("암호화 결과값 : " + bret);
+        			log.debug("암호화 문서 : " + objWorkPackager.getContainerFilePathName());
+        			log.debug("오류코드 : " + objWorkPackager.getLastErrorNum());
+        			log.debug("오류값 : " + objWorkPackager.getLastErrorStr());
+        			return true;
+        		}
+        		else if (retVal == 101) {
+        			log.error("파일형태는 " + FileTypeStr(retVal) + "["+retVal+"]"+" 입니다.");
+        			log.error("MarkAny 파일은 암호화 불가능 합니다.");
+        		}
+        		else if (retVal == 103) {
+        			log.error("파일형태는 " + FileTypeStr(retVal) + "["+retVal+"]"+" 입니다.");
+        			log.error("정상적인 암호화 파일은 암호화 과정 불필요 합니다.");
+        		}				
+        		else {
+        			log.error("일반 파일이 아닌경우 암호화 불가능 합니다.["+ retVal + "]");
+        		}
+        	}
+        	else {
+        		log.error("지원 확장자가 아닌경우 암호화 불가능 합니다.["+ retVal +"]");
+        	}	
+        }
+        
+        return false;
+    }
+    
+	/**
+	 * 파일 복호화
+	 * @param orgFile
+	 * @param decFile
+	 * @return
+	 */
+	public static boolean decFasooDrmFile(String orgFile, String decFile) {
+		// GetFileType() 함수의 리턴 값 설명
+		//
+		// 20 : 파일을 찾을 수 없습니다.
+		// 21 : 파일 사이즈가 0 입니다.
+		// 22 : 파일을 읽을 수 없습니다.
+		// 29 : 암호화 파일이 아닌 일반파일입니다.
+		// 26 : FSD Type의 암호화 파일입니다.
+		// 105 : Wrapsody Type의 암호화 파일입니다.
+		// 101 : MarkAny Type의 암호화 파일입니다.
+		// 104 : INCAPS(삼성 PC DRM) Type의 암호화 파일입니다.
+		// 103 : FSN Type의 암호화 파일입니다.
+		/*	
+		if("y".equals(CommonStaticString.getIsTest())){
+//			return orgFile;
+		}
+		*/
+		boolean bret = false;
+		boolean nret = false;
+		boolean iret = false; 
+		int retVal = 0;
+		
+		//DRM Config Information
+		String strFsdinitPath = "/pgm/itsm_prj/fsdinit";
+		//String strCPID = "0000000000012471";
+		String strCPID =  "0100000000003456";
+		String strEncFilePath = orgFile; //복호화 대상 문서 FullPath + FileName
+		String strDecFilePath = decFile; //복호화 된 문서 FullPath + FileName
+		
+		String ip4 = "";
+    	try {
+			ip4 = Inet4Address.getLocalHost().getHostAddress();
+			
+		}catch(UnknownHostException e) {}
+
+		log.debug("[CommonFilter] doFilter() ip4:[" + ip4 + "]");
+		
+		if(!"10.120.120.62".equals(ip4) && !"10.120.15.29".equals(ip4)) {	//개발서버, 운영서버 
+    		/**
+			 * 로컬테스트
+			 */
+			strFsdinitPath = "C:/Program Files/Fasoo DRM/CW-Packager/fsdinit"; 
+    	}
+		WorkPackager objWorkPackager = new WorkPackager();
+		//objWorkPackager.setCharset("eucKR");
+
+		//복호화 된문서가 암호화된 문서를 덮어쓰지 않음
+//		objWorkPackager.setOverWriteFlag(false);
+
+		retVal = objWorkPackager.GetFileType(strEncFilePath);
+		
+		log.debug("파일형태는 " + FileTypeStr(retVal) + "["+retVal+"]"+" 입니다.");
+
+		//대상 문서가 FSN로 암호화 되었을 때만 복호화 실행
+		if (retVal == 103) {
+			// 암호화 된 파일 복호화
+			bret = objWorkPackager.DoExtract(
+									strFsdinitPath,					//fsdinit 폴더 FullPath 설정
+									strCPID,				//고객사 Key(default) 
+									strEncFilePath,			//복호화 대상 문서 FullPath + FileName
+									strDecFilePath		//복호화 된 문서 FullPath + FileName
+									);
+			
+			log.debug("복호화 결과값 : " + bret);
+			log.debug("복호화 문서 : " + objWorkPackager.getContainerFilePathName());
+			log.debug("오류코드 : " + objWorkPackager.getLastErrorNum());
+			log.debug("오류값 : " + objWorkPackager.getLastErrorStr());
+			return true;
+		}
+		else if(retVal == 29) {
+			log.debug("암호화파일이 아닙니다 : 복호화 불필요");
+			return true;
+		}
+		else {
+			log.error("FSN 파일이 아닌경우 복호화 불가능 합니다.["+ retVal + "]");
+		}
+		
+		return false;
+    }
+	
+	public static String chkFasooDrmFile(String orgFile) {
+		// GetFileType() 함수의 리턴 값 설명
+		//
+		// 20 : 파일을 찾을 수 없습니다.
+		// 21 : 파일 사이즈가 0 입니다.
+		// 22 : 파일을 읽을 수 없습니다.
+		// 29 : 암호화 파일이 아닌 일반파일입니다.
+		// 26 : FSD Type의 암호화 파일입니다.
+		// 105 : Wrapsody Type의 암호화 파일입니다.
+		// 101 : MarkAny Type의 암호화 파일입니다.
+		// 104 : INCAPS(삼성 PC DRM) Type의 암호화 파일입니다.
+		// 103 : FSN Type의 암호화 파일입니다.
+
+		int retVal = 0;
+		
+		//DRM Config Information
+		String strFsdinitPath = "/pgm/itsm_prj/fsdinit";
+		//String strCPID = "0000000000012471";
+		String strCPID =  "0100000000003456";
+		String strEncFilePath = orgFile;
+
+		String ip4 = "";
+    	try {
+			ip4 = Inet4Address.getLocalHost().getHostAddress();
+			
+		}catch(UnknownHostException e) {}
+
+		log.debug("[CommonFilter] doFilter() ip4:[" + ip4 + "]");
+		
+		if(!"10.120.120.62".equals(ip4) && !"10.120.15.29".equals(ip4)) {	//개발서버, 운영서버 
+			/**
+			 * 로컬테스트
+			 */
+			strFsdinitPath = "C:/Program Files/Fasoo DRM/CW-Packager/fsdinit"; 
+    	}		
+		WorkPackager objWorkPackager = new WorkPackager();
+
+		retVal = objWorkPackager.GetFileType(strEncFilePath);
+
+		log.debug("파일형태는 " + FileTypeStr(retVal) + "["+retVal+"]"+" 입니다.");
+		return String.valueOf(retVal);
+    }
+	
+	public  static String FileTypeStr(int i) 
+	{
+		String ret = null;
+		switch(i)
+		{
+	    	case 20 : ret = "파일을 찾을 수 없습니다."; break;
+	    	case 21 : ret = "파일 사이즈가 0 입니다.";  break;
+	    	case 22 : ret = "파일을 읽을 수 없습니다."; break;
+	    	case 29 : ret = "암호화 파일이 아닙니다.";  break;
+	    	case 26 : ret = "FSD 파일입니다.";       	break;
+	    	case 105: ret = "Wrapsody 파일입니다.";  	break;
+	    	case 106: ret = "NX 파일입니다.";			break;	    	
+	    	case 101: ret = "MarkAny 파일입니다.";   	break;
+	    	case 104: ret = "INCAPS 파일입니다.";    	break;
+	    	case 103: ret = "FSN 파일입니다.";       	break;
+		}
+		return ret;		
+	}
+}

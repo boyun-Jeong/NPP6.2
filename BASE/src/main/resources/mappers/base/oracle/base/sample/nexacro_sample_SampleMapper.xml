@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sample.dao.UiAdapterSampleDAO">
+    
+  	<select id="selectSampleDataList" parameterType="java.util.Map" resultType="java.util.Map">
+            SELECT A.TITLE AS TITLE 
+                 , A.REG_ID AS REG_ID 
+                 , A.REG_DATE AS REG_DATE 
+                 , A.POST_ID AS POST_ID
+                 , NVL(A.CONTENTS,'') AS CONTENTS 
+                 , A.COMMUNITY_ID AS COMMUNITY_ID
+                 , A.HIT_COUNT AS HIT_COUNT
+            FROM TB_BOARD A
+            <where>
+	            <if test="searchCondition == 'TITLE'">
+					AND TITLE LIKE '%' || #{searchKeyword} || '%'
+				</if>
+				<if test="searchCondition == 'CONTENTS'">
+	                AND TITLE CONTENTS '%' || #{searchKeyword} || '%'
+	            </if>
+            </where>
+    </select>
+    
+    <insert id="insertSampleData" parameterType="java.util.Map">
+            INSERT INTO TB_BOARD (
+                TITLE,
+                REG_ID,
+                CONTENTS,
+                COMMUNITY_ID
+            ) VALUES (
+                #{TITLE},
+                #{REG_ID},
+                #{CONTENTS},
+                #{COMMUNITY_ID}
+            )
+    </insert>
+    
+      <update id="updateSampleData" parameterType="java.util.HashMap">
+            UPDATE TB_BOARD 
+            SET TITLE=#{TITLE}
+                , REG_ID=#{REG_ID}
+                , CONTENTS=#{CONTENTS}
+                , COMMUNITY_ID=#{COMMUNITY_ID}
+            WHERE POST_ID=#{POST_ID}
+    </update>
+    
+    <delete id="deleteSampleData" parameterType="java.util.HashMap">
+            DELETE FROM TB_BOARD 
+            WHERE POST_ID=#{POST_ID}
+    </delete>
+</mapper>

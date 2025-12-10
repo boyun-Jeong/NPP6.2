@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="spp" version="2.5">
+<!-- <web-app version="6.1" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee                       https://jakarta.ee/xml/ns/jakartaee/web-app_6_1.xsd"> -->
+  <display-name>SPP</display-name>
+  <servlet-mapping>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/config/springmvc/dispatcher-servlet*.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath*:spring/context-*.xml</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>
+  <filter>
+    <filter-name>encodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>utf-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>encodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>commonFilterBean</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>commonFilterBean</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+<!-- 
+    <filter>
+        <filter-name>CorsFilter</filter-name>
+        <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+        <init-param>
+          <param-name>cors.allowed.origins</param-name>
+          <param-value>*</param-value>
+        </init-param>
+        <init-param>
+          <param-name>cors.allowed.methods</param-name>
+          <param-value>GET,POST,HEAD,OPTIONS,PUT,DELETE</param-value>
+        </init-param>
+        <init-param>
+          <param-name>cors.allowed.headers</param-name>
+          <param-value>Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Headers</param-value>
+        </init-param>
+        <init-param>
+          <param-name>cors.exposed.headers</param-name>
+          <param-value>Access-Control-Allow-Origin,Access-Control-Allow-Credentials</param-value>
+        </init-param>
+        <init-param>
+          쿠키 통신을 안하는데 이걸 true로 하면 4XX 서버 에러가 뜬다
+          <param-name>cors.support.credentials</param-name>
+          <param-value>false</param-value>
+        </init-param>
+        <init-param>
+          <param-name>cors.preflight.maxage</param-name>
+          <param-value>10</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+      <filter-name>CorsFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+    </filter-mapping>
+ -->
+  <servlet>
+    <servlet-name>XExportImport</servlet-name>
+    <servlet-class>com.nexacro.java.xeni.services.GridExportImportServlet</servlet-class>
+  </servlet>
+<!--   <servlet> -->
+<!--     <servlet-name>XExportQuery</servlet-name> -->
+<!--     <servlet-class>com.wemb.spp.fwk.util.GridExportQueryServlet</servlet-class> -->
+<!--   </servlet> -->
+  <servlet>
+    <servlet-name>XImport</servlet-name>
+    <servlet-class>com.nexacro.java.xeni.services.GridExportImportServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>XExportImport</servlet-name>
+    <url-pattern>/XExportImport</url-pattern>
+  </servlet-mapping>
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>XExportQuery</servlet-name> -->
+<!--     <url-pattern>/XExportQuery</url-pattern> -->
+<!--   </servlet-mapping> -->
+  <servlet-mapping>
+    <servlet-name>XImport</servlet-name>
+    <url-pattern>/XImport</url-pattern>
+  </servlet-mapping>
+  <context-param>
+    <param-name>export-path</param-name>
+    <param-value>/excel</param-value>
+  </context-param>
+  <context-param>
+    <param-name>import-path</param-name>
+    <param-value>/excel</param-value>
+  </context-param>
+  <context-param>
+    <param-name>monitor-enabled</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <context-param>
+    <param-name>monitor-cycle-time</param-name>
+    <param-value>10</param-value>
+  </context-param>
+  <context-param>
+    <param-name>file-storage-time</param-name>
+    <param-value>10</param-value>
+  </context-param>
+  <mime-mapping>
+    <extension>xls</extension>
+    <mime-type>application/octet-stream</mime-type>
+  </mime-mapping>
+  <mime-mapping>
+    <extension>xlsx</extension>
+    <mime-type>application/octet-stream</mime-type>
+  </mime-mapping>
+  <session-config>
+    <session-timeout>600</session-timeout>
+  </session-config>
+  <login-config>
+    <auth-method>BASIC</auth-method>
+  </login-config>
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/common/error.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/common/error.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/common/error.jsp</location>
+  </error-page>
+<!--   <resource-ref> -->
+<!--     <description>SPP</description> -->
+<!--     <res-ref-name>jdbc/nitsm</res-ref-name> -->
+<!--     <res-type>javax.sql.DataSource</res-type> -->
+<!--     <res-auth>Container</res-auth> -->
+<!--   </resource-ref> -->
+<!--   <servlet> -->
+<!--     <description></description> -->
+<!--     <display-name>WebConfig</display-name> -->
+<!--     <servlet-name>WebConfig</servlet-name> -->
+<!--     <servlet-class>com.wemb.spp.fwk.util.WebConfig</servlet-class> -->
+<!--   </servlet> -->
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>WebConfig</servlet-name> -->
+<!--     <url-pattern>/WebConfig</url-pattern> -->
+<!--   </servlet-mapping> -->
+<!--   <servlet> -->
+<!--     <description></description> -->
+<!--     <display-name>FlowManagerImpl</display-name> -->
+<!--     <servlet-name>FlowManagerImpl</servlet-name> -->
+<!--     <servlet-class>com.wemb.spp.fwk.batch.service.impl.FlowManagerImpl</servlet-class> -->
+<!--   </servlet> -->
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>FlowManagerImpl</servlet-name> -->
+<!--     <url-pattern>/FlowManagerImpl</url-pattern> -->
+<!--   </servlet-mapping> -->
+</web-app>

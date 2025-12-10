@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.com.dao.FommScheduleJobDAO">
+
+    <sql id="selectFommScheduleJobMt">
+        SELECT
+              0 AS CHK
+            , ''    AS ROWFLAG
+            , A.JOB_NO
+            , A.TITLE
+            , A.CONT_DESC
+            , A.EXEC_GUBUN
+            , A.JAVA_SVC_NM
+            , A.QUERY_DESC
+            , A.SEND_TYPE_CD
+            , (
+              SELECT LISTAGG(CASE WHEN INSTR(A.SEND_TYPE_CD, CMM_CD) > 0 THEN CMM_CD_NM END, ', ') WITHIN GROUP (ORDER BY SORT_ORDR)
+              FROM FOMM_CMM_CD_MT
+              WHERE CODE_DIV = 'BASIS_CD'
+              AND UP_CMM_CD = 'SEND_TYPE_CD'
+              ) AS SEND_TYPE_NM
+            , A.DATE_TERM_USE_YN
+            , A.STR_DT
+            , SUBSTR(A.STR_TIME, 1, 4)  AS STR_TIME
+            , A.STR_DT || RPAD(A.STR_TIME, 6, '0')  AS STR_DTIME             
+            , A.END_DT
+            , SUBSTR(A.END_TIME, 1, 4)  AS END_TIME
+            , A.END_DT || RPAD(A.END_TIME, 6, '0')  AS END_DTIME
+            , A.HOLIDAY_SEND_YN
+            , REGEXP_SUBSTR(B.EXPECT_EXEC_DTIME, '[^,]+', 1, 1)  AS EXPECT_EXEC_DTIME1
+            , REGEXP_SUBSTR(B.EXPECT_EXEC_DTIME, '[^,]+', 1, 2)  AS EXPECT_EXEC_DTIME2
+            , REGEXP_SUBSTR(B.EXPECT_EXEC_DTIME, '[^,]+', 1, 3)  AS EXPECT_EXEC_DTIME3
+            , REGEXP_SUBSTR(B.EXPECT_EXEC_DTIME, '[^,]+', 1, 4)  AS EXPECT_EXEC_DTIME4
+            , REGEXP_SUBSTR(B.EXPECT_EXEC_DTIME, '[^,]+', 1, 5)  AS EXPECT_EXEC_DTIME5
+            , B.EXPECT_EXEC_DTIME
+            , A.CRON_EXPR_SEC
+            , A.CRON_EXPR_MIN
+            , A.CRON_EXPR_HOUR
+            , A.CRON_EXPR_DAY
+            , A.CRON_EXPR_MON
+            , A.CRON_EXPR_DOW
+            , A.CRON_EXPR_SEC || ' ' || A.CRON_EXPR_MIN || ' ' || A.CRON_EXPR_HOUR || ' ' || A.CRON_EXPR_DAY || ' ' || A.CRON_EXPR_MON || ' ' || A.CRON_EXPR_DOW    AS CRON_EXPR
+            , A.USE_YN
+            , NVL(B.STATUS, '0')  AS STATUS
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) || '(' || A.FRID || ')'  AS REG_USER_INFO
+            , A.FRID
+            , A.FRDT
+            , A.LMID
+            , A.LMDT
+            , A.LMPID
+
+        FROM
+              FOMM_SCHEDULE_JOB_MT A
+            , FOMM_SCHEDULE_JOB_DT B
+
+        WHERE 1 = 1
+        AND A.JOB_NO  = B.JOB_NO(+)
+        AND A.DEL_YN  = 'N'
+        
+        <if test="TITLE != null and TITLE != ''">
+        AND A.TITLE = #{TITLE}
+        </if>
+
+        <choose>
+            <when test='"Y".equals(DETAIL_PAGE_YN)'>
+        AND A.JOB_NO = #{JOB_NO}
+            </when>
+            <otherwise>
+                <if test="JOB_NO != null and JOB_NO != ''">
+        AND A.JOB_NO = #{JOB_NO}
+                </if>
+            </otherwise>
+        </choose>
+        
+
+        <if test="SEND_TYPE_CD != null and SEND_TYPE_CD != ''">
+            <choose>
+                <when test="SEND_TYPE_CD_ARR != null and SEND_TYPE_CD_ARR != ''">
+        AND (
+                    <foreach collection="SEND_TYPE_CD_ARR" item="sendTypeCdArr" open="" close="" separator=" OR ">
+                    INSTR(A.SEND_TYPE_CD, #{SEND_TYPE_CD}) > 0
+                    </foreach>
+                )
+                </when>
+                <otherwise>
+        AND INSTR(A.SEND_TYPE_CD, #{SEND_TYPE_CD}) > 0
+                </otherwise>
+            </choose>
+        </if>
+
+        <if test="USE_YN != null and USE_YN != ''">
+        AND A.USE_YN = #{USE_YN}
+        </if>
+
+        ORDER BY
+            JOB_NO
+    </sql>
+    <select id="selectScheduleJobList" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FommScheduleMapper.xml > selectScheduleJobList */
+        <include refid="selectFommScheduleJobMt"/>
+    </select>
+
+    <update id="saveFommScheDuleJobDt" parameterType="java.util.Map">
+        MERGE
+        INTO    FOMM_SCHEDULE_JOB_DT A
+        USING   DUAL
+        ON      (A.JOB_NO = #{JOB_NO})
+
+        WHEN MATCHED THEN
+            UPDATE SET
+                  STATUS                        = '1'
+                , EXPECT_EXEC_DTIME   = #{EXPECT_EXEC_DTIME}
+                , LMDT                            = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  --최종수정일시                 
+            
+        WHEN NOT MATCHED THEN
+            INSERT
+            (
+                  JOB_NO
+                , STATUS
+                , EXPECT_EXEC_DTIME
+                , FRDT
+                , LMDT
+            )
+            VALUES
+            (
+                  #{JOB_NO}
+                , '1'
+				, #{EXPECT_EXEC_DTIME}
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            )
+    </update>
+
+    <update id="updateJobStop" parameterType="String">
+        UPDATE FOMM_SCHEDULE_JOB_DT SET
+              STATUS  = '0'
+            , EXPECT_EXEC_DTIME = NULL
+        WHERE 1 = 1
+        AND JOB_NO = #{JOB_NO}
+    </update>
+
+    <update id="deleteJob" parameterType="String">
+        DELETE FOMM_SCHEDULE_JOB_DT
+        WHERE 1 = 1
+        AND JOB_NO = #{JOB_NO}
+    </update>
+    
+    <delete id="removeJobStatusAll">
+        DELETE FOMM_SCHEDULE_JOB_DT
+    </delete>
+
+    <insert id="insertFommScheduleJobExecHist" parameterType="java.util.Map">
+        <selectKey resultType="string" keyProperty="HIST_NO" order="BEFORE">
+        SELECT NVL(MAX(HIST_NO), 0) + 1 FROM FOMM_SCHEDULE_JOB_EXEC_HT WHERE JOB_NO = #{JOB_NO}
+        </selectKey>
+        INSERT INTO FOMM_SCHEDULE_JOB_EXEC_HT
+        (
+			  HIST_NO   --이력번호
+			, JOB_NO    --JOB NO
+			, TITLE --알림 이름
+			, CONT_DESC --알림 내용
+			, EXEC_GUBUN
+			, JAVA_SVC_NM   --실행 JAVA SERVICE명
+			, QUERY_DESC
+			, SEND_TYPE_CD  --전송TYPE
+			, DATE_TERM_USE_YN  --날짜기간사용여부
+			, STR_DT    --전송기간(시작일)
+			, STR_TIME  --전송기간(시작시간)
+			, END_DT    --전송기간(종료일)
+			, END_TIME  --전송기간(종료시간)
+			, HOLIDAY_SEND_YN  --휴일전송여부(Y/N)
+			, EXPECT_EXEC_DTIME --예상배치실행일(최대 상위5개일정)
+			, CRON_EXPR_SEC --CRON 초
+			, CRON_EXPR_MIN --CRON 분
+			, CRON_EXPR_HOUR    --CRON 시
+			, CRON_EXPR_DAY --CRON 일
+			, CRON_EXPR_MON --CRON 월
+			, CRON_EXPR_DOW --CRON 요일
+			, EXCEPTION_MSG    --예외처리메시지
+			, FRDT                     --최초등록일시
+        )
+        SELECT
+              #{HIST_NO}
+            , JOB_NO
+            , TITLE
+            , CONT_DESC
+            , EXEC_GUBUN
+            , JAVA_SVC_NM
+            , QUERY_DESC
+            , SEND_TYPE_CD
+            , DATE_TERM_USE_YN
+            , STR_DT
+            , STR_TIME
+            , END_DT
+            , END_TIME
+            , HOLIDAY_SEND_YN
+            , #{EXPECT_EXEC_DTIME}
+            , CRON_EXPR_SEC
+            , CRON_EXPR_MIN
+            , CRON_EXPR_HOUR
+            , CRON_EXPR_DAY
+            , CRON_EXPR_MON
+            , CRON_EXPR_DOW
+            , #{EXCEPTION_MSG}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') 
+            
+        FROM
+            FOMM_SCHEDULE_JOB_MT
+
+        WHERE 1 = 1
+        AND JOB_NO = #{JOB_NO}
+    </insert>
+
+    <!-- 예약 업무처리 Job 관련 sql 시작 -->
+
+    <select id="selectReserveJobList" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FommScheduleMapper.xml > selectReserveJobList */
+        SELECT
+			  A.RESERVE_NO
+			, A.JAVA_SVC_NM
+			, A.EXEC_DT
+			, A.EXEC_TIME
+			, A.EXEC_DT || RPAD(A.EXEC_TIME, 6, '0') AS EXEC_DTIME
+			, A.EXEC_YN
+			, A.WORK_DIV
+			, A.PK1
+			, A.PK2
+			, A.PK3
+			, A.DEL_YN
+			, A.FRID
+			, A.FRDT
+			, A.LMID
+			, A.LMDT
+			, A.LMPID
+			    
+        FROM
+            FOMM_RESERVE_JOB_MT A
+
+        WHERE 1 = 1
+        AND A.DEL_YN  = 'N'        
+
+        <choose>
+            
+	        <when test="(RESERVE_NO != null and RESERVE_NO != '') or (PK1 != null and PK1 != '')">
+	            <choose>
+	                <when test="RESERVE_NO != null and RESERVE_NO != ''">
+	        AND A.RESERVE_NO = #{RESERVE_NO}
+	                </when>
+	                <otherwise>
+            AND A.WORK_DIV  = #{WORK_DIV}
+			AND A.PK1 = #{PK1}
+			
+			          <if test="PK2 != null and PK2 != ''">
+			AND A.PK2 = #{PK2}
+			          </if>
+			
+			          <if test="PK3 != null and PK3 != ''">
+			AND A.PK3 = #{PK3}
+			          </if>
+	                </otherwise>
+	            </choose>
+	        </when>
+	        <otherwise>                
+                <if test='"Y".equals(SEND_TARG_YN)'>
+            AND TO_DATE(A.EXEC_DT || RPAD(A.EXEC_TIME, 6, '0'), 'YYYYMMDDHH24MISS') >= TO_DATE(TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'), 'YYYYMMDDHH24MISS')
+                </if>
+	        </otherwise>
+        </choose>
+        
+        <if test="EXEC_YN != null and EXEC_YN != ''">
+        AND A.EXEC_YN   = #{EXEC_YN}
+        </if>
+			
+        ORDER BY
+            A.RESERVE_NO
+    </select>
+
+    <insert id="insertReserveJobMt" parameterType="java.util.Map">
+        /* FommScheduleMapper.xml > insertReserveJobList */
+        <selectKey resultType="string" keyProperty="RESERVE_NO" order="BEFORE">
+        SELECT NVL(MAX(RESERVE_NO), 0) + 1 FROM FOMM_RESERVE_JOB_MT
+        </selectKey>
+
+        INSERT INTO FOMM_RESERVE_JOB_MT
+        (
+              RESERVE_NO    --예약번호
+			, JAVA_SVC_NM   --실행 JAVA SERVICE명
+			, EXEC_DT   --실행일
+			, EXEC_TIME --실행시간
+			, EXEC_YN   --실행여부
+			, WORK_DIV   --업무구분
+			, PK1   --PK1
+			, PK2   --PK2
+			, PK3   --PK3
+			, DEL_YN    --삭제여부
+			, FRID   --최초등록자ID
+			, FRDT  --최초등록일시
+			, LMID  --최종수정자ID
+			, LMDT  --최종수정일시
+			, LMPID --최종수정 화면ID
+        )
+        VALUES
+        (
+			  #{RESERVE_NO}
+			, #{JAVA_SVC_NM}
+			, #{EXEC_DT}
+			, #{EXEC_TIME}
+			, 'N'
+			, #{WORK_DIV}
+			, #{PK1}
+			, #{PK2}
+			, #{PK3}
+			, #{DEL_YN}
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') 
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') 
+			, #{LMPID}
+        )
+    </insert>
+
+    <update id="updateReserveJobMt" parameterType="String">
+        UPDATE FOMM_RESERVE_JOB_MT SET
+              EXEC_YN    = 'Y'
+            , LMDT          = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  --최종수정일시
+        WHERE 1 = 1
+        AND DEL_YN = 'N'
+        AND EXEC_YN = 'N'
+        AND RESERVE_NO = #{RESERVE_NO}
+    </update>
+
+    <update id="removeReserveJobMt" parameterType="java.util.Map">
+        UPDATE FOMM_RESERVE_JOB_MT SET
+            DEL_YN    = 'Y'
+        WHERE 1 = 1
+        AND DEL_YN  = 'N'
+        AND EXEC_YN = 'N'
+
+		<choose>
+		    <when test="RESERVE_NO != null and RESERVE_NO != ''">
+		AND RESERVE_NO = #{RESERVE_NO}
+		    </when>
+		    <otherwise>
+        AND WORK_DIV    = #{WORK_DIV}
+		AND PK1 = #{PK1}
+		
+		        <if test="PK2 != null and PK2 != ''">
+		AND PK2 = #{PK2}
+		        </if>
+		
+		        <if test="PK3 != null and PK3 != ''">
+		AND PK3 = #{PK3}
+		        </if>
+		
+		    </otherwise>
+		</choose>
+    </update>
+
+    <insert id="insertReserveJobExecHist" parameterType="java.util.Map">
+        <selectKey resultType="string" keyProperty="HIST_NO" order="BEFORE">
+        SELECT NVL(MAX(HIST_NO), 0) + 1 FROM FOMM_RESERVE_EXEC_HT WHERE RESERVE_NO = #{RESERVE_NO}
+        </selectKey>
+        INSERT INTO FOMM_RESERVE_EXEC_HT
+        (
+              HIST_NO
+			, RESERVE_NO    --예약번호
+			, JAVA_SVC_NM   --실행 JAVA SERVICE명
+			, EXEC_DT   --실행일
+			, EXEC_TIME --실행시간
+			, WORK_DIV
+			, PK1   --PK1
+			, PK2   --PK2
+			, PK3   --PK3
+			, EXPECT_EXEC_DTIME     --기준예약배치실행일시
+			, EXCEPTION_MSG
+			, FRDT  --최초등록일시
+        )
+        SELECT
+              #{HIST_NO}
+            , RESERVE_NO
+			, JAVA_SVC_NM
+			, EXEC_DT
+			, EXEC_TIME
+			, WORK_DIV
+			, PK1
+			, PK2
+			, PK3
+			, #{EXPECT_EXEC_DTIME}
+			, #{EXCEPTION_MSG}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        FROM
+            FOMM_RESERVE_JOB_MT A
+        WHERE 1 = 1
+        AND A.DEL_YN = 'N'
+        AND A.RESERVE_NO = #{RESERVE_NO}
+    </insert>
+
+</mapper>

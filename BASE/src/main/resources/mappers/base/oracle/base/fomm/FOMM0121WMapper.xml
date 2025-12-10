@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0121WDAO">
+
+    <!-- SPP 확장권한 목록 조회 -->
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FOMM0121WMapper >> select01 */
+        SELECT  0 AS CHK      /* CHECKBOX 컬럼 */
+              , '' AS ROWFLAG /* 행상태 표기를 위한 컬럼 */
+              , EXTD_ID       /* 확장권한 코드 */
+              , EXTD_NM       /* 확장권한명 */
+              , EXTD_GB       /* 확장권한구분(00:기준, 10:사용자, 20:부서) */
+              , CASE EXTD_GB
+                     WHEN '00' THEN 'Z99'
+                     ELSE DEST_CD
+                     END  AS DEST_CD
+              , USE_YN        /* 사용여부 */
+          FROM  FOMM_AUTH_EXTD_MT WHERE 1=1
+        <if test="EXTD_GB != '' and EXTD_GB != null">
+           AND  EXTD_GB = #{EXTD_GB}
+        </if>
+        <if test="EXTD_ID != '' and EXTD_ID != null">
+           AND  UPPER(EXTD_ID) LIKE UPPER('%' || #{EXTD_ID} || '%')
+        </if>
+        <if test="EXTD_NM != '' and EXTD_NM != null">
+           AND  UPPER(EXTD_NM) LIKE UPPER('%' || #{EXTD_NM} || '%')
+        </if>
+        <if test="USE_YN != '' and USE_YN != null">
+           AND  USE_YN = #{USE_YN}
+        </if>
+        
+        <if test="EXTD_SCH_GBN != null and EXTD_SCH_GBN != ''">
+        	-- 확장권한 ID별 조회 구분 - 자산쪽에서 사용 
+        	AND EXTD_ID LIKE (#{EXTD_SCH_GBN} || '%')
+        </if>
+    </select>
+
+    <!-- SPP 확장권한 사용자 목록 조회 -->
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FOMM0121WMapper >> select02 */
+        SELECT  0 AS CHK        /* CHECKBOX 컬럼 */
+              , '' AS ROWFLAG   /* 행상태 표기를 위한 컬럼 */
+              , M.EXTD_ID       /* 확장권한 코드 */
+              , M.EXTD_NM       /* 확장권한명 */
+              , M.DEST_CD   AS USER_ID       /* 사번 */
+              , M.DEST_CD   AS DEST_CD /* 사번 */
+              , A.USER_NM       /* 사용자명 */
+              , A.ROLE_NM       /* 직책 */
+              , A.DEPT_NM       /* 부서명 */
+              , M.EXTD_GB
+              , A.TELNUM        /* 내선명 */
+              , M.USE_YN
+          FROM  FOMM_AUTH_EXTD_MT M
+               ,FOMM_USER_MT      A
+         WHERE  M.DEST_CD = A.USER_ID(+)
+           AND  M.EXTD_GB = '10' /* 00:기준, 10:사용자, 20:부서 */
+           AND  EXTD_ID = #{EXTD_ID}
+    </select>
+
+    <!-- SPP 확장권한 부서 목록 조회 -->
+    <select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FOMM0121WMapper >> select03 */
+        SELECT  0 AS CHK        /* CHECKBOX 컬럼 */
+              , '' AS ROWFLAG   /* 행상태 표기를 위한 컬럼 */
+              , M.EXTD_ID       /* 확장권한 코드 */
+              , M.EXTD_NM       /* 확장권한명 */
+              , M.DEST_CD   AS DEPT_CD       /* 부서코드 */
+              , M.DEST_CD   AS DEST_CD /* 부서코드 */
+              , A.DEPT_NM       /* 부서명 */
+              , A.UP_DEPT_CD    /* 상위부서코드 */
+              ,(SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = A.UP_DEPT_CD) AS UP_DEPT_NM  /* 상위부서코드 */
+              ,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.DEPT_MANAGER_ID) AS DEPT_MANAGER_NM  /* 부서장명 */
+              , M.EXTD_GB
+              , M.USE_YN
+          FROM  FOMM_AUTH_EXTD_MT M
+               ,FOMM_DEPT_MT      A
+         WHERE  M.DEST_CD = A.DEPT_CD(+)
+           AND  M.EXTD_GB = '20' /* 10:사용자, 20:부서 */
+        <if test="EXTD_ID != '' and EXTD_ID != null">
+           AND  EXTD_ID = #{EXTD_ID}
+        </if>
+    </select>
+
+
+    <!-- SPP 확장권한 기준 추가 -->
+    <insert id="insert01" parameterType="java.util.Map">
+        /* FOMM0121WMapper >> insert01 */
+        MERGE INTO  FOMM_AUTH_EXTD_MT M
+             USING  DUAL
+                ON (M.EXTD_ID = #{EXTD_ID} AND EXTD_GB = #{EXTD_GB})
+      WHEN MATCHED
+              THEN
+            UPDATE
+               SET EXTD_NM = #{EXTD_NM}
+                  ,USE_YN  = #{USE_YN}
+                  ,LMID    = #{LMID}  /* 최종수정자 */
+                  ,LMDT    = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') /* 최종수정일시 */
+                  ,LMPID   = #{LMPID} /* 최종수정화면ID */
+      WHEN NOT MATCHED
+              THEN
+            INSERT (
+                    EXTD_ID      /* 확장권한 코드 */
+                  , EXTD_NM      /* 확장권한명 */
+                  , EXTD_GB      /* 확장권한구분(00:기준, 10:사용자, 20:부서) */
+                  , DEST_CD      /* 대상코드 */
+                  , USE_YN       /* 사용여부 */
+
+                  , RMK          /* 비고 */
+                  , FRID         /* 최초등록자 */
+                  , FRDT         /* 최초등록일시 */
+                  , LMID         /* 최종수정자 */
+                  , LMDT         /* 최종수정일시 */
+                  , LMPID        /* 최종수정화면ID */
+                   )
+            VALUES (
+                    #{EXTD_ID}   /* 확장권한 코드 */
+                  , #{EXTD_NM}   /* 확장권한명 */
+                  , #{EXTD_GB}   /* 확장권한구분(00:기준, 10:사용자, 20:부서) */
+                  , 'Z99'        /* 대상코드 */
+                  , #{USE_YN}    /* 사용여부 */
+
+                  , #{RMK}
+                  , #{LMID}
+                  , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                  , #{LMID}
+                  , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                  , #{LMPID}
+                   )
+    </insert>
+
+
+    <!-- SPP 확장권한 사용자 추가 -->
+    <insert id="insert02" parameterType="java.util.Map">
+        /* FOMM0121WMapper >> insert02 */
+        INSERT 
+        INTO  FOMM_AUTH_EXTD_MT
+        (
+              EXTD_ID      /* 확장권한 코드 */
+            , EXTD_NM      /* 확장권한명 */
+            , EXTD_GB      /* 확장권한구분(00:기준, 10:사용자, 20:부서) */
+            , DEST_CD      /* 대상코드 */
+            , USE_YN       /* 사용여부 */
+
+            , RMK          /* 비고 */
+            , FRID         /* 최초등록자 */
+            , FRDT         /* 최초등록일시 */
+            , LMID         /* 최종수정자 */
+            , LMDT         /* 최종수정일시 */
+            , LMPID        /* 최종수정화면ID */
+        )
+        VALUES
+        (
+              #{EXTD_ID}   /* 확장권한 코드 */
+            , #{EXTD_NM}   /* 확장권한명 */
+            , #{EXTD_GB}   /* 확장권한구분(00:기준, 10:사용자, 20:부서) */
+            , #{USER_ID}   /* 대상코드 */
+            , #{USE_YN}    /* 사용여부 */
+
+            , #{RMK}
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMPID}
+        )
+    </insert>
+
+
+    <!-- SPP 확장권한 부서 추가 -->
+    <insert id="insert03" parameterType="java.util.Map">
+        /* FOMM0121WMapper >> insert03 */
+        INSERT 
+        INTO  FOMM_AUTH_EXTD_MT
+        (
+              EXTD_ID      /* 확장권한 코드 */
+            , EXTD_NM      /* 확장권한명 */
+            , EXTD_GB      /* 확장권한구분(00:기준, 10:사용자, 20:부서) */
+            , DEST_CD      /* 대상코드 */
+            , USE_YN       /* 사용여부 */
+
+            , RMK          /* 비고 */
+            , FRID         /* 최초등록자 */
+            , FRDT         /* 최초등록일시 */
+            , LMID         /* 최종수정자 */
+            , LMDT         /* 최종수정일시 */
+            , LMPID        /* 최종수정화면ID */
+        )
+        VALUES
+        (
+              #{EXTD_ID}   /* 확장권한 코드 */
+            , #{EXTD_NM}   /* 확장권한명 */
+            , #{EXTD_GB}   /* 확장권한구분(00:기준, 10:사용자, 20:부서) */
+            , #{DEPT_CD}   /* 대상코드 */
+            , #{USE_YN}    /* 사용여부 */
+
+            , #{RMK}
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMPID}
+        )
+    </insert>
+
+    <!-- SPP 확장권한 삭제 -->
+    <delete id="remove01" parameterType="java.util.Map">
+        /* FOMM0000PMapper >> remove01 */
+        DELETE FROM FOMM_AUTH_EXTD_MT
+         WHERE EXTD_ID = #{EXTD_ID}
+           AND EXTD_GB = #{EXTD_GB}
+           AND DEST_CD = #{DEST_CD}
+    </delete>
+
+
+
+</mapper>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0160WDAO">
+	
+	<!-- SPP 메시지 코드 조회 -->
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0160WMapper >> select01 */
+    	SELECT
+    		  0		AS CHK
+			, ''	AS ROWFLAG
+			, MSG_NO
+			, SYS_LANG_CD
+			, SYS_LANG_MSG
+			, SEL_LANG_CD
+			, SEL_LANG_MSG   
+    	FROM
+    	(
+	    	SELECT
+				  MSG_NO
+				, #{SYS_LANG_CD}										AS SYS_LANG_CD
+				, MAX(CASE WHEN LANG_CD = #{SYS_LANG_CD} THEN MSG_CONTS END) AS SYS_LANG_MSG
+				, #{SEL_LANG_CD}										AS SEL_LANG_CD
+				, MAX(CASE WHEN LANG_CD = #{SEL_LANG_CD} THEN MSG_CONTS END)	AS SEL_LANG_MSG
+			FROM
+				FOMM_CMM_MSG_MT
+			<where> 
+			1 = 1
+			<if test="MSG_NO != null and MSG_NO != ''">
+				AND MSG_NO = #{MSG_NO}
+			</if>
+			<if test="MSG_TYPE_CD != null and MSG_TYPE_CD != ''">
+				AND TO_NUMBER(MSG_NO) BETWEEN 
+					(	SELECT	TO_NUMBER(NVL(ITM_VAL_1, '0'))
+						FROM 	FOMM_CMM_CD_MT
+						WHERE	UP_CMM_CD = 'MSG_TYPE_CD'
+						AND 	CODE_DIV = 'CMM_CD'
+						AND		CMM_CD = #{MSG_TYPE_CD}
+						AND		LANG_CD = #{SYS_LANG_CD}
+					)
+					AND
+					(	SELECT	TO_NUMBER(NVL(ITM_VAL_2, '9999999'))
+						FROM	FOMM_CMM_CD_MT
+						WHERE	UP_CMM_CD = 'MSG_TYPE_CD'
+						AND		CODE_DIV = 'CMM_CD'
+						AND		CMM_CD = #{MSG_TYPE_CD}
+						AND		LANG_CD = #{SYS_LANG_CD}
+					)
+			</if>
+			</where>
+			GROUP BY
+				MSG_NO
+		)
+		WHERE 1=1
+		<if test="SYSLANG_MSG_CONTS != null and SYSLANG_MSG_CONTS != ''">
+			AND UPPER(SYS_LANG_MSG) LIKE UPPER('%' || #{SYSLANG_MSG_CONTS} || '%')
+		</if>
+		<if test="CURLANG_MSG_CONTS != null and CURLANG_MSG_CONTS != ''">
+			AND UPPER(SEL_LANG_MSG) LIKE UPPER('%' || #{CURLANG_MSG_CONTS} || '%')
+		</if>
+		ORDER BY TO_NUMBER(MSG_NO) ASC
+			
+    </select>
+    
+        
+    <!-- SPP 메시지 내용 조회 -->
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* FOMM0160WMapper >> select02 */
+    	SELECT    '0' AS CHK
+    			, '' AS ROWFLAG
+    			, B.CMM_CD AS LANG_CD
+		        , A.MSG_NO
+		        , A.MSG_CONTS
+		        , A.RMK
+		        , A.FRID
+		        , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM				/* 최초등록자 */
+		        , A.FRDT
+		        , A.LMID
+		        , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM				/* 최종수정자 */
+		        , A.LMDT
+		        , A.LMPID
+		FROM    (
+		            SELECT  *
+		            FROM    FOMM_CMM_MSG_MT
+		            WHERE   MSG_NO = #{SEL_MSG_NO}
+		        ) A
+		        , ( SELECT  CMM_CD
+		                  , CMM_CD_NM 
+		            FROM    FOMM_CMM_CD_MT
+		            WHERE   1 = 1
+		            AND USE_YN		= 'Y'
+		            AND CODE_DIV	= 'CMM_CD'
+		            AND UP_CMM_CD	= 'LANG_CD'
+		            AND LANG_CD		= #{SYS_LANG_CD}
+		            ORDER BY SORT_ORDR ASC
+		        ) B
+		
+		WHERE   1=1
+		AND     A.LANG_CD(+) = B.CMM_CD
+    </select>
+    
+    
+    <!-- SPP 메시지 코드 추가 -->
+    <insert id="insert01" parameterType="java.util.Map">
+		/* FOMM0160WMapper >> insert01 */
+		INSERT INTO FOMM_CMM_MSG_MT
+		(
+			  MSG_NO	--메시지번호
+			, LANG_CD	--언어코드
+			, MSG_CONTS	--메시지내용
+			
+			, RMK	--비고
+			, FRID	--최초등록자
+			, FRDT	--최종등록일시
+			, LMID	--최종수정자
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정화면ID
+		)
+		VALUES
+		(
+			  #{MSG_NO}
+			, #{CUR_LANG_CD}
+			, #{MSG_CONTS}
+			
+			, #{RMK}
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		)
+    </insert>
+    
+        
+    <!-- SPP 메시지 코드 삭제 (메시지 내용 FOMM_CMM_CD_DT) 모두 삭제 -->
+    <update id="remove01" parameterType="java.util.Map">
+    	/* FOMM0160WMapper >> remove01 */
+        DELETE
+        FROM	FOMM_CMM_MSG_MT
+        WHERE	MSG_NO = #{MSG_NO}
+    </update>
+    
+    
+
+	<update id="modify02" parameterType="java.util.Map">
+		BEGIN
+			MERGE 
+			INTO FOMM_CMM_MSG_MT A
+			USING DUAL
+			ON
+			(
+					A.MSG_NO	= #{MSG_NO}
+				AND A.LANG_CD	= #{LANG_CD}
+			)
+	
+			WHEN MATCHED THEN
+			UPDATE SET
+			  MSG_CONTS	= #{MSG_CONTS}
+			, RMK		= #{RMK}
+			, LMID		= #{LMID}
+			, LMDT		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMPID		= #{LMPID}
+				
+			WHEN NOT MATCHED THEN
+			INSERT
+			(
+				  MSG_NO
+				, LANG_CD
+				, MSG_CONTS
+				, RMK
+				, FRID
+				, FRDT
+				, LMID
+				, LMDT
+				, LMPID
+		    )
+			VALUES
+			(
+				  #{MSG_NO}
+				, #{LANG_CD}
+				, #{MSG_CONTS}
+				, #{RMK}
+				, #{LMID}
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, #{LMID}
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, #{LMPID}
+			)
+			;
+			
+			<if test="SYS_LANG_CD.equals(LANG_CD)">
+				UPDATE 	FOMM_MENU_MT
+				SET		MENU_NM = #{MSG_CONTS}
+				WHERE	MENU_ID = #{MSG_NO}
+				;
+			</if>
+		END;
+	</update>
+
+    <!-- SPP 코드 삭제 -->
+    <update id="remove02" parameterType="java.util.Map">
+    	/* FOMM0160WMapper >> remove02 */
+        DELETE
+        FROM	FOMM_CMM_MSG_MT
+        WHERE	MSG_NO = #{MSG_NO}
+		AND	  	LANG_CD = #{LANG_CD}
+    </update>
+</mapper>

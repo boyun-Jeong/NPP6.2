@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM1400WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+	    /* FOMM1400WDAO.select01 */   
+	    select  '' AS ROWFLAG,
+	               '' AS CHK,
+	               SRL_QST_ID,
+                   APP_DATE,
+                   SCORE_LV1,
+                   SCORE_LV2,
+                   SCORE_LV3,
+                   SCORE_LV4,
+                   SCORE_LV5,
+                   USE_YN,
+                   BIGO,
+                   REG_USER_ID,
+                   REG_USER_NM,
+                   REG_STIME,
+                   LMOD_USER_ID,
+                   LMOD_USER_NM,
+                   SYSMODTIME
+           from FOMM_SRL_QST_MNG
+	</select>
+	
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FOMM1400WDAO.select02 */   
+        select 
+           '' AS ROWFLAG,
+           '' AS CHK,
+           SRL_QST_ID,
+           SEQ,
+           QST_ITEM_DESC,
+           QST_ITEM_TYPE,
+           QST_ITEM_RSP1,
+           QST_ITEM_RSP2,
+           QST_ITEM_RSP3,
+           QST_ITEM_RSP4,
+           QST_ITEM_RSP5,
+           QST_ITEM_RSP6,
+           QST_ITEM_RSP7,
+           QST_ITEM_RSP8,
+           QST_ITEM_RSP9,
+           TO_CHAR(QST_ITEM_GRD1) AS QST_ITEM_GRD1,
+           TO_CHAR(QST_ITEM_GRD2) AS QST_ITEM_GRD2,
+           TO_CHAR(QST_ITEM_GRD3) AS QST_ITEM_GRD3,
+           TO_CHAR(QST_ITEM_GRD4) AS QST_ITEM_GRD4,
+           TO_CHAR(QST_ITEM_GRD5) AS QST_ITEM_GRD5,
+           TO_CHAR(QST_ITEM_GRD6) AS QST_ITEM_GRD6,
+           TO_CHAR(QST_ITEM_GRD7) AS QST_ITEM_GRD7,
+           TO_CHAR(QST_ITEM_GRD8) AS QST_ITEM_GRD8,
+           TO_CHAR(QST_ITEM_GRD9) AS QST_ITEM_GRD9,
+           REG_USER_ID,
+           REG_USER_NM,
+           REG_STIME,
+           LMOD_USER_ID,
+           LMOD_USER_NM,
+           SYSMODTIME
+        from FOMM_SRL_QST_ITEM
+        WHERE SRL_QST_ID = #{SRL_QST_ID}
+        ORDER BY SEQ
+    </select>	
+
+	<insert id="insert01" parameterType="java.util.Map">
+     /* FOMM1400WDAO.insert01 */   
+     insert into FOMM_SRL_QST_MNG
+     ( SRL_QST_ID,
+       APP_DATE,
+       SCORE_LV1,
+       SCORE_LV2,
+       SCORE_LV3,
+       SCORE_LV4,
+       SCORE_LV5,
+       USE_YN,
+       BIGO,
+       REG_USER_ID,
+       REG_USER_NM,
+       REG_STIME,
+       LMOD_USER_ID,
+       LMOD_USER_NM,
+       SYSMODTIME )
+     values 
+     ( (SELECT 'SRL'|| TO_CHAR(SYSDATE, 'YYYY') || NVL(TRIM(TO_CHAR(MAX(SUBSTR(SRL_QST_ID, 8,3 )) + 1, '000')), '001') SRL_QST_ID
+           FROM  FOMM_SRL_QST_MNG
+          WHERE SRL_QST_ID LIKE 'SRL'||TO_CHAR(SYSDATE, 'YYYY')||'%'),
+       #{APP_DATE},
+       #{SCORE_LV1},
+       #{SCORE_LV2},
+       #{SCORE_LV3},
+       #{SCORE_LV4},
+       #{SCORE_LV5},
+       #{USE_YN},
+       #{BIGO},
+       #{userId},
+       #{userNm},
+       to_char(sysdate, 'yyyyMMddhh24miss'),
+       #{userId},
+       #{userNm},
+       to_char(sysdate, 'yyyyMMddhh24miss') )	
+	</insert>
+	
+    <insert id="insert02" parameterType="java.util.Map">
+     /* FOMM1400WDAO.insert02 */   
+     insert into FOMM_SRL_QST_ITEM
+     ( SRL_QST_ID,
+       SEQ,
+       QST_ITEM_DESC,
+       QST_ITEM_TYPE,
+       QST_ITEM_RSP1,
+       QST_ITEM_RSP2,
+       QST_ITEM_RSP3,
+       QST_ITEM_RSP4,
+       QST_ITEM_RSP5,
+       QST_ITEM_RSP6,
+       QST_ITEM_RSP7,
+       QST_ITEM_RSP8,
+       QST_ITEM_RSP9,
+       QST_ITEM_GRD1,
+       QST_ITEM_GRD2,
+       QST_ITEM_GRD3,
+       QST_ITEM_GRD4,
+       QST_ITEM_GRD5,
+       QST_ITEM_GRD6,
+       QST_ITEM_GRD7,
+       QST_ITEM_GRD8,
+       QST_ITEM_GRD9,
+       REG_USER_ID,
+       REG_USER_NM,
+       REG_STIME,
+       LMOD_USER_ID,
+       LMOD_USER_NM,
+       SYSMODTIME )
+     values 
+     ( #{SRL_QST_ID},
+       (SELECT TRIM(TO_CHAR(NVL(COUNT(*),0)+1,'00')) FROM FOMM_SRL_QST_ITEM
+         WHERE SRL_QST_ID = #{SRL_QST_ID}),       
+       #{QST_ITEM_DESC},
+       #{QST_ITEM_TYPE},
+       #{QST_ITEM_RSP1},
+       #{QST_ITEM_RSP2},
+       #{QST_ITEM_RSP3},
+       #{QST_ITEM_RSP4},
+       #{QST_ITEM_RSP5},
+       #{QST_ITEM_RSP6},
+       #{QST_ITEM_RSP7},
+       #{QST_ITEM_RSP8},
+       #{QST_ITEM_RSP9},
+       #{QST_ITEM_GRD1},
+       #{QST_ITEM_GRD2},
+       #{QST_ITEM_GRD3},
+       #{QST_ITEM_GRD4},
+       #{QST_ITEM_GRD5},
+       #{QST_ITEM_GRD6},
+       #{QST_ITEM_GRD7},
+       #{QST_ITEM_GRD8},
+       #{QST_ITEM_GRD9},
+       #{userId},
+       #{userNm},
+       to_char(sysdate, 'yyyyMMddhh24miss'),
+       #{userId},
+       #{userNm},
+       to_char(sysdate, 'yyyyMMddhh24miss') )  
+    </insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	     /* FOMM1400WDAO.modify01 */   
+	    update FOMM_SRL_QST_MNG set 
+            APP_DATE = #{APP_DATE},
+            SCORE_LV1 = #{SCORE_LV1},
+            SCORE_LV2 = #{SCORE_LV2},
+            SCORE_LV3 = #{SCORE_LV3},
+            SCORE_LV4 = #{SCORE_LV4},
+            SCORE_LV5 = #{SCORE_LV5},
+            USE_YN = #{USE_YN},
+            BIGO = #{BIGO},
+            LMOD_USER_ID = #{userId},
+            LMOD_USER_NM = #{userNm},
+            SYSMODTIME = to_char(sysdate, 'yyyyMMddhh24miss')
+        where SRL_QST_ID = #{SRL_QST_ID}           	   
+	</update>
+	
+    <update id="modify02" parameterType="java.util.Map">
+         /* FOMM1400WDAO.modify02 */   
+         update FOMM_SRL_QST_ITEM set 
+          QST_ITEM_DESC = #{QST_ITEM_DESC},
+          QST_ITEM_TYPE = #{QST_ITEM_TYPE},
+          QST_ITEM_RSP1 = #{QST_ITEM_RSP1},
+          QST_ITEM_RSP2 = #{QST_ITEM_RSP2},
+          QST_ITEM_RSP3 = #{QST_ITEM_RSP3},
+          QST_ITEM_RSP4 = #{QST_ITEM_RSP4},
+          QST_ITEM_RSP5 = #{QST_ITEM_RSP5},
+          QST_ITEM_RSP6 = #{QST_ITEM_RSP6},
+          QST_ITEM_RSP7 = #{QST_ITEM_RSP7},
+          QST_ITEM_RSP8 = #{QST_ITEM_RSP8},
+          QST_ITEM_RSP9 = #{QST_ITEM_RSP9},
+          QST_ITEM_GRD1 = #{QST_ITEM_GRD1},
+          QST_ITEM_GRD2 = #{QST_ITEM_GRD2},
+          QST_ITEM_GRD3 = #{QST_ITEM_GRD3},
+          QST_ITEM_GRD4 = #{QST_ITEM_GRD4},
+          QST_ITEM_GRD5 = #{QST_ITEM_GRD5},
+          QST_ITEM_GRD6 = #{QST_ITEM_GRD6},
+          QST_ITEM_GRD7 = #{QST_ITEM_GRD7},
+          QST_ITEM_GRD8 = #{QST_ITEM_GRD8},
+          QST_ITEM_GRD9 = #{QST_ITEM_GRD9},
+          LMOD_USER_ID = #{userId},
+          LMOD_USER_NM = #{userNm},
+          SYSMODTIME = to_char(sysdate, 'yyyyMMddhh24miss')
+         where SRL_QST_ID = #{SRL_QST_ID}
+         AND SEQ = #{SEQ}
+    </update>	
+
+	<delete id="remove01" parameterType="java.util.Map">
+	  /* FOMM1400WDAO.remove01 */   
+	 delete from FOMM_SRL_QST_MNG
+     where SRL_QST_ID = #{SRL_QST_ID}
+	</delete>
+	
+    <delete id="remove02" parameterType="java.util.Map">
+      /* FOMM1400WDAO.remove02 */   
+     delete from FOMM_SRL_QST_ITEM
+     where SRL_QST_ID = #{SRL_QST_ID}         
+        <if test="SEQ != '' and SEQ != null">
+             AND SEQ = #{SEQ}
+        </if>      
+    </delete>	
+
+</mapper>

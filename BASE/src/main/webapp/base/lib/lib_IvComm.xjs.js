@@ -1,0 +1,1074 @@
+//XJS=lib_IvComm.xjs
+(function()
+{
+    return function(path)
+    {
+        var obj;
+    
+        // User Script
+        this.registerScript(path, function() {
+        // include "lib::lib_IvComm.xjs";
+        // 서비스관리(iv) 공통 라이브러리
+
+        this.fnSearchBudgetTypeCd = function()
+        {
+        	var sTranId = "selectBudgetTypeCd";             // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+            var sService = "IV0110W/selectBudgetTypeCd";    // 서비스명
+            var sInDs = "dsCond=dsCond";					// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+            var sOutDs = "dsBudgetTypeDtlCd=dsData";        // 서버에서 수신할 데이타셋
+            var sArg = "";                   				// 서버 @ParamVariable 인자와 맵핑됨
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        this.fnSearchAuthUser = function(EXTD_ID, svcId)
+        {
+        	var dsObj;
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))			dsObj = this.dsIvPrePlan;
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))	dsObj = this.dsIvPlan;
+
+
+        	var sBIZ_TYPE_CD = dsObj.getColumn(dsObj.rowposition, "BIZ_TYPE_CD");
+        	if( sBIZ_TYPE_CD != 'SC' && sBIZ_TYPE_CD != 'GA') sBIZ_TYPE_CD = 'IT';
+
+        	EXTD_ID = 'IV_' + sBIZ_TYPE_CD + '_' + EXTD_ID;
+        	trace("@@@ fnSearchAuthUser : EXTD_ID=" + EXTD_ID);
+
+        	this.dsCondExtAuth.setColumn(0, 'EXTD_GB', '10');
+        	this.dsCondExtAuth.setColumn(0, 'EXTD_ID', EXTD_ID);
+
+        	var sTranId = "selectAuthUser";
+        	if( !Ex.isEmpty(svcId) )	sTranId = svcId;
+
+            var sService	= "IV0310W/select99";	//"FOMM0121W/select02";
+            var sInDs		= "dsCond=dsCondExtAuth";
+            var sOutDs		= "dsExtdAuthMt=dsData";
+            var sArg		= "";
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        };
+
+        // 예산항목 정보 조회
+        // 기초사업계획 정보 조회
+        this.fnSearch01 = function()
+        {
+        	var controllerNm	= "";
+        	var outDsNm			= "";
+
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))
+        	{
+        		controllerNm	= "IV0110W";
+        		outDsNm			= "dsIvPrePlan";
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))
+        	{
+        		controllerNm	= "IV0210W";
+        		outDsNm			= "dsIvPlan";
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV03"))
+        	{
+        		controllerNm	= "IV0310W";
+        		outDsNm			= "dsIvDrive";
+        	}
+
+        	var sTranId		= "select01";           		// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+            var sService	= controllerNm + "/select01";   // 서비스명
+            var sInDs		= "dsCond=dsCond";      		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+            var sOutDs		= outDsNm + "=dsData"; 			// 서버에서 수신할 데이타셋
+            var sArg		= "";							// 서버 @ParamVariable 인자와 맵핑됨
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        // 예산항목별 금액 조회(상세까지 포함)
+        this.fnSearch02 = function()
+        {
+        	var controllerNm	= "";
+        	var outDsNm			= "";
+
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))
+        	{
+        		controllerNm	= "IV0110W";
+        		outDsNm			= "dsIvPrePlanAmt";
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))
+        	{
+        		controllerNm	= "IV0210W";
+        		outDsNm			= "dsIvPlanAmt";
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV03"))
+        	{
+        		controllerNm	= "IV0310W";
+        		outDsNm			= "dsIvDriveAmt";
+        	}
+
+        	var sTranId		= "select03";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+            var sService	= controllerNm + "/select03";	// 서비스명
+            var sInDs		= "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+            var sOutDs		= outDsNm + "=dsData";			// 서버에서 수신할 데이타셋	dsIvPrePlanAmtDtl=dsDataDtl
+            var sArg		= "";							// 서버 @ParamVariable 인자와 맵핑됨
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        // 기초사업계획평가 조회
+        this.fnSearch03 = function()
+        {
+        	var controllerNm	= "";
+        	var outDsNm			= "";
+
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))
+        	{
+        		controllerNm	= "IV0110W";
+        		outDsNm			= "dsIvPrePlanEval";
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))
+        	{
+        		controllerNm	= "IV0210W";
+        		outDsNm			= "dsIvPlanEval";
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV03"))
+        	{
+        		controllerNm	= "IV0310W";
+        		outDsNm			= "dsIvDriveEval";
+        	}
+
+        	var sTranId		= "select04";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+            var sService	= controllerNm + "/select04";	// 서비스명
+            var sInDs		= "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+            var sOutDs		= outDsNm + "=dsData";			// 서버에서 수신할 데이타셋
+            var sArg		= "";							// 서버 @ParamVariable 인자와 맵핑됨
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        // 공통 저장 func
+        this.fnSave = function()
+        {
+        	var controllerNm	= "";
+        	var mDsNm			= "";
+        	var dDsNm			= "";
+
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))
+        	{
+        		controllerNm	= "IV0110W";
+        		mDsNm			= "dsIvPrePlan";
+        		dDsNm			= "dsIvPrePlanEval";
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))
+        	{
+        		controllerNm	= "IV0210W";
+        		mDsNm			= "dsIvPlan";
+        		dDsNm			= "dsIvPlanEval";
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV03"))
+        	{
+        		//var sInDs = "dsCond=dsCond dsIvDrive=dsIvDrive:A dsIvDriveAmt=dsInDrvAmt:U dsIvDriveEval=dsIvDriveEval:U dsIvDriveAmtDtl=dsIvDriveAmtDtl:A";
+        		controllerNm	= "IV0310W";
+        		mDsNm			= "dsIvDrive";
+        		dDsNm			= "dsIvDriveEval";
+        	}
+
+        	var sTranId		= "save02";
+            var sService	= controllerNm + "/save02";
+            var sInDs		= "dsCond=dsCond " + mDsNm + "=" + mDsNm + ":A " + dDsNm + "=" + dDsNm + ":U";
+            var sOutDs		= mDsNm + "=dsData";
+            var sArg		= "";
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        // 공통 삭제 func. ROWFLAG가 'I'면 행 삭제, 'U'/''면 'D'로 변경, 'D'면 원복
+        this.fnDelete = function(objDs)
+        {
+        	objDs.set_enableevent(false);
+        	objDs.set_filterstr("CHK=='1'");
+        	for(var i = objDs.rowcount-1; i >= 0; i--)	objDs.setDeleteRow(i);
+        	objDs.set_filterstr("");
+        	objDs.set_enableevent(true);
+        }
+
+        // 기초사업계획 확정
+        this.fnFixPlan = function()
+        {
+        	var dsObj		= "";
+        	var stCdColNm	= "";
+
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))
+        	{
+        		dsObj		= this.dsIvPrePlan;
+        		stCdColNm	= "PRE_PLAN_ST_CD";
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))
+        	{
+        		dsObj		= this.dsIvPlan;
+        		stCdColNm	= "PLAN_ST_CD";
+        	}
+
+        	dsObj.setColumn(dsObj.rowposition,	stCdColNm,		'A71');	// A71; 계획확정
+        	dsObj.setColumn(dsObj.rowposition,	'FIX_USER_YN1',	'Y');
+        	//dsObj.setColumn(dsObj.rowposition, 'REMARK', '');
+
+        	// 검토 업데이트여부 setting
+        	if( this.divContent.form.divStg.visible && dsObj.getColumn(dsObj.rowposition, 'STG_INSPT_YN') == 'N')
+        	{
+        		dsObj.setColumn(dsObj.rowposition, 'STG_INSPT_YN', 'Y');
+        	}
+
+        	if( Ex.isEmpty(dsObj.getColumn(dsObj.rowposition, "ROWFLAG")) )
+        	{
+        		dsObj.setColumn(dsObj.rowposition, "ROWFLAG", "U");
+        	}
+        	this.fnSave();
+        }
+
+        // 최종계획확정
+        this.fnFinalFixPlan = function()
+        {
+        	var dsObj		= "";
+        	var stCdColNm	= "";
+
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))
+        	{
+        		dsObj		= this.dsIvPrePlan;
+        		stCdColNm	= "PRE_PLAN_ST_CD";
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))
+        	{
+        		dsObj		= this.dsIvPlan;
+        		stCdColNm	= "PLAN_ST_CD";
+        	}
+
+        	dsObj.setColumn(dsObj.rowposition,	stCdColNm,		'A75');	// A75; 최종계획확정
+        	dsObj.setColumn(dsObj.rowposition,	'FIX_USER_YN2',	'Y');
+
+        	// 검토 업데이트여부 setting
+        	if( this.divContent.form.divStg.visible && dsObj.getColumn(dsObj.rowposition, 'STG_INSPT_YN') == 'N')
+        	{
+        		dsObj.setColumn(dsObj.rowposition, 'STG_INSPT_YN', 'Y');
+        	}
+
+        	if( Ex.isEmpty(dsObj.getColumn(dsObj.rowposition, "ROWFLAG")) )
+        	{
+        		dsObj.setColumn(dsObj.rowposition, "ROWFLAG", "U");
+        	}
+        	this.fnSave();
+        }
+
+        // 반려
+        this.fnTerminatePlan = function()
+        {
+        	var dsObj;
+        	var stColNm;
+        	var nmColNm;
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))
+        	{
+        		dsObj	= this.dsIvPrePlan;
+        		stColNm	= "PRE_PLAN_ST_CD";
+        		nmColNm	= "SUB_PRE_PLAN_NM";
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))
+        	{
+        		dsObj = this.dsIvPlan;
+        		stColNm	= "PLAN_ST_CD";
+        		nmColNm	= "SUB_PLAN_NM";
+        	}
+
+        	var strDate = Ex.util.getMaskFormatString(Ex.util.strToDate(Ex.util.today()), "yyyy.MM.dd");
+
+        	dsObj.setColumn(dsObj.rowposition, stColNm,	'A11');						// A11(작성중=반려)
+        	dsObj.setColumn(dsObj.rowposition, nmColNm,	'반려됨-' + strDate);
+        	this.fnSave();
+        }
+
+        // [기초/본] 사업계획 삭제
+        this.fnDeletePlan = function()
+        {
+        	var dsObj;
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))			dsObj	= this.dsIvPrePlan;
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))	dsObj	= this.dsIvPlan;
+
+        	dsObj.setColumn(dsObj.rowposition, 'ROWFLAG', 'D');
+        	this.fnSave();
+        }
+
+        // 공통코드 조회
+        this.fnGetCmmCd = function()
+        {
+        	var gubun = "";
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))			gubun = "PRE_PLAN";
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))	gubun = "PLAN";
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV03"))	gubun = "DRV";
+
+        	var oParam = {
+        		upCmmCd : ['BIZ_CD',			'RANK_CD',		'YN_SHORT_CD',	gubun + '_FILE_USER_CD',	gubun + '_FILE_DEV_CD', 'BUDGET_TYPE_CD', 		'BIZ_TYPE_CD',		'PLAN_YN']			// 조회할 상위코드
+        		,codeDiv: ['IT_INVEST_MNG_CD',	'CMM_CD',		'CMM_CD',		'IT_INVEST_MNG_CD',			'IT_INVEST_MNG_CD',		'IT_INVEST_MNG_CD',		'IT_INVEST_MNG_CD',	'IT_INVEST_MNG_CD']	// 조회할 코드의 업무구분
+        		,optStr	: ['SEL',				'SEL',			'SEL',			'SEL',						'SEL',					'',						'',					'SEL']				// ALL: '- 전체 -'; SEL: '- 선택 -'
+        		,useYn	: ['Y',					'Y',			'Y',			'Y',						'Y',					'Y',					'Y',				'Y']				// 사용여부
+        		,filter	: ['',					'',				'',				'',							'',						'',						'',					'']					// filterStr
+        		,objDs	: [this.dsBizCd,		this.dsRankCd,	this.dsYnCd,	this.dsFileGbn1,			this.dsFileGbn2,		this.dsBudgetTypeCd,	this.dsBizTypeCd,	this.dsPlanYn]		// copy dataset
+        	}
+        	Ex.util.getCmmCode(oParam);	// 공통코드 getter util; (oParam);
+        }
+
+        // 파일 업로드 default callback
+        this.fnUploadCallback = function(sSvcId, nErrorCode, sErrorMsg)
+        {
+        	if (nErrorCode < 0)
+        	{
+        		Ex.core.error(this,{id:"ERROR",msg:sSvcId+"\n"+Ex.core.msg(sErrorMsg)});
+        		return;
+        	}
+
+        	switch(sSvcId)
+        	{
+        		case "fileSvc" :
+        			if(this.getOwnerFrame().url.startsWith("iv::IV03"))
+        			{
+        				this.fnSetDsIvDrive();		// 추진사업 저장용 data setting
+        				this.fnSave();
+        			}
+        			else
+        			{
+        				this.divContent.form.divDev.form.divFile.form.fnUploadFiles(true);
+        			}
+        			break;
+
+        		case "fileSvcDevInspt" :
+        			if(this.getOwnerFrame().url.startsWith("iv::IV01"))			this.fnSetDsIvPrePlan();	// 기초사업계획 저장용 data setting
+        			else if(this.getOwnerFrame().url.startsWith("iv::IV02"))	this.fnSetDsIvPlan();		// 본사업계획 저장용 data setting
+        			this.fnSave();
+        			break;
+        	}
+        }
+
+        this.fnFileSetConfig = function()
+        {
+        	var tableName;
+        	var varKey;
+
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))
+        	{
+        		tableName	= "IV_PRE_PLAN";
+        		varKey		= this.PRE_PLAN_ID||'';
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))
+        	{
+        		tableName = "IV_PLAN";
+        		varKey		= this.PLAN_ID||'';
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV03"))
+        	{
+        		tableName = "IV_DRIVE";
+        		varKey		= this.DRV_ID||'';
+        	}
+
+        	// 첨부파일 setting
+        	var oParam = {
+        		 sSvcId		: 'fileSvc'			// divFile callback 후처리용 서비스 ID
+        		,limitMinCnt: 0					// 파일 최소 갯수; defualt 0
+        		,limitCnt	: 3					// 파일 최대 갯수; default 5
+        		,limitSize	: 100				// 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+        		,folderName	: 'iv'				// 폴더명(업무명)
+        		,tableName	: tableName			// 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+        		,primaryKey1: varKey			// 테이블 PK1(ex. 요청서ID 등)
+        		,primaryKey2: 'MAIN'			// 테이블 PK2 (복합 키인 경우 사용)
+        		,primaryKey3: ''				// 테이블 PK3 (복합 키인 경우 사용)
+        		,searchKey1 : varKey
+        		,searchKey2 : 'MAIN'
+        		,fileDownYn	: ''				// 파일다운권한; 	 공백 시 메뉴의 조회 권한
+        		,fileUpYn	: ''				// 파일업로드권한; 공백 시 메뉴의 추가 권한
+        		,deleteYn	: ''				// 파일삭제권한; 	 공백 시 메뉴의 삭제 권한
+        		,extGrid 	: this.formatGrd1
+        	};
+        	this.divContent.form.divFile.form.setConfig(this, oParam);
+
+        	if(tableName != "IV_DRIVE")
+        	{
+        		// 첨부파일 setting
+        		var oParam = {
+        			 sSvcId		: 'fileSvcDevInspt'		// divFile callback 후처리용 서비스 ID
+        			,limitMinCnt: 0						// 파일 최소 갯수; defualt 0
+        			,limitCnt	: 3						// 파일 최대 갯수; default 5
+        			,limitSize	: 100					// 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+        			,folderName	: 'iv'					// 폴더명(업무명)
+        			,tableName	: tableName				// 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+        			,primaryKey1: varKey				// 테이블 PK1(ex. 요청서ID 등)
+        			,primaryKey2: 'DEV_INSPT'			// 테이블 PK2 (복합 키인 경우 사용)
+        			,primaryKey3: ''					// 테이블 PK3 (복합 키인 경우 사용)
+        			,searchKey1 : varKey
+        			,searchKey2 : 'DEV_INSPT'
+        			,fileDownYn	: ''				// 파일다운권한; 	 공백 시 메뉴의 조회 권한
+        			,fileUpYn	: ''				// 파일업로드권한; 공백 시 메뉴의 추가 권한
+        			,deleteYn	: ''				// 파일삭제권한; 	 공백 시 메뉴의 삭제 권한
+        			,extGrid 	: this.formatGrd2
+        			,title 		: "첨부파일 <fs v='10'><fc v='red'>*검토의견서</fc></fs>"
+        		};
+        		this.divContent.form.divDev.form.divFile.form.setConfig(this, oParam);
+        		this.divContent.form.divDev.form.divFile.form.stcTitle.set_usedecorate(true);
+        	}
+        };
+
+        // 그리드 head 년도 setting
+        this.fnSetGrdAmtHead = function()
+        {
+        	if( Ex.isEmpty(this.BUDGET_YY) )	return;
+
+        	var BUDGET_YY_B1 = parseInt(this.BUDGET_YY) - 1;
+        	var BUDGET_YY_A1 = parseInt(this.BUDGET_YY) + 1;
+
+        	var grd;
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))			grd = this.divContent.form.grdPrePlanAmt;
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))	grd = this.divContent.form.grdPlanAmt;
+
+        	// cell merge로 인한 index +1 보정
+        	var bfText = "~ " + BUDGET_YY_B1 + "년";
+        	var cuText = this.BUDGET_YY + "년";
+        	var afText = BUDGET_YY_A1 + "년 ~";
+        	grd.setCellProperty( "Head", grd.getBindCellIndex("body" , "YYYYM1") + 1, "text", bfText);
+        	grd.setCellProperty( "Head", grd.getBindCellIndex("body" , "YYYYOR") + 1,	"text", cuText);
+        	grd.setCellProperty( "Head", grd.getBindCellIndex("body" , "YYYYP1") + 1,	"text", afText);
+        };
+
+        //상단 진행상태 흐름도 세팅
+        this.fnTopFlowSetting = function()
+        {
+        	var ST_CD;
+        	var dsMaster;
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))
+        	{
+        		ST_CD		= this.PRE_PLAN_ST_CD;
+        		dsMaster	= this.dsIvPrePlan;
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))
+        	{
+        		ST_CD		= this.PLAN_ST_CD;
+        		dsMaster	= this.dsIvPlan;
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV03"))
+        	{
+        		ST_CD		= this.DRV_ST_CD;
+        		dsMaster	= this.dsIvDrive;
+        	}
+
+        	var nRow = this.dsStepFlow.findRow("ST_CD", ST_CD);
+        	var objStep = "";
+        	var objStepNm = "";
+        	var objArrow = "";
+
+        	//이미지에 대해서 작업
+        	for(var i=0; i<(this.getOwnerFrame().url.startsWith("iv::IV02") ? 9 : 6); i++)
+        	{
+        		objStep		= this.divTop.form.divFlow.form["stcStep_" + i];		//이미지
+        		objStepNm	= this.divTop.form.divFlow.form["stcStepNm_" + i];		//단계명
+        		objArrow	= this.divTop.form.divFlow.form["stcStepArrow_" + i];	//화살표
+
+        		if(objStep)
+        		{
+        			//이미지 초기화
+        			var fRow = this.dsStepFlow.findRow("SEQ", i);
+        			if(fRow > -1)
+        			{
+        				objStep.EXTD_ID = this.dsStepFlow.getColumn(fRow, "EXTD_ID");
+        				objStep.SEQ		= this.dsStepFlow.getColumn(fRow, "SEQ");
+        				objStep.set_cssclass(this.dsStepFlow.getColumn(fRow, "ST_CSSCLASS") + "_Off");
+        				objArrow.set_cssclass("stc_WfAllow_Off");
+        				objStepNm.set_text(nexacro.replaceAll(this.dsStepFlow.getColumn(fRow, "ST_REF_NM"), "&#13;&#10;", "\n"));
+        			}
+        		}
+        	}
+        	trace("@@@ fnTopFlowSetting :nRow=" + nRow);
+
+        	if(dsMaster.rowcount > 0)
+        	{
+        		var curRow = dsMaster.rowposition;
+
+        		//현재상태 ON
+        		if(nRow > -1)
+        		{
+        			objStep		= this.divTop.form.divFlow.form["stcStep_" + this.dsStepFlow.getColumn(nRow, "SEQ")];
+        			objArrow	= this.divTop.form.divFlow.form["stcStepArrow_" + this.dsStepFlow.getColumn(nRow, "SEQ")];
+        			objStep.set_cssclass(this.dsStepFlow.getColumn(nRow, "ST_CSSCLASS") + "_On");
+        			objArrow.set_cssclass("stc_WfAllow_On");
+        		}
+
+        		//담당자 표시
+        		this.divTop.form.stcUserNmList.set_text("");
+        		var strUserList = "";
+
+        		if(!this.getOwnerFrame().url.startsWith("iv::IV03"))
+        		{
+        			if(nRow > -1)
+        			{
+        				EXTD_ID = this.dsStepFlow.getColumn(nRow, "EXTD_ID");
+        				trace("@@@ fnTopFlowSetting :EXTD_ID=" + EXTD_ID);
+        				if(!Ex.isEmpty(EXTD_ID))
+        				{
+        					if(this.getOwnerFrame().url == "iv::IV0110_P03.xfdl" || this.getOwnerFrame().url == "iv::IV0210_P03.xfdl")
+        					{
+        						this.fnSearchAuthUser("selectExtUser1", EXTD_ID);	//해당 EXTD_ID 로 확장권한자들 조회
+        					}
+        					else
+        					{
+        						this.fnSearchAuthUser(EXTD_ID);	//확장권한이 있는 경우
+        					}
+        				}
+        				else
+        				{
+        					trace("@@@ fnTopFlowSetting :EXTD_ID없을때");
+        					//없을때 ST_CD 로 분기
+        					switch(ST_CD)
+        					{
+        						case "A01":
+        						case "A11":
+        							strUserList = dsMaster.getColumn(curRow, "PLAN_USER_NM")
+        										+ "(" + Ex.isNvl(dsMaster.getColumn(curRow, "PLAN_DEPT_NM"), "") + " " + Ex.isNvl(dsMaster.getColumn(curRow, "PLAN_USER_TELNUM"), "") + ")";
+        							break;
+
+        						case "A21":
+        						case "A31":
+        							strUserList = dsMaster.getColumn(curRow, "DEV_USER_NM")
+        										+ "(" + Ex.isNvl(dsMaster.getColumn(curRow, "DEV_DEPT_NM"), "") + " " + Ex.isNvl(dsMaster.getColumn(curRow, "DEV_USER_TELNUM"), "") + ")";
+        							break;
+        					}
+        					this.divTop.form.stcUserNmList.set_text(Ex.isNvl(strUserList, ""));
+        				}
+        			}
+        		}
+        		else
+        		{
+        			switch(ST_CD)
+        			{
+        				case "A01":
+        				case "A11":
+        				case "A21":
+        					strUserList = dsMaster.getColumn(curRow, "DRV_USER_NM")
+        								+ "(" + dsMaster.getColumn(curRow, "DRV_DEPT_NM") + " " + dsMaster.getColumn(curRow, "DRV_USER_TELNUM") + ")";
+        					break;
+
+        				default :
+        					strUserList = dsMaster.getColumn(curRow, "LMOD_USER_NM") + "(" + dsMaster.getColumn(curRow, "LMOD_DEPT_NM") + ")";
+        					break;
+        			}
+        			this.divTop.form.stcUserNmList.set_text(strUserList.indexOf("undefined") > -1 ? "" : strUserList);
+        		}
+        	}
+        };
+
+        //IV0110 시리즈 플로우 단계 클릭
+        this.fnStepClick01 = function(obj,e)
+        {
+        	var EXTD_ID = obj.EXTD_ID;
+        	var SEQ = obj.SEQ;
+
+        	var nRow = this.dsStepFlow.findRow("ST_CD", this.PRE_PLAN_ST_CD);
+        	if(nRow > -1) var nSeq = this.dsStepFlow.getColumn(nRow, "SEQ");
+
+        	trace("현상태로 찾은 nSeq=" + nSeq);
+        	trace("버튼의 SEQ=" + SEQ);
+
+        	if(!Ex.isEmpty(nSeq))
+        	{
+        		var curRow = this.dsIvPrePlan.rowposition;
+
+        		if(SEQ < nSeq)
+        		{
+        			trace("@@@ Case#1");
+        			//현상태 이전인 경우
+        			var strUserList = "";
+        			switch(SEQ)
+        			{
+        				case "0":
+        					strUserList = this.dsIvPrePlan.getColumn(curRow, "PLAN_USER_NM")
+        								+ "(" + Ex.isNvl(this.dsIvPrePlan.getColumn(curRow, "PLAN_DEPT_NM"), "") + " " + Ex.isNvl(this.dsIvPrePlan.getColumn(curRow, "PLAN_USER_TELNUM"), "") + ")";
+        					break;
+
+        				case "1":
+        					strUserList = this.dsIvPrePlan.getColumn(curRow, "DEV_USER_NM")
+        								+ "(" + Ex.isNvl(this.dsIvPrePlan.getColumn(curRow, "DEV_DEPT_NM"), "") + " " + Ex.isNvl(this.dsIvPrePlan.getColumn(curRow, "DEV_USER_TELNUM"), "") + ")";
+        					break;
+
+        				case "2":
+        					strUserList = this.dsIvPrePlan.getColumn(curRow, "STG_INSPT_NM")
+        								+ "(" + Ex.isNvl(this.dsIvPrePlan.getColumn(curRow, "STG_INSPT_DEPT_NM"), "") + " " + Ex.isNvl(this.dsIvPrePlan.getColumn(curRow, "STG_INSPT_TELNUM"), "") + ")";
+        					break;
+
+        				case "3":
+        					strUserList = this.dsIvPrePlan.getColumn(curRow, "FIX_USER_NM1")
+        								+ "(" + Ex.isNvl(this.dsIvPrePlan.getColumn(curRow, "FIX_DEPT_NM1"), "") + " " + Ex.isNvl(this.dsIvPrePlan.getColumn(curRow, "FIX_USER_TELNUM1"), "") + ")";
+        					break;
+
+        				case "4":
+        					strUserList = this.dsIvPrePlan.getColumn(curRow, "FIX_USER_NM2")
+        								+ "(" + Ex.isNvl(this.dsIvPrePlan.getColumn(curRow, "FIX_DEPT_NM2"), "") + " " + Ex.isNvl(this.dsIvPrePlan.getColumn(curRow, "FIX_USER_TELNUM2"), "") + ")";
+        					break;
+        			}
+        			this.divTop.form.stcUserNmList.set_text(strUserList.indexOf("undefined") > -1 ? "" : strUserList);
+        		}
+        		else
+        		{
+        			//현상태 이후인 경우
+        			if(!Ex.isEmpty(EXTD_ID))
+        			{	trace("@@@ Case#2");
+        				//확장권한이 있는 경우
+        				if(this.getOwnerFrame().url == "iv::IV0110_P03.xfdl")	this.fnSearchAuthUser(EXTD_ID, "selectExtUser2");
+        				else													this.fnSearchAuthUser(EXTD_ID);
+        			}
+        			else
+        			{	trace("@@@ Case#3");
+        				var strUserList = "";
+        				switch(SEQ)
+        				{
+        					case "0":
+        						strUserList = this.dsIvPrePlan.getColumn(curRow, "PLAN_USER_NM")
+        									+ "(" + Ex.isNvl(this.dsIvPrePlan.getColumn(curRow, "PLAN_DEPT_NM"), "") + " " + Ex.isNvl(this.dsIvPrePlan.getColumn(curRow, "PLAN_USER_TELNUM"), "") + ")";
+        						break;
+
+        					case "1":
+        						strUserList = this.dsIvPrePlan.getColumn(curRow, "DEV_USER_NM")
+        									+ "(" + Ex.isNvl(this.dsIvPrePlan.getColumn(curRow, "DEV_DEPT_NM"), "") + " " + Ex.isNvl(this.dsIvPrePlan.getColumn(curRow, "DEV_USER_TELNUM"), "") + ")";
+        						break;
+        				}
+        				trace("strUserList=" + strUserList)
+        				this.divTop.form.stcUserNmList.set_text(strUserList.indexOf("undefined") > -1 ? "" : strUserList);
+        			}
+        		}
+        	}
+        };
+
+        //IV0210 시리즈 플로우 단계 클릭
+        this.fnStepClick02 = function(obj,e)
+        {
+        	var EXTD_ID = obj.EXTD_ID;
+        	var SEQ = obj.SEQ;
+
+        	var nRow = this.dsStepFlow.findRow("ST_CD", this.PLAN_ST_CD);
+        	if(nRow > -1) var nSeq = this.dsStepFlow.getColumn(nRow, "SEQ");
+
+        	trace("현상태로 찾은 nSeq=" + nSeq);
+        	trace("버튼의 SEQ=" + SEQ);
+
+        	if(!Ex.isEmpty(nSeq))
+        	{
+        		var curRow = this.dsIvPlan.rowposition;
+
+        		if(SEQ < nSeq)
+        		{
+        			trace("@@@ Case#1");
+        			//현상태 이전인 경우
+        			var strUserList = "";
+        			switch(SEQ)
+        			{
+        				case "0":
+        					strUserList = this.dsIvPlan.getColumn(curRow, "PLAN_USER_NM")
+        								+ "(" + this.dsIvPlan.getColumn(curRow, "PLAN_DEPT_NM") + " " + this.dsIvPlan.getColumn(curRow, "PLAN_USER_TELNUM") + ")";
+        					break;
+
+        				case "1":
+        					strUserList = this.dsIvPlan.getColumn(curRow, "DEV_USER_NM")
+        								+ "(" + this.dsIvPlan.getColumn(curRow, "DEV_DEPT_NM") + " " + this.dsIvPlan.getColumn(curRow, "DEV_USER_TELNUM") + ")";
+        					break;
+
+        				case "2":
+        					strUserList = this.dsIvPlan.getColumn(curRow, "STG_INSPT_NM")
+        								+ "(" + this.dsIvPlan.getColumn(curRow, "STG_INSPT_DEPT_NM") + " " + this.dsIvPlan.getColumn(curRow, "STG_INSPT_TELNUM") + ")";
+        					break;
+
+        				case "3":
+        					strUserList = this.dsIvPlan.getColumn(curRow, "FIX_USER_NM1")
+        								+ "(" + this.dsIvPlan.getColumn(curRow, "FIX_DEPT_NM1") + " " + this.dsIvPlan.getColumn(curRow, "FIX_USER_TELNUM1") + ")";
+        					break;
+
+        				case "4":
+        					strUserList = this.dsIvPlan.getColumn(curRow, "FIX_USER_NM2")
+        								+ "(" + this.dsIvPlan.getColumn(curRow, "FIX_DEPT_NM2") + " " + this.dsIvPlan.getColumn(curRow, "FIX_USER_TELNUM2") + ")";
+        					break;
+
+        				case "5":	//A75
+        					break;
+
+        				case "6":	//A81
+        					strUserList = this.dsIvPlan.getColumn(curRow, "FIX_USER_NM3")
+        								+ "(" + this.dsIvPlan.getColumn(curRow, "FIX_DEPT_NM3") + " " + this.dsIvPlan.getColumn(curRow, "FIX_USER_TELNUM3") + ")";
+        					break;
+
+        				case "7":
+        					strUserList = this.dsIvPlan.getColumn(curRow, "FIX_USER_NM4")
+        								+ "(" + this.dsIvPlan.getColumn(curRow, "FIX_DEPT_NM4") + " " + this.dsIvPlan.getColumn(curRow, "FIX_USER_TELNUM4") + ")";
+        					break;
+        			}
+        			this.divTop.form.stcUserNmList.set_text(strUserList.indexOf("undefined") > -1 ? "" : strUserList);
+        		}
+        		else
+        		{
+        			//현상태 이후인 경우
+        			if(!Ex.isEmpty(EXTD_ID))
+        			{	trace("@@@ Case#2");
+        				if(this.getOwnerFrame().url == "iv::IV0210_P03.xfdl")	this.fnSearchAuthUser(EXTD_ID, "selectExtUser2");
+        				else													this.fnSearchAuthUser(EXTD_ID);
+        			}
+        			else
+        			{	trace("@@@ Case#3");
+        				var strUserList = "";
+        				switch(SEQ)
+        				{
+        					case "0":
+        						strUserList = this.dsIvPlan.getColumn(curRow, "PLAN_USER_NM")
+        									+ "(" + this.dsIvPlan.getColumn(curRow, "PLAN_DEPT_NM") + " " + this.dsIvPlan.getColumn(curRow, "PLAN_USER_TELNUM") + ")";
+        						break;
+
+        					case "1":
+        						strUserList = this.dsIvPlan.getColumn(curRow, "DEV_USER_NM")
+        									+ "(" + this.dsIvPlan.getColumn(curRow, "DEV_DEPT_NM") + " " + this.dsIvPlan.getColumn(curRow, "DEV_USER_TELNUM") + ")";
+        						break;
+        				}
+        				trace("strUserList=" + strUserList)
+        				this.divTop.form.stcUserNmList.set_text(strUserList.indexOf("undefined") > -1 ? "" : strUserList);
+        			}
+        		}
+        	}
+        };
+
+        // 사업진행코드별 조정우선순위 div visible setting
+        this.fnSetPriNewNumDivVisible = function()
+        {
+        	var visible;
+        	var topComp;
+        	if(this.getOwnerFrame().url == "iv::IV0110_P03.xfdl" || this.getOwnerFrame().url == "iv::IV0210_P03.xfdl")
+        	{
+        		topComp = this.divContent.form.divPriNewNum;
+        		visible = true;
+        	}
+        	else
+        	{
+        		topComp = this.divContent.form.stcComplYn;
+        		visible	= false;
+        	}
+
+        	// 무조건 안보이게
+        	var nTop = 0;
+
+        	this.divContent.form.divPriNewNum.set_visible(visible);
+        	nTop = topComp.getOffsetBottom();
+
+        	this.divContent.form.stcTitle2.set_top(nTop + 20);
+
+        	if( !Ex.isEmpty(this.divContent.form["stcTitle2_desc"]) )
+        	{
+        		this.divContent.form.stcTitle2_desc.set_top(nTop + 20);
+        	}
+        	this.divContent.form.divGrdTopBtnAmt.set_top(nTop + 20);
+
+        	this.divContent.form.resetScroll();
+        }
+
+        // IV0110_P01, IV0210_P01 사업진행코드별 검토 div visible setting
+        this.fnSetInsptDivVisible01 = function(ST_CD)
+        {
+        	var grdObj;
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))			grdObj = this.divContent.form.grdPrePlanEval;
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))	grdObj = this.divContent.form.grdPlanEval;
+
+        	var nHeight = 0;
+        	switch(ST_CD)
+        	{
+        		case "" :		// 신규추가
+        		case "A11" :	// 작성중
+        			nHeight = grdObj.getOffsetBottom();
+        			break;
+
+        		case "A21" :	// 작성완료
+        		case "A31" :	// 개발부검토중
+        			if( this.fv_LoginUserChk == "Y" )
+        			{
+        				this.divContent.form.divDev.set_visible(false);
+        				this.divContent.form.divStg.set_visible(false);
+        				nHeight = grdObj.getOffsetBottom();
+        			}
+        			else
+        			{
+        				this.divContent.form.divDev.set_visible(true);
+        				nHeight = this.divContent.form.divDev.getOffsetBottom();
+        			}
+        			break;
+
+        		default :
+        			this.divContent.form.divDev.set_visible(false);
+        			this.divContent.form.divStg.set_visible(false);
+        			nHeight = this.divContent.form.divStg.getOffsetBottom();
+        			break;
+        	}
+
+        	// bottom margin
+        	this.divContent.form.stcBotMargin.set_background('transparent');
+        	this.divContent.form.stcBotMargin.set_top(nHeight);
+        	//this.divContent.form.stcBotMargin.set_visible(true);
+        	this.divContent.form.stcBotMargin.set_visible(false);
+        	this.divContent.form.resetScroll();
+
+        }
+
+        // IV0110_P02, IV0210_P02 사업진행코드별 검토 div visible setting
+        this.fnSetInsptDivVisible02 = function(ST_CD)
+        {
+        	var grdObj;
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))			grdObj = this.divContent.form.grdPrePlanEval;
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))	grdObj = this.divContent.form.grdPlanEval;
+
+        	var nHeight = 0;
+        	switch(ST_CD)
+        	{
+        		case "" :		// 신규추가
+        		case "A11" :	// 작성중
+        			nHeight = grdObj.getOffsetBottom();
+        			break;
+
+        		case "A21" :	// 작성완료
+        		case "A31" :	// 개발부검토중
+        			this.divContent.form.divDev.set_visible(true);
+        			nHeight = this.divContent.form.divDev.getOffsetBottom();
+        			break;
+
+        		default :
+        			this.divContent.form.divDev.set_visible(true);
+        			nHeight = this.divContent.form.divDev.getOffsetBottom();
+        			break;
+        	}
+
+        	// bottom margin
+        	this.divContent.form.stcBotMargin.set_background('transparent');
+        	this.divContent.form.stcBotMargin.set_top(nHeight);
+        	this.divContent.form.stcBotMargin.set_visible(true);
+        	this.divContent.form.resetScroll();
+        	this.divContent.form.stcBotMargin.set_visible(false);
+        }
+
+        // IV0110_P03, IV0210_P03 사업진행코드별 검토 div visible setting
+        this.fnSetInsptDivVisible03 = function(ST_CD)
+        {
+        	var nHeight = 0;
+        	switch(ST_CD)
+        	{
+        		default :
+        			this.divContent.form.divDev.set_visible(true);
+        			this.divContent.form.divStg.set_visible(true);
+        			nHeight = this.divContent.form.divStg.getOffsetBottom();
+        			break;
+        	}
+
+        	// bottom margin
+        	this.divContent.form.stcBotMargin.set_background('transparent');
+        	this.divContent.form.stcBotMargin.set_top(nHeight);
+        	this.divContent.form.stcBotMargin.set_visible(true);
+        	this.divContent.form.resetScroll();
+        	this.divContent.form.stcBotMargin.set_visible(false);
+        }
+
+        // IV0110_P01, IV0210_P01 저장 버튼(확정/임시저장/저장) visible setting
+        this.fnSetBtnSaveVisible01 = function(ST_CD)
+        {
+        	var masterDs;
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))			masterDs = this.dsIvPrePlan;
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))	masterDs = this.dsIvPlan;
+
+        	var saveYn = Ex.util.getMenuAuth(this, 'saveYn');
+
+        	this.divBottom.form.divBotBtn.form.btnSaveTemp.set_visible(false);
+        	this.divBottom.form.divBotBtn.form.btnSave.set_visible(false);
+        	this.divBottom.form.btnTerminate.set_visible(false);
+
+        	if(!Ex.isEmpty(ST_CD) && ST_CD > 'A11')
+        	{
+        		var PLAN_USER_ID = this.dsIvPlan.getColumn(masterDs.rowposition, 'PLAN_USER_ID');
+        		if(Ex.util.getSession('gvUserId') == PLAN_USER_ID)
+        		{
+        			this.divBottom.form.btnTerminate.set_visible(true);	//모든단계 강제종료 가능하게 변경
+        		}
+        	}
+
+        	if( this.pPopType == 'R' || saveYn == 'N' )	return;
+
+        	switch(ST_CD)
+        	{
+        		case "" :		// 신규 추가
+        			this.divBottom.form.divBotBtn.form.btnSaveTemp.set_visible(true);
+        			this.divBottom.form.divBotBtn.form.btnSave.set_visible(true);
+        			break;
+
+        		case "A01" :	// 기초사업 작성중    20241210
+        		case "A11" :	// 작성중
+        			var PLAN_USER_ID = masterDs.getColumn(masterDs.rowposition, 'PLAN_USER_ID');
+        			if(Ex.util.getSession('gvUserId') == PLAN_USER_ID)
+        			{
+        				this.divBottom.form.divBotBtn.form.btnSaveTemp.set_visible(true);
+        				this.divBottom.form.divBotBtn.form.btnSave.set_visible(true);
+        			}
+        			break;
+
+        		case "A21" :	// 작성완료
+        		case "A31" :	// 개발부 검토중
+        			this.divBottom.form.divBotBtn.form.btnSave.set_visible(false);
+        			if(this.fv_LoginUserChk == "Y")
+        			{
+        				//this.divBottom.form.divBotBtn.form.btnSaveTemp.set_text("저장");
+        				//this.divBottom.form.divBotBtn.form.btnSaveTemp.set_visible(true);
+        			}
+        			else
+        			{
+        				this.divBottom.form.divBotBtn.form.btnSave.set_visible(false);
+        			}
+        			break;
+        	}
+        	Ex.util.setBtnAlign(this.divBottom.form.divBotBtn, 'right', true);
+        }
+
+        // IV0110_P02, IV0210_P02 사용 저장 버튼(확정/임시저장/저장) visible setting
+        this.fnSetBtnSaveVisible02 = function(ST_CD)
+        {
+        	var masterDs;
+        	if(this.getOwnerFrame().url.startsWith("iv::IV01"))
+        	{
+        		masterDs = this.dsIvPrePlan;
+        	}
+        	else if(this.getOwnerFrame().url.startsWith("iv::IV02"))
+        	{
+        		masterDs = this.dsIvPlan;
+        	}
+
+        	var saveYn = Ex.util.getMenuAuth(this, 'saveYn');
+
+        	this.divBottom.form.divBotBtn.form.btnSaveTemp.set_visible(false);
+        	this.divBottom.form.divBotBtn.form.btnSave.set_visible(false);
+        	this.divBottom.form.btnTerminate.set_visible(false);
+
+        	if( this.pPopType == 'R' || saveYn == 'N' )	return;
+
+        	switch(ST_CD)
+        	{
+        		case "A21" :	// 작성완료
+        		case "A31" :	// 개발부검토중
+        			var DEV_USER_ID = masterDs.getColumn(masterDs.rowposition, 'DEV_USER_ID');
+        			if(Ex.util.getSession('gvUserId') == DEV_USER_ID)
+        			{
+        				this.divBottom.form.divBotBtn.form.btnSaveTemp.set_visible(true);
+        				this.divBottom.form.divBotBtn.form.btnSave.set_visible(true);
+        				this.divBottom.form.btnTerminate.set_visible(true);
+        			}
+        			break;
+
+        		case "A41" :	// 개발부 검토완료
+        			this.divBottom.form.divBotBtn.form.btnSaveTemp.set_visible(false);
+        			this.divBottom.form.divBotBtn.form.btnSave.set_visible(false);
+        			break;
+        	}
+        	Ex.util.setBtnAlign(this.divBottom.form.divBotBtn, 'right', true);
+        }
+
+        // IV0110_P03, IV0210_P03 사용 저장 버튼(확정/임시저장/저장) visible setting
+        this.fnSetBtnSaveVisible03 = function(ST_CD)
+        {
+        	var saveYn = Ex.util.getMenuAuth(this, 'saveYn');
+
+        	this.divBottom.form.divBotBtn.form.btnSaveTemp.set_visible(false);
+        	this.divBottom.form.divBotBtn.form.btnSave.set_visible(false);
+        	this.divBottom.form.divBotBtn.form.btnSaveFix.set_visible(false);
+        	this.divBottom.form.divBotBtn.form.btnSaveFinalFix.set_visible(false);
+        	this.divBottom.form.btnTerminate.set_visible(false);
+
+        	if( this.pPopType == 'R' || saveYn == 'N' )	return;
+
+        	if( (this.pScreenId == "IV0120W" || this.pScreenId == "IV0220W") && (ST_CD == "A41" || ST_CD == "A51") )
+        	{
+        		//확장권한 있는지 체크
+        		var fRow = this.dsExtdAuthMt.findRow("USER_ID", Ex.util.getSession('gvUserId'));
+
+        		if(fRow > -1)
+        		{
+        			this.divBottom.form.divBotBtn.form.btnSave.set_visible(true);
+        			this.divBottom.form.divBotBtn.form.btnSaveTemp.set_visible(true);
+        			this.divBottom.form.btnTerminate.set_visible(true);
+        		}
+        		else
+        		{
+        			this.divBottom.form.divBotBtn.form.btnSave.set_visible(false);
+        			this.divBottom.form.divBotBtn.form.btnSaveTemp.set_visible(false);
+        		}
+        	}
+        	else if( (this.pScreenId == "IV0130W" || this.pScreenId == "IV0230W") && (ST_CD == "A41" || ST_CD == "A51" || ST_CD == "A61" || ST_CD == "A71") )
+        	{
+        		//확장권한 있는지 체크
+        		var fRow = this.dsExtdAuthMt.findRow("USER_ID", Ex.util.getSession('gvUserId'));
+
+        		if( ST_CD == "A61")
+        		{
+        			trace("@@@ fnSetBtnSaveVisible : Case#2");
+        			this.divBottom.form.divBotBtn.form.btnSave.set_visible(false);
+        			this.divBottom.form.divBotBtn.form.btnSaveTemp.set_text("저장");
+        			if(fRow > -1)
+        			{
+        				this.divBottom.form.divBotBtn.form.btnSaveFix.set_visible(true);
+        				this.divBottom.form.divBotBtn.form.btnSaveTemp.set_visible(true);
+        				this.divBottom.form.btnTerminate.set_visible(true);
+        			}
+        		}
+        		if( ST_CD == "A71")
+        		{
+        			trace("@@@ fnSetBtnSaveVisible : Case#3");
+        			this.divBottom.form.divBotBtn.form.btnSave.set_visible(false);
+        			this.divBottom.form.divBotBtn.form.btnSaveTemp.set_text("저장");
+        			if(fRow > -1)
+        			{
+        				this.divBottom.form.divBotBtn.form.btnSaveFinalFix.set_visible(true);
+        				this.divBottom.form.divBotBtn.form.btnSaveTemp.set_visible(true);
+        				this.divBottom.form.btnTerminate.set_visible(true);
+        			}
+        		}
+        		//this.divBottom.form.divBotBtn.form.btnSaveTemp.set_visible(true);
+        	}
+        	else
+        	{	trace("@@@ fnSetBtnSaveVisible : Case#4");
+        		this.divBottom.form.divBotBtn.form.btnSaveTemp.set_visible(false);
+        		this.divBottom.form.divBotBtn.form.btnSave.set_visible(false);
+        		this.divBottom.form.divBotBtn.form.btnSaveFix.set_visible(false);
+        		this.divBottom.form.divBotBtn.form.btnSaveFinalFix.set_visible(false);
+        		this.divBottom.form.btnTerminate.set_visible(false);
+        	}
+        	Ex.util.setBtnAlign(this.divBottom.form.divBotBtn, 'right', true);
+        }
+
+        //법령상강제여부
+        this.divContent_cboComplYn_onitemchanged = function(obj,e)
+        {
+        	if( e.postvalue == e.prevalue ) return;
+
+        	if(e.postvalue == "Y" )
+        	{
+        		this.divContent.form.edtComplContents.enable = true;
+        	}
+        	else
+        	{
+        		//법령상강제여부가 부일경우 강제내용 클리어 및 비활성화
+        		this.divContent.form.edtComplContents.value = "";
+        		this.divContent.form.edtComplContents.enable = false;
+        	}
+        };
+
+        this.fnCommOncolumnchanged = function(obj,e)
+        {
+        	//alert( "obj.name " + obj.name ); //dsIvPrePlan
+        	// 예산년도 변경 시 예산항목별 금액 grid header format 변경
+        	switch(obj.id)
+        	{
+        		case "dsIvPrePlan" :
+        		case "dsIvPlan" :
+        			if(e.columnid == 'BUDGET_YY')
+        			{
+        				this.BUDGET_YY	= parseInt(e.newvalue);
+        				this.fnSetGrdAmtHead();
+        			}
+        			break;
+        	}
+        	obj.setUpdateRow(e);
+        };
+        });
+    
+        this.loadIncludeScript(path);
+        
+        obj = null;
+    };
+}
+)();

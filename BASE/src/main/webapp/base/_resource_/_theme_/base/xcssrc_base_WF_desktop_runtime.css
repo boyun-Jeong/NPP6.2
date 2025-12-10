@@ -1,0 +1,6450 @@
+﻿.Static.stc_WF_normal
+{
+	background : transparent;
+	border : 0px;
+	color : #000000;
+	font : 12px '돋움';
+}
+.Static.stc_WF_normal .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Static.stc_WF_event
+{
+	background : transparent;
+	border : 0px;
+	color : blue;
+	font : 12px '돋움';
+	cursor : pointger;
+}
+.Static.stc_WF_event .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Static.sta_WF_gridTitle
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/HOME/main-titbullet01.png') no-repeat left center;
+	border : 0px;
+	color : #000000;
+	font : bold 16px '돋움';
+}
+.Static.sta_WF_gridTitle .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Static.sta_WF_grdCnt
+{
+	color : #0a5dad;
+	font : bold 13px '돋움';
+}
+.Static.sta_WF_grdCnt .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Static.sta_WF_schTitle
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/sta_WF_schTitle.png') no-repeat left center;
+	border : 0px;
+	color : #444444;
+	font : bold 12px '돋움';
+}
+.Static.sta_WF_schTitle .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Static.sta_WF_schTitle_E
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/sta_WF_schTitle_E.png') no-repeat left center;
+	border : 0px;
+	color : #444444;
+	font : bold 12px '돋움';
+}
+.Static.sta_WF_schTitle_E .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Static.sta_WF_inputBg
+{
+	background : #ffffff;
+	border : 1px solid #d3d3d3;
+	color : #444444;
+	font : bold 12px '돋움';
+}
+.Static.sta_WF_inputBg .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Static.sta_WF_inputBgOnlyTop
+{
+	background : #ffffff;
+	border : 1px solid #d3d3d3,0px,0px,0px;
+	color : #444444;
+	font : bold 12px '돋움';
+}
+.Static.sta_WF_inputBgOnlyTop .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Static.sta_WF_inputTitle
+{
+	background : #fcf5ef;
+	border : 1px solid #d3d3d3;
+	color : #444444;
+	font : bold 12px '돋움';
+}
+.Static.sta_WF_inputTitle .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Static.sta_WF_inputTitle_E
+{
+	background : #fcf5ef URL('./SPP_IMAGE_SET/WF/img_WF_GrdCell_Essential.png') no-repeat left top;
+	border : 1px solid #d3d3d3;
+	color : #444444;
+	font : bold 12px '돋움';
+}
+.Static.sta_WF_inputTitle_E .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Static.sta_WF_descInfo
+{
+	color : red;
+	font : bold 12px '돋움';
+}
+.Static.sta_WF_descInfo .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Static.sta_WF_fileDropBg
+{
+	background : transparent;
+	border : 2px dotted #444444;
+	color : #444444;
+	font : bold 14px '돋움';
+}
+.Static.sta_WF_fileDropBg .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Static.stc_WF_arrowBody
+{
+	background : green;
+	border : 0px none;
+	color : #ffffff;
+	font : bold 12px '돋움';
+}
+.Static.stc_WF_arrowHead
+{
+	background : transparent;
+	border : 0px none;
+	color : green;
+	font : bold 25px '돋움';
+}
+.Static.stc_WF_arrowHead .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Static.stc_WF_countBg
+{
+	background : #656ff2;
+	border : 0px none;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.Static.stc_WF_countBg .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Static.stc_WF_count
+{
+	background : transparent;
+	border : 0px none;
+	color : #020202;
+	font : bold 14px '돋움';
+}
+.Static.stc_WF_count .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Static.stc_WF_wfNodeDisp
+{
+	background : white;
+	font : bold 18px '돋움';
+	color : #828282;
+	border : 3px solid #6695E8;
+	border-radius : 18px 18px 18px 0px;
+}
+.Static.stc_WF_wfNodeDisp .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Static.stc_WF_wfStatDispGrey
+{
+	background : #AABAD4;
+	font : 12px '돋움';
+	color : white;
+	border : 1px solid #89A0C2;
+	border-radius : 30px 30px;
+}
+.Static.stc_WF_wfStatDispGrey .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Static.stc_WF_wfStatDispBlue
+{
+	background : #75ADE6;
+	font : 12px '돋움';
+	color : white;
+	border : 1px solid #207ed5;
+	border-radius : 30px 30px;
+}
+.Static.stc_WF_wfStatDispBlue .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Static.stc_WF_wfStatDispPurple
+{
+	background : #8887D3;
+	font : 12px '돋움';
+	color : white;
+	border : 1px solid #5857BF;
+	border-radius : 30px 30px;
+}
+.Static.stc_WF_wfStatDispPurple .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Static.stc_WF_wfStatDispRed
+{
+	background : #FB9598;
+	font : 12px '돋움';
+	color : white;
+	border : 1px solid #FF6B6A;
+	border-radius : 30px 30px;
+}
+.Static.stc_WF_wfStatDispRed .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Static.stc_WF_wfContsDisp
+{
+	background : transparent;
+	font : bold 13px '돋움';
+	color : #020202;
+}
+.Static.stc_WF_wfContsDisp .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : top;
+}
+.Static.stc_WfAllow_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/maspp-arrow.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfAllow_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/maspp-arrow.gif') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqReg_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico01-off.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqReg_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico01-on.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqApv_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico02-off.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqApv_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico02-on.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqRev_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/img_WF_count02.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqRev_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqPmoApv_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico07-off.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqPmoApv_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico07-on.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqPrj_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico09-off.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqPrj_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico09-on.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqPmoEnd_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico10-off.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqPmoEnd_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico10-on.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqEnd_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico11-off.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqEnd_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico11-on.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WF_legend11
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/ico_WF_legend11.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WF_legend12
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/ico_WF_legend12.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WF_legend13
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/ico_WF_legend13.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WF_legend14
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/ico_WF_legend14.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WF_CalDate
+{
+	background : transparent;
+	font : bold 25px '돋움';
+	color : #030303;
+}
+.Static.stc_WF_CalDate .nexacontentsbox
+{
+	text-align : center;
+}
+.Static.stc_WF_calDateTitle
+{
+	background : #f5f5fd;
+	border : 1px solid #8a96a8, 1px solid #8a96a8, 2px solid #6d67e4, 1px solid #8a96a8;
+	font : bold 15px '돋움';
+	color : #020202;
+}
+.Static.stc_WF_calDateTitle .nexacontentsbox
+{
+	text-align : center;
+}
+.Static.stc_WF_timer
+{
+	background : #f0f4f9;
+	border-radius : 3px 3px;
+	border : 1px solid #4f46df;
+	font : bold 13px '돋움';
+	color : #4f46df;
+}
+.Static.stc_WF_timer .nexacontentsbox
+{
+	text-align : center;
+}
+.Edit.edt_WF_normal
+{
+	background : #ffffff;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #444444;
+	padding : 0px 18px 0px 6px;
+}
+.Edit.edt_WF_normal .nexainput
+{
+	text-align : left;
+}
+.Edit.edt_WF_normal .nexacontentsbox
+{
+	text-align : left;
+}
+.MaskEdit.msk_WF_normal
+{
+	background : #ffffff;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #444444;
+	padding : 0px 6px 0px 6px;
+}
+.MaskEdit.msk_WF_normal .nexainput
+{
+	text-align : left;
+}
+.MaskEdit.msk_WF_normal .nexacontentsbox
+{
+	text-align : left;
+}
+.TextArea.txa_WF_normal
+{
+	background : #ffffff;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #444444;
+	padding : 4px 6px 4px 6px;
+}
+.TextArea.txa_WF_normal .nexatextarea
+{
+	text-align : left;
+	-nexa-word-wrap : char;
+}
+.TextArea.txa_WF_normal .nexacontentsbox
+{
+	text-align : left;
+	-nexa-word-wrap : char;
+}
+.TextArea.txa_WF_Confirm
+{
+	background : #89aeeb;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #444444;
+	padding : 4px 6px 4px 6px;
+}
+.TextArea.txa_WF_Confirm .nexatextarea
+{
+	text-align : left;
+}
+.TextArea.txa_WF_Confirm .nexacontentsbox
+{
+	text-align : left;
+}
+.Button.btn_WF_normal
+{
+	background : #e1e1de;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_normal .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_favorite_off
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOff.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_favorite_on
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOn.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_search
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_search .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_searchReset
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_searchReset .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_primary_save
+{
+	background : #4774ff;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_save .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_primary_save_ex
+{
+	background : #ff7454;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_save_ex .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_primary_close
+{
+	background : #ffffff;
+	border : 1px solid #4774ff;
+	border-radius : 5px 5px;
+	color : #4774ff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_close .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_primary_delete
+{
+	background : #ffffff;
+	border : 1px solid red;
+	border-radius : 5px 5px;
+	color : red;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_delete .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_add
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_add .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_del
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_del .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_edit
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_edit .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_func
+{
+	background : #fafafa;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_func .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_fileDown
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_fileDown .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_excelDown
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_excelDown .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_excelUp
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_excelUp .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_chart
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_chart .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_refresh
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_refreshN.png') no-repeat left center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_clear
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_editClear_N.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_SearchIcon
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_Search.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_ClearIcon
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_ClearIcon .nexacontentsbox
+{
+	vertical-align : middle;
+}
+.Button.btn_WF_btnPrev
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchLeft.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchRight.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev2
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext2
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev3
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext3
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count00
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count01
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count02
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count03
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count04
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count05
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count00_on
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count01_on
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count02_on
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count03_on
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count04_on
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count05_on
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_countArrowRight
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_countArrowRight.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_calDayOn
+{
+	background : #656ff2;
+	border : 1px solid #656ff2;
+	border-radius : 5px;
+	color : #ffffff;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_calDayOff
+{
+	background : #f7f9fa;
+	border : 1px solid #c2c2c2;
+	border-radius : 5px;
+	color : #020202;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.CheckBox.chk_WF_normal
+{
+	background : transparent;
+	border : 0px none;
+	border-radius : 0px;
+	font : 12px '돋움';
+	color : #444444;
+}
+.CheckBox.chk_WF_normal .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Radio.rdo_WF_normal
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Radio.rdo_WF_normal .radioitem
+{
+	background : transparent;
+	border : 0px;
+}
+.Radio.rdo_WF_checklist
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Radio.rdo_WF_checklist .radioitem
+{
+	font : 12px '돋움';
+	color : #444444;
+}
+.Calendar.cal_WF_normal
+{
+	background : #ffffff;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+}
+.Calendar.cal_WF_normal .calendaredit
+{
+	background : transparent;
+	border : 0px;
+	font : 12px "돋움";
+	color : #444444;
+	padding : 0px 0px 0px 6px;
+}
+.Calendar.cal_WF_normal .dropbutton
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Combo.cbo_WF_normal
+{
+	background : #ffffff;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Combo.cbo_WF_normal .comboedit
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+	padding : 1px 6px 0px 6px;
+}
+.Combo.cbo_WF_normal .comboedit .nexainput
+{
+	text-align : left;
+}
+.Combo.cbo_WF_normal .comboedit .nexacontentsbox
+{
+	text-align : left;
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy
+{
+	background : #ffffff;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Combo.cbo_WF_normal .dropbutton
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Spin.spn_WF_normal
+{
+	background : #ffffff;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #444444;
+}
+.Spin.spn_WF_normal .spinedit
+{
+	background : transparent;
+	font : 12px '돋움';
+}
+.Spin.spn_WF_normal .spinedit .nexainput
+{
+	text-align : left;
+}
+.Spin.spn_WF_normal .spinedit .nexacontentsbox
+{
+	text-align : left;
+}
+.Spin.spn_WF_normal .spinupbutton
+{
+	background : transparent;
+	cursor : pointer;
+}
+.Spin.spn_WF_normal .spindownbutton
+{
+	background : transparent;
+}
+.Div.div_WF_divSearchArea
+{
+	background : #ffffff;
+	border : 1px solid #d3d3d3;
+	border-radius : 4px 4px;
+}
+.Div.div_WF_wfFieldN
+{
+	background : transparent;
+	border : 2px solid transparent;
+}
+.Div.div_WF_wfFieldA
+{
+	background : transparent;
+	border : 2px dashed #dfdfdf;
+}
+.Div.div_WF_wfFieldO
+{
+	background : transparent;
+	border : 2px dashed #3697f8;
+}
+.Div.div_WF_wfFieldDisp
+{
+	background : transparent;
+	border : 0px none;
+}
+.Div.div_WF_wfStep01
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_wfStep01.png') no-repeat left center;
+	border : 0px none;
+}
+.Div.div_WF_wfStep02
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_wfStep02.png') no-repeat left center;
+	border : 0px none;
+}
+.Div.div_WF_wfStep03
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_wfStep03.png') no-repeat left center;
+	border : 0px none;
+}
+.Div.div_WF_wfStep04
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_wfStep04.png') no-repeat left center;
+	border : 0px none;
+}
+.Div.div_WF_wfStep05
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_wfStep05.png') no-repeat left center;
+	border : 0px none;
+}
+.Div.div_WF_wfContsDisp
+{
+	background : #f6f7fe;
+	border : 2px solid #6b7ace;
+	border-radius : 0px 10px 10px 10px;
+}
+.Div.div_WF_wfArrowRight
+{
+	background : URL('./SPP_IMAGE_SET/WF/img_WF_wfArrowNext.png') no-repeat center center;
+	border : 0px none;
+}
+.Div.div_WF_wfDelFieldN
+{
+	background : transparent;
+	border : 1px solid #d3d3d3, 0px, 0px, 0px;
+}
+.Div.div_WF_wfDelFieldA
+{
+	background : transparent;
+	border : 2px dashed rgba(255, 0, 0, 0.3);
+}
+.Div.div_WF_wfNodeGuide
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 24px '돋움';
+}
+.Div.div_WF_wfFuncGuide
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 18px '돋움';
+}
+.Div.div_WF_wfCgerGuide
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 18px '돋움';
+}
+.Div.div_WF_wfNode
+{
+	background : #355cc5;
+	border : 1px solid #355cc5;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 16px '돋움';
+}
+.Div.div_WF_wfNodeScreen
+{
+	background : #355cc5 url('./SPP_IMAGE_SET/WF/ico_WF_screen.png') no-repeat 3px center;
+	border : 1px solid #355cc5;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 16px '돋움';
+}
+.Div.div_WF_wfFunc
+{
+	background : orange;
+	border : 1px solid orange;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 12px '돋움';
+}
+.Div.div_WF_wfCger
+{
+	background : green;
+	border : 1px solid green;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 12px '돋움';
+}
+.Div.div_WF_calTopBg
+{
+	background : #d9ddec;
+	border : 0px none;
+}
+.Div.div_WF_calDayBg
+{
+	background : white;
+	border-radius : 5px 5px;
+	border : 1px solid #dfdfdf;
+}
+.Div.div_WF_calTodayBg
+{
+	background : #fefae1;
+	border-radius : 5px 5px;
+	border : 1px solid #dfdfdf;
+}
+.Div.div_WF_WFHist_Off
+{
+	background : transparent url('./NHSB_IMAGE_SET/WF/card-box-normal.png') no-repeat center center;
+	border : 0px none;
+}
+.Div.div_WF_WFHist_OffSel
+{
+	background : transparent url('./NHSB_IMAGE_SET/WF/card-box-active.png') no-repeat center center /contain;
+	border : 0px none;
+}
+.Div.div_WF_WFHist_On
+{
+	background : transparent url('./NHSB_IMAGE_SET/WF/card-box-now.png') no-repeat center center /contain;
+	border : 0px none;
+}
+.Div.div_WF_WFHist_OnSel
+{
+	background : transparent url('./NHSB_IMAGE_SET/WF/card-box-now-active.png') no-repeat center center /contain;
+	border : 0px none;
+}
+.Grid.grd_WF_normal
+{
+	background : transparent;
+	border : 2px solid #010103, 0px, 1px solid #010103, 0px;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .head .row .cell
+{
+	background : #fcf5ef;
+	border : 1px solid #9ea7cc;
+	color : #32333b;
+	font : bold 12px '돋움';
+}
+.Grid.grd_WF_normal .head .row .cell .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_normal .body .row .cell
+{
+	background : #ffffff;
+	border : 1px solid #ced3e5;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell.oddcell
+{
+	background : #ffffff;
+	color : #32333b;
+}
+.Grid.grd_WF_normal .body .row .cell .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_normal .body .row .cell .subcell
+{
+	background : #ffffff;
+	border : 1px solid #ced3e5;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell.oddcell
+{
+	background : #ffffff;
+	color : #32333b;
+}
+.Grid.grd_WF_normal .body .row .cell .subcell .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_normal .body .selection
+{
+	border : 2px solid #125dae;
+}
+.Grid.grd_WF_normal .body .row .cell .cellcheckbox
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/chk_WF_BtnImage.png') no-repeat center center;
+}
+.Grid.grd_WF_normal .body .row .cell .cellradioitem
+{
+	background : transparent;
+	border : 0px;
+}
+.Grid.grd_WF_normal .body .row .cell .cellbutton
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell .cellbutton
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .cellcalendar
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell .cellcalendar
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .cellcombo
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell .cellcombo
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .celledit
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell .celledit
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .cellmaskedit
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell .cellmaskedit
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .cellmulticombo
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell .cellmulticombo
+{
+	background : white;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add .cellbutton
+{
+	border : 1px solid #c2c2c2;
+	font : 12px '돋움';
+	color : #555555;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add .cellbutton .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event
+{
+	color : blue;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event.oddcell
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_ntc
+{
+	background : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBTreeCell_WF_event .celltreeitem .treeitemtext
+{
+	color : blue;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBTreeCell_WF_event_sameTreeIcon .celltreeitem .treeitemtext
+{
+	color : blue;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold
+{
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP
+{
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success.oddcell
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success.oddcell
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success.oddcell
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info.oddcell
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info.oddcell
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info.oddcell
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning.oddcell
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning.oddcell
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning.oddcell
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger.oddcell
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger.oddcell
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger.oddcell
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt
+{
+	color : green;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.oddcell
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt
+{
+	color : blue;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.oddcell
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt
+{
+	color : yellow;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.oddcell
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt
+{
+	color : red;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.oddcell
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly.oddcell
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_f9f3f3
+{
+	background : #f9f3f3;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow
+{
+	background : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow.oddcell
+{
+	background : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_c0dbf7
+{
+	background : #c0dbf7;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_e1fcfe
+{
+	background : #e1fcfe;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_ffffff
+{
+	background : #ffffff;
+}
+.Grid.grd_WF_normal .summary
+{
+	background : #fefcf5;
+	border : 0px;
+}
+.Grid.grd_WF_normal .summary .row .cell
+{
+	background : #fdfbe5;
+	border : 1px solid #d3d3d3;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .summary .row .cell.oddcell
+{
+	background : #fdfbe5;
+	color : #444444;
+}
+.Grid.grd_WF_normal .hscrollbar
+{
+	border : 1px solid #b1b1b1, 0px none, 0px none, 0px none;
+}
+.Grid.grd_WF_normal .vscrollbar
+{
+	border : 0px none, 0px none, 0px none, 1px solid #b1b1b1;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.oddcell
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink .subcell
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink .subcell.oddcell
+{
+	background : pink;
+}
+.Grid .body .row .cell.grdBCell_WF_bgOrange
+{
+	background : peachpuff;
+}
+.Grid.grd_WF_noEffect .head .row .cell
+{
+	background : #eef3f6;
+	border : 1px solid #d3d3d3;
+	color : #444444;
+	font : bold 12px '돋움';
+}
+.Grid.grd_WF_noEffect .head .row .cell .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_noEffect .body .row .cell
+{
+	background : #f7f7f7;
+	border : 1px solid #d3d3d3;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_noEffect .body .row .cell.oddcell
+{
+	background : #ffffff;
+	color : #444444;
+}
+.Grid.grd_WF_noEffect .body .row .cell .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_noEffect .body .row .cell .subcell
+{
+	background : #f7f7f7;
+	border : 1px solid #d3d3d3;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_noEffect .body .row .cell .subcell.oddcell
+{
+	background : #ffffff;
+	color : #444444;
+}
+.Grid.grd_WF_noEffect .body .row .cell .subcell .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_noEffect .body .selection
+{
+	border : 2px solid #125dae;
+}
+.Grid.grd_WF_noEffect .body .row .cell .cellcheckbox
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/chk_WF_BtnImage.png') no-repeat center center;
+}
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly.oddcell
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_noEffect .summary
+{
+	background : #fefcf5;
+	border : 0px;
+}
+.Grid.grd_WF_noEffect .summary .row .cell
+{
+	background : #fdfbe5;
+	border : 1px solid #d3d3d3;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_noEffect .summary .row .cell.oddcell
+{
+	background : #fdfbe5;
+	color : #444444;
+}
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_bgPink
+{
+	background : pink;
+}
+.Grid.grd_WF_noEffect .hscrollbar
+{
+	border : 1px solid #b1b1b1, 0px none, 0px none, 0px none;
+}
+.Grid.grd_WF_noEffect .vscrollbar
+{
+	border : 0px none, 0px none, 0px none, 1px solid #b1b1b1;
+}
+.GridCellControl .cellbutton.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+	color : #555555;
+	background : linear-gradient(to top,#eaeaea,#ffffff);
+	border : 1px solid #c2c2c2;
+}
+.GridCellControl .cellcalendar.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+}
+.GridCellControl .cellcheckbox.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+}
+.GridCellControl .cellcombo.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+}
+.ListBoxControl.popupGridCellControlcellcombocombolist.dummy.dummy.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+	color : #555555;
+}
+.GridCellControl .celledit.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+	background : #ffffff;
+	border : 1px solid #d5d5d5;
+	padding : 1px 9px 0px 9px;
+}
+.GridCellControl .cellmaskedit.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+	background : #ffffff;
+	border : 1px solid #d5d5d5;
+	padding : 1px 9px 0px 9px;
+}
+.GridCellControl .cellprogressbar.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+}
+.GridCellControl .celltextarea.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+}
+.GridCellControl .celltreeitem .treeitemtext.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+	color : #666666;
+}
+.GridCellControl .celltreeline.grdCellCtrl_WF_normal
+{
+	border : 1px dotted #909090;
+}
+.Grid.grd_WF_tree
+{
+	background : transparent;
+	border : 2px solid #010103, 1px solid #aaaaaa, 1px solid #aaaaaa, 1px solid #aaaaaa;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_tree .head .row .cell
+{
+	background : #fcf5ef;
+	border : 1px solid #9ea7cc;
+	color : #32333b;
+	font : bold 12px '돋움';
+}
+.Grid.grd_WF_tree .head .row .cell .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_tree .body .row .cell
+{
+	background : #ffffff;
+	border : 1px solid #ced3e5;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_tree .body .row .cell.oddcell
+{
+	background : #ffffff;
+	color : #32333b;
+}
+.Grid.grd_WF_tree .body .row .cell .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_tree .body .row .cell .subcell
+{
+	background : #ffffff;
+	border : 1px solid #ced3e5;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_tree .body .row .cell .subcell.oddcell
+{
+	background : #ffffff;
+	color : #32333b;
+}
+.Grid.grd_WF_tree .body .row .cell .subcell .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_tree .body .row .cell .celltreeitem
+{
+	background : transparent;
+}
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitemtext
+{
+	font : 12px '돋움';
+	color : #444444;
+}
+.Grid.grd_WF_tree .hscrollbar
+{
+	border : 1px solid #b1b1b1, 0px none, 0px none, 0px none;
+}
+.Grid.grd_WF_tree .vscrollbar
+{
+	border : 0px none, 0px none, 0px none, 1px solid #b1b1b1;
+}
+.Grid .head .row .cell.grdHCell_WF_essential
+{
+	background : #fcf5ef url('./SPP_IMAGE_SET/WF/img_WF_GrdCell_Essential.png') no-repeat left top;
+}
+.Grid .head .row .cell.grdHCell_WF_essential.oddcell
+{
+	background : #fcf5ef url('./SPP_IMAGE_SET/WF/img_WF_GrdCell_Essential.png') no-repeat left top;
+}
+.Grid .body .row .cell.grdHCell_WF_bg_gray
+{
+	background : #d3d3d3;
+}
+.Grid .body .row .cell.grdHCell_WF_bg_gray.oddcell
+{
+	background : #d3d3d3;
+}
+.Div.mcbo_div_WF_normal
+{
+	background : transparent;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+}
+.Edit.mcbo_edt_WF_normal
+{
+	background : #ffffff;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #444444;
+	font : 12px '돋움';
+	padding : 0px 3px 0px 6px;
+	cursor : pointer;
+}
+.Edit.mcbo_edt_WF_normal .nexainput
+{
+	text-align : left;
+}
+.Edit.mcbo_edt_WF_normal .nexacontentsbox
+{
+	text-align : left;
+}
+.Button.mcbo_btn_WF_normal
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Static.mcbo_sta_WF_bg
+{
+	background : #ffffff;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.mcbo_btn_WF_select
+{
+	background : #A8CAE7;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.mcbo_btn_WF_select .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.mcbo_grd_WF_normal
+{
+	background : transparent;
+	border : 1px solid #b8b8b8, 0px, 0px, 0px;
+	cursor : pointer;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Grid.mcbo_grd_WF_normal .body .row .cell
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.CheckBoxSet.chkset_WF_checklist
+{
+	border : 0px none;
+	background : transparent;
+	font : 12px '돋움';
+}
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem
+{
+	background : transparent;
+	font : 12px '돋움';
+	color : #444444;
+}
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Grid .body .row .cell.grdBCell_DayEvent
+{
+	background : lightsteelblue;
+}
+.Button.btn_WF_mod
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_mod .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Grid .body .row .cell.grdBCell_ReadEvent
+{
+	color : #255b9a;
+	cursor : pointer;
+	font : normal bold 12px/normal "돋움";
+}
+.Grid .body .row .cell.grdBCell_BgBlueFontWhite
+{
+	background : #9ec1ff;
+	font : normal 12px/normal "돋움";
+}
+.Grid .body .row .cell.grdBCell_BgBlueFontWhite.oddcell
+{
+	background : #9ec1ff;
+}
+.ProgressBar.pg_WF_green .progressbaritem
+{
+	background : #1aadbd;
+}
+.ProgressBarControl .progressbaritem
+{
+	background : #1aadbd;
+}
+.Static.stc_WF_event[status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+	color : blue;
+	font : bold 12px '돋움';
+	cursor : pointger;
+}
+.Static.stc_WF_event[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Edit.edt_WF_normal[status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+	padding : 0px 18px 0px 6px;
+}
+.Edit.edt_WF_normal[status=mouseover] .nexainput
+{
+	text-align : left;
+}
+.Edit.edt_WF_normal[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+}
+.Edit.edt_WF_normal[status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+	padding : 0px 18px 0px 6px;
+}
+.Edit.edt_WF_normal[status=focused] .nexainput
+{
+	text-align : left;
+}
+.Edit.edt_WF_normal[status=focused] .nexacontentsbox
+{
+	text-align : left;
+}
+.Edit.edt_WF_normal[status=readonly]
+{
+	background : #ededed;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #000000;
+	padding : 0px 18px 0px 6px;
+}
+.Edit.edt_WF_normal[status=readonly] .nexainput
+{
+	text-align : left;
+}
+.Edit.edt_WF_normal[status=readonly] .nexacontentsbox
+{
+	text-align : left;
+}
+.MaskEdit.msk_WF_normal[status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+	padding : 0px 6px 0px 6px;
+}
+.MaskEdit.msk_WF_normal[status=mouseover] .nexainput
+{
+	text-align : left;
+}
+.MaskEdit.msk_WF_normal[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+}
+.MaskEdit.msk_WF_normal[status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+	padding : 0px 6px 0px 6px;
+}
+.MaskEdit.msk_WF_normal[status=focused] .nexainput
+{
+	text-align : left;
+}
+.MaskEdit.msk_WF_normal[status=focused] .nexacontentsbox
+{
+	text-align : left;
+}
+.MaskEdit.msk_WF_normal[status=readonly]
+{
+	background : #ededed;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #000000;
+	padding : 0px 6px 0px 6px;
+}
+.MaskEdit.msk_WF_normal[status=readonly] .nexainput
+{
+	text-align : left;
+}
+.MaskEdit.msk_WF_normal[status=readonly] .nexacontentsbox
+{
+	text-align : left;
+}
+.TextArea.txa_WF_normal[status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+	padding : 4px 6px 4px 6px;
+}
+.TextArea.txa_WF_normal[status=mouseover] .nexatextarea
+{
+	text-align : left;
+	-nexa-word-wrap : char;
+}
+.TextArea.txa_WF_normal[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	-nexa-word-wrap : char;
+}
+.TextArea.txa_WF_normal[status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+	padding : 4px 6px 4px 6px;
+}
+.TextArea.txa_WF_normal[status=focused] .nexatextarea
+{
+	text-align : left;
+	-nexa-word-wrap : char;
+}
+.TextArea.txa_WF_normal[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	-nexa-word-wrap : char;
+}
+.TextArea.txa_WF_normal[status=readonly]
+{
+	background : #ededed;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #000000;
+	padding : 4px 6px 4px 6px;
+}
+.TextArea.txa_WF_normal[status=readonly] .nexatextarea
+{
+	text-align : left;
+}
+.TextArea.txa_WF_normal[status=readonly] .nexacontentsbox
+{
+	text-align : left;
+}
+.TextArea.txa_WF_Confirm[status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+	padding : 4px 6px 4px 6px;
+}
+.TextArea.txa_WF_Confirm[status=mouseover] .nexatextarea
+{
+	text-align : left;
+}
+.TextArea.txa_WF_Confirm[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+}
+.TextArea.txa_WF_Confirm[status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+	padding : 4px 6px 4px 6px;
+}
+.TextArea.txa_WF_Confirm[status=focused] .nexatextarea
+{
+	text-align : left;
+}
+.TextArea.txa_WF_Confirm[status=focused] .nexacontentsbox
+{
+	text-align : left;
+}
+.TextArea.txa_WF_Confirm[status=readonly]
+{
+	background : #89aeeb;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #000000;
+	padding : 4px 6px 4px 6px;
+}
+.TextArea.txa_WF_Confirm[status=readonly] .nexatextarea
+{
+	text-align : left;
+}
+.TextArea.txa_WF_Confirm[status=readonly] .nexacontentsbox
+{
+	text-align : left;
+}
+.Button.btn_WF_normal[status=mouseover]
+{
+	background : #e1e1de;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_normal[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_normal[status=focused]
+{
+	background : #e1e1de;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_normal[status=focused] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_favorite_off[status=mouseover]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOff.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_favorite_off[status=focused]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOff.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_favorite_on[status=mouseover]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOn.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_favorite_on[status=focused]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOn.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_search[status=mouseover]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_search[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_search[status=focused]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_search[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_searchReset[status=mouseover]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_searchReset[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_searchReset[status=focused]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_searchReset[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_primary_save[status=mouseover]
+{
+	background : #4774ff;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_save[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_primary_save[status=focused]
+{
+	background : #4774ff;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_save[status=focused] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_primary_save_ex[status=mouseover]
+{
+	background : #ff7454;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_save_ex[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_primary_save_ex[status=focused]
+{
+	background : #ff7454;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_save_ex[status=focused] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_primary_close[status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #4774ff;
+	border-radius : 5px 5px;
+	color : #4774ff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_close[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_primary_close[status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #4774ff;
+	border-radius : 5px 5px;
+	color : #4774ff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_close[status=focused] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_primary_delete[status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid red;
+	border-radius : 5px 5px;
+	color : red;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_delete[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_primary_delete[status=focused]
+{
+	background : #ffffff;
+	border : 1px solid red;
+	border-radius : 5px 5px;
+	color : red;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_delete[status=focused] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_add[status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_add[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_add[status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_add[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_del[status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_del[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_del[status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_del[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_edit[status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_edit[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_edit[status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_edit[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_func[status=mouseover]
+{
+	background : #fafafa;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_func[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_func[status=focused]
+{
+	background : #fafafa;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_func[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_fileDown[status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_fileDown[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_fileDown[status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_fileDown[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_excelDown[status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_excelDown[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_excelDown[status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_excelDown[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_excelUp[status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_excelUp[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_excelUp[status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_excelUp[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_chart[status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_chart[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_chart[status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_chart[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_refresh[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_refreshN.png') no-repeat left center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_refresh[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_refreshO.png') no-repeat left center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_clear[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_editClear_O.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_clear[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_editClear_O.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_SearchIcon[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_SearchO.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_SearchIcon[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_SearchO.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_ClearIcon[status=mouseover]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_ClearIcon[status=mouseover] .nexacontentsbox
+{
+	vertical-align : middle;
+}
+.Button.btn_WF_ClearIcon[status=focused]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_ClearIcon[status=focused] .nexacontentsbox
+{
+	vertical-align : middle;
+}
+.Button.btn_WF_btnPrev[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchLeft.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchLeft.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchRight.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchRight.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev2[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev2[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev2O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext2[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext2[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext2O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev3[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev3[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev3O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext3[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext3[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext3O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count00[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count00[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count01[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count01[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count02[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count02[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count03[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count03[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count04[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count04[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count05[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count05[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count00_on[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count00_on[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count01_on[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count01_on[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count02_on[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count02_on[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count03_on[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count03_on[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count04_on[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count04_on[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count05_on[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count05_on[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_countArrowRight[status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_countArrowRight.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_countArrowRight[status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_countArrowRight.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_calDayOn[status=focused]
+{
+	background : #656ff2;
+	border : 1px solid #656ff2;
+	border-radius : 5px;
+	color : #ffffff;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_calDayOn[status=mouseover]
+{
+	background : #656ff2;
+	border : 1px solid #656ff2;
+	border-radius : 5px;
+	color : #ffffff;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_calDayOff[status=focused]
+{
+	background : #f7f9fa;
+	border : 1px solid #c2c2c2;
+	border-radius : 5px;
+	color : #020202;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_calDayOff[status=mouseover]
+{
+	background : #f7f9fa;
+	border : 1px solid #c2c2c2;
+	border-radius : 5px;
+	color : #020202;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.CheckBox.chk_WF_normal[status=focused]
+{
+	color : #444444;
+}
+.CheckBox.chk_WF_normal[status=mouseover]
+{
+	color : #0a5dad;
+}
+.CheckBox.chk_WF_normal[status=readonly]
+{
+	background : transparent;
+	border : 0px none;
+	border-radius : 0px;
+	font : 12px '돋움';
+	color : #000000;
+}
+.CheckBox.chk_WF_normal[status=readonly] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Radio.rdo_WF_normal[status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Radio.rdo_WF_normal[status=focused]
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Radio.rdo_WF_normal[status=readonly]
+{
+	background : transparent;
+	border : 0px;
+	color : #000000;
+	font : 12px '돋움';
+}
+.Radio.rdo_WF_normal .radioitem[status=readonly]
+{
+	background : transparent;
+	border : 0px;
+}
+.Radio.rdo_WF_normal .radioitem[status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+}
+.Radio.rdo_WF_checklist[status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Radio.rdo_WF_checklist[status=focused]
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Radio.rdo_WF_checklist[status=readonly]
+{
+	color : #000000;
+	font : 12px '돋움';
+}
+.Radio.rdo_WF_checklist .radioitem[status=readonly]
+{
+	font : 12px '돋움';
+	color : #444444;
+}
+.Radio.rdo_WF_checklist .radioitem[status=mouseover]
+{
+	font : bold 12px '돋움';
+	color : #0a5dad;
+}
+.Calendar.cal_WF_normal[status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+}
+.Calendar.cal_WF_normal[status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+}
+.Calendar.cal_WF_normal[status=readonly]
+{
+	background : #ededed;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+}
+.Calendar.cal_WF_normal .calendaredit[status=mouseover]
+{
+	background : #ffffff;
+	border : 0px;
+	font : 12px '돋움';
+	color : #0a5dad;
+	padding : 0px 0px 0px 6px;
+}
+.Calendar.cal_WF_normal .calendaredit[status=focused]
+{
+	background : #ffffff;
+	border : 0px;
+	font : 12px '돋움';
+	color : #0a5dad;
+	padding : 0px 0px 0px 6px;
+}
+.Calendar.cal_WF_normal .calendaredit[status=readonly]
+{
+	background : #ededed;
+	border : 0px;
+	font : 12px '돋움';
+	color : #000000;
+	padding : 0px 0px 0px 6px;
+}
+.Calendar.cal_WF_normal .dropbutton[status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Calendar.cal_WF_normal .dropbutton[status=focused]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Combo.cbo_WF_normal[status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Combo.cbo_WF_normal[status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Combo.cbo_WF_normal[status=readonly]
+{
+	background : #ededed;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	cursor : default;
+}
+.Combo.cbo_WF_normal .comboedit[status=readonly]
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+	padding : 1px 6px 0px 6px;
+}
+.Combo.cbo_WF_normal .comboedit[status=readonly] .nexainput
+{
+	text-align : left;
+}
+.Combo.cbo_WF_normal .comboedit[status=readonly] .nexacontentsbox
+{
+	text-align : left;
+}
+.Combo.cbo_WF_normal .comboedit[status=focused]
+{
+	background : transparent;
+	border : 0px;
+	color : #3697f8;
+	font : 12px '돋움';
+	padding : 1px 6px 0px 6px;
+}
+.Combo.cbo_WF_normal .comboedit[status=focused] .nexainput
+{
+	text-align : left;
+}
+.Combo.cbo_WF_normal .comboedit[status=focused] .nexacontentsbox
+{
+	text-align : left;
+}
+.Combo.cbo_WF_normal .comboedit[status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+	color : #3697f8;
+	font : 12px '돋움';
+	padding : 1px 6px 0px 6px;
+}
+.Combo.cbo_WF_normal .comboedit[status=mouseover] .nexainput
+{
+	text-align : left;
+}
+.Combo.cbo_WF_normal .comboedit[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy[status=focused]
+{
+	background : #8a96a8;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy[status=mouseover]
+{
+	background : #8a96a8;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[status=readonly]
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[status=readonly] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[status=focused]
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[status=mouseover]
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Combo.cbo_WF_normal .dropbutton[status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Combo.cbo_WF_normal .dropbutton[status=focused]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Spin.spn_WF_normal[status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+}
+.Spin.spn_WF_normal[status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+}
+.Spin.spn_WF_normal[status=readonly]
+{
+	background : #ededed;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #000000;
+}
+.Spin.spn_WF_normal .spinupbutton[status=mouseover]
+{
+	background : transparent;
+	cursor : pointer;
+}
+.Spin.spn_WF_normal .spinupbutton[status=focused]
+{
+	background : transparent;
+	cursor : pointer;
+}
+.Spin.spn_WF_normal .spindownbutton[status=mouseover]
+{
+	background : transparent;
+	cursor : pointer;
+}
+.Spin.spn_WF_normal .spindownbutton[status=focused]
+{
+	background : transparent;
+	cursor : pointer;
+}
+.Div.div_WF_divSearchArea[status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #d3d3d3;
+	border-radius : 4px 4px;
+}
+.Div.div_WF_divSearchArea[status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #d3d3d3;
+	border-radius : 4px 4px;
+}
+.Div.div_WF_wfNodeGuide[status=focused]
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 24px '돋움';
+}
+.Div.div_WF_wfNodeGuide[status=mouseover]
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 24px '돋움';
+}
+.Div.div_WF_wfFuncGuide[status=focused]
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 18px '돋움';
+}
+.Div.div_WF_wfFuncGuide[status=mouseover]
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 18px '돋움';
+}
+.Div.div_WF_wfCgerGuide[status=focused]
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 18px '돋움';
+}
+.Div.div_WF_wfCgerGuide[status=mouseover]
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 18px '돋움';
+}
+.Div.div_WF_wfNode[status=focused]
+{
+	background : #355cc5;
+	border : 1px solid #355cc5;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 16px '돋움';
+}
+.Div.div_WF_wfNode[status=mouseover]
+{
+	background : #355cc5;
+	border : 1px solid #355cc5;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 16px '돋움';
+}
+.Div.div_WF_wfNodeScreen[status=focused]
+{
+	background : #355cc5 url('./SPP_IMAGE_SET/WF/ico_WF_screen.png') no-repeat 3px center;
+	border : 1px solid #355cc5;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 16px '돋움';
+}
+.Div.div_WF_wfNodeScreen[status=mouseover]
+{
+	background : #355cc5 url('./SPP_IMAGE_SET/WF/ico_WF_screen.png') no-repeat 3px center;
+	border : 1px solid #355cc5;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 16px '돋움';
+}
+.Div.div_WF_calDayBg[status=mouseover]
+{
+	background : #e5f5ff;
+	border-radius : 5px 5px;
+	border : 1px solid #008bff;
+}
+.Grid.grd_WF_normal .body .row .cell[status=mouseover]
+{
+	background : #e6ecf5;
+	border : 1px solid #ced3e5;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell.oddcell[status=mouseover]
+{
+	background : #e6ecf5;
+	color : #32333b;
+}
+.Grid.grd_WF_normal .body .row .cell[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_normal .body .row .cell .subcell[status=mouseover]
+{
+	background : #e6ecf5;
+	border : 1px solid #ced3e5;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell.oddcell[status=mouseover]
+{
+	background : #e6ecf5;
+	color : #32333b;
+}
+.Grid.grd_WF_normal .body .row .cell .subcell[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_normal .body .row .cell .cellradioitem[status=readonly]
+{
+	background : transparent;
+	border : 0px;
+}
+.Grid.grd_WF_normal .body .row .cell .cellradioitem[status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[status=focused]
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[status=mouseover]
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[status=focused]
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[status=mouseover]
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add .cellbutton[status=focused]
+{
+	border : 1px solid #c2c2c2;
+	font : 12px '돋움';
+	color : #555555;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add .cellbutton[status=focused] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add .cellbutton[status=mouseover]
+{
+	border : 1px solid #c2c2c2;
+	font : 12px '돋움';
+	color : #555555;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add .cellbutton[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event[status=focused]
+{
+	color : blue;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event.oddcell[status=focused]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event[status=mouseover]
+{
+	color : blue;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event.oddcell[status=mouseover]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold[status=focused]
+{
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold[status=mouseover]
+{
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP[status=focused]
+{
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP[status=mouseover]
+{
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success[status=focused]
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success.oddcell[status=focused]
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success[status=mouseover]
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success.oddcell[status=mouseover]
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success[status=focused]
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success.oddcell[status=focused]
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success[status=mouseover]
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success.oddcell[status=mouseover]
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success[status=focused]
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success.oddcell[status=focused]
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success[status=mouseover]
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success.oddcell[status=mouseover]
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info[status=focused]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info.oddcell[status=focused]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info[status=mouseover]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info.oddcell[status=mouseover]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info[status=focused]
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info.oddcell[status=focused]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info[status=mouseover]
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info.oddcell[status=mouseover]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info[status=focused]
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info.oddcell[status=focused]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info[status=mouseover]
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info.oddcell[status=mouseover]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning[status=focused]
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning.oddcell[status=focused]
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning[status=mouseover]
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning.oddcell[status=mouseover]
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning[status=focused]
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning.oddcell[status=focused]
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning[status=mouseover]
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning.oddcell[status=mouseover]
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning[status=focused]
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning.oddcell[status=focused]
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning[status=mouseover]
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning.oddcell[status=mouseover]
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger[status=focused]
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger.oddcell[status=focused]
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger[status=mouseover]
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger.oddcell[status=mouseover]
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger[status=focused]
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger.oddcell[status=focused]
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger[status=mouseover]
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger.oddcell[status=mouseover]
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger[status=focused]
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger.oddcell[status=focused]
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger[status=mouseover]
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger.oddcell[status=mouseover]
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt[status=focused]
+{
+	color : green;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.oddcell[status=focused]
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt[status=focused] .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt[status=mouseover]
+{
+	color : green;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.oddcell[status=mouseover]
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt[status=mouseover] .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt[status=focused]
+{
+	color : blue;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.oddcell[status=focused]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt[status=focused] .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt[status=mouseover]
+{
+	color : blue;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.oddcell[status=mouseover]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt[status=mouseover] .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt[status=focused]
+{
+	color : yellow;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.oddcell[status=focused]
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt[status=focused] .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt[status=mouseover]
+{
+	color : yellow;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.oddcell[status=mouseover]
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt[status=mouseover] .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt[status=focused]
+{
+	color : red;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.oddcell[status=focused]
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt[status=focused] .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt[status=mouseover]
+{
+	color : red;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.oddcell[status=mouseover]
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt[status=mouseover] .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly[status=focused]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly.oddcell[status=focused]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly[status=mouseover]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly.oddcell[status=mouseover]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_f9f3f3[status=mouseover]
+{
+	background : #f9f3f3;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_f9f3f3[status=focused]
+{
+	background : #f9f3f3;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow[status=mouseover]
+{
+	background : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow.oddcell[status=mouseover]
+{
+	background : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow[status=focused]
+{
+	background : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow.oddcell[status=focused]
+{
+	background : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_c0dbf7[status=mouseover]
+{
+	background : #c0dbf7;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_c0dbf7[status=focused]
+{
+	background : #c0dbf7;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_e1fcfe[status=mouseover]
+{
+	background : #e1fcfe;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_e1fcfe[status=focused]
+{
+	background : #e1fcfe;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_ffffff[status=mouseover]
+{
+	background : #ffffff;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_ffffff[status=focused]
+{
+	background : #ffffff;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink[status=focused]
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.oddcell[status=focused]
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink[status=mouseover]
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.oddcell[status=mouseover]
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink .subcell[status=focused]
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink .subcell.oddcell[status=focused]
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink .subcell[status=mouseover]
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink .subcell.oddcell[status=mouseover]
+{
+	background : pink;
+}
+.Grid .body .row .cell.grdBCell_WF_bgOrange[status=focused]
+{
+	background : peachpuff;
+}
+.Grid .body .row .cell.grdBCell_WF_bgOrange[status=mouseover]
+{
+	background : peachpuff;
+}
+.Grid.grd_WF_noEffect .body .row .cell[status=mouseover]
+{
+	background : #f7f7f7;
+	border : 1px solid #d3d3d3;
+	color : #333333;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_noEffect .body .row .cell.oddcell[status=mouseover]
+{
+	background : #ffffff;
+	color : #333333;
+}
+.Grid.grd_WF_noEffect .body .row .cell[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_noEffect .body .row .cell .subcell[status=mouseover]
+{
+	background : #f7f7f7;
+	border : 1px solid #d3d3d3;
+	color : #333333;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_noEffect .body .row .cell .subcell.oddcell[status=mouseover]
+{
+	background : #ffffff;
+	color : #333333;
+}
+.Grid.grd_WF_noEffect .body .row .cell .subcell[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly[status=focused]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly.oddcell[status=focused]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly[status=mouseover]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly.oddcell[status=mouseover]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_bgPink[status=focused]
+{
+	background : pink;
+}
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_bgPink[status=mouseover]
+{
+	background : pink;
+}
+.GridCellControl .cellbutton.grdCellCtrl_WF_normal[status=mouseover]
+{
+	background : linear-gradient(to top,#e7e7e7,#fefefe);
+	border : 1px solid #a0a0a0;
+}
+.GridCellControl .cellbutton.grdCellCtrl_WF_normal[status=focused]
+{
+	background : linear-gradient(to top,#e7e7e7,#fefefe);
+	border : 1px solid #a0a0a0;
+}
+.ListBoxControl.popupGridCellControlcellcombocombolist.dummy.dummy .listboxitem.grdCellCtrl_WF_normal[status=mouseover]
+{
+	background : #e8e9ed;
+}
+.GridCellControl .celledit.grdCellCtrl_WF_normal[status=mouseover]
+{
+	border : 1px solid #5a86cd;
+}
+.GridCellControl .celledit.grdCellCtrl_WF_normal[status=focused]
+{
+	border : 1px solid #5a86cd;
+}
+.GridCellControl .cellmaskedit.grdCellCtrl_WF_normal[status=mouseover]
+{
+	border : 1px solid #5a86cd;
+}
+.GridCellControl .cellmaskedit.grdCellCtrl_WF_normal[status=focused]
+{
+	border : 1px solid #5a86cd;
+}
+.Grid.grd_WF_tree .body .row .cell[status=mouseover]
+{
+	background : #e6ecf5;
+	border : 1px solid #ced3e5;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_tree .body .row .cell.oddcell[status=mouseover]
+{
+	background : #e6ecf5;
+	color : #32333b;
+}
+.Grid.grd_WF_tree .body .row .cell[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_tree .body .row .cell .subcell[status=mouseover]
+{
+	background : #e6ecf5;
+	border : 1px solid #ced3e5;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_tree .body .row .cell .subcell.oddcell[status=mouseover]
+{
+	background : #e6ecf5;
+	color : #32333b;
+}
+.Grid.grd_WF_tree .body .row .cell .subcell[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitemtext[status=mouseover]
+{
+	font : 12px '돋움';
+	color : #32333b;
+}
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitemtext[status=mouseover] .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid .body .row .cell.grdHCell_WF_bg_gray[status=mouseover]
+{
+	background : #d3d3d3;
+}
+.Grid .body .row .cell.grdHCell_WF_bg_gray.oddcell[status=mouseover]
+{
+	background : #d3d3d3;
+}
+.Grid .body .row .cell.grdHCell_WF_bg_gray[status=focused]
+{
+	background : #d3d3d3;
+}
+.Grid .body .row .cell.grdHCell_WF_bg_gray.oddcell[status=focused]
+{
+	background : #d3d3d3;
+}
+.Div.mcbo_div_WF_normal[status=mouseover]
+{
+	background : transparent;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+}
+.Div.mcbo_div_WF_normal[status=focused]
+{
+	background : transparent;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+}
+.Edit.mcbo_edt_WF_normal[status=readonly]
+{
+	background : #ededed;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #000000;
+	font : 12px '돋움';
+	padding : 0px 3px 0px 6px;
+	cursor : pointer;
+}
+.Edit.mcbo_edt_WF_normal[status=readonly] .nexainput
+{
+	text-align : left;
+}
+.Edit.mcbo_edt_WF_normal[status=readonly] .nexacontentsbox
+{
+	text-align : left;
+}
+.Button.mcbo_btn_WF_normal[status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.mcbo_btn_WF_normal[status=focused]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.mcbo_btn_WF_select[status=focused]
+{
+	background : #A8CAE7;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.mcbo_btn_WF_select[status=focused] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.mcbo_btn_WF_select[status=mouseover]
+{
+	background : #A8CAE7;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.mcbo_btn_WF_select[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.mcbo_grd_WF_normal[status=readonly]
+{
+	background : transparent;
+	border : 1px solid #b8b8b8, 0px, 0px, 0px;
+	cursor : pointer;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Grid.mcbo_grd_WF_normal .body .row .cell[status=mouseover]
+{
+	background : #8a96a8;
+	border : 0px;
+	color : #ffffff;
+	font : 12px '돋움';
+}
+.Grid.mcbo_grd_WF_normal .body .row .cell[status=mouseover] .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem[status=mouseover]
+{
+	font : bold 12px '돋움';
+	color : #0a5dad;
+}
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem[status=readonly]
+{
+	color : #000000;
+	font : 12px '돋움';
+}
+.Grid .body .row .cell.grdBCell_DayEvent[status=mouseover]
+{
+	background : lightsteelblue;
+}
+.Grid .body .row .cell.grdBCell_DayEvent[status=focused]
+{
+	background : lightsteelblue;
+}
+.Button.btn_WF_mod[status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_mod[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_mod[status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_mod[status=focused] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Grid .body .row .cell.grdBCell_ReadEvent[status=focused]
+{
+	color : #255b9a;
+	cursor : pointer;
+	font : normal bold 12px/normal "돋움";
+}
+.Grid .body .row .cell.grdBCell_ReadEvent[status=mouseover]
+{
+	color : #7f7f7f;
+	cursor : pointer;
+	font : normal bold 12px/normal "돋움";
+}
+.Grid .body .row .cell.grdBCell_BgBlueFontWhite[status=focused]
+{
+	background : #9ec1ff;
+	font : normal 12px/normal "돋움";
+}
+.Grid .body .row .cell.grdBCell_BgBlueFontWhite.oddcell[status=focused]
+{
+	background : #9ec1ff;
+}
+.Grid .body .row .cell.grdBCell_BgBlueFontWhite[status=mouseover]
+{
+	background : #9ec1ff;
+	font : normal 12px/normal "돋움";
+}
+.Grid .body .row .cell.grdBCell_BgBlueFontWhite.oddcell[status=mouseover]
+{
+	background : #9ec1ff;
+}
+.Edit.edt_WF_normal[userstatus=nulltext]
+{
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #909090;
+	padding : 0px 18px 0px 6px;
+}
+.Edit.edt_WF_normal[userstatus=nulltext] .nexainput
+{
+	text-align : left;
+}
+.Edit.edt_WF_normal[userstatus=nulltext] .nexacontentsbox
+{
+	text-align : left;
+}
+.MaskEdit.msk_WF_normal[userstatus=nulltext]
+{
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #909090;
+	padding : 0px 6px 0px 6px;
+}
+.MaskEdit.msk_WF_normal[userstatus=nulltext] .nexainput
+{
+	text-align : left;
+}
+.MaskEdit.msk_WF_normal[userstatus=nulltext] .nexacontentsbox
+{
+	text-align : left;
+}
+.MaskEdit.msk_WF_normal[userstatus=invalidtext]
+{
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #909090;
+	padding : 0px 6px 0px 6px;
+}
+.MaskEdit.msk_WF_normal[userstatus=invalidtext] .nexainput
+{
+	text-align : left;
+}
+.MaskEdit.msk_WF_normal[userstatus=invalidtext] .nexacontentsbox
+{
+	text-align : left;
+}
+.Button.btn_WF_normal[userstatus=pushed]
+{
+	background : #e1e1de;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_normal[userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_normal[userstatus=selected]
+{
+	background : #e1e1de;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_normal[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_favorite_off[userstatus=pushed]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOff.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_favorite_off[userstatus=selected]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOff.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_favorite_on[userstatus=pushed]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOn.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_favorite_on[userstatus=selected]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOn.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_search[userstatus=pushed]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_search[userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_search[userstatus=selected]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_search[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_searchReset[userstatus=pushed]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_searchReset[userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_searchReset[userstatus=selected]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_searchReset[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_primary_save[userstatus=selected]
+{
+	background : #4774ff;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_save[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_primary_save[userstatus=pushed]
+{
+	background : #4774ff;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_save[userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_primary_save_ex[userstatus=selected]
+{
+	background : #ff7454;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_save_ex[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_primary_save_ex[userstatus=pushed]
+{
+	background : #ff7454;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_save_ex[userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_primary_close[userstatus=selected]
+{
+	background : #ffffff;
+	border : 1px solid #4774ff;
+	border-radius : 5px 5px;
+	color : #4774ff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_close[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_primary_close[userstatus=pushed]
+{
+	background : #ffffff;
+	border : 1px solid #4774ff;
+	border-radius : 5px 5px;
+	color : #4774ff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_close[userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_primary_delete[userstatus=selected]
+{
+	background : #ffffff;
+	border : 1px solid red;
+	border-radius : 5px 5px;
+	color : red;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_delete[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_primary_delete[userstatus=pushed]
+{
+	background : #ffffff;
+	border : 1px solid red;
+	border-radius : 5px 5px;
+	color : red;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_delete[userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_add[userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_add[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_add[userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_add[userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_del[userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_del[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_del[userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_del[userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_edit[userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_edit[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_edit[userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_edit[userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_func[userstatus=selected]
+{
+	background : #fafafa;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_func[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_func[userstatus=pushed]
+{
+	background : #fafafa;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_func[userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_fileDown[userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_fileDown[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_fileDown[userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_fileDown[userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_excelDown[userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_excelDown[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_excelDown[userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_excelDown[userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_excelUp[userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_excelUp[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_excelUp[userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_excelUp[userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_chart[userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_chart[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_chart[userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_chart[userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Button.btn_WF_refresh[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_refreshN.png') no-repeat left center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_refresh[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_refreshO.png') no-repeat left center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_clear[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_editClear_N.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_clear[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_editClear_O.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_SearchIcon[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_Search.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_SearchIcon[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_SearchP.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_ClearIcon[userstatus=pushed]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_ClearIcon[userstatus=pushed] .nexacontentsbox
+{
+	vertical-align : middle;
+}
+.Button.btn_WF_ClearIcon[userstatus=selected]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_ClearIcon[userstatus=selected] .nexacontentsbox
+{
+	vertical-align : middle;
+}
+.Button.btn_WF_btnPrev[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchLeft.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchLeft.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchRight.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchRight.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev2[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev2[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev2O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext2[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext2[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext2O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev3[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev3[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev3O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext3[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext3[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext3O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count00[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count00[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count01[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count01[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count02[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count02[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count03[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count03[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count04[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count04[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count05[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count05[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count00_on[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count00_on[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count01_on[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count01_on[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count02_on[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count02_on[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count03_on[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count03_on[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count04_on[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count04_on[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count05_on[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count05_on[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_countArrowRight[userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_countArrowRight.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_countArrowRight[userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_countArrowRight.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_calDayOn[userstatus=selected]
+{
+	background : #656ff2;
+	border : 1px solid #656ff2;
+	border-radius : 5px;
+	color : #ffffff;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_calDayOn[userstatus=pushed]
+{
+	background : #656ff2;
+	border : 1px solid #656ff2;
+	border-radius : 5px;
+	color : #ffffff;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_calDayOff[userstatus=selected]
+{
+	background : #f7f9fa;
+	border : 1px solid #c2c2c2;
+	border-radius : 5px;
+	color : #020202;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_calDayOff[userstatus=pushed]
+{
+	background : #f7f9fa;
+	border : 1px solid #c2c2c2;
+	border-radius : 5px;
+	color : #020202;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.CheckBox.chk_WF_normal[userstatus=selected]
+{
+	color : #444444;
+}
+.Radio.rdo_WF_normal .radioitem[userstatus=selected]
+{
+	background : transparent;
+	border : 0px;
+}
+.Radio.rdo_WF_checklist .radioitem[userstatus=selected]
+{
+	font : 12px '돋움';
+	color : #444444;
+}
+.Calendar.cal_WF_normal .dropbutton[userstatus=selected]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Calendar.cal_WF_normal .dropbutton[userstatus=pushed]
+{
+	cursor : pointer;
+}
+.Combo.cbo_WF_normal .comboedit[userstatus=nulltext]
+{
+	background : transparent;
+	border : 0px;
+	color : #888888;
+	font : 12px '돋움';
+	padding : 1px 6px 0px 6px;
+}
+.Combo.cbo_WF_normal .comboedit[userstatus=nulltext] .nexainput
+{
+	text-align : left;
+}
+.Combo.cbo_WF_normal .comboedit[userstatus=nulltext] .nexacontentsbox
+{
+	text-align : left;
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[userstatus=selected]
+{
+	background : #8a96a8;
+	border : 0px;
+	color : #ffffff;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Combo.cbo_WF_normal .dropbutton[userstatus=selected]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Combo.cbo_WF_normal .dropbutton[userstatus=pushed]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Spin.spn_WF_normal[userstatus=invalidtext]
+{
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #909090;
+}
+.Spin.spn_WF_normal .spinupbutton[userstatus=pushed]
+{
+	background : transparent;
+	cursor : pointer;
+}
+.Spin.spn_WF_normal .spindownbutton[userstatus=pushed]
+{
+	background : transparent;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell[userstatus=selected]
+{
+	background : #f3f6ff;
+	border : 1px solid #ced3e5;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell.oddcell[userstatus=selected]
+{
+	background : #f3f6ff;
+	color : #32333b;
+}
+.Grid.grd_WF_normal .body .row .cell[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_normal .body .row .cell .subcell[userstatus=selected]
+{
+	background : #f3f6ff;
+	border : 1px solid #ced3e5;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell.oddcell[userstatus=selected]
+{
+	background : #f3f6ff;
+	color : #32333b;
+}
+.Grid.grd_WF_normal .body .row .cell .subcell[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_normal .body .row .cell[userstatus=blinked]
+{
+	background : #125dae;
+	color : #ffffff;
+}
+.Grid.grd_WF_normal .body .row .cell .subcell[userstatus=blinked]
+{
+	background : #125dae;
+	color : #ffffff;
+}
+.Grid.grd_WF_normal .body .row .cell .cellradioitem[userstatus=selected]
+{
+	background : transparent;
+	border : 0px;
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[userstatus=selected]
+{
+	background : #8a96a8;
+	border : 0px;
+	color : #ffffff;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[userstatus=selected]
+{
+	background : #8a96a8;
+	border : 0px;
+	color : #ffffff;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add .cellbutton[userstatus=selected]
+{
+	border : 1px solid #c2c2c2;
+	font : 12px '돋움';
+	color : #555555;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add .cellbutton[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event[userstatus=selected]
+{
+	color : blue;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event.oddcell[userstatus=selected]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold[userstatus=selected]
+{
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP[userstatus=selected]
+{
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success[userstatus=selected]
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success.oddcell[userstatus=selected]
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success[userstatus=selected]
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success.oddcell[userstatus=selected]
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success[userstatus=selected]
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success.oddcell[userstatus=selected]
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info[userstatus=selected]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info.oddcell[userstatus=selected]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info[userstatus=selected]
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info.oddcell[userstatus=selected]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info[userstatus=selected]
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info.oddcell[userstatus=selected]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning[userstatus=selected]
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning.oddcell[userstatus=selected]
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning[userstatus=selected]
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning.oddcell[userstatus=selected]
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning[userstatus=selected]
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning.oddcell[userstatus=selected]
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger[userstatus=selected]
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger.oddcell[userstatus=selected]
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger[userstatus=selected]
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger.oddcell[userstatus=selected]
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger[userstatus=selected]
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger.oddcell[userstatus=selected]
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt[userstatus=selected]
+{
+	color : green;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.oddcell[userstatus=selected]
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt[userstatus=selected] .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt[userstatus=selected]
+{
+	color : blue;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.oddcell[userstatus=selected]
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt[userstatus=selected] .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt[userstatus=selected]
+{
+	color : yellow;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.oddcell[userstatus=selected]
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt[userstatus=selected] .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt[userstatus=selected]
+{
+	color : red;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.oddcell[userstatus=selected]
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt[userstatus=selected] .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly[userstatus=selected]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly.oddcell[userstatus=selected]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_f9f3f3[userstatus=selected]
+{
+	background : #f9f3f3;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow[userstatus=selected]
+{
+	background : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow.oddcell[userstatus=selected]
+{
+	background : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_c0dbf7[userstatus=selected]
+{
+	background : #c0dbf7;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_e1fcfe[userstatus=selected]
+{
+	background : #e1fcfe;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_ffffff[userstatus=selected]
+{
+	background : #ffffff;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink[userstatus=selected]
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.oddcell[userstatus=selected]
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink .subcell[userstatus=selected]
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink .subcell.oddcell[userstatus=selected]
+{
+	background : pink;
+}
+.Grid .body .row .cell.grdBCell_WF_bgOrange[userstatus=selected]
+{
+	background : peachpuff;
+}
+.Grid.grd_WF_noEffect .body .row .cell[userstatus=selected]
+{
+	background : #f7f7f7;
+	border : 1px solid #d3d3d3;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_noEffect .body .row .cell.oddcell[userstatus=selected]
+{
+	background : #ffffff;
+	color : #444444;
+}
+.Grid.grd_WF_noEffect .body .row .cell[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_noEffect .body .row .cell .subcell[userstatus=selected]
+{
+	background : #f7f7f7;
+	border : 1px solid #d3d3d3;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_noEffect .body .row .cell .subcell.oddcell[userstatus=selected]
+{
+	background : #ffffff;
+	color : #444444;
+}
+.Grid.grd_WF_noEffect .body .row .cell .subcell[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_noEffect .body .row .cell[userstatus=blinked]
+{
+	background : #125dae;
+	color : #ffffff;
+}
+.Grid.grd_WF_noEffect .body .row .cell .subcell[userstatus=blinked]
+{
+	background : #125dae;
+	color : #ffffff;
+}
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly[userstatus=selected]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly.oddcell[userstatus=selected]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_bgPink[userstatus=selected]
+{
+	background : pink;
+}
+.GridCellControl .cellbutton.grdCellCtrl_WF_normal[userstatus=pushed]
+{
+	background : linear-gradient(to top,#fefefe,#e9e9e9);
+}
+.GridCellControl .cellbutton.grdCellCtrl_WF_normal[userstatus=selected]
+{
+	background : linear-gradient(to top,#fefefe,#e9e9e9);
+}
+.Grid.grd_WF_tree .body .row .cell[userstatus=selected]
+{
+	background : #f3f6ff;
+	border : 1px solid #ced3e5;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_tree .body .row .cell.oddcell[userstatus=selected]
+{
+	background : #f3f6ff;
+	color : #32333b;
+}
+.Grid.grd_WF_tree .body .row .cell[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_WF_tree .body .row .cell .subcell[userstatus=selected]
+{
+	background : #f3f6ff;
+	border : 1px solid #ced3e5;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_tree .body .row .cell .subcell.oddcell[userstatus=selected]
+{
+	background : #f3f6ff;
+	color : #32333b;
+}
+.Grid.grd_WF_tree .body .row .cell .subcell[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid .body .row .cell.grdHCell_WF_bg_gray[userstatus=selected]
+{
+	background : #d3d3d3;
+}
+.Grid .body .row .cell.grdHCell_WF_bg_gray.oddcell[userstatus=selected]
+{
+	background : #d3d3d3;
+}
+.Button.mcbo_btn_WF_normal[userstatus=selected]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.mcbo_btn_WF_normal[userstatus=pushed]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.mcbo_btn_WF_select[userstatus=pushed]
+{
+	background : #A8CAE7;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.mcbo_btn_WF_select[userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.mcbo_btn_WF_select[userstatus=selected]
+{
+	background : #A8CAE7;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.mcbo_btn_WF_select[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem[userstatus=selected]
+{
+	font : 12px '돋움';
+	color : #444444;
+}
+.Grid .body .row .cell.grdBCell_DayEvent[userstatus=selected]
+{
+	background : lightsteelblue;
+}
+.Button.btn_WF_mod[userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_mod[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_mod[userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_mod[userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+	text-decoration : underline;
+}
+.Grid .body .row .cell.grdBCell_ReadEvent[userstatus=selected]
+{
+	color : #255b9a;
+	cursor : pointer;
+	font : normal bold 12px/normal "돋움";
+}
+.Grid .body .row .cell.grdBCell_BgBlueFontWhite[userstatus=selected]
+{
+	background : #9ec1ff;
+	font : normal 12px/normal "돋움";
+}
+.Grid .body .row .cell.grdBCell_BgBlueFontWhite.oddcell[userstatus=selected]
+{
+	background : #9ec1ff;
+}
+.Edit.edt_WF_normal[status=disabled]
+{
+	background : #dddddd;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #888888;
+	padding : 0px 18px 0px 6px;
+}
+.Edit.edt_WF_normal[status=disabled] .nexainput
+{
+	text-align : left;
+}
+.Edit.edt_WF_normal[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+}
+.MaskEdit.msk_WF_normal[status=disabled]
+{
+	background : #dddddd;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #888888;
+	padding : 0px 6px 0px 6px;
+}
+.MaskEdit.msk_WF_normal[status=disabled] .nexainput
+{
+	text-align : left;
+}
+.MaskEdit.msk_WF_normal[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+}
+.TextArea.txa_WF_normal[status=disabled]
+{
+	background : #dddddd;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #888888;
+	padding : 4px 6px 4px 6px;
+}
+.TextArea.txa_WF_normal[status=disabled] .nexatextarea
+{
+	text-align : left;
+}
+.TextArea.txa_WF_normal[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+}
+.TextArea.txa_WF_Confirm[status=disabled]
+{
+	background : #89aeeb;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #888888;
+	padding : 4px 6px 4px 6px;
+}
+.TextArea.txa_WF_Confirm[status=disabled] .nexatextarea
+{
+	text-align : left;
+}
+.TextArea.txa_WF_Confirm[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+}
+.Button.btn_WF_normal[status=disabled]
+{
+	background : #f5f5f5;
+	border : 1px solid #d9d9d9;
+	color : #bbbbbb;
+	cursor : default;
+}
+.Button.btn_WF_search[status=disabled]
+{
+	background : #f5f5f5;
+	border : 1px solid #d9d9d9;
+	color : #bbbbbb;
+}
+.Button.btn_WF_searchReset[status=disabled]
+{
+	background : #f5f5f5;
+	border : 1px solid #d9d9d9;
+	color : #bbbbbb;
+}
+.Button.btn_WF_primary_save[status=disabled]
+{
+	background : #f5f5f5;
+	border : 0px;
+	color : #bbbbbb;
+}
+.Button.btn_WF_primary_save_ex[status=disabled]
+{
+	background : #f5f5f5;
+	border : 0px;
+	color : #bbbbbb;
+}
+.Button.btn_WF_primary_close[status=disabled]
+{
+	background : #ffffff;
+	border : 1px solid #4774ff;
+	color : #4774ff;
+}
+.Button.btn_WF_primary_delete[status=disabled]
+{
+	background : #ffffff;
+	border : 1px solid red;
+	color : red;
+}
+.Button.btn_WF_add[status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+.Button.btn_WF_add[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_del[status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+.Button.btn_WF_del[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_edit[status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+.Button.btn_WF_edit[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_func[status=disabled]
+{
+	background : #f5f5f5;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+.Button.btn_WF_func[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_fileDown[status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+.Button.btn_WF_fileDown[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_excelDown[status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+.Button.btn_WF_excelDown[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_excelUp[status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+.Button.btn_WF_excelUp[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_chart[status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+.Button.btn_WF_chart[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Button.btn_WF_refresh[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_refreshN.png') no-repeat left center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_clear[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_editClear_D.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_SearchIcon[status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_SearchD.png') no-repeat center center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_ClearIcon[status=disabled]
+{
+	background : #f5f5f5;
+	border : 1px solid #d9d9d9;
+	color : #bbbbbb;
+}
+.Button.btn_WF_btnPrev[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchLeft.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchRight.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev2[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext2[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev3[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext3[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count00[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count01[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count02[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count03[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count04[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count05[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count00_on[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count01_on[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count02_on[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count03_on[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count04_on[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count05_on[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_countArrowRight[status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_countArrowRight.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_calDayOn[status=disabled]
+{
+	background : #656ff2;
+	border : 1px solid #656ff2;
+	border-radius : 5px;
+	color : #ffffff;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_calDayOff[status=disabled]
+{
+	background : #f7f9fa;
+	border : 1px solid #c2c2c2;
+	border-radius : 5px;
+	color : #020202;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.CheckBox.chk_WF_normal[status=disabled]
+{
+	color : #888888;
+}
+.Radio.rdo_WF_normal[status=disabled]
+{
+	background : transparent;
+	border : 0px;
+	color : #888888;
+	font : 12px '돋움';
+}
+.Radio.rdo_WF_normal .radioitem[status=disabled]
+{
+	background : transparent;
+	border : 0px;
+}
+.Radio.rdo_WF_checklist[status=disabled]
+{
+	color : #888888;
+	font : 12px '돋움';
+}
+.Radio.rdo_WF_checklist .radioitem[status=disabled]
+{
+	font : 12px '돋움';
+	color : #888888;
+}
+.Calendar.cal_WF_normal[status=disabled]
+{
+	background : #dddddd;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+}
+.Calendar.cal_WF_normal .calendaredit[status=disabled]
+{
+	background : #dddddd;
+	border : 0px;
+	font : 12px '돋움';
+	color : #888888;
+	padding : 0px 0px 0px 6px;
+}
+.Calendar.cal_WF_normal .dropbutton[status=disabled]
+{
+	cursor : default;
+}
+.Combo.cbo_WF_normal[status=disabled]
+{
+	background : #dddddd;
+	border : 1px solid #b8b8b8;
+	cursor : default;
+}
+.Combo.cbo_WF_normal .comboedit[status=disabled]
+{
+	background : transparent;
+	border : 0px;
+	color : #888888;
+	font : 12px '돋움';
+	padding : 1px 6px 0px 6px;
+}
+.Combo.cbo_WF_normal .comboedit[status=disabled] .nexainput
+{
+	text-align : left;
+}
+.Combo.cbo_WF_normal .comboedit[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[status=disabled]
+{
+	background : #dddddd;
+	border : 0px;
+	color : #909090;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Combo.cbo_WF_normal .dropbutton[status=disabled]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Spin.spn_WF_normal[status=disabled]
+{
+	background : #dddddd;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #888888;
+}
+.Spin.spn_WF_normal .spinupbutton[status=disabled]
+{
+	background : transparent;
+	cursor : default;
+}
+.Spin.spn_WF_normal .spindownbutton[status=disabled]
+{
+	background : transparent;
+	cursor : default;
+}
+.Div.div_WF_divSearchArea[status=disabled]
+{
+	background : #ffffff;
+	border : 1px solid #d3d3d3;
+	border-radius : 4px 4px;
+}
+.Div.div_WF_wfNode[status=disabled]
+{
+	background : #dfdfdf;
+	border : 1px solid #dfdfdf;
+	border-radius : 10px 10px;
+	color : #aaaaaa;
+	font : bold 16px '돋움';
+}
+.Div.div_WF_wfNodeScreen[status=disabled]
+{
+	background : #dfdfdf url('./SPP_IMAGE_SET/WF/ico_WF_screen.png') no-repeat 3px center;
+	border : 1px solid #dfdfdf;
+	border-radius : 10px 10px;
+	color : #aaaaaa;
+	font : bold 16px '돋움';
+}
+.Div.div_WF_wfFunc[status=disabled]
+{
+	background : #dfdfdf;
+	border : 1px solid #dfdfdf;
+	border-radius : 10px 10px;
+	color : #aaaaaa;
+	font : bold 12px '돋움';
+}
+.Div.div_WF_wfCger[status=disabled]
+{
+	background : #dfdfdf;
+	border : 1px solid #dfdfdf;
+	border-radius : 10px 10px;
+	color : #aaaaaa;
+	font : bold 12px '돋움';
+}
+.Grid.grd_WF_normal .head .row .cell[status=disabled]
+{
+	color : #444444;
+}
+.Grid.grd_WF_normal .body .row .cell[status=disabled]
+{
+	color : #888888;
+}
+.Grid.grd_WF_normal .body .row .cell .subcell[status=disabled]
+{
+	color : #888888;
+}
+.Grid.grd_WF_normal .body .row .cell .cellradioitem[status=disabled]
+{
+	background : transparent;
+	border : 0px;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add .cellbutton[status=disabled]
+{
+	color : #bbbbbb;
+	border : 1px solid #d9d9d9;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_f9f3f3[status=disabled]
+{
+	background : #f9f3f3;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow[status=disabled]
+{
+	background : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow.oddcell[status=disabled]
+{
+	background : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_c0dbf7[status=disabled]
+{
+	background : #c0dbf7;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_e1fcfe[status=disabled]
+{
+	background : #e1fcfe;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_ffffff[status=disabled]
+{
+	background : #ffffff;
+}
+.Grid.grd_WF_noEffect .head .row .cell[status=disabled]
+{
+	color : #444444;
+}
+.Grid.grd_WF_noEffect .body .row .cell[status=disabled]
+{
+	color : #888888;
+}
+.Grid.grd_WF_noEffect .body .row .cell .subcell[status=disabled]
+{
+	color : #888888;
+}
+.GridCellControl .cellbutton.grdCellCtrl_WF_normal[status=disabled]
+{
+	color : #bbbbbb;
+	background : #f5f5f5;
+	border : 1px solid #d9d9d9;
+}
+.GridCellControl .celledit.grdCellCtrl_WF_normal[status=disabled]
+{
+	color : #999999;
+	background : #efefef;
+}
+.GridCellControl .cellmaskedit.grdCellCtrl_WF_normal[status=disabled]
+{
+	color : #999999;
+	background : #efefef;
+}
+.GridCellControl .celltreeitem .treeitemtext.grdCellCtrl_WF_normal[status=disabled]
+{
+	color : #999999;
+}
+.Grid.grd_WF_tree .head .row .cell[status=disabled]
+{
+	color : #444444;
+}
+.Grid.grd_WF_tree .body .row .cell[status=disabled]
+{
+	color : #888888;
+}
+.Grid.grd_WF_tree .body .row .cell .subcell[status=disabled]
+{
+	color : #888888;
+}
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitemtext[status=disabled]
+{
+	font : 12px '돋움';
+	color : #909090;
+}
+.Grid .body .row .cell.grdHCell_WF_bg_gray[status=disabled]
+{
+	background : #d3d3d3;
+}
+.Grid .body .row .cell.grdHCell_WF_bg_gray.oddcell[status=disabled]
+{
+	background : #d3d3d3;
+}
+.Div.mcbo_div_WF_normal[status=disabled]
+{
+	background : transparent;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+}
+.Edit.mcbo_edt_WF_normal[status=disabled]
+{
+	background : #dddddd;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #888888;
+	font : 12px '돋움';
+	padding : 0px 3px 0px 6px;
+	cursor : default;
+}
+.Edit.mcbo_edt_WF_normal[status=disabled] .nexainput
+{
+	text-align : left;
+}
+.Edit.mcbo_edt_WF_normal[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+}
+.Button.mcbo_btn_WF_normal[status=disabled]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem[status=disabled]
+{
+	font : 12px '돋움';
+	color : #888888;
+}
+.Button.btn_WF_mod[status=disabled]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+.Button.btn_WF_mod[status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.CheckBox.chk_WF_normal[status=mouseover][userstatus=selected]
+{
+	color : #0a5dad;
+}
+.CheckBox.chk_WF_normal[status=disabled][userstatus=selected]
+{
+	color : #888888;
+}
+.Radio.rdo_WF_normal .radioitem[status=readonly][userstatus=selected]
+{
+	background : transparent;
+	border : 0px;
+}
+.Radio.rdo_WF_normal .radioitem[userstatus=selected][status=disabled]
+{
+	background : transparent;
+	border : 0px;
+}
+.Radio.rdo_WF_checklist .radioitem[status=mouseover][userstatus=selected]
+{
+	font : bold 12px '돋움';
+	color : #0a5dad;
+}
+.Radio.rdo_WF_checklist .radioitem[status=readonly][userstatus=selected]
+{
+	font : 12px '돋움';
+	color : #444444;
+}
+.Radio.rdo_WF_checklist .radioitem[userstatus=selected][status=disabled]
+{
+	font : 12px '돋움';
+	color : #888888;
+}
+.Grid.grd_WF_normal .body .row .cell[status=disabled][userstatus=selected]
+{
+	background : #f3f6ff;
+}
+.Grid.grd_WF_normal .body .row .cell.oddcell[status=disabled][userstatus=selected]
+{
+	background : #f3f6ff;
+}
+.Grid.grd_WF_normal .body .row .cell .cellradioitem[status=readonly][userstatus=selected]
+{
+	background : transparent;
+	border : 0px;
+}
+.Grid.grd_WF_noEffect .body .row .cell[status=disabled][userstatus=selected]
+{
+	background : #ededed;
+}
+.Grid.grd_WF_noEffect .body .row .cell.oddcell[status=disabled][userstatus=selected]
+{
+	background : #ededed;
+}
+.Grid.grd_WF_tree .body .row .cell[status=disabled][userstatus=selected]
+{
+	background : #f3f6ff;
+}
+.Grid.grd_WF_tree .body .row .cell.oddcell[status=disabled][userstatus=selected]
+{
+	background : #f3f6ff;
+}
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem[status=mouseover][userstatus=selected]
+{
+	color : #0a5dad;
+	font : bold 12px '돋움';
+}
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem[status=disabled][userstatus=selected]
+{
+	font : 12px '돋움';
+	color : #888888;
+}

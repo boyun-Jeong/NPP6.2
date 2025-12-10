@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0600WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			'0' AS CHK,
+			''	AS ROWFLAG,
+			A.MEET_ID,
+			A.MEET_NO,
+			A.TITLE,
+			A.PJT_ID,
+			C.PJT_NAME,
+			A.MEET_STIME,
+			A.MEET_ETIME,
+			A.CONTENTS,
+			A.MEET_TYPE_CD,
+			A.CLOSE_YN,
+			A.REG_STIME,
+			A.REG_USER_ID,
+			A.REG_USER_NM,
+			A.REG_USER_DEPT,
+			A.LMOD_SDATE,
+			A.LMOD_USER_ID,
+			A.LMOD_USER_NM,
+			A.LMOD_USER_DEPT,
+			B.CNT,
+			DECODE(NVL(B.CNT, 0), 0, B.ATN_USER_NM, 1, B.ATN_USER_NM, B.ATN_USER_NM||'외 '||TO_CHAR(B.CNT - 1)||'명') AS ATTN_CNT,
+			B.NOT_READ,
+			DECODE(B.CONF_CNT, B.CNT, B.CONF_TIME, NULL) AS CONF_TIME
+
+		FROM
+			PJ_MEETING A, 
+			(
+			SELECT
+				MEET_ID, 
+                COUNT(*) AS CNT, 
+                MAX(ATN_USER_NM) AS ATN_USER_NM, 
+                SUM(DECODE(CONF_TIME, NULL, 1, 0)) AS NOT_READ, 
+                SUM(DECODE(CONF_TIME, NULL, 0, 1)) AS CONF_CNT, 
+                MAX(CONF_TIME) AS CONF_TIME 
+			FROM PJ_MEET_ATTND 
+			WHERE 1 = 1 
+			GROUP BY MEET_ID
+			) B, 
+			PJ_PROJECT C 
+			 
+		WHERE 1 = 1 
+		AND A.MEET_ID = B.MEET_ID(+)
+		AND A.PJT_ID = C.PJT_ID
+		AND A.PJT_ID = #{PJT_ID}
+
+		<if test="TITLE != '' and TITLE != null">
+		AND UPPER(A.TITLE) LIKE UPPER('%' || #{TITLE} || '%')
+		</if>
+
+		<if test='"N".equals(CONF_FLG)'>
+		AND B.CONF_CNT <![CDATA[>]]> 0
+		</if>
+		
+		<if test="SDATE != '' and SDATE != null and EDATE != '' and EDATE != null">
+		AND A.MEET_STIME BETWEEN #{SDATE} AND #{EDATE}
+		</if>
+
+		<if test='"O".equals(ATTEND_FLG)'>
+		AND EXISTS
+				(
+				SELECT 1
+				FROM
+					PJ_MEET_ATTND D
+				WHERE 1 = 1
+				AND A.MEET_ID		= D.MEET_ID
+				AND D.ATN_USER_ID	= #{USER_ID}
+				)
+		</if>
+
+		ORDER BY
+			A.MEET_STIME DESC,  A.MEET_ETIME DESC, A.MEET_ID DESC
+	</select>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_MEETING
+	  	WHERE MEET_ID = #{MEET_ID}
+	</delete>
+	
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE FROM PJ_MEET_ATTND
+		WHERE 1 = 1
+		AND MEET_ID = #{MEET_ID}		 
+	</delete>
+
+</mapper>

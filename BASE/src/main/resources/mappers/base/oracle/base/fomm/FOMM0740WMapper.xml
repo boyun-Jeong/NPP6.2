@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0740WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+	
+	   SELECT
+	          0 AS CHK
+            , '' AS ROWFLAG
+            , USER_ID   --사번
+            , USER_NM   --이름
+            , DEPT_CD   --부서코드
+            , DEPT_NM   --부서명
+            , IP    --IP_ADDR
+            , DEL_YN    --삭제여부
+            , RMK   --비고
+            , FRID  --최초등록자
+            , FRNM  --최초등록자명
+            , TO_CHAR(TO_DATE(FRDT,'YYYYMMDDHH24MIss'),'YYYY-MM-DD HH24:MI:ss') AS FRDT  --최초등록일시
+            , LMID  --최종수정자
+            , TO_CHAR(TO_DATE(LMDT,'YYYYMMDDHH24MIss'),'YYYY-MM-DD HH24:MI:ss') AS LMDT  --최종수정일시
+        FROM FOMM_USER_ADMIN
+        WHERE 1 = 1
+            <if test='DEL_YN != "A"'>
+                    AND DEL_YN = #{DEL_YN}
+            </if>
+            <if test="USER_ID != '' and USER_ID != null">
+                    AND USER_ID LIKE '%' ||  #{USER_ID} || '%'
+            </if>
+            <if test="USER_NM != '' and USER_NM != null">
+                    AND USER_NM LIKE '%' ||  #{USER_NM} || '%'
+            </if>
+
+	
+	</select>
+	
+	
+	
+	<select id="select_save_chk01" parameterType="java.util.Map" resultType="java.util.Map">
+    
+       SELECT
+            
+            USER_ID   --사번
+            , USER_NM   --이름
+            , DEPT_CD   --부서코드
+            , DEPT_NM   --부서명
+            , IP    --IP_ADDR
+            
+        FROM FOMM_USER_ADMIN
+        WHERE 1 = 1
+            AND DEL_YN = 'N'
+            <if test="USER_ID != '' and USER_ID != null">
+                    AND USER_ID = #{USER_NM}
+            </if>
+            <if test="IP != '' and IP != null">
+                    AND IP = #{IP}
+            </if>
+    
+    </select>
+	
+	
+	<insert id="insert01" parameterType="java.util.Map">
+	
+			INSERT INTO FOMM_USER_ADMIN
+		        (
+		              USER_ID   --사번
+		            , USER_NM   --이름
+		            , DEPT_CD   --부서코드
+		            , DEPT_NM   --부서명
+		            , IP    --IP_ADDR
+		            , DEL_YN    --삭제여부
+		            , FRID  --최초등록자
+		            , FRNM  --최초등록자명
+		            , FRDT  --최초등록일시
+		        )
+		        VALUES
+		        (
+		              #{USER_ID}
+		            , #{USER_NM}
+		            , #{DEPT_CD}
+		            , #{DEPT_NM}
+		            , #{IP}
+		            , #{DEL_YN}
+                    , #{LMID}
+                    , #{LMNM}
+		            , TO_CHAR(SYSDATE,'YYYYMMDDHH24MIss')
+		        )
+		        
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	
+	       UPDATE FOMM_USER_ADMIN SET
+	       
+	           DEL_YN = #{DEL_YN}    --삭제여부
+             , LMID = #{LMID}    --최종수정자
+	         , LMDT = TO_CHAR(SYSDATE,'YYYYMMDDHH24MIss')    --최종수정일시
+            
+           WHERE 1 = 1
+                AND USER_ID = #{USER_ID}
+                AND IP = #{IP}
+	           
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	
+        	UPDATE FOMM_USER_ADMIN SET
+           
+               DEL_YN = 'Y'    --삭제여부
+             , LMID = #{LMID}    --최종수정자
+             , LMDT = TO_CHAR(SYSDATE,'YYYYMMDDHH24MIss')    --최종수정일시
+            
+           WHERE 1 = 1
+                AND USER_ID = #{USER_ID}
+                AND IP = #{IP}
+	
+	<!--
+	       DELETE
+	       FROM FOMM_USER_ADMIN
+	       WHERE 1 = 1
+	           AND USER = #{USER_ID}
+	           AND IP = #{IP}
+	   -->
+	     
+	</delete>
+
+</mapper>

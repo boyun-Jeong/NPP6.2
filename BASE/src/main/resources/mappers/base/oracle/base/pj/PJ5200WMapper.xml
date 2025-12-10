@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ5200WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.UTDFT_ID
+			, A.UTEST_ID
+			, A.PJT_ID
+			, A.BIZ_ID
+			, D.BIZ_NAME
+			, A.UTDFT_NO
+			, A.UTDFT_NAME
+			, E.UTEST_NO
+			, E.UTEST_NAME
+			, A.UTDFT_TYPE_CD
+			, A.UTDFT_DESC
+			, A.UTDFT_RCV_CD
+			, A.UTDFT_ACT_CD
+			, A.DFT_USER_ID
+			, A.DFT_USER_NM
+			, A.DFT_USER_DEPT
+			, A.DFT_REG_DATE
+			, A.ACT_USER_ID
+			, A.ACT_USER_NM
+			, A.ACT_USER_DEPT
+			, A.ACT_PDATE
+			, A.ACT_ADATE
+			, A.ACT_DESC
+			, A.CONF_USER_ID
+			, A.CONF_USER_NM
+			, A.CONF_USER_DEPT
+			, A.CONF_DATE
+			, A.UTDFT_RCV_DESC
+			, A.REMARK
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.SYSMODTIME
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, B.PJT_NAME AS PJT_NAME
+			, C.PJT_ID   AS P_PJT_ID 
+			, C.PJT_NAME AS P_PJT_NAME
+
+		FROM
+			  PJ_UT_DEFECT A   
+			, PJ_PROJECT B   
+			, PJ_PROJECT C
+			, PJ_BIZ D
+			, PJ_UNIT_TEST E
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND B.PARENT_ID	= C.PJT_ID
+		AND A.PJT_ID	= D.PJT_ID
+		AND A.BIZ_ID	= D.BIZ_ID
+		AND A.PJT_ID	= E.PJT_ID(+)
+		AND A.UTEST_ID	= E.UTEST_ID(+)
+		AND A.PJT_ID	= #{SUB_PJT_ID}
+
+		<if test="BIZ_ID != '' and BIZ_ID != null">
+		AND A.BIZ_ID	= #{BIZ_ID}
+		</if>
+
+		<if test="UTDFT_NO != '' and UTDFT_NO != null">
+		AND UPPER(A.UTDFT_NO) LIKE '%' || UPPER(#{UTDFT_NO}) || '%'
+		</if>
+
+		<if test="UTDFT_NM != '' and UTDFT_NM != null">
+		AND UPPER(A.UTDFT_NAME) LIKE '%' || UPPER(#{UTDFT_NM}) || '%'
+		</if>
+		
+		<if test="UTDFT_TYPE_CD != '' and UTDFT_TYPE_CD != null">
+		AND A.UTDFT_TYPE_CD	= #{UTDFT_TYPE_CD}
+		</if>
+
+		<if test="DFT_USER_NM != '' and DFT_USER_NM != null">
+		AND UPPER(A.DFT_USER_NM) LIKE '%' || UPPER(#{DFT_USER_NM}) || '%'
+		</if>
+
+		<if test="ACT_USER_NM != '' and ACT_USER_NM != null">
+		AND UPPER(A.ACT_USER_NM) LIKE '%' || UPPER(#{ACT_USER_NM}) || '%'
+		</if>
+
+		<if test="CONF_USER_NM != '' and CONF_USER_NM != null">
+		AND UPPER(A.CONF_USER_NM) LIKE '%' || UPPER(#{CONF_USER_NM}) || '%'
+		</if>
+
+		<if test="UTEST_NO != '' and UTEST_NO != null">
+		AND UPPER(E.UTEST_NO) LIKE '%' || UPPER(#{UTEST_NO}) || '%'
+		</if>
+
+		<if test="UTEST_NM != '' and UTEST_NM != null">
+		AND UPPER(E.UTEST_NAME) LIKE '%' || UPPER(#{UTEST_NM}) || '%'
+		</if>
+
+		<choose>
+			<when test='"DRDATE".equals(DATE_GBN)'>
+				<if test="(SDATE != '' and SDATE != null) or (EDATE != '' and EDATE != null)">
+		AND A.DFT_REG_DATE BETWEEN #{SDATE} AND #{EDATE}
+				</if>
+			</when>
+			<when test='"APDATE".equals(DATE_GBN)'>
+				<if test="(SDATE != '' and SDATE != null) or (EDATE != '' and EDATE != null)">
+		AND A.ACT_PDATE BETWEEN #{SDATE} AND #{EDATE}
+				</if>
+			</when>
+			<when test='"AADATE".equals(DATE_GBN)'>
+				<if test="(SDATE != '' and SDATE != null) or (EDATE != '' and EDATE != null)">
+		AND A.ACT_ADATE BETWEEN #{SDATE} AND #{EDATE}
+				</if>
+			</when>
+			<when test='"CFDATE".equals(DATE_GBN)'>
+				<if test="(SDATE != '' and SDATE != null) or (EDATE != '' and EDATE != null)">
+		AND A.CONF_DATE BETWEEN #{SDATE} AND #{EDATE}
+				</if>
+			</when>
+		</choose>
+
+		ORDER BY
+			A.UTDFT_NO, A.UTDFT_ID
+	</select>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_UT_DEFECT
+  		WHERE 1 = 1
+  		AND UTDFT_ID = #{UTDFT_ID}
+	</delete>
+
+</mapper>

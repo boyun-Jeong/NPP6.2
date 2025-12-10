@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0600WDAO">
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+	/* FOMM0600WMapper >> select01 */
+		SELECT
+		    A.NOTI_SEND_ID,
+		    A.NOTI_BATCH_ID,
+		    A.NOTI_SND_SUCCESS,
+		    A.NOTI_SND_MSG,
+		    A.NOTI_SND_STIME,
+		    A.NOTI_SND_ETIME,
+		    (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = B.SND_USER_ID)	SND_USER_NM,
+		    (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = B.NOTI_USER_ID)	NOTI_USER_NM
+		FROM 
+		    FOMM_NOTI_SEND_MT A
+		JOIN FOMM_NOTI_BATCH_MT B ON A.NOTI_BATCH_ID = B.NOTI_BATCH_ID 
+		WHERE 1 = 1
+		<if test="NOTI_BATCH_ID != '' and NOTI_BATCH_ID != null">
+		AND NOTI_BATCH_ID = #{NOTI_BATCH_ID}
+		</if>
+		
+		<if test="SND_USER_ID != '' and SND_USER_ID != null">
+		AND SND_USER_ID = #{SND_USER_ID}
+		</if>
+		<if test="NOTI_USER_ID != '' and NOTI_USER_ID != null">
+		AND NOTI_USER_ID = #{NOTI_USER_ID}
+		</if>		
+				
+		<if test="NOTI_SND_SUCCESS != '' and NOTI_SND_SUCCESS != null">
+		AND NOTI_SND_SUCCESS = #{NOTI_SND_SUCCESS} 
+		</if>
+		<if test="STIME != '' and STIME != null and ETIME != '' and ETIME != null">
+		
+			<if test="DATE_TYPE == 'NOTI_SND_STIME'">		
+				AND TO_CHAR(TO_DATE(NOTI_SND_STIME, 'YYYY-MM-DD HH24:MI:SS'), 'YYYYMMDDHH24MISS')  
+			</if>
+			<if test="DATE_TYPE == 'NOTI_SND_ETIME'">	
+				AND TO_CHAR(TO_DATE(NOTI_SND_ETIME, 'YYYY-MM-DD HH24:MI:SS'), 'YYYYMMDDHH24MISS') 
+			</if>
+			BETWEEN SUBSTR(#{STIME}, 1, 14) AND SUBSTR(#{ETIME}, 1, 14)
+		</if>
+		
+		
+	</select>
+
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+    /* FOMM0600WMapper >> select02 */
+      SELECT SEND_DT
+           , TARGET_SYSNM
+           , REQ_ID
+           , TMPLATE_NM
+           , TITLE
+           , MAX(WF_PROC_NM) AS WF_PROC_NM
+           , MAX(REQ_STAT_NM) AS REQ_STAT_NM
+           , MAX(SEND_SUCC_NM) AS SEND_SUCC_NM
+           , LISTAGG(RECV_USER_NM, ',') AS RECV_USER_NM
+        FROM ( 
+         SELECT  
+            NOTI_FLOW_ID
+            ,WRITE_DT
+            ,SEND_SYSID
+            ,TARGET_SYSID
+            ,CASE WHEN TARGET_SYSID = 'MSN' THEN '메신저알림' 
+                  WHEN TARGET_SYSID = 'MEMO' THEN '쪽지' 
+             END AS TARGET_SYSNM            
+            ,DATA_TYPE
+            ,TMPLATE_ID
+            ,TMPLATE_NM
+            ,REQ_ID
+            ,(SELECT MAX(X.TITLE) FROM SR_BASE_INFO X WHERE X.REQ_ID = REQ_ID AND X.REQ_TMPLAT_ID = TMPLATE_ID) AS TITLE
+            ,WF_PROC_CD
+            ,WF_PROC_NM
+            ,REQ_STAT_CD
+            ,REQ_STAT_NM
+            ,SEND_USER_ID
+            ,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = SEND_USER_ID) ||'(' || SEND_USER_ID || ')' AS SEND_USER_NM
+            ,RECV_USER_ID
+            ,(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = RECV_USER_ID)  ||'(' || RECV_USER_ID || ')' AS RECV_USER_NM            
+            ,SEND_DT
+            ,SEND_SUCC_YN
+            ,CASE WHEN SEND_SUCC_YN = 'Y' THEN '정상발송' ELSE '발송실패' END SEND_SUCC_NM
+            ,SEND_RET_MSG
+            ,DATA_CONTENTS
+        FROM FOMM_NOTI_APPL_HT
+       WHERE 1=1 
+         AND (TARGET_SYSID = 'MSN' OR TARGET_SYSID = 'MEMO' )
+         AND SEND_DT BETWEEN SUBSTR(#{STIME}, 1, 14) AND SUBSTR(#{ETIME}, 1, 14)
+        <if test="REQ_ID != '' and REQ_ID != null">
+        AND REQ_ID LIKE '%' || #{REQ_ID} || '%'
+        </if>
+        <if test="RECV_USER_ID != '' and RECV_USER_ID != null">
+        AND RECV_USER_ID = #{RECV_USER_ID}
+        </if>       
+                
+        <if test="SEND_SUCC_YN != '' and SEND_SUCC_YN != null">
+        AND SEND_SUCC_YN = #{SEND_SUCC_YN} 
+        </if>
+        )
+        GROUP BY SEND_DT, TARGET_SYSNM, REQ_ID, TMPLATE_NM, TITLE
+        ORDER BY SEND_DT DESC, REQ_ID, RECV_USER_NM
+        
+    </select>
+
+
+	<insert id="insert01" parameterType="java.util.Map">
+		INSERT INTO FOMM_NOTI_SEND_MT
+		(
+			  NOTI_SEND_ID
+			, NOTI_BATCH_ID
+			, NOTI_SND_MSG
+			, NOTI_SND_STIME
+		)
+		VALUES
+		(
+			SEQ_MS_SEND_ID.NEXTVAL -- #{NOTI_SEND_ID} 시퀀스사용
+			, #{NOTI_BATCH_ID}
+			, #{NOTI_SND_MSG}
+			, #{NOTI_SND_STIME}
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE FOMM_NOTI_SEND_MT SET
+		
+			  NOTI_SND_ETIME 		=		 #{NOTI_SND_ETIME}
+			, NOTI_SND_SUCCESS 		=		 #{NOTI_SND_SUCCESS}
+		WHERE 1 = 1
+		<if test="NOTI_SEND_ID != '' and NOTI_SEND_ID != null">
+		AND NOTI_SEND_ID = #{NOTI_SEND_ID}
+		</if>
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM FOMM_NOTI_SEND_MT
+		WHERE 1 = 1
+		<if test="NOTI_SEND_ID != '' and NOTI_SEND_ID != null">
+		AND NOTI_SEND_ID = #{NOTI_SEND_ID}
+		</if>
+	</delete>
+</mapper>

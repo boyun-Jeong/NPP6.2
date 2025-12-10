@@ -1,0 +1,1486 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("FOMM0950_W");
+            this.set_titletext("쪽지내용");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1052,600);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsCond", this);
+            obj._setContents("<ColumnInfo><Column id=\"MEMO_ID\" type=\"STRING\" size=\"256\"/><Column id=\"MODIFY_TYPE\" type=\"STRING\" size=\"256\"/><Column id=\"FV_FLAG\" type=\"STRING\" size=\"256\"/><Column id=\"MEMO_RCV_ID\" type=\"STRING\" size=\"256\"/><Column id=\"JOB_REV_NO\" type=\"STRING\" size=\"256\"/><Column id=\"RCV_USER_ID\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row/></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsPtMemo", this);
+            obj._setContents("<ColumnInfo><Column id=\"MEMO_ID\" type=\"STRING\" size=\"20\"/><Column id=\"MEMO_TITLE\" type=\"STRING\" size=\"200\"/><Column id=\"MEMO_CONTENTS\" type=\"STRING\" size=\"4000\"/><Column id=\"MEMO_STATUS_CD\" type=\"STRING\" size=\"30\"/><Column id=\"SEND_TIME\" type=\"STRING\" size=\"14\"/><Column id=\"ATTACH_YN\" type=\"STRING\" size=\"1\"/><Column id=\"DEL_YN\" type=\"STRING\" size=\"1\"/><Column id=\"DEL_TIME\" type=\"STRING\" size=\"14\"/><Column id=\"REG_USER_ID\" type=\"STRING\" size=\"10\"/><Column id=\"REG_USER_NM\" type=\"STRING\" size=\"100\"/><Column id=\"REG_USER_DEPT\" type=\"STRING\" size=\"100\"/><Column id=\"NEW_MEMO_YN\" type=\"STRING\" size=\"1\"/><Column id=\"SYSMODTIME\" type=\"STRING\" size=\"14\"/><Column id=\"LMOD_USER_ID\" type=\"STRING\" size=\"10\"/><Column id=\"LMOD_USER_NM\" type=\"STRING\" size=\"100\"/><Column id=\"LMOD_USER_DEPT\" type=\"STRING\" size=\"100\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsPtMemoRcv", this);
+            obj._setContents("<ColumnInfo><Column id=\"MEMO_RCV_ID\" type=\"STRING\" size=\"20\"/><Column id=\"MEMO_ID\" type=\"STRING\" size=\"20\"/><Column id=\"RCV_USER_ID\" type=\"STRING\" size=\"10\"/><Column id=\"RCV_USER_NM\" type=\"STRING\" size=\"100\"/><Column id=\"RCV_USER_DEPT\" type=\"STRING\" size=\"100\"/><Column id=\"RCV_TYPE_CD\" type=\"STRING\" size=\"30\"/><Column id=\"SND_USER_ID\" type=\"STRING\" size=\"10\"/><Column id=\"SND_USER_NM\" type=\"STRING\" size=\"100\"/><Column id=\"SND_USER_DEPT\" type=\"STRING\" size=\"100\"/><Column id=\"NEW_MEMO_YN\" type=\"STRING\" size=\"1\"/><Column id=\"READ_YN\" type=\"STRING\" size=\"1\"/><Column id=\"READ_TIME\" type=\"STRING\" size=\"14\"/><Column id=\"DEL_YN\" type=\"STRING\" size=\"1\"/><Column id=\"DEL_TIME\" type=\"STRING\" size=\"14\"/><Column id=\"RCV_USER_DEPT_NM\" type=\"STRING\" size=\"255\"/><Column id=\"SND_USER_DEPT_NM\" type=\"STRING\" size=\"255\"/><Column id=\"JBC_JNAME\" type=\"STRING\" size=\"255\"/><Column id=\"JOB_REV_NO\" type=\"STRING\" size=\"256\"/><Column id=\"USER_ID\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsPtMemoReply", this);
+            obj._setContents("<ColumnInfo><Column id=\"MEMO_ID\" type=\"STRING\" size=\"20\"/><Column id=\"REPLY_ID\" type=\"STRING\" size=\"20\"/><Column id=\"REPLY_USER_ID\" type=\"STRING\" size=\"10\"/><Column id=\"REPLY_USER_NM\" type=\"STRING\" size=\"100\"/><Column id=\"REPLY_USER_DEPT\" type=\"STRING\" size=\"100\"/><Column id=\"REPLY_CONTENTS\" type=\"STRING\" size=\"4000\"/><Column id=\"REG_STIME\" type=\"STRING\" size=\"14\"/><Column id=\"SYSMODTIME\" type=\"STRING\" size=\"14\"/><Column id=\"DEL_YN\" type=\"STRING\" size=\"1\"/><Column id=\"DEL_TIME\" type=\"STRING\" size=\"14\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsPtMemoRcvTmp", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("ds_userRcv_All_tmp", this);
+            obj._setContents("<ColumnInfo><Column id=\"USER_ID\" type=\"STRING\" size=\"256\"/><Column id=\"USER_NM\" type=\"STRING\" size=\"256\"/><Column id=\"DEPT_CD\" type=\"STRING\" size=\"256\"/><Column id=\"DEPT_NM\" type=\"STRING\" size=\"256\"/><Column id=\"RCV_TYPE_CD\" type=\"STRING\" size=\"256\"/><Column id=\"SND_USER_ID\" type=\"STRING\" size=\"256\"/><Column id=\"SND_USER_NM\" type=\"STRING\" size=\"256\"/><Column id=\"SND_USER_DEPT\" type=\"STRING\" size=\"256\"/><Column id=\"READ_YN\" type=\"STRING\" size=\"256\"/><Column id=\"NEW_MEMO_YN\" type=\"STRING\" size=\"256\"/><Column id=\"DEL_YN\" type=\"STRING\" size=\"256\"/><Column id=\"ROWFLAG\" type=\"STRING\" size=\"256\"/><Column id=\"RCV_USER_ID\" type=\"STRING\" size=\"256\"/><Column id=\"RCV_USER_NM\" type=\"STRING\" size=\"256\"/><Column id=\"RCV_USER_DEPT\" type=\"STRING\" size=\"256\"/><Column id=\"RCV_USER_DEPT_NM\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("ds_userRcv_All", this);
+            obj._setContents("<ColumnInfo><Column id=\"USER_ID\" type=\"STRING\" size=\"256\"/><Column id=\"USER_NM\" type=\"STRING\" size=\"256\"/><Column id=\"DEPT_CD\" type=\"STRING\" size=\"256\"/><Column id=\"DEPT_NM\" type=\"STRING\" size=\"256\"/><Column id=\"RCV_TYPE_CD\" type=\"STRING\" size=\"256\"/><Column id=\"SND_USER_ID\" type=\"STRING\" size=\"256\"/><Column id=\"SND_USER_NM\" type=\"STRING\" size=\"256\"/><Column id=\"SND_USER_DEPT\" type=\"STRING\" size=\"256\"/><Column id=\"READ_YN\" type=\"STRING\" size=\"256\"/><Column id=\"NEW_MEMO_YN\" type=\"STRING\" size=\"256\"/><Column id=\"DEL_YN\" type=\"STRING\" size=\"256\"/><Column id=\"ROWFLAG\" type=\"STRING\" size=\"256\"/><Column id=\"RCV_USER_ID\" type=\"STRING\" size=\"256\"/><Column id=\"RCV_USER_NM\" type=\"STRING\" size=\"256\"/><Column id=\"RCV_USER_DEPT\" type=\"STRING\" size=\"256\"/><Column id=\"RCV_USER_DEPT_NM\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsAlarm", this);
+            obj._setContents("<ColumnInfo><Column id=\"USER_ID\" type=\"STRING\" size=\"256\"/><Column id=\"POST_MT_TITLE\" type=\"STRING\" size=\"256\"/><Column id=\"ALARM_TYPE_CD\" type=\"STRING\" size=\"256\"/><Column id=\"ALARM_CONTS\" type=\"STRING\" size=\"256\"/><Column id=\"ALARM_REF\" type=\"STRING\" size=\"256\"/><Column id=\"ALARM_PARAMS\" type=\"STRING\" size=\"256\"/></ColumnInfo>");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Static("stcMsgDiv","20","12","60","20",null,null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_text("쪽지내용");
+            obj.set_cssclass("sta_WF_schTitle");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divContent","0.00","50","1040","550",null,null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_text("");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stc00","20","0","1012","34",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("0");
+            obj.set_cssclass("sta_WF_inputBg");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("stc01","20","34","1012","34",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("1");
+            obj.set_cssclass("sta_WF_inputBg");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("stc02","20","68","1012","34",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("2");
+            obj.set_cssclass("sta_WF_inputBg");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("stc03","20","102","1012","34",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("3");
+            obj.set_cssclass("sta_WF_inputBg");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("stc04","20","136","1012","34",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("4");
+            obj.set_cssclass("sta_WF_inputBg");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("stc05","20","0","100","34",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("5");
+            obj.set_text("제목");
+            obj.set_cssclass("sta_WF_inputTitle_E");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("stc06","20","34","100","34",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("6");
+            obj.set_text("등록자");
+            obj.set_cssclass("sta_WF_inputTitle");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("stc07","342.00","34","100","34",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("7");
+            obj.set_text("발송일시");
+            obj.set_cssclass("sta_WF_inputTitle");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("stc08","687.00","34","100","34",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("8");
+            obj.set_text("수정일시");
+            obj.set_cssclass("sta_WF_inputTitle");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("stc09","20","68","100","34",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("9");
+            obj.set_text("수신자");
+            obj.set_cssclass("sta_WF_inputTitle_E");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("stc10","20","102","100","34",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("10");
+            obj.set_text("참조자");
+            obj.set_cssclass("sta_WF_inputTitle");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("stc11","20","136","100","34",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("11");
+            obj.set_text("숨은 참조자");
+            obj.set_cssclass("sta_WF_inputTitle");
+            obj.set_visible("false");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("stc12","20.00","136","1012","405",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("12");
+            obj.set_cssclass("sta_WF_inputBg");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Static("stc13","20.00","136","100","405",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("13");
+            obj.set_text("내용");
+            obj.set_cssclass("sta_WF_inputTitle");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Edit("edtMemoTitle","stc05:4.00","5","900","24",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("14");
+            obj.set_readonly("true");
+            obj.set_validation("제목;NULL");
+            obj.set_validationGroup("input01");
+            obj.set_text("");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Edit("edtRegUserNm","stc06:4.00","39",null,"24","stc07:4",null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("15");
+            obj.set_readonly("true");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new MaskEdit("medtSendTime","stc07:4.00","39",null,"24","stc08:4",null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("16");
+            obj.set_type("string");
+            obj.set_readonly("true");
+            obj.set_maskchar("_");
+            obj.set_format("@@@@-@@-@@ @@:@@");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new MaskEdit("medtSysmodtime","stc08:4.00","39","233","24",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("17");
+            obj.set_type("string");
+            obj.set_readonly("true");
+            obj.set_format("@@@@-@@-@@ @@:@@");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Div("divRcvUserNm","stc09:5.00","73","900","24",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("18");
+            obj.set_url("fomm::FOMM0000_D05_M.xfdl");
+            obj.set_text("");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Div("divRefUserNm","stc10:5.00","107","900","24",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("19");
+            obj.set_url("fomm::FOMM0000_D05_M.xfdl");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Div("divBldUserNm","stc11:5.00","141","900","24",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("20");
+            obj.set_url("fomm::FOMM0000_D05_M.xfdl");
+            obj.set_visible("false");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Div("divWebEditor","stc13:0","136","913","405",null,null,null,null,null,null,this.divContent.form);
+            obj.set_taborder("21");
+            obj.set_text("div02");
+            obj.set_url("comm::comWebEditor.xfdl");
+            this.divContent.addChild(obj.name, obj);
+
+            obj = new Div("divComBtn","467.00","5","564","31",null,null,null,null,null,null,this);
+            obj.set_taborder("2");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnMsgReSnd","244.00","6","60","24",null,null,null,null,null,null,this.divComBtn.form);
+            obj.set_taborder("0");
+            obj.set_text("재발송");
+            this.divComBtn.addChild(obj.name, obj);
+
+            obj = new Button("btnMsgTrans","314.00","6","60","24",null,null,null,null,null,null,this.divComBtn.form);
+            obj.set_taborder("1");
+            obj.set_text("전달");
+            this.divComBtn.addChild(obj.name, obj);
+
+            obj = new Button("btnSave","43.00","6","60","24",null,null,null,null,null,null,this.divComBtn.form);
+            obj.set_taborder("2");
+            obj.set_text("수정");
+            obj.set_visible("false");
+            this.divComBtn.addChild(obj.name, obj);
+
+            obj = new Button("btnSend","108.00","6","60","24",null,null,null,null,null,null,this.divComBtn.form);
+            obj.set_taborder("3");
+            obj.set_text("발송");
+            obj.set_visible("false");
+            this.divComBtn.addChild(obj.name, obj);
+
+            obj = new Button("btnRcvMsgTrans","173.00","6","60","24",null,null,null,null,null,null,this.divComBtn.form);
+            obj.set_taborder("4");
+            obj.set_text("전달");
+            obj.set_visible("false");
+            this.divComBtn.addChild(obj.name, obj);
+
+            obj = new Button("btnRcvMsgReply","378.00","6","60","24",null,null,null,null,null,null,this.divComBtn.form);
+            obj.set_taborder("5");
+            obj.set_text("답장");
+            this.divComBtn.addChild(obj.name, obj);
+
+            obj = new Button("btnMsgDel","441.00","6","60","24",null,null,null,null,null,null,this.divComBtn.form);
+            obj.set_taborder("6");
+            obj.set_text("삭제");
+            this.divComBtn.addChild(obj.name, obj);
+
+            obj = new Button("btnClose","504","6","60","24",null,null,null,null,null,null,this.divComBtn.form);
+            obj.set_taborder("7");
+            obj.set_text("닫기");
+            this.divComBtn.addChild(obj.name, obj);
+
+            obj = new Static("Static00_00","0","0","20","600",null,null,null,null,null,null,this);
+            obj.set_taborder("3");
+            obj.set_background("#e5dbfa");
+            obj.set_text("20");
+            obj.set_textAlign("center");
+            obj.set_verticalAlign("middle");
+            obj.set_font("normal 12pt/normal \"Arial\"");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("Static00_00_00","1040.00","0","20","600",null,null,null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_background("#e5dbfa");
+            obj.set_text("20");
+            obj.set_textAlign("center");
+            obj.set_verticalAlign("middle");
+            obj.set_font("normal 12pt/normal \"Arial\"");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this.divContent.form.divRcvUserNm
+            obj = new Layout("default","",0,0,this.divContent.form.divRcvUserNm.form,function(p){});
+            this.divContent.form.divRcvUserNm.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.divContent.form.divRefUserNm
+            obj = new Layout("default","",0,0,this.divContent.form.divRefUserNm.form,function(p){});
+            this.divContent.form.divRefUserNm.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.divContent.form.divBldUserNm
+            obj = new Layout("default","",0,0,this.divContent.form.divBldUserNm.form,function(p){});
+            this.divContent.form.divBldUserNm.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.divContent.form.divWebEditor
+            obj = new Layout("default","",0,0,this.divContent.form.divWebEditor.form,function(p){});
+            this.divContent.form.divWebEditor.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.divContent.form
+            obj = new Layout("default","",0,0,this.divContent.form,function(p){});
+            this.divContent.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.divComBtn.form
+            obj = new Layout("default","",0,0,this.divComBtn.form,function(p){});
+            this.divComBtn.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this
+            obj = new Layout("default","",1052,600,this,function(p){});
+            obj.set_horizontalgap("0");
+            obj.set_spacing("0px");
+            obj.set_tabletemplate("1* / 1*");
+            obj.set_verticalgap("0");
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("item0","divContent.form.edtMemoTitle","value","dsPtMemo","MEMO_TITLE");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item1","divContent.form.edtRegUserNm","value","dsPtMemo","REG_USER_NM");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item2","divContent.form.medtSendTime","value","dsPtMemo","SEND_TIME");
+            this.addChild(obj.name, obj);
+            obj.bind();
+
+            obj = new BindItem("item3","divContent.form.medtSysmodtime","value","dsPtMemo","SYSMODTIME");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+            this._addPreloadList("fdl","fomm::FOMM0000_D05_M.xfdl");
+            this._addPreloadList("fdl","comm::comWebEditor.xfdl");
+        };
+        
+        // User Script
+        this.registerScript("FOMM0950_W.xfdl", function() {
+        /***********************************************************************************
+        * 화면(ID)	︰ FOMM0950_W
+        * 화면(명)	︰ 쪽지처리
+        * 메뉴(경로)	︰ 관리자 > 포털관리 > 쪽지 발송함, 쪽지 수신함 > 쪽지처리
+        * 화면 설명	︰ SPP 쪽지처리
+        * 작성자		︰ WEMB
+        * 작성일		︰ 2024.11.12
+        * 수정이력		︰
+        *------------------------------------------------------------------
+        * 수정일        작성자		이력
+        *------------------------------------------------------------------
+        * 2024.11.12	 WEMB			최초작성
+        *------------------------------------------------------------------
+        ***********************************************************************************/
+
+        /***********************************************************************************
+         * Script Include
+         ***********************************************************************************/
+
+        /***********************************************************************************
+         * Form Variable
+         ***********************************************************************************/
+        var fv_oArgs  = "";
+        var fv_memoId = "";
+        var fv_flag   = "";	//발신함 ,수신함에서 호출여부 flag
+        var fv_MEMO_STATUS_CD = "";
+        /**********************************************************************************
+        *	발신자의 경우
+        		1. 임시저장 - 수정 : USND, 발송 : SSND, 삭제 : DSND
+        		2. 발송 - 재발송 : RSND, 전달 : TSND, 삭제 : DSND
+        	수신자의 경우(1가지 경우 밖에 없음)
+        		1. 전달 : TRCV, 답신 : RRCV, 삭제 : DRCV
+        ***********************************************************************************/
+
+        this.ACT_USER_ID = Ex.util.getSession('gvUserId');
+        this.ACT_USER_NM = Ex.util.getSession('gvUserNm');
+        this.ACT_DEPT_NM = Ex.util.getSession('gvDeptNm');
+        this.ACT_DEPT_CD = Ex.util.getSession('gvDeptCd');
+
+        /***********************************************************************************
+         * Form Function
+         ***********************************************************************************/
+        this.form_onload = function(obj, e)
+        {
+        	this.gfnFormOnLoad(obj, this.fnInit);
+        }
+
+        this.fnInit = function()
+        {
+        	/* 쪽지 수신자 선택 관련 초기화*/
+        	//this.divRcvUserNm.form.objDsUser = this.ds_userRcv_All;
+        	this.divContent.form.divRcvUserNm.form.objDsUser = this.ds_userRcv_All;
+        	this.divContent.form.divRcvUserNm.form.filterCol  = 'RCV_TYPE_CD';
+        	this.divContent.form.divRcvUserNm.form.filterStr  = 'TO';
+
+        	this.divContent.form.divRefUserNm.form.objDsUser = this.ds_userRcv_All;
+        	this.divContent.form.divRefUserNm.form.filterCol  = 'RCV_TYPE_CD';
+        	this.divContent.form.divRefUserNm.form.filterStr  = 'CC';
+
+        	this.divContent.form.divBldUserNm.form.objDsUser = this.ds_userRcv_All;
+        	this.divContent.form.divBldUserNm.form.filterCol  = 'RCV_TYPE_CD';
+        	this.divContent.form.divBldUserNm.form.filterStr  = 'BCC';
+
+        	this.fnCompInit();		// 컴포넌트 초기화
+        }
+
+        // 필요시 폼관련 이벤트는 여기 추가
+        /***********************************************************************************
+         * Common Function
+         ***********************************************************************************/
+        // 검색조건 초기화
+        this.fnSearchReset = function()
+        {
+
+        }
+
+        // 조회
+        this.fnSearch = function()
+        {
+        	// transaction
+        	var sTranId = "select01";					// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+            var sService = "FOMM0950W/select01";		// 서비스명
+            var sInDs = "dsCond=dsCond";				// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+            //var sOutDs = "dsPtMemo=dsPtMemo dsPtMemoRcv=dsPtMemoRcv dsPtMemoReply=dsPtMemoReply";	// 서버에서 수신할 데이타셋
+        	var sOutDs = "dsPtMemo=dsPtMemo dsPtMemoRcv=dsPtMemoRcv";	// 서버에서 수신할 데이타셋
+            var sArg = "";								// 서버 @ParamVariable 인자와 맵핑됨
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+        // 발신,수신함 -> 쪽지 상세
+        this.fnReadYN = function(){
+        	// NEW_MEMO_YN,READ_YN, READ_TIME 업데이트
+        	//MEMO_RCV_ID = '' AND READ_YN = 'N'
+
+        	var sTranId = "save01";                          						// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+        	var sService = "FOMM0950W/save01";                         			   	// 서비스명
+        	//var sInDs = "dsPtMemo=ds_pt_memo:A dsPtMemoRcv=ds_pt_memo_rcv:U";		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+        	var sInDs = "dsCond=dsCond dsPtMemo=dsPtMemo dsPtMemoRcv=dsPtMemoRcv";
+        	//var sOutDs = "ds_new_memo_id=DS_NEW_MEMO_ID";				          	// 서버에서 수신할 데이타셋
+        	var sOutDs = "";
+        	var sArg = "";                   										// 서버 @ParamVariable 인자와 맵핑됨
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+        this.fnMemoDel = function(){
+
+        	var sTranId = "save03";                          						// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+        	var sService = "FOMM0950W/save03";                         			   	// 서비스명
+        	//var sInDs = "dsPtMemo=ds_pt_memo:A dsPtMemoRcv=ds_pt_memo_rcv:U";		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+        	//var sInDs = "dsCond=dsCond dsPtMemo=dsPtMemo dsPtMemoRcv=dsPtMemoRcv";
+        	var sInDs = "dsCond=dsCond";
+        	//var sOutDs = "ds_new_memo_id=DS_NEW_MEMO_ID";				          	// 서버에서 수신할 데이타셋
+        	var sOutDs = "";
+        	var sArg = "";                   										// 서버 @ParamVariable 인자와 맵핑됨
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+        // 수정버튼
+        this.fnSave = function(){
+        	// 임시저장상태에서 쪽지내용 수정 혹은 발송
+
+        	// ======= 수정(임시저장 유지), 발송 처리=========
+        	// 0. dsRcv 수신자를 dsRcvtmp로 복사
+        	// 0. 제목, 내용 변경사항 있든지 없든지 상관없이 무조건 memo 테이블에 update
+        	// 0. dsrcv 무조건 상태값 update 임시저장:1,발송:2
+        	// 1. dsRcv 수신자가 dsRcvtmp에 있으면 dsRcv U플레그 넣어줌 dsRcvtmp에서 해당 수신자 삭제 해당 수신자 rcv테이블에 상태값 업데이트(임시저장,발송)
+        	// 2. dsRcv 수신자가 dsRcvtmp에 없으면 dsRcv D플레그 넣어줌 dsRcv 해당 수신자 rcv테이블의 메모수신상태 del_yn = y 업데이트
+        	// 3. dsRcvtmp 추가된 수신자 Rcv 테이블에 insert 임시저장:1,발송:2
+        	//====================================================
+
+        	var sTranId = "save02";                          						// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+        	var sService = "FOMM0950W/save02";                         			   	// 서비스명
+        	//var sInDs = "dsPtMemo=ds_pt_memo:A dsPtMemoRcv=ds_pt_memo_rcv:U";		// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+        	var sInDs = "dsCond=dsCond dsPtMemo=dsPtMemo dsPtMemoRcvTmp=dsPtMemoRcvTmp ds_userRcv_All=ds_userRcv_All";
+        	//var sOutDs = "ds_new_memo_id=DS_NEW_MEMO_ID";				          	// 서버에서 수신할 데이타셋
+        	var sOutDs = "dsPtMemo=dsPtMemo";	//화면이 0910(발신함)으로 넘어가므로 의미없음
+        	var sArg = "";                   										// 서버 @ParamVariable 인자와 맵핑됨
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        // 알림 보내기
+        this.fnSendAlarm = function()
+        {
+        	// transaction
+        	var sTranId = "sendAlarm";                          // transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+            var sService = "ALARM/send";               			// 서비스명
+            var sInDs = "dsAlarm=dsAlarm";                  	// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+            var sOutDs = "";           		   					// 서버에서 수신할 데이타셋
+            var sArg = "";                   				    // 서버 @ParamVariable 인자와 맵핑됨
+
+        	Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        }
+
+        /***********************************************************************************
+         * CallBack Event
+         ***********************************************************************************/
+        // Transaction 디폴트 콜백함수
+        this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+        {
+        	// 에러메세지 처리
+        	if (nErrorCode < 0)
+        	{
+        		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+        		Ex.core.error(this, param);
+        		return;
+        	}
+
+        	// 각 Transaction별 CallBack 처리
+        	switch (sSvcId)
+        	{
+        		case "select01" :
+
+        			this.dsPtMemoRcvTmp.clearData(); 					//받는 사람 전체를 데이터셋에 복사
+        			this.dsPtMemoRcvTmp.copyData(this.dsPtMemoRcv);		//수신자 변경의 경우를 위한 전체 복사(임시저장일 경우만 필요)
+        			this.ds_userRcv_All.clearData();
+        			this.ds_userRcv_All.copyData(this.dsPtMemoRcv);		//수신자 변경의 경우 중복 방지 및 이름 set
+        			this.ds_userRcv_All.addColumn("ROWFLAG", "string");
+        			this.dsPtMemoRcvTmp.addColumn("ROWFLAG", "string");	//상태값 저장을 위한 컬럼추가
+
+        			// TO, CC, BCC SET
+        			var rcvChildForm = this.divContent.form.divRcvUserNm.form;
+        			var refChildForm = this.divContent.form.divRefUserNm.form;
+        			var bldChildForm = this.divContent.form.divBldUserNm.form;
+        			//for문 돌면서 각 user이름 SET
+
+        			var strTOUserNm = "", strCCUserNm = "", strBCCUserNm = "";
+        			var TOcnt = 0, CCcnt = 0, BCCcnt = 0 ;
+        			var nRowCnt = this.dsPtMemoRcv.rowcount;
+        			var rcvType = "";
+        			var BCCYN = "";
+
+        			for( i = 0; i <nRowCnt ; i++ ) {
+
+        				rcvType =  this.dsPtMemoRcv.getColumn(i,"RCV_TYPE_CD");
+
+        				switch(rcvType) {
+        				case 'TO' 	:
+        					if( TOcnt > 0) strTOUserNm += ",";
+        					strTOUserNm += this.dsPtMemoRcv.getColumn(i,"RCV_USER_NM");
+        					TOcnt++
+        					break;
+        				case 'CC' 	:
+        					if( CCcnt > 0) strCCUserNm += ",";
+        					strCCUserNm += this.dsPtMemoRcv.getColumn(i,"RCV_USER_NM");
+        					CCcnt++
+        					break;
+        				case 'BCC' 	:
+        					// 숨은 참조인 USER가 상세화면을 보고 있는 경우라면 TO,CC,BCC 다 보임
+        					if(this.ACT_USER_ID == this.dsPtMemoRcv.getColumn(i,"RCV_USER_ID")) BCCYN = "Y";
+
+        					if( BCCcnt > 0) strBCCUserNm += ",";
+        					strBCCUserNm += this.dsPtMemoRcv.getColumn(i,"RCV_USER_NM");
+        					BCCcnt++
+        					break;
+        				}
+        			}
+        			rcvChildForm.edtUserNm.set_value("");
+        			rcvChildForm.edtUserNm2.set_value(strTOUserNm);
+        			refChildForm.edtUserNm.set_value("");
+        			refChildForm.edtUserNm2.set_value(strCCUserNm);
+
+        			bldChildForm.edtUserNm.set_value("");
+
+        			if (BCCYN = "Y") {
+        				bldChildForm.edtUserNm2.set_value(strBCCUserNm);
+        			} else {
+        				bldChildForm.edtUserNm2.set_value("");
+        			}
+
+        			/*
+        			rcvChildForm.edtUserNm2.set_value(this.dsPtMemoRcv.getColumn(this.dsPtMemoRcv.rowposition, 'RCV_USER_NM'));
+        			refChildForm.edtUserNm2.set_value(this.dsPtMemoRcv.getColumn(this.dsPtMemoRcv.rowposition+1, 'RCV_USER_NM'))
+        			bldChildForm.edtUserNm2.set_value(this.dsPtMemoRcv.getColumn(this.dsPtMemoRcv.rowposition+2, 'RCV_USER_NM'))
+        			*/
+
+        			//임시저장과 발송 상태 분기
+        			if (this.dsPtMemo.getColumn(0, 'MEMO_STATUS_CD') == 1)	// 임시저장 상태
+        			{
+        				this.divContent.form.edtMemoTitle.readonly = false;
+        				//trace("$$$$$$$$$$$$$ MEMO_STATUS_CD : " + this.dsPtMemo.getColumn(0, 'MEMO_STATUS_CD'));
+        				this.divComBtn.form.btnSave.visible = true;			// 임시저장의 경우 수정, 발송, 삭제, 닫기 버튼 보여야함
+        				this.divComBtn.form.btnSend.visible = true;			// 발송
+        				this.divComBtn.form.btnMsgReSnd.visible = false;	// 재발송 O
+        				this.divComBtn.form.btnMsgTrans.visible = false;	//
+        				Ex.util.setBtnAlign(this.divComBtn, 'right', true);
+        			} else {	//발송상태
+        				rcvChildForm.edtUserNm.set_enable(false);
+        				rcvChildForm.btnSearchPop.set_enable(false);
+        				rcvChildForm.edtUserNm2.set_enable(false);
+
+        				refChildForm.edtUserNm.set_enable(false);
+        				refChildForm.btnSearchPop.set_enable(false);
+        				refChildForm.edtUserNm2.set_enable(false);
+
+        				bldChildForm.edtUserNm.set_enable(false);
+        				bldChildForm.btnSearchPop.set_enable(false);
+        				bldChildForm.edtUserNm2.set_enable(false);
+        			}
+
+        			var webConts = this.dsPtMemo.getColumn(this.dsPtMemo.rowposition, 'MEMO_CONTENTS')||'';
+        			this.divContent.form.divWebEditor.form.setContent(webConts, false);
+        			//this.divContent.form.divWebEditor.form.initCreate(true);
+        			//this.divContent.form.divWebEditor.enable = false;
+        			//alert("webEditor.setReadonly");
+        			//this.divContent.form.divWebEditor.form.webEditor.setReadonly(true);
+        			//this.divContent.form.divWebEditor.setReadonly(true);
+
+        			if(fv_flag == "SND"){
+        			/************************************************/
+        			// MEMO 테이블 발신자 NEW_MEMO_YN 업뎃 모듈은 안하기로 협의/
+        			/************************************************/
+        //				this.dsCond.setColumn(0,"MODIFY_TYPE", "R" + fv_flag);	//fv_flag - 발신자 : SND, 수신자 : RCV
+        //				this.dsCond.setColumn(0,"MODIFY_TYPE", "RS");
+        // 				fv_memoId
+        // 				fv_flag
+        // 				trace("fv_flag :: " + fv_flag);
+        // 				trace("fv_memoId :: " + fv_memoId);
+        // 				trace("dsPtMemo 로우카운트 :: " + this.dsPtMemo.rowcount);
+        // 				trace("dsPtMemoRcv 로우카운트 :: " + this.dsPtMemoRcv.rowcount);
+        // 				trace("dsPtMemo MEMO ID:: " + this.dsPtMemo.getColumn(0,"MEMO_ID"));
+        // 				trace("dsPtMemoRcv MEMO RCV ID:: " + this.dsPtMemoRcv.getColumn(0,"MEMO_RCV_ID"));
+
+        			} else if(fv_flag == "RCV"){
+        				//수신자가 메모 읽음
+        				//MEMO_RCV 테이블 READ_YN을 Y로, READTIME 업뎃
+        				this.dsCond.setColumn(0,"MODIFY_TYPE", "RR");	//fv_flag - 발신자 : SND, 수신자 : RCV
+        				//this.dsCond.setColumn(0,"MODIFY_TYPE","RRCV");
+        				this.dsCond.setColumn(0,"FV_FLAG",fv_flag);
+        				this.dsCond.setColumn(0,"RCV_USER_ID",Ex.util.getSession('gvUserId'));
+
+        				this.fnReadYN();
+        			}
+        			Ex.core.toast(this, "10002");
+        			break;
+
+        		case "save01" :
+        			nexacro.getApplication().mainframe.VFrameSetMain.frTop.form.fnSelectAlarmCnt();
+        			break;
+
+        		case "save01_D" :
+        			// 이 케이스 안씀
+        			var param = {
+        				  id	: "save01_D"				//fnMsgAfter에서 식별자로 사용되는 ID
+        				, msg	: "삭제 되었습니다."	//메시지 내용
+        				, arrparam : []						//메시지의 변수에 들어갈 실제값
+        				, msgtype : "I"						//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        			};
+        			Ex.core.alert(this, param);
+        			Ex.core.pclose(this);
+        			break;
+
+        		case "save02" :
+        			if (this.dsPtMemo.getColumn(0,"MEMO_STATUS_CD") == 2){
+        				this.setAlarmParam();
+        			}
+        			Ex.core.pclose(this,"btnSave");
+        			break;
+
+        		case "save03" :
+        			Ex.core.pclose(this,"btnMsgDel");
+        			break;
+        	}
+        }
+
+        // 팝업 디폴트 콜백함수
+        this.fnPopupAfter = function(pID,varValue)
+        {
+        	switch(pID)
+        	{
+        		case "MsgReSnd" :
+        			//trace("pID : " + pID);
+        			//trace("varValue : " + varValue);
+        			//this.go("fomm::FOMM0910_W.xfdl");
+        			//Ex.core._callWork("FOMM0910_W");
+        			//Ex.core._callWork("fomm::FOMM0910_W.xfdl");
+        			//Ex.core.openMenu("FOMM0910_W");
+        			//Ex.core.openMenu("fomm::FOMM0910_W.xfdl");
+        			//if(varValue.indexOf("Dataset id=") > -1)	this.dsPopRtn.loadXML(varValue);
+        			Ex.core.pclose(this, "MsgReSnd");
+        			break;
+
+        		case "MsgTrans" :
+        			Ex.core.pclose(this, "MsgTrans");
+        			break;
+
+        		case "RcvMsgReply" :
+        			Ex.core.pclose(this, "RcvMsgReply");
+        			break;
+        	}
+
+        	// TO DO
+        	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+        }
+
+        // alert/confirm/error 메시지창 디폴트 콜백함수
+        this.fnMsgAfter = function(mID,varValue)
+        {
+        	// TO DO
+        	// 개발자가 지정한 mID(메시지창ID) , varValue(메시지창 반환값)
+        	// alert/error : 무조건 true 반환
+        	// confirm     : true/false 선택적 반환
+
+        	if(!varValue) return;
+
+        	switch(mID)
+        	{
+        		case "saveConfirm" :		//임시저장후 수정, 발송
+
+        			//dsPtMemoRcvTmp의 user를 ds_userRcv_All_tmp 비교해서 dsPtMemoRcvTmp의 수신자 가공후
+        			//dsPtMemoRcvTmp update 상태로, ds_userRcv_All_tmp insert 상태로 변경후 save01 호출
+
+        				// ======= 수정 처리(임시저장 유지됨), 발송 처리=========
+        				// 0. dsPtMemoRcv 수신자를 dsPtMemoRcvTmp로 복사 OK(화면 로딩시)
+        				// 0. 제목, 내용 변경사항 있든지 없든지 상관없이 무조건 memo 테이블에 update (dsPtMemo 데이터셋은 무조건 update) 쿼리로해결
+        				// 0. dsPtMemo 무조건 MEMO_STATUS_CD 상태값 update 임시저장:1,발송:2	OK
+        				// 1. dsPtMemoRcvTmp 수신자가 ds_userRcv_All_tmp에(새롭게 선택된) 있으면 dsPtMemoRcvTmp 수신자는 아무것도 하지마!! 현재값유지
+        				//		ds_userRcv_All_tmp에(새롭게 선택된) 있는 해당 수신자 삭제
+        				// 2. dsPtMemoRcvTmp 수신자가 ds_userRcv_All_tmp에(새롭게 선택된) 없으면 dsPtMemoRcvTmp 수신자는 D플레그 넣어줌
+        				//		dsPtMemoRcvTmp 해당 수신자 rcv테이블의 메모삭제 여부 del_yn = y 업데이트
+        				// 3. 2번의 경우 외의 ds_userRcv_All_tmp 수신자는 모두 memo_rcv 테이블에 Insert
+        				//====================================================
+
+        			//	dataset에서 해당 레코드 삭제
+        			//var delRowCnt = this.ds_userRcv_All.rowcount;
+        			//for( i = delRowCnt-1; i >= 0; i-- )
+        			var nRowCnt = this.dsPtMemoRcvTmp.rowcount;
+        			for( i = 0; i <nRowCnt ; i++ )
+        			{
+        				var uid = this.dsPtMemoRcvTmp.getColumn(i,"RCV_USER_ID");
+        				var nRow = this.ds_userRcv_All.findRow("RCV_USER_ID",uid);
+        				if(nRow != -1){
+        					// 있으면 아무것도 하지마
+        					//trace("삭제되는 ds_userRcv_All dataset ID ::: " + uid );
+        					this.ds_userRcv_All.setColumn(nRow,"ROWFLAG","X");
+        					//선택한 수신자 중에서 기존 수신자와 중복선택되었다면 ROWFLAG를 "X" 변환, D와 I만 처리함
+        				} else {
+        					// 없으면 del_yn을 y로 업데이트 ROWFLAG를 D
+        					//trace("업데이트되는 dsPtMemoRcvTmp dataset ID ::: " + this.dsPtMemoRcvTmp.getColumn(i,"RCV_USER_ID"));
+        					this.dsPtMemoRcvTmp.setColumn(this.dsPtMemoRcvTmp.findRow("RCV_USER_ID",uid),"ROWFLAG","D");
+        				}
+        			}
+        			this.fnSave();
+        			break;
+
+        		case "deleteConfirm" :
+        			//this.dsCond.setColumn(0,"MODIFY_TYPE", "D" + fv_flag);	//발신자 : SND, 수신자 : RCV
+        			//trace(this.dsCond.getColumn(0,"MODIFY_TYPE"));
+        			//alert(this.dsCond.getColumn(0,"JOB_REV_NO"));
+        			this.fnMemoDel();
+
+        			break;
+        	}
+        }
+
+        /***********************************************************************************
+         * User Function
+         ***********************************************************************************/
+
+        // component init
+        this.fnCompInit = function()
+        {
+        	//fv_oArgs  = this.getOwnerFrame()
+        	//fv_memoId = fv_oArgs.memoId.toString();
+        	//fv_flag   = fv_oArgs.flag;
+
+        	fv_memoId = this.getOwnerFrame().memoId.toString();
+        	fv_flag	= this.getOwnerFrame().flag;
+        	fv_MEMO_STATUS_CD = this.getOwnerFrame().fv_MEMO_STATUS_CD;
+
+        	//var pcd = this.getOwnerFrame().pMenuParamCd;
+        	//this.MENU_PARAM_CD = this.getOwnerFrame().pMenuParamCd;
+        	//trace('this.MENU_PARAM_CD >>>> ' ,  pcd);
+        	/*
+        	// 첨부파일 setting
+        	var oParam = {
+        		 sSvcId		: 'fileSvc'			// divFile callback 후처리용 서비스 ID
+        		,limitMinCnt: 0					// 파일 최소 갯수; defualt 0
+        		,limitCnt	: 3					// 파일 최대 갯수; default 5
+        		,limitSize	: 100				// 첨부파일 개당 용량 제한(단위 MB); default 100 MB
+        		,folderName	: 'fomm'			// 폴더명(업무명)
+        		,tableName	: 'FOMM_MEMO'		// 구분명(ex. 화면명 + "_" + 첨부파일 Div ID)
+        		,primaryKey1: fv_memoId||''		// 테이블 PK1(ex. 요청서ID 등)
+        		,primaryKey2: ''				// 테이블 PK2 (복합 키인 경우 사용)
+        		,primaryKey3: ''				// 테이블 PK3 (복합 키인 경우 사용)
+        		,fileDownYn	: ''				// 파일다운권한; 	 공백 시 메뉴의 조회 권한
+        		,fileUpYn	: ''				// 파일업로드권한; 공백 시 메뉴의 추가 권한
+        		,deleteYn	: ''				// 파일삭제권한; 	 공백 시 메뉴의 삭제 권한
+        	};
+
+        	this.divContent.form.divUpload.form.setConfig(this, oParam);
+        	*/
+        	//readonly
+        	if (fv_MEMO_STATUS_CD == 1 || Ex.isEmpty(fv_MEMO_STATUS_CD)){
+        		this.divContent.form.divWebEditor.form.initCreate();
+        	} else {
+        		this.divContent.form.divWebEditor.form.initCreate(true);
+        	}
+
+        	// 버튼&권한 mapping && visible 처리
+        	// 사용 안하는 버튼
+        	this.divComBtn.form.btnSave.visible = false;		// 수정
+        	this.divComBtn.form.btnSend.visible = false;		// 발송
+        	this.divComBtn.form.btnRcvMsgTrans.visible = false;	// 전달
+
+        	if (fv_flag == 'SND') {
+        		var arrBtn = [this.divComBtn.form.btnMsgReSnd];			// 재발송 O
+        		Ex.util.setBtnVisible(this, 'save', arrBtn);
+
+        		arrBtn = [this.divComBtn.form.btnMsgTrans];				// 전달	O
+        		Ex.util.setBtnVisible(this, 'save', arrBtn);
+
+        		this.divComBtn.form.btnRcvMsgReply.visible = false;		// 답신	X
+
+        	} else {
+
+        		this.divComBtn.form.btnMsgReSnd.visible = false;		// 재발송	X
+
+        		var arrBtn = [this.divComBtn.form.btnMsgTrans];				// 전달	O
+        		Ex.util.setBtnVisible(this, 'save', arrBtn);
+
+        		arrBtn = [this.divComBtn.form.btnRcvMsgReply];			// 답신 O
+        		Ex.util.setBtnVisible(this, 'save', arrBtn);
+
+        	}
+
+        	//arrBtn = [this.divComBtn.form.btnSave];	// 수정
+        	//Ex.util.setBtnVisible(this, 'save', arrBtn);
+
+        	//arrBtn = [this.divComBtn.form.btnSend];	// 발송
+        	//Ex.util.setBtnVisible(this, 'save', arrBtn);
+
+        	var arrBtn = [this.divComBtn.form.btnMsgDel];		// 삭제
+        	Ex.util.setBtnVisible(this, 'delete', arrBtn);
+
+        	// 버튼 영역 div align 처리
+        	Ex.util.setBtnAlign(this.divComBtn, 'right', true);
+
+        	this.dsCond.setColumn(0,"MEMO_ID",fv_memoId);
+        	this.fnSearch();		// 메모내용조회
+        }
+
+        this.fn_SaveChk = function()
+        {
+        	// 컴포넌트가 필수입력 값일때 호출 information의 validation 과 validationGroup 값필요
+        	if( !Ex.util.checkValidate(this, "input01") ) return false;
+
+        	var nRow		= this.dsPtMemo.rowposition;
+        	var nRowType    = this.dsPtMemo.getRowType(nRow);
+        	var strValue	= "";
+
+        	if(nRowType == 2 || nRowType == 4){
+
+        // 		strValue = this.dsPtMemo.getColumn(nRow, "MEMO_TITLE");
+        // 		if(strValue === null || strValue === ""){
+        // 			alert("제목을 확인하시기 바랍니다.");
+        // 			return false;
+        // 		}
+        // 		strValue = this.dsPtMemo.getColumn(nRow, "MEMO_CONTENTS");
+        // 		if(strValue === null || strValue === ""){
+        // 			alert("내용을 확인하시기 바랍니다.");
+        // 			return false;
+        // 		}
+        		if(Ex.isEmpty(this.divContent.form.divRcvUserNm.form.edtUserNm2.value)){
+        			var param = {
+        				  id	: "AlertRcvUser"	//fnMsgAfter에서 식별자로 사용되는 ID
+        				//, msg	: "수신자가 없습니다. \n저장하시겠습니까?"	//메시지 내용
+        				, msg	: "수신자가 없습니다."	//메시지 내용
+        				, arrparam : []						//메시지의 변수에 들어갈 실제값
+        				, msgtype : "I"						//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        			};
+        			Ex.core.alert(this, param);
+        			return false;
+        		}
+
+        		strValue = this.dsPtMemo.getColumn(nRow, "MEMO_CONTENTS");
+        		//trace("this.ds_pt_memo.getColumn(nRow, 'MEMO_CONTENTS')    ::::: "   + strValue);
+        		if(Ex.isEmpty(strValue) || strValue == "<p>&nbsp;</p>"){
+        			//alert("내용을 확인하시기 바랍니다.");
+        			//return false;
+        			var param = {
+        				  id	: "AlertEmptyConts"	//fnMsgAfter에서 식별자로 사용되는 ID
+        				, msg	: "발송내용을 입력하셔야 쪽지발송이 가능합니다."	//메시지 내용
+        				, arrparam : []						//메시지의 변수에 들어갈 실제값
+        				, msgtype : "I"						//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        			};
+        			Ex.core.alert(this, param);
+        			//this.divWebEditor.form.webEditor.f
+        			return false;
+        		}
+        	}
+        	return true;
+        }
+
+        //
+        // this.fn_btnProc = function()
+        // {
+        // 	var k = 0;
+        //
+        // 	for(i = 0; i < this.btn_chk.length; i++){
+        // 		if(this.btn_chk[i]){
+        // 			this.id[k]  = this.btn_id[i];
+        // 			this.txt[k] = this.btn_text[i];
+        // 			this.css[k] = this.btn_css[i];
+        // 			this.fun[k] = this.btn_func[i];
+        //
+        // 			k++;
+        // 		}
+        // 	}
+        //
+        // 	var args = {
+        // 		count 	: k,
+        // 		id 		: this.id,
+        // 		text 	: this.txt,
+        // 		css 	: this.css,
+        // 		func 	: this.fun,
+        // 	};
+        //
+        // 	var mustAuth = "NNNN";
+        //
+        // 	trace("+++++++++++++++++++++++ this.divComBtn : " + this.divComBtn);
+        //
+        //
+        //
+        // 	this.initAuthButton(this, this.divComBtn, args, mustAuth);
+        // }
+        //
+        //
+        // this.initAuthButton = function(targetForm, targetDiv, args, mustAuth) {
+        //
+        // 	if(!targetDiv){
+        // 		trace("targetDiv가 유효하지 않음");
+        // 		return;
+        // 	}
+        //
+        // 	var count = args.count;
+        // 	var ids = args.id;
+        // 	var texts = args.text;
+        // 	var cssClasses = args.css;
+        // 	var funcs = args.func;
+        //
+        //
+        // 	for(var i = targetDiv.all.length - 1; i >=0; i--){
+        // 		var comp = targetDiv.all[i];
+        //
+        // 		if(comp instanceof Button){
+        // 			targetDiv.removeChild(comp.name);
+        // 			comp.destroy();
+        // 		}
+        // 	}
+        //
+        // 		trace("0000000000000000000 count : " + count);
+        //
+        // 	for(var i = 0; i < count; i++){
+        // 		var buttonId = ids[i];
+        //
+        // 		trace("======================== buttonId : " + buttonId);
+        //
+        // 		var newBtn = new Button();
+        // 		newBtn.init(buttonId, "absolute", 10+(i * 110), 10 , 100, 30);
+        // 		newBtn.set_text(text[i]);
+        // 		newBtn.set_cssclass(cssClasses[i]);
+        //
+        // 		targetDiv.addChild(button, newBtn);
+        // 		newBtn.show();
+        //
+        //
+        // 		trace("======================== newBtn : " + newBtn);
+        //
+        // 		if(funcs[i] && typeof targetForm[funcs[i]] === "function"){
+        // 			newBtn.addEventHandler("onclick", targetForm[funcs[i]], targetForm);
+        // 		}else{
+        // 			trace("버튼핸들러가 없음 " + funcs[i]);
+        // 		}
+        //
+        //
+        // 		if(mustAuth[i] === "N"){
+        // 			newBtn.set_enable(false);
+        // 		}else{
+        // 			newBtn.set_enable(true);
+        // 		}
+        //
+        // // 		var buttonObj = this.findComponent(targetDiv, buttonId);
+        // //
+        // //
+        // // 		if(buttonObj){
+        // //
+        // // 			if(texts[i]){
+        // // 				buttonObj.set_text(texts[i]);
+        // // 			}
+        // //
+        // // 			if(cssClasses[i]){
+        // // 				buttonObj.set_cssclass(cssClasses[i]);
+        // // 			}
+        // //
+        // // 			if(funcs[i]){
+        // // 				buttonObj.addEventHandler("onclick", targetForm[funcs[i]], targetForm);
+        // // 			}
+        // //
+        // // 			if(mustAuth && mustAuth[i] === "N"){
+        // // 				buttonObj.set_enable(false);
+        // // 			}else{
+        // // 				buttonObj.set_enable(true);
+        // // 			}
+        // //
+        // // 		}else{
+        // // 			trace("================== 버튼 안됨 : " + buttonId);
+        // // 		}
+        // 	}
+        // }
+        // //
+        // // this.findComponent = function(parentObj, compId){
+        // //
+        // // 	trace("================== parentObj : " + parentObj.all);
+        // // 	trace("================== compId : " + compId);
+        // //
+        // // 	if(!parentObj || !parentObj.all){
+        // //
+        // // 		trace("================== 유효하지않음 : ");
+        // //
+        // // 		return null;
+        // // 	}
+        // //
+        // // 	for(var i = 0; i < parentObj.all.length; i++){
+        // //
+        // // 		trace("찿는중 컴포넌트 이름 : " + parentObj.all[i].name );
+        // //
+        // // 	 	if(parentObj.all[i].name == compId){
+        // //  			return parentObj.all[i];
+        // //  		}
+        // // 	}
+        // //
+        // // 	trace("못찾음 : " + compId);
+        // // 	return null;
+        // // }
+        //
+        //
+        //
+        // this.addEventHandler("onload", this.fnCompInit, this);
+
+        //팝업창에서 수신,참조,숨은참조 선택 후 콜백 받는 함수
+        this.selrcvUserCallBack = function(compId, dsRtnObj)
+        {
+        	this.fn_setRcvUserType(compId, dsRtnObj);
+        }
+
+        //TO,CC,BCC 수신자를 선택하면 콜 하는 함수
+        //ds_userRcv_All 데이터셋에 수신자 별로 저장
+        this.fn_setRcvUserType = function(compId, dsRtnObj)
+        {
+        	var rcvType = "";
+        	var RCV_TYPE_CD = "";
+        	var sid = "";
+        	var strRcvUserNm = "";
+
+        	if (compId == "divRcvUserNm"){
+        		rcvType = "TO";	//수신
+        		//strRcvUserNm = this.divContent.form.divRcvUserNm.form.edtUserNm2.value;
+        	} else if (compId == "divRefUserNm"){
+        		rcvType = "CC";	//참조
+        		//strRcvUserNm = this.divContent.form.divRefUserNm.form.edtUserNm2.value;
+        	} else if (compId == "divBldUserNm"){
+        		rcvType = "BCC";	//숨은참조
+        		//strRcvUserNm = this.divContent.form.divBldUserNm.form.edtUserNm2.value;
+        	}
+
+        	this.ds_userRcv_All_tmp.clearData();	// TO,CC,BCC 상관없이 수신자를 선택했다면 tmp에 복사해온다
+        	this.ds_userRcv_All_tmp.copyData(dsRtnObj);
+        	trace(this.ds_userRcv_All_tmp.saveXML());
+
+        	// 수신,참조 선택팝업에서 기존 선택된 수신,참조자를 취소하는 경우
+        	if(this.ds_userRcv_All_tmp.rowcount == 0 && rcvType == "TO") {
+        		this.userClearCallBack(compId,this.ds_userRcv_All);
+        	} else if(this.ds_userRcv_All_tmp.rowcount == 0 && rcvType == "CC") {
+        		this.userClearCallBack(compId,this.ds_userRcv_All);
+        	}
+
+        //	수신,참조,숨은참조 선택후 사용자 팝업에서 return 받는 필드명
+        // 	"RCV_USER_ID", 		USER_ID - 받아옴
+        // 	"RCV_USER_NM", 		USER_NM - 받아옴
+        // 	"RCV_USER_DEPT", 	DEPT_CD - 받아옴
+        // 	"RCV_USER_DEPT_NM",	DEPT_NM - 받아옴
+
+        	//var strRcvUserNm = "";
+        	var j = 0;
+        	var nRowCnt = this.ds_userRcv_All_tmp.rowcount;
+        	var nRowJungCnt = 0;
+        	var s_rcvtype = "";
+
+        	// copy된 ds_userRcv_All_tmp 에 RCV_TYPE_CD 컬럼을 추가하고 edtuserNm2에 수신자 이름을 넣어 준다
+
+        		this.ds_userRcv_All_tmp.addColumn("RCV_TYPE_CD", "string");
+        		this.ds_userRcv_All_tmp.addColumn("SND_USER_ID", "string");
+        		this.ds_userRcv_All_tmp.addColumn("SND_USER_NM", "string");
+        		this.ds_userRcv_All_tmp.addColumn("SND_USER_DEPT", "string");
+        		this.ds_userRcv_All_tmp.addColumn("READ_YN", "string");
+        		this.ds_userRcv_All_tmp.addColumn("NEW_MEMO_YN", "string");
+        		this.ds_userRcv_All_tmp.addColumn("DEL_YN", "string");
+        		this.ds_userRcv_All_tmp.addColumn("ROWFLAG", "string");
+
+        	// 여러명을 선택할 수 있으므로 for문 사용
+        	for( i = 0; i <nRowCnt ; i++ ) {
+
+        		this.ds_userRcv_All_tmp.setColumn(i,"RCV_TYPE_CD", rcvType);			// 추가된 컬럼의 rcvtype을 바꿔줌 TO:수신, CC:참조, BCC:숨은참조
+        		this.ds_userRcv_All_tmp.setColumn(i,"SND_USER_ID", this.ACT_USER_ID);	// SND_USER_ID
+        		this.ds_userRcv_All_tmp.setColumn(i,"SND_USER_NM", this.ACT_USER_NM);	// SND_USER_NM
+        		this.ds_userRcv_All_tmp.setColumn(i,"SND_USER_DEPT", this.ACT_DEPT_CD);	// SND_USER_DEPT
+        		this.ds_userRcv_All_tmp.setColumn(i,"READ_YN", "N");					// READ_YN
+        		this.ds_userRcv_All_tmp.setColumn(i,"NEW_MEMO_YN", "Y");				// NEW_MEMO_YN
+        		this.ds_userRcv_All_tmp.setColumn(i,"DEL_YN", "N");						// DEL_YN
+        		this.ds_userRcv_All_tmp.setColumn(i,"ROWFLAG", "I");					// ROWFLAG
+        		this.ds_userRcv_All_tmp.setColumn(i,"REG_USER_ID", this.ACT_USER_ID);	// REG_USER_ID
+        		this.ds_userRcv_All_tmp.setColumn(i,"REG_USER_NM", this.ACT_USER_NM);	// REG_USER_NM
+        		this.ds_userRcv_All_tmp.setColumn(i,"REG_USER_DEPT", this.ACT_DEPT_CD);	// REG_USER_DEPT
+        	}
+        	//this.ds_userRcv_All.appendData(this.ds_userRcv_All_tmp,true);
+
+        	//if(this.ds_userRcv_All.rowcount < 1){								// 기존 Dataset에 선택된 수신자가 없는경우는 전체복사-임시저장이기 때문에 있음
+        	//	this.ds_userRcv_All.copyData(this.ds_userRcv_All_tmp);
+        		//trace("신규 row 개수 : "+this.ds_userRcv_All_tmp.rowcount);
+        	//} else {															// 기존 Dataset에 선택된 수신자가 1건이라도 있을경우 비교후 추가
+        		for( i = 0; i <nRowCnt ; i++ )
+        		{
+        			sid = this.ds_userRcv_All_tmp.getColumn(i,"USER_ID"); // 원본데이터의 USER_ID 가져오기
+        			s_rcvtype = this.ds_userRcv_All_tmp.getColumn(i,"RCV_TYPE_CD");
+        			//alert("this.dsPtMemoRcvTmp.findRow('USER_ID',sid) "+this.dsPtMemoRcvTmp.findRow("USER_ID",sid));
+        			//alert("s_rcvtype  " + s_rcvtype);
+        			//기존수신자를 새롭게 rcvtype바꿔서 선택하는 경우 방지
+        			this.dsPtMemoRcvTmp.setColumn(this.dsPtMemoRcvTmp.findRow("USER_ID",sid),"RCV_TYPE_CD",s_rcvtype);
+        			//trace("기존 USER ID : " + this.ds_userRcv_All.getColumn(i,"USER_ID"));
+        			//trace("기존 USER ID : " + this.ds_userRcv_All.getColumn(this.ds_userRcv_All.rowcount-1,"USER_ID"));
+
+        			if (this.ds_userRcv_All.findRow("RCV_USER_ID",sid) == -1) 	// USER_ID로 중복체크
+        			{
+        				this.ds_userRcv_All.addRow();
+        				//this.ds_userRcv_All.copyRow(this.ds_userRcv_All.rowcount-1,this.ds_userRcv_All_tmp,i);
+        				//COPY 하지 말고 USER_ID 와 USER_NM 을 setColumn으로 넣어줄것
+
+        				//this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"MEMO_ID",fv_memoId);
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"JOB_REV_NO",fv_memoId);
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"RCV_TYPE_CD",this.ds_userRcv_All_tmp.getColumn(i,"RCV_TYPE_CD"));
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"SND_USER_ID",this.ds_userRcv_All_tmp.getColumn(i,"SND_USER_ID"));
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"SND_USER_NM",this.ds_userRcv_All_tmp.getColumn(i,"SND_USER_NM"));
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"SND_USER_DEPT",this.ds_userRcv_All_tmp.getColumn(i,"SND_USER_DEPT"));
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"READ_YN","N");
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"NEW_MEMO_YN","Y");
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"DEL_YN","N");
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"ROWFLAG","I");
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"REG_USER_ID",this.ds_userRcv_All_tmp.getColumn(i,"REG_USER_ID"));
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"REG_USER_NM",this.ds_userRcv_All_tmp.getColumn(i,"REG_USER_NM"));
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"REG_USER_DEPT",this.ds_userRcv_All_tmp.getColumn(i,"REG_USER_DEPT"));
+
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"RCV_USER_ID",this.ds_userRcv_All_tmp.getColumn(i,"USER_ID"));
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"USER_ID",this.ds_userRcv_All_tmp.getColumn(i,"USER_ID"));	// FOMM0900_P01용
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"RCV_USER_NM",this.ds_userRcv_All_tmp.getColumn(i,"USER_NM"));
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"RCV_USER_DEPT",this.ds_userRcv_All_tmp.getColumn(i,"DEPT_CD"));
+        				this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowcount-1,"RCV_USER_DEPT_NM",this.ds_userRcv_All_tmp.getColumn(i,"DEPT_NM"));
+
+        				//this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowposition,"RCV_USER_ID",this.ds_userRcv_All_tmp.getColumn(i,"USER_ID"));
+        				//this.ds_userRcv_All.setColumn(this.ds_userRcv_All.rowposition,"RCV_USER_NM",this.ds_userRcv_All_tmp.getColumn(i,"USER_NM"));
+        				trace(this.ds_userRcv_All.getColumn(this.ds_userRcv_All.rowcount-1,"RCV_USER_ID"));
+        				trace(this.ds_userRcv_All.getColumn(this.ds_userRcv_All.rowcount-1,"RCV_USER_NM"));
+        				trace(this.ds_userRcv_All.getColumn(this.ds_userRcv_All.rowcount-1,"RCV_TYPE_CD"));
+        				trace(this.ds_userRcv_All.getColumn(this.ds_userRcv_All.rowcount-1,"ROWFLAG"));
+
+        				//trace("기존로우 + 추가한 로우 count : "+this.ds_userRcv_All.rowcount);
+        				//trace("신규 추가되는 user ID : "+ this.ds_userRcv_All.getColumn(this.ds_userRcv_All.rowcount-1,"USER_ID"));
+        			} else {
+        				RCV_TYPE_CD = this.ds_userRcv_All.getColumn(this.ds_userRcv_All.findRow("RCV_USER_ID",sid),"RCV_TYPE_CD"); // 원본데이터의 rcvtype 가져오기
+        				if (RCV_TYPE_CD != rcvType) nRowJungCnt++;
+        			}
+        		}
+        	//}
+
+        // edtUserNm2 수신자 이름 넣기
+         	trace("필터전 : " + this.ds_userRcv_All.rowcount);
+         	trace("rcvType : " + rcvType);
+        	this.ds_userRcv_All.set_enableevent(false);
+        	this.ds_userRcv_All.set_filterstr("RCV_TYPE_CD=='" + rcvType +"'");
+        	trace("필터후 : " + this.ds_userRcv_All.rowcount);
+
+        	for( i = 0; i <this.ds_userRcv_All.rowcount ; i++ )
+        	{
+        		if( j > 0) strRcvUserNm += ",";
+        		//if(strRcvUserNm != "" || j > 0) strRcvUserNm += ",";
+        		strRcvUserNm += this.ds_userRcv_All.getColumn(i,"RCV_USER_NM");
+        		j++;
+        	}
+
+        	this.ds_userRcv_All.set_filterstr("");
+        	this.ds_userRcv_All.set_enableevent(true);
+
+        // 	trace("원복후 : " + this.ds_userRcv_All.rowcount);
+        // 	trace("edtName2 : " + strRcvUserNm);
+
+        	switch(rcvType)
+        	{
+        		case "TO" :
+        			this.divContent.form.divRcvUserNm.form.edtUserNm2.set_value("");
+        			this.divContent.form.divRcvUserNm.form.edtUserNm2.set_value(strRcvUserNm);
+        			//this.divRcvUserNm.form.edtUserNm2.set_value(strRcvUserNm);
+        			//this.divRcvUserNm.set_enable(false);
+        			break;
+
+        		case "CC" :
+        			this.divContent.form.divRefUserNm.form.edtUserNm2.set_value("");
+        			this.divContent.form.divRefUserNm.form.edtUserNm2.set_value(strRcvUserNm);
+        			//this.divRefUserNm.form.edtUserNm2.set_value(strRcvUserNm);
+        			//this.divRefUserNm.set_enable(false);
+        			break;
+
+        		case "BCC" :
+        			this.divContent.form.divBldUserNm.form.edtUserNm2.set_value("");
+        			this.divContent.form.divBldUserNm.form.edtUserNm2.set_value(strRcvUserNm);
+        			//this.divBldUserNm.form.edtUserNm2.set_value(strRcvUserNm);
+        			//this.divBldUserNm.set_enable(false);
+        			break;
+        	}
+
+        	if(nRowJungCnt >0){
+        		Ex.core.toast(this, "중복된 수신,참조자는 제외 하였습니다.");
+        	}
+        //	trace(this.ds_userRcv_All.saveXML());
+        	/*
+        	for( i = 0; i <this.ds_userRcv_All.rowcount ; i++ )
+        	{
+        		trace("수신자 전체 : "+ i + "번 " + this.ds_userRcv_All.getColumn(i,"USER_NM"));
+        	}
+        	*/
+        }
+
+        //팝업창에서 수신,참조,숨은참조 선택 후 Clear 이벤트처리
+        this.userClearCallBack = function(compId, dsRtnObj)
+        {
+        	this.ds_userRcv_All_tmp.clearData();
+        	//trace("삭제전 : " + this.ds_userRcv_All.rowcount);
+        	this.ds_userRcv_All.set_enableevent(false);
+
+        	var rcvType;
+        	if (compId == "divRcvUserNm"){
+        		this.divContent.form.divRcvUserNm.form.edtUserNm2.set_value("");
+        		//this.divRcvUserNm.form.edtUserNm2.set_value("");
+        		rcvType = "TO";	//수신
+        	} else if (compId == "divRefUserNm"){
+        		this.divContent.form.divRefUserNm.form.edtUserNm2.set_value("");
+        		//this.divRefUserNm.form.edtUserNm2.set_value("");
+        		rcvType = "CC";	//참조
+        	} else if (compId == "divBldUserNm"){
+        		this.divContent.form.divBldUserNm.form.edtUserNm2.set_value("");
+        		//this.divBldUserNm.form.edtUserNm2.set_value("");
+        		rcvType = "BCC";	//숨은참조
+        	}
+        	// dataset에서 해당 레코드 삭제
+        	var delRowCnt = this.ds_userRcv_All.rowcount;
+        	for( i = delRowCnt-1; i >= 0; i-- )
+        	{
+        		if(this.ds_userRcv_All.getColumn(i,"RCV_TYPE_CD") == rcvType) this.ds_userRcv_All.deleteRow(i);
+        		//trace("edtName2 : " + strRcvUserNm);
+        	}
+        	this.ds_userRcv_All.set_enableevent(true);
+        	//trace("삭제후 : " + this.ds_userRcv_All.rowcount);
+        }
+
+
+        this.setAlarmParam = function(){
+        	//trace("------------- fnSendAlarm --------------");
+        	var nRowCnt = this.ds_userRcv_All.rowcount;
+        	var alarmTypeCd = "CDALM03";	//쪽지용 코드테이블 참조
+        	//var alarmRef = this.getOwnerFrame().url;
+        	var alarmRef = "fomm::FOMM0950_W.xfdl";
+        	var alarmConts = this.ACT_USER_NM + "님 으로 부터 쪽지가 도착했습니다.";
+
+        	var paramArr = [];
+        	var params = {"pPostNo": this.dsPtMemo.getColumn(0, "MEMO_ID").toString(), "pPostMtType": "RCV"};
+        	paramArr.push(params);
+        	var alarmParams = JSON.stringify(paramArr); // 알림발생 화면을 열기 위한 파라미터 전달
+
+        	// memo 수신자 id를 넣어준다.
+        	for( i = 0; i <nRowCnt ; i++ )
+        	{
+        		var rowpos = this.dsAlarm.setAddRow();
+        		this.dsAlarm.setColumn(rowpos, "USER_ID",this.ds_userRcv_All.getColumn(i,"USER_ID"));
+        		this.dsAlarm.setColumn(rowpos, "ALARM_TYPE_CD", alarmTypeCd);
+        		this.dsAlarm.setColumn(rowpos, "ALARM_REF", alarmRef);
+        		this.dsAlarm.setColumn(rowpos, "ALARM_CONTS", alarmConts);
+        		this.dsAlarm.setColumn(rowpos, "ALARM_PARAMS", alarmParams);
+        	}
+        trace(this.dsAlarm.saveXML());
+        	//var rowpos = this.dsAlarm.setAddRow();
+
+        	//var postMtTitle = this.dsPostDt.getColumn(0, 'POST_MT_TITLE');
+        	//var userNm = this.dsPostDt.getColumn(0, 'FRNM');
+        	//var deptNm = this.dsPostDt.getColumn(0, 'FR_DEPT_NM');
+        	//var alarmTypeCd = (this.pReplyFlag == true) ? 'CDALM05' : 'CDALM06'; // 답글이면 05, 그냥 글이면 06
+
+        	//var alarmTypeCd = 'CDALM03';	//쪽지용 코드테이블 참조
+        	//var alarmRef = this.getOwnerFrame().url;
+        	//var alarmConts = `${postMtTitle}에 ${userNm}(${deptNm})님이 게시글을 작성했습니다.`;
+        	//var alarmConts = this.ACT_USER_NM + '님 으로 부터 쪽지가 도착했습니다.';
+
+        	// dsAlarm 에 데이터 세팅
+        	//this.dsAlarm.setColumn(rowpos, "USER_ID", Ex.util.getSession('gvUserId'));
+        	//this.dsAlarm.setColumn(rowpos, "USER_ID", "e1002229");
+        	//this.dsAlarm.setColumn(rowpos, "ALARM_TYPE_CD", alarmTypeCd);
+        	//this.dsAlarm.setColumn(rowpos, "ALARM_REF", alarmRef);
+        	//this.dsAlarm.setColumn(rowpos, "ALARM_CONTS", alarmConts);
+
+        	this.fnSendAlarm(); // 트랜잭션
+        }
+
+
+
+        /***********************************************************************************
+         * Component Event
+         ***********************************************************************************/
+        /**********************************************************************************
+        *	발신자의 경우
+        		1. 임시저장 - 수정 : USND, 발송 : SSND, 삭제 : DSND
+        		2. 발송 - 재발송 : RSND, 전달 : TSND, 삭제 : DSND
+        	수신자의 경우(1가지 경우 밖에 없음)
+        		1. 전달 : TRCV, 답신 : RRCV, 삭제 : DRCV
+        ***********************************************************************************/
+        // 공통 onclick : component
+        this.fnCommOnclick = function(obj, e)
+        {
+        	switch(obj.name)
+        	{
+        		case "btnSave" :		// 임시저장 후 수정
+        			this.dsCond.setColumn(0,"MODIFY_TYPE", "U" + fv_flag);	//fv_flag - 발신자 : SND, 수신자 : RCV
+        			trace("MODIFY_TYPE  :: " + this.dsCond.getColumn(0,"MODIFY_TYPE"));
+
+        			var webConts = this.divContent.form.divWebEditor.form.getContent();
+        			//this.ds_pt_memo.setColumn(0, 'MEMO_CONTENTS', webConts);
+        			this.dsPtMemo.setColumn(0, 'MEMO_CONTENTS', webConts);
+        			// 예전 시스템 - COMESTA1 : 임시저장 COMESTA2 : 발송
+        			this.dsPtMemo.setColumn(0, "MEMO_STATUS_CD", 	"1");	//1 : 임시저장, 2 : 발송완료
+
+        			//임시저장일 경우 수신자가 없어도 저장 할 수 있도록 처리, 발송일 경우만 vali 체크함
+        			//임시저장의 경우 수신자가 없어도 저장 가능 해야함
+        			//if(!this.fn_SaveChk()) return;
+
+        			/*
+        			if(this.divContent.form.divUpload.form.isUpdateForm())
+        			{
+        				this.divContent.form.divUpload.form.fnUploadFiles();
+        			}
+        			*/
+        			var param = {
+        				id : "saveConfirm"					//fnMsgAfter에서 식별자로 사용되는 ID itemPopValiAlert-am100_D00.xfdl
+        			  , msg : "수정 하시겠습니까?"			//메시지 내용
+        			  , arrparam : ['']						//메시지의 변수에 들어갈 실제값
+        			  , msgtype : "I"};						//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert,
+        													//'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용), 'E' : 'X' icon; Error alert;
+        			Ex.core.confirm(this, param);
+        			break;
+
+        		case "btnSend" :		// 임시저장후 발송
+        			this.dsCond.setColumn(0,"MODIFY_TYPE", "S" + fv_flag);	//fv_flag - 발신자 : SND, 수신자 : RCV
+        			//trace("MODIFY_TYPE  :: " + this.dsCond.getColumn(0,"MODIFY_TYPE"));
+
+        			var webConts = this.divContent.form.divWebEditor.form.getContent();
+        			this.dsPtMemo.setColumn(0, 'MEMO_CONTENTS', webConts);
+        			this.dsPtMemo.setColumn(0, "MEMO_STATUS_CD", 	"2");		// 1: 임시저장, 2:발송
+
+        			if(!this.fn_SaveChk()) return;
+        			/*
+        			if(this.divContent.form.divUpload.form.isUpdateForm())
+        			{
+        				this.divContent.form.divUpload.form.fnUploadFiles();
+        			}
+        			*/
+
+        			var param = {
+        				id : "saveConfirm"					//fnMsgAfter에서 식별자로 사용되는 ID itemPopValiAlert-am100_D00.xfdl
+        			  , msg : "쪽지를 발송 하시겠습니까?"			//메시지 내용
+        			  , arrparam : ['']						//메시지의 변수에 들어갈 실제값
+        			  , msgtype : "I"};						//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert,
+        													//'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용), 'E' : 'X' icon; Error alert;
+        			Ex.core.confirm(this, param);
+        			break;
+
+        		case "btnMsgReSnd" :		// 재발송
+        			//this.divContent.form.divBottom.visible = true;
+        			/*
+        			Ex.core.popup(
+        			this,
+        			'MsgReSnd,
+        			"fomm::FOMM0900_W.xfdl",             		// <--- 팝업창 오픈 Url
+        			{ title			: Ex.core.word('쪽지') + ' ' + Ex.core.word('다시 보내기'),
+        			  pPopType		: 'MsgReSnd',
+        			  pMEMO_ID		: pMEMO_ID,
+        			},     	// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+        			"width=1100,height=850"                  // <--- width/height/modeless(프레임 처리 옵션)
+        			);
+        			*/
+        			this.dsCond.setColumn(0,"MODIFY_TYPE", "R" + fv_flag);	//fv_flag - 발신자 : SND, 수신자 : RCV
+        			trace("MODIFY_TYPE  :: " + this.dsCond.getColumn(0,"MODIFY_TYPE"));
+
+        			Ex.core.pclose(this,"MsgReSnd");
+        			break;
+
+        			//this.opener.fnPopupRecall(this);
+        			//trace(this.getOwnerFrame());
+        			//this.getOwnerFrame().fnPopupRecall(this);
+        			//.fnPopupRecall(this);
+
+        		case "btnRcvMsgReply" :		// 답신
+        			this.dsCond.setColumn(0,"MODIFY_TYPE", "R" + fv_flag);	//fv_flag - 발신자 : SND, 수신자 : RCV
+        			trace("MODIFY_TYPE  :: " + this.dsCond.getColumn(0,"MODIFY_TYPE"));
+        			//this.divContent.form.divBottom.visible = true;
+        			/*
+        			var sSize = '';
+        			sSize = 'width=1060,height=900';
+        			Ex.core.popup(
+        				this,
+        				'RcvMsgReply',
+        				"fomm::FOMM0900_W.xfdl",             		// <--- 팝업창 오픈 Url
+        				{ title			: Ex.core.word('쪽지') + ' ' + Ex.core.word('답장 하기'),
+        				  pMEMO_ID 		: this.pMEMO_ID,
+        				  //pMEMO_RCV_ID 	: this.pMEMO_RCV_ID,
+        				  pflag 		: "RcvMsgReply",
+        				},     	// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+        				sSize                  // <--- width/height/modeless(프레임 처리 옵션)
+        			);
+        			*/
+        			Ex.core.pclose(this,"RcvMsgReply");
+        			break;
+
+        		case "btnMsgTrans" :		// 전달
+        			this.dsCond.setColumn(0,"MODIFY_TYPE", "T" + fv_flag);	//발신자 : SND, 수신자 : RCV
+        			trace("MODIFY_TYPE  :: " + this.dsCond.getColumn(0,"MODIFY_TYPE"));
+        			//this.divContent.form.divBottom.visible = true;
+        			/*
+        			var sSize = '';
+        			sSize = 'width=1060,height=900';
+        			Ex.core.popup(
+        				this,
+        				'MsgTrans',
+        				"fomm::FOMM0900_W.xfdl",             		// <--- 팝업창 오픈 Url
+        				{ title			: Ex.core.word('쪽지') + ' ' + Ex.core.word('전달 하기'),
+        				  pMEMO_ID 		: this.pMEMO_ID,
+        				  //pMEMO_RCV_ID 	: this.pMEMO_RCV_ID,
+        				  pflag 		: "MsgTrans",
+        				},     	// <--- title및 파라미터(p1,p2는 화면에서 사용할 파라미터 등)
+        				sSize                  // <--- width/height/modeless(프레임 처리 옵션)
+        			);
+        			*/
+        			Ex.core.pclose(this,"MsgTrans");
+        			break;
+
+        		case "btnMsgDel" :		// 삭제
+        			this.dsCond.setColumn(0,"MODIFY_TYPE", "D" + fv_flag);	//발신자 : SND, 수신자 : RCV
+        			//this.dsCond.setColumn(0,"MEMO_ID",this.dsPtMemoRcv.getColumn(0,"JOB_REV_NO"));
+        			//this.dsCond.setColumn(0,"JOB_REV_NO",this.dsPtMemoRcv.getColumn(0,"JOB_REV_NO"));
+        			//this.dsCond.setColumn(0,"MEMO_RCV_ID",this.dsPtMemoRcv.getColumn(0,"MEMO_RCV_ID"));
+        			this.dsCond.setColumn(0,"JOB_REV_NO",this.dsPtMemo.getColumn(0,"MEMO_ID"));
+        			this.dsCond.setColumn(0,"RCV_USER_ID",Ex.util.getSession('gvUserId'));
+        			//trace("MODIFY_TYPE  :: " + this.dsCond.getColumn(0,"MODIFY_TYPE"));
+
+        			var param = {
+        				id : "deleteConfirm"
+        				, msg : (fv_flag == "SND")? "보내신 쪽지를 삭제 하시겠습니까?" : "받으신 쪽지를 삭제 하시겠습니까?"
+        				//, msg : fv_flag + " 쪽지를 삭제 하시겠습니까?"
+        				//, msg : "삭제 시 <fc v='red'>{0}</fc>복구 할 수 없습니다.\n계속 하시겠습니까?"
+        				//, arrparam : ['삭제된 쪽지는 ']
+        				, arrparam : ['']
+        				, msgtype : "W"};
+        			Ex.core.confirm(this, param);
+
+        			break;
+
+        		case "btnClose" :			// 닫기
+        			Ex.core.pclose(this,"Close");
+        			break;
+        	}
+        }
+
+
+
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divComBtn.form.btnMsgReSnd.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.divComBtn.form.btnMsgTrans.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.divComBtn.form.btnSave.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.divComBtn.form.btnSend.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.divComBtn.form.btnRcvMsgReply.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.divComBtn.form.btnMsgDel.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.divComBtn.form.btnClose.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.dsAlarm.addEventHandler("oncolumnchanged",this.dsOnColumnChanged,this);
+        };
+        this.loadIncludeScript("FOMM0950_W.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

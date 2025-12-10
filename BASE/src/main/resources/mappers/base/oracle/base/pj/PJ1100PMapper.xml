@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ1100PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.EDU_ID
+			, A.TITLE
+			, A.PJT_ID
+			, B.PJT_NAME
+			, SUBSTR(A.EDU_STIME, 1, 8)	AS EDU_DATE
+			, SUBSTR(A.EDU_STIME, -4)	AS EDU_STIME
+			, SUBSTR(A.EDU_ETIME, -4)	AS EDU_ETIME
+			, A.CONTENTS
+			, A.EDU_LOC
+			, A.LECTURE_NM
+			
+			, SUBSTR(A.REG_STIME, 1, 8)	AS REG_DATE
+            , SUBSTR(A.REG_STIME, -6)	AS REG_TIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+
+		FROM
+			  PJ_EDUCATION A
+			, PJ_PROJECT B
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND A.EDU_ID	= #{EDU_ID} 
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			'0' AS CHK,
+			''	AS ROWFLAG,
+			A.EDU_ATTND_ID,
+			A.EDU_ID,
+			A.ATN_USER_ID, 
+			A.ATN_USER_NM,
+			A.ATN_USER_DEPT,
+			A.REG_USER_ID,
+			A.REG_USER_NM,
+			A.REG_USER_DEPT,
+			A.REG_STIME
+
+		FROM
+			PJ_EDU_ATTND A
+
+		WHERE 1 = 1
+		AND A.EDU_ID = #{EDU_ID} 
+
+		ORDER BY
+			A.ATN_USER_NM
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="EDU_ID" order="BEFORE">
+			SELECT
+				'PJED' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(EDU_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_EDUCATION
+   			WHERE 1 = 1
+   			AND EDU_ID LIKE 'PJED%'
+			AND LENGTH(EDU_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_EDUCATION 
+		(
+			  EDU_ID
+			, TITLE
+			, PJT_ID
+			, EDU_STIME
+			, EDU_ETIME
+			, CONTENTS
+			, EDU_LOC
+			, LECTURE_NM
+			
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  #{EDU_ID}
+			, #{TITLE}
+			, #{PJT_ID}
+			, #{EDU_DATE} || #{EDU_STIME}
+			, #{EDU_DATE} || #{EDU_ETIME}
+			, #{CONTENTS}
+			, #{EDU_LOC}
+			, #{LECTURE_NM}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_EDUCATION SET
+			  TITLE				= #{TITLE}
+			, EDU_STIME			= #{EDU_DATE} || #{EDU_STIME}
+			, EDU_ETIME			= #{EDU_DATE} || #{EDU_ETIME}
+			, CONTENTS			= #{CONTENTS}
+			, EDU_LOC			= #{EDU_LOC}
+			, LECTURE_NM		= #{LECTURE_NM}
+
+			, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+
+		WHERE 1 = 1
+		AND PJT_ID	= #{PJT_ID}
+		AND EDU_ID	= #{EDU_ID}
+	</update>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="EDU_ATTND_ID" order="BEFORE">
+			SELECT
+				'PJEA' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(EDU_ATTND_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_EDU_ATTND
+   			WHERE 1 = 1
+   			AND EDU_ATTND_ID LIKE 'PJEA%'
+			AND LENGTH(EDU_ATTND_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_EDU_ATTND 
+		(
+			  EDU_ATTND_ID
+			, EDU_ID
+			, ATN_USER_ID
+			, ATN_USER_NM
+			, ATN_USER_DEPT
+
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+			, REG_STIME
+		)
+		VALUES
+		(
+			  #{EDU_ATTND_ID}
+			, #{EDU_ID}
+			, #{ATN_USER_ID}
+			, #{ATN_USER_NM}
+			, #{ATN_USER_DEPT}
+
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') 
+		)
+	</insert>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_EDU_ATTND 
+		WHERE 1 = 1
+		AND EDU_ID			= #{EDU_ID}
+		AND EDU_ATTND_ID	= #{EDU_ATTND_ID}
+	</delete>
+
+</mapper>

@@ -1,0 +1,1902 @@
+(function()
+{
+    return function()
+    {
+        if (!this._is_form)
+            return;
+        
+        var obj = null;
+        
+        this.on_create = function()
+        {
+            this.set_name("FOMM0700_D01");
+            this.set_titletext("체크리스트 입력폼");
+            this.set_scrolltype("vertical");
+            if (Form == this.constructor)
+            {
+                this._setFormPosition(1280,235);
+            }
+            
+            // Object(Dataset, ExcelExportObject) Initialize
+            obj = new Dataset("dsCond", this);
+            obj._setContents("<ColumnInfo><Column id=\"CHKLST_ID\" type=\"STRING\" size=\"256\"/><Column id=\"KEY_TBL\" type=\"STRING\" size=\"256\"/><Column id=\"PK1\" type=\"STRING\" size=\"256\"/><Column id=\"PK2\" type=\"STRING\" size=\"256\"/><Column id=\"PK3\" type=\"STRING\" size=\"256\"/></ColumnInfo><Rows><Row><Col id=\"CHKLST_ID\"/><Col id=\"KEY_TBL\"/><Col id=\"PK1\"/><Col id=\"PK2\"/><Col id=\"PK3\"/></Row></Rows>");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsAnswerCnt", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsData", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+
+
+            obj = new Dataset("dsExclude", this);
+            obj._setContents("");
+            this.addChild(obj.name, obj);
+            
+            // UI Components Initialize
+            obj = new Static("stcScore",null,"0","60","40","0",null,null,null,null,null,this);
+            obj.set_taborder("3");
+            obj.set_text("점수");
+            obj.set_textAlign("center");
+            obj.set_visible("false");
+            obj.set_border("1px solid #125dae, 1px solid #b7b1b2, 1px solid #b7b1b2, 1px solid #b7b1b2");
+            obj.set_cssclass("sta_WF_inputTitle");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcAnswerTitle",null,"0","436","40","59",null,null,null,null,null,this);
+            obj.set_taborder("1");
+            obj.set_text("점검결과");
+            obj.set_cssclass("sta_WF_inputTitle");
+            obj.set_textAlign("center");
+            obj.set_border("1px solid #125dae, 1px solid #b7b1b2, 1px solid #b7b1b2, 1px solid #b7b1b2");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+
+            obj = new Div("divBottomButton","0",null,null,"32","0","0",null,null,null,null,this);
+            obj.set_taborder("4");
+            obj.set_text("");
+            obj.set_background("white");
+            obj.set_isChgLang("false");
+            obj.set_isButtonGroup("true");
+            obj.set_visible("false");
+            obj.set_formscrolltype("none");
+            this.addChild(obj.name, obj);
+
+            obj = new Button("btnSave",null,"0","80","32","0",null,null,null,null,null,this.divBottomButton.form);
+            obj.set_taborder("0");
+            obj.set_text("등록");
+            obj.set_cssclass("btn_WF_primary_save");
+            obj.set_visible("true");
+            this.divBottomButton.addChild(obj.name, obj);
+
+            obj = new Div("divConts","0","40",null,null,"0","divBottomButton:8",null,null,null,null,this);
+            obj.set_taborder("2");
+            obj.set_border("0px solid red");
+            obj.set_formscrollbarsize("15");
+            obj.set_text("");
+            obj.set_formscrolltype("vertical");
+            obj.set_visible("true");
+            this.addChild(obj.name, obj);
+
+            obj = new Static("stcQueTitle","0","0",null,"40","stcAnswerTitle:-1",null,null,null,null,null,this);
+            obj.set_taborder("0");
+            obj.set_text("점검항목");
+            obj.set_cssclass("sta_WF_inputTitle");
+            obj.set_textAlign("center");
+            obj.set_border("1px solid #125dae, 1px solid #b7b1b2, 1px solid #b7b1b2, 1px solid #b7b1b2");
+            obj.set_visible("false");
+            this.addChild(obj.name, obj);
+            // Layout Functions
+            //-- Default Layout : this.divBottomButton.form
+            obj = new Layout("default","",0,0,this.divBottomButton.form,function(p){});
+            this.divBottomButton.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this.divConts.form
+            obj = new Layout("default","",0,0,this.divConts.form,function(p){});
+            this.divConts.form.addLayout(obj.name, obj);
+
+            //-- Default Layout : this
+            obj = new Layout("default","",1280,235,this,function(p){});
+            this.addLayout(obj.name, obj);
+            
+            // BindItem Information
+            obj = new BindItem("recUserNm","txRecUser","value","dtSrReqInfo","recUserNm");
+            this.addChild(obj.name, obj);
+            obj.bind();
+            
+            // TriggerItem Information
+
+        };
+        
+        this.loadPreloadList = function()
+        {
+
+        };
+        
+        // User Script
+        this.registerScript("FOMM0700_D01.xfdl", function() {
+        /***********************************************************************************
+        * 화면 ID	︰ FOMM07000_D
+        * 화면(명)	︰ 체크리스트 문항 및 답항
+        * 메뉴(경로)	︰ 공통
+        * 화면 설명	︰
+        * 작성자		︰ WEMB
+        * 작성일		︰ 2024. 06. 28
+        * 수정이력	︰
+        *------------------------------------------------------------------
+        * 수정일			작성자		이력
+        *------------------------------------------------------------------
+        *2024. 06. 28	WEMB		최초작성
+        *------------------------------------------------------------------
+        ***********************************************************************************/
+        /***********************************************************************************
+         * Script Include
+         ***********************************************************************************/
+
+        /***********************************************************************************
+         * Form Variable
+         ***********************************************************************************/
+        this.callScope;
+
+        this.TITLE;				//제크리스트 제목
+        this.IS_AUTO_SIZE;		//true(전체 Form에 Scroll발생)/false([divConts] DIV 영역만 Scroll 발생)
+        this.IS_DIV_RESIZE;		//checklist 데이터 조회하여 화면을 동적으로 그린 후 Header와 [divConts] DIV 크기 재조정을 실행할지 여부
+        this.DIRECTION;			//답항 그리기 방향 : H(가로)/V(세로)
+        this.EDITABLE;			//true(Y편집모드)/ false(N조회모드)
+        this.MSG;				//N(NO:알림없음), A(ALERT:alert창), T(TOAST:toast메시지)
+        this.IS_USE_REG_BTN;	//true(Y:등록버튼 사용), false(N:등록버튼 미사용)
+        this.IS_LABEL_SCORE;	//true(Y:답항라벨 점수 표기), false(N:답항라벨 점수 미표기)
+        this.USE_ONSIZE_EVT;
+        this.CHKLST_ID;
+        this.KEY_TBL;
+        this.PK1;
+        this.PK2;
+        this.PK3;
+
+        this.validationChcekQueSeq;	//등록시 validation 체크에 충족하지 않은 문항 번호를 저장하기 윈한 변수
+
+        this.maxQuestionWidth;
+        this.maxAnswerWidth		= 0;
+        this.targetChkSet;
+        this.orgValue;
+
+        var formObj;
+        /***********************************************************************************
+         * Form Function
+         ***********************************************************************************/
+        this.form_onload = function(obj, e)
+        {
+        	formObj = obj;
+        	this.gfnFormOnLoad(obj, this.fnInit);
+        }
+
+        this.fnInit = function()
+        {
+        	this.fnCompInit();		// 컴포넌트 초기화
+        }
+
+        // 필요시 폼관련 이벤트는 여기 추가
+        /***********************************************************************************
+         * Common Function
+         ***********************************************************************************/
+        // 조회
+        this.fnSearch = function()
+        {
+        	if( !Ex.isEmpty(this.dsCond.getColumn(0, "CHKLST_ID")) )
+        	{
+        		var sTranId = "select01";													// transaction 서비스 실행 ID / 콜백에서 수신할 서비스ID
+        		var sService = "FOMM0700D/selectData";										// 서비스명
+        		var sInDs = "dsCond=dsCond";												// 서버로 전송할 데이타셋 @ParamDataSet 인자와 맵핑됨
+        		var sOutDs = "dsAnswerCnt=dsAnswerCnt dsData=dsData dsExclude=dsExclude";	// 서버에서 수신할 데이타셋
+        		var sArg = "";																// 서버 @ParamVariable 인자와 맵핑됨
+        		Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        	}
+        }
+
+        // 저장
+        this.fnSave = function()
+        {
+        	var sTranId = "save01";
+            var sService = "FOMM0700D/save01";
+            var sInDs = "dsCond=dsCond dsData=dsData:A";
+            var sOutDs = "dsAnswerCnt=dsAnswerCnt dsData=dsData dsExclude=dsExclude";
+            var sArg = "";
+            Ex.core.tran(this, sTranId, sService, sInDs, sOutDs, sArg);
+        };
+
+        /***********************************************************************************
+         * CallBack Event
+         ***********************************************************************************/
+        // Transaction 디폴트 콜백함수
+        this.fnCallback = function (sSvcId, nErrorCode, sErrorMsg)
+        {
+        	// 에러메세지 처리
+        	if (nErrorCode < 0)
+        	{
+        		var param = {id : "ERROR", msg : sSvcId+"::"+nErrorCode+"::"+sErrorMsg};
+        		Ex.core.error(this, param);
+        		return;
+        	}
+
+        	if(this.parent.callBackFunc)	this.parent.callBackFunc(sSvcId);
+
+        	// 각 Transaction별 CallBack 처리
+        	switch (sSvcId)
+        	{
+        		case "select01" :
+        			this.stcQueTitle.set_visible(true);
+        			this.stcAnswerTitle.set_visible(true);
+        			this.stcScore.set_visible(true);
+
+        			if(this.DIRECTION == "H")
+        			{
+        				this.fnDrawCheckListHorizontal();
+        			}
+        			else if(this.DIRECTION == "V")
+        			{
+        				this.fnDrawCheckListVertical();
+        			}
+        			if(!this["divConts"].visible)
+        			{
+        				this["divConts"].set_visible(true);
+        			}
+
+        			if(this.callScope.fnGetScore)
+        			{
+        				var sumRetVal = 0;
+        				for(var i=0; i<this.dsData.rowcount; i++)
+        				{
+        					sumRetVal += nexacro.toNumber(this.dsData.getColumn(i, "RET_VAL"), 0);
+        				}
+        				trace("SUM RET_VAL : " + sumRetVal);
+        				this.callScope.fnGetScore(sumRetVal);
+        			}
+        			break;
+
+        		case "save01" :
+        			if( Ex.isEmpty(this.MSG) )
+        			{
+        				this.MSG = "N";
+        			}
+
+        			if(this.MSG == "A")
+        			{
+        				var param = {
+        					  id	: "saveAlertI"				//fnMsgAfter에서 식별자로 사용되는 ID
+        					, msg	: "10004"					//메시지 내용
+        					, arrparam : [Ex.core.word("")]		//메시지의 변수에 들어갈 실제값
+        					, msgtype : "S"						//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        				};
+        				Ex.core.alert(this, param);
+        				return false;
+        			}
+        			else if(this.MSG == "T")
+        			{
+        				Ex.core.toast(this, "10004", null, {toastType:'S'});
+        			}
+        			break;
+        	}
+        }
+
+        // 팝업 디폴트 콜백함수
+        this.fnPopupAfter = function(pID, varValue)
+        {
+        	// TO DO
+        	// 개발자가 지정한 pID(팝업창ID) , varValue(팝업창 반환값)
+        	if(!varValue) return;
+
+        	switch(pID)
+        	{
+        		case "" :
+        			break;
+        	}
+        }
+
+        // alert/confirm/error 메시지창 디폴트 콜백함수
+        this.fnMsgAfter = function(mID, varValue)
+        {
+        	if(!varValue) return;
+
+        	switch(mID)
+        	{
+        		case "saveConfirm" :
+        			this.fnSave();
+        			break;
+
+        		case "AlertInputCheck1I" :	//단일선택 (미입력)
+        			this["divConts"].form["rdoAnswer" + this.validationChcekQueSeq].setFocus();
+        			break;
+
+        		case "AlertInputCheck2I" :	//복수선택 (미입력)
+        			this["divConts"].form["chkSetAnswer" + this.validationChcekQueSeq].setFocus();
+        			break;
+
+        		case "AlertInputCheck3I" :	//복수선택 (최소 선택 미충족)
+        			this["divConts"].form["chkSetAnswer" + this.validationChcekQueSeq].setFocus();
+        			break;
+
+        		case "AlertInputCheck4I" :	//서술식 (미입력)
+        			this["divConts"].form["divSubjective" + this.validationChcekQueSeq].form["txaAnswer"].setFocus();
+        			break;
+
+        		case "AlertInputCheck5I" :	//복수응답 가능 갯수 초과
+        			this.targetChkSet.set_value(this.orgValue);
+        			this.orgValue = undefined;
+        			break;
+        	}
+        }
+
+        /***********************************************************************************
+         * User Function
+         ***********************************************************************************/
+        this.fnCompInit = function()
+        {
+        }
+
+        //config
+        this.setConfig = function(scope, oParam)
+        {
+        	this.maxQuestionWidth	= this.width;
+
+        	this.callScope		= scope;																//호출한 scope
+
+        	this.TITLE			= !Ex.isEmpty(oParam.TITLE) ? '■ ' + oParam.TITLE + '\n' : '';			//제목 (제목이 존재하는 경우 Validation 체크시 같이 표현)
+        	this.IS_AUTO_SIZE	= Ex.isEmpty(oParam.IS_AUTO_SIZE) ? false : oParam.IS_AUTO_SIZE;		//true(전체 Form에 Scroll발생)/false([divConts] DIV 영역만 Scroll 발생)
+        	this.IS_DIV_RESIZE	= Ex.isEmpty(oParam.IS_DIV_RESIZE) ? true : oParam.IS_DIV_RESIZE;		//checklist 데이터 조회하여 화면을 동적으로 그린 후 Header와 [divConts] DIV 크기 재조정을 실행할지 여부
+        	this.DIRECTION		= Ex.isEmpty(oParam.DIRECTION) ? "H" : oParam.DIRECTION;				//답항 그리기 방향 H(가로)/V(세로)
+        	this.EDITABLE		= Ex.isEmpty(oParam.EDITABLE) ? false : oParam.EDITABLE;				//true(편집모드)/ false(조회모드)
+        	this.MSG			= oParam.MSG || "N";													//N(NO:알림없음), A(ALERT:alert창), T(TOAST:toast메시지)
+        	this.IS_USE_REG_BTN = Ex.isEmpty(oParam.IS_USE_REG_BTN) ? false : oParam.IS_USE_REG_BTN;	//true(등록버튼 사용), false(등록버튼 미사용)
+        	this.IS_LABEL_SCORE = Ex.isEmpty(oParam.IS_LABEL_SCORE) ? false : oParam.IS_LABEL_SCORE;	//true(답항라벨 점수 표기), false(답항라벨 점수 미표기)
+        	this.USE_ONSIZE_EVT	= Ex.isEmpty(oParam.USE_ONSIZE_EVT) ? false : oParam.USE_ONSIZE_EVT;	//checklist Form의 onsize 이벤트 사용여부 true(사용) / false(미사용)
+        	this.CHKLST_ID		= oParam.CHKLST_ID;                 									//문항 CHKLIST KEY ID
+        	this.KEY_TBL		= oParam.KEY_TBL;                   									//구분값
+        	this.PK1			= oParam.PK1;                       									//테이블 PK1
+        	this.PK2			= oParam.PK2;                       									//테이블 PK2 (복합 키인 경우 사용)
+        	this.PK3			= oParam.PK3;                       									//테이블 PK3 (복합 키인 경우 사용)
+
+        // 	trace(
+        // 		"this.IS_AUTO_SIZE : " + this.IS_AUTO_SIZE +
+        // 		"this.IS_DIV_RESIZE : " + this.IS_DIV_RESIZE +
+        // 		"\nthis.DIRECTION : " + this.DIRECTION +
+        // 		"\nthis.EDITABLE : " + this.EDITABLE +
+        // 		"\nthis.MSG : " + this.MSG +
+        // 		"\nthis.IS_USE_REG_BTN : " + this.IS_USE_REG_BTN +
+        // 		"\nthis.IS_LABEL_SCORE : " + this.IS_LABEL_SCORE +
+        // 		"\nthis.USE_ONSIZE_EVT : " + this.USE_ONSIZE_EVT +
+        // 		"\nthis.CHKLST_ID : " + this.CHKLST_ID +
+        // 		"\nthis.KEY_TBL : " + this.KEY_TBL +
+        // 		"\nthis.PK1 : " + this.PK1 +
+        // 		"\nthis.PK2 : " + this.PK2 +
+        //         "\nthis.PK3 : " + this.PK3
+        // 	);
+
+        	if( !Ex.isEmpty(this.DIRECTION) )
+        	{
+        		this.dsCond.setColumn(0, "DIRECTION", this.DIRECTION);
+        	}
+        	else
+        	{
+        		this.dsCond.setColumn(0, "DIRECTION", "H");	//Default : 가로
+        	}
+
+        	if( Ex.isEmpty(this.IS_LABEL_SCORE) )
+        	{
+        		this.IS_LABEL_SCORE = false;
+        	}
+
+        	if( !Ex.isEmpty(this.CHKLST_ID) )
+        	{
+        		this.dsCond.setColumn(0, "CHKLST_ID", this.CHKLST_ID);
+        	}
+        	else
+        	{
+        		var param = {
+        			  id	: "AlertChkLstIdI"			//fnMsgAfter에서 식별자로 사용되는 ID
+        			, msg	: "체크리스트ID가 없습니다."		//메시지 내용
+        			, arrparam : [Ex.core.word("")]		//메시지의 변수에 들어갈 실제값
+        			, msgtype : "I"						//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        		};
+        		Ex.core.alert(this, param);
+        		return false;
+        	}
+
+        	if( !Ex.isEmpty(this.KEY_TBL) )
+        	{
+        		this.dsCond.setColumn(0, "KEY_TBL", this.KEY_TBL);
+        	}
+        	else
+        	{
+        		var param = {
+        			  id	: "AlertKeyTblI"			//fnMsgAfter에서 식별자로 사용되는 ID
+        			, msg	: "KEY_TBL값이 없습니다."		//메시지 내용
+        			, arrparam : [Ex.core.word("")]		//메시지의 변수에 들어갈 실제값
+        			, msgtype : "I"						//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        		};
+        		Ex.core.alert(this, param);
+        		return false;
+        	}
+
+        	if( !Ex.isEmpty(this.PK1) )
+        	{
+        		this.dsCond.setColumn(0, "PK1", this.PK1);
+        	}
+        	else
+        	{
+        // 		var param = {
+        // 			  id	: "AlertPK!I"				//fnMsgAfter에서 식별자로 사용되는 ID
+        // 			, msg	: "PK1 값이 없습니다."			//메시지 내용
+        // 			, arrparam : [Ex.core.word("")]		//메시지의 변수에 들어갈 실제값
+        // 			, msgtype : "I"						//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        // 		};
+        // 		Ex.core.alert(this, param);
+        // 		return false;
+        		trace("PK1 값이 없습니다.");
+        	}
+
+        	if( !Ex.isEmpty(this.PK2) )
+        	{
+        		this.dsCond.setColumn(0, "PK2", this.PK2);
+        	}
+
+        	if( !Ex.isEmpty(this.PK3) )
+        	{
+        		this.dsCond.setColumn(0, "PK3", this.PK3);
+        	}
+
+        	if( Ex.isEmpty(this.EDITABLE) )
+        	{
+        		this.EDITABLE = false;
+        	}
+
+        	var editAble = this.EDITABLE;
+
+        	if(this.IS_USE_REG_BTN)
+        	{
+        		this["divConts"].set_bottom("divBottomButton:8");
+        		this.divBottomButton.set_visible(true);
+        	}
+        	else
+        	{
+        		this["divConts"].set_bottom(0);
+        	}
+
+        	trace("CHKLST_ID : " + this.CHKLST_ID);
+        	trace("KEY_TBL : " + this.KEY_TBL);
+
+        	this.fnSearch();
+        }
+
+        //가로답항 체크리스트 그리기
+        this.fnDrawCheckListHorizontal = function()
+        {
+        	trace("CALL this.fnDrawCheckListHorizontal()");
+        	this.stcScore.set_visible(false);
+        	this.stcAnswerTitle.set_right(0);
+
+        	var top = -1;
+        	var taLeft = 0;
+        	var dHeight = 28;
+        	var defTxaHeight = 24;
+
+        	this.maxAnswerWidth = 0;	//답항 Radio를 감싸고 있는 Div의 최대 넓이를 구하기 위한 변수
+
+        	//1. 문항과 답항을 우선 그린다.
+        	for(var i=0; i<this.dsData.rowcount; i++)
+        	{
+        		var queSeq		= this.dsData.getColumn(i, "QUE_SEQ");
+        		var queNm		= this.dsData.getColumn(i, "QUE_NM");
+        		var queTypeCd	= this.dsData.getColumn(i, "QUE_TYPE_CD");		//질문응답유형(0:단일선택/1:복수선택/2:주관식)
+        		var minAnsCnt	= this.dsData.getColumn(i, "MIN_ANS_CNT");		//복수선택인 경우 최소 응답 가능 답항 갯수
+        		var maxAnsCnt	= this.dsData.getColumn(i, "MAX_ANS_CNT");		//복수선택인 경우 최대 응답 가능 답항 갯수
+        		var isNoInputYn	= this.dsData.getColumn(i, "IS_NO_INPUT_YN");	//미응답 가능여부
+
+        		if(queTypeCd == "0" || queTypeCd == "1")	//객관식(단일선택/복수선택)
+        		{
+        			var objTextArea = new TextArea("txaQuestion" + queSeq, 0, top, 100, dHeight, null, null);
+        			objTextArea.set_cssclass("txa_WF_normal");
+        			objTextArea.set_tabstop(false);
+        			objTextArea.set_value(queSeq + ". " + queNm);
+        			objTextArea.set_readonly(true);
+        			//objTextArea.set_border("1px solid blue");
+        			objTextArea.set_scrolltype("both");
+        			//objTextArea.set_wordWrap("char");
+
+        			this["divConts"].addChild("txaQuestion" + queSeq, objTextArea);
+        			objTextArea.show();
+
+        			var answerObj;
+
+        			if(queTypeCd == "0")		//객관식(단일선택)
+        			{
+        				//init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]] )
+        				answerObj = new Radio("rdoAnswer" + queSeq, null, top, 2000, dHeight, 0, null);
+        				answerObj.set_cssclass("rdo_WF_checklist");
+        				answerObj.set_direction("horizontal");	//vertical
+        				answerObj.set_columncount(-1);
+        				answerObj.set_rowcount(-1);
+        				answerObj.IS_NO_INPUT_YN	= isNoInputYn;
+        				this["divConts"].addChild("rdoAnswer" + queSeq, answerObj);
+
+        				answerObj.addEventHandler("onitemchanged", this.rdoOnItemChanged, this);
+        			}
+        			else if(queTypeCd == "1")	//객관식(복수선택)
+        			{
+        				//init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]] )
+        				answerObj = new CheckBoxSet("chkSetAnswer" + queSeq, null, top, 2000, dHeight, 0, null);
+        				answerObj.set_cssclass("chkset_WF_checklist");
+        				answerObj.set_border("1px solid #d3d3d3");
+        				answerObj.set_direction("horizontal");
+        				//answerObj.set_direction("vertical");
+        				answerObj.set_columncount(-1);
+        				answerObj.set_rowcount(-1);
+        				answerObj.MIN_ANS_CNT	= minAnsCnt;
+        				answerObj.MAX_ANS_CNT	= maxAnsCnt;
+        				this["divConts"].addChild("chkSetAnswer" + queSeq, answerObj);
+
+        				answerObj.addEventHandler("canitemchange", this.chkboxSetCanItemChange, this);
+        				answerObj.addEventHandler("onitemchanged", this.chkboxSetOnItemChanged, this);
+        			}
+
+        			answerObj.set_border("1px solid #d3d3d3");
+        			//answerObj.set_border("1px solid crimson");
+
+        			var dsObj = new Dataset();
+        			dsObj.addColumn("codecolumn", "string", 120);
+        			dsObj.addColumn("datacolumn", "string", 120);
+
+        			answerObj.set_codecolumn("codecolumn");
+        			answerObj.set_datacolumn("datacolumn");
+
+        			for(var j=1; j<=nexacro.toNumber(this.dsAnswerCnt.getColumn(0, "MAX_CNT"), 0); j++)
+        			{
+        				var exmSeq	= this.dsData.getColumn(i, "EXM_SEQ" + j);
+        				var exmVal	= this.dsData.getColumn(i, "EXM_VAL" + j);
+
+        				var maxVal = nexacro.toNumber(this.dsAnswerCnt.getColumn(0, "MAX_VAL"), 0);
+        				var exmNm	= this.dsData.getColumn(i, "EXM_NM" + j);
+
+        				if(maxVal > 0 && this.IS_LABEL_SCORE)
+        				{
+        					exmNm	= this.dsData.getColumn(i, "EXM_NM" + j) + " [" + exmVal + "점]";
+        				}
+        				else
+        				{
+        					exmNm	= this.dsData.getColumn(i, "EXM_NM" + j);
+        				}
+
+        				if( !Ex.isEmpty(exmVal) )
+        				{
+        					var aRow = dsObj.addRow();
+        					dsObj.setColumn(aRow, "codecolumn", exmSeq);
+        					dsObj.setColumn(aRow, "datacolumn", exmNm);
+        				}
+        			}
+        			this.addChild("dsAnswer" + queSeq, dsObj);
+
+        			answerObj.set_innerdataset(dsObj);
+        			answerObj.show();
+
+        			answerObj.set_fittocontents("width");
+
+        			if(this.maxAnswerWidth < answerObj.getOffsetWidth())
+        			{
+        				this.maxAnswerWidth	= answerObj.getOffsetWidth();
+        			}
+
+        			if(this.maxQuestionWidth > answerObj.getOffsetLeft() + 1)
+        			{
+        				this.maxQuestionWidth	= answerObj.getOffsetLeft() + 1;
+        			}
+
+        			answerObj.set_fittocontents("none");
+
+        			top += dHeight-1;
+        		}
+        		else if(queTypeCd == "2")	//주관식
+        		{
+        			//init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]] )
+        			var divSubjective = new Div("divSubjective" + queSeq, 0, top, null, (defTxaHeight*2)-1, 0, null);
+        			this["divConts"].addChild("divSubjective" + queSeq, divSubjective);
+        			divSubjective.show();
+
+        			var objTextAreaQue = new TextArea("txaQuestion", 0, 0, null, 10, 0, null);
+        			objTextAreaQue.set_cssclass("txa_WF_normal");
+        			objTextAreaQue.set_tabstop(false);
+        			objTextAreaQue.set_readonly(true);
+        			objTextAreaQue.set_value(queNm);
+        			//objTextAreaQue.set_border("1px solid blue");
+        			objTextAreaQue.set_scrolltype("both");
+        			//objTextAreaQue.set_wordWrap("char");
+
+        			divSubjective.addChild("txaQuestion", objTextAreaQue);
+        			objTextAreaQue.show();
+
+        			if(objTextAreaQue.vscrollbar)
+        			{
+        				objTextAreaQue.set_height(objTextAreaQue.height + objTextAreaQue.vscrollbar.max);
+        			}
+
+        			var objTextAreaAns = new TextArea("txaAnswer", 0, "txaQuestion:-1", null, 62, 0, 0);	//3줄 62
+        			objTextAreaAns.set_cssclass("txa_WF_normal");
+        			//objTextArea.set_border("1px solid blue");
+        			objTextAreaAns.set_scrolltype("both");
+        			//objTextAreaAns.set_wordWrap("char");
+        			objTextAreaAns.IS_NO_INPUT_YN	= isNoInputYn;
+
+        			divSubjective.addChild("txaAnswer", objTextAreaAns);
+        			objTextAreaAns.show();
+
+        			divSubjective.set_height(objTextAreaQue.height + objTextAreaAns.height - 1);
+        		}
+        	}
+        	trace("111111111111111111111111111111111111 END");
+        	//trace("this.getOffsetWidth() : " + this.getOffsetWidth() + " this.maxQuestionWidth : " + this.maxQuestionWidth);
+
+        	//2.그려진 문항 답항에서 답항 텍스트 내용 길이에 맞게 각각의 답항 width를 재조정한 후 답항 전체의 총 넓이를 구해서 문항 스크롤이 생기지 않도록 넓힌다.
+        	for(var i=0; i<this.dsData.rowcount; i++)
+        	{
+        		var queSeq		= this.dsData.getColumn(i, "QUE_SEQ");
+        		var queTypeCd	= this.dsData.getColumn(i, "QUE_TYPE_CD");	//질문응답유형(0:단일선택/1:복수선택/2:주관식)
+
+        		if(queTypeCd == "0" || queTypeCd == "1")	//객관식(단일선택/복수선택)
+        		{
+        			var compId = "";
+
+        			if(queTypeCd == "0")		//객관식(단일선택)
+        			{
+        				compId = "rdoAnswer" + queSeq;
+        			}
+        			else if(queTypeCd == "1")	//객관식(복수선택)
+        			{
+        				compId = "chkSetAnswer" + queSeq;
+        			}
+
+        			var rdoChkSetObj = this["divConts"].form[compId];
+        			rdoChkSetObj.setOffsetWidth(this.maxAnswerWidth);
+        			this["divConts"].form["txaQuestion" + queSeq].set_width(10);
+        			this["divConts"].form["txaQuestion" + queSeq].set_width(null);
+        			this["divConts"].form["txaQuestion" + queSeq].set_width(this["divConts"].form[compId].getOffsetLeft() + 1);
+
+        			//this["divConts"].form["txaQuestion" + queSeq].set_width(this.maxQuestionWidth);
+
+        			if(this["divConts"].form["txaQuestion" + queSeq].vscrollbar)
+        			{
+        				var txaHeight = this["divConts"].form["txaQuestion" + queSeq].height;
+        				var txaVscrollbar = this["divConts"].form["txaQuestion" + queSeq].vscrollbar;
+        				var txaVscrollbarMax	= txaVscrollbar.max;
+        				this["divConts"].form["txaQuestion" + queSeq].set_height(txaHeight + txaVscrollbarMax);
+        				rdoChkSetObj.set_height(txaHeight + txaVscrollbarMax);
+        			}
+        		}
+        	}
+        	trace("222222222222222222222222222222222222 END");
+
+        	/*3. 답항 DIV 넓이 조절에 따른 문항 넓이도 맞춰 조정하고 문항의 넓이가 줄어들어서 스크롤이 발생할 경우
+        		 스크롤이 발생하지 않는 크기가 되도록 문항의 높이를 재조정 하고 이후 답항의 높이도 재조정된 문항의 높이와 동일하게 변경해준다.
+        	 */
+        	for(var i=0; i<this.dsData.rowcount; i++)
+        	{
+        		var queSeq			= this.dsData.getColumn(i, "QUE_SEQ");
+        		var preQueSeq		= i==0 ? undefined : this.dsData.getColumn(i-1, "QUE_SEQ");
+        		var curQueTypeCd	= this.dsData.getColumn(i, "QUE_TYPE_CD");	//질문응답유형(0:단일선택/1:복수선택/2:주관식)
+        		var upQueTypeCd		= i==0 ? undefined : this.dsData.getColumn(i-1, "QUE_TYPE_CD");	//질문응답유형(0:단일선택/1:복수선택/2:주관식)
+        		var seq				= this.dsData.getColumn(i, "RET_SEQ");
+        		var val				= this.dsData.getColumn(i, "RET_VAL");
+        		var valStr			= this.dsData.getColumn(i, "RET_STR");
+        		var curCompId		= "";
+
+        		if(curQueTypeCd == "0")			//현재 문항 객관식(단일선택)
+        		{
+        			curCompId	= "rdoAnswer" + queSeq;
+        		}
+        		else if(curQueTypeCd == "1")	//현재 문항 객관식(복수선택)
+        		{
+        			curCompId	= "chkSetAnswer" + queSeq;
+        		}
+        		else if(curQueTypeCd == "2")	//현재 문항 주관식
+        		{
+        			curCompId	= "divSubjective" + queSeq;
+        		}
+
+        		//trace("this.dsData.rowcount : " + this.dsData.rowcount + " i=" + i + " curCompId : " + curCompId);
+
+        		if(i > 0)
+        		{
+        			if(curQueTypeCd == "0" || curQueTypeCd == "1")		//현재 문항 객관식(단일선택/복수선택)
+        			{
+        				if(upQueTypeCd == "0" || upQueTypeCd == "1")	//직전 문항 객관식(단일선택/복수선택)
+        				{
+        					this["divConts"].form["txaQuestion" + queSeq].set_top(this["divConts"].form["txaQuestion" + preQueSeq].getOffsetBottom()-1);
+
+        					var upRdoChkObj;
+
+        					if(upQueTypeCd == "0")		//직전 문항 객관식(단일선택)
+        					{
+        						upRdoChkObj	= "rdoAnswer" + preQueSeq;
+        					}
+        					else if(upQueTypeCd == "1")	//직전 문항 객관식(복수선택)
+        					{
+        						upRdoChkObj	= "chkSetAnswer" + preQueSeq;
+        					}
+
+        					this["divConts"].form[curCompId].set_top(this["divConts"].form[upRdoChkObj].getOffsetBottom()-1);
+        				}
+        				else if(upQueTypeCd == "2")	//직전 문항 주관식
+        				{
+        					this["divConts"].form["txaQuestion" + queSeq].set_top(this["divConts"].form["divSubjective" + preQueSeq].getOffsetBottom()-1);
+        					this["divConts"].form[curCompId].set_top(this["divConts"].form["divSubjective" + preQueSeq].getOffsetBottom()-1);
+        				}
+        			}
+        			else if(curQueTypeCd == "2")		//주관식
+        			{
+        				if(upQueTypeCd == "0" || upQueTypeCd == "1")	//직전 문항 객관식(단일선택/복수선택)
+        				{
+        					this["divConts"].form[curCompId].set_top(this["divConts"].form["txaQuestion" + preQueSeq].getOffsetBottom()-1);
+        				}
+        				else if(upQueTypeCd == "2")	//직전 문항 주관식
+        				{
+        					this["divConts"].form[curCompId].set_top(this["divConts"].form["divSubjective" + preQueSeq].getOffsetBottom()-1);
+        				}
+        			}
+        		}
+
+        		var editAble = this.EDITABLE;
+
+        		if(curQueTypeCd == "0")			//단일응답
+        		{
+        			this["divConts"].form[curCompId].set_value(seq);
+
+        			if(editAble)
+        			{
+        				var fRow = this.dsExclude.findRowExpr("USE_YN=='Y' && QUE_SEQ==" + queSeq + " && EXM_SEQ==" + seq);
+
+        				if(fRow > -1)
+        				{
+        					var evt = nexacro.ItemChangeEventInfo;
+        					evt.postvalue = seq;
+        					this.rdoOnItemChanged(this["divConts"].form[curCompId], evt);
+        				}
+        			}
+        			else
+        			{
+        				this["divConts"].form[curCompId].set_enable(false);
+        			}
+        		}
+        		else if(curQueTypeCd == "1")	//복수응답
+        		{
+        			if( !Ex.isEmpty(val) )
+        			{
+        				this["divConts"].form[curCompId].set_value(seq);
+
+        				if(editAble)
+        				{
+        					var seqArr = seq.split(",");
+
+        					var chkCnt = 0;
+        					for(var j=0; j<seqArr.length; j++)
+        					{
+        						var fRow = this.dsExclude.findRowExpr("USE_YN=='Y' && QUE_SEQ==" + queSeq + " && EXM_SEQ==" + seqArr[j]);
+
+        						if(fRow > -1)
+        						{
+        							chkCnt++;
+        							break;
+        						}
+        					}
+
+        					if(chkCnt > 0)
+        					{
+        						var evt = nexacro.ItemChangeEventInfo;
+        						evt.postvalue = seq;
+        						this.chkboxSetOnItemChanged(this["divConts"].form[curCompId], evt);
+        					}
+        				}
+        				else
+        				{
+        					this["divConts"].form[curCompId].set_enable(false);
+        				}
+        			}
+        		}
+        		else if(curQueTypeCd == "2")	//주관식
+        		{
+        			this["divConts"].form[curCompId].form["txaAnswer"].set_value(valStr);
+
+        			if(!editAble)
+        			{
+        				this["divConts"].form[curCompId].form["txaAnswer"].set_enable(false);
+        			}
+        		}
+        	}
+
+        	this["divConts"].form.resetScroll();
+
+        	if(this.IS_AUTO_SIZE)
+        	{
+        		if(this["divConts"].form.vscrollbar)
+        		{
+        			trace("BF divConts getOffsetHeight() : " + this["divConts"].getOffsetHeight() + " vscrollbar.max : " + this["divConts"].form.vscrollbar.max);
+        			this["divConts"].set_bottom(null);
+        			//this["divConts"].set_height(this["divConts"].getOffsetHeight() + this["divConts"].form.vscrollbar.max);
+        			this["divConts"].set_height(this["divConts"].getOffsetHeight() + this["divConts"].form.vscrollbar.max);
+        			trace("AF divConts getOffsetHeight() : " + this["divConts"].getOffsetHeight());
+        		}
+        	}
+
+        	if(this.IS_USE_REG_BTN)
+        	{
+        		this.divBottomButton.set_top(this.divConts.getOffsetBottom() + 8);
+        	}
+
+        	//alert("this.IS_DIV_RESIZE : " + this.IS_DIV_RESIZE);
+
+        	if(this.IS_DIV_RESIZE)
+        	{
+        		this.divOnSize(this["divConts"]);
+        	}
+
+        	if(this.USE_ONSIZE_EVT)
+        	{
+        		this.addEventHandler("onsize", this.formOnSize, this);
+        	}
+        	Ex.util.callParentSizeChangeComplete(this, "fnSizeChangeComplete", this.parent.id);
+        	trace("[fnDrawCheckListHorizontal() END-END-END-END-END-END-END-END-END-END-END-END-END-END-END-END]");
+        }
+
+        //세로답항 체크리스트 그리기
+        this.fnDrawCheckListVertical = function()
+        {
+        	trace("CALL this.fnDrawCheckListVertical()");
+        	var maxVal = nexacro.toNumber(this.dsAnswerCnt.getColumn(0, "MAX_VAL"), 0);
+
+        	if(maxVal == 0)
+        	{
+        		this.stcScore.set_visible(false);
+        		this.stcAnswerTitle.set_right(0);
+        	}
+        	else
+        	{
+        		this.stcScore.set_visible(true);
+        		this.stcAnswerTitle.set_right(59);
+        	}
+
+        	var dHeight			= 24;
+        	var defTxaHeight	= 24;
+
+        	this.maxAnswerWidth = 0;	//답항 Radio를 감싸고 있는 Div의 최대 넓이를 구하기 위한 변수
+
+        	var answerObjTop = -1;
+
+        	//1. 문항과 답항을 우선 그린다.
+        	for(var i=0; i<this.dsData.rowcount; i++)
+        	{
+        		var queSeq		= this.dsData.getColumn(i, "QUE_SEQ");
+        		var queNm		= this.dsData.getColumn(i, "QUE_NM");
+        		var queVal		= this.dsData.getColumn(i, "QUE_VAL");
+        		var retVal		= this.dsData.getColumn(i, "RET_VAL");
+        		var queTypeCd	= this.dsData.getColumn(i, "QUE_TYPE_CD");		//질문응답유형(0:단일선택/1:복수선택/2:주관식)
+        		var minAnsCnt	= this.dsData.getColumn(i, "MIN_ANS_CNT");		//복수선택인 경우 최소 응답 가능 답항 갯수
+        		var maxAnsCnt	= this.dsData.getColumn(i, "MAX_ANS_CNT");		//복수선택인 경우 최대 응답 가능 답항 갯수
+        		var isNoInputYn	= this.dsData.getColumn(i, "IS_NO_INPUT_YN");	//미응답 가능여부
+
+        		if(queTypeCd == "0" || queTypeCd == "1")	//객관식(단일선택/복수선택)
+        		{
+        			if(maxVal > 0)
+        			{
+        				//init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]] )
+        				var stcScoreObj = new Static("stcScore" + queSeq, null, answerObjTop, 60, dHeight, 0, null);
+        				stcScoreObj.set_text(retVal);
+        				stcScoreObj.set_padding("2px 5px 2px 5px");
+        				stcScoreObj.set_border("1px solid #d3d3d3");
+        				//stcScoreObj.set_border("1px solid red");
+        				stcScoreObj.set_textAlign("right");
+        				stcScoreObj.set_verticalAlign("middle");
+        				this["divConts"].addChild("stcScore" + queSeq, stcScoreObj);
+        				stcScoreObj.show();
+        			}
+
+        			//init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]] )
+        			var txaQuestionObj = new TextArea("txaQuestion" + queSeq, 0, answerObjTop, 10, dHeight, null, null);
+        			txaQuestionObj.set_cssclass("txa_WF_normal");
+        			txaQuestionObj.set_tabstop(false);
+        			txaQuestionObj.set_value(queNm);
+        			txaQuestionObj.set_readonly(true);
+        			//txaQuestionObj.set_border("1px solid blue");
+        			txaQuestionObj.set_scrolltype("both");
+        			//txaQuestionObj.set_wordWrap("char");
+
+        			this["divConts"].addChild("txaQuestion" + queSeq, txaQuestionObj);
+        			txaQuestionObj.show();
+
+        			var objRight;
+
+        			if(maxVal > 0)	objRight = 59;
+        			else			objRight = 0;
+
+        			var answerObj;
+
+        			if(queTypeCd == "0")		//객관식(단일선택)
+        			{
+        				//init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]] )
+        				//answerObj = new Radio("rdoAnswer" + queSeq, null, answerObjTop, 10, 10, "stcScore" + queSeq + ":-1", null);
+        				answerObj = new Radio("rdoAnswer" + queSeq, null, answerObjTop, 10, 10, objRight, null);
+        				answerObj.set_cssclass("rdo_WF_normal");
+        				answerObj.set_border("1px solid #d3d3d3");
+        				answerObj.set_columncount(1);
+        				answerObj.set_rowcount(-1);
+        				answerObj.set_direction("vertical");
+        				answerObj.IS_NO_INPUT_YN	= isNoInputYn;
+        				this["divConts"].addChild("rdoAnswer" + queSeq, answerObj);
+
+        				answerObj.addEventHandler("onitemchanged", this.rdoOnItemChanged, this);
+        			}
+        			else if(queTypeCd == "1")	//객관식(복수선택)
+        			{
+        				//init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]] )
+        				//answerObj = new CheckBoxSet("chkSetAnswer" + queSeq, null, answerObjTop, 10, 10, "stcScore" + queSeq + ":-1", null);
+        				answerObj = new CheckBoxSet("chkSetAnswer" + queSeq, null, answerObjTop, 10, 10, objRight, null);
+        				answerObj.set_padding("0px 0px 0px 6px");
+        				answerObj.set_border("1px solid #d3d3d3");
+        				answerObj.set_columncount(1);
+        				answerObj.set_rowcount(-1);
+        				answerObj.set_direction("vertical");
+        				answerObj.MIN_ANS_CNT	= minAnsCnt;
+        				answerObj.MAX_ANS_CNT	= maxAnsCnt;
+        				this["divConts"].addChild("chkSetAnswer" + queSeq, answerObj);
+
+        				answerObj.addEventHandler("canitemchange", this.chkboxSetCanItemChange, this);
+        				answerObj.addEventHandler("onitemchanged", this.chkboxSetOnItemChanged, this);
+        			}
+
+        			var dsObj = new Dataset();
+        			dsObj.addColumn("codecolumn", "string", 120);
+        			dsObj.addColumn("datacolumn", "string", 120);
+
+        			answerObj.set_codecolumn("codecolumn");
+        			answerObj.set_datacolumn("datacolumn");
+
+        			for(var j=1; j<=nexacro.toNumber(this.dsAnswerCnt.getColumn(0, "MAX_CNT"), 0); j++)
+        			{
+        				var exmSeq	= this.dsData.getColumn(i, "EXM_SEQ" + j);
+        				var exmVal	= this.dsData.getColumn(i, "EXM_VAL" + j);
+
+        				var exmNm = "";
+
+        				if(maxVal > 0 && this.IS_LABEL_SCORE)
+        				{
+        					exmNm	= this.dsData.getColumn(i, "EXM_NM" + j) + " [" + exmVal + "점]";
+        				}
+        				else
+        				{
+        					exmNm	= this.dsData.getColumn(i, "EXM_NM" + j);
+        				}
+
+        				if( !Ex.isEmpty(exmVal) )
+        				{
+        					var aRow = dsObj.addRow();
+        					dsObj.setColumn(aRow , "codecolumn", exmSeq);
+        					dsObj.setColumn(aRow , "datacolumn", exmNm);
+        				}
+        			}
+        			this.addChild("dsAnswer" + queSeq, dsObj);
+
+        			answerObj.set_innerdataset(dsObj);
+        			answerObj.show();
+
+        			answerObj.set_fittocontents("both");
+
+        			if(this.maxAnswerWidth < answerObj.getOffsetWidth() + 15)
+        			{
+        				this.maxAnswerWidth	= answerObj.getOffsetWidth() + 15;
+        			}
+
+        			if(this.maxQuestionWidth > answerObj.getOffsetLeft() + 1 - 15)
+        			{
+        				this.maxQuestionWidth	= answerObj.getOffsetLeft() + 1 - 15;
+        			}
+
+        			//trace("XXXXXX answerObj.getOffsetHeight() : " + answerObj.getOffsetHeight());
+
+        			var cacuRdoChkHeight = answerObj.getOffsetHeight() + ((answerObj.getCount() - 1) * 5) - 1;
+        			//trace("i=" + i + " dsObj.rowcount : " + dsObj.rowcount + " cacuRdoChkHeight : " + cacuRdoChkHeight);
+        			if(maxVal > 0)
+        			{
+        				stcScoreObj.set_height(cacuRdoChkHeight);
+        			}
+        			txaQuestionObj.set_height(cacuRdoChkHeight);
+
+        			answerObjTop += cacuRdoChkHeight;
+        		}
+        		else if(queTypeCd == "2")	//주관식
+        		{
+        			//init( strName, vLeft, vTop , vWidth, vHeight [, vRight, vBottom, [vMinWidth, [vMaxWidth, [vMinHeight, [vMaxHeight]]]]] )
+        			var divSubjective = new Div("divSubjective" + queSeq, 0, top, null, (defTxaHeight*2)-1, 0, null);
+        			this["divConts"].addChild("divSubjective" + queSeq, divSubjective);
+        			divSubjective.show();
+
+        			var txaQuestionObj = new TextArea("txaQuestion", 0, 0, null, 10, 0, null);
+        			txaQuestionObj.set_cssclass("txa_WF_normal");
+        			txaQuestionObj.set_tabstop(false);
+        			txaQuestionObj.set_readonly(true);
+        			txaQuestionObj.set_value(queNm);
+        			//txaQuestionObj.set_border("1px solid blue");
+        			txaQuestionObj.set_scrolltype("both");
+        			//txaQuestionObj.set_wordWrap("char");
+
+        			divSubjective.addChild("txaQuestion", txaQuestionObj);
+        			txaQuestionObj.show();
+
+        			if(txaQuestionObj.vscrollbar)
+        			{
+        				txaQuestionObj.set_height(txaQuestionObj.height + txaQuestionObj.vscrollbar.max);
+        			}
+
+        			var txaAnswerObj = new TextArea("txaAnswer", 0, "txaQuestion:-1", null, 62, 0, 0);	//3줄 62
+        			txaAnswerObj.set_cssclass("txa_WF_normal");
+        			//txaAnswerObj.set_border("1px solid blue");
+        			txaAnswerObj.set_scrolltype("both");
+        			//txaAnswerObj.set_wordWrap("char");
+        			txaAnswerObj.IS_NO_INPUT_YN	= isNoInputYn;
+
+        			divSubjective.addChild("txaAnswer", txaAnswerObj);
+        			txaAnswerObj.show();
+
+        			divSubjective.set_height(txaQuestionObj.height + txaAnswerObj.height + 1);
+        		}
+        	}
+        	trace("this.fnDrawCheckListVertical() 11111111111111111111111111111 END");
+        	//trace("this.maxAnswerWidth : " + this.maxAnswerWidth);
+
+        	//2.그려진 문항 답항에서 답항 텍스트 내용 길이에 맞게 각각의 답항 width를 재조정한 후 답항 전체의 총 넓이를 구해서 문항 스크롤이 생기지 않도록 넓힌다.
+        	for(var i=0; i<this.dsData.rowcount; i++)
+        	{
+        		var queSeq		= this.dsData.getColumn(i, "QUE_SEQ");
+        		var queTypeCd	= this.dsData.getColumn(i, "QUE_TYPE_CD");	//질문응답유형(0:단일선택/1:복수선택/2:주관식)
+
+        		if(queTypeCd == "0" || queTypeCd == "1")	//객관식(단일선택/복수선택)
+        		{
+        			var compId = "";
+
+        			if(queTypeCd == "0")		//객관식(단일선택)
+        			{
+        				compId = "rdoAnswer" + queSeq;
+        			}
+        			else if(queTypeCd == "1")	//객관식(복수선택)
+        			{
+        				compId = "chkSetAnswer" + queSeq;
+        			}
+
+        			var rdoChkSetObj = this["divConts"].form[compId];
+
+        			var rHeight = rdoChkSetObj.getOffsetHeight();
+        			rdoChkSetObj.set_fittocontents("none");
+        			rdoChkSetObj.set_columncount(1);
+
+        			rdoChkSetObj.setOffsetWidth(this.maxAnswerWidth);
+        			var totHeight = rHeight + ((rdoChkSetObj.getCount() - 1) * 5);
+        			//trace("totHeight ::::::::::::: " + totHeight);
+
+        			this["divConts"].form["txaQuestion" + queSeq].set_height(totHeight);
+
+        			this["divConts"].form["txaQuestion" + queSeq].set_width(this.maxQuestionWidth);
+
+        			if(this["divConts"].form["txaQuestion" + queSeq].vscrollbar)
+        			{
+        				var txaHeight = this["divConts"].form["txaQuestion" + queSeq].height;
+        				var txaVscrollbar = this["divConts"].form["txaQuestion" + queSeq].vscrollbar;
+        				var txaVscrollbarMax	= txaVscrollbar.max;
+        				this["divConts"].form["txaQuestion" + queSeq].set_height(txaHeight + txaVscrollbarMax);
+        				rdoChkSetObj.set_height(txaHeight + txaVscrollbarMax);
+        			}
+
+        			if(totHeight < this["divConts"].form["txaQuestion" + queSeq].height)
+        			{
+        				totHeight = this["divConts"].form["txaQuestion" + queSeq].height;
+        			}
+
+        			this["divConts"].form["txaQuestion" + queSeq].set_height(totHeight);
+
+        			rdoChkSetObj.setOffsetHeight(totHeight);
+        			if(maxVal > 0)
+        			{
+        				this["divConts"].form["stcScore" + queSeq].set_height(totHeight);
+        			}
+        		}
+        	}
+        	trace("this.fnDrawCheckListVertical() 222222222222222222222222222222 END");
+
+        	//3.그려진 문항 답항에서 답항 텍스트 내용 길이에 맞게 각각의 답항 width를 재조정한 후 답항 전체의 총 넓이를 구해서 문항 스크롤이 생기지 않도록 넓힌다.
+        	for(var i=0; i<this.dsData.rowcount; i++)
+        	{
+        		var queSeq			= this.dsData.getColumn(i, "QUE_SEQ");
+        		var preQueSeq		= i==0 ? undefined : this.dsData.getColumn(i-1, "QUE_SEQ");
+        		var curQueTypeCd	= this.dsData.getColumn(i, "QUE_TYPE_CD");		//질문응답유형(0:단일선택/1:복수선택/2:주관식)
+        		var upQueTypeCd		= i==0 ? undefined : this.dsData.getColumn(i-1, "QUE_TYPE_CD");	//질문응답유형(0:단일선택/1:복수선택/2:주관식)
+        		var seq				= this.dsData.getColumn(i, "RET_SEQ");
+        		var queNm			= this.dsData.getColumn(i, "QUE_NM");
+        		var val				= this.dsData.getColumn(i, "RET_VAL");
+        		var valStr			= this.dsData.getColumn(i, "RET_STR");
+        		var curCompId		= "";
+
+        		if(curQueTypeCd == "0")			//현재 문항 객관식(단일선택)
+        		{
+        			curCompId	= "rdoAnswer" + queSeq;
+        		}
+        		else if(curQueTypeCd == "1")	//현재 문항 객관식(복수선택)
+        		{
+        			curCompId	= "chkSetAnswer" + queSeq;
+        		}
+        		else if(curQueTypeCd == "2")	//현재 문항 주관식
+        		{
+        			curCompId	= "divSubjective" + queSeq;
+        		}
+
+        		//trace("this.dsData.rowcount : " + this.dsData.rowcount + " i=" + i + " curCompId : " + curCompId);
+
+        		if(i>0)
+        		{
+        			if(curQueTypeCd == "0" || curQueTypeCd == "1")		//현재 문항 객관식(단일선택/복수선택)
+        			{
+        				if(upQueTypeCd == "0" || upQueTypeCd == "1")	//직전 문항 객관식(단일선택/복수선택)
+        				{
+        					//trace("Shift Top");
+        					var upRdoChkObj;
+
+        					if(upQueTypeCd == "0")		//직전 문항 객관식(단일선택)
+        					{
+        						upRdoChkObj	= "rdoAnswer" + preQueSeq;
+        					}
+        					else if(upQueTypeCd == "1")	//직전 문항 객관식(복수선택)
+        					{
+        						upRdoChkObj	= "chkSetAnswer" + preQueSeq;
+        					}
+
+        					this["divConts"].form["txaQuestion" + queSeq].set_top(this["divConts"].form["txaQuestion" + preQueSeq].getOffsetBottom() - 1);	//여백 [좌/중/우] : 5씩 + 테두리 border 좌/우 : 1씩
+        					if(maxVal > 0)
+        					{
+        						this["divConts"].form["stcScore" + queSeq].set_top(this["divConts"].form["stcScore" + preQueSeq].getOffsetBottom() - 1);	//여백 [좌/중/우] : 5씩 + 테두리 border 좌/우 : 1씩
+        					}
+        					this["divConts"].form[curCompId].set_top(this["divConts"].form[upRdoChkObj].getOffsetBottom() - 1);	//여백 [좌/중/우] : 5씩 + 테두리 border 좌/우 : 1씩
+        				}
+        				else if(upQueTypeCd == "2")		//직전 문항 객관식(단일선택/복수선택)
+        				{
+        					this["divConts"].form["txaQuestion" + queSeq].set_top(this["divConts"].form["divSubjective" + preQueSeq].getOffsetBottom()-1);
+        					if(maxVal > 0)
+        					{
+        						this["divConts"].form["stcScore" + queSeq].set_top(this["divConts"].form["divSubjective" + preQueSeq].getOffsetBottom()-1);
+        					}
+        					this["divConts"].form[curCompId].set_top(this["divConts"].form["divSubjective" + preQueSeq].getOffsetBottom()-1);
+        				}
+        			}
+        			else if(curQueTypeCd == "2")	//주관식
+        			{
+        				curCompId = "divSubjective" + queSeq;
+        				if(upQueTypeCd == "0" || upQueTypeCd == "1")	//직전 문항 객관식(단일선택/복수선택)
+        				{
+        					this["divConts"].form[curCompId].set_top(this["divConts"].form["txaQuestion" + preQueSeq].getOffsetBottom() - 1);	//여백 [좌/중/우] : 5씩 + 테두리 border 좌/우 : 1씩
+        				}
+        				else if(upQueTypeCd == "2")	//직전 문항 주관식
+        				{
+        					this["divConts"].form[curCompId].set_top(this["divConts"].form["divSubjective" + preQueSeq].getOffsetBottom()-1);
+        				}
+        			}
+        		}
+
+        		var editAble = this.EDITABLE;
+
+        		if(curQueTypeCd == "0")			//단일응답
+        		{
+        			trace("curCompId : " + curCompId + " seq:[" + seq + "]");
+        			this["divConts"].form[curCompId].set_value(seq);
+
+        			if(editAble)
+        			{
+        				var fRow = this.dsExclude.findRowExpr("USE_YN=='Y' && QUE_SEQ==" + queSeq + " && EXM_SEQ==" + seq);
+
+        				if(fRow > -1)
+        				{
+        					var evt = nexacro.ItemChangeEventInfo;
+        					evt.postvalue = seq;
+        					this.rdoOnItemChanged(this["divConts"].form[curCompId], evt);
+        				}
+        			}
+        			else
+        			{
+        				this["divConts"].form[curCompId].set_enable(false);
+        			}
+        		}
+        		else if(curQueTypeCd == "1")	//복수응답
+        		{
+        			if( !Ex.isEmpty(val) )
+        			{
+        				this["divConts"].form[curCompId].set_value(seq);
+
+        				if(editAble)
+        				{
+        					var seqArr = seq.split(",");
+
+        					var chkCnt = 0;
+        					for(var j=0; j<seqArr.length; j++)
+        					{
+        						var fRow = this.dsExclude.findRowExpr("USE_YN=='Y' && QUE_SEQ==" + queSeq + " && EXM_SEQ==" + seqArr[j]);
+
+        						if(fRow > -1)
+        						{
+        							chkCnt++;
+        							break;
+        						}
+        					}
+
+        					if(chkCnt > 0)
+        					{
+        						var evt = nexacro.ItemChangeEventInfo;
+        						evt.postvalue = seq;
+        						this.chkboxSetOnItemChanged(this["divConts"].form[curCompId], evt);
+        					}
+        				}
+        				else
+        				{
+        					this["divConts"].form[curCompId].set_enable(false);
+        				}
+        			}
+        		}
+        		else if(curQueTypeCd == "2")	//주관식
+        		{
+        			this["divConts"].form[curCompId].form["txaAnswer"].set_value(valStr);
+
+        			if(!editAble)
+        			{
+        				this["divConts"].form[curCompId].form["txaAnswer"].set_enable(false);
+        			}
+        		}
+        	}
+
+        	trace("this.fnDrawCheckListVertical() 33333333333333333333333333333333 END");
+
+        	this["divConts"].form.resetScroll();
+
+        	if(this.IS_AUTO_SIZE)
+        	{
+        		if(this["divConts"].form.vscrollbar)
+        		{
+        			trace("BF divConts getOffsetHeight() : " + this["divConts"].getOffsetHeight() + " vscrollbar.max : " + this["divConts"].form.vscrollbar.max);
+        			this["divConts"].set_bottom(null);
+        			this["divConts"].set_height(this["divConts"].getOffsetHeight() + this["divConts"].form.vscrollbar.max);
+        			trace("AF divConts getOffsetHeight() : " + this["divConts"].getOffsetHeight());
+        		}
+        	}
+
+        	if(this.IS_USE_REG_BTN)
+        	{
+        		this.divBottomButton.set_top(this.divConts.getOffsetBottom() + 8);
+        	}
+
+        	if(this.IS_DIV_RESIZE)
+        	{
+        		this.divOnSize(this["divConts"]);
+        	}
+
+        	if(this.USE_ONSIZE_EVT)
+        	{
+        		this.addEventHandler("onsize", this.formOnSize, this);
+        	}
+        	Ex.util.callParentSizeChangeComplete(this, "fnSizeChangeComplete", this.parent.id);
+        	trace("[fnDrawCheckListVertical() END-END-END-END-END-END-END-END-END-END-END-END-END-END-END-END]");
+        }
+
+        this.isUpdateForm = function()
+        {
+        	trace("[FOMM0700_D01] this.isUpdateForm() this.dsData.rowcount : " + this.dsData.rowcount);
+        	//입력 컴포넌트에 입력된 값을 Dataset에 적용한다.
+        	for(var i=0; i<this.dsData.rowcount; i++)
+        	{
+        		var queSeq		= this.dsData.getColumn(i, "QUE_SEQ");			//문항번호
+        		var queTypeCd	= this.dsData.getColumn(i, "QUE_TYPE_CD");		//질문응답유형(0:단일선택/1:복수선택/2:주관식)
+        		var isNoInputYn	= this.dsData.getColumn(i, "IS_NO_INPUT_YN");	//미입력가능여부
+        		var minAnsCnt	= this.dsData.getColumn(i, "MIN_ANS_CNT");		//복수응답시 최소응답갯수
+
+        		var fRow = this.dsData.findRowExpr("QUE_SEQ==" + queSeq);
+
+        		trace("[FOMM0700_D01] this.isUpdateForm() i=" + i + " queTypeCd=" + queTypeCd);
+
+        		if(queTypeCd == "0")
+        		{
+        			var val = this["divConts"].form["rdoAnswer" + queSeq].value;
+        			var chklstexmId = this.dsData.getColumn(fRow, "CHKLSTEXM_ID" + val);
+
+        			if( !Ex.isEmpty(val) )
+        			{
+        				var exmVal = this.dsData.getColumn(fRow, "EXM_VAL" + val);
+
+        				trace("[FOMM0700_D01] fRow : " + fRow + " val : " + val + " chklstexmId : " + chklstexmId + " exmVal : " + exmVal);
+
+        				this.dsData.setColumn(i, "CHKLSTEXM_ID", chklstexmId);
+        				this.dsData.setColumn(i, "RET_SEQ", val);
+        				this.dsData.setColumn(i, "RET_VAL", exmVal);
+        			}
+        			else
+        			{
+        				this.dsData.setColumn(i, "CHKLSTEXM_ID", undefined);
+        				this.dsData.setColumn(i, "RET_SEQ", undefined);
+        				this.dsData.setColumn(i, "RET_VAL", "");
+        			}
+        		}
+        		else if(queTypeCd == "1")
+        		{
+        			var val = this["divConts"].form["chkSetAnswer" + queSeq].value;
+
+        			if( !Ex.isEmpty(val) )
+        			{
+        				var valArr = val.split(",");
+        				var chklstexmIdAll = "";
+        				var totExmVal = 0;
+
+        				for(var j=0; j<valArr.length; j++)
+        				{
+        					var chklstexmId = this.dsData.getColumn(fRow, "CHKLSTEXM_ID" + valArr[j]);
+        					if( !Ex.isEmpty(chklstexmId) )
+        					{
+        						chklstexmIdAll += (!Ex.isEmpty(chklstexmIdAll) ? "," : "") + chklstexmId;
+        					}
+
+        					var exmVal = this.dsData.getColumn(fRow, "EXM_VAL" + valArr[j]);
+        					totExmVal = totExmVal + exmVal;
+        				}
+
+        				this.dsData.setColumn(i, "RET_SEQ", val);
+        				this.dsData.setColumn(i, "CHKLSTEXM_ID", chklstexmIdAll);
+        				this.dsData.setColumn(i, "RET_VAL", totExmVal);
+        			}
+        			else
+        			{
+        				this.dsData.setColumn(i, "CHKLSTEXM_ID", undefined);
+        				this.dsData.setColumn(i, "RET_VAL", undefined);
+        			}
+        		}
+        		else if(queTypeCd == "2")
+        		{
+        			var chklstexmId = this.dsData.getColumn(fRow, "CHKLSTEXM_ID1");
+        			this.dsData.setColumn(i, "CHKLSTEXM_ID", chklstexmId);
+        			this.dsData.setColumn(i, "RET_STR", this["divConts"].form["divSubjective" + queSeq].form["txaAnswer"].value);
+        		}
+        	}
+
+        	if( !Ex.util.isUpdated(this.dsData) ) return false;
+        	return true;
+        }
+
+        //※추후 문항 답항 선택에 따른 체크 제외 문항 관리에 대한 로직 추가 필요
+        this.fnCheckValidate = function()
+        {
+        	for(var i=0; i<this.dsData.rowcount; i++)
+        	{
+        		var queSeq		= this.dsData.getColumn(i, "QUE_SEQ");			//문항번호
+        		var queTypeCd	= this.dsData.getColumn(i, "QUE_TYPE_CD");		//질문응답유형(0:단일선택/1:복수선택/2:주관식)
+        		var isNoInputYn	= this.dsData.getColumn(i, "IS_NO_INPUT_YN");	//미입력가능여부
+        		var minAnsCnt	= this.dsData.getColumn(i, "MIN_ANS_CNT");		//복수응답시 최소응답갯수
+
+        		if(queTypeCd == "0")
+        		{
+        			if(this["divConts"].form["rdoAnswer" + queSeq].enable)	//입력부가 활성화된 경우만 답항 체크
+        			{
+        				if(isNoInputYn != "Y")
+        				{
+        					if( Ex.isEmpty(this.dsData.getColumn(i, "RET_VAL")) )
+        					{
+        						this.validationChcekQueSeq = queSeq;
+        						var param = {
+        							  id	: "AlertInputCheck1I"										//fnMsgAfter에서 식별자로 사용되는 ID
+        							, msg	: this.TITLE + "[문항" + queSeq + "] 응답값이 입력되지 않았습니다."	//메시지 내용
+        							, arrparam : []														//메시지의 변수에 들어갈 실제값
+        							, msgtype : "I"														//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        						};
+        						Ex.core.alert(this, param);
+        						return false;
+        					}
+        				}
+        			}
+        		}
+        		else if(queTypeCd == "1")
+        		{
+        			if(this["divConts"].form["chkSetAnswer" + queSeq].enable)	//입력부가 활성화된 경우만 답항 체크
+        			{
+        				var val = this.dsData.getColumn(i, "RET_SEQ")||'';
+        				var valArr = [];
+
+        				if( !Ex.isEmpty(val) )
+        				{
+        					valArr	= val.split(",");
+        				}
+
+        // 				if(valArr.length == 0)				//미응답
+        // 				{
+        // 					this.validationChcekQueSeq = queSeq;
+        // 					var param = {
+        // 						  id	: "AlertInputCheck2I"										//fnMsgAfter에서 식별자로 사용되는 ID
+        // 						, msg	: this.TITLE + "[문항" + queSeq + "] 응답값이 입력되지 않았습니다."	//메시지 내용
+        // 						, arrparam : []														//메시지의 변수에 들어갈 실제값
+        // 						, msgtype : "I"														//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        // 					};
+        // 					Ex.core.alert(this, param);
+        // 					return false;
+        // 				}
+        // 				else
+        				if(valArr.length < minAnsCnt)	//최소응답 갯수 미충족
+        				{
+        					this.validationChcekQueSeq = queSeq;
+        					var param = {
+        						  id	: "AlertInputCheck3I"																//fnMsgAfter에서 식별자로 사용되는 ID
+        						, msg	: this.TITLE + "[" + queSeq + "문항] 최소 선택해야 하는 답항은 " + minAnsCnt + "개 입니다."	//메시지 내용
+        						, arrparam : []																				//메시지의 변수에 들어갈 실제값
+        						, msgtype : "I"																				//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        					};
+        					Ex.core.alert(this, param);
+        					return false;
+        				}
+        			}
+        		}
+        		else if(queTypeCd == "2")
+        		{
+        			if(this["divConts"].form["divSubjective" + queSeq].form["txaAnswer"].enable)	//입력부가 활성화된 경우만 답항 체크
+        			{
+        				if(isNoInputYn != "Y")
+        				{
+        					if( Ex.isEmpty(this.dsData.getColumn(i, "RET_STR")) )
+        					{
+        						this.validationChcekQueSeq = queSeq;
+        						var param = {
+        							  id	: "AlertInputCheck4I"										//fnMsgAfter에서 식별자로 사용되는 ID
+        							, msg	: this.TITLE + "[문항" + queSeq + "] 응답값이 입력되지 않았습니다."	//메시지 내용
+        							, arrparam : []														//메시지의 변수에 들어갈 실제값
+        							, msgtype : "I"														//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        						};
+        						Ex.core.alert(this, param);
+        						return false;
+        					}
+        				}
+        			}
+        		}
+        	}
+        	return true;
+        }
+
+        this.setEnable = function(isEnable)
+        {
+        	for(var i=0; i<formObj.dsData.rowcount; i++)
+        	{
+        		var queSeq = formObj.dsData.getColumn(i, "QUE_SEQ");
+        		var compId = "";
+        		if(formObj.dsData.getColumn(i, "QUE_TYPE_CD") == "0")		compId	= "rdoAnswer" + queSeq;
+        		else if(formObj.dsData.getColumn(i, "QUE_TYPE_CD") == "1")	compId	= "chkSetAnswer" + queSeq;
+        		else if(formObj.dsData.getColumn(i, "QUE_TYPE_CD") == "2")	compId	= "divSubjective" + queSeq;
+
+        		formObj["divConts"].form[compId].set_enable(isEnable);
+        	}
+
+        	if(formObj.divBottomButton.form.btnSave.visible)
+        	{
+        		formObj.divBottomButton.form.btnSave.set_enable(isEnable);
+        	}
+
+        	trace("setEnable END : rowcount:[" + formObj.dsData.rowcount + "] isEnable:[" + isEnable + "]");
+        }
+        /***********************************************************************************
+         * Component Event
+         ***********************************************************************************/
+        // component onclick event.
+        this.fnCommOnclick = function(obj, e)
+        {
+        	// TO DO
+        	// 개발자가 컴포넌트 onclick event를 'fnCommOnclick'으로 지정하고 컴포넌트 id로 구분하여 작성
+        	switch(obj.name)
+        	{
+        		case "btnSave" :
+        			this.isUpdateForm();
+        			if( this.fnCheckValidate() )
+        			{
+        				var param = {
+        					  id : "saveConfirm"
+        					, msg : "10003"
+        					, arrparam : ['']
+        					, msgtype : "I"
+        				};
+        				Ex.core.confirm(this, param);
+        			}
+        			break;
+        	}
+        }
+
+        //문항 답항 선택에 따른 제외 문항 enable 처리 처리 필요
+        this.rdoOnItemChanged = function(obj,e)
+        {
+        	var queSeq	= nexacro.replaceAll(obj.id, "rdoAnswer", "");
+        	var exmSeq	= e.postvalue;
+        	//var exmVal	= e.postvalue;
+
+        	//1. 문항과 연결된 제외 문항의 입력 가능 하도록 전체 해제
+        	var fRow = this.dsExclude.findRowExpr("USE_YN=='Y' && QUE_SEQ==" + queSeq);
+
+        	while(fRow > -1)
+        	{
+        		var excludeQueSeq = this.dsExclude.getColumn(fRow, "EXL_SEQ_VAL");
+
+        		var excludeQueSeqArr = excludeQueSeq.split(",");
+
+        		for(var i=0; i<excludeQueSeqArr.length; i++)
+        		{
+        			var chkRow = this.dsData.findRow("QUE_SEQ", excludeQueSeqArr[i]);
+        			var queTypeCd = this.dsData.getColumn(chkRow, "QUE_TYPE_CD");
+
+        			if(queTypeCd == "0")
+        			{
+        				if(!this["divConts"].form["rdoAnswer" + excludeQueSeqArr[i]].enable)
+        				{
+        					this["divConts"].form["rdoAnswer" + excludeQueSeqArr[i]].set_enable(true);
+        				}
+        			}
+        			else if(queTypeCd == "1")
+        			{
+        				if(!this["divConts"].form["chkSetAnswer" + excludeQueSeqArr[i]].enable)
+        				{
+        					this["divConts"].form["chkSetAnswer" + excludeQueSeqArr[i]].set_enable(true);
+        				}
+        			}
+        			else if(queTypeCd == "2")
+        			{
+        				if(!this["divConts"].form["divSubjective" + excludeQueSeqArr[i]].form["txaAnswer"].enable)
+        				{
+        					this["divConts"].form["divSubjective" + excludeQueSeqArr[i]].form["txaAnswer"].set_enable(true);
+        				}
+        			}
+        		}
+        		fRow++;
+        		fRow = this.dsExclude.findRowExpr("USE_YN=='Y' && QUE_SEQ=='" + queSeq + "'", fRow);
+        	}
+
+        	//현재 선택된 문항의 답항 선택에 따라 제외 문항에 대한 비활성화 적용
+        	fRow = this.dsExclude.findRowExpr("USE_YN=='Y' && QUE_SEQ==" + queSeq + " && EXM_SEQ==" + exmSeq);
+        	//trace("this.rdoOnItemChanged() fRow : " + fRow + " queSeq : " + queSeq + " exmSeq : " +exmSeq);
+
+        	if(fRow > -1)
+        	{
+        		var excludeQueSeq = this.dsExclude.getColumn(fRow, "EXL_SEQ_VAL");
+        		var excludeQueSeqArr = excludeQueSeq.split(",");
+
+        		for(var i=0; i<excludeQueSeqArr.length; i++)
+        		{
+        			var chkRow = this.dsData.findRow("QUE_SEQ", excludeQueSeqArr[i]);
+        			if(chkRow > -1)
+        			{
+        				var compId = "";
+        				if(this.dsData.getColumn(chkRow, "QUE_TYPE_CD") == "0")			compId	= "rdoAnswer" + excludeQueSeqArr[i];
+        				else if(this.dsData.getColumn(chkRow, "QUE_TYPE_CD") == "1")	compId	= "chkSetAnswer" + excludeQueSeqArr[i];
+        				else if(this.dsData.getColumn(chkRow, "QUE_TYPE_CD") == "2")	compId	= "divSubjective" + excludeQueSeqArr[i];
+
+        				if(this["divConts"].form[compId].enable)
+        				{
+        					this["divConts"].form[compId].set_enable(false);
+
+        					if(this.dsData.getColumn(chkRow, "QUE_TYPE_CD") == "0")
+        					{
+        						this["divConts"].form[compId].set_value("");
+        						var evt = nexacro.ItemChangeEventInfo;
+        						evt.postvalue = "";
+        						this.rdoOnItemChanged(this["divConts"].form[compId], evt)
+        					}
+        					else if(this.dsData.getColumn(chkRow, "QUE_TYPE_CD") == "1")
+        					{
+        						this["divConts"].form[compId].set_value("");
+        						var evt = nexacro.ItemChangeEventInfo;
+        						evt.postvalue = "";
+        						this.chkboxSetCanItemChange(this["divConts"].form[compId], evt);
+        					}
+        					else if(this.dsData.getColumn(chkRow, "QUE_TYPE_CD") == "2")
+        					{
+        						this["divConts"].form[compId].form["txaAnswer"].set_value("");
+        					}
+        				}
+        			}
+        		}
+        	}
+
+        	fRow = this.dsData.findRow("QUE_SEQ", queSeq);
+        	var exmVal = this.dsData.getColumn(fRow, "EXM_VAL" + exmSeq);
+        	trace("obj.id : " + obj.id + " exmSeq : " + exmSeq + " fRow : " + fRow + " exmVal : " + exmVal);
+        	if(this["divConts"].form["stcScore" + queSeq])
+        	{
+        		this["divConts"].form["stcScore" + queSeq].set_text(exmVal);
+        	}
+        	this.dsData.setColumn(fRow, "RET_VAL", exmVal);
+        	var sumRetVal1 = 0;
+
+        	for(var i=0; i<this.dsData.rowcount; i++)
+        	{
+        		sumRetVal1 += nexacro.toNumber(this.dsData.getColumn(i, "RET_VAL"), 0);
+        	}
+        	/*
+        	if( Ex.isEmpty(this.parent.parent.dsNumber.saveXML()) ) return;
+        	if(this.parent.parent.dsNumber.saveXML().indexOf("Dataset id=") > -1)
+        	{
+        		this.parent.parent.dsNumber.setColumn(0,'NUM',sumRetVal1);
+        	}
+        	*/
+
+        	if(this.callScope.fnGetScore)
+        	{
+        		var sumRetVal = 0;
+        		for(var i=0; i<this.dsData.rowcount; i++)
+        		{
+        			sumRetVal += nexacro.toNumber(this.dsData.getColumn(i, "RET_VAL"), 0);
+        		}
+        		trace("SUM RET_VAL : " + sumRetVal);
+        		this.callScope.fnGetScore(sumRetVal);
+        	}
+        }
+
+        //복수응답인 경우 최대 선택 가능 답항 갯수 초과시 메시지 처리 후 마지막 선택값 초기화를 위한 이벤트
+        this.chkboxSetCanItemChange = function(obj,e)
+        {
+        	//trace("this.chkboxSetCanItemChange()");
+        	var queSeq	= nexacro.replaceAll(obj.id, "chkSetAnswer", "");
+
+        	var fRow = this.dsData.findRow("QUE_SEQ", queSeq);
+
+        	trace("this.chkboxSetCanItemChange() obj.id : " + obj.id + " queSeq : " + queSeq + " fRow : " + fRow + " e.postvalue : " + e.postvalue);
+
+        	var totExmVal = 0;
+
+        	if(fRow > -1)
+        	{
+        		var maxAnsCnt = this.dsData.getColumn(fRow, "MAX_ANS_CNT");
+
+        		if( !Ex.isEmpty(e.postvalue) )
+        		{
+        			var valArr = e.postvalue.split(",");
+
+        			//trace("e.postvalue : " + e.postvalue + " maxAnsCnt : " + maxAnsCnt + " valArr.length : " + valArr.length);
+
+        			if(valArr.length > maxAnsCnt)
+        			{
+        				this.validationChcekQueSeq = queSeq;
+        				var param = {
+        					  id	: "AlertInputCheck5I"									//fnMsgAfter에서 식별자로 사용되는 ID
+        					, msg	: "[" + queSeq + "문항] 최대 응답 가능 갯수를 초과하였습니다."	//메시지 내용
+        					, arrparam : [Ex.core.word("")]									//메시지의 변수에 들어갈 실제값
+        					, msgtype : "I"													//메시지 타입 '' : [No icon]아이콘 없는 기본 alert, 'I' : [Info]일반 alert, 'W' : [Warning]경고 Alert, 'S' : [Success]성공 alert(저장 등에 사용)&#13;
+        				};
+        				Ex.core.alert(this, param);
+        				this.targetChkSet	= obj;
+        				this.orgValue = e.prevalue;
+        				return false;
+        			}
+
+        			for(var i=0; i<valArr.length; i++)
+        			{
+        				var exmVal = this.dsData.getColumn(fRow, "EXM_VAL" + valArr[i]);
+        				//this["divConts"].form["stcScore" + (fRow+1)].set_text(exmVal);
+        				//this.dsData.setColumn(fRow, "RET_VAL", exmVal);
+        				totExmVal += nexacro.toNumber(exmVal, 0);
+        				trace("i=" + i + " exmVal : " + exmVal + " valArr[i] : " + valArr[i]);
+        			}
+        			trace("totExmVal : " + totExmVal);
+        		}
+        	}
+
+        	if(this["divConts"].form["stcScore" + queSeq])
+        	{
+        		this["divConts"].form["stcScore" + queSeq].set_text(totExmVal);
+        	}
+        	this.dsData.setColumn(fRow, "RET_VAL", totExmVal);
+
+        	if(this.callScope.fnGetScore)
+        	{
+        		var sumRetVal = 0;
+        		for(var i=0; i<this.dsData.rowcount; i++)
+        		{
+        			sumRetVal += nexacro.toNumber(this.dsData.getColumn(i, "RET_VAL"), 0);
+        		}
+        		trace("SUM RET_VAL : " + sumRetVal);
+        		this.callScope.fnGetScore(sumRetVal);
+        	}
+        	return true;
+        }
+
+        //복수응답인 경우 문항 답항 선택에 따른 제외 문항 enable 처리 처리 필요
+        this.chkboxSetOnItemChanged = function(obj,e)
+        {
+        	//trace("this.chkboxSetOnItemChanged() e.postvalue :[" + e.postvalue + "]");
+        	var queSeq	= nexacro.replaceAll(obj.id, "rdoAnswer", "");
+        	var queVal	= e.postvalue;
+
+        	//1. 문항과 연결된 제외 문항의 입력 가능 하도록 전체 해제
+        	var fRow = this.dsExclude.findRowExpr("USE_YN=='Y' && QUE_SEQ==" + queSeq);
+
+        	while(fRow > -1)
+        	{
+        		var excludeQueSeq = this.dsExclude.getColumn(fRow, "EXL_SEQ_VAL");
+        		var excludeQueSeqArr = excludeQueSeq.split(",");
+
+        		for(var i=0; i<excludeQueSeqArr.length; i++)
+        		{
+        			var chkRow = this.dsData.findRow("QUE_SEQ", excludeQueSeqArr[i]);
+        			if(chkRow > -1)
+        			{
+        				var compId = "";
+        				if(this.dsData.getColumn(chkRow, "QUE_TYPE_CD") == "0")			compId	= "rdoAnswer" + excludeQueSeqArr[i];
+        				else if(this.dsData.getColumn(chkRow, "QUE_TYPE_CD") == "1")	compId	= "chkSetAnswer" + excludeQueSeqArr[i];
+        				else if(this.dsData.getColumn(chkRow, "QUE_TYPE_CD") == "2")	compId	= "divSubjective" + excludeQueSeqArr[i];
+
+        				if(!this["divConts"].form[compId].enable)
+        				{
+        					this["divConts"].form[compId].set_enable(true);
+        				}
+        			}
+        		}
+        		fRow++;
+        		fRow = this.dsExclude.findRowExpr("QUE_SEQ==" + queSeq, fRow);
+        	}
+
+        	//현재 선택된 문항의 답항 선택에 따라 제외 문항에 대한 비활성화 적용
+        	var val = e.postvalue;
+
+        	if( !Ex.isEmpty(val) )
+        	{
+        		var valArr = val.split(",");
+
+        		for(var i=0; i<valArr.length; i++)
+        		{
+        			fRow = this.dsExclude.findRowExpr("USE_YN=='Y' && QUE_SEQ==" + queSeq + " && EXM_SEQ==" + valArr[i]);
+
+        			if(fRow > -1)
+        			{
+        				var excludeQueSeq = this.dsExclude.getColumn(fRow, "EXL_SEQ_VAL");
+        				var excludeQueSeqArr = excludeQueSeq.split(",");
+
+        				for(var i=0; i<excludeQueSeqArr.length; i++)
+        				{
+        					var chkRow = this.dsData.findRow("QUE_SEQ", excludeQueSeqArr[i]);
+        					if(chkRow > -1)
+        					{
+        						var compId = "";
+        						if(this.dsData.getColumn(chkRow, "QUE_TYPE_CD") == "0")			compId	= "rdoAnswer" + excludeQueSeqArr[i];
+        						else if(this.dsData.getColumn(chkRow, "QUE_TYPE_CD") == "1")	compId	= "chkSetAnswer" + excludeQueSeqArr[i];
+        						else if(this.dsData.getColumn(chkRow, "QUE_TYPE_CD") == "2")	compId	= "divSubjective" + excludeQueSeqArr[i];
+
+        						if(this.dsData.getColumn(chkRow, "QUE_TYPE_CD") == "0")
+        						{
+        							this["divConts"].form[compId].set_value("");
+        							var evt = nexacro.ItemChangeEventInfo;
+        							evt.postvalue = "";
+        							this.rdoOnItemChanged(this["divConts"].form[compId], evt)
+        						}
+        						else if(this.dsData.getColumn(chkRow, "QUE_TYPE_CD") == "1")
+        						{
+        							this["divConts"].form[compId].set_value("");
+        							var evt = nexacro.ItemChangeEventInfo;
+        							evt.postvalue = "";
+        							this.chkboxSetCanItemChange(this["divConts"].form[compId], evt);
+        						}
+        						else
+        						{
+        							this["divConts"].form[compId].set_value("");
+        						}
+        						this["divConts"].form[compId].set_enable(false);
+        					}
+        				}
+        			}
+        		}
+        	}
+        }
+
+        this.dsOnColumnChanged = function(obj,e)
+        {
+        	obj.setUpdateRow(e);
+        };
+
+        this.divOnSize = function()
+        {
+        	trace("this.divOnSize() START ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        	this["divConts"].form.resetScroll();
+
+        	this.resetScroll();
+
+        	var maxVal = nexacro.toNumber(this.dsAnswerCnt.getColumn(0, "MAX_VAL"), 0);
+        	var scrollbarSize = 0;
+
+        	if(this.vscrollbar)
+        	{
+        		if(this.vscrollbar.max > 0)
+        		{
+        			scrollbarSize =+ 15;
+        		}
+        	}
+
+        	if(this["divConts"].form.vscrollbar)
+        	{
+        		if(this["divConts"].form.vscrollbar.max > 0)
+        		{
+        			scrollbarSize =+ 15;
+        		}
+        	}
+
+        	if(this.DIRECTION == "V")
+        	{
+        		if(maxVal > 0)
+        		{
+        			this.stcScore.set_width(60 + scrollbarSize);
+        			this.stcAnswerTitle.set_right(null);
+        			this.stcAnswerTitle.set_left(this.maxQuestionWidth - scrollbarSize - 1);
+        			this.stcAnswerTitle.set_width(this.maxAnswerWidth);
+
+        			trace("this.maxAnswerWidth : " + this.maxAnswerWidth);
+        		}
+        		else
+        		{
+        			this.stcAnswerTitle.set_left(null);
+        			this.stcAnswerTitle.set_right(0);
+        			this.stcAnswerTitle.set_width(this.maxAnswerWidth + scrollbarSize);
+        		}
+        	}
+        	else
+        	{
+        		this.stcAnswerTitle.set_left(null);
+        		this.stcAnswerTitle.set_right(0);
+        		this.stcAnswerTitle.set_width(this.maxAnswerWidth + scrollbarSize);
+        	}
+
+        	this.stcQueTitle.set_width(this.stcAnswerTitle.getOffsetLeft() + 1);
+
+        	for(var i=0; i<this.dsData.rowcount; i++)
+        	{
+        		var queSeq		= this.dsData.getColumn(i, "QUE_SEQ");
+        		var queTypeCd	= this.dsData.getColumn(i, "QUE_TYPE_CD");	//질문응답유형(0:단일선택/1:복수선택/2:주관식)
+
+        		var compId = "";
+        		if(queTypeCd == "0")		//객관식(단일선택)
+        		{
+        			compId = "rdoAnswer" + queSeq;
+        		}
+        		else if(queTypeCd == "1")	//객관식(복수선택)
+        		{
+        			compId = "chkSetAnswer" + queSeq;
+        		}
+
+        		if(queTypeCd == "0" || queTypeCd == "1")	//객관식(단일선택/복수선택)
+        		{
+        			trace("OFFSET LEFT : " + this["divConts"].form[compId].getOffsetLeft());
+        			this["divConts"].form["txaQuestion" + queSeq].set_width( this["divConts"].form[compId].getOffsetLeft() + 1);
+        		}
+        	}
+        	this["divConts"].form.resetScroll();
+
+        	this.resetScroll();
+
+        	trace("this.divOnSize() END");
+        };
+
+        this.formOnSize = function(obj,e)
+        {
+        	trace("[FOMM0700_D01] this.formOnSize()");
+        	this.divOnSize(this["divConts"]);
+        };
+        });
+        
+        // Regist UI Components Event
+        this.on_initEvent = function()
+        {
+            this.addEventHandler("onload",this.form_onload,this);
+            this.divBottomButton.form.btnSave.addEventHandler("onclick",this.fnCommOnclick,this);
+            this.dsData.addEventHandler("oncolumnchanged",this.dsOnColumnChanged,this);
+        };
+        this.loadIncludeScript("FOMM0700_D01.xfdl");
+        this.loadPreloadList();
+        
+        // Remove Reference
+        obj = null;
+    };
+}
+)();

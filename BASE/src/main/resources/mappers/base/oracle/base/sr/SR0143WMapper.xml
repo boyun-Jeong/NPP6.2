@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR0143WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT 
+		      '0' AS CHK
+			, '' AS ROWFLAG
+			, A.PROC_NUMBER --프로세스번호
+		    , B.TITLE --제목    
+		    , A.APPR_GBN_CD --결재자구분코드
+		    , A.ORG_USER_NM --원처리자
+		    , A.SRM_USER_NM --처리자
+		    , A.SRM_USER_ID
+		    , A.WF_HIST_SEQ--히스토리키값
+		    , A.APPR_STAT_CD --승인상태
+		    , A.WF_PROC_CD --워크플로우단계코드
+		    , A.REG_STIME -- 등록일시
+		    , A.MOBL_CONFIRM_STIME
+		    , CASE WHEN( A.MOBL_CONFIRM_STIME IS NULL OR A.MOBL_CONFIRM_STIME='') THEN DECODE(A.SRM_USER_ID,#{LMID},'본인확인','미확인')  
+		    	   ELSE '확인완료' END AS DIV_NM
+
+		    , B.REQ_STAT_CD --요청서진행상태코드
+            , C.SVC_CD --서비스유형코드
+            , C.REQ_TMPLAT_ID
+            , C.REQ_TMPLAT_VER
+            , A.APPR_NM	AS WF_PROC_NM
+		FROM
+			  WF_PROC_HIST A
+			, SR_BASE_INFO B
+			, WF_REQ_TMPLAT_HT C
+			<!-- , WF_REQ_TMPLAT_PROC_HT D -->
+		WHERE 1=1
+		AND B.REQ_ID			= A.PROC_NUMBER
+        AND B.REQ_TMPLAT_ID 	= C.REQ_TMPLAT_ID
+        AND B.REQ_TMPLAT_VER	= C.REQ_TMPLAT_VER
+        --AND C.REQ_TMPLAT_ID     = D.REQ_TMPLAT_ID
+        --AND C.REQ_TMPLAT_VER	= D.REQ_TMPLAT_VER
+        --AND A.WF_PROC_CD		= D.WF_PROC_CD
+		AND MOBL_APP_NM ='FLOW'
+		AND NVL(B.DEL_YN, 'N')    = 'N'
+		--AND B.REQ_STAT_CD         = 'RQST11'	-- 결재중
+		
+		<if test="PROC_NUMBER != '' and PROC_NUMBER != null">
+		AND PROC_NUMBER = #{PROC_NUMBER}
+		</if>
+		
+		<if test="TITLE != '' and TITLE != null">
+		AND TITLE LIKE '%'||#{TITLE}||'%'
+		</if>
+		
+		<if test="SVC_CD != '' and SVC_CD != null">
+		AND SVC_CD = #{SVC_CD}
+		</if>
+		
+		<if test="START_DATE != '' and START_DATE != null and END_DATE != '' and END_DATE != null">
+        AND SUBSTR(A.REG_STIME,0,8) BETWEEN #{START_DATE} AND #{END_DATE}
+        </if>
+        
+        <if test='"Y".equals(MYREQ_YN)'>
+        AND (A.MOBL_CONFIRM_STIME IS NULL OR A.MOBL_CONFIRM_STIME='') AND A.ORG_USER_ID = #{LMID}
+        </if>
+        AND  (A.SRM_USER_ID = #{LMID} OR A.ORG_USER_ID = #{LMID} )
+		
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		INSERT INTO WF_PROC_HIST
+		(
+			  PROC_NUMBER	--프로세스번호
+			, WF_HIST_SEQ	--히스토리키값
+			, WF_PROC_CD	--워크플로우단계코드
+			, APPR_STAT_CD	--승인상태
+			, APPR_COMMENT	--승인/반려의견
+			, APPR_GBN_CD	--결재자구분코드
+			, SRM_USER_ID	--처리이력변경 사용자ID
+			, SRM_USER_NM	--처리이력변경 사용자
+			, SRM_JBC_JNAME	--처리이력변경 사용자 직명
+			, SRM_DEPT_NM	--처리이력변경 사용자 팀명
+			, REG_STIME	--등록일시
+			, ORG_USER_ID	--원처리자ID(대무처리시)
+			, ORG_USER_NM	--원처리자명(대무처리시)
+			, ORG_JBC_JNAME	--원처리자직명(대무처리시)
+			, ORG_DEPT_NM	--원처리자부서명(대무처리시)
+			, DAEJIC_YN	--대직처리여부
+			, MOBL_CONFIRM_STIME	--모바일결재확인일시
+			, MOBL_APP_NM	--모바일앱(app)이름(FLOW)
+		)
+		VALUES
+		(
+			  #{PROC_NUMBER}
+			, #{WF_HIST_SEQ}
+			, #{WF_PROC_CD}
+			, #{APPR_STAT_CD}
+			, #{APPR_COMMENT}
+			, #{APPR_GBN_CD}
+			, #{SRM_USER_ID}
+			, #{SRM_USER_NM}
+			, #{SRM_JBC_JNAME}
+			, #{SRM_DEPT_NM}
+			, #{REG_STIME}
+			, #{ORG_USER_ID}
+			, #{ORG_USER_NM}
+			, #{ORG_JBC_JNAME}
+			, #{ORG_DEPT_NM}
+			, #{DAEJIC_YN}
+			, #{MOBL_CONFIRM_STIME}
+			, #{MOBL_APP_NM}
+		)
+	</insert>
+
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE WF_PROC_HIST SET			
+			   MOBL_CONFIRM_STIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')	--모바일결재확인일시
+		WHERE 1 = 1
+		<if test="PROC_NUMBER != '' and PROC_NUMBER != null">
+		AND PROC_NUMBER = #{PROC_NUMBER}
+		</if>
+		<if test="WF_HIST_SEQ != '' and WF_HIST_SEQ != null">
+		AND WF_HIST_SEQ = #{WF_HIST_SEQ}
+		</if>
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM WF_PROC_HIST
+		WHERE 1 = 1
+		<if test="PROC_NUMBER != '' and PROC_NUMBER != null">
+		AND PROC_NUMBER = #{PROC_NUMBER}
+		</if>
+		<if test="WF_HIST_SEQ != '' and WF_HIST_SEQ != null">
+		AND WF_HIST_SEQ = #{WF_HIST_SEQ}
+		</if>
+	</delete>
+
+</mapper>

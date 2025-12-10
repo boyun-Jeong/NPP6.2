@@ -1,0 +1,6951 @@
+﻿.Static.stc_WF_normal
+{
+	background : transparent;
+	border : 0px;
+	color : #000000;
+	font : 12px '돋움';
+}
+.Static.stc_WF_normal .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.stc_WF_event
+{
+	background : transparent;
+	border : 0px;
+	color : blue;
+	font : 12px '돋움';
+	cursor : pointger;
+}
+.Static.stc_WF_event .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.sta_WF_gridTitle
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/HOME/main-titbullet01.png') no-repeat left center;
+	border : 0px;
+	color : #000000;
+	font : bold 16px '돋움';
+}
+.Static.sta_WF_gridTitle .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.sta_WF_grdCnt
+{
+	color : #0a5dad;
+	font : bold 13px '돋움';
+}
+.Static.sta_WF_grdCnt .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.sta_WF_schTitle
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/sta_WF_schTitle.png') no-repeat left center;
+	border : 0px;
+	color : #444444;
+	font : bold 12px '돋움';
+}
+.Static.sta_WF_schTitle .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.sta_WF_schTitle_E
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/sta_WF_schTitle_E.png') no-repeat left center;
+	border : 0px;
+	color : #444444;
+	font : bold 12px '돋움';
+}
+.Static.sta_WF_schTitle_E .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.sta_WF_inputBg
+{
+	background : #ffffff;
+	border : 1px solid #d3d3d3;
+	color : #444444;
+	font : bold 12px '돋움';
+}
+.Static.sta_WF_inputBg .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.sta_WF_inputBgOnlyTop
+{
+	background : #ffffff;
+	border-top : 1px solid #d3d3d3;
+	border-right : 0px;
+	border-bottom : 0px;
+	border-left : 0px;
+	color : #444444;
+	font : bold 12px '돋움';
+}
+.Static.sta_WF_inputBgOnlyTop .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.sta_WF_inputTitle
+{
+	background : #fcf5ef;
+	border : 1px solid #d3d3d3;
+	color : #444444;
+	font : bold 12px '돋움';
+}
+.Static.sta_WF_inputTitle .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.sta_WF_inputTitle_E
+{
+	background : #fcf5ef URL('./SPP_IMAGE_SET/WF/img_WF_GrdCell_Essential.png') no-repeat left top;
+	border : 1px solid #d3d3d3;
+	color : #444444;
+	font : bold 12px '돋움';
+}
+.Static.sta_WF_inputTitle_E .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.sta_WF_descInfo
+{
+	color : red;
+	font : bold 12px '돋움';
+}
+.Static.sta_WF_descInfo .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.sta_WF_fileDropBg
+{
+	background : transparent;
+	border : 2px dotted #444444;
+	color : #444444;
+	font : bold 14px '돋움';
+}
+.Static.sta_WF_fileDropBg .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.stc_WF_arrowBody
+{
+	background : green;
+	border : 0px none;
+	color : #ffffff;
+	font : bold 12px '돋움';
+}
+.Static.stc_WF_arrowHead
+{
+	background : transparent;
+	border : 0px none;
+	color : green;
+	font : bold 25px '돋움';
+}
+.Static.stc_WF_arrowHead .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.stc_WF_countBg
+{
+	background : #656ff2;
+	border : 0px none;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.Static.stc_WF_countBg .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.stc_WF_count
+{
+	background : transparent;
+	border : 0px none;
+	color : #020202;
+	font : bold 14px '돋움';
+}
+.Static.stc_WF_count .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.stc_WF_wfNodeDisp
+{
+	background : white;
+	font : bold 18px '돋움';
+	color : #828282;
+	border : 3px solid #6695E8;
+	border-radius : 18px 18px 18px 0px;
+}
+.Static.stc_WF_wfNodeDisp .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.stc_WF_wfStatDispGrey
+{
+	background : #AABAD4;
+	font : 12px '돋움';
+	color : white;
+	border : 1px solid #89A0C2;
+	border-radius : 30px 30px;
+}
+.Static.stc_WF_wfStatDispGrey .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.stc_WF_wfStatDispBlue
+{
+	background : #75ADE6;
+	font : 12px '돋움';
+	color : white;
+	border : 1px solid #207ed5;
+	border-radius : 30px 30px;
+}
+.Static.stc_WF_wfStatDispBlue .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.stc_WF_wfStatDispPurple
+{
+	background : #8887D3;
+	font : 12px '돋움';
+	color : white;
+	border : 1px solid #5857BF;
+	border-radius : 30px 30px;
+}
+.Static.stc_WF_wfStatDispPurple .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.stc_WF_wfStatDispRed
+{
+	background : #FB9598;
+	font : 12px '돋움';
+	color : white;
+	border : 1px solid #FF6B6A;
+	border-radius : 30px 30px;
+}
+.Static.stc_WF_wfStatDispRed .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Static.stc_WF_wfContsDisp
+{
+	background : transparent;
+	font : bold 13px '돋움';
+	color : #020202;
+}
+.Static.stc_WF_wfContsDisp .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : top;
+	background-position-y : top;
+}
+.Static.stc_WfAllow_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/maspp-arrow.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfAllow_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/maspp-arrow.gif') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqReg_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico01-off.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqReg_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico01-on.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqApv_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico02-off.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqApv_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico02-on.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqRev_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/img_WF_count02.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqRev_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqPmoApv_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico07-off.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqPmoApv_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico07-on.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqPrj_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico09-off.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqPrj_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico09-on.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqPmoEnd_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico10-off.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqPmoEnd_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico10-on.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqEnd_Off
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico11-off.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WfReqEnd_On
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/Rbox-ico11-on.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WF_legend11
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/ico_WF_legend11.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WF_legend12
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/ico_WF_legend12.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WF_legend13
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/ico_WF_legend13.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WF_legend14
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/ico_WF_legend14.png') no-repeat center center;
+	border : 0px none;
+}
+.Static.stc_WF_CalDate
+{
+	background : transparent;
+	font : bold 25px '돋움';
+	color : #030303;
+}
+.Static.stc_WF_CalDate .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+.Static.stc_WF_calDateTitle
+{
+	background : #f5f5fd;
+	border-top : 1px solid #8a96a8;
+	border-right : 1px solid #8a96a8;
+	border-bottom : 2px solid #6d67e4;
+	border-left : 1px solid #8a96a8;
+	font : bold 15px '돋움';
+	color : #020202;
+}
+.Static.stc_WF_calDateTitle .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+.Static.stc_WF_timer
+{
+	background : #f0f4f9;
+	border-radius : 3px 3px;
+	border : 1px solid #4f46df;
+	font : bold 13px '돋움';
+	color : #4f46df;
+}
+.Static.stc_WF_timer .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+}
+.Edit.edt_WF_normal
+{
+	background : #ffffff;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #444444;
+}
+.Edit.edt_WF_normal .nexainput
+{
+	text-align : left;
+	padding : 0px 18px 0px 6px;
+}
+.Edit.edt_WF_normal .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+.MaskEdit.msk_WF_normal
+{
+	background : #ffffff;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #444444;
+}
+.MaskEdit.msk_WF_normal .nexainput
+{
+	text-align : left;
+	padding : 0px 6px 0px 6px;
+}
+.MaskEdit.msk_WF_normal .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+.TextArea.txa_WF_normal
+{
+	background : #ffffff;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #444444;
+}
+.TextArea.txa_WF_normal .nexatextarea
+{
+	text-align : left;
+	padding : 4px 6px 4px 6px;
+	white-space : pre-wrap;
+	word-wrap : break-word;
+	word-break : break-all;
+}
+.TextArea.txa_WF_normal .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	white-space : pre-wrap;
+	word-wrap : break-word;
+	word-break : break-all;
+}
+.TextArea.txa_WF_Confirm
+{
+	background : #89aeeb;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #444444;
+}
+.TextArea.txa_WF_Confirm .nexatextarea
+{
+	text-align : left;
+	padding : 4px 6px 4px 6px;
+}
+.TextArea.txa_WF_Confirm .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+.Button.btn_WF_normal
+{
+	background : #e1e1de;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_normal .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_favorite_off
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOff.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_favorite_on
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOn.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_search
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_search .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_searchReset
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_searchReset .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_primary_save
+{
+	background : #4774ff;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_save .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_primary_save_ex
+{
+	background : #ff7454;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_save_ex .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_primary_close
+{
+	background : #ffffff;
+	border : 1px solid #4774ff;
+	border-radius : 5px 5px;
+	color : #4774ff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_close .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_primary_delete
+{
+	background : #ffffff;
+	border : 1px solid red;
+	border-radius : 5px 5px;
+	color : red;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_primary_delete .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_add
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_add .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_del
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_del .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_edit
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_edit .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_func
+{
+	background : #fafafa;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_func .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_fileDown
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_fileDown .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_excelDown
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_excelDown .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_excelUp
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_excelUp .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_chart
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_chart .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_refresh
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_refreshN.png') no-repeat left center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_clear
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_editClear_N.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_WF_SearchIcon
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_Search.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_ClearIcon
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_WF_ClearIcon .nexacontentsbox
+{
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Button.btn_WF_btnPrev
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchLeft.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchRight.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev2
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext2
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnPrev3
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_btnNext3
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count00
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count01
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count02
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count03
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count04
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count05
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count00_on
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count01_on
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count02_on
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count03_on
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count04_on
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_count05_on
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_countArrowRight
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_countArrowRight.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_WF_calDayOn
+{
+	background : #656ff2;
+	border : 1px solid #656ff2;
+	border-radius : 5px;
+	color : #ffffff;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_calDayOff
+{
+	background : #f7f9fa;
+	border : 1px solid #c2c2c2;
+	border-radius : 5px;
+	color : #020202;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+.CheckBox.chk_WF_normal
+{
+	background : transparent;
+	border : 0px none;
+	border-radius : 0px;
+	font : 12px '돋움';
+	color : #444444;
+}
+.CheckBox.chk_WF_normal .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Radio.rdo_WF_normal
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Radio.rdo_WF_normal .radioitem
+{
+	background : transparent;
+	border : 0px;
+}
+.Radio.rdo_WF_checklist
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Radio.rdo_WF_checklist .radioitem
+{
+	font : 12px '돋움';
+	color : #444444;
+}
+.Calendar.cal_WF_normal
+{
+	background : #ffffff;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+}
+.Calendar.cal_WF_normal .calendaredit
+{
+	background : transparent;
+	border : 0px;
+	font : 12px "돋움";
+	color : #444444;
+}
+.Calendar.cal_WF_normal .calendaredit .nexainput
+{
+	padding : 0px 0px 0px 6px;
+}
+.Calendar.cal_WF_normal .dropbutton
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Combo.cbo_WF_normal
+{
+	background : #ffffff;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Combo.cbo_WF_normal .comboedit
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Combo.cbo_WF_normal .comboedit .nexainput
+{
+	text-align : left;
+	padding : 1px 6px 0px 6px;
+}
+.Combo.cbo_WF_normal .comboedit .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy
+{
+	background : #ffffff;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Combo.cbo_WF_normal .dropbutton
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Spin.spn_WF_normal
+{
+	background : #ffffff;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #444444;
+}
+.Spin.spn_WF_normal .spinedit
+{
+	background : transparent;
+	font : 12px '돋움';
+}
+.Spin.spn_WF_normal .spinedit .nexainput
+{
+	text-align : left;
+}
+.Spin.spn_WF_normal .spinedit .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+.Spin.spn_WF_normal .spinupbutton
+{
+	background : transparent;
+	cursor : pointer;
+}
+.Spin.spn_WF_normal .spindownbutton
+{
+	background : transparent;
+}
+.Div.div_WF_divSearchArea
+{
+	background : #ffffff;
+	border : 1px solid #d3d3d3;
+	border-radius : 4px 4px;
+}
+.Div.div_WF_wfFieldN
+{
+	background : transparent;
+	border : 2px solid transparent;
+}
+.Div.div_WF_wfFieldA
+{
+	background : transparent;
+	border : 2px dashed #dfdfdf;
+}
+.Div.div_WF_wfFieldO
+{
+	background : transparent;
+	border : 2px dashed #3697f8;
+}
+.Div.div_WF_wfFieldDisp
+{
+	background : transparent;
+	border : 0px none;
+}
+.Div.div_WF_wfStep01
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_wfStep01.png') no-repeat left center;
+	border : 0px none;
+}
+.Div.div_WF_wfStep02
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_wfStep02.png') no-repeat left center;
+	border : 0px none;
+}
+.Div.div_WF_wfStep03
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_wfStep03.png') no-repeat left center;
+	border : 0px none;
+}
+.Div.div_WF_wfStep04
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_wfStep04.png') no-repeat left center;
+	border : 0px none;
+}
+.Div.div_WF_wfStep05
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_wfStep05.png') no-repeat left center;
+	border : 0px none;
+}
+.Div.div_WF_wfContsDisp
+{
+	background : #f6f7fe;
+	border : 2px solid #6b7ace;
+	border-radius : 0px 10px 10px 10px;
+}
+.Div.div_WF_wfArrowRight
+{
+	background : URL('./SPP_IMAGE_SET/WF/img_WF_wfArrowNext.png') no-repeat center center;
+	border : 0px none;
+}
+.Div.div_WF_wfDelFieldN
+{
+	background : transparent;
+	border-top : 1px solid #d3d3d3;
+	border-right : 0px;
+	border-bottom : 0px;
+	border-left : 0px;
+}
+.Div.div_WF_wfDelFieldA
+{
+	background : transparent;
+	border-top : 2px dashed rgba(255,0,0,0.30);
+	border-right : 2px dashed rgba(255,0,0,0.30);
+	border-bottom : 2px dashed rgba(255,0,0,0.30);
+	border-left : 2px dashed rgba(255,0,0,0.30);
+}
+.Div.div_WF_wfNodeGuide
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 24px '돋움';
+}
+.Div.div_WF_wfFuncGuide
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 18px '돋움';
+}
+.Div.div_WF_wfCgerGuide
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 18px '돋움';
+}
+.Div.div_WF_wfNode
+{
+	background : #355cc5;
+	border : 1px solid #355cc5;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 16px '돋움';
+}
+.Div.div_WF_wfNodeScreen
+{
+	background : #355cc5 url('./SPP_IMAGE_SET/WF/ico_WF_screen.png') no-repeat 3px center;
+	border : 1px solid #355cc5;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 16px '돋움';
+}
+.Div.div_WF_wfFunc
+{
+	background : orange;
+	border : 1px solid orange;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 12px '돋움';
+}
+.Div.div_WF_wfCger
+{
+	background : green;
+	border : 1px solid green;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 12px '돋움';
+}
+.Div.div_WF_calTopBg
+{
+	background : #d9ddec;
+	border : 0px none;
+}
+.Div.div_WF_calDayBg
+{
+	background : white;
+	border-radius : 5px 5px;
+	border : 1px solid #dfdfdf;
+}
+.Div.div_WF_calTodayBg
+{
+	background : #fefae1;
+	border-radius : 5px 5px;
+	border : 1px solid #dfdfdf;
+}
+.Div.div_WF_WFHist_Off
+{
+	background : transparent url('./NHSB_IMAGE_SET/WF/card-box-normal.png') no-repeat center center;
+	border : 0px none;
+}
+.Div.div_WF_WFHist_OffSel
+{
+	background : transparent url('./NHSB_IMAGE_SET/WF/card-box-active.png') no-repeat center center /contain;
+	border : 0px none;
+}
+.Div.div_WF_WFHist_On
+{
+	background : transparent url('./NHSB_IMAGE_SET/WF/card-box-now.png') no-repeat center center /contain;
+	border : 0px none;
+}
+.Div.div_WF_WFHist_OnSel
+{
+	background : transparent url('./NHSB_IMAGE_SET/WF/card-box-now-active.png') no-repeat center center /contain;
+	border : 0px none;
+}
+.Grid.grd_WF_normal
+{
+	background : transparent;
+	border-top : 2px solid #010103;
+	border-right : 0px;
+	border-bottom : 1px solid #010103;
+	border-left : 0px;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .head .row .cell
+{
+	background : #fcf5ef;
+	border : 1px solid #9ea7cc;
+	justify-content : center;
+	align-items : center;
+	color : #32333b;
+	font : bold 12px '돋움';
+}
+.Grid.grd_WF_normal .head .row .cell > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Grid.grd_WF_normal .body .row .cell
+{
+	background : #ffffff;
+	border : 1px solid #ced3e5;
+	justify-content : center;
+	align-items : center;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell.oddcell
+{
+	background : #ffffff;
+	color : #32333b;
+}
+.Grid.grd_WF_normal .body .row .cell > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Grid.grd_WF_normal .body .row .cell .subcell
+{
+	background : #ffffff;
+	border : 1px solid #ced3e5;
+	justify-content : center;
+	align-items : center;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell.oddcell
+{
+	background : #ffffff;
+	color : #32333b;
+}
+.Grid.grd_WF_normal .body .row .cell .subcell > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Grid.grd_WF_normal .body .selection
+{
+	border : 2px solid #125dae;
+}
+.Grid.grd_WF_normal .body .row .cell .cellcheckbox
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/chk_WF_BtnImage.png') no-repeat center center;
+}
+.Grid.grd_WF_normal .body .row .cell .cellradioitem
+{
+	background : transparent;
+	border : 0px;
+}
+.Grid.grd_WF_normal .body .row .cell .cellbutton
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell .cellbutton
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .cellcalendar
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell .cellcalendar
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .cellcombo
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell .cellcombo
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .celledit
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell .celledit
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .cellmaskedit
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell .cellmaskedit
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .cellmulticombo
+{
+	background : white;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .body .row .cell .subcell .cellmulticombo
+{
+	background : white;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add.dummy.dummy.dummy .cellbutton .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add.dummy.dummy.dummy .cellbutton
+{
+	border : 1px solid #c2c2c2;
+	font : 12px '돋움';
+	color : #555555;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event.dummy.dummy.dummy
+{
+	color : blue;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event.dummy.dummy.dummy.oddcell
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_ntc.dummy.dummy.dummy
+{
+	background : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBTreeCell_WF_event.dummy.dummy.dummy .celltreeitem .treeitemtext
+{
+	color : blue;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBTreeCell_WF_event_sameTreeIcon.dummy.dummy.dummy .celltreeitem .treeitemtext
+{
+	color : blue;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold.dummy.dummy.dummy
+{
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP.dummy.dummy.dummy
+{
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success.dummy.dummy.dummy
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success.dummy.dummy.dummy.oddcell
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success.dummy.dummy.dummy
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success.dummy.dummy.dummy.oddcell
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success.dummy.dummy.dummy
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success.dummy.dummy.dummy.oddcell
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info.dummy.dummy.dummy
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info.dummy.dummy.dummy.oddcell
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info.dummy.dummy.dummy
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info.dummy.dummy.dummy.oddcell
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info.dummy.dummy.dummy
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info.dummy.dummy.dummy.oddcell
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning.dummy.dummy.dummy
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning.dummy.dummy.dummy.oddcell
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning.dummy.dummy.dummy
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning.dummy.dummy.dummy.oddcell
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning.dummy.dummy.dummy
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning.dummy.dummy.dummy.oddcell
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger.dummy.dummy.dummy
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger.dummy.dummy.dummy.oddcell
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger.dummy.dummy.dummy
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger.dummy.dummy.dummy.oddcell
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger.dummy.dummy.dummy
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger.dummy.dummy.dummy.oddcell
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.dummy.dummy.dummy
+{
+	color : green;
+	text-decoration : underline;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.dummy.dummy.dummy.oddcell
+{
+	color : green;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.dummy.dummy.dummy > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.dummy.dummy.dummy
+{
+	color : blue;
+	text-decoration : underline;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.dummy.dummy.dummy.oddcell
+{
+	color : blue;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.dummy.dummy.dummy > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.dummy.dummy.dummy
+{
+	color : yellow;
+	text-decoration : underline;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.dummy.dummy.dummy.oddcell
+{
+	color : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.dummy.dummy.dummy > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.dummy.dummy.dummy
+{
+	color : red;
+	text-decoration : underline;
+	cursor : pointer;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.dummy.dummy.dummy.oddcell
+{
+	color : red;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.dummy.dummy.dummy > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy.oddcell
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_f9f3f3.dummy.dummy.dummy
+{
+	background : #f9f3f3;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow.dummy.dummy.dummy
+{
+	background : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow.dummy.dummy.dummy.oddcell
+{
+	background : yellow;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_c0dbf7.dummy.dummy.dummy
+{
+	background : #c0dbf7;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_e1fcfe.dummy.dummy.dummy
+{
+	background : #e1fcfe;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_ffffff.dummy.dummy.dummy
+{
+	background : #ffffff;
+}
+.Grid.grd_WF_normal .summary
+{
+	background : #fefcf5;
+	border : 0px;
+}
+.Grid.grd_WF_normal .summary .row .cell
+{
+	background : #fdfbe5;
+	border : 1px solid #d3d3d3;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_normal .summary .row .cell.oddcell
+{
+	background : #fdfbe5;
+	color : #444444;
+}
+.Grid.grd_WF_normal .hscrollbar
+{
+	border-top : 1px solid #b1b1b1;
+	border-right : 0px none;
+	border-bottom : 0px none;
+	border-left : 0px none;
+}
+.Grid.grd_WF_normal .vscrollbar
+{
+	border-top : 0px none;
+	border-right : 0px none;
+	border-bottom : 0px none;
+	border-left : 1px solid #b1b1b1;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy.oddcell
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy .subcell
+{
+	background : pink;
+}
+.Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy .subcell.oddcell
+{
+	background : pink;
+}
+.Grid .body .row .cell.grdBCell_WF_bgOrange.dummy.dummy.dummy
+{
+	background : peachpuff;
+}
+.Grid.grd_WF_noEffect .head .row .cell
+{
+	background : #eef3f6;
+	border : 1px solid #d3d3d3;
+	justify-content : center;
+	align-items : center;
+	color : #444444;
+	font : bold 12px '돋움';
+}
+.Grid.grd_WF_noEffect .head .row .cell > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Grid.grd_WF_noEffect .body .row .cell
+{
+	background : #f7f7f7;
+	border : 1px solid #d3d3d3;
+	justify-content : center;
+	align-items : center;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_noEffect .body .row .cell.oddcell
+{
+	background : #ffffff;
+	color : #444444;
+}
+.Grid.grd_WF_noEffect .body .row .cell > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Grid.grd_WF_noEffect .body .row .cell .subcell
+{
+	background : #f7f7f7;
+	border : 1px solid #d3d3d3;
+	justify-content : center;
+	align-items : center;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_noEffect .body .row .cell .subcell.oddcell
+{
+	background : #ffffff;
+	color : #444444;
+}
+.Grid.grd_WF_noEffect .body .row .cell .subcell > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Grid.grd_WF_noEffect .body .selection
+{
+	border : 2px solid #125dae;
+}
+.Grid.grd_WF_noEffect .body .row .cell .cellcheckbox
+{
+	background : transparent url('./SPP_IMAGE_SET/WF/chk_WF_BtnImage.png') no-repeat center center;
+}
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy.oddcell
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+.Grid.grd_WF_noEffect .summary
+{
+	background : #fefcf5;
+	border : 0px;
+}
+.Grid.grd_WF_noEffect .summary .row .cell
+{
+	background : #fdfbe5;
+	border : 1px solid #d3d3d3;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_noEffect .summary .row .cell.oddcell
+{
+	background : #fdfbe5;
+	color : #444444;
+}
+.Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy
+{
+	background : pink;
+}
+.Grid.grd_WF_noEffect .hscrollbar
+{
+	border-top : 1px solid #b1b1b1;
+	border-right : 0px none;
+	border-bottom : 0px none;
+	border-left : 0px none;
+}
+.Grid.grd_WF_noEffect .vscrollbar
+{
+	border-top : 0px none;
+	border-right : 0px none;
+	border-bottom : 0px none;
+	border-left : 1px solid #b1b1b1;
+}
+.GridCellControl .cellbutton.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+	color : #555555;
+	background : #eaeaea;
+	background : -webkit-linear-gradient(to top,#eaeaea,#ffffff);
+	background : linear-gradient(to top,#eaeaea,#ffffff);
+	border : 1px solid #c2c2c2;
+}
+.GridCellControl .cellcalendar.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+}
+.GridCellControl .cellcheckbox.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+}
+.GridCellControl .cellcombo.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+}
+.ListBoxControl.popupGridCellControlcellcombocombolist.dummy.dummy.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+	color : #555555;
+}
+.GridCellControl .celledit.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+	background : #ffffff;
+	border : 1px solid #d5d5d5;
+}
+.GridCellControl .celledit.grdCellCtrl_WF_normal .nexainput
+{
+	padding : 1px 9px 0px 9px;
+}
+.GridCellControl .cellmaskedit.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+	background : #ffffff;
+	border : 1px solid #d5d5d5;
+}
+.GridCellControl .cellmaskedit.grdCellCtrl_WF_normal .nexainput
+{
+	padding : 1px 9px 0px 9px;
+}
+.GridCellControl .cellprogressbar.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+}
+.GridCellControl .celltextarea.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+}
+.GridCellControl .celltreeitem .treeitemtext.grdCellCtrl_WF_normal
+{
+	font : 12px '돋움';
+	color : #666666;
+}
+.GridCellControl .celltreeline.grdCellCtrl_WF_normal
+{
+	border : 1px dotted #909090;
+}
+.Grid.grd_WF_tree
+{
+	background : transparent;
+	border-top : 2px solid #010103;
+	border-right : 1px solid #aaaaaa;
+	border-bottom : 1px solid #aaaaaa;
+	border-left : 1px solid #aaaaaa;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_tree .head .row .cell
+{
+	background : #fcf5ef;
+	border : 1px solid #9ea7cc;
+	justify-content : center;
+	align-items : center;
+	color : #32333b;
+	font : bold 12px '돋움';
+}
+.Grid.grd_WF_tree .head .row .cell > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Grid.grd_WF_tree .body .row .cell
+{
+	background : #ffffff;
+	border : 1px solid #ced3e5;
+	justify-content : center;
+	align-items : center;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_tree .body .row .cell.oddcell
+{
+	background : #ffffff;
+	color : #32333b;
+}
+.Grid.grd_WF_tree .body .row .cell > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Grid.grd_WF_tree .body .row .cell .subcell
+{
+	background : #ffffff;
+	border : 1px solid #ced3e5;
+	justify-content : center;
+	align-items : center;
+	color : #32333b;
+	font : 12px '돋움';
+}
+.Grid.grd_WF_tree .body .row .cell .subcell.oddcell
+{
+	background : #ffffff;
+	color : #32333b;
+}
+.Grid.grd_WF_tree .body .row .cell .subcell > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Grid.grd_WF_tree .body .row .cell .celltreeitem
+{
+	background : transparent;
+}
+.Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitemtext
+{
+	font : 12px '돋움';
+	color : #444444;
+}
+.Grid.grd_WF_tree .hscrollbar
+{
+	border-top : 1px solid #b1b1b1;
+	border-right : 0px none;
+	border-bottom : 0px none;
+	border-left : 0px none;
+}
+.Grid.grd_WF_tree .vscrollbar
+{
+	border-top : 0px none;
+	border-right : 0px none;
+	border-bottom : 0px none;
+	border-left : 1px solid #b1b1b1;
+}
+.Grid .head .row .cell.grdHCell_WF_essential.dummy.dummy.dummy
+{
+	background : #fcf5ef url('./SPP_IMAGE_SET/WF/img_WF_GrdCell_Essential.png') no-repeat left top;
+}
+.Grid .head .row .cell.grdHCell_WF_essential.dummy.dummy.dummy.oddcell
+{
+	background : #fcf5ef url('./SPP_IMAGE_SET/WF/img_WF_GrdCell_Essential.png') no-repeat left top;
+}
+.Grid .body .row .cell.grdHCell_WF_bg_gray.dummy.dummy.dummy
+{
+	background : #d3d3d3;
+}
+.Grid .body .row .cell.grdHCell_WF_bg_gray.dummy.dummy.dummy.oddcell
+{
+	background : #d3d3d3;
+}
+.Div.mcbo_div_WF_normal
+{
+	background : transparent;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+}
+.Edit.mcbo_edt_WF_normal
+{
+	background : #ffffff;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #444444;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Edit.mcbo_edt_WF_normal .nexainput
+{
+	text-align : left;
+	padding : 0px 3px 0px 6px;
+}
+.Edit.mcbo_edt_WF_normal .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+.Button.mcbo_btn_WF_normal
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+.Static.mcbo_sta_WF_bg
+{
+	background : #ffffff;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.mcbo_btn_WF_select
+{
+	background : #A8CAE7;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.mcbo_btn_WF_select .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Grid.mcbo_grd_WF_normal
+{
+	background : transparent;
+	border-top : 1px solid #b8b8b8;
+	border-right : 0px;
+	border-bottom : 0px;
+	border-left : 0px;
+	cursor : pointer;
+	color : #444444;
+	font : 12px '돋움';
+}
+.Grid.mcbo_grd_WF_normal .body .row .cell
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+.CheckBoxSet.chkset_WF_checklist
+{
+	border : 0px none;
+	background : transparent;
+	font : 12px '돋움';
+}
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem
+{
+	background : transparent;
+	font : 12px '돋움';
+	color : #444444;
+}
+.CheckBoxSet.chkset_WF_checklist .checkboxsetitem .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Grid .body .row .cell.grdBCell_DayEvent.dummy.dummy.dummy
+{
+	background : lightsteelblue;
+}
+.Button.btn_WF_mod
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+.Button.btn_WF_mod .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+.Grid .body .row .cell.grdBCell_ReadEvent.dummy.dummy.dummy
+{
+	color : #255b9a;
+	cursor : pointer;
+	font : normal bold 12px/normal "돋움";
+}
+.Grid .body .row .cell.grdBCell_BgBlueFontWhite.dummy.dummy.dummy
+{
+	background : #9ec1ff;
+	font : normal 12px/normal "돋움";
+}
+.Grid .body .row .cell.grdBCell_BgBlueFontWhite.dummy.dummy.dummy.oddcell
+{
+	background : #9ec1ff;
+}
+.ProgressBar.pg_WF_green .progressbaritem
+{
+	background : #1aadbd;
+}
+.ProgressBarControl .progressbaritem
+{
+	background : #1aadbd;
+}
+#nexacontainer .Static.stc_WF_event[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Static.stc_WF_event[data-status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+	color : blue;
+	font : bold 12px '돋움';
+	cursor : pointger;
+}
+#nexacontainer .Edit.edt_WF_normal[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+}
+#nexacontainer .Edit.edt_WF_normal[data-status=mouseover] .nexainput
+{
+	text-align : left;
+	padding : 0px 18px 0px 6px;
+}
+#nexacontainer .Edit.edt_WF_normal[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .Edit.edt_WF_normal[data-status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+}
+#nexacontainer .Edit.edt_WF_normal[data-status=focused] .nexainput
+{
+	text-align : left;
+	padding : 0px 18px 0px 6px;
+}
+#nexacontainer .Edit.edt_WF_normal[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .Edit.edt_WF_normal[data-status=readonly]
+{
+	background : #ededed;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #000000;
+}
+#nexacontainer .Edit.edt_WF_normal[data-status=readonly] .nexainput
+{
+	text-align : left;
+	padding : 0px 18px 0px 6px;
+}
+#nexacontainer .Edit.edt_WF_normal[data-status=readonly] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-status=mouseover] .nexainput
+{
+	text-align : left;
+	padding : 0px 6px 0px 6px;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-status=focused] .nexainput
+{
+	text-align : left;
+	padding : 0px 6px 0px 6px;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-status=readonly]
+{
+	background : #ededed;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #000000;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-status=readonly] .nexainput
+{
+	text-align : left;
+	padding : 0px 6px 0px 6px;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-status=readonly] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .TextArea.txa_WF_normal[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+}
+#nexacontainer .TextArea.txa_WF_normal[data-status=mouseover] .nexatextarea
+{
+	text-align : left;
+	padding : 4px 6px 4px 6px;
+	white-space : pre-wrap;
+	word-wrap : break-word;
+	word-break : break-all;
+}
+#nexacontainer .TextArea.txa_WF_normal[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	white-space : pre-wrap;
+	word-wrap : break-word;
+	word-break : break-all;
+}
+#nexacontainer .TextArea.txa_WF_normal[data-status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+}
+#nexacontainer .TextArea.txa_WF_normal[data-status=focused] .nexatextarea
+{
+	text-align : left;
+	padding : 4px 6px 4px 6px;
+	white-space : pre-wrap;
+	word-wrap : break-word;
+	word-break : break-all;
+}
+#nexacontainer .TextArea.txa_WF_normal[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	white-space : pre-wrap;
+	word-wrap : break-word;
+	word-break : break-all;
+}
+#nexacontainer .TextArea.txa_WF_normal[data-status=readonly]
+{
+	background : #ededed;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #000000;
+}
+#nexacontainer .TextArea.txa_WF_normal[data-status=readonly] .nexatextarea
+{
+	text-align : left;
+	padding : 4px 6px 4px 6px;
+}
+#nexacontainer .TextArea.txa_WF_normal[data-status=readonly] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .TextArea.txa_WF_Confirm[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+}
+#nexacontainer .TextArea.txa_WF_Confirm[data-status=mouseover] .nexatextarea
+{
+	text-align : left;
+	padding : 4px 6px 4px 6px;
+}
+#nexacontainer .TextArea.txa_WF_Confirm[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .TextArea.txa_WF_Confirm[data-status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+}
+#nexacontainer .TextArea.txa_WF_Confirm[data-status=focused] .nexatextarea
+{
+	text-align : left;
+	padding : 4px 6px 4px 6px;
+}
+#nexacontainer .TextArea.txa_WF_Confirm[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .TextArea.txa_WF_Confirm[data-status=readonly]
+{
+	background : #89aeeb;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #000000;
+}
+#nexacontainer .TextArea.txa_WF_Confirm[data-status=readonly] .nexatextarea
+{
+	text-align : left;
+	padding : 4px 6px 4px 6px;
+}
+#nexacontainer .TextArea.txa_WF_Confirm[data-status=readonly] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .Button.btn_WF_normal[data-status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_normal[data-status=mouseover]
+{
+	background : #e1e1de;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_normal[data-status=focused] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_normal[data-status=focused]
+{
+	background : #e1e1de;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_favorite_off[data-status=mouseover]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOff.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_favorite_off[data-status=focused]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOff.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_favorite_on[data-status=mouseover]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOn.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_favorite_on[data-status=focused]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOn.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_search[data-status=mouseover]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_search[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_search[data-status=focused]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_search[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_searchReset[data-status=mouseover]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_searchReset[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_searchReset[data-status=focused]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_searchReset[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_primary_save[data-status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_primary_save[data-status=mouseover]
+{
+	background : #4774ff;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_primary_save[data-status=focused] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_primary_save[data-status=focused]
+{
+	background : #4774ff;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_primary_save_ex[data-status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_primary_save_ex[data-status=mouseover]
+{
+	background : #ff7454;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_primary_save_ex[data-status=focused] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_primary_save_ex[data-status=focused]
+{
+	background : #ff7454;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_primary_close[data-status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_primary_close[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #4774ff;
+	border-radius : 5px 5px;
+	color : #4774ff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_primary_close[data-status=focused] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_primary_close[data-status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #4774ff;
+	border-radius : 5px 5px;
+	color : #4774ff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_primary_delete[data-status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_primary_delete[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid red;
+	border-radius : 5px 5px;
+	color : red;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_primary_delete[data-status=focused] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_primary_delete[data-status=focused]
+{
+	background : #ffffff;
+	border : 1px solid red;
+	border-radius : 5px 5px;
+	color : red;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_add[data-status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_add[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_add[data-status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_add[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_del[data-status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_del[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_del[data-status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_del[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_edit[data-status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_edit[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_edit[data-status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_edit[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_func[data-status=mouseover]
+{
+	background : #fafafa;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_func[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_func[data-status=focused]
+{
+	background : #fafafa;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_func[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_fileDown[data-status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_fileDown[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_fileDown[data-status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_fileDown[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_excelDown[data-status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_excelDown[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_excelDown[data-status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_excelDown[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_excelUp[data-status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_excelUp[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_excelUp[data-status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_excelUp[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_chart[data-status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_chart[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_chart[data-status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_chart[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_refresh[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_refreshN.png') no-repeat left center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_refresh[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_refreshO.png') no-repeat left center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_clear[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_editClear_O.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_clear[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_editClear_O.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_SearchIcon[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_SearchO.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_SearchIcon[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_SearchO.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_ClearIcon[data-status=mouseover]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_ClearIcon[data-status=mouseover] .nexacontentsbox
+{
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_ClearIcon[data-status=focused]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_ClearIcon[data-status=focused] .nexacontentsbox
+{
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_btnPrev[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchLeft.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnPrev[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchLeft.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnNext[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchRight.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnNext[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchRight.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnPrev2[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnPrev2[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev2O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnNext2[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnNext2[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext2O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnPrev3[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnPrev3[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev3O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnNext3[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnNext3[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext3O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count00[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count00[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count01[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count01[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count02[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count02[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count03[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count03[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count04[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count04[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count05[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count05[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count00_on[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count00_on[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count01_on[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count01_on[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count02_on[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count02_on[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count03_on[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count03_on[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count04_on[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count04_on[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count05_on[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count05_on[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_countArrowRight[data-status=focused]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_countArrowRight.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_countArrowRight[data-status=mouseover]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_countArrowRight.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_calDayOn[data-status=focused]
+{
+	background : #656ff2;
+	border : 1px solid #656ff2;
+	border-radius : 5px;
+	color : #ffffff;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_calDayOn[data-status=mouseover]
+{
+	background : #656ff2;
+	border : 1px solid #656ff2;
+	border-radius : 5px;
+	color : #ffffff;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_calDayOff[data-status=focused]
+{
+	background : #f7f9fa;
+	border : 1px solid #c2c2c2;
+	border-radius : 5px;
+	color : #020202;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_calDayOff[data-status=mouseover]
+{
+	background : #f7f9fa;
+	border : 1px solid #c2c2c2;
+	border-radius : 5px;
+	color : #020202;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .CheckBox.chk_WF_normal[data-status=focused]
+{
+	color : #444444;
+}
+#nexacontainer .CheckBox.chk_WF_normal[data-status=mouseover]
+{
+	color : #0a5dad;
+}
+#nexacontainer .CheckBox.chk_WF_normal[data-status=readonly]
+{
+	background : transparent;
+	border : 0px none;
+	border-radius : 0px;
+	font : 12px '돋움';
+	color : #000000;
+}
+#nexacontainer .CheckBox.chk_WF_normal[data-status=readonly] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Radio.rdo_WF_normal[data-status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+#nexacontainer .Radio.rdo_WF_normal[data-status=focused]
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+#nexacontainer .Radio.rdo_WF_normal[data-status=readonly]
+{
+	background : transparent;
+	border : 0px;
+	color : #000000;
+	font : 12px '돋움';
+}
+#nexacontainer .Radio.rdo_WF_normal .radioitem[data-status=readonly]
+{
+	background : transparent;
+	border : 0px;
+}
+#nexacontainer .Radio.rdo_WF_normal .radioitem[data-status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+}
+#nexacontainer .Radio.rdo_WF_checklist[data-status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+#nexacontainer .Radio.rdo_WF_checklist[data-status=focused]
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+#nexacontainer .Radio.rdo_WF_checklist[data-status=readonly]
+{
+	color : #000000;
+	font : 12px '돋움';
+}
+#nexacontainer .Radio.rdo_WF_checklist .radioitem[data-status=readonly]
+{
+	font : 12px '돋움';
+	color : #444444;
+}
+#nexacontainer .Radio.rdo_WF_checklist .radioitem[data-status=mouseover]
+{
+	font : bold 12px '돋움';
+	color : #0a5dad;
+}
+#nexacontainer .Calendar.cal_WF_normal[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+}
+#nexacontainer .Calendar.cal_WF_normal[data-status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+}
+#nexacontainer .Calendar.cal_WF_normal[data-status=readonly]
+{
+	background : #ededed;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+}
+#nexacontainer .Calendar.cal_WF_normal .calendaredit[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 0px;
+	font : 12px '돋움';
+	color : #0a5dad;
+}
+#nexacontainer .Calendar.cal_WF_normal .calendaredit[data-status=mouseover] .nexainput
+{
+	padding : 0px 0px 0px 6px;
+}
+#nexacontainer .Calendar.cal_WF_normal .calendaredit[data-status=focused]
+{
+	background : #ffffff;
+	border : 0px;
+	font : 12px '돋움';
+	color : #0a5dad;
+}
+#nexacontainer .Calendar.cal_WF_normal .calendaredit[data-status=focused] .nexainput
+{
+	padding : 0px 0px 0px 6px;
+}
+#nexacontainer .Calendar.cal_WF_normal .calendaredit[data-status=readonly]
+{
+	background : #ededed;
+	border : 0px;
+	font : 12px '돋움';
+	color : #000000;
+}
+#nexacontainer .Calendar.cal_WF_normal .calendaredit[data-status=readonly] .nexainput
+{
+	padding : 0px 0px 0px 6px;
+}
+#nexacontainer .Calendar.cal_WF_normal .dropbutton[data-status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Calendar.cal_WF_normal .dropbutton[data-status=focused]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Combo.cbo_WF_normal[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Combo.cbo_WF_normal[data-status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Combo.cbo_WF_normal[data-status=readonly]
+{
+	background : #ededed;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	cursor : default;
+}
+#nexacontainer .Combo.cbo_WF_normal .comboedit[data-status=readonly]
+{
+	background : transparent;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+#nexacontainer .Combo.cbo_WF_normal .comboedit[data-status=readonly] .nexainput
+{
+	text-align : left;
+	padding : 1px 6px 0px 6px;
+}
+#nexacontainer .Combo.cbo_WF_normal .comboedit[data-status=readonly] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .Combo.cbo_WF_normal .comboedit[data-status=focused]
+{
+	background : transparent;
+	border : 0px;
+	color : #3697f8;
+	font : 12px '돋움';
+}
+#nexacontainer .Combo.cbo_WF_normal .comboedit[data-status=focused] .nexainput
+{
+	text-align : left;
+	padding : 1px 6px 0px 6px;
+}
+#nexacontainer .Combo.cbo_WF_normal .comboedit[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .Combo.cbo_WF_normal .comboedit[data-status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+	color : #3697f8;
+	font : 12px '돋움';
+}
+#nexacontainer .Combo.cbo_WF_normal .comboedit[data-status=mouseover] .nexainput
+{
+	text-align : left;
+	padding : 1px 6px 0px 6px;
+}
+#nexacontainer .Combo.cbo_WF_normal .comboedit[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy[data-status=focused]
+{
+	background : #8a96a8;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+}
+#nexacontainer .ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy[data-status=mouseover]
+{
+	background : #8a96a8;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+}
+#nexacontainer .ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[data-status=readonly]
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+#nexacontainer .ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[data-status=readonly] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[data-status=focused]
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+#nexacontainer .ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+#nexacontainer .ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Combo.cbo_WF_normal .dropbutton[data-status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Combo.cbo_WF_normal .dropbutton[data-status=focused]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Spin.spn_WF_normal[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+}
+#nexacontainer .Spin.spn_WF_normal[data-status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #0a5dad;
+}
+#nexacontainer .Spin.spn_WF_normal[data-status=readonly]
+{
+	background : #ededed;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #000000;
+}
+#nexacontainer .Spin.spn_WF_normal .spinupbutton[data-status=mouseover]
+{
+	background : transparent;
+	cursor : pointer;
+}
+#nexacontainer .Spin.spn_WF_normal .spinupbutton[data-status=focused]
+{
+	background : transparent;
+	cursor : pointer;
+}
+#nexacontainer .Spin.spn_WF_normal .spindownbutton[data-status=mouseover]
+{
+	background : transparent;
+	cursor : pointer;
+}
+#nexacontainer .Spin.spn_WF_normal .spindownbutton[data-status=focused]
+{
+	background : transparent;
+	cursor : pointer;
+}
+#nexacontainer .Div.div_WF_divSearchArea[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #d3d3d3;
+	border-radius : 4px 4px;
+}
+#nexacontainer .Div.div_WF_divSearchArea[data-status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #d3d3d3;
+	border-radius : 4px 4px;
+}
+#nexacontainer .Div.div_WF_wfNodeGuide[data-status=focused]
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 24px '돋움';
+}
+#nexacontainer .Div.div_WF_wfNodeGuide[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 24px '돋움';
+}
+#nexacontainer .Div.div_WF_wfFuncGuide[data-status=focused]
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 18px '돋움';
+}
+#nexacontainer .Div.div_WF_wfFuncGuide[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 18px '돋움';
+}
+#nexacontainer .Div.div_WF_wfCgerGuide[data-status=focused]
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 18px '돋움';
+}
+#nexacontainer .Div.div_WF_wfCgerGuide[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 2px dashed #dfdfdf;
+	border-radius : 10px 10px;
+	color : #dfdfdf;
+	font : bold 18px '돋움';
+}
+#nexacontainer .Div.div_WF_wfNode[data-status=focused]
+{
+	background : #355cc5;
+	border : 1px solid #355cc5;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 16px '돋움';
+}
+#nexacontainer .Div.div_WF_wfNode[data-status=mouseover]
+{
+	background : #355cc5;
+	border : 1px solid #355cc5;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 16px '돋움';
+}
+#nexacontainer .Div.div_WF_wfNodeScreen[data-status=focused]
+{
+	background : #355cc5 url('./SPP_IMAGE_SET/WF/ico_WF_screen.png') no-repeat 3px center;
+	border : 1px solid #355cc5;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 16px '돋움';
+}
+#nexacontainer .Div.div_WF_wfNodeScreen[data-status=mouseover]
+{
+	background : #355cc5 url('./SPP_IMAGE_SET/WF/ico_WF_screen.png') no-repeat 3px center;
+	border : 1px solid #355cc5;
+	border-radius : 10px 10px;
+	color : #ffffff;
+	font : bold 16px '돋움';
+}
+#nexacontainer .Div.div_WF_calDayBg[data-status=mouseover]
+{
+	background : #e5f5ff;
+	border-radius : 5px 5px;
+	border : 1px solid #008bff;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell[data-status=mouseover]
+{
+	background : #e6ecf5;
+	border : 1px solid #ced3e5;
+	justify-content : center;
+	align-items : center;
+	color : #32333b;
+	font : 12px '돋움';
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.oddcell[data-status=mouseover]
+{
+	background : #e6ecf5;
+	color : #32333b;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell[data-status=mouseover] > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell .subcell[data-status=mouseover]
+{
+	background : #e6ecf5;
+	border : 1px solid #ced3e5;
+	justify-content : center;
+	align-items : center;
+	color : #32333b;
+	font : 12px '돋움';
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell .subcell.oddcell[data-status=mouseover]
+{
+	background : #e6ecf5;
+	color : #32333b;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell .subcell[data-status=mouseover] > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell .cellradioitem[data-status=readonly]
+{
+	background : transparent;
+	border : 0px;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell .cellradioitem[data-status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+}
+#nexacontainer .ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[data-status=focused]
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+#nexacontainer .ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+#nexacontainer .ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[data-status=focused]
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+#nexacontainer .ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[data-status=mouseover]
+{
+	background : #ffffff;
+	border : 0px;
+	color : #444444;
+	font : 12px '돋움';
+}
+#nexacontainer .ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add.dummy.dummy.dummy .cellbutton[data-status=focused] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add.dummy.dummy.dummy .cellbutton[data-status=focused]
+{
+	border : 1px solid #c2c2c2;
+	font : 12px '돋움';
+	color : #555555;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add.dummy.dummy.dummy .cellbutton[data-status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add.dummy.dummy.dummy .cellbutton[data-status=mouseover]
+{
+	border : 1px solid #c2c2c2;
+	font : 12px '돋움';
+	color : #555555;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event.dummy.dummy.dummy[data-status=focused]
+{
+	color : blue;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : blue;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold.dummy.dummy.dummy[data-status=focused]
+{
+	font : bold 13px/normal "돋움";
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold.dummy.dummy.dummy[data-status=mouseover]
+{
+	font : bold 13px/normal "돋움";
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP.dummy.dummy.dummy[data-status=focused]
+{
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP.dummy.dummy.dummy[data-status=mouseover]
+{
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success.dummy.dummy.dummy[data-status=focused]
+{
+	color : green;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : green;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : green;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : green;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success.dummy.dummy.dummy[data-status=focused]
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : green;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : green;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success.dummy.dummy.dummy[data-status=focused]
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : green;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : green;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info.dummy.dummy.dummy[data-status=focused]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info.dummy.dummy.dummy[data-status=focused]
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info.dummy.dummy.dummy[data-status=focused]
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning.dummy.dummy.dummy[data-status=focused]
+{
+	color : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning.dummy.dummy.dummy[data-status=focused]
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning.dummy.dummy.dummy[data-status=focused]
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger.dummy.dummy.dummy[data-status=focused]
+{
+	color : red;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : red;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : red;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : red;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger.dummy.dummy.dummy[data-status=focused]
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : red;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : red;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger.dummy.dummy.dummy[data-status=focused]
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : red;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : red;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.dummy.dummy.dummy[data-status=focused]
+{
+	color : green;
+	text-decoration : underline;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : green;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.dummy.dummy.dummy[data-status=focused] > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : green;
+	text-decoration : underline;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : green;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.dummy.dummy.dummy[data-status=mouseover] > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.dummy.dummy.dummy[data-status=focused]
+{
+	color : blue;
+	text-decoration : underline;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.dummy.dummy.dummy[data-status=focused] > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : blue;
+	text-decoration : underline;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.dummy.dummy.dummy[data-status=mouseover] > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.dummy.dummy.dummy[data-status=focused]
+{
+	color : yellow;
+	text-decoration : underline;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.dummy.dummy.dummy[data-status=focused] > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : yellow;
+	text-decoration : underline;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.dummy.dummy.dummy[data-status=mouseover] > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.dummy.dummy.dummy[data-status=focused]
+{
+	color : red;
+	text-decoration : underline;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : red;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.dummy.dummy.dummy[data-status=focused] > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : red;
+	text-decoration : underline;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : red;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.dummy.dummy.dummy[data-status=mouseover] > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy[data-status=focused]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_f9f3f3.dummy.dummy.dummy[data-status=mouseover]
+{
+	background : #f9f3f3;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_f9f3f3.dummy.dummy.dummy[data-status=focused]
+{
+	background : #f9f3f3;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow.dummy.dummy.dummy[data-status=mouseover]
+{
+	background : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	background : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow.dummy.dummy.dummy[data-status=focused]
+{
+	background : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	background : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_c0dbf7.dummy.dummy.dummy[data-status=mouseover]
+{
+	background : #c0dbf7;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_c0dbf7.dummy.dummy.dummy[data-status=focused]
+{
+	background : #c0dbf7;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_e1fcfe.dummy.dummy.dummy[data-status=mouseover]
+{
+	background : #e1fcfe;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_e1fcfe.dummy.dummy.dummy[data-status=focused]
+{
+	background : #e1fcfe;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_ffffff.dummy.dummy.dummy[data-status=mouseover]
+{
+	background : #ffffff;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_ffffff.dummy.dummy.dummy[data-status=focused]
+{
+	background : #ffffff;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy[data-status=focused]
+{
+	background : pink;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	background : pink;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy[data-status=mouseover]
+{
+	background : pink;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	background : pink;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy .subcell[data-status=focused]
+{
+	background : pink;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy .subcell.oddcell[data-status=focused]
+{
+	background : pink;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy .subcell[data-status=mouseover]
+{
+	background : pink;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy .subcell.oddcell[data-status=mouseover]
+{
+	background : pink;
+}
+#nexacontainer .Grid .body .row .cell.grdBCell_WF_bgOrange.dummy.dummy.dummy[data-status=focused]
+{
+	background : peachpuff;
+}
+#nexacontainer .Grid .body .row .cell.grdBCell_WF_bgOrange.dummy.dummy.dummy[data-status=mouseover]
+{
+	background : peachpuff;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell[data-status=mouseover]
+{
+	background : #f7f7f7;
+	border : 1px solid #d3d3d3;
+	justify-content : center;
+	align-items : center;
+	color : #333333;
+	font : 12px '돋움';
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell.oddcell[data-status=mouseover]
+{
+	background : #ffffff;
+	color : #333333;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell[data-status=mouseover] > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell .subcell[data-status=mouseover]
+{
+	background : #f7f7f7;
+	border : 1px solid #d3d3d3;
+	justify-content : center;
+	align-items : center;
+	color : #333333;
+	font : 12px '돋움';
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell .subcell.oddcell[data-status=mouseover]
+{
+	background : #ffffff;
+	color : #333333;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell .subcell[data-status=mouseover] > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy[data-status=focused]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy[data-status=focused]
+{
+	background : pink;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy[data-status=mouseover]
+{
+	background : pink;
+}
+#nexacontainer .GridCellControl .cellbutton.grdCellCtrl_WF_normal[data-status=mouseover]
+{
+	background : #e7e7e7;
+	background : -webkit-linear-gradient(to top,#e7e7e7,#fefefe);
+	background : linear-gradient(to top,#e7e7e7,#fefefe);
+	border : 1px solid #a0a0a0;
+}
+#nexacontainer .GridCellControl .cellbutton.grdCellCtrl_WF_normal[data-status=focused]
+{
+	background : #e7e7e7;
+	background : -webkit-linear-gradient(to top,#e7e7e7,#fefefe);
+	background : linear-gradient(to top,#e7e7e7,#fefefe);
+	border : 1px solid #a0a0a0;
+}
+#nexacontainer .ListBoxControl.popupGridCellControlcellcombocombolist.dummy.dummy .listboxitem.grdCellCtrl_WF_normal[data-status=mouseover]
+{
+	background : #e8e9ed;
+}
+#nexacontainer .GridCellControl .celledit.grdCellCtrl_WF_normal[data-status=mouseover]
+{
+	border : 1px solid #5a86cd;
+}
+#nexacontainer .GridCellControl .celledit.grdCellCtrl_WF_normal[data-status=focused]
+{
+	border : 1px solid #5a86cd;
+}
+#nexacontainer .GridCellControl .cellmaskedit.grdCellCtrl_WF_normal[data-status=mouseover]
+{
+	border : 1px solid #5a86cd;
+}
+#nexacontainer .GridCellControl .cellmaskedit.grdCellCtrl_WF_normal[data-status=focused]
+{
+	border : 1px solid #5a86cd;
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell[data-status=mouseover]
+{
+	background : #e6ecf5;
+	border : 1px solid #ced3e5;
+	justify-content : center;
+	align-items : center;
+	color : #32333b;
+	font : 12px '돋움';
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell.oddcell[data-status=mouseover]
+{
+	background : #e6ecf5;
+	color : #32333b;
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell[data-status=mouseover] > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell .subcell[data-status=mouseover]
+{
+	background : #e6ecf5;
+	border : 1px solid #ced3e5;
+	justify-content : center;
+	align-items : center;
+	color : #32333b;
+	font : 12px '돋움';
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell .subcell.oddcell[data-status=mouseover]
+{
+	background : #e6ecf5;
+	color : #32333b;
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell .subcell[data-status=mouseover] > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitemtext[data-status=mouseover]
+{
+	font : 12px '돋움';
+	color : #32333b;
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitemtext[data-status=mouseover] .nexacontentsbox
+{
+	text-decoration : underline;
+}
+#nexacontainer .Grid .body .row .cell.grdHCell_WF_bg_gray.dummy.dummy.dummy[data-status=mouseover]
+{
+	background : #d3d3d3;
+}
+#nexacontainer .Grid .body .row .cell.grdHCell_WF_bg_gray.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	background : #d3d3d3;
+}
+#nexacontainer .Grid .body .row .cell.grdHCell_WF_bg_gray.dummy.dummy.dummy[data-status=focused]
+{
+	background : #d3d3d3;
+}
+#nexacontainer .Grid .body .row .cell.grdHCell_WF_bg_gray.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	background : #d3d3d3;
+}
+#nexacontainer .Div.mcbo_div_WF_normal[data-status=mouseover]
+{
+	background : transparent;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+}
+#nexacontainer .Div.mcbo_div_WF_normal[data-status=focused]
+{
+	background : transparent;
+	border : 1px solid #3697f8;
+	border-radius : 3px 3px;
+}
+#nexacontainer .Edit.mcbo_edt_WF_normal[data-status=readonly]
+{
+	background : #ededed;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #000000;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Edit.mcbo_edt_WF_normal[data-status=readonly] .nexainput
+{
+	text-align : left;
+	padding : 0px 3px 0px 6px;
+}
+#nexacontainer .Edit.mcbo_edt_WF_normal[data-status=readonly] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .Button.mcbo_btn_WF_normal[data-status=mouseover]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.mcbo_btn_WF_normal[data-status=focused]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.mcbo_btn_WF_select[data-status=focused] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.mcbo_btn_WF_select[data-status=focused]
+{
+	background : #A8CAE7;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.mcbo_btn_WF_select[data-status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.mcbo_btn_WF_select[data-status=mouseover]
+{
+	background : #A8CAE7;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Grid.mcbo_grd_WF_normal[data-status=readonly]
+{
+	background : transparent;
+	border-top : 1px solid #b8b8b8;
+	border-right : 0px;
+	border-bottom : 0px;
+	border-left : 0px;
+	cursor : pointer;
+	color : #444444;
+	font : 12px '돋움';
+}
+#nexacontainer .Grid.mcbo_grd_WF_normal .body .row .cell[data-status=mouseover]
+{
+	background : #8a96a8;
+	border : 0px;
+	color : #ffffff;
+	font : 12px '돋움';
+	text-decoration : underline;
+}
+#nexacontainer .Grid.mcbo_grd_WF_normal .body .row .cell[data-status=mouseover] > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+#nexacontainer .CheckBoxSet.chkset_WF_checklist .checkboxsetitem[data-status=mouseover]
+{
+	font : bold 12px '돋움';
+	color : #0a5dad;
+}
+#nexacontainer .CheckBoxSet.chkset_WF_checklist .checkboxsetitem[data-status=readonly]
+{
+	color : #000000;
+	font : 12px '돋움';
+}
+#nexacontainer .Grid .body .row .cell.grdBCell_DayEvent.dummy.dummy.dummy[data-status=mouseover]
+{
+	background : lightsteelblue;
+}
+#nexacontainer .Grid .body .row .cell.grdBCell_DayEvent.dummy.dummy.dummy[data-status=focused]
+{
+	background : lightsteelblue;
+}
+#nexacontainer .Button.btn_WF_mod[data-status=mouseover]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_mod[data-status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_mod[data-status=focused]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_mod[data-status=focused] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Grid .body .row .cell.grdBCell_ReadEvent.dummy.dummy.dummy[data-status=focused]
+{
+	color : #255b9a;
+	cursor : pointer;
+	font : normal bold 12px/normal "돋움";
+}
+#nexacontainer .Grid .body .row .cell.grdBCell_ReadEvent.dummy.dummy.dummy[data-status=mouseover]
+{
+	color : #7f7f7f;
+	cursor : pointer;
+	font : normal bold 12px/normal "돋움";
+}
+#nexacontainer .Grid .body .row .cell.grdBCell_BgBlueFontWhite.dummy.dummy.dummy[data-status=focused]
+{
+	background : #9ec1ff;
+	font : normal 12px/normal "돋움";
+}
+#nexacontainer .Grid .body .row .cell.grdBCell_BgBlueFontWhite.dummy.dummy.dummy.oddcell[data-status=focused]
+{
+	background : #9ec1ff;
+}
+#nexacontainer .Grid .body .row .cell.grdBCell_BgBlueFontWhite.dummy.dummy.dummy[data-status=mouseover]
+{
+	background : #9ec1ff;
+	font : normal 12px/normal "돋움";
+}
+#nexacontainer .Grid .body .row .cell.grdBCell_BgBlueFontWhite.dummy.dummy.dummy.oddcell[data-status=mouseover]
+{
+	background : #9ec1ff;
+}
+#nexacontainer .Edit.edt_WF_normal[data-userstatus=nulltext]
+{
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #909090;
+}
+#nexacontainer .Edit.edt_WF_normal[data-userstatus=nulltext] .nexainput
+{
+	text-align : left;
+	padding : 0px 18px 0px 6px;
+}
+#nexacontainer .Edit.edt_WF_normal[data-userstatus=nulltext] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-userstatus=nulltext]
+{
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #909090;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-userstatus=nulltext] .nexainput
+{
+	text-align : left;
+	padding : 0px 6px 0px 6px;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-userstatus=nulltext] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-userstatus=invalidtext]
+{
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #909090;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-userstatus=invalidtext] .nexainput
+{
+	text-align : left;
+	padding : 0px 6px 0px 6px;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-userstatus=invalidtext] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .Button.btn_WF_normal[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_normal[data-userstatus=pushed]
+{
+	background : #e1e1de;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_normal[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_normal[data-userstatus=selected]
+{
+	background : #e1e1de;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_favorite_off[data-userstatus=pushed]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOff.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_favorite_off[data-userstatus=selected]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOff.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_favorite_on[data-userstatus=pushed]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOn.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_favorite_on[data-userstatus=selected]
+{
+	background : url('./SPP_IMAGE_SET/WF/btn_WF_FavoriteOn.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_search[data-userstatus=pushed]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_search[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_search[data-userstatus=selected]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_search[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_searchReset[data-userstatus=pushed]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_searchReset[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_searchReset[data-userstatus=selected]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_searchReset[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_primary_save[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_primary_save[data-userstatus=selected]
+{
+	background : #4774ff;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_primary_save[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_primary_save[data-userstatus=pushed]
+{
+	background : #4774ff;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_primary_save_ex[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_primary_save_ex[data-userstatus=selected]
+{
+	background : #ff7454;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_primary_save_ex[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_primary_save_ex[data-userstatus=pushed]
+{
+	background : #ff7454;
+	border : 0px;
+	border-radius : 5px 5px;
+	color : #ffffff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_primary_close[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_primary_close[data-userstatus=selected]
+{
+	background : #ffffff;
+	border : 1px solid #4774ff;
+	border-radius : 5px 5px;
+	color : #4774ff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_primary_close[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_primary_close[data-userstatus=pushed]
+{
+	background : #ffffff;
+	border : 1px solid #4774ff;
+	border-radius : 5px 5px;
+	color : #4774ff;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_primary_delete[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_primary_delete[data-userstatus=selected]
+{
+	background : #ffffff;
+	border : 1px solid red;
+	border-radius : 5px 5px;
+	color : red;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_primary_delete[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_primary_delete[data-userstatus=pushed]
+{
+	background : #ffffff;
+	border : 1px solid red;
+	border-radius : 5px 5px;
+	color : red;
+	font : bold 14px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_add[data-userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_add[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_add[data-userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_add[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_del[data-userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_del[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_del[data-userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_del[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_edit[data-userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_edit[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_edit[data-userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_edit[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_func[data-userstatus=selected]
+{
+	background : #fafafa;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_func[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_func[data-userstatus=pushed]
+{
+	background : #fafafa;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_func[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_fileDown[data-userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_fileDown[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_fileDown[data-userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_fileDown[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_excelDown[data-userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_excelDown[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_excelDown[data-userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_excelDown[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_excelUp[data-userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_excelUp[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_excelUp[data-userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_excelUp[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_chart[data-userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_chart[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_chart[data-userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_chart[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Button.btn_WF_refresh[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_refreshN.png') no-repeat left center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_refresh[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_refreshO.png') no-repeat left center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_clear[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_editClear_N.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_clear[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_editClear_O.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_SearchIcon[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_Search.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_SearchIcon[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_SearchP.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_ClearIcon[data-userstatus=pushed]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_ClearIcon[data-userstatus=pushed] .nexacontentsbox
+{
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_ClearIcon[data-userstatus=selected]
+{
+	background : #546673;
+	border : 0px;
+	border-radius : 5px 5px;
+	font : 14px '돋움';
+	color : #ffffff;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_ClearIcon[data-userstatus=selected] .nexacontentsbox
+{
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_btnPrev[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchLeft.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnPrev[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchLeft.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnNext[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchRight.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnNext[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchRight.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnPrev2[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnPrev2[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev2O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnNext2[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnNext2[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext2O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnPrev3[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnPrev3[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev3O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnNext3[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnNext3[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext3O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count00[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count00[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count01[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count01[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count02[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count02[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count03[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count03[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count04[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count04[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count05[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count05[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count00_on[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count00_on[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count01_on[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count01_on[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count02_on[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count02_on[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count03_on[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count03_on[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count04_on[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count04_on[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count05_on[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count05_on[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_countArrowRight[data-userstatus=selected]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_countArrowRight.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_countArrowRight[data-userstatus=pushed]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_countArrowRight.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_calDayOn[data-userstatus=selected]
+{
+	background : #656ff2;
+	border : 1px solid #656ff2;
+	border-radius : 5px;
+	color : #ffffff;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_calDayOn[data-userstatus=pushed]
+{
+	background : #656ff2;
+	border : 1px solid #656ff2;
+	border-radius : 5px;
+	color : #ffffff;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_calDayOff[data-userstatus=selected]
+{
+	background : #f7f9fa;
+	border : 1px solid #c2c2c2;
+	border-radius : 5px;
+	color : #020202;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_calDayOff[data-userstatus=pushed]
+{
+	background : #f7f9fa;
+	border : 1px solid #c2c2c2;
+	border-radius : 5px;
+	color : #020202;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .CheckBox.chk_WF_normal[data-userstatus=selected]
+{
+	color : #444444;
+}
+#nexacontainer .Radio.rdo_WF_normal .radioitem[data-userstatus=selected]
+{
+	background : transparent;
+	border : 0px;
+}
+#nexacontainer .Radio.rdo_WF_checklist .radioitem[data-userstatus=selected]
+{
+	font : 12px '돋움';
+	color : #444444;
+}
+#nexacontainer .Calendar.cal_WF_normal .dropbutton[data-userstatus=selected]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Calendar.cal_WF_normal .dropbutton[data-userstatus=pushed]
+{
+	cursor : pointer;
+}
+#nexacontainer .Combo.cbo_WF_normal .comboedit[data-userstatus=nulltext]
+{
+	background : transparent;
+	border : 0px;
+	color : #888888;
+	font : 12px '돋움';
+}
+#nexacontainer .Combo.cbo_WF_normal .comboedit[data-userstatus=nulltext] .nexainput
+{
+	text-align : left;
+	padding : 1px 6px 0px 6px;
+}
+#nexacontainer .Combo.cbo_WF_normal .comboedit[data-userstatus=nulltext] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[data-userstatus=selected]
+{
+	background : #8a96a8;
+	border : 0px;
+	color : #ffffff;
+	font : 12px '돋움';
+}
+#nexacontainer .ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Combo.cbo_WF_normal .dropbutton[data-userstatus=selected]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Combo.cbo_WF_normal .dropbutton[data-userstatus=pushed]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Spin.spn_WF_normal[data-userstatus=invalidtext]
+{
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #909090;
+}
+#nexacontainer .Spin.spn_WF_normal .spinupbutton[data-userstatus=pushed]
+{
+	background : transparent;
+	cursor : pointer;
+}
+#nexacontainer .Spin.spn_WF_normal .spindownbutton[data-userstatus=pushed]
+{
+	background : transparent;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell[data-userstatus=selected]
+{
+	background : #f3f6ff;
+	border : 1px solid #ced3e5;
+	justify-content : center;
+	align-items : center;
+	color : #32333b;
+	font : 12px '돋움';
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.oddcell[data-userstatus=selected]
+{
+	background : #f3f6ff;
+	color : #32333b;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell[data-userstatus=selected] > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell .subcell[data-userstatus=selected]
+{
+	background : #f3f6ff;
+	border : 1px solid #ced3e5;
+	justify-content : center;
+	align-items : center;
+	color : #32333b;
+	font : 12px '돋움';
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell .subcell.oddcell[data-userstatus=selected]
+{
+	background : #f3f6ff;
+	color : #32333b;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell .subcell[data-userstatus=selected] > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell[data-userstatus=blinked]
+{
+	background : #125dae;
+	color : #ffffff;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell .subcell[data-userstatus=blinked]
+{
+	background : #125dae;
+	color : #ffffff;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell .cellradioitem[data-userstatus=selected]
+{
+	background : transparent;
+	border : 0px;
+}
+#nexacontainer .ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[data-userstatus=selected]
+{
+	background : #8a96a8;
+	border : 0px;
+	color : #ffffff;
+	font : 12px '돋움';
+}
+#nexacontainer .ListBoxControl.popupGridgrd_WF_normalbodyrowcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[data-userstatus=selected]
+{
+	background : #8a96a8;
+	border : 0px;
+	color : #ffffff;
+	font : 12px '돋움';
+}
+#nexacontainer .ListBoxControl.popupGridgrd_WF_normalbodyrowcellsubcellcellcombocombolist.dummy.dummy.dummy.dummy.dummy.dummy.dummy .listboxitem[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add.dummy.dummy.dummy .cellbutton[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add.dummy.dummy.dummy .cellbutton[data-userstatus=selected]
+{
+	border : 1px solid #c2c2c2;
+	font : 12px '돋움';
+	color : #555555;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : blue;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_event.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold.dummy.dummy.dummy[data-userstatus=selected]
+{
+	font : bold 13px/normal "돋움";
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP.dummy.dummy.dummy[data-userstatus=selected]
+{
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : green;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : green;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_success.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : green;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : green;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_success.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : green;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_info.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : blue;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_info.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_warning.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : yellow;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_warning.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : red;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : red;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bold_danger.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : red;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : red;
+	font : bold 13px/normal "돋움";
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_boldP_danger.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : red;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : green;
+	text-decoration : underline;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : green;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_success_evt.dummy.dummy.dummy[data-userstatus=selected] > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : blue;
+	text-decoration : underline;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : blue;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_info_evt.dummy.dummy.dummy[data-userstatus=selected] > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : yellow;
+	text-decoration : underline;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_warning_evt.dummy.dummy.dummy[data-userstatus=selected] > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : red;
+	text-decoration : underline;
+	cursor : pointer;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : red;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_danger_evt.dummy.dummy.dummy[data-userstatus=selected] > .nexacontentsbox
+{
+	text-decoration : underline;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_f9f3f3.dummy.dummy.dummy[data-userstatus=selected]
+{
+	background : #f9f3f3;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow.dummy.dummy.dummy[data-userstatus=selected]
+{
+	background : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	background : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_c0dbf7.dummy.dummy.dummy[data-userstatus=selected]
+{
+	background : #c0dbf7;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_e1fcfe.dummy.dummy.dummy[data-userstatus=selected]
+{
+	background : #e1fcfe;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_ffffff.dummy.dummy.dummy[data-userstatus=selected]
+{
+	background : #ffffff;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy[data-userstatus=selected]
+{
+	background : pink;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	background : pink;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy .subcell[data-userstatus=selected]
+{
+	background : pink;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy .subcell.oddcell[data-userstatus=selected]
+{
+	background : pink;
+}
+#nexacontainer .Grid .body .row .cell.grdBCell_WF_bgOrange.dummy.dummy.dummy[data-userstatus=selected]
+{
+	background : peachpuff;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell[data-userstatus=selected]
+{
+	background : #f7f7f7;
+	border : 1px solid #d3d3d3;
+	justify-content : center;
+	align-items : center;
+	color : #444444;
+	font : 12px '돋움';
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell.oddcell[data-userstatus=selected]
+{
+	background : #ffffff;
+	color : #444444;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell[data-userstatus=selected] > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell .subcell[data-userstatus=selected]
+{
+	background : #f7f7f7;
+	border : 1px solid #d3d3d3;
+	justify-content : center;
+	align-items : center;
+	color : #444444;
+	font : 12px '돋움';
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell .subcell.oddcell[data-userstatus=selected]
+{
+	background : #ffffff;
+	color : #444444;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell .subcell[data-userstatus=selected] > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell[data-userstatus=blinked]
+{
+	background : #125dae;
+	color : #ffffff;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell .subcell[data-userstatus=blinked]
+{
+	background : #125dae;
+	color : #ffffff;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_readonly.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	color : #000000;
+	background : rgba(255, 0, 0, 0.3);
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell.grdBCell_WF_bgPink.dummy.dummy.dummy[data-userstatus=selected]
+{
+	background : pink;
+}
+#nexacontainer .GridCellControl .cellbutton.grdCellCtrl_WF_normal[data-userstatus=pushed]
+{
+	background : #fefefe;
+	background : -webkit-linear-gradient(to top,#fefefe,#e9e9e9);
+	background : linear-gradient(to top,#fefefe,#e9e9e9);
+}
+#nexacontainer .GridCellControl .cellbutton.grdCellCtrl_WF_normal[data-userstatus=selected]
+{
+	background : #fefefe;
+	background : -webkit-linear-gradient(to top,#fefefe,#e9e9e9);
+	background : linear-gradient(to top,#fefefe,#e9e9e9);
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell[data-userstatus=selected]
+{
+	background : #f3f6ff;
+	border : 1px solid #ced3e5;
+	justify-content : center;
+	align-items : center;
+	color : #32333b;
+	font : 12px '돋움';
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell.oddcell[data-userstatus=selected]
+{
+	background : #f3f6ff;
+	color : #32333b;
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell[data-userstatus=selected] > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell .subcell[data-userstatus=selected]
+{
+	background : #f3f6ff;
+	border : 1px solid #ced3e5;
+	justify-content : center;
+	align-items : center;
+	color : #32333b;
+	font : 12px '돋움';
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell .subcell.oddcell[data-userstatus=selected]
+{
+	background : #f3f6ff;
+	color : #32333b;
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell .subcell[data-userstatus=selected] > .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Grid .body .row .cell.grdHCell_WF_bg_gray.dummy.dummy.dummy[data-userstatus=selected]
+{
+	background : #d3d3d3;
+}
+#nexacontainer .Grid .body .row .cell.grdHCell_WF_bg_gray.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	background : #d3d3d3;
+}
+#nexacontainer .Button.mcbo_btn_WF_normal[data-userstatus=selected]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.mcbo_btn_WF_normal[data-userstatus=pushed]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.mcbo_btn_WF_select[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.mcbo_btn_WF_select[data-userstatus=pushed]
+{
+	background : #A8CAE7;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.mcbo_btn_WF_select[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	background-position-x : center;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.mcbo_btn_WF_select[data-userstatus=selected]
+{
+	background : #A8CAE7;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .CheckBoxSet.chkset_WF_checklist .checkboxsetitem[data-userstatus=selected]
+{
+	font : 12px '돋움';
+	color : #444444;
+}
+#nexacontainer .Grid .body .row .cell.grdBCell_DayEvent.dummy.dummy.dummy[data-userstatus=selected]
+{
+	background : lightsteelblue;
+}
+#nexacontainer .Button.btn_WF_mod[data-userstatus=selected]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_mod[data-userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_mod[data-userstatus=pushed]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	border : 1px solid #b3b3b3;
+	border-radius : 3px 3px;
+	color : #333333;
+	font : 12px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_mod[data-userstatus=pushed] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+	text-decoration : underline;
+}
+#nexacontainer .Grid .body .row .cell.grdBCell_ReadEvent.dummy.dummy.dummy[data-userstatus=selected]
+{
+	color : #255b9a;
+	cursor : pointer;
+	font : normal bold 12px/normal "돋움";
+}
+#nexacontainer .Grid .body .row .cell.grdBCell_BgBlueFontWhite.dummy.dummy.dummy[data-userstatus=selected]
+{
+	background : #9ec1ff;
+	font : normal 12px/normal "돋움";
+}
+#nexacontainer .Grid .body .row .cell.grdBCell_BgBlueFontWhite.dummy.dummy.dummy.oddcell[data-userstatus=selected]
+{
+	background : #9ec1ff;
+}
+#nexacontainer .Edit.edt_WF_normal[data-status=disabled]
+{
+	background : #dddddd;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #888888;
+}
+#nexacontainer .Edit.edt_WF_normal[data-status=disabled] .nexainput
+{
+	text-align : left;
+	padding : 0px 18px 0px 6px;
+}
+#nexacontainer .Edit.edt_WF_normal[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-status=disabled]
+{
+	background : #dddddd;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #888888;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-status=disabled] .nexainput
+{
+	text-align : left;
+	padding : 0px 6px 0px 6px;
+}
+#nexacontainer .MaskEdit.msk_WF_normal[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .TextArea.txa_WF_normal[data-status=disabled]
+{
+	background : #dddddd;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #888888;
+}
+#nexacontainer .TextArea.txa_WF_normal[data-status=disabled] .nexatextarea
+{
+	text-align : left;
+	padding : 4px 6px 4px 6px;
+}
+#nexacontainer .TextArea.txa_WF_normal[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .TextArea.txa_WF_Confirm[data-status=disabled]
+{
+	background : #89aeeb;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #888888;
+}
+#nexacontainer .TextArea.txa_WF_Confirm[data-status=disabled] .nexatextarea
+{
+	text-align : left;
+	padding : 4px 6px 4px 6px;
+}
+#nexacontainer .TextArea.txa_WF_Confirm[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .Button.btn_WF_normal[data-status=disabled]
+{
+	background : #f5f5f5;
+	border : 1px solid #d9d9d9;
+	color : #bbbbbb;
+	cursor : default;
+}
+#nexacontainer .Button.btn_WF_search[data-status=disabled]
+{
+	background : #f5f5f5;
+	border : 1px solid #d9d9d9;
+	color : #bbbbbb;
+}
+#nexacontainer .Button.btn_WF_searchReset[data-status=disabled]
+{
+	background : #f5f5f5;
+	border : 1px solid #d9d9d9;
+	color : #bbbbbb;
+}
+#nexacontainer .Button.btn_WF_primary_save[data-status=disabled]
+{
+	background : #f5f5f5;
+	border : 0px;
+	color : #bbbbbb;
+}
+#nexacontainer .Button.btn_WF_primary_save_ex[data-status=disabled]
+{
+	background : #f5f5f5;
+	border : 0px;
+	color : #bbbbbb;
+}
+#nexacontainer .Button.btn_WF_primary_close[data-status=disabled]
+{
+	background : #ffffff;
+	border : 1px solid #4774ff;
+	color : #4774ff;
+}
+#nexacontainer .Button.btn_WF_primary_delete[data-status=disabled]
+{
+	background : #ffffff;
+	border : 1px solid red;
+	color : red;
+}
+#nexacontainer .Button.btn_WF_add[data-status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_icoAdd.png') no-repeat left center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+#nexacontainer .Button.btn_WF_add[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_del[data-status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_icoDel.png') no-repeat left center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+#nexacontainer .Button.btn_WF_del[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_edit[data-status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_icoEdit.png') no-repeat left center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+#nexacontainer .Button.btn_WF_edit[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_func[data-status=disabled]
+{
+	background : #f5f5f5;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+#nexacontainer .Button.btn_WF_func[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_fileDown[data-status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_icoDownload.png') no-repeat left center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+#nexacontainer .Button.btn_WF_fileDown[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_excelDown[data-status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_icoExcel.png') no-repeat left center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+#nexacontainer .Button.btn_WF_excelDown[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_excelUp[data-status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_icoUpload.png') no-repeat left center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+#nexacontainer .Button.btn_WF_excelUp[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_chart[data-status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_icoChart.png') no-repeat left center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+#nexacontainer .Button.btn_WF_chart[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Button.btn_WF_refresh[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_refreshN.png') no-repeat left center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_clear[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_editClear_D.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_SearchIcon[data-status=disabled]
+{
+	background : #f5f5f5 URL('./SPP_IMAGE_SET/WF/btn_WF_SearchD.png') no-repeat center center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_ClearIcon[data-status=disabled]
+{
+	background : #f5f5f5;
+	border : 1px solid #d9d9d9;
+	color : #bbbbbb;
+}
+#nexacontainer .Button.btn_WF_btnPrev[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchLeft.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnNext[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_atchRight.png') no-repeat center center;
+	border : 1px solid #dbdbdb;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnPrev2[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnNext2[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext2N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnPrev3[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnPrev3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_btnNext3[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/btn_WF_btnNext3N.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count00[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count01[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count02[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count03[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count04[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count05[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count00_on[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count00_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count01_on[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count01_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count02_on[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count02_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count03_on[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count03_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count04_on[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count04_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_count05_on[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_count05_O.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_countArrowRight[data-status=disabled]
+{
+	background : transparent URL('./SPP_IMAGE_SET/WF/img_WF_countArrowRight.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_calDayOn[data-status=disabled]
+{
+	background : #656ff2;
+	border : 1px solid #656ff2;
+	border-radius : 5px;
+	color : #ffffff;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .Button.btn_WF_calDayOff[data-status=disabled]
+{
+	background : #f7f9fa;
+	border : 1px solid #c2c2c2;
+	border-radius : 5px;
+	color : #020202;
+	font : bold 13px '돋움';
+	cursor : pointer;
+}
+#nexacontainer .CheckBox.chk_WF_normal[data-status=disabled]
+{
+	color : #888888;
+}
+#nexacontainer .Radio.rdo_WF_normal[data-status=disabled]
+{
+	background : transparent;
+	border : 0px;
+	color : #888888;
+	font : 12px '돋움';
+}
+#nexacontainer .Radio.rdo_WF_normal .radioitem[data-status=disabled]
+{
+	background : transparent;
+	border : 0px;
+}
+#nexacontainer .Radio.rdo_WF_checklist[data-status=disabled]
+{
+	color : #888888;
+	font : 12px '돋움';
+}
+#nexacontainer .Radio.rdo_WF_checklist .radioitem[data-status=disabled]
+{
+	font : 12px '돋움';
+	color : #888888;
+}
+#nexacontainer .Calendar.cal_WF_normal[data-status=disabled]
+{
+	background : #dddddd;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+}
+#nexacontainer .Calendar.cal_WF_normal .calendaredit[data-status=disabled]
+{
+	background : #dddddd;
+	border : 0px;
+	font : 12px '돋움';
+	color : #888888;
+}
+#nexacontainer .Calendar.cal_WF_normal .calendaredit[data-status=disabled] .nexainput
+{
+	padding : 0px 0px 0px 6px;
+}
+#nexacontainer .Calendar.cal_WF_normal .dropbutton[data-status=disabled]
+{
+	cursor : default;
+}
+#nexacontainer .Combo.cbo_WF_normal[data-status=disabled]
+{
+	background : #dddddd;
+	border : 1px solid #b8b8b8;
+	cursor : default;
+}
+#nexacontainer .Combo.cbo_WF_normal .comboedit[data-status=disabled]
+{
+	background : transparent;
+	border : 0px;
+	color : #888888;
+	font : 12px '돋움';
+}
+#nexacontainer .Combo.cbo_WF_normal .comboedit[data-status=disabled] .nexainput
+{
+	text-align : left;
+	padding : 1px 6px 0px 6px;
+}
+#nexacontainer .Combo.cbo_WF_normal .comboedit[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[data-status=disabled]
+{
+	background : #dddddd;
+	border : 0px;
+	color : #909090;
+	font : 12px '돋움';
+}
+#nexacontainer .ListBoxControl.popupCombocbo_WF_normalcombolist.dummy.dummy .listboxitem[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .Combo.cbo_WF_normal .dropbutton[data-status=disabled]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .Spin.spn_WF_normal[data-status=disabled]
+{
+	background : #dddddd;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+	font : 12px '돋움';
+	color : #888888;
+}
+#nexacontainer .Spin.spn_WF_normal .spinupbutton[data-status=disabled]
+{
+	background : transparent;
+	cursor : default;
+}
+#nexacontainer .Spin.spn_WF_normal .spindownbutton[data-status=disabled]
+{
+	background : transparent;
+	cursor : default;
+}
+#nexacontainer .Div.div_WF_divSearchArea[data-status=disabled]
+{
+	background : #ffffff;
+	border : 1px solid #d3d3d3;
+	border-radius : 4px 4px;
+}
+#nexacontainer .Div.div_WF_wfNode[data-status=disabled]
+{
+	background : #dfdfdf;
+	border : 1px solid #dfdfdf;
+	border-radius : 10px 10px;
+	color : #aaaaaa;
+	font : bold 16px '돋움';
+}
+#nexacontainer .Div.div_WF_wfNodeScreen[data-status=disabled]
+{
+	background : #dfdfdf url('./SPP_IMAGE_SET/WF/ico_WF_screen.png') no-repeat 3px center;
+	border : 1px solid #dfdfdf;
+	border-radius : 10px 10px;
+	color : #aaaaaa;
+	font : bold 16px '돋움';
+}
+#nexacontainer .Div.div_WF_wfFunc[data-status=disabled]
+{
+	background : #dfdfdf;
+	border : 1px solid #dfdfdf;
+	border-radius : 10px 10px;
+	color : #aaaaaa;
+	font : bold 12px '돋움';
+}
+#nexacontainer .Div.div_WF_wfCger[data-status=disabled]
+{
+	background : #dfdfdf;
+	border : 1px solid #dfdfdf;
+	border-radius : 10px 10px;
+	color : #aaaaaa;
+	font : bold 12px '돋움';
+}
+#nexacontainer .Grid.grd_WF_normal .head .row .cell[data-status=disabled]
+{
+	color : #444444;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell[data-status=disabled]
+{
+	color : #888888;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell .subcell[data-status=disabled]
+{
+	color : #888888;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell .cellradioitem[data-status=disabled]
+{
+	background : transparent;
+	border : 0px;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_add.dummy.dummy.dummy .cellbutton[data-status=disabled]
+{
+	color : #bbbbbb;
+	border : 1px solid #d9d9d9;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_f9f3f3.dummy.dummy.dummy[data-status=disabled]
+{
+	background : #f9f3f3;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow.dummy.dummy.dummy[data-status=disabled]
+{
+	background : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_yellow.dummy.dummy.dummy.oddcell[data-status=disabled]
+{
+	background : yellow;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_c0dbf7.dummy.dummy.dummy[data-status=disabled]
+{
+	background : #c0dbf7;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_e1fcfe.dummy.dummy.dummy[data-status=disabled]
+{
+	background : #e1fcfe;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.grdBCell_WF_backColor_ffffff.dummy.dummy.dummy[data-status=disabled]
+{
+	background : #ffffff;
+}
+#nexacontainer .Grid.grd_WF_noEffect .head .row .cell[data-status=disabled]
+{
+	color : #444444;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell[data-status=disabled]
+{
+	color : #888888;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell .subcell[data-status=disabled]
+{
+	color : #888888;
+}
+#nexacontainer .GridCellControl .cellbutton.grdCellCtrl_WF_normal[data-status=disabled]
+{
+	color : #bbbbbb;
+	background : #f5f5f5;
+	border : 1px solid #d9d9d9;
+}
+#nexacontainer .GridCellControl .celledit.grdCellCtrl_WF_normal[data-status=disabled]
+{
+	color : #999999;
+	background : #efefef;
+}
+#nexacontainer .GridCellControl .cellmaskedit.grdCellCtrl_WF_normal[data-status=disabled]
+{
+	color : #999999;
+	background : #efefef;
+}
+#nexacontainer .GridCellControl .celltreeitem .treeitemtext.grdCellCtrl_WF_normal[data-status=disabled]
+{
+	color : #999999;
+}
+#nexacontainer .Grid.grd_WF_tree .head .row .cell[data-status=disabled]
+{
+	color : #444444;
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell[data-status=disabled]
+{
+	color : #888888;
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell .subcell[data-status=disabled]
+{
+	color : #888888;
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell .celltreeitem .treeitemtext[data-status=disabled]
+{
+	font : 12px '돋움';
+	color : #909090;
+}
+#nexacontainer .Grid .body .row .cell.grdHCell_WF_bg_gray.dummy.dummy.dummy[data-status=disabled]
+{
+	background : #d3d3d3;
+}
+#nexacontainer .Grid .body .row .cell.grdHCell_WF_bg_gray.dummy.dummy.dummy.oddcell[data-status=disabled]
+{
+	background : #d3d3d3;
+}
+#nexacontainer .Div.mcbo_div_WF_normal[data-status=disabled]
+{
+	background : transparent;
+	border : 1px solid #b8b8b8;
+	border-radius : 3px 3px;
+}
+#nexacontainer .Edit.mcbo_edt_WF_normal[data-status=disabled]
+{
+	background : #dddddd;
+	border : 0px;
+	border-radius : 3px 3px;
+	color : #888888;
+	font : 12px '돋움';
+	cursor : default;
+}
+#nexacontainer .Edit.mcbo_edt_WF_normal[data-status=disabled] .nexainput
+{
+	text-align : left;
+	padding : 0px 3px 0px 6px;
+}
+#nexacontainer .Edit.mcbo_edt_WF_normal[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+}
+#nexacontainer .Button.mcbo_btn_WF_normal[data-status=disabled]
+{
+	background : transparent;
+	border : 0px;
+	cursor : pointer;
+}
+#nexacontainer .CheckBoxSet.chkset_WF_checklist .checkboxsetitem[data-status=disabled]
+{
+	font : 12px '돋움';
+	color : #888888;
+}
+#nexacontainer .Button.btn_WF_mod[data-status=disabled]
+{
+	background : #fafafa URL('./SPP_IMAGE_SET/TPF/ico_TPF_Notice.png') no-repeat 20% center;
+	border : 1px solid #d9d9d9;
+	border-radius : 3px 3px;
+	color : #bbbbbb;
+	font : 12px '돋움';
+	cursor : default;
+}
+#nexacontainer .Button.btn_WF_mod[data-status=disabled] .nexacontentsbox
+{
+	text-align : left;
+	background-position-x : left;
+	vertical-align : middle;
+	background-position-y : center;
+}
+#nexacontainer .CheckBox.chk_WF_normal[data-status=mouseover][data-userstatus=selected]
+{
+	color : #0a5dad;
+}
+#nexacontainer .CheckBox.chk_WF_normal[data-status=disabled][data-userstatus=selected]
+{
+	color : #888888;
+}
+#nexacontainer .Radio.rdo_WF_normal .radioitem[data-status=readonly][data-userstatus=selected]
+{
+	background : transparent;
+	border : 0px;
+}
+#nexacontainer .Radio.rdo_WF_normal .radioitem[data-userstatus=selected][data-status=disabled]
+{
+	background : transparent;
+	border : 0px;
+}
+#nexacontainer .Radio.rdo_WF_checklist .radioitem[data-status=mouseover][data-userstatus=selected]
+{
+	font : bold 12px '돋움';
+	color : #0a5dad;
+}
+#nexacontainer .Radio.rdo_WF_checklist .radioitem[data-status=readonly][data-userstatus=selected]
+{
+	font : 12px '돋움';
+	color : #444444;
+}
+#nexacontainer .Radio.rdo_WF_checklist .radioitem[data-userstatus=selected][data-status=disabled]
+{
+	font : 12px '돋움';
+	color : #888888;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell[data-status=disabled][data-userstatus=selected]
+{
+	background : #f3f6ff;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell.oddcell[data-status=disabled][data-userstatus=selected]
+{
+	background : #f3f6ff;
+}
+#nexacontainer .Grid.grd_WF_normal .body .row .cell .cellradioitem[data-status=readonly][data-userstatus=selected]
+{
+	background : transparent;
+	border : 0px;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell[data-status=disabled][data-userstatus=selected]
+{
+	background : #ededed;
+}
+#nexacontainer .Grid.grd_WF_noEffect .body .row .cell.oddcell[data-status=disabled][data-userstatus=selected]
+{
+	background : #ededed;
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell[data-status=disabled][data-userstatus=selected]
+{
+	background : #f3f6ff;
+}
+#nexacontainer .Grid.grd_WF_tree .body .row .cell.oddcell[data-status=disabled][data-userstatus=selected]
+{
+	background : #f3f6ff;
+}
+#nexacontainer .CheckBoxSet.chkset_WF_checklist .checkboxsetitem[data-status=mouseover][data-userstatus=selected]
+{
+	color : #0a5dad;
+	font : bold 12px '돋움';
+}
+#nexacontainer .CheckBoxSet.chkset_WF_checklist .checkboxsetitem[data-status=disabled][data-userstatus=selected]
+{
+	font : 12px '돋움';
+	color : #888888;
+}

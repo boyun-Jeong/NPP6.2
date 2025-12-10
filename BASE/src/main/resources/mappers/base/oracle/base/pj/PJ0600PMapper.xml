@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0600PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			'0' AS CHK,
+			A.MEET_ID, 
+			A.MEET_NO, 
+			A.TITLE, 
+			A.PJT_ID, 
+			A.MEET_STIME, 
+			A.MEET_ETIME, 
+			A.CONTENTS, 
+			A.MEET_TYPE_CD, 
+			A.CLOSE_YN, 
+			A.REG_STIME, 
+			A.REG_USER_ID, 
+			A.REG_USER_NM, 
+			A.REG_USER_DEPT, 
+			A.LMOD_SDATE, 
+			A.LMOD_USER_ID, 
+			A.LMOD_USER_NM, 
+			A.LMOD_USER_DEPT, 
+			A.MEET_LOC, 
+			A.DETRM_CONTS, 
+			A.PENDG_CONTS, 
+			A.ISSUE_CONTS
+		FROM
+			PJ_MEETING A 
+
+		WHERE 1 = 1 
+		AND A.PJT_ID = #{PJT_ID} 
+ 
+ 		<choose>
+			<when test='"TITLE".equals(SEARCH_TYPE)'>
+		AND A.TITLE like '%'|| #{SEARCH_TEXT} || '%'
+			</when>
+			<when test='"CONTENTS".equals(SEARCH_TYPE)'>
+		AND A.CONTENTS like '%' || {SEARCH_TEXT} || '%'
+			</when>
+			<when test='"NO".equals(SEARCH_TYPE)'>
+		AND A.MEET_ID = #{SEARCH_TEXT}
+			</when>
+		</choose>
+ 
+		ORDER BY
+			A.MEET_ID, A.MEET_NO
+	</select>
+
+</mapper>

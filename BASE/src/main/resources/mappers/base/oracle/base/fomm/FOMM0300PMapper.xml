@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0300PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			'0'	AS CHK,
+			''	AS ROWFLAG,
+			WORK_CAL_ID,
+			WORK_REG_DT,
+			BZSYS_CAT_CD,
+			WORK_NO,
+			WORK_SDT,
+			WORK_STIME,
+			WORK_EDT,
+			WORK_ETIME,
+			WORK_END_YN,
+			WORK_USER_ID,
+			WORK_USER_ID	AS ORG_WORK_USER_ID,
+			WORK_USER_NM,
+			WORK_DEPT_NM,
+			WORK_BRIEF,
+			WORK_CONT,
+			REG_DATETIME,
+			REG_USER_ID,
+			REG_USER_NM,
+			REG_DEPT_NM,
+			LMOD_DATETIME,
+			LMOD_USER_ID,
+			LMOD_USER_NM,
+			LMOD_DEPT_NM
+
+		FROM
+			FOMM_WORK_CALENDAR
+
+		WHERE 1 = 1
+		AND DISPLAY_YN = 'Y'
+ 		AND WORK_SDT 		= #{WORK_DT}
+
+ 		<if test="WORK_USER_ID != null and WORK_USER_ID != ''">
+ 		AND WORK_USER_ID	= #{WORK_USER_ID}
+ 		</if>
+
+		ORDER BY
+  			WORK_END_YN, WORK_SDT || WORK_STIME
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+    	<selectKey resultType="string" keyProperty="WORK_CAL_ID" order="BEFORE">
+    		SELECT 
+				'JBCL' || TO_CHAR(SYSDATE, 'YYYYMMDD') ||
+				LPAD(TO_NUMBER(NVL(SUBSTR(MAX(WORK_CAL_ID), 13), 0)) + 1, 8, '0')
+			FROM FOMM_WORK_CALENDAR
+        	WHERE 1 = 1
+        	AND SUBSTR(WORK_CAL_ID, 5) LIKE TO_CHAR(SYSDATE, 'YYYYMMDD') || '%'
+    	</selectKey>
+
+		INSERT INTO FOMM_WORK_CALENDAR
+    	(
+			WORK_CAL_ID,
+			BZSYS_CAT_CD,
+			WORK_NO,
+			WORK_SDT,
+			WORK_STIME,
+			WORK_EDT,
+			WORK_ETIME,
+			WORK_END_YN,
+			WORK_USER_ID,
+			WORK_USER_NM,
+			WORK_DEPT_NM,
+			DISPLAY_YN,
+			WORK_BRIEF,
+			WORK_CONT,
+			REG_DATETIME,
+			REG_USER_ID,
+			REG_USER_NM,
+			REG_DEPT_NM
+		)
+		VALUES
+		(
+			#{WORK_CAL_ID},
+			#{BZSYS_CAT_CD},
+			#{WORK_NO},
+			#{WORK_SDT},
+			#{WORK_STIME},
+			#{WORK_EDT},
+			#{WORK_ETIME},
+			#{WORK_END_YN},
+			#{WORK_USER_ID},
+			#{WORK_USER_NM},
+			#{WORK_DEPT_NM},
+			'Y',
+			#{WORK_BRIEF},
+			#{WORK_CONT},
+			TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'),
+			#{LMID},
+			(SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID}),
+			(SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+    </insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE FOMM_WORK_CALENDAR SET
+			  BZSYS_CAT_CD	= #{BZSYS_CAT_CD}
+			, WORK_SDT		= #{WORK_SDT}
+			, WORK_STIME	= #{WORK_STIME}
+			, WORK_EDT		= #{WORK_EDT}
+			, WORK_ETIME	= #{WORK_ETIME}
+			, WORK_END_YN	= #{WORK_END_YN}
+			, WORK_USER_ID	= #{WORK_USER_ID}
+			, WORK_USER_NM	= #{WORK_USER_NM}
+			, WORK_DEPT_NM	= #{WORK_DEPT_NM}
+			, WORK_BRIEF	= #{WORK_BRIEF}
+			, WORK_CONT		= #{WORK_CONT}
+			, LMOD_DATETIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID	= #{LMID}
+			, LMOD_USER_NM	= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, LMOD_DEPT_NM	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		WHERE 1 = 1
+		AND WORK_CAL_ID	= #{WORK_CAL_ID}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		UPDATE FOMM_WORK_CALENDAR SET
+			  DISPLAY_YN	= 'N'
+			, LMOD_DATETIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID = #{LMID}
+			, LMOD_USER_NM = (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, LMOD_DEPT_NM = (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		WHERE 1 = 1
+		AND WORK_CAL_ID	= #{WORK_CAL_ID}
+		AND DISPLAY_YN	= 'Y'
+	</delete>
+
+</mapper>

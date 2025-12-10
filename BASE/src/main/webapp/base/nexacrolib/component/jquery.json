@@ -1,0 +1,11 @@
+﻿{
+	"name": "jquery",
+	"version": "3.3.1",
+	"description": "jquery.min.js",
+	"license": "",
+	"scripts": [        
+        "jquery/jquery.min.js"        
+	]
+}
+//@ sourceURL=jquery.json
+

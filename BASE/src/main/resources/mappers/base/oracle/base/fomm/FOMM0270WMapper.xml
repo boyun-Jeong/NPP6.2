@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0270WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+	 SELECT 
+	        '' AS CHK
+          , '' AS ROWFLAG
+	      , A.CLSSF
+	      , A.PAGE_DESC
+	      , A.PAGE_URL
+	      , A.ORD_SEQ
+	      , A.USE_YN
+	      , A.REG_DT
+	      , A.CHG_DT
+	      , A.LINK_SEQ
+	   FROM ITSM2.FOMM_SYS_LINKPAGE A
+	  WHERE 1 = 1
+	  <if test="CLSSF != '' and CLSSF != null">
+	    AND A.CLSSF LIKE '%' || #{CLSSF} || '%'
+	  </if>
+	  <if test="PAGE_DESC != '' and PAGE_DESC != null">
+	    AND A.PAGE_DESC LIKE '%' || #{PAGE_DESC} || '%'
+	  </if>
+	 ORDER BY A.ORD_SEQ
+	</select>
+
+
+    
+
+    
+
+    <insert id="insert01" parameterType="java.util.Map">
+    INSERT INTO ITSM2.FOMM_SYS_LINKPAGE
+        (
+            LINK_SEQ,
+            CLSSF,
+            PAGE_DESC,
+            PAGE_URL,
+            ORD_SEQ,
+            USE_YN,
+            REG_DT,
+            CHG_DT
+        )
+        VALUES 
+        ( 
+            (SELECT NVL(MAX(LINK_SEQ)+1,'1') AS LINK_SEQ FROM FOMM_SYS_LINKPAGE),
+            #{CLSSF},
+            #{PAGE_DESC},
+            #{PAGE_URL},
+            #{ORD_SEQ},
+            #{USE_YN},
+            TO_CHAR(SYSDATE, 'YYYYMMDD'),
+            TO_CHAR(SYSDATE, 'YYYYMMDD')
+        )
+    </insert>
+
+    <update id="modify01" parameterType="java.util.Map">
+	   UPDATE ITSM2.FOMM_SYS_LINKPAGE SET 
+	       PAGE_URL = #{PAGE_URL}
+	       ,ORD_SEQ = #{ORD_SEQ}
+	       ,USE_YN = #{USE_YN}
+	       ,CHG_DT = TO_CHAR(SYSDATE, 'YYYYMMDD')
+	       ,CLSSF= #{CLSSF}
+	       ,PAGE_DESC = #{PAGE_DESC}
+		WHERE 1=1
+		  AND LINK_SEQ = #{LINK_SEQ}
+    </update>
+
+    <delete id="remove01" parameterType="java.util.Map">
+         DELETE FROM ITSM2.FOMM_SYS_LINKPAGE 
+          WHERE 1=1
+            AND LINK_SEQ = #{LINK_SEQ}
+    </delete>
+
+</mapper>
+

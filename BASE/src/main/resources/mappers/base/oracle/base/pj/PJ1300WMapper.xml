@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ1300WDAO">
+
+<!-- 	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map"> -->
+	<select id="select01" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, ''	AS TEMP_EVAL_LIST_ID
+			, A.EVAL_LIST_ID
+			, A.EVAL_LIST_NM
+			, A.USE_YN
+			, A.ACT_STIME
+			, A.ACT_ETIME
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, B.CNT
+
+		FROM
+			PJ_EVAL_LIST A,
+			(
+			SELECT
+				EVAL_LIST_ID, COUNT(*) AS CNT
+			FROM
+				PJ_EVAL_ITEM
+			GROUP BY
+				EVAL_LIST_ID
+			) B
+
+		WHERE 1 = 1
+		AND A.EVAL_LIST_ID = B.EVAL_LIST_ID(+)
+
+		ORDER BY
+			A.ACT_STIME DESC
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK 
+			, ''	AS ROWFLAG
+			, ''	AS TEMP_EVAL_LIST_ID
+			, A.EVAL_ITEM_ID
+			, A.EVAL_LIST_ID
+			, A.EVAL_ITEM_CD
+			, A.EVAL_ITEM_NM
+			, A.EVAL_ITEM_BASIS
+			, A.EVAL_ITEM_SCORE
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+		FROM
+			PJ_EVAL_ITEM A
+
+		WHERE 1 = 1
+		AND A.EVAL_LIST_ID	= #{EVAL_LIST_ID}
+
+		ORDER BY
+			A.EVAL_ITEM_ID
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="EVAL_LIST_ID" order="BEFORE">
+			SELECT
+				'PJEL' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(EVAL_LIST_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_EVAL_LIST
+   			WHERE 1 = 1
+   			AND EVAL_LIST_ID LIKE 'PJEL%'
+			AND LENGTH(EVAL_LIST_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_EVAL_LIST 
+		(
+			  EVAL_LIST_ID
+			, EVAL_LIST_NM
+			, USE_YN
+			, ACT_STIME
+			, ACT_ETIME
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  #{EVAL_LIST_ID}
+			, #{EVAL_LIST_NM}
+			, #{USE_YN}
+			, #{ACT_STIME}
+			, #{ACT_ETIME}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_EVAL_LIST SET
+			  EVAL_LIST_NM		= #{EVAL_LIST_NM}
+			, USE_YN			= #{USE_YN}
+			, ACT_STIME			= #{ACT_STIME}
+			, ACT_ETIME			= #{ACT_ETIME} 
+
+			, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+		WHERE 1 = 1
+		AND EVAL_LIST_ID = #{EVAL_LIST_ID}
+	</update>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="EVAL_ITEM_ID" order="BEFORE">
+			SELECT
+				'PJEI' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(EVAL_ITEM_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_EVAL_ITEM
+   			WHERE 1 = 1
+   			AND EVAL_ITEM_ID LIKE 'PJEI%'
+			AND LENGTH(EVAL_ITEM_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_EVAL_ITEM 
+		(
+			  EVAL_ITEM_ID
+			, EVAL_LIST_ID
+			, EVAL_ITEM_CD
+			, EVAL_ITEM_NM
+			, EVAL_ITEM_BASIS
+			, EVAL_ITEM_SCORE
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  #{EVAL_ITEM_ID} 
+			, #{EVAL_LIST_ID}
+			, #{EVAL_ITEM_CD}
+			, #{EVAL_ITEM_NM}
+			, #{EVAL_ITEM_BASIS}
+			, #{EVAL_ITEM_SCORE}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify02" parameterType="java.util.Map">
+		UPDATE PJ_EVAL_ITEM SET
+			  EVAL_ITEM_CD		= #{EVAL_ITEM_CD}
+			, EVAL_ITEM_NM		= #{EVAL_ITEM_NM}
+			, EVAL_ITEM_BASIS	= #{EVAL_ITEM_BASIS}
+			, EVAL_ITEM_SCORE	= #{EVAL_ITEM_SCORE}
+
+			, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+
+		WHERE 1 = 1
+		AND EVAL_LIST_ID	= #{EVAL_LIST_ID}
+		AND EVAL_ITEM_ID	= #{EVAL_ITEM_ID}
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_EVAL_LIST
+		WHERE 1 = 1
+		AND EVAL_LIST_ID = #{EVAL_LIST_ID}
+	</delete>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE FROM PJ_EVAL_ITEM
+		WHERE 1 = 1
+		AND EVAL_LIST_ID = #{EVAL_LIST_ID}
+	</delete>
+
+	<delete id="remove03" parameterType="java.util.Map">
+		DELETE FROM PJ_EVAL_ITEM
+		WHERE 1 = 1
+		AND EVAL_LIST_ID	= #{EVAL_LIST_ID}
+		AND EVAL_ITEM_ID	= #{EVAL_ITEM_ID}
+	</delete>
+
+</mapper>

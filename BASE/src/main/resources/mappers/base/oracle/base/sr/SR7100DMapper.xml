@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR7100DDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			'0'	AS CHK,
+			''	AS ROWFLAG,
+			REQ_ID,
+			PJT_ID,
+			PJT_NAME,
+			REQ_DESC,
+			FRID,
+			FRDT,
+			LMID,
+			LMDT,
+			LMPID
+
+		FROM
+			SR_PMS_REQ
+
+		WHERE 1=1
+		AND REQ_ID = #{REQ_ID}		
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		 INSERT INTO SR_PMS_REQ
+		(
+			REQ_ID,
+			PJT_ID,
+			PJT_NAME,
+			REQ_DESC,
+			FRID,
+			FRDT,
+			LMID,
+			LMDT,
+			LMPID
+		)
+		VALUES
+		(
+			#{REQ_ID},
+			#{PJT_ID},
+			#{PJT_NAME},
+			#{REQ_DESC},
+
+			#{LMID},
+			TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'),
+			#{LMID},
+			TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS'),
+			#{LMPID}
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE SR_PMS_REQ SET 
+ 			PJT_ID		= #{PJT_ID},
+			PJT_NAME	= #{PJT_NAME},
+			REQ_DESC	= #{REQ_DESC},
+
+			LMID		= #{LMID},
+			LMDT		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		WHERE 1=1
+		AND REQ_ID = #{REQ_ID}
+	</update>
+
+</mapper>

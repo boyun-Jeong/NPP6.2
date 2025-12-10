@@ -1,0 +1,2076 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.wf.dao.WF0120WDAO">
+
+    <!-- 요청서 워크플로우 단계 조회 -->
+    <select id="selectProc" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectProc */
+        SELECT    '0' AS CHK
+                , '' AS ROWFLAG
+                , A.REQ_TMPLAT_ID     --요청서양식ID
+                , A.REQ_TMPLAT_VER    --요청서양식버전
+                , A.WF_PROC_CD        --워크플로우단계
+                , A.WF_PROC_NM        --워크플로우단계명
+                , A.NEXT_WF_PROC_CD   --가능한 다음 단계
+                , A.SEQ               --워크플로우단계 순서
+                , A.URL               --화면URL
+                , A.SKIP_YN           --스킵가능여부
+                <choose>
+                    <when test='REQ_ID != "" and REQ_ID != null and !REQ_ID.startsWith("REQ_")'>
+                , NVL(B.WF_PROC_SKIP_YN, 'Y')	AS WF_PROC_SKIP_YN	--단계스킵여부
+                    </when>
+                    <otherwise>
+                , 'N'   AS WF_PROC_SKIP_YN
+                    </otherwise>
+                </choose>
+                , A.SKIP_OPT          --스킵조건
+                , A.SCREEN_EDIT       --화면기준 수정 가능 워크플로우 단계(담당자 기준)
+                , A.SCREEN_RTRN       --화면반려시 워크플로우단계
+                , A.FUNC_TYPE_CD      --검토자지정타입(01:사용자선택, 02:조건지정)
+                , A.FUNC              --기능
+                , A.FUNC_NM           --기능명
+                , A.CGER_TYPE_CD      --담당자지정타입(01:사용자선택, 02:조건지정)
+                , A.CGER              --담당자기능
+                , A.CGER_NM           --담당자기능명
+                , A.EDIT              --결재/검토시 수정 가능 워크플로우 단계
+                , A.RTRN              --결재/검토 반려시 워크플로우단계
+                , A.RVER_CNT          --검토 기능 총 검토 수
+                , A.SCREEN_APV_ESS_YN
+                , A.SCREEN_RTRN_ESS_YN
+                , A.APV_ESS_YN
+                , A.RTRN_ESS_YN
+                , A.MAP_WF_PROC_CD
+                , A.SCRN_TYPE
+                , A.ORG_WF_PROC_NM 
+                , A.RMK               --비고
+
+                , FRID              --최초등록자
+                , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM             /* 최초등록자 */
+                , FRDT              /* 최초등록일시 */
+                , LMID      --최종수정자ID
+                , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM             /* 최종수정자 */
+                , LMDT      --최종수정일시
+                , LMPID     --최종수정 화면ID
+                
+        FROM
+              WF_REQ_TMPLAT_PROC_HT A
+
+            <if test='REQ_ID != "" and REQ_ID != null and !REQ_ID.startsWith("REQ_")'>
+            , (
+              SELECT *
+              FROM
+                (
+                SELECT
+                      'WF_PROC_1000'    AS WF_PROC_CD
+                    , 1                 AS SEQ
+                    , 'N'               AS WF_PROC_SKIP_YN
+                FROM DUAL
+                
+                UNION
+                
+                SELECT
+                      WF_PROC_CD
+                    , SEQ
+                    , WF_PROC_SKIP_YN
+                FROM SR_WF_PROC
+                WHERE 1 = 1
+                AND REQ_ID = #{REQ_ID}
+                AND WF_PROC_CD <![CDATA[<>]]> 'WF_PROC_1000'
+                )
+              ) B
+        </if>
+
+        WHERE 1 = 1
+
+        <if test='REQ_ID != "" and REQ_ID != null and !REQ_ID.startsWith("REQ_")'>
+        AND A.WF_PROC_CD        = B.WF_PROC_CD(+)
+        AND A.SEQ <![CDATA[<=]]>
+        						(
+        						SELECT SEQ
+        						FROM WF_REQ_TMPLAT_PROC_HT C
+        						WHERE 1 = 1
+        						AND EXISTS
+        								(
+        								SELECT 1
+        								FROM SR_BASE_INFO D
+        								WHERE 1 = 1
+        								AND C.REQ_TMPLAT_ID		= D.REQ_TMPLAT_ID
+        								AND C.REQ_TMPLAT_VER	= D.REQ_TMPLAT_VER
+        								AND C.WF_PROC_CD		= D.WF_PROC_CD
+        								AND D.REQ_ID			= #{REQ_ID}
+        								)
+        						) 
+        </if>
+
+        AND A.REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+        AND A.REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+
+        <if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+        AND A.WF_PROC_CD = #{WF_PROC_CD}
+        </if>
+
+        ORDER BY
+            A.SEQ ASC
+    </select>
+
+    <!-- 요청서 양식 목록 조회 -->
+    <select id="selectUpReqTmplatVer" parameterType="java.util.Map" resultType="integer">
+        SELECT
+            TO_NUMBER(MAX(REQ_TMPLAT_VER)) + 1  AS UP_REQ_TMPLAT_VER
+        FROM
+            WF_REQ_TMPLAT_HT
+        WHERE REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+    </select>
+
+    <!-- 요청서 양식 목록 조회 -->
+    <select id="selectWfReqTmplatMt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfReqTmplatMt */
+        SELECT
+              '0' AS CHK
+            , '' AS ROWFLAG
+            , REQ_TMPLAT_ID     --요청서양식ID
+            , REQ_TMPLAT_NM     --요청서양식명
+            <choose>
+                <when test='REQ_ID != "" and REQ_ID != null and !REQ_ID.startsWith("REQ_")'>
+            , (SELECT REQ_TMPLAT_VER FROM SR_BASE_INFO WHERE REQ_ID = #{REQ_ID}) AS REQ_TMPLAT_VER
+                </when>
+                <otherwise>
+            , (SELECT REQ_TMPLAT_VER FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND CUR_VER_YN = 'Y')  AS REQ_TMPLAT_VER    --요청서양식버전
+                </otherwise>
+            </choose>            
+            , SVC_CD            --서비스유형코드
+            , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'SVC_CD' AND CMM_CD = SVC_CD AND CODE_DIV = 'WORKFLOW_CD' AND LANG_CD = 'KR')      AS SVC_NM  -- 서비스명
+            , SVC_DTL_CD        --서비스유형 상세코드
+            , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = SVC_CD AND CMM_CD = SVC_DTL_CD AND CODE_DIV = 'WORKFLOW_CD' AND LANG_CD = 'KR')    AS SVC_DTL_NM  -- 서비스상세명
+            , WF_ID             --워크플로우ID
+            , MAP_PROC_CD
+            , (SELECT B.WF_NM FROM WF_WORKFLOW_MT B WHERE B.WF_ID = A.WF_ID) AS WF_NM   -- 워크플로우명
+            , (SELECT ITM_VAL_1 FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'REQ_INFO_TYPE_CD' AND CMM_CD = A.REQ_INFO_TYPE_CD AND LANG_CD = #{SYS_LANG_CD})   AS SR_INFO_URL --요청서 기본정보 화면 URL
+            , REQ_URL_NO        --요청서URL번호
+            , REQ_URL           --요청서URL
+            , END_URL           --종료 후 보여질 화면 URL
+            , REQ_INFO_TYPE_CD  --요청서 기본정보 타입코드
+            , ATTACH_USE_YN     --첨부파일 사용여부
+            , USE_YN            --사용여부
+            , REQ_DESC          --작성요령
+            , REQ_REF_YN        --요청서 참조여부
+            , SATI_INVEST_GUBUN --만족도조사구분
+            , VER_MNG_YN        --버전관리여부
+            , 'N'    AS WF_HIST_CONF_YN
+            , #{REQ_ID}                                                 AS REQ_ID
+            , SAVE_BTN_YN       --임시저장버튼사용여부
+            , CANCEL_BTN_YN     --회수버튼사용여부
+            , DEL_BTN_YN        --삭제버튼사용여부
+            
+            , RMK               --비고
+            , FRID              --최초등록자
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM --최초등록자
+            , FRDT              --최초등록일시
+            , LMID              --최종수정자ID
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM --최종수정자
+            , LMDT              --최종수정일시
+            , LMPID             --최종수정 화면ID
+            , (SELECT SORT_ORDR FROM FOMM_CMM_CD_MT CM WHERE CM.UP_CMM_CD = SVC_CD AND CM.CMM_CD = SVC_DTL_CD  AND LANG_CD = 'KR' ) AS SVC_SORT_NO   --서비스분류순서
+            , SORT_NO AS SVC_TMPL_NO  --표시순서
+
+        FROM
+            WF_REQ_TMPLAT_MT A
+
+        WHERE 1 = 1
+        AND NVL(A.DEL_YN, 'N')  = 'N'
+
+        <if test="REQ_TMPLAT_ID != '' and REQ_TMPLAT_ID != null">
+        AND A.REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+        </if>
+
+        <if test="REQ_TMPLAT_NM != '' and REQ_TMPLAT_NM != null">
+        AND UPPER(A.REQ_TMPLAT_NM) LIKE UPPER('%' || #{REQ_TMPLAT_NM} || '%')
+        </if>
+
+        <if test="SVC_CD != '' and SVC_CD != null">
+        AND A.SVC_CD = #{SVC_CD}
+        </if>
+
+        <if test="SVC_DTL_CD != '' and SVC_DTL_CD != null">
+        AND A.SVC_DTL_CD = #{SVC_DTL_CD}
+        </if>
+        
+        <if test="WF_ID != '' and WF_ID != null">
+        AND A.WF_ID = #{WF_ID}
+        </if>
+
+        <if test="USE_YN != '' and USE_YN != null">
+        AND A.USE_YN = #{USE_YN}
+        </if>
+
+        ORDER BY
+            SVC_SORT_NO, SORT_NO, A.REQ_TMPLAT_NM
+    </select>
+
+    <!-- 요청서 양식 목록 조회 -->
+    <select id="selectWfReqTmplatHt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfReqTmplatHt */
+        SELECT
+              '0' AS CHK
+            , '' AS ROWFLAG
+            , REQ_TMPLAT_ID     --요청서양식ID
+            , REQ_TMPLAT_VER    --요청서양식VER
+            , REQ_TMPLAT_NM     --요청서양식명
+            , SVC_CD            --서비스유형코드
+            , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'SVC_CD' AND CMM_CD = SVC_CD AND CODE_DIV = 'WORKFLOW_CD' AND LANG_CD = 'KR')      AS SVC_NM  -- 서비스명
+            , SVC_DTL_CD        --서비스유형 상세코드
+            , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = SVC_CD AND CMM_CD = SVC_DTL_CD AND CODE_DIV = 'WORKFLOW_CD' AND LANG_CD = 'KR')    AS SVC_DTL_NM  -- 서비스상세명
+            , WF_ID             --워크플로우ID
+            , MAP_PROC_CD
+            , (SELECT B.WF_NM FROM WF_WORKFLOW_MT B WHERE B.WF_ID = A.WF_ID) AS WF_NM   -- 워크플로우명
+            , (SELECT ITM_VAL_1 FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'REQ_INFO_TYPE_CD' AND CMM_CD = A.REQ_INFO_TYPE_CD AND LANG_CD = 'KR')   AS SR_INFO_URL --요청서 기본정보 화면 URL
+            , REQ_URL_NO        --요청서URL번호
+            , REQ_URL           --요청서URL
+            , END_URL           --종료 후 보여질 화면 URL
+            , REQ_INFO_TYPE_CD  --요청서 기본정보 타입코드
+            , ATTACH_USE_YN     --첨부파일 사용여부
+            , USE_YN            --사용여부
+            , REQ_DESC          --작성요령
+            , REQ_REF_YN        --요청서 참조여부
+            , SATI_INVEST_GUBUN --만족도조사구분                        
+            , #{REQ_ID}                                                 AS REQ_ID
+            
+            , RMK               --비고
+            , FRID              --최초등록자
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM --최초등록자
+            , FRDT              --최초등록일시
+            , LMID              --최종수정자ID
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM --최종수정자
+            , LMDT              --최종수정일시
+            , LMPID             --최종수정 화면ID
+
+        FROM
+            WF_REQ_TMPLAT_HT A
+
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+        <choose>
+            <when test='REQ_ID != "" and REQ_ID != null and !REQ_ID.startsWith("REQ_")'>
+        AND A.REQ_TMPLAT_VER = (SELECT REQ_TMPLAT_VER FROM SR_BASE_INFO WHERE REQ_ID = #{REQ_ID})
+            </when>
+            <otherwise>
+        AND A.REQ_TMPLAT_VER = (SELECT REQ_TMPLAT_VER FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID = A.REQ_TMPLAT_ID AND CUR_VER_YN = 'Y')
+            </otherwise>
+        </choose>
+
+        ORDER BY
+            A.REQ_TMPLAT_ID DESC
+    </select>
+
+    <!-- SPP WF 요청서양식 추가/버전업 -->
+    <insert id="insertWfReqTmplatMt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfReqTmplatMt */
+        <selectKey resultType="map" keyColumn="REQ_TMPLAT_ID,REQ_TMPLAT_VER" keyProperty="REQ_TMPLAT_ID,REQ_TMPLAT_VER" order="BEFORE">
+            SELECT
+                  'WFT' || TO_CHAR(SYSDATE, 'YY') || LPAD(NVL(MAX(SUBSTR(REQ_TMPLAT_ID, -4)), 0) + 1, 4, '0') AS REQ_TMPLAT_ID
+                , 1 AS REQ_TMPLAT_VER
+            FROM WF_REQ_TMPLAT_MT
+            WHERE SUBSTR(REQ_TMPLAT_ID, 4, 2) = TO_CHAR(SYSDATE, 'YY')            
+        </selectKey>
+
+        INSERT INTO WF_REQ_TMPLAT_MT
+        (
+              REQ_TMPLAT_ID         --요청서양식ID
+            , REQ_TMPLAT_NM         --요청서양식명
+            , SVC_CD                --서비스유형코드
+            , SVC_DTL_CD            --서비스유형 상세코드
+            , WF_ID                 --워크플로우ID
+            , MAP_PROC_CD           --매핑단계코드
+            , REQ_URL_NO            --요청서URL번호 
+            , REQ_URL               --요청서URL
+            , END_URL               --종료 후 보여질 화면 URL
+            , REQ_INFO_TYPE_CD      --요청서 기본정보 타입코드
+            , ATTACH_USE_YN         --첨부파일 사용여부
+            , REQ_REF_YN            --요청서 참조여부
+            , SATI_INVEST_GUBUN     --만족도조사구분
+            , VER_MNG_YN            --버전관리여부
+            , SAVE_BTN_YN           --임시저장버튼사용여부
+            , CANCEL_BTN_YN         --회수버튼사용여부
+            , DEL_BTN_YN            --삭제버튼사용여부
+            , REQ_DESC              --작성요령
+            , USE_YN                --사용여부
+            , DEL_YN                --삭제여부
+            , RMK                   --비고
+
+            , FRID      --최초등록자ID
+            , FRDT      --최초등록일시
+            , LMID      --최종수정자ID
+            , LMDT      --최종수정일시
+            , LMPID     --최종수정 화면ID
+        )
+        VALUES
+        (
+              #{REQ_TMPLAT_ID}
+            , #{REQ_TMPLAT_NM}
+            , #{SVC_CD}
+            , #{SVC_DTL_CD}
+            , #{WF_ID}
+            , #{MAP_PROC_CD}        --매핑단계코드
+            , #{REQ_URL_NO}
+            , #{REQ_URL}
+            , #{END_URL}                --종료 후 보여질 화면 URL
+            , #{REQ_INFO_TYPE_CD}
+            , #{ATTACH_USE_YN}
+            , #{REQ_REF_YN}
+            , #{SATI_INVEST_GUBUN}
+            , #{VER_MNG_YN}
+            , NVL(#{SAVE_BTN_YN}, 'Y')
+            , NVL(#{CANCEL_BTN_YN}, 'Y')
+            , NVL(#{DEL_BTN_YN}, 'Y')
+            , #{REQ_DESC}
+            , NVL(#{USE_YN}, 'N')
+            , 'N'
+            , #{RMK}
+
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMPID}
+        )
+    </insert>
+    
+    <!-- SPP WF 요청서양식 수정 -->
+    <update id="updateWfReqTmplatMt" parameterType="java.util.Map">
+        /* WF0120WMapper >> updateWfReqTmplatMt */
+        UPDATE WF_REQ_TMPLAT_MT SET
+              REQ_TMPLAT_NM      = #{REQ_TMPLAT_NM}                     --요청서양식명
+            , SVC_CD             = #{SVC_CD}                            --서비스유형코드
+            , SVC_DTL_CD         = #{SVC_DTL_CD}                        --서비스유형 상세코드
+            , WF_ID              = #{WF_ID}                             --워크플로우ID
+            , MAP_PROC_CD        = #{MAP_PROC_CD}                       --매핑단계코드
+            , REQ_URL            = #{REQ_URL}                           --요청서URL
+            , REQ_INFO_TYPE_CD   = #{REQ_INFO_TYPE_CD}                  --요청서 기본정보 타입코드
+            , REQ_REF_YN         = #{REQ_REF_YN}                        --요청서 참조여부
+            , VER_MNG_YN         = #{VER_MNG_YN}                        --버전관리여부
+            , REQ_URL_NO         = #{REQ_URL_NO}                        --요청서URL번호
+            , END_URL            = #{END_URL}                           --종료 후 보여질 화면 URL
+            , SATI_INVEST_GUBUN  = #{SATI_INVEST_GUBUN}                 --만족도조사구분
+            , REQ_DESC           = #{REQ_DESC}                          --작성요령
+            , ATTACH_USE_YN      = #{ATTACH_USE_YN}                     --첨부파일 사용여부
+            , SAVE_BTN_YN        = NVL(#{SAVE_BTN_YN}, 'Y')             --임시저장버튼사용여부
+            , CANCEL_BTN_YN      = NVL(#{CANCEL_BTN_YN}, 'Y')           --취소버튼 사용여부
+            , DEL_BTN_YN         = NVL(#{DEL_BTN_YN}, 'Y')              --삭제버튼 사용여부
+            , USE_YN             = #{USE_YN}                            --사용여부
+
+            , RMK                = #{RMK}                               --비고
+            , LMID               = #{LMID}                              --최종수정자ID
+            , LMDT               = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') --최종수정일시
+            , LMPID              = #{LMPID}                             --최종수정 화면ID
+
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+    </update>
+    
+    <!-- SPP WF 요청서양식 삭제 (삭제여부 Y처리) -->
+    <update id="deleteWfReqTmplatMt" parameterType="java.util.Map">
+        /* WF0120WMapper >> deleteWfReqTmplatMt */
+        UPDATE WF_REQ_TMPLAT_MT SET
+              DEL_YN    = 'Y'                                   --사용여부
+            , LMID      = #{LMID}                               --최종수정자ID
+            , LMDT      = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  --최종수정일시
+            , LMPID     = #{LMPID}  --최종수정 화면ID
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID       = #{REQ_TMPLAT_ID}
+        AND NVL(DEL_YN, 'N')    = 'N'
+    </update>
+
+    <select id="selectWfReqTmplatProcDt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfReqTmplatProcDt */
+        SELECT    '0' AS CHK
+                , '' AS ROWFLAG
+                , A.REQ_TMPLAT_ID         --요청서양식ID
+                , A.SEQ                   --워크플로우단계 순서
+                , A.WF_PROC_CD            --워크플로우단계
+                , A.WF_PROC_NM            --워크플로우단계명
+                , A.MAP_WF_PROC_CD        --매핑진행단계코드
+                , A.URL                   --화면URL
+                , A.SKIP_YN               --스킵가능여부
+                , A.SKIP_OPT              --스킵조건
+                , A.SCREEN_EDIT           --화면기준 수정 가능 워크플로우 단계(담당자 기준)
+                , A.FUNC_TYPE_CD          --검토자지정타입(01:사용자선택, 02:조건지정)
+                , A.FUNC                  --기능
+                , A.FUNC_NM               --기능명
+                , A.CGER_TYPE_CD          --담당자지정타입(01:사용자선택, 02:조건지정)
+                , A.CGER                  --담당자기능
+                , A.CGER_NM               --담당자기능명
+                , A.EDIT                  --결재/검토시 수정 가능 워크플로우 단계
+                , A.RVER_CNT              --검토 기능 총 검토 수
+                , A.NEXT_WF_PROC_CD       --가능한 다음 단계
+                , A.SCREEN_RTRN           --화면반려시 워크플로우단계
+                , A.RTRN                  --결재/검토 반려시 워크플로우단계                
+
+                , A.SCREEN_APV_ESS_YN     --담당자-접수의견필수여부
+                , A.SCREEN_RTRN_ESS_YN    --담당자-반려사유필수여부 
+                , A.APV_ESS_YN            --결재/검토-승인의견필수여부 
+                , A.RTRN_ESS_YN           --결재/검토-반려의견필수여부
+                
+                , A.SCREEN_APV_BTN_YN
+                , A.SCREEN_RTRN_BTN_YN
+                , A.SCREEN_SAVE_BTN_YN
+                
+                , A.APV_BTN_YN
+                , A.RTRN_BTN_YN
+                , A.SAVE_BTN_YN
+                
+                , A.SCREEN_APV_BTN_TEXT
+                , A.SCREEN_RTRN_BTN_TEXT
+                , A.SCREEN_SAVE_BTN_TEXT
+                
+                , A.APV_BTN_TEXT
+                , A.RTRN_BTN_TEXT
+                , A.SAVE_BTN_TEXT
+                
+                , A.SCRN_TYPE             --화면타입(D:단계DIV화면타입,P:팝업타입) 
+                , A.ORG_WF_PROC_NM        --원본단계명 
+                , A.RMK                   --비고
+                
+        FROM
+            WF_REQ_TMPLAT_PROC_DT A
+
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+
+        ORDER BY
+            A.SEQ ASC
+    </select>
+
+    <select id="selectWfReqTmplatProcHt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfReqTmplatProcHt */
+        SELECT    '0' AS CHK
+                , '' AS ROWFLAG
+                , A.REQ_TMPLAT_ID         --요청서양식ID
+                , A.SEQ                   --워크플로우단계 순서
+                , A.WF_PROC_CD            --워크플로우단계
+                , A.WF_PROC_NM            --워크플로우단계명
+                , A.MAP_WF_PROC_CD        --매핑진행단계코드
+                , A.URL                   --화면URL
+                , A.SKIP_YN               --스킵가능여부
+                , A.SKIP_OPT              --스킵조건
+                , A.SCREEN_EDIT           --화면기준 수정 가능 워크플로우 단계(담당자 기준)
+                , A.FUNC_TYPE_CD          --검토자지정타입(01:사용자선택, 02:조건지정)
+                , A.FUNC                  --기능
+                , A.FUNC_NM               --기능명
+                , A.CGER_TYPE_CD          --담당자지정타입(01:사용자선택, 02:조건지정)
+                , A.CGER                  --담당자기능
+                , A.CGER_NM               --담당자기능명
+                , A.EDIT                  --결재/검토시 수정 가능 워크플로우 단계
+                , A.RVER_CNT              --검토 기능 총 검토 수
+                , A.NEXT_WF_PROC_CD       --가능한 다음 단계
+                , A.SCREEN_RTRN           --화면반려시 워크플로우단계
+                , A.RTRN                  --결재/검토 반려시 워크플로우단계                
+                
+                , A.SCRN_TYPE             --화면타입(D:단계DIV화면타입,P:팝업타입) 
+                , A.ORG_WF_PROC_NM        --원본단계명
+
+                , A.SCREEN_APV_ESS_YN     --담당자-접수의견필수여부
+                , A.SCREEN_RTRN_ESS_YN    --담당자-반려사유필수여부
+                 
+                , A.APV_ESS_YN            --결재/검토-승인의견필수여부 
+                , A.RTRN_ESS_YN           --결재/검토-반려의견필수여부
+                
+                , A.SCREEN_APV_BTN_YN
+                , A.SCREEN_RTRN_BTN_YN
+                , A.SCREEN_SAVE_BTN_YN
+                
+                , A.APV_BTN_YN
+                , A.RTRN_BTN_YN
+                , A.SAVE_BTN_YN
+                
+                , A.SCREEN_APV_BTN_TEXT
+                , A.SCREEN_RTRN_BTN_TEXT
+                , A.SCREEN_SAVE_BTN_TEXT
+                
+                , A.APV_BTN_TEXT
+                , A.RTRN_BTN_TEXT
+                , A.SAVE_BTN_TEXT  
+                
+                , A.RMK                   --비고
+                
+        FROM
+            WF_REQ_TMPLAT_PROC_HT A
+
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+        AND A.REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+
+        <if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+        AND A.WF_PROC_CD        = #{WF_PROC_CD}
+        </if>
+
+        ORDER BY
+            A.SEQ ASC
+    </select>
+
+    <insert id="insertWfReqTmplatProcDt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfReqTmplatProcDt */
+        INSERT INTO WF_REQ_TMPLAT_PROC_DT
+        (
+              REQ_TMPLAT_ID     --요청서양식ID
+            , WF_PROC_CD        --워크플로우단계
+            , WF_PROC_NM        --워크플로우단계명
+
+            , NEXT_WF_PROC_CD   --가능한다음단계
+            , SEQ               --워크플로우단계 순서
+            , URL               --화면URL
+            , SKIP_YN           --스킵가능여부
+            , SKIP_OPT          --스킵조건
+            , SCREEN_EDIT       --화면편집 가능단계
+            , SCREEN_RTRN       --화면반려시 워크플로우단계
+
+            , FUNC_TYPE_CD      --검토자 지정타입(01:사용자선택, 02:조건지정)           
+            , FUNC              --기능
+            , FUNC_NM           --기능명
+
+            , CGER_TYPE_CD      --담당자 지정타입(01:사용자선택, 02:조건지정)
+            , CGER              --담당자기능
+            , CGER_NM           --담당자기능명
+
+            , EDIT              --결재/검토시 수정 가능 워크플로우 단계
+            , RTRN              --결재반려시 워크플로우단계
+            
+            , RVER_CNT          --검토 기능 총 검토 수
+            , SCREEN_APV_ESS_YN
+            , SCREEN_RTRN_ESS_YN
+            , APV_ESS_YN
+            , RTRN_ESS_YN
+            , MAP_WF_PROC_CD
+            , SCRN_TYPE
+            , ORG_WF_PROC_NM
+            
+            , SCREEN_APV_BTN_YN
+            , SCREEN_RTRN_BTN_YN
+            , SCREEN_SAVE_BTN_YN
+            
+            , APV_BTN_YN
+            , RTRN_BTN_YN
+            , SAVE_BTN_YN
+            
+            , SCREEN_APV_BTN_TEXT
+            , SCREEN_RTRN_BTN_TEXT
+            , SCREEN_SAVE_BTN_TEXT
+            
+            , APV_BTN_TEXT
+            , RTRN_BTN_TEXT
+            , SAVE_BTN_TEXT 
+              
+            , RMK
+
+            , FRID
+            , FRDT
+            , LMID
+            , LMDT
+            , LMPID
+        )
+        VALUES
+        (
+              #{REQ_TMPLAT_ID}
+            , #{WF_PROC_CD}
+            , #{WF_PROC_NM}
+            
+            , #{NEXT_WF_PROC_CD}
+            , #{SEQ}
+            , #{URL}
+            , NVL(#{SKIP_YN}, 'N')
+            , #{SKIP_OPT}
+            , #{SCREEN_EDIT}
+            , #{SCREEN_RTRN}
+            
+            , #{FUNC_TYPE_CD}
+            , #{FUNC}
+            , #{FUNC_NM}
+            
+            , #{CGER_TYPE_CD}
+            , #{CGER}
+            , #{CGER_NM}
+
+            , #{EDIT}
+            , #{RTRN}
+            , #{RVER_CNT}
+            , NVL(#{SCREEN_APV_ESS_YN}, 'N')
+            , NVL(#{SCREEN_RTRN_ESS_YN}, 'Y')
+            , NVL(#{APV_ESS_YN}, 'N')
+            , NVL(#{RTRN_ESS_YN}, 'Y')
+            , #{MAP_WF_PROC_CD}
+            , NVL(#{SCRN_TYPE},
+                CASE
+                    WHEN #{WF_PROC_CD} = 'WF_PROC_1000'
+                    THEN 'D'
+                    WHEN #{WF_PROC_CD} = 'WF_PROC_9999'
+                    THEN NULL
+                    ELSE CASE WHEN #{URL} IS NULL THEN 'P' ELSE 'D' END
+                END
+              )
+            , #{ORG_WF_PROC_NM}
+            
+            , NVL(#{SCREEN_APV_BTN_YN}, 'N')
+            , NVL(#{SCREEN_RTRN_BTN_YN}, 'N')
+            , NVL(#{SCREEN_SAVE_BTN_YN}, 'N')
+            
+            , NVL(#{APV_BTN_YN}, 'N')
+            , NVL(#{RTRN_BTN_YN}, 'N')
+            , NVL(#{SAVE_BTN_YN}, 'N')
+            
+            , NVL(#{SCREEN_APV_BTN_TEXT}, '접수')
+            , NVL(#{SCREEN_RTRN_BTN_TEXT}, '반려')
+            , NVL(#{SCREEN_SAVE_BTN_TEXT}, '저장')
+            
+            , NVL(#{APV_BTN_TEXT}, '승인')
+            , NVL(#{RTRN_BTN_TEXT}, '반려')
+            , NVL(#{SAVE_BTN_TEXT}, '저장')
+            
+            , #{RMK}
+
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMPID}
+        )
+    </insert>
+
+    <delete id="deleteWfReqTmplatProcDt" parameterType="java.util.Map">
+       /* WF0120WMapper >> deleteWfReqTmplatProcDt */
+        DELETE
+        FROM WF_REQ_TMPLAT_PROC_DT
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID}
+    </delete>
+
+    <!-- 요청서 양식 등록 화면 테이블 정보 목록 조회 -->
+    <select id="selectWfRegTblInfoDt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfRegTblInfoDt */
+        SELECT
+              '0'   AS CHK
+            , ''    AS ROWFLAG
+            , REQ_TMPLAT_ID     --요청서양식ID
+            , WF_PROC_CD        --요청서양식버전
+            , ORDR              --순서
+            , TBL_NM            --테이블명
+            , DATASET_NM        --데이터셋
+            , INC_TEMP_SAVE_YN  --임시저장포함여부
+            , WF_PROC_AGREE_YN  --단계일치여부
+            , USE_YN            --사용여부
+            , SELECT_QUERY      --조회 쿼리
+            , INSERT_QUERY      --등록 쿼리
+            , UPDATE_QUERY      --수정 쿼리
+            , DELETE_QUERY      --삭제 쿼리
+            , TBL_DESC          --테이블 설명
+            , RMK               --비고
+            , FRID              --최초등록자ID
+            , FRDT              --최초등록일시
+            , LMID              --최종수정자ID
+            , LMDT              --최종수정일시
+            , LMPID             --최종수정 화면ID
+        FROM
+            WF_REG_TBL_IFNO_DT A
+
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+
+        ORDER BY ORDR
+    </select>
+
+    <select id="selectWfRegTblInfoHt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfRegTblInfoHt */
+        SELECT
+              '0'   AS CHK
+            , ''    AS ROWFLAG
+            , REQ_TMPLAT_ID     --요청서양식ID
+            , REQ_TMPLAT_VER    --요청서양식VER
+            , WF_PROC_CD        --요청서양식버전
+            , ORDR              --순서
+            , TBL_NM            --테이블명
+            , DATASET_NM        --데이터셋
+            , INC_TEMP_SAVE_YN  --임시저장포함여부
+            , WF_PROC_AGREE_YN  --단계일치여부
+            , USE_YN            --사용여부
+            , SELECT_QUERY      --조회 쿼리
+            , INSERT_QUERY      --등록 쿼리
+            , UPDATE_QUERY      --수정 쿼리
+            , DELETE_QUERY      --삭제 쿼리
+            , TBL_DESC          --테이블 설명
+            , RMK               --비고
+            , FRID              --최초등록자ID
+            , FRDT              --최초등록일시
+            , LMID              --최종수정자ID
+            , LMDT              --최종수정일시
+            , LMPID             --최종수정 화면ID
+        FROM
+            WF_REG_TBL_IFNO_HT A
+
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID}
+        AND REQ_TMPLAT_VER  = #{REQ_TMPLAT_VER}
+
+        ORDER BY ORDR
+    </select>
+
+    <!-- SPP WF 요청서 등록 화면 테이블명 등록 -->
+    <insert id="insertWfRegTblIfnoDt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfRegTblIfnoDt */
+        <selectKey resultType="int" keyProperty="SEQ" order="BEFORE">
+            <choose>
+                <when test="SEQ != '' and SEQ != null">
+                    SELECT #{SEQ} FROM DUAL
+                </when>
+                <otherwise>
+                    SELECT NVL(MAX(SEQ), 0) + 1
+                    FROM
+                        WF_REG_TBL_IFNO_DT
+                    WHERE 1 = 1
+                    AND REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID}
+                    AND WF_PROC_CD      = #{WF_PROC_CD}
+                </otherwise>
+            </choose>
+        </selectKey>
+        BEGIN
+
+            MERGE
+            INTO    WF_REG_TBL_IFNO_DT A
+            USING   DUAL
+            ON      (A.REQ_TMPLAT_ID = #{REQ_TMPLAT_ID} AND A.WF_PROC_CD = #{WF_PROC_CD} AND SEQ = #{SEQ})
+            WHEN MATCHED THEN
+                UPDATE SET
+                      ORDR                = #{ORDR}
+                    , TBL_NM              = #{TBL_NM}
+                    , DATASET_NM          = #{DATASET_NM}
+                    , INC_TEMP_SAVE_YN    = NVL(DECODE(#{INC_TEMP_SAVE_YN}, '1', 'Y', '0', 'N', #{INC_TEMP_SAVE_YN}), 'N') --임시저장포함여부
+                    , WF_PROC_AGREE_YN    = NVL(DECODE(#{WF_PROC_AGREE_YN}, '1', 'Y', '0', 'N', #{WF_PROC_AGREE_YN}), 'N') --단계일치여부
+                    , TBL_DESC            = #{TBL_DESC}
+                    , SELECT_QUERY        = #{SELECT_QUERY}
+                    , INSERT_QUERY        = #{INSERT_QUERY}
+                    , UPDATE_QUERY        = #{UPDATE_QUERY}
+                    , DELETE_QUERY        = #{DELETE_QUERY}
+                    , USE_YN              = NVL(DECODE(#{USE_YN}, '1', 'Y', '0', 'N', #{USE_YN}), 'Y')           --사용여부
+
+                    , LMID                = #{LMID}
+                    , LMDT                = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                    , LMPID               = #{LMPID}
+
+            WHEN NOT MATCHED THEN
+                INSERT
+                (
+                      REQ_TMPLAT_ID
+                    , WF_PROC_CD
+                    , SEQ
+                    , TBL_NM
+                    , ORDR              
+                    , DATASET_NM
+                    , INC_TEMP_SAVE_YN  --임시저장포함여부
+                    , WF_PROC_AGREE_YN  --단계일치여부
+                    , TBL_DESC
+                    , SELECT_QUERY 
+                    , INSERT_QUERY 
+                    , UPDATE_QUERY 
+                    , DELETE_QUERY
+                    , USE_YN            --사용여부
+                    , DEL_YN            --삭제여부
+                    , RMK
+        
+                    , FRID
+                    , FRDT
+                    , LMID
+                    , LMDT
+                    , LMPID
+            )
+            VALUES
+            (
+                  #{REQ_TMPLAT_ID}
+                , #{WF_PROC_CD}
+                , #{SEQ}
+                , #{TBL_NM}
+                , #{ORDR}
+                , #{DATASET_NM}
+                , NVL(DECODE(#{INC_TEMP_SAVE_YN}, '1', 'Y', '0', 'N', #{INC_TEMP_SAVE_YN}), 'N') --임시저장포함여부
+                , NVL(DECODE(#{WF_PROC_AGREE_YN}, '1', 'Y', '0', 'N', #{WF_PROC_AGREE_YN}), 'N') --단계일치여부
+                , #{TBL_DESC}
+                , #{SELECT_QUERY} 
+                , #{INSERT_QUERY} 
+                , #{UPDATE_QUERY} 
+                , #{DELETE_QUERY}
+                , NVL(DECODE(#{USE_YN}, '1', 'Y', '0', 'N', #{USE_YN}), 'N')                     --사용여부
+                , NVL(#{DEL_YN}, 'N')           --삭제여부
+                , #{RMK}
+    
+                , #{LMID}
+                , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                , #{LMID}
+                , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                , #{LMPID}
+            )
+            ;
+
+        END;
+    </insert>
+
+    <!-- SPP WF 요청서 등록 화면 테이블명 삭제 -->
+    <delete id="deleteWfRegTblIfnoDt" parameterType="java.util.Map">
+        /* WF0120WMapper >> deleteWfRegTblIfnoDt */
+        DELETE
+        FROM    WF_REG_TBL_IFNO_DT
+        WHERE   REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+    </delete>
+
+    <!-- 요청서 단계/기능별 서비스 등록 정보 목록 조회 -->
+    <select id="selectWfReqProcSvcDt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfReqProcSvcDt */
+        SELECT
+              '0'   AS CHK
+            , ''    AS ROWFLAG
+            , A.REQ_TMPLAT_ID       --요청서양식ID
+            , A.WF_PROC_CD      --요청서양식버전
+            , A.FUNC                --기능(공통코드/* 워크플로우기능[WF_FUNC_CD] - WF_FUNC_00 : 등록, WF_FUNC_01 : 결재, WF_FUNC_02 : 검토, WF_FUNC_03 : 회람, WF_FUNC_04 : 담당자 */)
+            , A.PROC_GUBUN      --구분[SELECT(조회), SAVE(저장 범주-REG:등록, REV:접수, APV:승인(건건마다), RTN:반려), SAVE-END:최종승인 시점]
+            , A.SEQ             --순번
+            , A.PRE_GUBUN           --전처리구분(BF:이전, CU:기본, AF:이후)
+            , A.FR_BK_GUBUN     --전/후구분(FR:전, BK:후) ※PRE_GUBUN이 'CU'인 경우 사용
+            , A.INC_TEMP_SAVE_YN
+            , A.WF_PROC_AGREE_YN
+            , A.USE_YN
+            , A.SVC_NM          --서비스명
+            , A.IN_DATASET      --입력데이터셋명[dsIn1=dsIn1 dsIn2=dsIn2]
+            , A.OUT_DATASET     --출력데이터셋명[dsOut1=dsOut1 dsOut2=dsOut2]
+            , A.RMK             --비고
+
+            , A.FRID                --최초등록자ID
+            , A.FRDT                --최초등록일시
+            , A.LMID                --최종수정자ID
+            , A.LMDT                --최종수정일시
+            , A.LMPID               --최종수정 화면ID
+        FROM
+            WF_REQ_PROC_SVC_DT A
+
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+
+        ORDER BY
+            WF_PROC_CD, FUNC, PROC_GUBUN, DECODE(PRE_GUBUN, 'BF', 1, 'CU', 2, 'AF', 3), SEQ
+    </select>
+
+    <!-- 요청서 단계/기능별 서비스 등록 정보 목록 조회 -->
+    <select id="selectWfReqProcSvcHt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfReqProcSvcHt */
+        SELECT
+              '0'   AS CHK
+            , ''    AS ROWFLAG
+            , A.REQ_TMPLAT_ID       --요청서양식ID
+            , A.REQ_TMPLAT_VER       --요청서양식VER
+            , A.WF_PROC_CD      --요청서양식버전
+            , A.FUNC                --기능(공통코드/* 워크플로우기능[WF_FUNC_CD] - WF_FUNC_00 : 등록, WF_FUNC_01 : 결재, WF_FUNC_02 : 검토, WF_FUNC_03 : 회람, WF_FUNC_04 : 담당자 */)
+            , A.PROC_GUBUN      --구분[SELECT(조회), SAVE(저장 범주-REG:등록, REV:접수, APV:승인(건건마다), RTN:반려), SAVE-END:최종승인 시점]
+            , A.SEQ             --순번
+            , A.PRE_GUBUN           --전처리구분(BF:이전, CU:기본, AF:이후)
+            , A.FR_BK_GUBUN     --전/후구분(FR:전, BK:후) ※PRE_GUBUN이 'CU'인 경우 사용
+            , A.INC_TEMP_SAVE_YN
+            , A.WF_PROC_AGREE_YN
+            , A.USE_YN
+            , A.SVC_NM          --서비스명
+            , A.IN_DATASET      --입력데이터셋명[dsIn1=dsIn1 dsIn2=dsIn2]
+            , A.OUT_DATASET     --출력데이터셋명[dsOut1=dsOut1 dsOut2=dsOut2]
+            , A.RMK             --비고
+
+            , A.FRID                --최초등록자ID
+            , A.FRDT                --최초등록일시
+            , A.LMID                --최종수정자ID
+            , A.LMDT                --최종수정일시
+            , A.LMPID               --최종수정 화면ID
+        FROM
+            WF_REQ_PROC_SVC_HT A
+
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+        AND REQ_TMPLAT_VER = #{REQ_TMPLAT_VER}
+
+        ORDER BY
+            WF_PROC_CD, FUNC, PROC_GUBUN, DECODE(PRE_GUBUN, 'BF', 1, 'CU', 2, 'AF', 3), SEQ
+    </select>
+
+    <!-- SPP WF 요청서 등록 화면 테이블명 등록 -->
+    <insert id="insertWfReqProcSvcDt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfReqProcSvcDt */
+        INSERT INTO WF_REQ_PROC_SVC_DT
+        (
+              REQ_TMPLAT_ID
+            , WF_PROC_CD
+            , FUNC
+            , PROC_GUBUN
+            , SEQ
+            , PRE_GUBUN
+            , FR_BK_GUBUN
+            , SVC_NM
+            , IN_DATASET
+            , OUT_DATASET
+            , INC_TEMP_SAVE_YN
+            , WF_PROC_AGREE_YN
+            , USE_YN
+            , RMK
+            , FRID
+            , FRDT
+            , LMID
+            , LMDT
+            , LMPID
+        )
+        VALUES
+        (
+              #{REQ_TMPLAT_ID}
+            , #{WF_PROC_CD}
+            , #{FUNC}
+            , #{PROC_GUBUN}
+            , #{SEQ}
+            , #{PRE_GUBUN}
+            , #{FR_BK_GUBUN}
+            , #{SVC_NM}     
+            , #{IN_DATASET}
+            , #{OUT_DATASET}
+            , CASE
+                WHEN #{PROC_GUBUN} = 'SAVE'
+                THEN NVL(DECODE(#{INC_TEMP_SAVE_YN}, '1', 'Y', '0', 'N', #{INC_TEMP_SAVE_YN}), 'N')
+                ELSE 'N'
+              END
+            , CASE
+                WHEN #{PROC_GUBUN} = 'SAVE'
+                THEN NVL(DECODE(#{WF_PROC_AGREE_YN}, '1', 'Y', '0', 'N', #{WF_PROC_AGREE_YN}), 'N')
+                ELSE 'N'
+              END
+            , NVL(DECODE(#{USE_YN}, '1', 'Y', '0', 'N', #{USE_YN}), 'Y')
+            , #{RMK}
+
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMPID}
+        )
+    </insert>
+
+    <!-- SPP WF 요청서 등록 화면 테이블명 삭제 -->
+    <delete id="deleteWfReqProcSvcDt" parameterType="java.util.Map">
+        /* WF0120WMapper >> deleteWfReqProcSvcDt */
+        DELETE
+        FROM WF_REQ_PROC_SVC_DT
+        WHERE REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+    </delete>
+
+    <!-- 요청서 양식 담당자/검토자 역할자 목록 조회 -->
+    <select id="selectWfReqTmplatCgerExtdDt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfReqTmplatCgerExtdDt */
+        SELECT
+              '0'   AS CHK
+            , ''    AS ROWFLAG
+            , REQ_TMPLAT_ID
+            , WF_PROC_CD
+            , WF_FUNC_CD
+            , WF_FUNC_NM
+            , EXTD_ID
+            , RMK
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM             /* 최초등록자 */
+            , A.FRDT                /* 최초등록일시 */
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM             /* 최종수정자 */
+            , A.LMDT                /* 최종수정일시 */
+            , A.LMPID               /* 최종수정화면ID */
+            
+        FROM
+              WF_REQ_TMPLAT_CGER_EXTD_DT A
+
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+    </select>
+
+    <select id="selectWfReqTmplatCgerExtdHt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfReqTmplatCgerExtdHt */
+        SELECT
+              '0'   AS CHK
+            , ''    AS ROWFLAG
+            , REQ_TMPLAT_ID
+            , REQ_TMPLAT_VER
+            , WF_PROC_CD
+            , WF_FUNC_CD
+            , WF_FUNC_NM
+            , EXTD_ID
+            , RMK
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM             /* 최초등록자 */
+            , A.FRDT                /* 최초등록일시 */
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM             /* 최종수정자 */
+            , A.LMDT                /* 최종수정일시 */
+            , A.LMPID               /* 최종수정화면ID */
+            
+        FROM
+              WF_REQ_TMPLAT_CGER_EXTD_DT A
+
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+        AND A.REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+        
+        <if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+        AND A.WF_PROC_CD        = #{WF_PROC_CD}
+        </if>
+    </select>
+
+    <!-- SPP WF 담당자/검토자 조회 서비스명 등록 -->
+    <insert id="insertWfReqTmplatCgerExtdDt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfReqTmplatCgerExtdDt */
+        INSERT INTO WF_REQ_TMPLAT_CGER_EXTD_DT
+        (
+              REQ_TMPLAT_ID
+            , WF_PROC_CD
+            , WF_FUNC_CD
+            , WF_FUNC_NM
+            , EXTD_ID
+
+            , RMK
+            , FRID
+            , FRDT
+            , LMID
+            , LMDT
+            , LMPID
+        )
+        VALUES
+        (
+              #{REQ_TMPLAT_ID}
+            , #{WF_PROC_CD}
+            , #{WF_FUNC_CD}
+            , #{WF_FUNC_NM}
+            , #{EXTD_ID}
+                        
+            , #{RMK}
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMPID}
+        )
+    </insert>
+
+    <!-- SPP WF 담당자/검토자 조회 서비스명 삭제 -->
+    <delete id="deleteWfReqTmplatCgerExtdDt" parameterType="java.util.Map">
+        /* WF0120WMapper >> deleteWfReqTmplatCgerExtdDt */
+        DELETE
+        FROM    WF_REQ_TMPLAT_CGER_EXTD_DT
+        WHERE   REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+    </delete>
+
+    <!-- 요청서 양식 담당자 지정 목록 조회 -->
+    <select id="selectWfReqTmplatCgerDt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfReqTmplatCgerDt */
+        SELECT
+              0 AS CHK          /* CHECKBOX 컬럼 */
+            , '' AS ROWFLAG     /* 행상태 표기를 위한 컬럼 */
+            <!-- , B.CGER_TYPE_CD   /* 담당자유형 코드*/ -->
+
+            , A.USER_ID         /* ID(사번) */
+            , A.USER_NM         /* 사용자명 */
+            , A.CO_CD           /* 회사코드 */
+            , A.CO_NM           /* 회사명 */
+            , A.DEPT_CD         /* 부서코드 */
+            , A.DEPT_NM         /* 부서명 */
+            , A.POS_NM          /* 직급명 */
+            , A.ROLE_NM         /* 역할(직책)명 */
+
+            <!-- , B.JAVA_SVC_NM -->
+            , B.REQ_TMPLAT_ID
+            , B.WF_PROC_CD
+            , B.SEQ
+            , DECODE(B.ESS_YN, 'Y', '1', '0') AS ESS_YN
+            <!-- , '01' AS CGER_FUNC_TYPE_CD -->
+            , B.WF_FUNC_CD
+            , B.WF_FUNC_NM
+
+            , B.RMK             /* 비고 */
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = B.FRID) AS FRNM             /* 최초등록자 */
+            , B.FRDT                /* 최초등록일시 */
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = B.LMID) AS LMNM             /* 최종수정자 */
+            , B.LMDT                /* 최종수정일시 */
+            , B.LMPID               /* 최종수정화면ID */
+
+        FROM
+              FOMM_USER_MT A
+            , WF_REQ_TMPLAT_CGER_DT B
+
+        WHERE 1 = 1
+        AND A.USER_ID       = B.USER_ID
+
+        <if test="REQ_TMPLAT_ID != '' and REQ_TMPLAT_ID != null">
+        AND B.REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+        </if>
+
+        <if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+        AND B.WF_PROC_CD = #{WF_PROC_CD}
+        </if>
+
+    </select>
+
+    <select id="selectWfReqTmplatCgerHt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfReqTmplatCgerHt */
+        SELECT
+              0 AS CHK          /* CHECKBOX 컬럼 */
+            , '' AS ROWFLAG     /* 행상태 표기를 위한 컬럼 */
+            <!-- , B.CGER_TYPE_CD   /* 담당자유형 코드*/ -->
+
+            , A.USER_ID         /* ID(사번) */
+            , A.USER_NM         /* 사용자명 */
+            , A.CO_CD           /* 회사코드 */
+            , A.CO_NM           /* 회사명 */
+            , A.DEPT_CD         /* 부서코드 */
+            , A.DEPT_NM         /* 부서명 */
+            , A.POS_NM          /* 직급명 */
+            , A.ROLE_NM         /* 역할(직책)명 */
+
+            <!-- , B.JAVA_SVC_NM -->
+            , B.REQ_TMPLAT_ID
+            , B.REQ_TMPLAT_VER
+            , B.WF_PROC_CD
+            , B.SEQ
+            , DECODE(B.ESS_YN, 'Y', '1', '0') AS ESS_YN
+            <!-- , '01' AS CGER_FUNC_TYPE_CD -->
+            , B.WF_FUNC_CD
+            , B.WF_FUNC_NM
+            , B.RMK             /* 비고 */
+
+        FROM
+              FOMM_USER_MT A
+            , WF_REQ_TMPLAT_CGER_HT B
+
+        WHERE 1 = 1
+        AND A.USER_ID           = B.USER_ID
+        AND B.REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+        AND B.REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+
+        <if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+        AND B.WF_PROC_CD = #{WF_PROC_CD}
+        </if>
+        
+        <if test='REQ_ID != "" and REQ_ID != null and !REQ_ID.startsWith("REQ_")'>
+        AND EXISTS
+                (
+                SELECT 1
+                FROM SR_BASE_INFO C
+                WHERE 1 = 1
+                AND C.REQ_ID        = #{REQ_ID}
+                AND C.REQ_TMPLAT_ID = B.REQ_TMPLAT_ID
+                )
+        </if>
+
+        ORDER BY
+            B.REQ_TMPLAT_ID ASC, B.WF_PROC_CD ASC, B.SEQ ASC
+    </select>
+
+    <!-- SPP WF 요청서양식 담당자 추가 -->
+    <insert id="insertWfReqTmplatCgerDt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfReqTmplatCgerDt */
+        INSERT INTO WF_REQ_TMPLAT_CGER_DT
+        (
+              REQ_TMPLAT_ID
+            , WF_PROC_CD
+            , SEQ
+            , WF_FUNC_CD
+            , WF_FUNC_NM
+            , ESS_YN
+            , USER_ID
+
+            , REV_BTN_YN
+            , SAVE_BTN_YN
+            , RTRN_BTN_YN
+            
+            , REV_BTN_TEXT
+            , SAVE_BTN_TEXT
+            , RTRN_BTN_TEXT 
+
+            , RMK
+            , FRID
+            , FRDT
+            , LMID
+            , LMDT
+            , LMPID
+        )
+        VALUES
+        (
+              #{REQ_TMPLAT_ID}
+            , #{WF_PROC_CD}
+            , #{SEQ}
+            , #{WF_FUNC_CD}
+            , #{WF_FUNC_NM}
+            , DECODE(#{ESS_YN}, '1', 'Y', 'N')
+            , #{USER_ID}
+
+            , NVL(#{REV_BTN_YN}, 'N')
+            , NVL(#{SAVE_BTN_YN}, 'N')
+            , NVL(#{RTRN_BTN_YN}, 'N')
+
+            , NVL(#{REV_BTN_TEXT}, '접수')
+            , NVL(#{SAVE_BTN_TEXT}, '저장')
+            , NVL(#{RTRN_BTN_TEXT}, '승인')
+
+            , #{RMK}
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMPID}
+        )
+    </insert>
+
+    <!-- SPP WF 요청서양식 담당자 삭제 -->
+    <delete id="deleteWfReqTmplatCgerDt" parameterType="java.util.Map">
+        /* WF0120WMapper >> deleteWfReqTmplatCgerDt */
+        DELETE
+        FROM WF_REQ_TMPLAT_CGER_DT
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+    </delete>
+
+    <!-- 요청서 양식 담당자/검토자 서비스명 목록 조회 -->
+    <select id="selectWfReqTmplatCgerSvcDt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfReqTmplatCgerSvcDt */
+        SELECT
+              '0'   AS CHK
+            , ''    AS ROWFLAG
+            , REQ_TMPLAT_ID
+            , WF_PROC_CD
+            , WF_FUNC_CD
+            , WF_FUNC_NM
+            , JAVA_SVC_NM
+            , RMK
+            <!-- , '02' AS CGER_FUNC_TYPE_CD -->
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM             /* 최초등록자 */
+            , A.FRDT                /* 최초등록일시 */
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM             /* 최종수정자 */
+            , A.LMDT                /* 최종수정일시 */
+            , A.LMPID               /* 최종수정화면ID */
+            
+        FROM
+              WF_REQ_TMPLAT_CGER_SVC_DT A
+
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+        
+        <if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+        AND WF_PROC_CD    = #{WF_PROC_CD} 
+        </if>
+        
+        ORDER BY
+            A.WF_PROC_CD
+    </select>
+
+    <select id="selectWfReqTmplatCgerSvcHt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfReqTmplatCgerSvcHt */
+        SELECT
+              '0'   AS CHK
+            , ''    AS ROWFLAG
+            , REQ_TMPLAT_ID
+            , REQ_TMPLAT_VER
+            , WF_PROC_CD
+            , WF_FUNC_CD
+            , WF_FUNC_NM
+            , JAVA_SVC_NM
+            , RMK
+            <!-- , '02' AS CGER_FUNC_TYPE_CD -->
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.FRID) AS FRNM             /* 최초등록자 */
+            , A.FRDT                /* 최초등록일시 */
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = A.LMID) AS LMNM             /* 최종수정자 */
+            , A.LMDT                /* 최종수정일시 */
+            , A.LMPID               /* 최종수정화면ID */
+            
+        FROM
+              WF_REQ_TMPLAT_CGER_SVC_HT A
+
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID}
+        AND REQ_TMPLAT_VER  = #{REQ_TMPLAT_VER}
+        
+        <if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+        AND WF_PROC_CD    = #{WF_PROC_CD} 
+        </if>
+        
+        ORDER BY
+            A.WF_PROC_CD
+    </select>
+
+    <!-- SPP WF 담당자/검토자 조회 서비스명 등록 -->
+    <insert id="insertWfReqTmplatCgerSvcDt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfReqTmplatCgerSvcDt */
+        INSERT INTO WF_REQ_TMPLAT_CGER_SVC_DT
+        (
+              REQ_TMPLAT_ID
+            , WF_PROC_CD
+            , WF_FUNC_CD
+            , WF_FUNC_NM
+            , JAVA_SVC_NM
+
+            , RMK
+            , FRID
+            , FRDT
+            , LMID
+            , LMDT
+            , LMPID
+        )
+        VALUES
+        (
+              #{REQ_TMPLAT_ID}
+            , #{WF_PROC_CD}
+            , #{WF_FUNC_CD}
+            , #{WF_FUNC_NM}
+            , #{JAVA_SVC_NM}
+                        
+            , #{RMK}
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMPID}
+        )
+    </insert>
+
+    <!-- SPP WF 담당자/검토자 조회 서비스명 삭제 -->
+    <delete id="deleteWfReqTmplatCgerSvcDt" parameterType="java.util.Map">
+        /* WF0120WMapper >> deleteWfReqTmplatCgerSvcDt */
+        DELETE
+        FROM    WF_REQ_TMPLAT_CGER_SVC_DT
+        WHERE   REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+    </delete>
+
+    <!-- WF 결재 단계 정의 목록 조회  -->
+    <select id="selectWfReqAppvDt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfReqAppvDt */
+        SELECT
+              '0'               AS CHK
+            , ''                AS ROWFLAG
+            , REQ_TMPLAT_ID                 --요청서양식ID
+            , WF_PROC_CD                    --요청서진행단계
+            , APPR_LVL_SEQ                  --결재단계순번
+            , MAP_WF_PROC_CD                -- 매핑진행단계코드
+            
+            , APPR_NM                       --결재명칭
+            , APPR_DIRECT_YN                --결재선직접지정가능여부
+            , APPR_PROC_DIV_CD              --결재처리구분코드
+            , APPR_PROG_DIV_CD              --결재진행구분코드
+            , SVC_NM                        --서비스명
+            , RMK                           --비고
+
+            , FRID                          --최초등록자ID
+            , FRDT                          --최초등록일시
+            , LMID                          --최종수정자ID
+            , LMDT                          --최종수정일시
+            , LMPID                         --최종수정 화면ID
+
+        FROM WF_REQ_APPV_DT
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+
+        <if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+        AND WF_PROC_CD  = #{WF_PROC_CD}
+        </if>
+
+        <if test="APPR_LVL_SEQ != '' and APPR_LVL_SEQ != null">
+        AND APPR_LVL_SEQ    = #{APPR_LVL_SEQ}
+        </if>
+
+        ORDER BY
+            WF_PROC_CD, APPR_LVL_SEQ
+    </select>
+
+    <select id="selectWfReqAppvHt" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> selectWfReqAppvHt */
+        SELECT
+              '0'               AS CHK
+            , ''                AS ROWFLAG
+            , REQ_TMPLAT_ID                 --요청서양식ID
+            , REQ_TMPLAT_VER                --요청서양식VER
+            , WF_PROC_CD                    --요청서진행단계
+            , APPR_LVL_SEQ                  --결재단계순번
+            , APPR_NM                       --결재명칭
+            , APPR_DIRECT_YN                --결재선직접지정가능여부
+            , APPR_PROC_DIV_CD              --결재처리구분코드
+            , APPR_PROG_DIV_CD              --결재진행구분코드
+            , SVC_NM                        --서비스명
+            , RMK                           --비고
+
+            , FRID                          --최초등록자ID
+            , FRDT                          --최초등록일시
+            , LMID                          --최종수정자ID
+            , LMDT                          --최종수정일시
+            , LMPID                         --최종수정 화면ID
+
+        FROM WF_REQ_APPV_DT
+        WHERE 1 = 1
+        AND REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID}
+        AND REQ_TMPLAT_VER  = #{REQ_TMPLAT_VER}
+
+        <if test="WF_PROC_CD != '' and WF_PROC_CD != null">
+        AND WF_PROC_CD  = #{WF_PROC_CD}
+        </if>
+
+        <if test="APPR_LVL_SEQ != '' and APPR_LVL_SEQ != null">
+        AND APPR_LVL_SEQ    = #{APPR_LVL_SEQ}
+        </if>
+
+        ORDER BY
+            WF_PROC_CD, APPR_LVL_SEQ
+    </select>
+
+    <!-- SPP WF 결재 단계 정의 등록 -->
+    <insert id="insertWfReqAppvDt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfReqAppvDt */
+        INSERT INTO WF_REQ_APPV_DT
+        (
+              REQ_TMPLAT_ID      --요청서양식ID
+            , WF_PROC_CD         --요청서진행단계
+            , APPR_LVL_SEQ       --결재단계순번
+            , MAP_WF_PROC_CD    -- 매핑진행단계코드
+            , APPR_NM            --결재명칭
+            , APPR_DIRECT_YN     --결재선직접지정가능여부
+            , APPR_PROC_DIV_CD   --결재처리구분코드
+            , APPR_PROG_DIV_CD   --결재진행구분코드
+            , SVC_NM             --서비스명
+            , RMK                --비고
+
+            , FRID               --최초등록자ID
+            , FRDT               --최초등록일시
+            , LMID               --최종수정자ID
+            , LMDT               --최종수정일시
+            , LMPID              --최종수정 화면ID
+        )
+        VALUES
+        (
+              #{REQ_TMPLAT_ID}
+            , #{WF_PROC_CD}
+            , #{APPR_LVL_SEQ}
+            , #{MAP_WF_PROC_CD} -- 매핑진행단계코드
+            , #{APPR_NM}
+            , CASE WHEN #{APPR_PROC_DIV_CD} = '01' THEN 'Y' ELSE NVL(#{APPR_DIRECT_YN}, 'N') END
+            , #{APPR_PROC_DIV_CD}
+            , #{APPR_PROG_DIV_CD}
+            , #{SVC_NM}
+            , #{RMK}
+            
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMPID}
+        )
+    </insert>
+
+    <!-- SPP WF 결재 단계 정의 삭제 -->
+    <delete id="deleteWfReqAppvDt" parameterType="java.util.Map">
+        /* WF0120WMapper >> deleteWfReqAppvDt */
+        DELETE
+        FROM WF_REQ_APPV_DT
+        WHERE REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+    </delete>
+
+    <!-- WF_REQ_TMPLAT_HT [요청서양식-이력] 생성 -->
+    <insert id="insertWfReqTmplatHt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfReqTmplatHt */
+        BEGIN
+
+            DELETE
+            FROM WF_REQ_TMPLAT_HT
+            WHERE 1 = 1
+            AND REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+            AND REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+            ;
+
+            INSERT INTO WF_REQ_TMPLAT_HT
+            (
+                  REQ_TMPLAT_ID
+                , REQ_TMPLAT_NM
+                , REQ_TMPLAT_VER
+                , SVC_CD
+                , SVC_DTL_CD
+                , WF_ID
+                , MAP_PROC_CD
+                , REQ_URL
+                , REQ_INFO_TYPE_CD
+                , REQ_REF_YN
+                , VER_MNG_YN
+                , REQ_URL_NO
+                , END_URL
+                , SATI_INVEST_GUBUN
+                , REQ_DESC
+                , ATTACH_USE_YN
+                , SAVE_BTN_YN      --임시저장버튼사용여부
+                , CANCEL_BTN_YN
+                , DEL_BTN_YN
+                , USE_YN
+                , RMK
+
+                , FRID
+                , FRDT
+                , LMID
+                , LMDT
+                , LMPID
+            )
+            SELECT
+                  REQ_TMPLAT_ID
+                , REQ_TMPLAT_NM
+                , #{REQ_TMPLAT_VER}
+                , SVC_CD
+                , SVC_DTL_CD
+                , WF_ID
+                , MAP_PROC_CD
+                , REQ_URL
+                , REQ_INFO_TYPE_CD
+                , REQ_REF_YN
+                , VER_MNG_YN
+                , REQ_URL_NO
+                , END_URL
+                , SATI_INVEST_GUBUN
+                , REQ_DESC
+                , ATTACH_USE_YN
+                , SAVE_BTN_YN      --임시저장버튼사용여부
+                , CANCEL_BTN_YN    --회수버튼사용여부
+                , DEL_BTN_YN       --삭제버튼사용여부
+                , USE_YN
+                , RMK
+
+                , #{LMID}
+                , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                , #{LMID}
+                , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                , #{LMPID}
+            FROM
+                  WF_REQ_TMPLAT_MT A
+    
+            WHERE 1=1
+            AND REQ_TMPLAT_ID    = #{REQ_TMPLAT_ID}
+            ;
+            
+            UPDATE WF_REQ_TMPLAT_HT SET
+                CUR_VER_YN  = 'N'
+            WHERE 1 = 1
+            AND REQ_TMPLAT_ID    = #{REQ_TMPLAT_ID}
+            ;
+
+            <!-- 마지막 버전 현재 버전으로 업데이트 -->
+            UPDATE WF_REQ_TMPLAT_HT SET
+                CUR_VER_YN  = 'Y'
+            WHERE 1 = 1
+            AND REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID}
+            AND REQ_TMPLAT_VER  = (SELECT MAX(REQ_TMPLAT_VER) FROM WF_REQ_TMPLAT_HT WHERE REQ_TMPLAT_ID   = #{REQ_TMPLAT_ID})
+            ;
+
+        END;
+    </insert>
+
+    <!-- WF_REQ_TMPLAT_PROC_HT [요청서양식 워크플로우 단계 상세-이력] 생성 -->
+    <insert id="insertWfReqTmplatProcHt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfReqTmplatProcHt */
+        BEGIN
+
+            DELETE
+            FROM WF_REQ_TMPLAT_PROC_HT
+            WHERE 1 = 1
+            AND REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+            AND REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+            ;
+
+            INSERT INTO WF_REQ_TMPLAT_PROC_HT
+            (
+                  REQ_TMPLAT_ID
+                , REQ_TMPLAT_VER
+                , WF_PROC_CD
+                , WF_PROC_NM
+                , NEXT_WF_PROC_CD
+                , SEQ
+                , URL
+                , SKIP_YN
+                , SKIP_OPT
+                , SCREEN_RTRN
+                , FUNC_TYPE_CD
+                , FUNC
+                , FUNC_NM
+                , CGER_TYPE_CD
+                , CGER
+                , CGER_NM
+                , RTRN
+                , RVER_CNT
+                , SCREEN_EDIT
+                , EDIT
+                , SCREEN_APV_ESS_YN
+                , SCREEN_RTRN_ESS_YN
+                , APV_ESS_YN
+                , RTRN_ESS_YN
+                , MAP_WF_PROC_CD
+                , SCRN_TYPE
+                , ORG_WF_PROC_NM
+                , SCREEN_APV_BTN_YN
+                , SCREEN_RTRN_BTN_YN
+                , SCREEN_SAVE_BTN_YN
+                , APV_BTN_YN
+                , RTRN_BTN_YN
+                , SAVE_BTN_YN
+                , SCREEN_APV_BTN_TEXT
+                , SCREEN_RTRN_BTN_TEXT
+                , SCREEN_SAVE_BTN_TEXT
+                , APV_BTN_TEXT
+                , RTRN_BTN_TEXT
+                , SAVE_BTN_TEXT
+                , RMK
+                , FRID
+                , FRDT
+                , LMID
+                , LMDT
+                , LMPID
+            )
+            SELECT
+                  REQ_TMPLAT_ID
+                , #{REQ_TMPLAT_VER}
+                , WF_PROC_CD
+                , WF_PROC_NM
+                , NEXT_WF_PROC_CD
+                , SEQ
+                , URL
+                , SKIP_YN
+                , SKIP_OPT
+                , SCREEN_RTRN
+                , FUNC_TYPE_CD
+                , FUNC
+                , FUNC_NM
+                , CGER_TYPE_CD
+                , CGER
+                , CGER_NM
+                , RTRN
+                , RVER_CNT
+                , SCREEN_EDIT
+                , EDIT
+                , SCREEN_APV_ESS_YN
+                , SCREEN_RTRN_ESS_YN
+                , APV_ESS_YN
+                , RTRN_ESS_YN
+                , MAP_WF_PROC_CD
+                , SCRN_TYPE
+                , ORG_WF_PROC_NM
+                , SCREEN_APV_BTN_YN
+                , SCREEN_RTRN_BTN_YN
+                , SCREEN_SAVE_BTN_YN
+                , APV_BTN_YN
+                , RTRN_BTN_YN
+                , SAVE_BTN_YN
+                , SCREEN_APV_BTN_TEXT
+                , SCREEN_RTRN_BTN_TEXT
+                , SCREEN_SAVE_BTN_TEXT
+                , APV_BTN_TEXT
+                , RTRN_BTN_TEXT
+                , SAVE_BTN_TEXT
+                , RMK
+
+                , #{LMID}
+                , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                , #{LMID}
+                , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                , #{LMPID}
+            FROM
+                  WF_REQ_TMPLAT_PROC_DT A
+    
+            WHERE 1 = 1
+            AND REQ_TMPLAT_ID    = #{REQ_TMPLAT_ID}
+            ;
+
+        END;
+    </insert>
+
+    <!-- SPP WF 요청서양식 담당자 이력 생성 -->
+    <insert id="insertWfReqTmplatCgerHt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfReqTmplatCgerHt */
+        BEGIN
+
+            DELETE
+            FROM WF_REQ_TMPLAT_CGER_HT
+            WHERE 1 = 1
+            AND REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+            AND REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+            ;
+
+            INSERT INTO WF_REQ_TMPLAT_CGER_HT
+            (
+                  REQ_TMPLAT_ID
+                , REQ_TMPLAT_VER
+                , WF_PROC_CD
+                , SEQ
+                , WF_FUNC_CD
+                , WF_FUNC_NM
+                , ESS_YN
+                , USER_ID
+                , RMK
+                
+                , FRID
+                , FRDT
+                , LMPID
+            )
+            SELECT    REQ_TMPLAT_ID
+                    , #{REQ_TMPLAT_VER}
+                    , WF_PROC_CD
+                    , SEQ
+                    , WF_FUNC_CD
+                    , WF_FUNC_NM
+                    , ESS_YN
+                    , USER_ID
+                    , RMK
+                    
+                    , #{LMID}
+                    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                    , #{LMPID}
+            FROM
+                  WF_REQ_TMPLAT_CGER_DT A
+    
+            WHERE 1=1
+            AND REQ_TMPLAT_ID    = #{REQ_TMPLAT_ID}
+    
+            ORDER BY
+                SEQ ASC
+            ;
+
+        END;
+    </insert>
+
+    <!-- SPP WF 담당자/검토자 조회 서비스명 이력 등록 -->
+    <insert id="insertWfReqTmplatCgerSvcHt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfReqTmplatCgerSvcHt */
+        BEGIN
+
+            DELETE
+            FROM WF_REQ_TMPLAT_CGER_SVC_HT
+            WHERE 1 = 1
+            AND REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+            AND REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+            ;
+
+            INSERT INTO WF_REQ_TMPLAT_CGER_SVC_HT
+            (
+                  REQ_TMPLAT_ID
+                , REQ_TMPLAT_VER
+                , WF_PROC_CD
+                , WF_FUNC_CD
+                , WF_FUNC_NM
+                , JAVA_SVC_NM
+                , RMK
+                
+                , FRID
+                , FRDT
+                , LMPID
+            )
+            SELECT    REQ_TMPLAT_ID
+                    , #{REQ_TMPLAT_VER}
+                    , WF_PROC_CD
+                    , WF_FUNC_CD
+                    , WF_FUNC_NM
+                    , JAVA_SVC_NM
+                    , RMK
+
+                    , #{LMID}
+                    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                    , #{LMPID}
+            FROM
+                  WF_REQ_TMPLAT_CGER_SVC_DT A
+    
+            WHERE 1=1
+            AND REQ_TMPLAT_ID    = #{REQ_TMPLAT_ID}
+            ;
+
+        END;
+    </insert>
+
+    <!-- SPP WF 요청서 등록 화면 테이블명 이력 등록 -->
+    <insert id="insertWfRegTblIfnoHt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfRegTblIfnoHt */
+        BEGIN
+
+            DELETE
+            FROM WF_REG_TBL_IFNO_HT
+            WHERE 1 = 1
+            AND REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+            AND REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+            ;
+
+            INSERT INTO WF_REG_TBL_IFNO_HT
+            (
+                  REQ_TMPLAT_ID
+                , REQ_TMPLAT_VER
+                , WF_PROC_CD
+                , SEQ
+                , TBL_NM
+                , DATASET_NM
+                , ORDR
+                , INC_TEMP_SAVE_YN  --임시저장포함여부
+                , WF_PROC_AGREE_YN  --단계일치여부
+                , USE_YN            --사용여부
+                , TBL_DESC
+                , SELECT_QUERY 
+                , INSERT_QUERY 
+                , UPDATE_QUERY 
+                , DELETE_QUERY
+                , RMK 
+                
+                , FRID
+                , FRDT
+                , LMPID
+            )
+            SELECT    REQ_TMPLAT_ID
+                    , #{REQ_TMPLAT_VER}
+                    , WF_PROC_CD
+                    , SEQ
+                    , TBL_NM
+                    , DATASET_NM
+                    , ORDR
+                    , INC_TEMP_SAVE_YN  --임시저장포함여부
+                    , WF_PROC_AGREE_YN  --단계일치여부
+                    , USE_YN            --사용여부
+                    , TBL_DESC
+                    , SELECT_QUERY 
+                    , INSERT_QUERY 
+                    , UPDATE_QUERY 
+                    , DELETE_QUERY
+                    , RMK
+                    
+                    , #{LMID}
+                    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                    , #{LMPID}
+            FROM
+                  WF_REG_TBL_IFNO_DT A
+    
+            WHERE 1=1
+            AND A.REQ_TMPLAT_ID  = #{REQ_TMPLAT_ID}
+            AND A.DEL_YN         = 'N'
+            ;
+
+        END;
+    </insert>
+
+    <!-- SPP WF 요청서 등록 화면 테이블명 이력 등록 -->
+    <insert id="insertWfReqProcSvcHt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfReqProcSvcHt */
+        BEGIN
+
+            DELETE
+            FROM WF_REQ_PROC_SVC_HT
+            WHERE 1 = 1
+            AND REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+            AND REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+            ;
+
+            INSERT INTO WF_REQ_PROC_SVC_HT
+            (
+                  REQ_TMPLAT_ID
+                , REQ_TMPLAT_VER
+                , WF_PROC_CD
+                , FUNC
+                , PROC_GUBUN
+                , SEQ
+                , PRE_GUBUN
+                , FR_BK_GUBUN
+                , SVC_NM
+                , INC_TEMP_SAVE_YN
+                , WF_PROC_AGREE_YN
+                , USE_YN
+                , IN_DATASET
+                , OUT_DATASET
+                , RMK
+                
+                , FRID
+                , FRDT
+                , LMPID
+            )
+            SELECT    REQ_TMPLAT_ID
+                    , #{REQ_TMPLAT_VER}
+                    , WF_PROC_CD
+                    , FUNC
+                    , PROC_GUBUN
+                    , SEQ
+                    , PRE_GUBUN
+                    , FR_BK_GUBUN
+                    , SVC_NM
+                    , INC_TEMP_SAVE_YN
+                    , WF_PROC_AGREE_YN
+                    , USE_YN
+                    , IN_DATASET
+                    , OUT_DATASET
+                    , RMK
+                    
+                    , #{LMID}
+                    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                    , #{LMPID}
+            FROM
+                  WF_REQ_PROC_SVC_DT A
+    
+            WHERE 1=1
+            AND REQ_TMPLAT_ID    = #{REQ_TMPLAT_ID}
+            ;
+
+        END;
+    </insert>
+
+    <!-- SPP WF 결재 단계 정의 이력 등록 -->
+    <insert id="insertWfReqAppvHt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfReqAppvHt */
+        BEGIN
+
+            DELETE
+            FROM WF_REQ_APPV_HT
+            WHERE 1 = 1
+            AND REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+            AND REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+            ;
+
+            INSERT INTO WF_REQ_APPV_HT
+            (
+                  REQ_TMPLAT_ID      --요청서양식ID
+                , REQ_TMPLAT_VER     --요청서양식버전
+                , WF_PROC_CD         --요청서진행단계
+                , APPR_LVL_SEQ       --결재단계순번
+                , MAP_WF_PROC_CD     --매핑진행단계코드
+                , APPR_NM            --결재명칭
+                , APPR_DIRECT_YN     --결재선직접지정가능여부
+                , APPR_PROC_DIV_CD   --결재진행구분코드
+                , APPR_PROG_DIV_CD   --결재진행구분코드
+                , SVC_NM             --서비스명
+                , RMK                --비고
+                
+                , FRID               --최초등록자ID
+                , FRDT               --최초등록일시
+                , LMID               --최종수정자ID
+                , LMDT               --최종수정일시
+                , LMPID              --최종수정 화면ID
+            )
+            SELECT    REQ_TMPLAT_ID
+                    , #{REQ_TMPLAT_VER}
+                    , WF_PROC_CD
+                    , APPR_LVL_SEQ
+                    , MAP_WF_PROC_CD
+                    , APPR_NM
+                    , NVL(APPR_DIRECT_YN, 'N') --결재선직접지정가능여부
+                    , APPR_PROC_DIV_CD
+                    , APPR_PROG_DIV_CD
+                    , SVC_NM
+                    , RMK
+                    
+                    , #{LMID}
+                    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                    , #{LMID}
+                    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                    , #{LMPID}
+            FROM
+                  WF_REQ_APPV_DT A
+    
+            WHERE 1=1
+            AND REQ_TMPLAT_ID    = #{REQ_TMPLAT_ID}
+            ;
+
+        END;
+    </insert>
+
+    <!-- SPP WF 담당자/검토자 조회 서비스명 이력 등록 -->
+    <insert id="insertWfReqTmplatCgerExtdHt" parameterType="java.util.Map">
+        /* WF0120WMapper >> insertWfReqTmplatCgerExtdHt */
+        BEGIN
+
+            DELETE
+            FROM WF_REQ_TMPLAT_CGER_EXTD_HT
+            WHERE 1 = 1
+            AND REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+            AND REQ_TMPLAT_VER    = #{REQ_TMPLAT_VER}
+            ;
+
+            INSERT INTO WF_REQ_TMPLAT_CGER_EXTD_HT
+            (
+                  REQ_TMPLAT_ID
+                , REQ_TMPLAT_VER
+                , WF_PROC_CD
+                , WF_FUNC_CD
+                , WF_FUNC_NM
+                , EXTD_ID
+                , RMK
+                
+                , FRID
+                , FRDT
+                , LMPID
+            )
+            SELECT    REQ_TMPLAT_ID
+                    , #{REQ_TMPLAT_VER}
+                    , WF_PROC_CD
+                    , WF_FUNC_CD
+                    , WF_FUNC_NM
+                    , EXTD_ID
+                    , RMK
+                    
+                    , #{LMID}
+                    , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                    , #{LMPID}
+            FROM
+                  WF_REQ_TMPLAT_CGER_EXTD_DT A
+    
+            WHERE 1=1
+            AND REQ_TMPLAT_ID     = #{REQ_TMPLAT_ID}
+            ;
+
+        END;
+    </insert>
+
+    <!-- 요청서 양식 도움말 번호 조회 -->
+    <select id="select08" parameterType="java.util.Map" resultType="java.util.Map">
+        /* WF0120WMapper >> select08 */
+        SELECT
+              BOARD_NO  --게시번호
+            , BOARD_TYPE_CD --게시물구분코드
+            , DAT_TYPE_CD   --자료구분코드
+            , EXT_COL1  -- 
+            , TITLE --제목
+            , CONTS --내용
+            , REGI_DATE --등록일
+            , BEGIN_DT  --게시시작일시
+            , END_DT    --게시종료일시
+            , POP_YN    --팝업공지여부
+            , DEL_YN    --삭제여부
+            , READ_CNT  --조회수
+            , RMK   --비고
+            , FRID  --최초등록자
+            , FRDT  --최초등록일시
+            , LMID  --최종수정자
+            , LMDT  --최종수정일시
+            , LMPID --최종수정화면ID
+            , REQ_TMPLAT_ID --요청서 템플릿 ID
+        FROM FOMM_BOARD_MT
+        WHERE 1 = 1
+        <if test="REQ_TMPLAT_ID != '' and REQ_TMPLAT_ID != null">
+                AND REQ_TMPLAT_ID = #{REQ_TMPLAT_ID}
+        </if>
+
+    </select>
+
+    <select id="selectWfReqTmplatAll" resultType="java.util.Map">
+	    SELECT
+		      REQ_TMPLAT_ID
+		    , REQ_TMPLAT_VER
+		    , SVC_CD
+		    , SVC_DTL_CD
+		    , MAP_PROC_CD
+		    , REQ_URL
+		    , REQ_INFO_TYPE_CD
+		    , REQ_REF_YN
+		    , END_URL
+		    , ATTACH_USE_YN
+		    , USE_YN
+		    , CANCEL_BTN_YN
+		    , DEL_BTN_YN
+		    , SAVE_BTN_YN
+	    
+		FROM
+		    (
+		    SELECT
+		          A.*
+		        , ROW_NUMBER() OVER(PARTITION BY REQ_TMPLAT_ID ORDER BY REQ_TMPLAT_VER DESC) AS NUM          
+		
+		    FROM
+		        WF_REQ_TMPLAT_HT A
+		    )
+		WHERE NUM = 1
+    </select>
+
+</mapper>

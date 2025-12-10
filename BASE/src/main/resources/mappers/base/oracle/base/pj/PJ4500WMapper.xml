@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ4500WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.BTPR_ID
+			, A.BTPR_NO
+			, A.BTPR_NAME
+			, A.BTPR_TYPE_CD
+			, A.PJT_ID
+			, A.BIZ_ID
+			, D.BIZ_NAME
+			, A.PLAN_SDATE
+			, A.PLAN_EDATE
+			, A.ACTL_SDATE
+			, A.ACTL_EDATE
+			, A.CHG_USER_NM
+			, A.DEV_USER_ID
+			, A.DEV_USER_NM
+			, A.DEV_USER_DEPT
+			, A.PL_USER_ID
+			, A.PL_USER_NM
+			, A.PL_USER_DEPT
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, A.BTPR_DESC
+			, A.REMARK
+			, B.PJT_NAME AS PJT_NAME
+			, C.PJT_ID      AS P_PJT_ID 
+			, C.PJT_NAME AS P_PJT_NAME
+			, E.FUNC_NO_INFO
+			, E.FUNC_NAME_INFO
+			, F.BATCHJOB_NO_INFO
+			, F.BATCHJOB_NAME_INFO
+
+		FROM
+			  PJ_BATCHPRG A   
+			, PJ_PROJECT B
+			, PJ_PROJECT C
+			, PJ_BIZ D
+			, (
+			  SELECT
+				  EE.PJT_ID
+				, EE.BTPR_ID
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.FUNC_NO) ORDER BY FF.FUNC_NO, FF.FUNC_ID).EXTRACT('//text()').GETCLOBVAL(),2) AS FUNC_NO_INFO
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.FUNC_NAME) ORDER BY FF.FUNC_NO, FF.FUNC_ID).EXTRACT('//text()').GETCLOBVAL(),2) AS FUNC_NAME_INFO
+			  FROM
+			  	  PJ_BTPR_FUNC_MAP EE
+			  	, PJ_FUNCTION FF
+			  WHERE 1 = 1
+			  AND EE.FUNC_ID	= FF.FUNC_ID
+			  AND EE.PJT_ID     = FF.PJT_ID
+			  AND EE.PJT_ID     = #{SUB_PJT_ID} 
+
+			  GROUP BY
+			  	  EE.PJT_ID
+			  	, EE.BTPR_ID
+			  ) E
+			, (
+			  SELECT
+				  EE.PJT_ID
+				, EE.BTPR_ID
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.BTJB_NO) ORDER BY FF.BTJB_NO, FF.BTJB_ID).EXTRACT('//text()').GETCLOBVAL(),2) AS BATCHJOB_NO_INFO
+				, SUBSTR(XMLAGG(XMLELEMENT(X, '¶', FF.BTJB_NAME) ORDER BY FF.BTJB_NO, FF.BTJB_ID).EXTRACT('//text()').GETCLOBVAL(),2) AS BATCHJOB_NAME_INFO
+			  FROM
+			  	  PJ_BTPR_BTJB_MAP EE
+				, PJ_BATCHJOB FF
+			  WHERE 1 = 1
+			  AND EE.BTJB_ID	= FF.BTJB_ID
+               AND EE.PJT_ID	= FF.PJT_ID
+               AND EE.PJT_ID	= #{SUB_PJT_ID}
+
+			  GROUP
+			  	  BY EE.PJT_ID
+				, EE.BTPR_ID
+			  ) F
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND B.PARENT_ID = C.PJT_ID
+		AND A.PJT_ID	= D.PJT_ID
+		AND A.BIZ_ID	= D.BIZ_ID
+		AND A.PJT_ID	= E.PJT_ID(+)
+		AND A.BTPR_ID	= E.BTPR_ID(+)
+		AND A.PJT_ID	= F.PJT_ID(+)
+		AND A.BTPR_ID	= F.BTPR_ID(+)
+		AND A.PJT_ID	= #{SUB_PJT_ID} 
+
+		<if test="BIZ_ID != '' and BIZ_ID != null">
+		AND A.BIZ_ID	= #{BIZ_ID}
+		</if>
+
+		<if test="BTPR_NO != '' and BTPR_NO != null">
+		AND UPPER(A.BTPR_NO) LIKE '%' || UPPER(#{BTPR_NO}) || '%'
+		</if>
+
+		<if test="BTPR_NM != '' and BTPR_NM != null">
+		AND UPPER(A.BTPR_NAME) LIKE '%' || UPPER(#{BTPR_NM}) || '%'
+		</if>
+		
+		<if test="BTPR_TYPE_CD != '' and BTPR_TYPE_CD != null">
+		AND A.BTPR_TYPE_CD	= #{BTPR_TYPE_CD}
+		</if>
+
+		<if test="CHG_USER_NM != '' and CHG_USER_NM != null">
+		AND UPPER(A.CHG_USER_NM) LIKE '%' || UPPER(#{CHG_USER_NM}) || '%'
+		</if>
+
+		<if test="DEV_USER_NM != '' and DEV_USER_NM != null">
+		AND UPPER(A.DEV_USER_NM) LIKE '%' || UPPER(#{DEV_USER_NM}) || '%'
+		</if>
+
+		<if test="PL_USER_NM != '' and PL_USER_NM != null">
+		AND UPPER(A.PL_USER_NM) LIKE '%' || UPPER(#{PL_USER_NM}) || '%'
+		</if>
+
+		<if test="RSP_BIZ != '' and RSP_BIZ != null">
+		AND UPPER(A.RSP_BIZ) LIKE '%' || UPPER(#{RSP_BIZ}) || '%'
+		</if>
+
+		<if test="FUNC_NO != '' and FUNC_NO != null">
+		AND A.BTPR_ID IN
+						(
+						SELECT
+							AA.BTPR_ID
+						FROM
+							  PJ_BTPR_FUNC_MAP AA
+							, PJ_FUNCTION BB
+						WHERE 1 = 1
+						AND AA.PJT_ID	= BB.PJT_ID
+						AND AA.FUNC_ID	= BB.FUNC_ID
+						AND AA.PJT_ID	= #{SUB_PJT_ID}
+						AND UPPER(BB.FUNC_NO) LIKE UPPER('%' || #{FUNC_NO} || '%')
+						)
+		</if>
+
+		<if test="BATCHJOB_NO != '' and BATCHJOB_NO != null">
+		AND A.BTPR_ID IN
+						(
+						SELECT
+							AA.BTPR_ID
+						FROM
+							  PJ_BTPR_BTJB_MAP AA
+							, PJ_BATCHJOB BB
+						WHERE 1 = 1
+						AND AA.PJT_ID	= BB.PJT_ID
+						AND AA.BTJB_ID	= BB.BTJB_ID
+						AND AA.PJT_ID	= #{SUB_PJT_ID}
+						AND UPPER(BB.BTJB_NO) LIKE UPPER('%' || #{BATCHJOB_NO} || '%')
+						)
+		</if>
+
+		<choose>
+			<when test='"PLAN".equals(DATE_GBN)'>
+				<if test="(SDATE != '' and SDATE != null) or (EDATE != '' and EDATE != null)">
+		AND (
+			 A.PLAN_SDATE BETWEEN #{SDATE} AND #{EDATE} OR
+			 A.PLAN_EDATE BETWEEN #{SDATE} AND #{EDATE}
+			)
+				</if>
+			</when>
+			<when test='"ACTL".equals(DATE_GBN)'>
+				<if test="(SDATE != '' and SDATE != null) or (EDATE != '' and EDATE != null)">
+		AND (
+			 A.ACTL_SDATE BETWEEN #{SDATE} AND #{EDATE} OR
+			 A.ACTL_EDATE BETWEEN #{SDATE} AND #{EDATE}
+			)
+				</if>
+			</when>
+		</choose>
+
+		ORDER BY
+			A.BTPR_NO, A.BTPR_ID
+	</select>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_BTPR_FUNC_MAP
+  		WHERE 1 = 1
+  		AND BTPR_ID = #{BTPR_ID}
+	</delete>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_BTPR_BTJB_MAP
+  		WHERE 1 = 1
+  		AND BTPR_ID = #{BTPR_ID}
+	</delete>
+
+	<delete id="remove03" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_BATCHPRG
+  		WHERE 1 = 1
+  		AND BTPR_ID = #{BTPR_ID}
+	</delete>
+
+</mapper>

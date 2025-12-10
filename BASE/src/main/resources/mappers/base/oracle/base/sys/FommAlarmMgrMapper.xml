@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.com.dao.FommAlarmMgrDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FommAlarmMgrMapper >> select01 */
+        SELECT      
+        	'' AS ROWFLAG,
+            fa.ALARM_ID         AS ALARM_ID,
+            fccm.CMM_CD_NM      AS ALARM_TYPE,
+            fa.USER_ID          AS USER_ID, 
+            CASE fa.CONFIRM_YN  WHEN 'N' THEN '미확인'
+                                WHEN 'Y' THEN '확인'
+            END AS CONFIRM_YN,
+            fa.CONFIRM_DT       AS CONFIRM_DT, 
+            fa.ALARM_TYPE_CD    AS ALARM_TYPE_CD, 
+            fa.ALARM_REF        AS ALARM_REF, 
+            fa.RECEIVED_DT      AS RECEIVED_DT,
+            CASE WHEN (SYSDATE - fa.RECEIVED_DT) > 60             THEN '오래 전'
+                 WHEN (SYSDATE - fa.RECEIVED_DT) >= 1             THEN ROUND(SYSDATE - RECEIVED_DT) || '일 전'
+                 WHEN (SYSDATE - fa.RECEIVED_DT) * 24 * 60 >= 60  THEN ROUND((SYSDATE - RECEIVED_DT) * 24) || '시간 전'
+                 ELSE ROUND((SYSDATE - RECEIVED_DT) * 24 * 60) || '분 전'
+            END AS ELAPSEDTIME,
+            fa.ALARM_CONTS      AS ALARM_CONTS,
+            fa.ALARM_PARAMS     AS ALARM_PARAMS
+        FROM
+            FOMM_ALARM fa
+            LEFT
+            OUTER
+            JOIN
+            (SELECT * FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'CMM_CD' AND UP_CMM_CD = 'ALARM_TYPE_CD') fccm
+        ON fa.ALARM_TYPE_CD = fccm.CMM_CD
+        WHERE 1=1
+          AND fa.USER_ID = #{USER_ID}
+          AND TO_CHAR(fa.RECEIVED_DT, 'YYYYMMDD') BETWEEN #{SDATE} AND #{EDATE}
+          <if test="CONFIRM_YN != '' and CONFIRM_YN != null">
+            AND CONFIRM_YN = #{CONFIRM_YN}
+          </if>
+        ORDER BY fa.CONFIRM_YN, fa.RECEIVED_DT DESC
+    </select>
+
+    <!-- SPP 알람 발송 목록 수정 -->
+    <update id="modify01" parameterType="java.util.Map">
+        /* FommAlarmMgrMapper >> modify01 */
+        UPDATE  FOMM_ALARM
+        SET     CONFIRM_YN = 'Y',
+                CONFIRM_DT = SYSDATE
+        WHERE   ALARM_ID = #{ALARM_ID}
+    </update>
+    
+    <!-- SPP 알람 발송 목록 수정 -->
+    <update id="modify02" parameterType="java.util.Map">
+        /* FommAlarmMgrMapper >> modify02 */
+        UPDATE  FOMM_ALARM_CNT
+        SET     ALARM_CNT = TO_CHAR(TO_NUMBER(ALARM_CNT) -1),
+                LAST_CNT_UPDT = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        WHERE   USER_ID = #{USER_ID} AND TO_NUMBER(ALARM_CNT) > 0
+    </update>
+    
+    <!-- SPP 알람 발송 목록 삭제 -->
+    <delete id="remove01" parameterType="java.util.Map">
+        DELETE FROM FOMM_ALARM
+        WHERE USER_ID = #{USER_ID} AND ALARM_ID = #{ALARM_ID} AND CONFIRM_YN = 'Y'
+    </delete>
+
+    <insert id="insert01" parameterType="java.util.Map">
+        <selectKey resultType="string" keyProperty="ALARM_ID" order="BEFORE">
+            SELECT TO_NUMBER(NVL(MAX(ALARM_ID), 0))+1 AS ALARM_ID   FROM FOMM_ALARM
+        </selectKey>
+        
+        INSERT INTO FOMM_ALARM
+        (
+              ALARM_ID          --알람ID
+            , USER_ID           --수신자ID
+            , CONFIRM_YN        --확인여부
+            , ALARM_TYPE_CD     --알람타입코드
+            , ALARM_REF         --알람발생화면참조ID
+            , RECEIVED_DT       --알람수신일시
+            , ALARM_CONTS       --알람내용
+            , ALARM_PARAMS 		--알람열람용 파라미터
+        )
+        VALUES(
+		        #{ALARM_ID}
+		        , #{USER_ID}
+		        , 'N'
+		        , #{ALARM_TYPE_CD}
+		        , #{ALARM_REF}
+		        , SYSDATE
+		        , #{ALARM_CONTS}
+		        , #{ALARM_PARAMS}
+        )
+    </insert>
+
+</mapper>

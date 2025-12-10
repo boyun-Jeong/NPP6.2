@@ -1,0 +1,463 @@
+﻿.Button.btn_NHFIRE_tabOff
+{
+	background : #ffffff;
+	border : 1px solid #dfdfdf, 1px solid #dfdfdf, 2px solid #8a96a8, 1px solid #dfdfdf;
+	font : bold 12px "KoPubL";
+	color : #383e4b;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_tabOff .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_NHFIRE_tabOn
+{
+	background : #4d85ec;
+	border : 1px solid #4d85ec, 1px solid #4d85ec, 2px solid #8a96a8, 1px solid #4d85ec;
+	font : bold 12px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_tabOn .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_NHFIRE_dashBoardLink
+{
+	background : url('./MIRAE_IMAGE_SET/TPF/ma-spp-top-myboard.png') no-repeat right center;
+	border : 0px;
+	color : white;
+	cursor : pointer;
+	font : 11px "KoPubL";
+}
+.Button.btn_NHFIRE_dashBoardLink .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_hyperlink
+{
+	background : transparent url('./MIRAE_IMAGE_SET/HOME/main-link.png') no-repeat left center;
+	border : 0px;
+	cursor : pointer;
+	font : 11px "KoPubL";
+}
+.Button.btn_NHFIRE_cmtDel
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastError.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastSuccess.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave1
+{
+	border : 1px solid #000000;
+	font : bold 9px 'KoPubL';
+	background : #ffffff;
+	color : #000000;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave1 .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_NHFIRE_cmtConfirm
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastInfo.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Tab.tab_NHFIRE_mdi
+{
+	background : transparent;
+	border : 1px solid #e5e5e5, 1px solid #e5e5e5, 2px solid #252c43, 1px solid #e5e5e5;
+}
+.Tab.tab_NHFIRE_mdi .tabbuttonitemTab.tabbuttonitemTabtab_NHFIRE_mdi
+{
+	background : #ffffff;
+	border : 1px solid #e5e5e5, 1px solid #e5e5e5, 2px solid #252c43, 1px solid #e5e5e5;
+	cursor : pointer;
+	color : #444444;
+	font : bold 14px 'KoPubL';
+}
+.Tab.tab_NHFIRE_mdi .tabbuttonitemTab.tabbuttonitemTabtab_NHFIRE_mdi .tabbuttonitemtext .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Tab.tab_NHFIRE_mdi .tabbuttonitemTab.tabbuttonitemTabtab_NHFIRE_mdi .tabbuttonitemtext
+{
+	font : bold 14px 'KoPubL';
+}
+.Tab.tab_NHFIRE_mdi .tabbuttonitemTab.tabbuttonitemTabtab_NHFIRE_mdi .extrabutton
+{
+	background : url(./SPP_IMAGE_SET/TBF/btn_TBF_MdiX.png) no-repeat center center;
+	cursor : pointer;
+}
+.Tab.tab_NHFIRE_mdi .tabpageTab.tabpageTabtab_NHFIRE_mdi
+{
+	border : 1px solid #252c43;
+}
+.Button.btn_NHFIRE_tabOff[status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #dfdfdf, 1px solid #dfdfdf, 2px solid #8a96a8, 1px solid #dfdfdf;
+	font : bold 12px "KoPubL";
+	color : #383e4b;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_tabOff[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_NHFIRE_tabOff[status=focused]
+{
+	background : #ffffff;
+	border : 1px solid #dfdfdf, 1px solid #dfdfdf, 2px solid #8a96a8, 1px solid #dfdfdf;
+	font : bold 12px "KoPubL";
+	color : #383e4b;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_tabOff[status=focused] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_NHFIRE_tabOn[status=mouseover]
+{
+	background : #4d85ec;
+	border : 1px solid #4d85ec, 1px solid #4d85ec, 2px solid #8a96a8, 1px solid #4d85ec;
+	font : bold 12px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_tabOn[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_NHFIRE_tabOn[status=focused]
+{
+	background : #4d85ec;
+	border : 1px solid #4d85ec, 1px solid #4d85ec, 2px solid #8a96a8, 1px solid #4d85ec;
+	font : bold 12px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_tabOn[status=focused] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_NHFIRE_dashBoardLink[status=mouseover]
+{
+	background : url('./MIRAE_IMAGE_SET/TPF/ma-spp-top-myboard.png') no-repeat right center;
+	border : 0px;
+	color : white;
+	cursor : pointer;
+	font : 11px "KoPubL";
+}
+.Button.btn_NHFIRE_dashBoardLink[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_NHFIRE_dashBoardLink[status=focused]
+{
+	background : url('./MIRAE_IMAGE_SET/TPF/ma-spp-top-myboard.png') no-repeat right center;
+	border : 0px;
+	color : white;
+	cursor : pointer;
+	font : 11px "KoPubL";
+}
+.Button.btn_NHFIRE_dashBoardLink[status=focused] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_hyperlink[status=focused]
+{
+	background : transparent url('./MIRAE_IMAGE_SET/HOME/main-link.png') no-repeat left center;
+	border : 0px;
+	cursor : pointer;
+	font : 11px "KoPubL";
+}
+.Button.btn_WF_hyperlink[status=mouseover]
+{
+	background : transparent url('./MIRAE_IMAGE_SET/HOME/spp-new_36-hover.png') no-repeat left center;
+}
+.Button.btn_NHFIRE_cmtDel[status=focused]
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastError.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtDel[status=mouseover]
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastError.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave[status=focused]
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastSuccess.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave[status=mouseover]
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastSuccess.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave1[status=focused]
+{
+	border : 1px solid #000000;
+	font : bold 9px 'KoPubL';
+	background : #ffffff;
+	color : #000000;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave1[status=focused] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_NHFIRE_cmtSave1[status=mouseover]
+{
+	border : 1px solid #000000;
+	font : bold 9px 'KoPubL';
+	background : #ffffff;
+	color : #000000;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave1[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_NHFIRE_cmtConfirm[status=focused]
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastInfo.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtConfirm[status=mouseover]
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastInfo.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Tab.tab_NHFIRE_mdi[status=focused]
+{
+	background : transparent;
+	border : 1px solid #e5e5e5, 1px solid #e5e5e5, 2px solid #252c43, 1px solid #e5e5e5;
+}
+.Tab.tab_NHFIRE_mdi[status=mouseover]
+{
+	background : transparent;
+	border : 1px solid #e5e5e5, 1px solid #e5e5e5, 2px solid #252c43, 1px solid #e5e5e5;
+}
+.Tab.tab_NHFIRE_mdi .tabbuttonitemTab.tabbuttonitemTabtab_NHFIRE_mdi[status=mouseover]
+{
+	background : #ffffff;
+	border : 1px solid #e5e5e5, 1px solid #e5e5e5, 2px solid #252c43, 1px solid #e5e5e5;
+	cursor : pointer;
+	color : #444444;
+	font : bold 14px 'KoPubL';
+}
+.Tab.tab_NHFIRE_mdi .tabbuttonitemTab.tabbuttonitemTabtab_NHFIRE_mdi[status=focused]
+{
+	background : #252c43;
+	border : 1px solid #252c43, 1px solid #252c43, 2px solid #252c43, 1px solid #252c43;
+	cursor : pointer;
+	color : #ffffff;
+	font : bold 14px 'KoPubL';
+}
+.Tab.tab_NHFIRE_mdi .tabbuttonitemTab.tabbuttonitemTabtab_NHFIRE_mdi .extrabutton[status=focused]
+{
+	background : url(./MIRAE_IMAGE_SET/HOME/tab-X.png) no-repeat center center;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_tabOff[userstatus=pushed]
+{
+	background : #ffffff;
+	border : 1px solid #dfdfdf, 1px solid #dfdfdf, 2px solid #8a96a8, 1px solid #dfdfdf;
+	font : bold 12px "KoPubL";
+	color : #383e4b;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_tabOff[userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_NHFIRE_tabOn[userstatus=pushed]
+{
+	background : #4d85ec;
+	border : 1px solid #4d85ec, 1px solid #4d85ec, 2px solid #8a96a8, 1px solid #4d85ec;
+	font : bold 12px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_tabOn[userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_NHFIRE_dashBoardLink[userstatus=pushed]
+{
+	background : url('./MIRAE_IMAGE_SET/TPF/ma-spp-top-myboard.png') no-repeat right center;
+	border : 0px;
+	color : white;
+	cursor : pointer;
+	font : 11px "KoPubL";
+}
+.Button.btn_NHFIRE_dashBoardLink[userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_WF_hyperlink[userstatus=pushed]
+{
+	background : transparent url('./MIRAE_IMAGE_SET/HOME/spp-new_36-hover.png') no-repeat left center;
+}
+.Button.btn_WF_hyperlink[userstatus=selected]
+{
+	background : transparent url('./MIRAE_IMAGE_SET/HOME/spp-new_36-hover.png') no-repeat left center;
+}
+.Button.btn_NHFIRE_cmtDel[userstatus=pushed]
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastError.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtDel[userstatus=selected]
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastError.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave[userstatus=pushed]
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastSuccess.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave[userstatus=selected]
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastSuccess.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave1[userstatus=pushed]
+{
+	border : 1px solid #000000;
+	font : bold 9px 'KoPubL';
+	background : #ffffff;
+	color : #000000;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave1[userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_NHFIRE_cmtSave1[userstatus=selected]
+{
+	border : 1px solid #000000;
+	font : bold 9px 'KoPubL';
+	background : #ffffff;
+	color : #000000;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave1[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_NHFIRE_cmtConfirm[userstatus=pushed]
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastInfo.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtConfirm[userstatus=selected]
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastInfo.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Tab.tab_NHFIRE_mdi .tabbuttonitemTab.tabbuttonitemTabtab_NHFIRE_mdi[userstatus=selected]
+{
+	background : #252c43;
+	border : 1px solid #252c43, 1px solid #252c43, 2px solid #252c43, 1px solid #252c43;
+	cursor : pointer;
+	color : #ffffff;
+	font : bold 14px 'KoPubL';
+}
+.Tab.tab_NHFIRE_mdi .tabbuttonitemTab.tabbuttonitemTabtab_NHFIRE_mdi .extrabutton[userstatus=selected]
+{
+	background : url(./MIRAE_IMAGE_SET/HOME/tab-X.png) no-repeat center center;
+	cursor : pointer;
+}
+.Tab.tab_NHFIRE_mdi .tabbuttonitemTab.tabbuttonitemTabtab_NHFIRE_mdi .extrabutton[userstatus=pushed]
+{
+	background : url(./MIRAE_IMAGE_SET/HOME/tab-X.png) no-repeat center center;
+	cursor : pointer;
+}
+.Button.btn_WF_hyperlink[status=disabled]
+{
+	background : transparent url('./MIRAE_IMAGE_SET/HOME/main-link.png') no-repeat left center;
+	border : 0px;
+	cursor : pointer;
+	font : 11px "KoPubL";
+}
+.Button.btn_NHFIRE_cmtDel[status=disabled]
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastError.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave[status=disabled]
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastSuccess.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave1[status=disabled]
+{
+	border : 1px solid #000000;
+	font : bold 9px 'KoPubL';
+	background : #ffffff;
+	color : #000000;
+	cursor : pointer;
+}
+.Button.btn_NHFIRE_cmtSave1[status=disabled] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_NHFIRE_cmtConfirm[status=disabled]
+{
+	background : transparent url('./SPP_IMAGE_SET/FOMM/bg_FOMM_toastInfo.png') no-repeat center center;
+	border : 0px none;
+	cursor : pointer;
+}
+.Tab.tab_NHFIRE_mdi .tabbuttonitemTab.tabbuttonitemTabtab_NHFIRE_mdi[userstatus=selected][status=mouseover]
+{
+	background : #252c43;
+	border : 1px solid #252c43, 1px solid #252c43, 2px solid #252c43, 1px solid #252c43;
+	cursor : pointer;
+	color : #ffffff;
+	font : bold 14px 'KoPubL';
+}
+.Tab.tab_NHFIRE_mdi .tabbuttonitemTab.tabbuttonitemTabtab_NHFIRE_mdi[status=focused][userstatus=selected]
+{
+	background : #252c43;
+	border : 1px solid #252c43, 1px solid #252c43, 2px solid #252c43, 1px solid #252c43;
+	cursor : pointer;
+	color : #ffffff;
+	font : bold 14px 'KoPubL';
+}

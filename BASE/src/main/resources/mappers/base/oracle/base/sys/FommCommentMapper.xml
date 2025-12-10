@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.com.dao.FommCommentDAO">
+	
+	<select id="selectComment" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT	  '0' AS CHK
+				, '' AS ROWFLAG
+				, A.COMMENT_NO	--댓글PK(SEQ)
+				, A.KEY_TBL		--키 테이블명
+				, A.PK1			--PK1
+				, A.PK2			--PK2
+				, A.PK3			--PK3
+				, A.COMMENT_CONTS	--댓글 내용
+				, A.DEL_YN		--삭제여부
+				, A.EXT_COL_1		--항목1
+				, A.EXT_COL_2		--항목2
+				, A.EXT_COL_3		--항목3
+				, A.EXT_COL_4		--항목4
+				, A.EXT_COL_5		--항목5
+				, A.FRID	--최초등록자ID
+				, A.FRDT	--최초등록일시
+				, TO_CHAR(TO_DATE(A.FRDT, 'YYYYMMDDHH24MISS'), 'YYYY-MM-DD HH24:MI:SS') AS REG_DT_NM
+				, A.LMID	--최종수정자ID
+				, B.USER_NM	AS LMNM
+				, B.USER_NM || '(' || A.LMID || ')' AS REG_USER_ID_NM
+				, A.LMDT	--최종수정일시
+				, A.LMPID   --최종수정화면ID
+				, A.CONFIRM_YN   --요구확정
+				
+		FROM 	  FOMM_COMMENT_MT A
+				, FOMM_USER_MT B
+		
+		WHERE 	1 = 1
+		AND		A.LMID = B.USER_ID
+		AND		DEL_YN = 'N'
+		<if test="COMMENT_NO != '' and COMMENT_NO != null">
+			AND COMMENT_NO = #{COMMENT_NO}
+		</if>
+		<if test="KEY_TBL != '' and KEY_TBL != null">
+			AND KEY_TBL = #{KEY_TBL}
+		</if>
+		
+		<if test="PK1 != '' and PK1 != null">
+			AND PK1 = #{PK1}
+		</if>
+		<if test="PK2 != '' and PK2 != null">
+			AND PK2 = #{PK2}
+		</if>
+		<if test="PK3 != '' and PK3 != null">
+			AND PK3 = #{PK3}
+		</if>
+		
+		<if test="EXT_COL_1 != '' and EXT_COL_1 != null">
+			AND EXT_COL_1 = #{EXT_COL_1}
+		</if>
+		<if test="EXT_COL_2 != '' and EXT_COL_2 != null">
+			AND EXT_COL_2 = #{EXT_COL_2}
+		</if>
+		<if test="EXT_COL_3 != '' and EXT_COL_3 != null">
+			AND EXT_COL_3 = #{EXT_COL_3}
+		</if>
+		<if test="EXT_COL_4 != '' and EXT_COL_4 != null">
+			AND EXT_COL_4 = #{EXT_COL_4}
+		</if>
+		<if test="EXT_COL_5 != '' and EXT_COL_5 != null">
+			AND EXT_COL_5 = #{EXT_COL_5}
+		</if>
+		
+		ORDER BY FRDT ASC
+	</select>
+
+	<insert id="insertComment" parameterType="java.util.Map">
+		INSERT INTO FOMM_COMMENT_MT
+		(
+			  COMMENT_NO	--댓글PK(SEQ)
+			, KEY_TBL	--키 테이블명
+			, PK1	--PK1
+			, PK2	--PK2
+			, PK3	--PK3
+			, COMMENT_CONTS	--댓글 내용
+			, DEL_YN	--삭제여부
+			, EXT_COL_1	--항목1
+			, EXT_COL_2	--항목2
+			, EXT_COL_3	--항목3
+			, EXT_COL_4	--항목4
+			, EXT_COL_5	--항목5
+			, CONFIRM_YN   --요구확정
+			, FRID	--최초등록자ID
+			, FRDT	--최초등록일시
+			, LMID	--최종수정자ID
+			, LMDT	--최종수정일시
+			, LMPID	--최종수정화면ID
+			
+		)
+		VALUES
+		(
+			  (SELECT NVL(MAX(COMMENT_NO), 0)+1 FROM FOMM_COMMENT_MT)
+			, #{KEY_TBL}
+			, #{PK1}
+			, #{PK2}
+			, #{PK3}
+			, #{COMMENT_CONTS}
+			, NVL(#{DEL_YN}, 'N')
+			, #{EXT_COL_1}
+			, #{EXT_COL_2}
+			, #{EXT_COL_3}
+			, #{EXT_COL_4}
+			, #{EXT_COL_5}
+			, 'N'
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMPID}
+		)
+	</insert>
+
+	<update id="modifyComment" parameterType="java.util.Map">
+		UPDATE	FOMM_COMMENT_MT 
+		SET	  KEY_TBL	= #{KEY_TBL}	--키 테이블명
+			, PK1 		= #{PK1}	--PK1
+			, PK2 		= #{PK2}	--PK2
+			, PK3 		= #{PK3}	--PK3
+			, COMMENT_CONTS	= #{COMMENT_CONTS}	--댓글 내용
+			, DEL_YN 	= #{DEL_YN}	--삭제여부
+			, EXT_COL_1 = #{EXT_COL_1}	--항목1
+			, EXT_COL_2 = #{EXT_COL_2}	--항목2
+			, EXT_COL_3 = #{EXT_COL_3}	--항목3
+			, EXT_COL_4 = #{EXT_COL_4}	--항목4
+			, EXT_COL_5 = #{EXT_COL_5}	--항목5
+			, CONFIRM_YN   = #{CONFIRM_YN} --요구확정
+			, LMID 		= #{LMID}	--최종수정자ID
+			, LMDT		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMPID 	= #{LMPID}	--최종수정화면ID
+		WHERE COMMENT_NO = #{COMMENT_NO}
+	</update>
+
+	<delete id="removeComment" parameterType="java.util.Map">
+		UPDATE	FOMM_COMMENT_MT
+		SET	  DEL_YN = 'Y'
+			, LMID 		= #{LMID}	--최종수정자ID
+			, LMDT		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMPID 	= #{LMPID}	--최종수정화면ID
+		WHERE	COMMENT_NO = #{COMMENT_NO}
+	</delete>
+</mapper>

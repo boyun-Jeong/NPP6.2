@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0410PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  ''	AS ROWFLAG
+			, A.REPORT_ID
+			, A.REPORT_TYPE_CD
+			, A.REPORT_NAME
+			, A.PJT_ID
+			, B.PJT_NAME
+			, A.CONTENTS
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+
+		FROM
+			PJ_REPORT A,
+			PJ_PROJECT B 
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND A.PJT_ID	= #{PJT_ID}
+		AND A.REPORT_ID = #{REPORT_ID} 
+
+		ORDER BY
+			A.REPORT_ID
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="REPORT_ID" order="BEFORE">
+			SELECT
+				'PJRP' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(REPORT_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_REPORT
+   			WHERE 1 = 1
+   			AND REPORT_ID LIKE 'PJRP%'
+			AND LENGTH(REPORT_ID) = 16
+		</selectKey>
+		
+		INSERT INTO PJ_REPORT 
+		(
+			  REPORT_ID
+			, REPORT_TYPE_CD
+			, REPORT_NAME
+			, PJT_ID
+			, CONTENTS
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES 
+		(
+			  #{REPORT_ID} 
+			, #{REPORT_TYPE_CD} 
+			, #{REPORT_NAME}
+			, #{PJT_ID}
+			, #{CONTENTS}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID}) 
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_REPORT SET
+			  REPORT_TYPE_CD	= #{REPORT_TYPE_CD}
+			, REPORT_NAME       = #{REPORT_NAME}
+			, CONTENTS			= #{CONTENTS}
+
+			, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+		WHERE 1 = 1
+		AND PJT_ID		= #{PJT_ID}
+		AND REPORT_ID	= #{REPORT_ID}
+	</update>
+
+</mapper>

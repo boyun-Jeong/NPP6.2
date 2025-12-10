@@ -1,0 +1,1419 @@
+﻿.Div.div_HOME_border
+{
+	border : 1px solid #c4c8d7;
+	border-radius : 10px;
+}
+.Div.div_HOME_myAppv
+{
+	-nexa-edge : url('./NHSB_IMAGE_SET/HOME/box-3d-box01.png') 0px 0px;
+	border : 0px none;
+	cursor : pointer;
+}
+.Div.div_HOME_myRequest
+{
+	-nexa-edge : url('./NHSB_IMAGE_SET/HOME/box-3d-box04.png') 0px 0px;
+	border : 0px none;
+	cursor : pointer;
+}
+.Div.div_HOME_myTask
+{
+	-nexa-edge : url('./NHSB_IMAGE_SET/HOME/box-3d-box03.png') 0px 0px;
+	border : 0px none;
+	cursor : pointer;
+}
+.Div.div_HOME_myReview
+{
+	-nexa-edge : url('./NHSB_IMAGE_SET/HOME/box-3d-box02.png') 0px 0px;
+	border : 0px none;
+	cursor : pointer;
+}
+.Div.div_HOME_myWidgetBg
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/HOME/main-btn05-off.png') 0px 0px;
+	border : 0px none;
+	cursor : pointer;
+}
+.Div.div_HOME_myWidgetBg02
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/HOME/main-numbox01.png') 0px 0px;
+	border : 0px none;
+	cursor : pointer;
+}
+.Div.div_HOME_widget01
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/HOME/main-ico01.png') 0px 0px;
+	border : 0px none;
+	cursor : pointer;
+}
+.Div.div_HOME_widget02
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/HOME/main-ico02.png') 0px 0px;
+	border : 0px none;
+	cursor : pointer;
+}
+.Div.div_HOME_widget03
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/HOME/main-ico03.png') 0px 0px;
+	border : 0px none;
+	cursor : pointer;
+}
+.Div.div_HOME_widget04
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/HOME/main-ico04.png') 0px 0px;
+	border : 0px none;
+	cursor : pointer;
+}
+.Div.div_HOME_widget05
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/HOME/main-ico05.png') 0px 0px;
+	border : 0px none;
+	cursor : pointer;
+}
+.Div.div_HOME_widget06
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/HOME/main-ico06.png') 0px 0px;
+	border : 0px none;
+	cursor : pointer;
+}
+.Div.div_HOME_calNormal
+{
+	background : white;
+	border : 1px solid #c4c8d7;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Div.div_HOME_calSel
+{
+	background : #ecf5ff;
+	border : 1px solid #c4c8d7;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Div.div_HOME_calToday
+{
+	background : #ecf5ff;
+	border : 1px solid #005bc3;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Div.div_HOME_calHoliday
+{
+	background : #ffeae9;
+	border : 1px solid #ff4d4c;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Div.div_HOME_calSatday
+{
+	background : #94c6f5;
+	border : 1px solid #3082ed;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Static.sta_HOME_calEtcMonth
+{
+	border : 0px;
+	color : #c4c8d7;
+	font : bold 12px 'KoPubL';
+}
+.Static.sta_HOME_calEtcMonth .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : top;
+}
+.Static.sta_HOME_calCntNormal
+{
+	background : #ecf5ff;
+	border : 1px solid #c4c8d7;
+	border-radius : 2px;
+	font : normal 8px 'KoPubL';
+	color : #005bc3;
+	cursor : pointer;
+}
+.Static.sta_HOME_calCntNormal .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Static.sta_HOME_calCntHoliday
+{
+	background : #ffc0c0;
+	border : 1px solid #ff6867;
+	border-radius : 2px;
+	font : bold 8px 'KoPubL';
+	color : #f98888;
+	cursor : pointer;
+}
+.Static.sta_HOME_calCntHoliday .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Static.sta_HOME_calCntSatday
+{
+	background : #cbe3fa;
+	border : 1px solid #68a4f1;
+	border-radius : 2px;
+	font : bold 8px 'KoPubL';
+	color : #f98888;
+	cursor : pointer;
+}
+.Static.sta_HOME_calCntSatday .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Static.sta_HOME_calCurMonth
+{
+	border : 0px;
+	color : #555555;
+	font : normal 12px 'KoPubL';
+}
+.Static.sta_HOME_calCurMonth .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : top;
+}
+.Static.sta_HOME_calSelDate
+{
+	border : 0px;
+	color : #c4c8d7;
+	font : bold 12px 'KoPubL';
+}
+.Static.sta_HOME_calSelDate .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : top;
+}
+.Static.sta_HOME_calHoliday
+{
+	border : 0px;
+	color : #c4c8d7;
+	font : bold 12px 'KoPubL';
+}
+.Static.sta_HOME_calHoliday .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : top;
+}
+.Static.sta_IT_Title15
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-bullet.png') no-repeat left center;
+	border : 0px;
+	color : #000000;
+	font : bold 15px 'KoPub돋움체_Pro';
+}
+.Static.sta_IT_Title15 .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Static.sta_IT_Title14
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-bullet.png') no-repeat left center;
+	border : 0px;
+	color : #000000;
+	font : bold 14px 'KoPub돋움체_Pro';
+}
+.Static.sta_IT_Title14 .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Div.div_IT_icon01
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con01.png') 0px 0px;
+	border : 0px none;
+}
+.Div.div_IT_icon02
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con02.png') 0px 0px;
+	border : 0px none;
+}
+.Div.div_IT_icon03
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con04.png') 0px 0px;
+	border : 0px none;
+}
+.Div.div_IT_icon04
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con06.png') 0px 0px;
+	border : 0px none;
+}
+.Div.div_IT_icon05
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con09.png') 0px 0px;
+	border : 0px none;
+}
+.Div.div_IT_icon06
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con05.png') 0px 0px;
+	border : 0px none;
+}
+.Div.div_IT_icon07
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con03.png') 0px 0px;
+	border : 0px none;
+}
+.Div.div_IT_icon08
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con08.png') 0px 0px;
+	border : 0px none;
+}
+.Div.div_IT_icon09
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-icon-con07.png') 0px 0px;
+	border : 0px none;
+}
+.Div.div_IT_icon10
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-badge03.png') 0px 0px;
+	border : 0px none;
+}
+.Div.div_IT_icon11
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-badge02.png') 0px 0px;
+	border : 0px none;
+}
+.Div.div_IT_icon12
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-badge01.png') 0px 0px;
+	border : 0px none;
+}
+.Div.div_IT_dott
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/IT_PORTAL/con-line02-dotted.png') 0px 0px;
+	border : 0px none;
+}
+.Div.div_IT_bg02
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-fr02.png') 0px 0px;
+	border : 0px none;
+}
+.Div.div_IT_bg03
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-fr01.png') 0px 0px;
+	border : 0px none;
+}
+.Static.sta_IT_bg01
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/IT_PORTAL/con-fm02.png') no-repeat left center;
+	border : 0px;
+	color : #3d3d3d;
+	font : bold 12px 'KoPub돋움체_Pro';
+}
+.Static.sta_IT_bg01 .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : top;
+}
+.Static.sta_IT_bg02
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/IT_PORTAL/num-fr02.png') no-repeat left center;
+	border : 0px;
+	color : #2f79d9;
+	font : bold 12px 'KoPub돋움체_Pro';
+}
+.Static.sta_IT_bg02 .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : middle;
+}
+.Static.sta_IT_bg03
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-fr02.png') no-repeat left center;
+	border : 0px;
+	color : #043b72;
+	font : bold 12px 'KoPub돋움체_Pro';
+}
+.Static.sta_IT_bg03 .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : middle;
+}
+.Static.sta_IT_bg04
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/IT_PORTAL/maspp-fr01.png') no-repeat left center;
+	border : 0px;
+	color : #043b72;
+	font : bold 12px 'KoPub돋움체_Pro';
+}
+.Static.sta_IT_bg04 .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : middle;
+}
+.Static.sta_IT_bg05
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/IT_PORTAL/num-fr04.png') no-repeat left center;
+	border : 0px;
+	color : #2f79d9;
+	font : bold 12px 'KoPub돋움체_Pro';
+}
+.Static.sta_IT_bg05 .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : middle;
+}
+.Static.sta_IT_bg06
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/IT_PORTAL/con-fr-line-right.png') no-repeat left center;
+	border : 0px;
+	color : #ffffff;
+	font : bold 12px 'KoPub돋움체_Pro';
+}
+.Static.sta_IT_bg06 .nexacontentsbox
+{
+	text-align : right;
+	vertical-align : middle;
+}
+.Static.sta_IT_bg07
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/IT_PORTAL/con-fr-line-left.png') no-repeat left center;
+	border : 0px;
+	color : #3d3d3d;
+	font : bold 12px 'KoPub돋움체_Pro';
+}
+.Static.sta_IT_bg07 .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Button.btn_HOME_boardOff
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/HOME/main-tab01-off.png') no-repeat center center;
+	border : 0px none;
+	border-radius : 5px 5px 0px 0px;
+	font : bold 14px "KoPubL";
+	color : #383e4b;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOff .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOn
+{
+	background : transparent URL('./NHSB_IMAGE_SET/HOME/main-tab01-on.png') no-repeat center center;
+	border : 0px none;
+	font : bold 14px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOn .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOff2
+{
+	background : transparent URL('./NHSB_IMAGE_SET/HOME/main-tab02-off.png') no-repeat center center /contain;
+	border : 0px none;
+	border-radius : 5px 5px 0px 0px;
+	font : bold 14px "KoPubL";
+	color : #5e656f;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOff2 .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOn2
+{
+	background : transparent URL('./NHSB_IMAGE_SET/HOME/main-tab02-on.png') no-repeat center center /contain;
+	border : 0px none;
+	border-radius : 5px 5px 0px 0px;
+	font : bold 14px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOn2 .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_arrowRight
+{
+	background : transparent url('./SPP_IMAGE_SET/HOME/btn_HOME_arrowRight.png') no-repeat center center /auto;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_HOME_setting
+{
+	background : url('./NHSB_IMAGE_SET/HOME/btn-setting.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_HOME_link
+{
+	background : url('./NHSB_IMAGE_SET/HOME/btn-new.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Grid.grd_HOME_board
+{
+	background : transparent;
+	border : 0px solid #010103, 0px none, 0px none, 0px none;
+	color : #444444;
+	font : 14px 'KoPubL';
+}
+.Grid.grd_HOME_board .body .row .cell
+{
+	background : transparent;
+	border : 0px none;
+	color : #444444;
+	font : bold 14px 'KoPubL';
+	cursor : pointer;
+}
+.Grid.grd_HOME_board .body .row .cell.oddcell
+{
+	background : transparent;
+	color : #444444;
+}
+.Grid.grd_HOME_board .body .row .cell .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_board .body .row .cell .subcell
+{
+	background : transparent;
+	border : 0px none;
+	color : #444444;
+	font : bold 14px 'KoPubL';
+	cursor : pointer;
+}
+.Grid.grd_HOME_board .body .row .cell .subcell.oddcell
+{
+	background : transparent;
+	color : #444444;
+}
+.Grid.grd_HOME_board .body .row .cell .subcell .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit
+{
+	background : transparent;
+	border : 1px solid #444444;
+	border-radius : 5px 5px;
+	padding : 3px 6px 3px 6px;
+	color : #444444;
+	font : bold 13px 'KoPubL';
+	cursor : pointer;
+}
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit .nexainput
+{
+	text-align : center;
+}
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit .nexacontentsbox
+{
+	text-align : center;
+}
+.Grid.grd_HOME_normal
+{
+	background : transparent;
+	border : 2px solid #000000, 0px, 1px solid #ced5df, 0px;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .head .row .cell
+{
+	background : #ecf5ff;
+	border : 0px, 0px, 1px solid #ced5df, 0px;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .head .row .cell .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .head .row .cell .subcell
+{
+	background : #ecf5ff;
+	border : 0px, 0px, 1px solid #ced5df, 0px;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .head .row .cell .subcell .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .body .row .cell
+{
+	background : #f8fdff;
+	border : 0px none, 0px none, 1px solid #ced5df, 0px none;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .body .row .cell.oddcell
+{
+	background : white;
+	color : #32333b;
+}
+.Grid.grd_HOME_normal .body .row .cell .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .body .row .cell .subcell
+{
+	background : #f8fdff;
+	border : 0px none, 0px none, 1px solid #ced5df, 0px none;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .body .row .cell .subcell.oddcell
+{
+	background : white;
+	color : #32333b;
+}
+.Grid.grd_HOME_normal .body .row .cell .subcell .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell
+{
+	background : #ecf5ff;
+	border : 0px, 0px, 1px solid #ced5df, 0px;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell .subcell
+{
+	background : #ecf5ff;
+	border : 0px, 0px, 1px solid #ced5df, 0px;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell .subcell .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.ListView.lsv_HOME_normal.lsv_WF_HOME
+{
+	border : 0px none;
+	background : transparent;
+	color : transparent;
+}
+.ListView.lsv_HOME_normal .body
+{
+	border : 0px none;
+	background : transparent;
+	font : 12px "KoPubL";
+}
+.ListView.lsv_HOME_normal .detail
+{
+	border : 0px none;
+	background : transparent;
+	font : 12px "KoPubL";
+}
+.ListViewDetailBandControl.popupListViewlsv_HOME_normaldetail.dummy.dummy
+{
+	border : 0px none;
+	background : transparent;
+	font : 12px "KoPubL";
+}
+.ListView.lsv_HOME_normal .body .cell
+{
+	background : transparent;
+	border : 0px none;
+}
+.ListView.lsv_HOME_normal .detail .cell
+{
+	background : transparent;
+	border : 0px none;
+}
+.ListViewDetailBandControl.popupListViewlsv_HOME_normaldetail.dummy.dummy .cell
+{
+	background : transparent;
+	border : 0px none;
+}
+.ListView.lsv_HOME_normal .body .expandbar
+{
+	background : linear-gradient(to top,#eaeaea,#ffffff);
+	border : 1px solid #c2c2c2;
+}
+.Div.div_HOME_myWidgetBg[status=mouseover]
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/HOME/main-btn05-on.png') 0px 0px;
+	border : 0px none;
+	cursor : pointer;
+}
+.Div.div_HOME_myWidgetBg[status=focused]
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/HOME/main-btn05-on.png') 0px 0px;
+	border : 0px none;
+	cursor : pointer;
+}
+.Div.div_HOME_calNormal[status=mouseover]
+{
+	background : white;
+	border : 1px solid #005bc3;
+	border-radius : 3px 3px;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOff[status=mouseover]
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/HOME/main-tab01-off.png') no-repeat center center;
+	border : 0px none;
+	border-radius : 5px 5px 0px 0px;
+	font : bold 14px "KoPubL";
+	color : #383e4b;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOff[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOff[status=focused]
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/HOME/main-tab01-off.png') no-repeat center center;
+	border : 0px none;
+	border-radius : 5px 5px 0px 0px;
+	font : bold 14px "KoPubL";
+	color : #383e4b;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOff[status=focused] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOn[status=mouseover]
+{
+	background : transparent URL('./NHSB_IMAGE_SET/HOME/main-tab01-on.png') no-repeat center center;
+	border : 0px none;
+	font : bold 14px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOn[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOn[status=focused]
+{
+	background : transparent URL('./NHSB_IMAGE_SET/HOME/main-tab01-on.png') no-repeat center center;
+	border : 0px none;
+	font : bold 14px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOn[status=focused] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOff2[status=mouseover]
+{
+	background : transparent URL('./NHSB_IMAGE_SET/HOME/main-tab02-off.png') no-repeat center center /contain;
+	border : 0px none;
+	border-radius : 5px 5px 0px 0px;
+	font : bold 14px "KoPubL";
+	color : #5e656f;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOff2[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOff2[status=focused]
+{
+	background : transparent URL('./NHSB_IMAGE_SET/HOME/main-tab02-off.png') no-repeat center center /contain;
+	border : 0px none;
+	border-radius : 5px 5px 0px 0px;
+	font : bold 14px "KoPubL";
+	color : #5e656f;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOff2[status=focused] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOn2[status=mouseover]
+{
+	background : transparent URL('./NHSB_IMAGE_SET/HOME/main-tab02-on.png') no-repeat center center /contain;
+	border : 0px none;
+	border-radius : 5px 5px 0px 0px;
+	font : bold 14px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOn2[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOn2[status=focused]
+{
+	background : transparent URL('./NHSB_IMAGE_SET/HOME/main-tab02-on.png') no-repeat center center /contain;
+	border : 0px none;
+	border-radius : 5px 5px 0px 0px;
+	font : bold 14px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOn2[status=focused] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_arrowRight[status=mouseover]
+{
+	background : transparent url('./SPP_IMAGE_SET/HOME/btn_HOME_arrowRight.png') no-repeat center center /auto;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_HOME_arrowRight[status=focused]
+{
+	background : transparent url('./SPP_IMAGE_SET/HOME/btn_HOME_arrowRight.png') no-repeat center center /auto;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_HOME_setting[status=focused]
+{
+	background : url('./NHSB_IMAGE_SET/HOME/btn-setting.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_HOME_setting[status=mouseover]
+{
+	background : url('./NHSB_IMAGE_SET/HOME/btn-setting-hover.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_HOME_link[status=focused]
+{
+	background : url('./NHSB_IMAGE_SET/HOME/btn-new.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_HOME_link[status=mouseover]
+{
+	background : url('./NHSB_IMAGE_SET/HOME/btn-new-hover.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Grid.grd_HOME_board .body .row .cell[status=mouseover]
+{
+	background : transparent;
+	border : 0px none;
+	color : #444444;
+	font : bold 14px 'KoPubL';
+	cursor : pointer;
+}
+.Grid.grd_HOME_board .body .row .cell.oddcell[status=mouseover]
+{
+	background : transparent;
+	color : #444444;
+}
+.Grid.grd_HOME_board .body .row .cell[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_board .body .row .cell .subcell[status=mouseover]
+{
+	background : transparent;
+	border : 0px none;
+	color : #444444;
+	font : bold 14px 'KoPubL';
+	cursor : pointer;
+}
+.Grid.grd_HOME_board .body .row .cell .subcell.oddcell[status=mouseover]
+{
+	background : transparent;
+	color : #444444;
+}
+.Grid.grd_HOME_board .body .row .cell .subcell[status=mouseover] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=mouseover]
+{
+	background : transparent;
+	border : 1px solid #444444;
+	border-radius : 5px 5px;
+	padding : 3px 6px 3px 6px;
+	color : #444444;
+	font : bold 13px 'KoPubL';
+	cursor : pointer;
+}
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=mouseover] .nexainput
+{
+	text-align : center;
+}
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+}
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=readonly]
+{
+	background : transparent;
+	border : 1px solid #444444;
+	border-radius : 5px 5px;
+	padding : 3px 6px 3px 6px;
+	color : #444444;
+	font : bold 13px 'KoPubL';
+	cursor : pointer;
+}
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=readonly] .nexainput
+{
+	text-align : center;
+}
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=readonly] .nexacontentsbox
+{
+	text-align : center;
+}
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=focused]
+{
+	background : transparent;
+	border : 1px solid #444444;
+	border-radius : 5px 5px;
+	padding : 3px 6px 3px 6px;
+	color : #444444;
+	font : bold 13px 'KoPubL';
+	cursor : pointer;
+}
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=focused] .nexainput
+{
+	text-align : center;
+}
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=focused] .nexacontentsbox
+{
+	text-align : center;
+}
+.Grid.grd_HOME_normal .head .row .cell[status=mouseover]
+{
+	background : #ecf5ff;
+	border : 0px, 0px, 1px solid #ced5df, 0px;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .head .row .cell[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .head .row .cell .subcell[status=mouseover]
+{
+	background : #ecf5ff;
+	border : 0px, 0px, 1px solid #ced5df, 0px;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .head .row .cell .subcell[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .body .row .cell[status=mouseover]
+{
+	background : #f8fdff;
+	border : 0px none, 0px none, 1px solid #ced5df, 0px none;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .body .row .cell.oddcell[status=mouseover]
+{
+	background : white;
+	color : #32333b;
+}
+.Grid.grd_HOME_normal .body .row .cell[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .body .row .cell .subcell[status=mouseover]
+{
+	background : #f8fdff;
+	border : 0px none, 0px none, 1px solid #ced5df, 0px none;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .body .row .cell .subcell.oddcell[status=mouseover]
+{
+	background : white;
+	color : #32333b;
+}
+.Grid.grd_HOME_normal .body .row .cell .subcell[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell[status=mouseover]
+{
+	background : #ecf5ff;
+	border : 0px, 0px, 1px solid #ced5df, 0px;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell .subcell[status=mouseover]
+{
+	background : #ecf5ff;
+	border : 0px, 0px, 1px solid #ced5df, 0px;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell .subcell[status=mouseover] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.ListView.lsv_HOME_normal.lsv_WF_HOME[status=readonly]
+{
+	border : 0px none;
+	background : transparent;
+	color : transparent;
+}
+.ListView.lsv_HOME_normal .body[status=readonly]
+{
+	border : 0px none;
+	background : transparent;
+	font : 12px "KoPubL";
+}
+.ListView.lsv_HOME_normal .detail[status=readonly]
+{
+	border : 0px none;
+	background : transparent;
+	font : 12px "KoPubL";
+}
+.ListViewDetailBandControl.popupListViewlsv_HOME_normaldetail.dummy.dummy[status=readonly]
+{
+	border : 0px none;
+	background : transparent;
+	font : 12px "KoPubL";
+}
+.ListView.lsv_HOME_normal .body[status=focused]
+{
+	border : 0px none;
+	background : transparent;
+	font : 12px "KoPubL";
+}
+.ListView.lsv_HOME_normal .detail[status=focused]
+{
+	border : 0px none;
+	background : transparent;
+	font : 12px "KoPubL";
+}
+.ListViewDetailBandControl.popupListViewlsv_HOME_normaldetail.dummy.dummy[status=focused]
+{
+	border : 0px none;
+	background : transparent;
+	font : 12px "KoPubL";
+}
+.ListView.lsv_HOME_normal .body[status=mouseover]
+{
+	border : 0px none;
+	background : transparent;
+	font : 12px "KoPubL";
+}
+.ListView.lsv_HOME_normal .detail[status=mouseover]
+{
+	border : 0px none;
+	background : transparent;
+	font : 12px "KoPubL";
+}
+.ListViewDetailBandControl.popupListViewlsv_HOME_normaldetail.dummy.dummy[status=mouseover]
+{
+	border : 0px none;
+	background : transparent;
+	font : 12px "KoPubL";
+}
+.ListView.lsv_HOME_normal .body .cell[status=readonly]
+{
+	background : transparent;
+	border : 0px none;
+}
+.ListView.lsv_HOME_normal .detail .cell[status=readonly]
+{
+	background : transparent;
+	border : 0px none;
+}
+.ListViewDetailBandControl.popupListViewlsv_HOME_normaldetail.dummy.dummy .cell[status=readonly]
+{
+	background : transparent;
+	border : 0px none;
+}
+.ListView.lsv_HOME_normal .body .cell[status=focused]
+{
+	background : transparent;
+	border : 0px none;
+}
+.ListView.lsv_HOME_normal .detail .cell[status=focused]
+{
+	background : transparent;
+	border : 0px none;
+}
+.ListViewDetailBandControl.popupListViewlsv_HOME_normaldetail.dummy.dummy .cell[status=focused]
+{
+	background : transparent;
+	border : 0px none;
+}
+.ListView.lsv_HOME_normal .body .cell[status=mouseover]
+{
+	border : 0px none;
+}
+.ListView.lsv_HOME_normal .detail .cell[status=mouseover]
+{
+	border : 0px none;
+}
+.ListViewDetailBandControl.popupListViewlsv_HOME_normaldetail.dummy.dummy .cell[status=mouseover]
+{
+	border : 0px none;
+}
+.ListView.lsv_HOME_normal .body .expandbar[status=mouseover]
+{
+	background : linear-gradient(to top,#e7e7e7,#fefefe);
+	border : 1px solid #a0a0a0;
+}
+.ListView.lsv_HOME_normal .body .expandbar[status=focused]
+{
+	background : linear-gradient(to top,#e7e7e7,#fefefe);
+	border : 1px solid #a0a0a0;
+}
+.Button.btn_HOME_boardOff[userstatus=pushed]
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/HOME/main-tab01-off.png') no-repeat center center;
+	border : 0px none;
+	border-radius : 5px 5px 0px 0px;
+	font : bold 14px "KoPubL";
+	color : #383e4b;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOff[userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOff[userstatus=selected]
+{
+	background : transparent URL('./MIRAE_IMAGE_SET/HOME/main-tab01-off.png') no-repeat center center;
+	border : 0px none;
+	border-radius : 5px 5px 0px 0px;
+	font : bold 14px "KoPubL";
+	color : #383e4b;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOff[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOn[userstatus=pushed]
+{
+	background : transparent URL('./NHSB_IMAGE_SET/HOME/main-tab01-on.png') no-repeat center center;
+	border : 0px none;
+	font : bold 14px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOn[userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOn[userstatus=selected]
+{
+	background : transparent URL('./NHSB_IMAGE_SET/HOME/main-tab01-on.png') no-repeat center center;
+	border : 0px none;
+	font : bold 14px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOn[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOff2[userstatus=pushed]
+{
+	background : transparent URL('./NHSB_IMAGE_SET/HOME/main-tab02-off.png') no-repeat center center /contain;
+	border : 0px none;
+	border-radius : 5px 5px 0px 0px;
+	font : bold 14px "KoPubL";
+	color : #5e656f;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOff2[userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOff2[userstatus=selected]
+{
+	background : transparent URL('./NHSB_IMAGE_SET/HOME/main-tab02-off.png') no-repeat center center /contain;
+	border : 0px none;
+	border-radius : 5px 5px 0px 0px;
+	font : bold 14px "KoPubL";
+	color : #5e656f;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOff2[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOn2[userstatus=pushed]
+{
+	background : transparent URL('./NHSB_IMAGE_SET/HOME/main-tab02-on.png') no-repeat center center /contain;
+	border : 0px none;
+	border-radius : 5px 5px 0px 0px;
+	font : bold 14px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOn2[userstatus=pushed] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_boardOn2[userstatus=selected]
+{
+	background : transparent URL('./NHSB_IMAGE_SET/HOME/main-tab02-on.png') no-repeat center center /contain;
+	border : 0px none;
+	border-radius : 5px 5px 0px 0px;
+	font : bold 14px "KoPubL";
+	color : #ffffff;
+	cursor : pointer;
+}
+.Button.btn_HOME_boardOn2[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+}
+.Button.btn_HOME_arrowRight[userstatus=pushed]
+{
+	background : transparent url('./SPP_IMAGE_SET/HOME/btn_HOME_arrowRight.png') no-repeat center center /auto;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_HOME_arrowRight[userstatus=selected]
+{
+	background : transparent url('./SPP_IMAGE_SET/HOME/btn_HOME_arrowRight.png') no-repeat center center /auto;
+	border : 0px none;
+	cursor : pointer;
+}
+.Button.btn_HOME_setting[userstatus=selected]
+{
+	background : url('./NHSB_IMAGE_SET/HOME/btn-setting.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_HOME_setting[userstatus=pushed]
+{
+	background : url('./NHSB_IMAGE_SET/HOME/btn-setting-hover.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_HOME_link[userstatus=selected]
+{
+	background : url('./NHSB_IMAGE_SET/HOME/btn-new.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Button.btn_HOME_link[userstatus=pushed]
+{
+	background : url('./NHSB_IMAGE_SET/HOME/btn-new-hover.png') no-repeat center center;
+	border : 0px;
+	cursor : pointer;
+}
+.Grid.grd_HOME_board .body .row .cell[userstatus=selected]
+{
+	background : transparent;
+	border : 0px none;
+	color : #444444;
+	font : bold 14px 'KoPubL';
+	cursor : pointer;
+}
+.Grid.grd_HOME_board .body .row .cell.oddcell[userstatus=selected]
+{
+	background : transparent;
+	color : #444444;
+}
+.Grid.grd_HOME_board .body .row .cell[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_board .body .row .cell .subcell[userstatus=selected]
+{
+	background : transparent;
+	border : 0px none;
+	color : #444444;
+	font : bold 14px 'KoPubL';
+	cursor : pointer;
+}
+.Grid.grd_HOME_board .body .row .cell .subcell.oddcell[userstatus=selected]
+{
+	background : transparent;
+	color : #444444;
+}
+.Grid.grd_HOME_board .body .row .cell .subcell[userstatus=selected] .nexacontentsbox
+{
+	text-align : left;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .head .row .cell[userstatus=selected]
+{
+	background : #ecf5ff;
+	border : 0px, 0px, 1px solid #ced5df, 0px;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .head .row .cell[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .head .row .cell .subcell[userstatus=selected]
+{
+	background : #ecf5ff;
+	border : 0px, 0px, 1px solid #ced5df, 0px;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .head .row .cell .subcell[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .body .row .cell[userstatus=selected]
+{
+	background : #f8fdff;
+	border : 0px none, 0px none, 1px solid #ced5df, 0px none;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .body .row .cell.oddcell[userstatus=selected]
+{
+	background : white;
+	color : #32333b;
+}
+.Grid.grd_HOME_normal .body .row .cell[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .body .row .cell .subcell[userstatus=selected]
+{
+	background : #f8fdff;
+	border : 0px none, 0px none, 1px solid #ced5df, 0px none;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .body .row .cell .subcell.oddcell[userstatus=selected]
+{
+	background : white;
+	color : #32333b;
+}
+.Grid.grd_HOME_normal .body .row .cell .subcell[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell[userstatus=selected]
+{
+	background : #ecf5ff;
+	border : 0px, 0px, 1px solid #ced5df, 0px;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell .subcell[userstatus=selected]
+{
+	background : #ecf5ff;
+	border : 0px, 0px, 1px solid #ced5df, 0px;
+	color : #32333b;
+	font : bold 12px 'KoPubL';
+}
+.Grid.grd_HOME_normal .head .row .cell.grdHCell_HOME_fCell .subcell[userstatus=selected] .nexacontentsbox
+{
+	text-align : center;
+	vertical-align : middle;
+}
+.ListView.lsv_HOME_normal .body[userstatus=selected]
+{
+	background : transparent;
+}
+.ListView.lsv_HOME_normal .detail[userstatus=selected]
+{
+	background : transparent;
+}
+.ListViewDetailBandControl.popupListViewlsv_HOME_normaldetail.dummy.dummy[userstatus=selected]
+{
+	background : transparent;
+}
+.Div.div_HOME_myWidgetBg[status=disabled]
+{
+	-nexa-edge : url('./MIRAE_IMAGE_SET/HOME/main-btn05-off.png') 0px 0px;
+	border : 0px none;
+	cursor : pointer;
+}
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=disabled]
+{
+	background : transparent;
+	border : 1px solid #444444;
+	border-radius : 5px 5px;
+	padding : 3px 6px 3px 6px;
+	color : #444444;
+	font : bold 13px 'KoPubL';
+	cursor : pointer;
+}
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=disabled] .nexainput
+{
+	text-align : center;
+}
+.Grid.grd_HOME_board .body .row .cell.grdBCelledit_HOME_readonly .celledit[status=disabled] .nexacontentsbox
+{
+	text-align : center;
+}
+.Grid.grd_WF_normal .head .row .cell[status=disabled]
+{
+	color : #444444;
+}
+.ListView.lsv_HOME_normal[status=disabled]
+{
+	background : #666666;
+}
+.ListView.lsv_HOME_normal .body[status=disabled]
+{
+	color : #999999;
+}
+.ListView.lsv_HOME_normal .detail[status=disabled]
+{
+	color : #999999;
+}
+.ListViewDetailBandControl.popupListViewlsv_HOME_normaldetail.dummy.dummy[status=disabled]
+{
+	color : #999999;
+}
+.ListView.lsv_HOME_normal .body .cell[status=disabled]
+{
+	background : transparent;
+	border : 0px none;
+}
+.ListView.lsv_HOME_normal .detail .cell[status=disabled]
+{
+	background : transparent;
+	border : 0px none;
+}
+.ListViewDetailBandControl.popupListViewlsv_HOME_normaldetail.dummy.dummy .cell[status=disabled]
+{
+	background : transparent;
+	border : 0px none;
+}
+.ListView.lsv_HOME_normal .body .expandbar[status=disabled]
+{
+	color : #bbbbbb;
+	background : #f5f5f5;
+	border : 1px solid #d9d9d9;
+	opacity : 0.50;
+}

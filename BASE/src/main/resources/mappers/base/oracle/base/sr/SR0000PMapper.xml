@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR0000PDAO">
+
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              0 AS CHK      /* CHECKBOX 컬럼 */
+            , CASE WHEN B.REQ_ID IS NULL THEN 'I' ELSE '' END AS ROWFLAG        /* 행상태 표기를 위한 컬럼 */
+            , A.REQ_TMPLAT_ID
+            , A.REQ_TMPLAT_VER
+            , B.REQ_ID                                      --요청서ID
+            , NVL(B.WF_PROC_CD, (
+                                SELECT WF_PROC_CD
+                                FROM WF_REQ_TMPLAT_PROC_HT X
+                                WHERE 1 = 1
+                                AND X.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID
+                                AND X.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER
+                                AND SEQ = 1
+                                )
+              )   AS WF_PROC_CD                             --진행단계
+            , ( SELECT  CMM_CD_NM
+                FROM    FOMM_CMM_CD_MT
+                WHERE   CODE_DIV = 'WORKFLOW_CD'
+                AND     LANG_CD = 'KR'
+                AND     CMM_CD = NVL(   B.WF_PROC_CD, 
+                                        (   SELECT  WF_PROC_CD
+                                            FROM    WF_REQ_TMPLAT_PROC_HT X
+                                            WHERE   1 = 1
+                                            AND     X.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID
+                                            AND     X.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER
+                                            AND     SEQ = 1
+                                        )
+                                    )
+              ) AS WF_PROC_NM                               --진행단계명
+            , B.REQ_STAT_CD                                 --요청서진행상태코드
+            , NVL((SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = B.REQ_STAT_CD AND LANG_CD = 'KR')
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = B.REQ_STAT_CD AND LANG_CD = 'KR')
+                 ) AS REQ_STAT_NM
+            , B.TITLE                                       --제목
+            , NVL(B.REQ_EM_YN, 'N') AS REQ_EM_YN            --긴급요청여부
+            , B.REQ_USER_ID                                 --요청자ID
+            , B.REQ_USER_NM                                 --요청자명
+            , B.REQ_DEPT_CD                                 --요청자부서ID
+            , B.REQ_DEPT_NM                                 --요청자부서명
+            , B.REQ_DATE                                    --요청일시
+            , A.SVC_CD                                      --서비스유형코드
+            , A.SVC_DTL_CD                                  --서비스유형 상세코드
+            , NVL((SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'SVC_CD' AND CMM_CD = A.SVC_CD AND LANG_CD = 'KR')
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'SVC_CD' AND CMM_CD = A.SVC_CD AND LANG_CD = 'KR')
+                 )
+              || ' > ' ||
+              NVL((SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = A.SVC_CD AND CMM_CD = A.SVC_DTL_CD AND LANG_CD = 'KR')
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = A.SVC_CD AND CMM_CD = A.SVC_DTL_CD AND LANG_CD = 'KR')
+                 )  AS SVC_NM_INFO
+            , A.REQ_TMPLAT_NM                               /*요청서양식명*/
+            , A.REQ_REF_YN                                  /*요청서 참조여부*/
+            , B.REQ_WISH_DT                                 /*희망완료일*/
+            , B.REQ_WISH_TIME                               /*희망완료시분*/
+            , B.JOB_REQ_DT                                  /*작업요청일*/
+            , B.JOB_REQ_TIME                                /*작업요청시분*/
+            , B.PROC_COMP_DATE                              /*완료일시*/
+            , B.DEL_YN                                      /*삭제여부*/
+            , B.CONTENTS                                    /*요청서내용*/
+            , B.PRE_CONF_USER_ID                            /*사전협의자ID*/
+            , B.PRE_CONF_USER_NM                            /*사전협의자명*/
+            , B.PRE_CONF_DEPT_CD                            /*사전협의자부서ID*/
+            , B.PRE_CONF_DEPT_NM                            /*사전협의자부서명*/
+            , A.REQ_DESC                                    /*작성요령*/
+            , B.RMK                                         /*비고*/
+            , B.REF_REQ_ID                                  /*참조요청서ID*/
+            , B.E_DOCU_NO                                   /*전자결재문서*/ 
+            , B.CANCEL_POSS_YN                              /*회수(요청취소)가능여부*/
+            , C.DANGER_GRADE_CD                             /*위험등급*/
+            , C.IT_DEPT_CD                                  /*IT부서*/
+            , (SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = C.IT_DEPT_CD) AS IT_DEPT_NM
+            , C.PM_USER_ID                                  /*IT담당자*/
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = C.PM_USER_ID) AS PM_USER_NM
+
+            , B.FRID                                        /*등록자ID*/
+            , B.FR_USER_NM                                  /*등록자명*/
+            , B.FR_DEPT_CD                                  /*등록자부서ID*/
+            , B.FR_DEPT_NM                                  /*등록자부서명*/
+            , TO_DATE(B.FRDT, 'YYYYMMDDHH24MISS') AS FRDT   /*최초등록일시*/
+            , B.FRDT                                        /*등록일시*/
+            , B.LMID                                        /*수정자ID*/
+            , B.LM_USER_NM                                  /*수정자명*/
+            , B.LM_DEPT_CD                                  /*수정자부서ID*/
+            , B.LM_DEPT_NM                                  /*수정자부서명*/
+            , TO_DATE(B.FRDT, 'YYYYMMDDHH24MISS') AS LMDT   /*최초등록일시*/
+            , B.LMDT                                        /*수정일시*/
+            , B.LMPID                                       /*최종수정화면ID*/
+            , MA.SR_CHK_STOP_YN                             /*요청관리 검토중지 여부*/
+
+        FROM
+             WF_REQ_TMPLAT_HT A
+            ,SR_BASE_INFO B
+        LEFT JOIN SR_MA_REQ MA ON B.REQ_ID      = MA.REQ_ID     
+        LEFT JOIN SR_MA_BA_IT_REV C ON B.REQ_ID = C.REQ_ID
+        LEFT JOIN SR_MA_PRJ P ON B.REQ_ID       = P.REQ_ID
+        
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID 
+        AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+        AND B.DEL_YN            = 'N'
+        AND A.SVC_CD            = 'SRM'        
+          
+        <if test="TITLE != '' and TITLE != null">
+        AND UPPER(B.TITLE) LIKE '%' || UPPER(#{TITLE}) || '%'
+        </if>
+
+        <if test="REQ_ID != '' and REQ_ID != null">
+        AND UPPER(B.REQ_ID) LIKE UPPER(#{REQ_ID}) || '%'
+        </if>
+        
+        AND B.REQ_DATE  BETWEEN #{FR_REQ_DT} ||'000000' AND #{TO_REQ_DT} ||'235959'
+        
+        <if test="REQ_STAT_CD != '' and REQ_STAT_CD != null">
+        AND B.REQ_STAT_CD       = #{REQ_STAT_CD}
+        </if>
+        
+        <if test="SVC_CD != '' and SVC_CD != null">
+        AND A.SVC_CD       = #{SVC_CD}
+        </if>
+
+        <if test='"Y".equals(MY_REQ_YN)'>
+        AND B.REQ_USER_ID    = #{USER_ID}
+        </if>
+
+        <if test="REQ_TMPLAT_ID != '' and REQ_TMPLAT_ID != null">
+        AND A.REQ_TMPLAT_ID    = #{REQ_TMPLAT_ID}
+        </if>
+        <choose>
+            <when test="SR_CHK_STOP_YN != '' and SR_CHK_STOP_YN != null">
+            AND (B.WF_PROC_CD ='WF_PROC_9999' AND B.REQ_STAT_CD='RQST99')           
+            AND B.SVC_DTL_CD IN ('WFSR0100','WFSR0200','WFSR0300','WFSR1100','WFSR1200','WFSR1300')
+            </when>
+            <otherwise>
+                <choose>
+                     <when test="REQ_SR_STATUS != '' and REQ_SR_STATUS != null">
+                     
+                     </when>
+                    
+                    <otherwise>
+                     AND (B.WF_PROC_CD ='WF_PROC_9999' AND B.REQ_STAT_CD='RQST99')
+                    </otherwise>
+                </choose>
+            </otherwise>
+        </choose>
+        
+        <!-- 초기 작성중(임시저장) 내역은 제외 -->
+        AND (B.WF_PROC_CD, B.REQ_STAT_CD) NOT IN (SELECT 'WF_PROC_1000', 'RQST00' FROM DUAL)
+    </select>
+    
+        <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT
+              0 AS CHK      /* CHECKBOX 컬럼 */
+            , CASE WHEN B.REQ_ID IS NULL THEN 'I' ELSE '' END AS ROWFLAG        /* 행상태 표기를 위한 컬럼 */
+            , A.REQ_TMPLAT_ID
+            , A.REQ_TMPLAT_VER
+            , B.REQ_ID                                      --요청서ID
+            , NVL(B.WF_PROC_CD, (
+                                SELECT WF_PROC_CD
+                                FROM WF_REQ_TMPLAT_PROC_HT X
+                                WHERE 1 = 1
+                                AND X.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID
+                                AND X.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER
+                                AND SEQ = 1
+                                )
+              )   AS WF_PROC_CD                             --진행단계
+            , ( SELECT  CMM_CD_NM
+                FROM    FOMM_CMM_CD_MT
+                WHERE   CODE_DIV = 'WORKFLOW_CD'
+                AND     LANG_CD = 'KR'
+                AND     CMM_CD = NVL(   B.WF_PROC_CD, 
+                                        (   SELECT  WF_PROC_CD
+                                            FROM    WF_REQ_TMPLAT_PROC_HT X
+                                            WHERE   1 = 1
+                                            AND     X.REQ_TMPLAT_ID = A.REQ_TMPLAT_ID
+                                            AND     X.REQ_TMPLAT_VER = A.REQ_TMPLAT_VER
+                                            AND     SEQ = 1
+                                        )
+                                    )
+              ) AS WF_PROC_NM                               --진행단계명
+            , B.REQ_STAT_CD                                 --요청서진행상태코드
+            , NVL((SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = B.REQ_STAT_CD AND LANG_CD = 'KR')
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'REQ_STAT_CD' AND CMM_CD = B.REQ_STAT_CD AND LANG_CD = 'KR')
+                 ) AS REQ_STAT_NM
+            , B.TITLE                                       --제목
+            , NVL(B.REQ_EM_YN, 'N') AS REQ_EM_YN            --긴급요청여부
+            , B.REQ_USER_ID                                 --요청자ID
+            , B.REQ_USER_NM                                 --요청자명
+            , B.REQ_DEPT_CD                                 --요청자부서ID
+            , B.REQ_DEPT_NM                                 --요청자부서명
+            , B.REQ_DATE                                    --요청일시
+            , A.SVC_CD                                      --서비스유형코드
+            , A.SVC_DTL_CD                                  --서비스유형 상세코드
+            , NVL((SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'SVC_CD' AND CMM_CD = A.SVC_CD AND LANG_CD = 'KR')
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'SVC_CD' AND CMM_CD = A.SVC_CD AND LANG_CD = 'KR')
+                 )
+              || ' > ' ||
+              NVL((SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = A.SVC_CD AND CMM_CD = A.SVC_DTL_CD AND LANG_CD = 'KR')
+                , (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = A.SVC_CD AND CMM_CD = A.SVC_DTL_CD AND LANG_CD = 'KR')
+                 )  AS SVC_NM_INFO
+            , A.REQ_TMPLAT_NM                               /*요청서양식명*/
+            , A.REQ_REF_YN                                  /*요청서 참조여부*/
+            , B.REQ_WISH_DT                                 /*희망완료일*/
+            , B.REQ_WISH_TIME                               /*희망완료시분*/
+            , B.JOB_REQ_DT                                  /*작업요청일*/
+            , B.JOB_REQ_TIME                                /*작업요청시분*/
+            , B.PROC_COMP_DATE                              /*완료일시*/
+            , B.DEL_YN                                      /*삭제여부*/
+            , B.CONTENTS                                    /*요청서내용*/
+            , B.PRE_CONF_USER_ID                            /*사전협의자ID*/
+            , B.PRE_CONF_USER_NM                            /*사전협의자명*/
+            , B.PRE_CONF_DEPT_CD                            /*사전협의자부서ID*/
+            , B.PRE_CONF_DEPT_NM                            /*사전협의자부서명*/
+            , A.REQ_DESC                                    /*작성요령*/
+            , B.RMK                                         /*비고*/
+            , B.REF_REQ_ID                                  /*참조요청서ID*/
+            , B.E_DOCU_NO                                   /*전자결재문서*/ 
+            , B.CANCEL_POSS_YN                              /*회수(요청취소)가능여부*/
+            , C.DANGER_GRADE_CD                             /*위험등급*/
+            , C.IT_DEPT_CD                                  /*IT부서*/
+            , (SELECT DEPT_NM FROM FOMM_DEPT_MT WHERE DEPT_CD = C.IT_DEPT_CD) AS IT_DEPT_NM
+            , C.PM_USER_ID                                  /*IT담당자*/
+            , (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = C.PM_USER_ID) AS PM_USER_NM
+
+            , B.FRID                                        /*등록자ID*/
+            , B.FR_USER_NM                                  /*등록자명*/
+            , B.FR_DEPT_CD                                  /*등록자부서ID*/
+            , B.FR_DEPT_NM                                  /*등록자부서명*/
+            , TO_DATE(B.FRDT, 'YYYYMMDDHH24MISS') AS FRDT   /*최초등록일시*/
+            , B.FRDT                                        /*등록일시*/
+            , B.LMID                                        /*수정자ID*/
+            , B.LM_USER_NM                                  /*수정자명*/
+            , B.LM_DEPT_CD                                  /*수정자부서ID*/
+            , B.LM_DEPT_NM                                  /*수정자부서명*/
+            , TO_DATE(B.FRDT, 'YYYYMMDDHH24MISS') AS LMDT   /*최초등록일시*/
+            , B.LMDT                                        /*수정일시*/
+            , B.LMPID                                       /*최종수정화면ID*/
+            , MA.SR_CHK_STOP_YN                             /*요청관리 검토중지 여부*/
+
+        FROM
+             WF_REQ_TMPLAT_HT A
+            ,SR_BASE_INFO B
+        LEFT JOIN SR_MA_REQ MA ON B.REQ_ID      = MA.REQ_ID     
+        LEFT JOIN SR_MA_BA_IT_REV C ON B.REQ_ID = C.REQ_ID
+        LEFT JOIN SR_MA_PRJ P ON B.REQ_ID       = P.REQ_ID
+        
+        WHERE 1 = 1
+        AND A.REQ_TMPLAT_ID     = B.REQ_TMPLAT_ID 
+        AND A.REQ_TMPLAT_VER    = B.REQ_TMPLAT_VER
+        AND B.DEL_YN            = 'N'
+        AND A.SVC_CD            = 'CHM'        
+          
+        <if test="TITLE != '' and TITLE != null">
+        AND UPPER(B.TITLE) LIKE '%' || UPPER(#{TITLE}) || '%'
+        </if>
+
+        <if test="REQ_ID != '' and REQ_ID != null">
+        AND UPPER(B.REQ_ID) LIKE UPPER(#{REQ_ID}) || '%'
+        </if>
+        
+        AND B.REQ_DATE  BETWEEN #{FR_REQ_DT} ||'000000' AND #{TO_REQ_DT} ||'235959'
+        
+        <if test="REQ_STAT_CD != '' and REQ_STAT_CD != null">
+        AND B.REQ_STAT_CD       = #{REQ_STAT_CD}
+        </if>
+       
+        <if test='"Y".equals(MY_REQ_YN)'>
+        AND B.REQ_USER_ID    = #{USER_ID}
+        </if>
+
+        <if test="REQ_TMPLAT_ID != '' and REQ_TMPLAT_ID != null">
+        AND A.REQ_TMPLAT_ID    = #{REQ_TMPLAT_ID}
+        </if>
+        <!-- 초기 작성중(임시저장) 내역은 제외 -->
+        AND (B.WF_PROC_CD, B.REQ_STAT_CD) NOT IN (SELECT 'WF_PROC_1000', 'RQST00' FROM DUAL)
+        ORDER BY B.REQ_DATE DESC
+    </select>
+
+</mapper>

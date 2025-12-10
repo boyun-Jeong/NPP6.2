@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM1200WDAO">
+
+	<select id="selectCatNh" parameterType="java.util.Map" resultType="java.util.Map">
+	    /* FOMM1200WDAO.selectCatNh */
+	    select  
+	       '' AS ROWFLAG,
+           SR_CAT_ID,
+           SR_CAT_TYPE,
+           SR_CAT_NAME,
+           SR_TYPE,
+           AUTH_ID,
+           USE_YN,
+           BIGO,
+           REG_USER_ID,
+           REG_USER_NM,
+           REG_STIME,
+           LMOD_USER_ID,
+           LMOD_USER_NM,
+           SYSMODTIME
+        from SR_CATEGORY_NH
+         where 1 = 1
+         <if test="SR_CAT_NAME != '' and SR_CAT_NAME != null">
+             AND REPLACE(UPPER(SR_CAT_NAME),' ','') LIKE '%'||REPLACE(UPPER(#{SR_CAT_NAME}),' ','')||'%'
+         </if>
+         <if test="SR_CAT_TYPE != '' and SR_CAT_TYPE != null">
+             AND SR_CAT_TYPE = #{SR_CAT_TYPE}
+         </if>
+         <if test="USE_YN  != '' and USE_YN  != null">
+             AND USE_YN = #{USE_YN}
+         </if> 
+      ORDER BY SR_CAT_TYPE, SR_CAT_ID   
+	</select>
+
+	<insert id="insertCatNh" parameterType="java.util.Map">
+	  /* FOMM1200WDAO.insertCatNh */ 
+      insert into SR_CATEGORY_NH
+      ( SR_CAT_ID,
+        SR_CAT_TYPE,
+        SR_CAT_NAME,
+        SR_TYPE,
+        AUTH_ID,
+        USE_YN,
+        BIGO,
+        REG_USER_ID,
+        REG_USER_NM,
+        REG_STIME,
+        LMOD_USER_ID,
+        LMOD_USER_NM,
+        SYSMODTIME )
+      values 
+      ( #{SR_CAT_ID},
+        #{SR_CAT_TYPE},
+        #{SR_CAT_NAME},
+        #{SR_TYPE},
+        #{AUTH_ID},
+        #{USE_YN},
+        #{BIGO},
+        #{userId},
+        #{userNm},
+        to_char(sysdate, 'yyyyMMddhh24miss'),
+        #{userId},
+        #{userNm},
+        to_char(sysdate, 'yyyyMMddhh24miss') 
+      )   
+	</insert>
+
+	<update id="updateCatNh" parameterType="java.util.Map">
+	   /* FOMM1200WDAO.updateCatNh */ 
+	   update SR_CATEGORY_NH set 
+           SR_CAT_ID = #{SR_CAT_ID},
+           SR_CAT_TYPE = #{SR_CAT_TYPE},
+           SR_CAT_NAME = #{SR_CAT_NAME},
+           SR_TYPE = #{SR_TYPE},
+           AUTH_ID = #{AUTH_ID},
+           USE_YN = #{USE_YN},
+           BIGO = #{BIGO},
+           LMOD_USER_ID = #{userId},
+           LMOD_USER_NM = #{userNm},
+           SYSMODTIME = to_char(sysdate, 'yyyyMMddhh24miss')
+       where SR_CAT_ID = #{SR_CAT_ID} 
+	</update>
+	
+	    
+    <select id="chkDupCatNh" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FOMM1200WDAO.chkDupCatNh */
+        select count(*) RST_CNT
+           from SR_CATEGORY_NH SM
+        where 1 = 1    
+           AND SR_CAT_ID = #{SR_CAT_ID}
+    </select>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	</delete>
+
+</mapper>

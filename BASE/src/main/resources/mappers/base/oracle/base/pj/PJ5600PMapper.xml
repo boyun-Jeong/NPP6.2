@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ5600PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  A.STDFT_ID
+			, A.STEST_ID
+			, D.STEST_TYPE_CD
+			, D.STEST_VERSION
+			, D.STEST_NO
+			, D.STEST_NAME
+			, D.CASE_DESC
+			, D.STEP_SEQ
+			, D.STEP_NO
+			, D.STEP_NAME
+			, A.PJT_ID
+			, A.BIZ_ID
+			, A.STDFT_NO
+			, A.STDFT_NAME
+			, A.STDFT_TYPE_CD
+			, A.STDFT_DESC
+			, A.STDFT_RCV_CD
+			, A.STDFT_RCV_DESC
+			, A.STDFT_ACT_CD
+			, A.STDFT_CLASS_CD
+			, A.STDFT_SEVERITY_CD
+			, A.STDFT_CONF_CD
+			, A.DFT_USER_ID
+			, A.DFT_USER_NM
+			, A.DFT_USER_DEPT
+			, A.DFT_REG_DATE
+			, A.ACT_USER_ID
+			, A.ACT_USER_NM
+			, A.ACT_USER_DEPT
+			, A.ACT_PDATE
+			, A.ACT_ADATE
+			, A.ACT_DESC
+			, A.CONF_USER_ID
+			, A.CONF_USER_NM
+			, A.CONF_USER_DEPT
+			, A.CONF_DATE
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.SYSMODTIME
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, A.REMARK
+			, A.STDFT_RCV_USER_ID
+			, A.STDFT_RCV_USER_NM
+			, A.STDFT_RCV_USER_DEPT
+			, B.PJT_NAME AS PJT_NAME
+			, C.PJT_ID   AS P_PJT_ID 
+			, C.PJT_NAME AS P_PJT_NAME
+
+		FROM
+			  PJ_ST_DEFECT A
+			, PJ_PROJECT B
+			, PJ_PROJECT C
+			, PJ_SCNR_TEST D
+
+		WHERE 1 = 1
+		AND A.PJT_ID		= B.PJT_ID
+		AND B.PARENT_ID		= C.PJT_ID
+		AND A.STEST_ID		= D.STEST_ID(+)
+		AND A.PJT_ID		= D.PJT_ID(+)
+		AND A.STDFT_ID		= #{STDFT_ID}
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="STDFT_ID" order="BEFORE">
+			SELECT
+				'PJSD' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(STDFT_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_ST_DEFECT
+   			WHERE 1 = 1
+   			AND STDFT_ID LIKE 'PJSD%'
+			AND LENGTH(STDFT_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_ST_DEFECT
+		(  
+			  STDFT_ID
+			, STEST_ID
+			, PJT_ID
+			, BIZ_ID
+			, STDFT_NO
+			, STDFT_NAME
+			, STDFT_TYPE_CD
+			, STDFT_DESC
+			, STDFT_RCV_CD
+			, STDFT_RCV_DESC
+			, STDFT_ACT_CD
+			, STDFT_CLASS_CD
+			, STDFT_SEVERITY_CD
+			, STDFT_CONF_CD
+			, DFT_USER_ID
+			, DFT_USER_NM
+			, DFT_USER_DEPT
+			, DFT_REG_DATE
+			, ACT_USER_ID
+			, ACT_USER_NM
+			, ACT_USER_DEPT
+			, ACT_PDATE
+			, ACT_ADATE
+			, ACT_DESC
+			, CONF_USER_ID
+			, CONF_USER_NM
+			, CONF_USER_DEPT
+			, CONF_DATE
+			, REMARK
+			, STDFT_RCV_USER_ID
+			, STDFT_RCV_USER_NM
+			, STDFT_RCV_USER_DEPT
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+
+			, SYSMODTIME
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  #{STDFT_ID}
+		    , #{STEST_ID}
+		    , #{PJT_ID}
+		    , #{BIZ_ID}
+		    , (
+			  SELECT
+				'DF'|| '_' || #{STEST_VERSION} || '_' || #{STEP_NO} || '_' ||
+				TRIM(TO_CHAR(NVL(MAX(TO_NUMBER(SUBSTR(STDFT_NO, LENGTH(STDFT_NO), 3), '999')), 0) + 1, '000'))	AS STDFT_NO
+			  FROM
+			  	PJ_ST_DEFECT
+			  WHERE 1 = 1
+			  AND STDFT_NO LIKE ( 'DF' || '_' || #{STEST_VERSION} || '_' || #{STEP_NO} ||'%' )
+			  )
+		    , #{STDFT_NAME}
+			, #{STDFT_TYPE_CD}
+			, #{STDFT_DESC}
+			, #{STDFT_RCV_CD}
+			, #{STDFT_RCV_DESC}
+			, #{STDFT_ACT_CD}
+			, #{STDFT_CLASS_CD}
+			, #{STDFT_SEVERITY_CD}
+			, #{STDFT_CONF_CD}
+			, #{DFT_USER_ID}
+			, #{DFT_USER_NM}
+			, #{DFT_USER_DEPT}
+			, #{DFT_REG_DATE}
+			, #{ACT_USER_ID}
+			, #{ACT_USER_NM}
+			, #{ACT_USER_DEPT}
+			, #{ACT_PDATE}
+			, #{ACT_ADATE}
+			, #{ACT_DESC}
+			, #{CONF_USER_ID}
+			, #{CONF_USER_NM}
+			, #{CONF_USER_DEPT}
+			, #{CONF_DATE}
+			, #{REMARK}
+
+			, #{STDFT_RCV_USER_ID}
+			, #{STDFT_RCV_USER_NM}
+			, #{STDFT_RCV_USER_DEPT}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_ST_DEFECT SET
+			  STEST_ID				= #{STEST_ID}
+            , PJT_ID				= #{PJT_ID}
+            , BIZ_ID				= #{BIZ_ID}
+            , STDFT_NO				= #{STDFT_NO}
+            , STDFT_NAME			= #{STDFT_NAME}
+            , STDFT_TYPE_CD			= #{STDFT_TYPE_CD}
+            , STDFT_DESC			= #{STDFT_DESC}
+            , STDFT_RCV_CD			= #{STDFT_RCV_CD}
+            , STDFT_RCV_DESC		= #{STDFT_RCV_DESC}
+            , STDFT_ACT_CD			= #{STDFT_ACT_CD}
+            , STDFT_CLASS_CD		= #{STDFT_CLASS_CD}
+            , STDFT_SEVERITY_CD		= #{STDFT_SEVERITY_CD}
+            , STDFT_CONF_CD			= #{STDFT_CONF_CD}
+            , DFT_USER_ID			= #{DFT_USER_ID}
+            , DFT_USER_NM			= #{DFT_USER_NM}
+            , DFT_USER_DEPT			= #{DFT_USER_DEPT}
+            , DFT_REG_DATE			= #{DFT_REG_DATE}
+            , ACT_USER_ID			= #{ACT_USER_ID}
+            , ACT_USER_NM       	= #{ACT_USER_NM}
+            , ACT_USER_DEPT     	= #{ACT_USER_DEPT}
+            , ACT_PDATE				= #{ACT_PDATE}
+            , ACT_ADATE				= #{ACT_ADATE}
+            , ACT_DESC				= #{ACT_DESC}
+            , CONF_USER_ID			= #{CONF_USER_ID}
+            , CONF_USER_NM			= #{CONF_USER_NM}
+            , CONF_USER_DEPT		= #{CONF_USER_DEPT}
+            , CONF_DATE				= #{CONF_DATE}
+            , REMARK				= #{REMARK}
+            , STDFT_RCV_USER_ID		= #{STDFT_RCV_USER_ID}
+		    , STDFT_RCV_USER_NM		= #{STDFT_RCV_USER_NM}
+		    , STDFT_RCV_USER_DEPT	= #{STDFT_RCV_USER_DEPT}
+
+            , LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+
+		WHERE 1 = 1
+		AND STDFT_ID = #{STDFT_ID}
+	</update>
+
+</mapper>

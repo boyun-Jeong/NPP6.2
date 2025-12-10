@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0950WDAO">
+
+    <resultMap id="memoMap" type="hashMap" >
+        <result property="CHK"              column="CHK"            jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="ROWFLAG"          column="ROWFLAG"        jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="MEMO_ID"          column="MEMO_ID"        jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="MEMO_TITLE"       column="MEMO_TITLE"     jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="MEMO_CONTENTS"    column="MEMO_CONTENTS"  jdbcType="CLOB"     javaType="java.lang.String"/>
+       
+        <result property="MEMO_STATUS_CD"   column="MEMO_STATUS_CD" jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="SEND_TIME"        column="SEND_TIME"      jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="ATTACH_YN"        column="ATTACH_YN"      jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="DEL_YN"           column="DEL_YN"         jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="DEL_TIME"         column="DEL_TIME"       jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="REG_USER_ID"      column="REG_USER_ID"    jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        
+        <result property="REG_USER_NM"      column="REG_USER_NM"    jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="REG_USER_DEPT"    column="REG_USER_DEPT"  jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="NEW_MEMO_YN"      column="NEW_MEMO_YN"    jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="SYSMODTIME"       column="SYSMODTIME"     jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="LMOD_USER_ID"     column="LMOD_USER_ID"   jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="LMOD_USER_NM"     column="LMOD_USER_NM"   jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        
+        <result property="LMOD_USER_DEPT"   column="LMOD_USER_DEPT" jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        
+        <result property="REPLY_ID"         column="REPLY_ID"       jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="REPLY_USER_ID"    column="REPLY_USER_ID"  jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="REPLY_USER_NM"    column="REPLY_USER_NM"  jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="REPLY_USER_DEPT"  column="REPLY_USER_DEPT" jdbcType="VARCHAR"  javaType="java.lang.String"/>
+        <result property="REPLY_CONTENTS"   column="REPLY_CONTENTS" jdbcType="CLOB"  javaType="java.lang.String"/>
+        <result property="REG_STIME"        column="REG_STIME"      jdbcType="VARCHAR"  javaType="java.lang.String"/>
+    </resultMap>
+
+	<select id="select01" parameterType="java.util.Map" resultMap="memoMap">
+        SELECT 
+		    MEMO_ID
+		    , MEMO_TITLE
+		    , MEMO_CONTENTS
+		    , MEMO_STATUS_CD
+		    , SEND_TIME
+		    , ATTACH_YN
+		    , DEL_YN
+		    , DEL_TIME
+		    , REG_USER_ID
+		    , REG_USER_NM
+		    , REG_USER_DEPT
+		    , NEW_MEMO_YN
+		    , SYSMODTIME
+		    , LMOD_USER_ID
+		    , LMOD_USER_NM
+		    , LMOD_USER_DEPT
+		FROM FOMM_MEMO
+		WHERE MEMO_ID = #{MEMO_ID}
+	</select>
+	
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT 
+		    MEMO_RCV_ID
+		    , JOB_REV_NO
+		    , RCV_USER_ID
+		    , RCV_USER_ID AS USER_ID
+		    , RCV_USER_NM
+		    , RCV_USER_NM AS USER_NM
+		    , RCV_USER_DEPT
+		    , RCV_TYPE_CD
+		    , SND_USER_ID
+		    , SND_USER_NM
+		    , SND_USER_DEPT
+		    , NEW_MEMO_YN
+		    , READ_YN
+		    , READ_TIME
+		    , DEL_YN
+		    , DEL_TIME
+		    , (
+		        SELECT
+		            DEPT_NM
+		        FROM 
+		            FOMM_DEPT_MT
+		        WHERE
+		            DEPT_CD = RCV_USER_DEPT
+		    ) RCV_USER_DEPT_NM
+		    , (
+		        SELECT
+		            DEPT_NM
+		        FROM 
+		            FOMM_DEPT_MT
+		        WHERE
+		            DEPT_CD = SND_USER_DEPT
+		    ) SND_USER_DEPT_NM
+		    , (
+		        SELECT 
+		            POS_NM 
+		        FROM 
+		            FOMM_USER_MT
+		        WHERE 
+		            USER_ID = RCV_USER_ID
+		    ) JBC_JNAME
+		    , 'U' AS ROWFLAG
+		FROM 
+		    FOMM_MEMO_RCV
+		WHERE 1=1
+            AND JOB_REV_NO = #{MEMO_ID}
+            AND NVL(DEL_YN,'N') = 'N'
+		ORDER BY JOB_REV_NO
+    </select>
+    
+    <select id="select03" parameterType="java.util.Map" resultMap="memoMap">
+        SELECT
+		    MEMO_ID
+		    , REPLY_ID
+		    , REPLY_USER_ID
+		    , REPLY_USER_NM
+		    , REPLY_USER_DEPT
+		    , REPLY_CONTENTS
+		    , REG_STIME
+		    , SYSMODTIME
+		    , DEL_YN
+		    , DEL_TIME
+		FROM 
+		    FOMM_MEMO_REPLY
+		WHERE 
+		    MEMO_ID = #{MEMO_ID}
+		    AND NVL(DEL_YN,'N') = 'N'
+		ORDER BY REPLY_ID
+    </select>
+    
+    <select id="select10" parameterType="java.util.Map" resultMap="memoMap">
+        SELECT 
+            MEMO_ID
+            , MEMO_TITLE
+            , MEMO_CONTENTS
+            , MEMO_STATUS_CD
+            , SEND_TIME
+            , ATTACH_YN
+            , DEL_YN
+            , DEL_TIME
+            , REG_USER_ID
+            , REG_USER_NM
+            , REG_USER_DEPT
+            , NEW_MEMO_YN
+            , SYSMODTIME
+            , LMOD_USER_ID
+            , LMOD_USER_NM
+            , LMOD_USER_DEPT
+        FROM FOMM_MEMO
+        WHERE MEMO_ID = #{MEMO_ID}
+    </select> 
+
+	<insert id="insert01" parameterType="java.util.Map">
+	</insert>
+	
+    <insert id="insert02" parameterType="java.util.Map">
+    
+            INSERT INTO FOMM_MEMO_RCV
+        ( 
+            MEMO_RCV_ID
+            , JOB_REV_NO
+            , SEND_GUBUN
+            , RCV_USER_ID
+            , RCV_USER_NM
+            , RCV_USER_DEPT
+            , RCV_TYPE_CD
+            , SND_USER_ID
+            , SND_USER_NM
+            , SND_USER_DEPT
+            , NEW_MEMO_YN
+            , READ_YN
+        )
+        VALUES 
+        ( 
+            (SELECT NVL(MAX(MEMO_RCV_ID)+1,1) AS MEMO_RCV_ID FROM FOMM_MEMO_RCV)
+            , #{JOB_REV_NO}
+            , NVL(#{SEND_GUBUN},'00')
+            , #{RCV_USER_ID}
+            , #{RCV_USER_NM}
+            , #{RCV_USER_DEPT}
+            , #{RCV_TYPE_CD}
+            , #{SND_USER_ID}
+            , #{SND_USER_NM}
+            , #{SND_USER_DEPT}
+            , #{NEW_MEMO_YN}
+            , #{READ_YN}
+        )
+    
+        
+    </insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	
+	   -- 수신자 READ_YN 업데이트
+	   
+	   UPDATE FOMM_MEMO_RCV
+	   SET
+	       NEW_MEMO_YN = 'N'
+	       ,READ_YN = 'Y'
+	       ,READ_TIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        WHERE  JOB_REV_NO = #{MEMO_ID}
+        AND RCV_USER_ID = #{RCV_USER_ID}
+        AND NVL(READ_YN,'N') = 'N'
+	   
+	</update>
+	
+	<update id="modify02" parameterType="java.util.Map">
+    
+       -- 수신자 DEL_YN 업데이트
+  
+        UPDATE FOMM_MEMO_RCV
+        SET
+            DEL_YN = 'Y'
+            ,DEL_TIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        WHERE  JOB_REV_NO = #{JOB_REV_NO}
+            AND RCV_USER_ID = #{RCV_USER_ID}
+            AND NVL(DEL_YN,'N') = 'N'
+ <!-- 
+    DELETE FROM FOMM_MEMO_RCV 
+        WHERE JOB_REV_NO = #{JOB_REV_NO}
+            AND RCV_USER_ID = #{RCV_USER_ID}
+            AND NVL(DEL_YN,'N') = 'N'
+          -->   
+            
+    </update>
+    
+    <update id="modify03" parameterType="java.util.Map">
+       -- 발신자 DEL_YN 업데이트
+        UPDATE FOMM_MEMO
+        SET
+            DEL_YN = 'Y'
+            ,DEL_TIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            ,LMOD_USER_ID= #{LMID}
+            ,LMOD_USER_NM = #{LMNM}
+            ,LMOD_USER_DEPT = #{LMDNM}
+            ,SYSMODTIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+        WHERE  MEMO_ID = #{MEMO_ID}
+            AND NVL(DEL_YN,'N') = 'N'
+    </update>
+        
+    <update id="modify04" parameterType="java.util.Map">
+           -- 발신자 READ_YN 업데이트(발신확인)
+       
+        UPDATE FOMM_MEMO
+        SET
+            NEW_MEMO_YN = 'Y'
+            ,DEL_TIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            ,LMOD_USER_ID= #{LMID}
+            ,LMOD_USER_NM = #{LMNM}
+            ,LMOD_USER_DEPT = #{LMDNM}
+        WHERE  MEMO_ID = #{MEMO_ID}
+            AND NEW_MEMO_YN = 'Y'            
+    </update>
+    
+    <update id="modify05" parameterType="java.util.Map">
+           -- 발신자 임시저장후 수정 혹은 발송
+       
+        UPDATE FOMM_MEMO SET
+            MEMO_TITLE = #{MEMO_TITLE}
+            , MEMO_CONTENTS = #{MEMO_CONTENTS}
+            , MEMO_STATUS_CD = #{MEMO_STATUS_CD}
+            ,LMOD_USER_ID= #{LMID}
+            ,LMOD_USER_NM = #{LMNM}
+            ,LMOD_USER_DEPT = #{LMDNM}
+            <choose>
+                <when test='MEMO_STATUS_CD.equals("1")'>
+                    , SYSMODTIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                </when>
+                <when test='MEMO_STATUS_CD.equals("2")'>
+                    , SEND_TIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                </when>
+            </choose>
+        WHERE  MEMO_ID = #{MEMO_ID}
+            AND NEW_MEMO_YN = 'Y'
+    </update>
+    
+    <update id="modify06" parameterType="java.util.Map">
+    
+       -- 수신자 RCV_TYPE_CD 업데이트
+  
+        UPDATE FOMM_MEMO_RCV
+        SET
+            RCV_TYPE_CD = #{RCV_TYPE_CD}
+            
+        WHERE  JOB_REV_NO = #{JOB_REV_NO}
+            AND RCV_USER_ID = #{RCV_USER_ID}
+ <!-- 
+    DELETE FROM FOMM_MEMO_RCV 
+        WHERE JOB_REV_NO = #{JOB_REV_NO}
+            AND RCV_USER_ID = #{RCV_USER_ID}
+            AND NVL(DEL_YN,'N') = 'N'
+          -->   
+            
+    </update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	    -- 메모삭제 업데이트  MEMO_STATUS_CD=1(임시저장) 중 수정으로 기존수신자 DEL_YN=Y
+
+			     DELETE FROM FOMM_MEMO_RCV 
+		         WHERE JOB_REV_NO = #{JOB_REV_NO}
+		            AND RCV_USER_ID = #{RCV_USER_ID}
+		            AND NVL(DEL_YN,'N') = 'N'
+	       <!--
+			     UPDATE FOMM_MEMO_RCV SET
+		            DEL_YN = 'Y'
+		            ,DEL_TIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		         WHERE  JOB_REV_NO = #{JOB_REV_NO}
+		            AND RCV_USER_ID = #{RCV_USER_ID}
+		            AND NVL(DEL_YN,'N') = 'N'
+		  -->
+
+	</delete>
+	
+	   <delete id="remove02" parameterType="java.util.Map">
+        -- 메모삭제 - 발신자, 수신자
+        
+         <choose>
+            <when test='MODIFY_TYPE.equals("DSND")'>
+                UPDATE FOMM_MEMO SET
+		            DEL_YN = 'Y'
+		            ,DEL_TIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+		        WHERE  MEMO_ID = #{MEMO_ID}
+		            AND NVL(DEL_YN,'N') = 'N'
+            </when>
+            <when test='MODIFY_TYPE.equals("DRCV")'>
+               
+                UPDATE FOMM_MEMO_RCV SET
+                    DEL_YN = 'Y'
+                    ,DEL_TIME = TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+                WHERE  JOB_REV_NO = #{JOB_REV_NO}
+                    AND RCV_USER_ID = #{RCV_USER_ID}
+                    AND NVL(DEL_YN,'N') = 'N'
+           <!--                    
+		        DELETE FROM FOMM_MEMO_RCV 
+		        WHERE JOB_REV_NO = #{JOB_REV_NO}
+		            AND RCV_USER_ID = #{RCV_USER_ID}
+		            AND NVL(DEL_YN,'N') = 'N'
+		      -->        
+            </when>
+        </choose>
+    </delete>
+
+</mapper>

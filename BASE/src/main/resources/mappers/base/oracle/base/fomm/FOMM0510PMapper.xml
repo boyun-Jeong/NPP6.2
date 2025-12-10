@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0510PDAO">
+
+    <sql id="selectKeyFommScheduleJobMt">
+        /* FOMM0510PDAO.selectKeyFommScheduleJobMt */
+        SELECT NVL(MAX(JOB_NO), 0) +1 FROM FOMM_SCHEDULE_JOB_MT
+    </sql>
+
+    <sql id="insertFommScheduleJobMt">
+        /* FOMM0510PDAO.insert01 */
+        INSERT INTO FOMM_SCHEDULE_JOB_MT
+        (
+              JOB_NO    --JOB NO
+            , TITLE --알림 이름
+            , CONT_DESC --알림 내용
+            , EXEC_GUBUN
+            , JAVA_SVC_NM   --실행 JAVA SERVICE명
+            , QUERY_DESC
+            , SEND_TYPE_CD  --전송TYPE
+            , DATE_TERM_USE_YN  --날짜기간사용여부
+            , STR_DT    --전송기간(시작일)
+            , STR_TIME  --전송기간(시작시간)
+            , END_DT    --전송기간(종료일)
+            , END_TIME  --전송기간(종료시간)
+            , HOLIDAY_SEND_YN   --휴일전송여부(Y/N)
+            , CRON_EXPR_SEC --CRON 초
+            , CRON_EXPR_MIN --CRON 분
+            , CRON_EXPR_HOUR    --CRON 시
+            , CRON_EXPR_DAY --CRON 일
+            , CRON_EXPR_MON --CRON 월
+            , CRON_EXPR_DOW --CRON 요일
+            , USE_YN    --사용여부
+            , DEL_YN    --삭제여부
+            , FRID  --최초등록자ID
+            , FRDT  --최초등록일시
+            , LMID  --최종수정자ID
+            , LMDT  --최종수정일시
+            , LMPID --최종수정 화면ID
+        )
+        VALUES
+        (
+              #{JOB_NO}
+            , #{TITLE}
+            , #{CONT_DESC}
+            , #{EXEC_GUBUN}
+            , #{JAVA_SVC_NM}
+            , #{QUERY_DESC}
+            , #{SEND_TYPE_CD}
+            , #{DATE_TERM_USE_YN}
+            , #{STR_DT}
+            , RPAD(#{STR_TIME}, 6, '0')
+            , #{END_DT}
+            , RPAD(#{END_TIME}, 6, '0')
+            , #{HOLIDAY_SEND_YN}
+            , #{CRON_EXPR_SEC}
+            , #{CRON_EXPR_MIN}
+            , #{CRON_EXPR_HOUR}
+            , #{CRON_EXPR_DAY}
+            , #{CRON_EXPR_MON}
+            , #{CRON_EXPR_DOW}
+            , #{USE_YN}
+            , 'N'
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMID}
+            , TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+            , #{LMPID}
+        )
+    </sql>
+
+    <sql id="updateFommScheduleJobMt">
+        UPDATE FOMM_SCHEDULE_JOB_MT SET
+              TITLE = #{TITLE}  --알림 이름
+            , CONT_DESC = #{CONT_DESC}  --알림 내용
+            , EXEC_GUBUN	= #{EXEC_GUBUN}
+            , JAVA_SVC_NM = #{JAVA_SVC_NM}  --실행 JAVA SERVICE명
+            , QUERY_DESC	= #{QUERY_DESC}
+            , SEND_TYPE_CD = #{SEND_TYPE_CD}    --전송TYPE
+            , DATE_TERM_USE_YN = #{DATE_TERM_USE_YN}    --날짜기간사용여부
+            , STR_DT = #{STR_DT}    --전송기간(시작일)
+            , STR_TIME = RPAD(#{STR_TIME}, 6, '0')    --전송기간(시작시간)
+            , END_DT = #{END_DT}    --전송기간(종료일)
+            , END_TIME = RPAD(#{END_TIME}, 6, '0')    --전송기간(종료시간)
+            , HOLIDAY_SEND_YN = #{HOLIDAY_SEND_YN}  --휴일전송여부(Y/N)
+            , CRON_EXPR_SEC = #{CRON_EXPR_SEC}  --CRON 초
+            , CRON_EXPR_MIN = #{CRON_EXPR_MIN}  --CRON 분
+            , CRON_EXPR_HOUR = #{CRON_EXPR_HOUR}    --CRON 시
+            , CRON_EXPR_DAY = #{CRON_EXPR_DAY}  --CRON 일
+            , CRON_EXPR_MON = #{CRON_EXPR_MON}  --CRON 월
+            , CRON_EXPR_DOW = #{CRON_EXPR_DOW}  --CRON 요일
+            , USE_YN = #{USE_YN}    --사용여부
+            , LMID = #{LMID}    --최종수정자ID
+            , LMDT = #{LMDT}    --최종수정일시
+            , LMPID = #{LMPID}  --최종수정 화면ID
+
+        WHERE 1 = 1
+        AND JOB_NO = #{JOB_NO}
+    </sql>
+
+    <sql id="deleteFommScheduleJobMt">
+        UPDATE FOMM_SCHEDULE_JOB_MT SET
+            DEL_YN  = 'Y'
+        WHERE 1 = 1
+        AND DEL_YN  = 'N'
+        AND JOB_NO  = #{JOB_NO}
+    </sql>
+    
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+        <include refid="com.base.com.dao.FommScheduleJobDAO.selectFommScheduleJobMt"/>
+	</select>
+
+    <insert id="insert01" parameterType="java.util.Map">
+        <selectKey resultType="string" keyProperty="JOB_NO" order="BEFORE">
+            <include refid="selectKeyFommScheduleJobMt"/>
+        </selectKey>
+
+        <include refid="insertFommScheduleJobMt"/>
+    </insert>
+
+    <update id="modify01" parameterType="java.util.Map">
+        <include refid="updateFommScheduleJobMt"/>
+    </update>
+
+    <update id="remove01" parameterType="java.util.Map">
+        <include refid="deleteFommScheduleJobMt"/>
+    </update>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  HIST_NO	--이력번호
+			, JOB_NO	--JOB NO
+			, TITLE	--알림 이름
+			, CONT_DESC	--알림 내용
+			, JAVA_SVC_NM	--실행 JAVA SERVICE명
+			, SEND_TYPE_CD	--전송TYPE
+			, REPLACE(
+				REPLACE(
+					REPLACE(
+						REPLACE(
+							SEND_TYPE_CD, 'TALK', (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'BASIS_CD' AND UP_CMM_CD = 'SEND_TYPE_CD' AND CMM_CD = 'TALK')
+						),
+						'MEMO', (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'BASIS_CD' AND UP_CMM_CD = 'SEND_TYPE_CD' AND CMM_CD = 'MEMO')
+					),			  
+					'SLIDE', (SELECT CMM_CD_NM FROM FOMM_CMM_CD_MT WHERE CODE_DIV = 'BASIS_CD' AND UP_CMM_CD = 'SEND_TYPE_CD' AND CMM_CD = 'SLIDE')
+				),
+			  	',', ', '
+			  )	AS SEND_TYPE_NM
+			, DATE_TERM_USE_YN	--날짜기간사용여부
+			, STR_DT	--전송기간(시작일)
+			, STR_TIME	--전송기간(시작시간)
+			, END_DT	--전송기간(종료일)
+			, END_TIME	--전송기간(종료시간)
+			, HOLIDAY_SEND_YN	--휴일전송여부(Y/N)
+			, EXPECT_EXEC_DTIME	--예상배치실행일(최대 상위5개일정)
+			, CRON_EXPR_SEC	--CRON 초
+			, CRON_EXPR_MIN	--CRON 분
+			, CRON_EXPR_HOUR	--CRON 시
+			, CRON_EXPR_DAY	--CRON 일
+			, CRON_EXPR_MON	--CRON 월
+			, CRON_EXPR_DOW	--CRON 요일
+			, EXCEPTION_MSG	--예외메시지
+			, FRDT	--최초등록일시
+			, EXEC_GUBUN	--실행구분(01:JAVA서비스 02:QUERY)
+			, DECODE(EXEC_GUBUN, '01', 'JAVA 서비스', '02', 'QUERY')	AS EXEC_GUBUN_NM
+			, QUERY_DESC	--쿼리문(SELECT절 USER_ID 필수 조회)
+		FROM FOMM_SCHEDULE_JOB_EXEC_HT
+		WHERE 1 = 1
+		
+		<if test="JOB_NO != '' and JOB_NO != null">
+		AND JOB_NO = #{JOB_NO}
+		</if>
+
+		<if test="START_DATE != '' and START_DATE != null and END_DATE != '' and END_DATE != null">
+		AND SUBSTR(FRDT, 1, 8) BETWEEN #{START_DATE} AND #{END_DATE}
+		</if>
+
+		<if test="TITLE != '' and TITLE != null">
+		AND TITLE LIKE '%' || #{TITLE} || '%'
+		</if>
+		ORDER BY
+			HIST_NO DESC
+	</select>
+
+</mapper>

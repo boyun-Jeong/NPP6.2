@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ0100PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		  SELECT
+			  A.PJT_ID
+			, A.PJT_NAME
+			, A.PJT_STATUS_CD
+			, A.PJT_DESC
+			, A.PJT_EXEC_CD
+			, A.IN_PM_USER_ID
+			, A.IN_PM_USER_NM
+			, A.IN_PM_DEPT
+			, A.OUT_PM_USER_ID
+			, A.OUT_PM_USER_NM
+			, A.OUT_CPY_ID
+			, A.OUT_CPY_NAME
+			, A.UPMU_USER_ID
+			, A.UPMU_USER_NM
+			, A.UPMU_USER_DEPT
+			, A.PJT_STIME
+			, A.PJT_ETIME
+			, A.PJT_TYPE_CD
+			, A.PJT_SIZE_CD
+			, A.PJT_DEV_CD
+			, A.PJT_STD_YN
+			, A.PJT_OPEN_DATE
+			, A.CONTRT_ID
+			, A.DEV_AMOUNT
+			, A.DEV_MM
+			, A.HW_AMOUNT
+			, A.SW_AMOUNT
+			, A.TOT_AMOUNT
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.SYSMODTIME
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+
+		FROM
+			PJ_PROJECT A
+
+		WHERE 1 = 1
+
+		<if test="PJT_NM != '' and PJT_NM != null">
+		AND UPPER(A.PJT_NAME) LIKE UPPER('%' || #{PJT_NM} ||'%')
+		</if> 
+
+<!-- 		AND SUBSTR(NVL(A.PJT_STIME, '0000'), 1, 4) <![CDATA[<=]]> #{YEAR} -->
+<!-- 		AND SUBSTR(NVL(A.PJT_ETIME, '9999'), 1, 4) <![CDATA[>=]]> #{YEAR} -->
+		AND (
+			 SUBSTR(NVL(A.PJT_STIME, '0000'), 1, 4) BETWEEN #{FR_YEAR} AND #{TO_YEAR} OR
+			 SUBSTR(NVL(A.PJT_ETIME, '9999'), 1, 4) BETWEEN #{FR_YEAR} AND #{TO_YEAR}
+			)
+<!-- 		AND ( -->
+<!-- 			EXISTS (SELECT 1 FROM SPP_PKG.TBT_PJ_USER X WHERE X.USER_ID = #{USER_ID}  AND X.PJT_ID = A.PJT_ID) OR -->
+<!-- 			EXISTS (SELECT 1 FROM SPP_PKG.TBT_PT_AUTH_USER_MAP X WHERE X.USER_ID = #{USER_ID}  AND X.AUTH_ID = 'PJ_AUTH_0001') -->
+<!-- 			) -->
+		
+		AND (A.SUB_PJT_YN = 'N' OR A.SUB_PJT_YN IS NULL)
+
+		<if test="GUBUN != '' and GUBUN != null">
+		AND A.PJT_STATUS_CD = #{GUBUN}
+		</if>
+
+		ORDER BY
+			A.PJT_STIME DESC, A.PJT_ETIME DESC, A.PJT_ID DESC
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, PJT_ID
+			, YYYYMMDD
+			, HOLI_YN
+			, DAY_NAME
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+
+		FROM
+			PJ_WBS_DAY
+
+		WHERE 1 = 1
+		AND PJT_ID	= #{PJT_ID}
+
+		ORDER BY
+			YYYYMMDD
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		MERGE
+		INTO	PJ_WBS_DAY A
+		USING 	DUAL
+		ON		(A.PJT_ID = #{PJT_ID} AND A.YYYYMMDD = #{YYYYMMDD})
+		
+		WHEN MATCHED THEN
+			UPDATE SET
+			  HOLI_YN			= #{HOLI_YN}
+			, DAY_NAME			= #{DAY_NAME}
+
+			, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID}) 
+
+		WHEN NOT MATCHED THEN
+			INSERT
+			(
+				  PJT_ID
+				, YYYYMMDD
+				, HOLI_YN
+				, DAY_NAME
+				
+				, REG_STIME
+				, REG_USER_ID
+				, REG_USER_NM
+				, REG_USER_DEPT
+	
+				, LMOD_SDATE
+				, LMOD_USER_ID
+				, LMOD_USER_NM
+				, LMOD_USER_DEPT
+			)
+			VALUES
+			(
+				  #{PJT_ID}
+				, #{YYYYMMDD}
+				, #{HOLI_YN}
+				, #{DAY_NAME}
+				
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, #{LMID}
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+				, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+				
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, #{LMID}
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+				, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			)
+	</insert>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE FROM PJ_WBS_DAY 
+  		WHERE 1 = 1
+  		AND PJT_ID		= #{PJT_ID}
+  		AND YYYYMMDD	= #{YYYYMMDD}
+	</delete>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE FROM PJ_WBS 
+  		WHERE 1 = 1
+  		AND PJT_ID = #{SUB_PJT_ID}
+	</delete>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		<include refid="com.base.pj.dao.PJ0100WDAO.mergePjWbs"/>
+	</insert>
+
+	<insert id="insert03" parameterType="java.util.Map">
+		MERGE
+		INTO	PJ_WBS_TOT A
+		USING 	DUAL
+		ON		(A.PJT_ID = #{SUB_PJT_ID})
+
+		WHEN NOT MATCHED THEN
+			INSERT
+		    (
+		          PJT_ID
+		        , VERSION
+		        , CALC_DATE
+
+		        , REG_STIME
+		        , REG_USER_ID
+		        , REG_USER_NM
+		        , REG_USER_DEPT
+		        , LMOD_SDATE
+		        , LMOD_USER_ID
+		        , LMOD_USER_NM
+		        , LMOD_USER_DEPT
+		    )
+		    VALUES
+		    (
+		    	  #{SUB_PJT_ID}
+				, #{VERSION}
+				, #{CALC_DATE}
+
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')  
+				, #{LMID}
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+				, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+	
+				, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') 
+				, #{LMID}
+				, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+				, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		    )
+
+		WHEN MATCHED THEN
+			UPDATE SET
+				  VERSION			= #{VERSION}
+
+				, LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+				, LMOD_USER_ID		= #{LMID}
+				, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+				, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+	</insert>
+
+	<delete id="remove03" parameterType="java.util.Map">
+		DELETE FROM PJ_WBS_VERSION 
+  		WHERE 1 = 1
+  		AND PJT_ID	= #{SUB_PJT_ID}
+  		AND VERSION	= #{VERSION}
+	</delete>
+
+	<insert id="insert04" parameterType="java.util.Map">
+		INSERT INTO PJ_WBS_VERSION
+		(
+			  WBS_ID
+			, VERSION
+			, WBS_CODE
+			, WBS_NAME
+			, PJT_ID
+			, LVL
+			, PARENT_ID
+			, LEAF_YN
+			, PLAN_SDATE
+			, PLAN_EDATE
+			, PLAN_TOT_WORK
+			, PLAN_WORK
+			, PLAN_CMPL_RATE
+			, WEIGHT
+			, ACTL_SDATE
+			, ACTL_EDATE
+			, ACTL_WORK
+			, ACTL_CMPL_RATE
+			, WORK_CMPL_YN
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+			, WBS_DESC
+			, ACTL_PLAN_RATE
+			, CHG_USER_NM
+			, OUTPRNT_ORD
+			, PLAN_DAYS
+			, EXE_USER_NM
+			, PLAN_CMPL_MRATE
+			, STAGE_CD
+		)
+		SELECT
+			  WBS_ID
+			, #{VERSION}
+			, WBS_CODE
+			, WBS_NAME
+			, PJT_ID
+			, LVL
+			, PARENT_ID
+			, LEAF_YN
+			, PLAN_SDATE
+			, PLAN_EDATE
+			, PLAN_TOT_WORK
+			, PLAN_WORK
+			, PLAN_CMPL_RATE
+			, WEIGHT
+			, ACTL_SDATE
+			, ACTL_EDATE
+			, ACTL_WORK
+			, ACTL_CMPL_RATE
+			, WORK_CMPL_YN
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+			, WBS_DESC
+			, ACTL_PLAN_RATE
+			, CHG_USER_NM
+			, OUTPRNT_ORD
+			, PLAN_DAYS
+			, EXE_USER_NM
+			, PLAN_CMPL_MRATE
+			, STAGE_CD
+
+		FROM PJ_WBS
+		WHERE PJT_ID = #{SUB_PJT_ID}
+	</insert>
+
+	<select id="callPrPjWbsRateCacuProc" parameterType="java.util.Map" statementType="CALLABLE">
+		<include refid="com.base.pj.dao.PJ0100WDAO.procPrWbsRateCacu"/>
+    </select>
+
+    <select id="selectHoliday" parameterType="java.util.Map" resultType="java.util.Map">
+    	SELECT
+    		  YYYYMMDD
+			, HOLI_NAME
+    	FROM
+    		FOMM_HOLIDAY
+
+		WHERE 1 = 1
+		AND YYYYMMDD LIKE #{YEAR} || '%'
+
+        <if test="HOLI_YN != '' and HOLI_YN != null">
+            <choose>
+                <when test='"Y".equals(HOLI_YN)'>
+        AND (HOLI_YN = 'Y' OR HOLI_YN = '1') 
+                </when>
+                <when test='"N".equals(HOLI_YN)'>                
+        AND (HOLI_YN = 'N' OR HOLI_YN = '0')
+                </when>
+            </choose>
+        </if>
+
+		ORDER BY
+			YYYYMMDD
+    </select>
+
+</mapper>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM1300WDAO">
+
+	<select id="selectDeptList" parameterType="java.util.Map" resultType="java.util.Map">
+	   /* FOMM1300WDAO.selectDeptList */
+	   SELECT NULL AS TEAM_ID
+             ,      '- 선택 -' AS TEAM_NM
+          FROM DUAL
+      UNION ALL
+	   SELECT A.DEPT_ID AS TEAM_ID ,
+                    REPLACE(B.DEPT_NM, '(손해)', '') AS TEAM_NM
+          FROM WF_DEVPR_TEAM_REL A,
+                    FOMM_DEPT_MT B
+       WHERE A.DEPT_ID = B.DEPT_CD
+       GROUP BY A.DEPT_ID,
+                         B.DEPT_NM
+	</select>
+	
+	<select id="selectDevprLIst" parameterType="java.util.Map" resultType="java.util.Map">
+	  /* FOMM1300WDAO.selectDevprLIst */
+      SELECT NULL AS SENIOR_ID
+           ,       NULL AS DEVPR_ID
+           ,       '- 전체 -' AS USER_NM
+         FROM DUAL
+      UNION ALL 	  
+      SELECT A.SENIOR_ID,
+             A.DEVPR_ID,
+             C.USER_NM AS USER_NM
+        FROM WF_DEVPR_TEAM_REL A,
+             FOMM_USER_MT C
+       WHERE 1=1
+         AND A.DEVPR_ID = C.USER_ID
+       ORDER BY USER_NM,
+                        DEVPR_ID
+    </select>
+    
+    <select id="selectSeniorList" parameterType="java.util.Map" resultType="java.util.Map">
+      /* FOMM1300WDAO.selectSeniorList */
+      SELECT NULL AS SENIOR_ID
+         ,   '- 전체 -' AS SENIOR_NM
+        FROM DUAL
+      UNION ALL  
+      SELECT DISTINCT A.SENIOR_ID,
+             C.USER_NM AS SENIOR_NM
+        FROM WF_DEVPR_TEAM_REL A,
+             FOMM_USER_MT C
+       WHERE 1=1
+         AND A.SENIOR_ID = C.USER_ID
+       ORDER BY SENIOR_NM
+    </select>
+    
+    <select id="selectSrType2All" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FOMM1300WDAO.selectSrType2All */
+        SELECT CMM_CD
+                  ,  UP_CMM_CD
+                  ,  CMM_CD_NM
+                  ,  USE_YN 
+          FROM FOMM_CMM_CD_MT
+         WHERE 1=1
+              AND UP_CMM_CD IN (SELECT CMM_CD 
+                                                   FROM FOMM_CMM_CD_MT
+                                                 WHERE 1=1
+                                                      AND UP_CMM_CD = 'REQC0000'
+                                               )  
+    </select>
+    
+    <select id="selectUpmu2All" parameterType="java.util.Map" resultType="java.util.Map">
+        /* FOMM1300WDAO.selectUpmu2All */
+        SELECT CMM_CD
+                  ,  UP_CMM_CD
+                  ,  CMM_CD_NM
+                  ,  USE_YN 
+          FROM FOMM_CMM_CD_MT
+         WHERE 1=1
+              AND UP_CMM_CD IN (SELECT CMM_CD 
+                                                   FROM FOMM_CMM_CD_MT
+                                                 WHERE 1=1
+                                                      AND UP_CMM_CD = 'BIZC0000'
+                                               )  
+    </select>    
+    
+    <select id="selectDataList" parameterType="java.util.Map" resultType="java.util.Map">
+      /* FOMM1300WDAO.selectDataList */
+      SELECT '' AS CHK
+          , '' AS ROWFLAG 
+          , A.DEPT_ID
+          , REPLACE(B.DEPT_NM, '(손해)', '')  AS SHORT_DEPT_NM
+          , A.SENIOR_ID
+          , C.USER_NM AS SENIOR_NM  
+          , E.MIN_BSE_LVL1_CD
+          , NVL(F.CMM_CD_NM, E.MIN_BSE_LVL1_NM) AS MIN_BSE_LVL1_NM
+          , A.DEVPR_ID  
+          , D.USER_NM AS DEVPR_NM 
+          , A.DEVPR_ID AS OLD_DEVPR_ID
+        FROM WF_DEVPR_TEAM_REL A,  
+             FOMM_DEPT_MT B,
+             FOMM_USER_MT C,
+             FOMM_USER_MT D,
+            (SELECT STAFF_ID
+                  , MAX(SVC_CLSS_CD) AS MAX_SVC_CLSS_CD
+                  , MIN(SVC_CLSS_CD) AS MIN_SVC_CLSS_CD
+                  , MAX(BSE_LVL1_CD) AS MAX_BSE_LVL1_CD
+                  , MIN(BSE_LVL1_CD) AS MIN_BSE_LVL1_CD
+                  , MAX(BSE_LVL1_NM) AS MAX_BSE_LVL1_NM
+                  , MIN(BSE_LVL1_NM) AS MIN_BSE_LVL1_NM
+                  , MAX(BSE_LVL2_CD) AS MAX_BSE_LVL2_CD
+                  , MIN(BSE_LVL2_CD) AS MIN_BSE_LVL2_CD
+                  , MAX(BSE_LVL2_NM) AS MAX_BSE_LVL2_NM
+                  , MIN(BSE_LVL2_NM) AS MIN_BSE_LVL2_NM
+               FROM WF_SVC_STAFF_MNG T1
+             GROUP BY STAFF_ID
+            ) E,
+            (SELECT * FROM FOMM_CMM_CD_MT WHERE UP_CMM_CD = 'BIZC0000') F
+       WHERE 1=1 
+         AND A.DEPT_ID = B.DEPT_CD
+         AND A.SENIOR_ID = C.USER_ID
+         AND A.DEVPR_ID = D.USER_ID
+         AND A.DEVPR_ID = E.STAFF_ID(+)
+         AND E.MIN_BSE_LVL1_CD = F.CMM_CD(+)
+         
+         <if test="SENIOR_ID != '' and SENIOR_ID != null">
+             AND A.SENIOR_ID = #{SENIOR_ID}
+         </if>
+         <if test="DEVPR_ID  != '' and DEVPR_ID  != null">
+             AND A.DEVPR_ID = #{DEVPR_ID}
+         </if> 
+         
+      ORDER BY A.DEPT_ID, SENIOR_NM, NVL(F.CMM_CD, E.MIN_BSE_LVL1_NM)
+    </select>    
+    
+    <select id="selectDevprRegPopList" parameterType="java.util.Map" resultType="java.util.Map">
+         /* FOMM1300WDAO.selectDevprRegPopList */
+         SELECT '0' as CHK,
+                '' AS ROWFLAG,
+                US.USER_ID,
+                US.USER_NM,    
+                US.DEPT_CD,
+                US.DEPT_NM,
+                US.ROLE_CD,
+                US.ROLE_NM,
+                US.POS_CD,
+                US.POS_NM,
+                US.TELNUM,
+                US.MOBILE_NUM,
+                US.MOBILE_NUM
+           FROM FOMM_USER_MT US JOIN (SELECT USER_ID
+                   FROM FOMM_USER_MT A
+                  MINUS
+         SELECT DEVPR_ID
+                   FROM WF_DEVPR_TEAM_REL B ) REL ON US.USER_ID = REL.USER_ID JOIN FOMM_DEPT_MT OG ON US.DEPT_CD = OG.DEPT_CD
+          WHERE 1=1
+            AND US.USE_YN = 'Y'         
+            <if test="USER_ID != '' and USER_ID != null">
+                   AND US.USER_ID LIKE #{USER_ID} || '%'
+            </if>
+            <if test="USER_NM != '' and USER_NM != null">
+                   AND US.USER_NM LIKE #{USER_NM} || '%'
+            </if>
+          ORDER BY US.USER_NM
+    </select>
+
+	<insert id="insertDevpr" parameterType="java.util.Map">
+	/* FOMM1300WDAO.insertDevpr */
+	INSERT INTO WF_DEVPR_TEAM_REL
+    (
+         DEVPR_ID
+       , DEPT_ID
+       , SENIOR_ID
+       , USE_ST_DT
+       , USE_ED_DT
+    ) VALUES (
+         #{DEVPR_ID}
+       , #{DEPT_ID}
+       , #{SENIOR_ID}
+       , TO_CHAR(SYSDATE,'YYYYMMDD')
+       , '99991231'
+    )
+	</insert>
+
+	<update id="updateDevpr" parameterType="java.util.Map">
+	   /* FOMM1300WDAO.updateDevpr */
+	   UPDATE WF_DEVPR_TEAM_REL 
+              SET DEVPR_ID= #{DEVPR_ID},
+                      DEPT_ID = #{DEPT_ID},
+                      SENIOR_ID = #{SENIOR_ID}
+         WHERE DEVPR_ID = #{OLD_DEVPR_ID}
+	</update>
+
+	<delete id="deleteDevpr" parameterType="java.util.Map">
+	 /* FOMM1300WDAO.deleteDevpr */
+	 DELETE FROM WF_DEVPR_TEAM_REL 
+                WHERE DEVPR_ID = #{OLD_DEVPR_ID}
+	</delete>
+
+</mapper>

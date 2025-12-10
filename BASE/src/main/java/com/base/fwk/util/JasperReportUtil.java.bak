@@ -1,0 +1,351 @@
+package com.wemb.spp.fwk.util;
+
+import java.io.File;
+import java.io.OutputStream;
+import java.net.Inet4Address;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import com.nexacro.java.xapi.data.DataSet;
+import com.nexacro.java.xapi.data.DataSetList;
+import com.nexacro.java.xapi.data.PlatformData;
+import com.nexacro.java.xapi.tx.HttpPlatformRequest;
+import com.nexacro.uiadapter.spring.core.annotation.ParamDataSet;
+import com.nexacro.uiadapter.spring.core.data.NexacroResult;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+
+/**
+ * <pre>
+ * @title - 리포트 출력 (jasperReport)
+ * @package com.wemb.spp.test.web
+ * @author 정하림
+ * @since 2024. 12. 02.
+ * @version 1.0
+ * @see
+ *  =================== 변경 내역 ================== 날짜 변경자 내용
+ *  ---------------------------------------------- 2024. 12. 02. 정하림 최초작성
+ */
+@Controller
+@RequestMapping("/jasperReport")
+public class JasperReportUtil {
+
+	private Logger log = LoggerFactory.getLogger(JasperReportUtil.class);
+
+	@Value("#{app['report.template.path']}")
+	private String templatePath;
+
+	@Autowired
+	private ResourceLoader resourceLoader;
+
+	/**
+	 * 리포트 생성
+	 * @param reqId
+	 * @param file
+	 * @return
+	 */
+	@GetMapping("/viewer")
+	public void generate(HttpServletRequest req, HttpServletResponse res) throws Exception  {
+
+		log.debug("req.getParameterMap().size() : " + req.getParameterMap().size());
+
+		HashMap<String, Object> parameters = new HashMap<>();
+		String dbConnNm = "";
+		String fileNm = "";
+		
+		for(String colNm : req.getParameterMap().keySet()) {
+			
+			log.debug("colNm:[" + colNm + "] value:[" + req.getParameter(colNm) + "]");
+
+			if("CONN_NM".equals(colNm)) {
+				dbConnNm = StringUtil.safe(req.getParameter(colNm), "").replace("undefined", "");
+
+			}else if("FILE_NM".equals(colNm)) {
+				fileNm = StringUtil.safe(req.getParameter(colNm), "");
+
+			}else {
+				parameters.put(colNm, StringUtil.safe(req.getParameter(colNm), ""));
+			}
+		}
+
+		if("".equals(dbConnNm)) {
+			dbConnNm = "itsm";
+
+		}else {
+			dbConnNm = dbConnNm.toLowerCase();
+		}
+
+		log.debug("[EXEC] dbConnNm:[" + dbConnNm + "] fileNm:[" + fileNm + "]");
+		
+//		FileInputStream fis = null;
+		Connection conn = null;
+
+        try {//(Connection conn = conn.getConnection()) {
+        	
+        	Context init = new InitialContext();
+        	
+        	String ip4 = Inet4Address.getLocalHost().getHostAddress();
+        	String lookUpStr = "";
+
+        	if(!"10.120.120.62".equals(ip4) && !"10.120.15.29".equals(ip4)) {	//개발서버, 운영서버가 아닌 경우
+        		lookUpStr = "java:comp/env/";
+        	}
+			Context env = (Context) init.lookup(lookUpStr);
+			DataSource ds = (DataSource) env.lookup("jdbc/" + dbConnNm);
+			conn = ds.getConnection();
+			
+        	// 2. Jasper Reports 템플릿 경로 설정
+        	String fullPath = templatePath + fileNm + ".jasper"; 	// 경로 생성
+//        	String fullPath = templatePath + fileNm + ".jrxml"; 	// 경로 생성
+//    		Resource resource = resourceLoader.getResource(fullPath);	// 리소스 로드
+    		String reportPath = resourceLoader.getResource(fullPath).getFile().getAbsolutePath();				// 파일 절대경로 반환        	
+
+        	// 3. Jasper Reports PDF 생성
+//        	fis = new FileInputStream(reportPath);
+//        	JasperReport jasperrReport = (JasperReport) JRLoader.loadObject(fis);
+//    		log.debug("Generated Report Path======>" + reportPath);
+//        	JasperReport jasperrReport = JasperCompileManager.compileReport(reportPath);        	
+//        	log.debug("after Generated Report Path======>" + reportPath);
+        	JasperPrint jasperPrint = JasperFillManager.fillReport(reportPath, parameters, conn);
+//        	JasperPrint jasperPrint = JasperFillManager.fillReport(jasperrReport, parameters, conn);
+//        	JasperViewer.viewReport(jasperPrint, false);
+        	
+//        	JasperViewer jv = new JasperViewer(jasperPrint);
+//			jv.setJMenuBar(null);
+//			jv.setTitle("xxxxx");
+//			jv.setVisible(false);
+
+        	// 4. PDF 파일 응답 전송
+        	res.setContentType("application/pdf");
+            res.setHeader("Content-Disposition", "inline; filename=\"" + fileNm + ".pdf\"");
+
+            try(OutputStream out = res.getOutputStream()){
+            	JasperExportManager.exportReportToPdfStream(jasperPrint, out);
+
+            }catch(Exception e) {
+            	log.debug("----Error generating report : {}", e.getMessage());
+                res.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            }
+
+        }catch(Exception e) {
+        	log.debug("----Error generating report : {}", e.getMessage());
+        }finally {
+        	
+        	if(conn != null) {
+        		conn.close();
+        	}
+
+//        	if(fis != null) {
+//        		fis.close();
+//        	}
+        }
+        // result 뭐로 보낼지 다시 생각. pdf 저장 완료
+	}
+
+	/**
+	 * 리포트 생성
+	 * 
+	 * @param reqId
+	 * @param file
+	 * @return
+	 */
+	@GetMapping("/checkViewerByDB")
+	// public void generate(@RequestParam(name = "reqId") String reqId,
+	// @RequestParam(name = "file") String fileNm, HttpServletResponse resp) throws
+	// Exception {
+	public NexacroResult viewerByDB(@ParamDataSet(name = "dsParams") List<Map<String, Object>> dsParams)
+			throws Exception {
+
+		NexacroResult result = new NexacroResult();
+
+		String dbConnNm = "itsm";
+		String rptFileNm = "";
+		String reportPath = "";
+
+		if (dsParams != null) {
+
+			for (int i = 0; i < dsParams.size(); i++) {
+
+				if ("DB_CONN_NM".equals(dsParams.get(i).get("PARAM_NM"))) {
+					dbConnNm = StringUtil.safe(dsParams.get(i).get("PARAM_VAL"));
+
+				} else if ("RPT_FILE_NM".equals(dsParams.get(i).get("PARAM_NM"))) {
+					rptFileNm = StringUtil.safe(dsParams.get(i).get("PARAM_VAL"));
+				}
+			}
+		}
+
+		Connection conn = null;
+
+		try {
+
+			// 1. Jasper Reports 템플릿 경로 설정
+			if (!"".equals(rptFileNm)) {
+				String fullPath = templatePath + rptFileNm + ".jasper"; // 경로 생성
+				Resource resource = resourceLoader.getResource(fullPath); // 리소스 로드
+
+				File rptFile = resource.getFile();
+				if (rptFile != null) {
+					reportPath = resource.getFile().getAbsolutePath(); // 파일 절대경로 반환
+
+				} else {
+					result.setErrorCode(-9986);
+					result.setErrorMsg("출력물 보고서 파일명이 존재하지 않았습니다.");
+					return result;
+				}
+
+				log.info("-----Generated Report Path : " + reportPath);
+
+			} else {
+
+				result.setErrorCode(-9987);
+				result.setErrorMsg("출력물 보고서 파일명이 지정되지 않았습니다.");
+				return result;
+			}
+
+			// 2. DataSource 연결
+			Context init = new InitialContext();
+			Context env = (Context) init.lookup("java:comp/env");
+			DataSource ds = (DataSource) env.lookup("jdbc/" + dbConnNm);
+			conn = ds.getConnection();
+
+			if (conn == null) {
+				result.setErrorCode(-9988);
+				result.setErrorMsg("연결 정보가 올바르지 않습니다.");
+			}
+
+		} catch (Exception e) {
+
+			log.info("----Error generating report : {}", e.getMessage());
+			result.setErrorCode(-9989);
+			result.setErrorMsg(e.getMessage());
+			return result;
+
+		} finally {
+
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return result;
+	}
+
+	@GetMapping("/callViewerPageByDB")
+	// public void generate(@RequestParam(name = "reqId") String reqId,
+	// @RequestParam(name = "file") String fileNm, HttpServletResponse resp) throws
+	// Exception {
+	public void callViewerPageByDB(HttpServletRequest req, HttpServletResponse res) throws Exception {
+
+		HttpPlatformRequest httpPlatformRequest = new HttpPlatformRequest(req, "PlatformSsv", "UTF-8");
+
+		httpPlatformRequest.receiveData();
+		PlatformData platformData = httpPlatformRequest.getData();
+
+		DataSetList pDataSetList = platformData.getDataSetList();
+
+		HashMap<String, Object> parameters = new HashMap<>();
+		String dbConnNm = "itsm";
+		String rptFileNm = "";
+		String reportPath = "";
+
+		if (pDataSetList.get("dsParams").hasData()) {
+
+			DataSet dsParams = pDataSetList.get("dsParams");
+
+			if (dsParams != null) {
+
+				for (int i = 0; i < dsParams.getRowCount(); i++) {
+
+					if ("DB_CONN_NM".equals(dsParams.getString(i, "PARAM_NM"))) {
+						dbConnNm = dsParams.getString(i, "PARAM_VAL");
+
+					} else if ("RPT_FILE_NM".equals(dsParams.getString(i, "PARAM_NM"))) {
+						rptFileNm = dsParams.getString(i, "PARAM_VAL");
+
+					} else {
+						parameters.put(dsParams.getString(i, "PARAM_NM"), dsParams.getString(i, "PARAM_VAL"));
+					}
+				}
+			}
+		}
+
+		Connection conn = null;
+
+		try {
+
+			// 1. Jasper Reports 템플릿 경로 설정
+			if (!"".equals(rptFileNm)) {
+				String fullPath = templatePath + rptFileNm + ".jasper"; // 경로 생성
+				Resource resource = resourceLoader.getResource(fullPath); // 리소스 로드
+
+				File rptFile = resource.getFile();
+				if (rptFile != null) {
+					reportPath = resource.getFile().getAbsolutePath(); // 파일 절대경로 반환
+
+				} else {
+					throw new Exception("출력할 보고서 파일이 존재하지 않습니다.");
+				}
+
+				log.info("-----Generated Report Path : " + reportPath);
+
+			} else {
+				throw new Exception("출력물 보고서 파일명이 지정되지 않았습니다.");
+			}
+
+			// 2. DataSource 연결
+			Context init = new InitialContext();
+			Context env = (Context) init.lookup("java:comp/env");
+			DataSource ds = (DataSource) env.lookup("jdbc/" + dbConnNm);
+			conn = ds.getConnection();
+
+			if (conn == null) {
+				throw new Exception("연결 정보가 올바르지 않습니다.");
+			}
+			// 3. Jasper Reports PDF 생성
+			JasperPrint jasperPrint = JasperFillManager.fillReport(reportPath, parameters, conn);
+//			JasperViewer jv = new JasperViewer(jasperPrint);
+//			jv.setJMenuBar(null);
+//			jv.setTitle("xxxxx");
+//			jv.setVisible(false);
+			JasperViewer.viewReport(jasperPrint, false);
+
+			// 4. PDF 파일 응답 전송
+			res.setContentType("application/pdf");
+			res.setHeader("Content-Disposition", "inline; filename=\"" + rptFileNm + ".pdf\"");
+
+			try (OutputStream out = res.getOutputStream()) {
+				JasperExportManager.exportReportToPdfStream(jasperPrint, out);
+
+			} catch (Exception e) {
+				log.info("Error generating report : {}", e.getMessage());
+			}
+
+		} catch (Exception e) {
+			log.info("----Error generating report : {}", e.getMessage());
+
+		} finally {
+
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+
+}

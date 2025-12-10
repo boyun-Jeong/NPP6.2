@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ5300WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  A.PJT_ID
+			, A.BIZ_ID
+			, A.BIZ_NAME
+			, B.PJT_NAME			AS PJT_NAME
+			, C.PJT_ID				AS P_PJT_ID 
+			, C.PJT_NAME			AS P_PJT_NAME
+			, NVL(D.TOT_PLAN_CNT,0) AS TOT_PLAN_CNT
+			, NVL(D.TOT_ACTL_CNT,0) AS TOT_ACTL_CNT
+			, NVL(D.TOT_CONF_CNT,0) AS TOT_CONF_CNT
+			, ROUND( DECODE( NVL(D.TOT_PLAN_CNT, 0), 0, 0, NVL(D.TOT_CONF_CNT, 0) / NVL(D.TOT_PLAN_CNT, 0) ) * 100, 1)  AS TOT_RATE
+			, NVL(D.SUM_PLAN_CNT,0) AS SUM_PLAN_CNT
+			, NVL(D.SUM_ACTL_CNT,0) AS SUM_ACTL_CNT
+			, NVL(D.SUM_CONF_CNT,0) AS SUM_CONF_CNT
+			, ROUND( DECODE( NVL(D.SUM_PLAN_CNT, 0), 0, 0, NVL(D.SUM_CONF_CNT, 0) / NVL(D.SUM_PLAN_CNT, 0) ) * 100, 1)  AS SUM_RATE
+			, NVL(D.WEEK_PLAN_CNT,0) AS WEEK_PLAN_CNT
+			, NVL(D.WEEK_ACTL_CNT,0) AS WEEK_ACTL_CNT
+			, NVL(D.WEEK_CONF_CNT,0) AS WEEK_CONF_CNT
+			, ROUND( DECODE( NVL(D.WEEK_PLAN_CNT, 0), 0, 0, NVL(D.WEEK_CONF_CNT, 0) / NVL(D.WEEK_PLAN_CNT, 0) ) * 100, 1) AS WEEK_RATE
+
+		FROM
+			  PJ_BIZ A
+			, PJ_PROJECT B
+			, PJ_PROJECT C
+			, (
+			  SELECT 
+				  A.PJT_ID
+				, A.BIZ_ID
+				, SUM(TOT_PLAN_CNT) AS TOT_PLAN_CNT
+				, SUM(TOT_ACTL_CNT) AS TOT_ACTL_CNT
+				, SUM(TOT_CONF_CNT) AS TOT_CONF_CNT
+				, SUM(SUM_PLAN_CNT) AS SUM_PLAN_CNT
+				, SUM(SUM_ACTL_CNT) AS SUM_ACTL_CNT
+				, SUM(SUM_CONF_CNT) AS SUM_CONF_CNT
+				, SUM(WEEK_PLAN_CNT) AS WEEK_PLAN_CNT
+				, SUM(WEEK_ACTL_CNT) AS WEEK_ACTL_CNT
+				, SUM(WEEK_CONF_CNT) AS WEEK_CONF_CNT
+
+			  FROM
+			  	(
+				/* 전체 대상 */
+                SELECT 
+					  A.PJT_ID
+					, A.BIZ_ID
+					, COUNT(1) AS TOT_PLAN_CNT
+					, NULL AS TOT_ACTL_CNT
+					, NULL AS TOT_CONF_CNT
+					, NULL AS SUM_PLAN_CNT
+					, NULL AS SUM_ACTL_CNT
+					, NULL AS SUM_CONF_CNT
+					, NULL AS WEEK_PLAN_CNT
+					, NULL AS WEEK_ACTL_CNT
+					, NULL AS WEEK_CONF_CNT
+
+				FROM
+					PJ_UT_DEFECT A
+
+				WHERE 1 = 1
+				AND A.PJT_ID		= #{SUB_PJT_ID}
+				AND A.UTDFT_RCV_CD	= 'DFT_REV_STS_CD01' /* 접수유형 - 수용 */
+
+				GROUP BY A.PJT_ID, A.BIZ_ID
+
+                UNION ALL
+
+                SELECT
+					  A.PJT_ID
+					, A.BIZ_ID
+					, NULL AS TOT_PLAN_CNT
+					, COUNT(1) AS TOT_ACTL_CNT
+					, NULL AS TOT_CONF_CNT
+					, NULL AS SUM_PLAN_CNT
+					, NULL AS SUM_ACTL_CNT
+					, NULL AS SUM_CONF_CNT
+					, NULL AS WEEK_PLAN_CNT
+					, NULL AS WEEK_ACTL_CNT
+					, NULL AS WEEK_CONF_CNT
+
+				FROM
+					PJ_UT_DEFECT A
+
+				WHERE 1 = 1
+				AND A.PJT_ID		= #{SUB_PJT_ID}
+				AND A.UTDFT_RCV_CD	= 'DFT_REV_STS_CD01' /* 접수유형 - 수용 */
+				AND A.ACT_ADATE IS NOT NULL
+
+				GROUP BY A.PJT_ID, A.BIZ_ID
+
+                UNION ALL
+
+                SELECT 
+					  A.PJT_ID
+					, A.BIZ_ID
+					, NULL AS TOT_PLAN_CNT
+					, NULL AS TOT_ACTL_CNT
+					, COUNT(1) AS TOT_CONF_CNT
+					, NULL AS SUM_PLAN_CNT
+					, NULL AS SUM_ACTL_CNT
+					, NULL AS SUM_CONF_CNT
+					, NULL AS WEEK_PLAN_CNT
+					, NULL AS WEEK_ACTL_CNT
+					, NULL AS WEEK_CONF_CNT
+
+				FROM
+					PJ_UT_DEFECT A
+
+				WHERE 1 = 1
+				AND A.PJT_ID		= #{SUB_PJT_ID}
+				AND A.UTDFT_RCV_CD	= 'DFT_REV_STS_CD01' /* 접수유형 - 수용 */
+				AND A.UTDFT_ACT_CD	= 'DFT_PRC_STS_CD03' /* 결함처리결과 - 확인완료 */
+
+				GROUP BY A.PJT_ID, A.BIZ_ID
+
+                UNION ALL
+                
+                /* 계획 대상 (누적) */
+				SELECT 
+					  A.PJT_ID
+					, A.BIZ_ID
+					, NULL AS TOT_ACTL_CNT
+					, NULL AS TOT_PLAN_CNT
+					, NULL AS TOT_CONF_CNT
+					, COUNT(1) AS SUM_PLAN_CNT
+					, NULL AS SUM_ACTL_CNT
+					, NULL AS SUM_CONF_CNT
+					, NULL AS WEEK_PLAN_CNT
+					, NULL AS WEEK_ACTL_CNT
+					, NULL AS WEEK_CONF_CNT
+
+				FROM
+					PJ_UT_DEFECT A
+
+				WHERE 1 = 1
+				AND A.PJT_ID		= #{SUB_PJT_ID}
+				AND A.UTDFT_RCV_CD	= 'DFT_REV_STS_CD01' /* 접수유형 - 수용 */
+				AND A.ACT_PDATE <![CDATA[<=]]> #{BDATE}
+
+				GROUP BY A.PJT_ID, A.BIZ_ID
+
+                UNION ALL
+
+                SELECT 
+					  A.PJT_ID
+					, A.BIZ_ID
+					, NULL AS TOT_PLAN_CNT
+					, NULL AS TOT_ACTL_CNT
+					, NULL AS TOT_CONF_CNT
+					, NULL AS SUM_PLAN_CNT
+					, COUNT(1) AS SUM_ACTL_CNT
+					, NULL AS SUM_CONF_CNT
+					, NULL AS WEEK_PLAN_CNT
+					, NULL AS WEEK_ACTL_CNT
+					, NULL AS WEEK_CONF_CNT
+
+				FROM
+					PJ_UT_DEFECT A
+
+				WHERE 1 = 1
+				AND A.PJT_ID		= #{SUB_PJT_ID}
+				AND A.UTDFT_RCV_CD	= 'DFT_REV_STS_CD01' /* 접수유형 - 수용 */
+				AND A.ACT_PDATE <![CDATA[<=]]> #{BDATE}
+				
+				GROUP BY A.PJT_ID, A.BIZ_ID
+
+                UNION ALL
+
+                SELECT 
+					  A.PJT_ID
+					, A.BIZ_ID
+					, NULL AS TOT_PLAN_CNT
+					, NULL AS TOT_ACTL_CNT
+					, NULL AS TOT_CONF_CNT
+					, NULL AS SUM_PLAN_CNT
+					, NULL AS SUM_ACTL_CNT
+					, COUNT(1) AS SUM_CONF_CNT
+					, NULL AS WEEK_PLAN_CNT
+					, NULL AS WEEK_ACTL_CNT
+					, NULL AS WEEK_CONF_CNT
+
+				FROM
+					PJ_UT_DEFECT A
+
+				WHERE 1 = 1
+				AND A.PJT_ID		= #{SUB_PJT_ID}
+				AND A.UTDFT_RCV_CD	= 'DFT_REV_STS_CD01' /* 접수유형 - 수용 */
+				AND A.UTDFT_ACT_CD	= 'DFT_PRC_STS_CD03' /* 결함처리결과 - 확인완료 */
+				AND A.ACT_PDATE <![CDATA[<=]]> #{BDATE}
+
+				GROUP BY A.PJT_ID, A.BIZ_ID
+
+                UNION ALL
+
+                /* 계획 대상 (주간) */
+                SELECT 
+					  A.PJT_ID
+					, A.BIZ_ID
+					, NULL AS TOT_PLAN_CNT
+					, NULL AS TOT_ACTL_CNT
+					, NULL AS TOT_CONF_CNT
+					, NULL AS SUM_PLAN_CNT
+					, NULL AS SUM_ACTL_CNT
+					, NULL AS SUM_CONF_CNT
+					, COUNT(1) AS WEEK_PLAN_CNT
+					, NULL AS WEEK_ACTL_CNT 
+					, NULL AS WEEK_CONF_CNT
+
+				FROM
+					PJ_UT_DEFECT A
+
+				WHERE 1 = 1
+				AND A.PJT_ID		= #{SUB_PJT_ID}
+				AND A.UTDFT_RCV_CD	= 'DFT_REV_STS_CD01' /* 접수유형 - 수용 */
+				AND A.ACT_PDATE BETWEEN (SELECT /* 일요일 계산 */TO_CHAR(TO_DATE(#{BDATE},'YYYYMMDD') + (1 - TO_CHAR(TO_DATE(#{BDATE},'YYYYMMDD'),'D')), 'YYYYMMDD') FROM DUAL) AND #{BDATE}
+
+				GROUP BY A.PJT_ID, A.BIZ_ID
+
+                UNION ALL
+
+                SELECT 
+					  A.PJT_ID
+					, A.BIZ_ID
+					, NULL AS TOT_PLAN_CNT
+					, NULL AS TOT_ACTL_CNT
+					, NULL AS TOT_CONF_CNT
+					, NULL AS SUM_PLAN_CNT
+					, NULL AS SUM_ACTL_CNT
+					, NULL AS SUM_CONF_CNT
+					, NULL AS WEEK_PLAN_CNT
+					, COUNT(1) AS WEEK_ACTL_CNT
+					, NULL AS WEEK_CONF_CNT
+
+				FROM
+					PJ_UT_DEFECT A
+
+				WHERE 1 = 1
+				AND A.PJT_ID		= #{SUB_PJT_ID}
+				AND A.UTDFT_RCV_CD	= 'DFT_REV_STS_CD01' /* 접수유형 - 수용 */
+				AND A.ACT_ADATE BETWEEN (SELECT /* 일요일 계산 */TO_CHAR(TO_DATE(#{BDATE},'YYYYMMDD') + (1 - TO_CHAR(TO_DATE(#{BDATE},'YYYYMMDD'),'D')), 'YYYYMMDD') FROM DUAL) AND #{BDATE}
+
+				GROUP BY A.PJT_ID, A.BIZ_ID
+
+                UNION ALL
+
+                SELECT 
+					  A.PJT_ID
+					, A.BIZ_ID
+					, NULL AS TOT_PLAN_CNT
+					, NULL AS TOT_ACTL_CNT
+					, NULL AS TOT_CONF_CNT
+					, NULL AS SUM_PLAN_CNT
+					, NULL AS SUM_ACTL_CNT
+					, NULL AS SUM_CONF_CNT
+					, NULL AS WEEK_PLAN_CNT
+					, NULL AS WEEK_ACTL_CNT
+					, COUNT(1) AS WEEK_CONF_CNT
+
+				FROM
+					PJ_UT_DEFECT A
+
+				WHERE 1 = 1
+				AND A.PJT_ID		= #{SUB_PJT_ID}
+				AND A.UTDFT_RCV_CD	= 'DFT_REV_STS_CD01' /* 접수유형 - 수용 */
+				AND A.UTDFT_ACT_CD	= 'DFT_PRC_STS_CD03' /* 결함처리결과 - 확인완료 */
+				AND A.CONF_DATE BETWEEN (SELECT /* 일요일 계산 */TO_CHAR(TO_DATE(#{BDATE},'YYYYMMDD') + (1 - TO_CHAR(TO_DATE(#{BDATE},'YYYYMMDD'),'D')), 'YYYYMMDD') FROM DUAL) AND #{BDATE}
+
+				GROUP BY A.PJT_ID, A.BIZ_ID
+				) A
+			  GROUP BY A.PJT_ID, A.BIZ_ID
+			  ) D
+
+		WHERE 1 = 1
+		AND A.PJT_ID    = B.PJT_ID
+		AND B.PARENT_ID = C.PJT_ID
+		AND A.PJT_ID    = D.PJT_ID(+)
+		AND A.BIZ_ID    = D.BIZ_ID(+)
+		AND A.PJT_ID    = #{SUB_PJT_ID}
+		AND A.USE_YN	= 'Y'
+
+		ORDER BY
+			A.ORD_NUM
+	</select>
+
+</mapper>

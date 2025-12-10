@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:p="http://www.springframework.org/schema/p" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+<!-- 	<bean id="applicationContextProvider" class="com.nexacro.uiadapter17.spring.core.context.ApplicationContextProvider" lazy-init="false" />	 -->
+	<bean id="applicationContextProvider" class="com.nexacro.uiadapter.jakarta.core.context.ApplicationContextProvider" lazy-init="false" />
+
+    <bean id="oracleDbms" class="com.nexacro.uiadapter.jakarta.dao.dbms.Oracle" />
+<!-- 	<bean id="hsqlDbms" class="com.nexacro.uiadapter.jakarta.dao.dbms.Hsql" /> -->
+<!-- 	<bean id="mssqlDbms" class="com.nexacro.uiadapter.jakarta.dao.dbms.Mssql" /> -->
+<!-- 	<bean id="mysqlDbms" class="com.nexacro.uiadapter.jakarta.dao.dbms.Mysql" /> -->
+<!--    <bean id="tiberoDbms" class="com.nexacro.uiadapter.jakarta.dao.dbms.Tibero" /> -->
+<!-- 	<bean id="postgreDbms" class="com.nexacro.uiadapter.jakarta.dao.dbms.Postgre" /> -->
+	
+<!-- 		<bean id="dbmsProvider" class="com.nexacro.uiadapter17.spring.dao.DbVendorsProvider"> -->
+		<bean id="dbmsProvider" class="com.nexacro.uiadapter.jakarta.dao.DbVendorsProvider">
+	    <property name="dbvendors">
+	        <map>
+<!-- 	     		<entry key="SQL Server" value-ref="mssqlDbms"/> -->
+<!--                <entry key="Tibero" value-ref="tiberoDbms"/> -->
+                <entry key="Oracle" value-ref="oracleDbms"/>
+<!-- 	            <entry key="MySQL" value-ref="mysqlDbms"/> -->
+<!-- 				<entry key="PostgreSQL" value-ref="PostgreDbms"/> -->
+	        </map>
+	    </property>
+	</bean>
+</beans>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0260WDAO">
+
+    <select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+        <if test="DT != '' and DT != null and DT != 'ALL' ">
+	        SELECT '' AS ROWFLAG
+	             , DT
+			     , FULL_DT
+			     , WEEK_CD
+			     , CASE WHEN WEEK_CD = '1' THEN '일요일'
+			            WHEN WEEK_CD = '2' THEN '월요일'
+			            WHEN WEEK_CD = '3' THEN '화요일'
+			            WHEN WEEK_CD = '4' THEN '수요일'
+			            WHEN WEEK_CD = '5' THEN '목요일'
+			            WHEN WEEK_CD = '6' THEN '금요일'
+			            WHEN WEEK_CD = '7' THEN '토요일'
+			       END AS WEEK_NM
+			     , IS_TODAY
+                 , CASE WHEN WEEK_CD = '1' OR WEEK_CD = '7' THEN '1'
+                        ELSE HOLI_YN
+			       END AS HOLI_YN
+			     , FH.HOLI_NAME
+			FROM
+			(   SELECT 
+			          LEVEL                                                                       AS DT
+			        , TO_CHAR(TO_DATE(#{DT} || LPAD(LEVEL, 2, '0'), 'YYYYMMDD'), 'YYYYMMDD')   AS FULL_DT
+			        , TO_CHAR(TO_DATE(#{DT} || LPAD(LEVEL, 2, '0'), 'YYYYMMDD'), 'd')          AS WEEK_CD
+			        , CASE
+			            WHEN TO_CHAR(TO_DATE(#{DT} || LPAD(LEVEL, 2, '0'), 'YYYYMMDD'), 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+			            THEN 'Y'
+			            ELSE 'N'
+			          END IS_TODAY
+			    FROM DUAL
+			    CONNECT BY LEVEL <![CDATA[<=]]> TO_CHAR(LAST_DAY(TO_DATE(#{DT} || '01', 'YYYYMMDD')), 'DD')
+			) DT
+			LEFT OUTER JOIN FOMM_HOLIDAY FH ON DT.FULL_DT = FH.YYYYMMDD
+			ORDER BY DT.DT
+		</if>
+        <if test="DT != '' and DT != null and DT == 'ALL' ">
+            SELECT 
+                  '' AS ROWFLAG
+                , FULL_DT
+			    , WEEK_CD
+			    , CASE WHEN WEEK_CD = '1' THEN '일요일'
+			           WHEN WEEK_CD = '2' THEN '월요일'
+			           WHEN WEEK_CD = '3' THEN '화요일'
+			           WHEN WEEK_CD = '4' THEN '수요일'
+			           WHEN WEEK_CD = '5' THEN '목요일'
+			           WHEN WEEK_CD = '6' THEN '금요일'
+			           WHEN WEEK_CD = '7' THEN '토요일'
+			      END AS WEEK_NM
+			    , CASE
+			        WHEN TO_CHAR(TO_DATE(FULL_DT, 'YYYYMMDD'), 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+			        THEN 'Y'
+			        ELSE 'N'
+			      END IS_TODAY
+                 , CASE WHEN WEEK_CD = '1' OR WEEK_CD = '7' THEN '1'
+                        WHEN FH.HOLI_NAME IS NOT NULL THEN '1'
+                        WHEN FH.HOLI_NAME IS NULL THEN '0'
+			      END AS HOLI_YN
+			    , FH.HOLI_NAME
+			FROM
+			(
+			    SELECT 
+			          TO_CHAR(TO_DATE(#{YEAR} || '0101', 'YYYYMMDD') + (LEVEL-1), 'YYYYMMDD')        AS FULL_DT
+			        , TO_CHAR(TO_DATE(#{YEAR} || '0101', 'YYYYMMDD') + (LEVEL-1), 'D')               AS WEEK_CD
+			    FROM DUAL
+			    CONNECT BY LEVEL <![CDATA[<=]]> TO_DATE(#{YEAR} || '1231', 'YYYYMMDD') - TO_DATE(#{YEAR} || '0101', 'YYYYMMDD') + 1
+			) DT
+			LEFT OUTER JOIN FOMM_HOLIDAY FH ON DT.FULL_DT = FH.YYYYMMDD
+			ORDER BY DT.FULL_DT
+        </if>
+    </select>
+    
+    <select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+	    SELECT 
+		    LEVEL AS YYYY
+		FROM DUAL
+		WHERE LEVEL BETWEEN TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - 5 AND TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) + 5
+		CONNECT BY LEVEL <![CDATA[<=]]>  TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) + 3
+    </select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+        MERGE INTO FOMM_HOLIDAY
+        USING DUAL
+            ON (YYYYMMDD = #{FULL_DT})
+        WHEN MATCHED THEN 
+            UPDATE SET HOLI_NAME = #{HOLI_NAME} , HOLI_YN = #{HOLI_YN}
+        WHEN NOT MATCHED THEN
+            INSERT (YYYYMMDD, HOLI_NAME, HOLI_YN) VALUES (#{FULL_DT}, #{HOLI_NAME},#{HOLI_YN})
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+        DELETE
+        FROM FOMM_HOLIDAY 
+        WHERE 1 = 1
+        AND YYYYMMDD = #{FULL_DT}
+	</delete>
+
+</mapper>

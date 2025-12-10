@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ5400PDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.STEST_ID
+			, A.STEST_NO
+			, A.STEST_TYPE_CD
+			, A.STEST_VERSION
+			, A.STEST_NAME
+			, A.CASE_DESC
+			, A.STEP_SEQ
+			, A.STEP_NO
+			, A.STEP_NAME
+			, A.STEP_DESC
+			, A.STEP_INPUT
+			, A.STEP_EXPECT
+			, A.PJT_ID
+			, A.BIZ_ID
+			, A.RESULT_CD
+			, A.REMARK
+			, A.TESTER_ID
+			, A.TESTER_NM
+			, A.TESTER_DEPT
+			, A.TESTER_PDATE
+			, A.TESTER_ADATE
+			, A.PL_USER_ID
+			, A.PL_USER_NM
+			, A.PL_USER_DEPT
+			, A.PL_TEST_PDATE
+			, A.PL_TEST_ADATE
+			, A.UPMU_USER_ID
+			, A.UPMU_USER_NM
+			, A.UPMU_USER_DEPT
+			, A.UPMU_TEST_PDATE
+			, A.UPMU_TEST_ADATE
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.LMOD_SDATE
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, B.PJT_NAME AS PJT_NAME
+			, C.PJT_ID   AS P_PJT_ID 
+			, C.PJT_NAME AS P_PJT_NAME
+
+		FROM
+			  PJ_SCNR_TEST A   
+			, PJ_PROJECT B
+			, PJ_PROJECT C
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND B.PARENT_ID = C.PJT_ID
+		AND A.STEST_ID	= #{STEST_ID}
+	</select>
+
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.STDFT_ID
+			, A.STEST_ID
+			, A.PJT_ID
+			, A.BIZ_ID
+			, A.STDFT_NO
+			, A.STDFT_NAME
+			, A.STDFT_TYPE_CD
+			, A.STDFT_DESC
+			, A.STDFT_RCV_CD
+			, A.STDFT_RCV_DESC
+			, A.STDFT_ACT_CD
+			, A.STDFT_CLASS_CD
+			, A.STDFT_SEVERITY_CD
+			, A.STDFT_CONF_CD
+			, A.DFT_USER_ID
+			, A.DFT_USER_NM
+			, A.DFT_USER_DEPT
+			, A.DFT_REG_DATE
+			, A.ACT_USER_ID
+			, A.ACT_USER_NM
+			, A.ACT_USER_DEPT
+			, A.ACT_PDATE
+			, A.ACT_ADATE
+			, A.ACT_DESC
+			, A.CONF_USER_ID
+			, A.CONF_USER_NM
+			, A.CONF_USER_DEPT
+			, A.CONF_DATE
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.SYSMODTIME
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, A.REMARK
+
+		FROM
+			PJ_ST_DEFECT A
+
+		WHERE 1 = 1
+		AND A.STEST_ID	= #{STEST_ID}
+		<!-- AND A.PJT_ID	= #{PJT_ID} -->
+
+    	ORDER BY
+    		A.STDFT_NO, A.STDFT_ID
+	</select>
+
+	<select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.STEST_ID AS REF_ID
+			, A.SCR_ID
+			, B.SCR_NO
+			, B.SCR_NAME
+			, A.PJT_ID
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+
+		FROM
+			  PJ_STEST_SCR_MAP A
+			, PJ_SCREEN B
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND A.SCR_ID	= B.SCR_ID
+		AND A.STEST_ID	= #{STEST_ID}
+		<!-- AND A.PJT_ID	= #{PJT_ID} -->
+
+		ORDER BY
+			B.SCR_NO, B.SCR_ID
+	</select>
+
+	<select id="select04" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.STEST_ID AS REF_ID
+			, A.BTJB_ID
+			, B.BTJB_NO
+			, B.BTJB_NAME
+			, A.PJT_ID
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+
+		FROM
+			  PJ_STEST_BTJB_MAP A
+			, PJ_BATCHJOB B
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND A.BTJB_ID	= B.BTJB_ID
+		AND A.STEST_ID	= #{STEST_ID}
+		<!-- AND A.PJT_ID	= #{PJT_ID} -->
+
+		ORDER BY
+			B.BTJB_NO, B.BTJB_ID
+	</select>
+	
+	<select id="select05" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.STEST_ID AS REF_ID
+			, A.INF_ID
+			, B.INF_NO
+			, B.INF_NAME
+			, A.PJT_ID
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+
+		FROM
+			  PJ_STEST_INF_MAP A
+			, PJ_INTERFACE B
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND A.INF_ID	= B.INF_ID
+		AND A.STEST_ID	= #{STEST_ID}
+		<!-- AND A.PJT_ID	= #{PJT_ID} -->
+
+		ORDER BY
+			B.INF_NO, B.INF_ID
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+		<selectKey resultType="string" keyProperty="STEST_ID" order="BEFORE">
+			SELECT
+				'PJST' || TO_CHAR(SYSDATE, 'YYMMDD') ||
+				LPAD( NVL(MAX(TO_NUMBER(NVL(SUBSTR(STEST_ID, -6), 0) )), 0) + 1, 6, 0)
+   			FROM PJ_SCNR_TEST
+   			WHERE 1 = 1
+   			AND STEST_ID LIKE 'PJST%'
+			AND LENGTH(STEST_ID) = 16
+		</selectKey>
+
+		INSERT INTO PJ_SCNR_TEST
+		(  
+			  STEST_ID
+			, STEST_NO
+			, STEST_TYPE_CD
+			, STEST_VERSION
+			, STEST_NAME
+			, CASE_DESC
+			, STEP_SEQ
+			, STEP_NO
+			, STEP_NAME
+			, STEP_DESC
+			, STEP_INPUT
+			, STEP_EXPECT
+			, PJT_ID
+			, BIZ_ID
+			, RESULT_CD
+			, REMARK
+			, TESTER_ID
+			, TESTER_NM
+			, TESTER_DEPT
+			, TESTER_PDATE
+			, TESTER_ADATE
+			, UPMU_USER_ID
+			, UPMU_USER_NM
+			, UPMU_USER_DEPT
+			, UPMU_TEST_PDATE
+			, UPMU_TEST_ADATE
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+
+			, LMOD_SDATE
+			, LMOD_USER_ID
+			, LMOD_USER_NM
+			, LMOD_USER_DEPT
+		)
+		VALUES
+		(
+			  #{STEST_ID} 
+			, #{STEST_NO}
+			, #{STEST_TYPE_CD}
+			, #{STEST_VERSION}
+			, #{STEST_NAME}
+			, #{CASE_DESC}
+			, #{STEP_SEQ}
+			, #{STEP_NO}
+			, #{STEP_NAME}
+			, #{STEP_DESC}
+			, #{STEP_INPUT}
+			, #{STEP_EXPECT}
+			, #{PJT_ID}
+			, #{BIZ_ID}
+			, #{RESULT_CD}
+			, #{REMARK}
+			, #{TESTER_ID}
+			, #{TESTER_NM}
+			, #{TESTER_DEPT}
+			, #{TESTER_PDATE}
+			, #{TESTER_ADATE}
+			, #{UPMU_USER_ID}
+			, #{UPMU_USER_NM}
+			, #{UPMU_USER_DEPT}
+			, #{UPMU_TEST_PDATE}
+			, #{UPMU_TEST_ADATE}
+			
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+		UPDATE PJ_SCNR_TEST SET
+			  STEST_NO			= #{STEST_NO}
+            , STEST_TYPE_CD		= #{STEST_TYPE_CD}
+            , STEST_VERSION		= #{STEST_VERSION}
+            , STEST_NAME		= #{STEST_NAME}
+            , CASE_DESC			= #{CASE_DESC}
+            , STEP_SEQ			= #{STEP_SEQ}
+            , STEP_NO			= #{STEP_NO}
+            , STEP_NAME			= #{STEP_NAME}
+            , STEP_DESC			= #{STEP_DESC}
+            , STEP_INPUT		= #{STEP_INPUT}
+            , STEP_EXPECT		= #{STEP_EXPECT}
+            , BIZ_ID			= #{BIZ_ID}
+            , RESULT_CD			= #{RESULT_CD}
+            , REMARK			= #{REMARK}
+            , TESTER_ID			= #{TESTER_ID}
+            , TESTER_NM			= #{TESTER_NM}
+            , TESTER_DEPT		= #{TESTER_DEPT}
+            , TESTER_PDATE		= #{TESTER_PDATE}
+            , TESTER_ADATE		= #{TESTER_ADATE}
+            , UPMU_USER_ID		= #{UPMU_USER_ID}
+            , UPMU_USER_NM		= #{UPMU_USER_NM}
+            , UPMU_USER_DEPT	= #{UPMU_USER_DEPT}
+            , UPMU_TEST_PDATE	= #{UPMU_TEST_PDATE}
+            , UPMU_TEST_ADATE	= #{UPMU_TEST_ADATE}
+
+            , LMOD_SDATE		= TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, LMOD_USER_ID		= #{LMID}														--최종수정자ID
+			, LMOD_USER_NM		= (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자이름
+			, LMOD_USER_DEPT	= (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})	--최종수정자부서이름
+
+		WHERE 1 = 1
+		AND STEST_ID	= #{STEST_ID}
+	</update>
+
+	<insert id="insert02" parameterType="java.util.Map">
+		INSERT INTO PJ_STEST_SCR_MAP
+		(  
+		        STEST_ID
+		      , SCR_ID
+		      , PJT_ID
+		      , REG_STIME
+		      , REG_USER_ID
+		      , REG_USER_NM
+		      , REG_USER_DEPT
+		)
+		VALUES
+		(
+		      #{REF_ID}
+			, #{SCR_ID}
+			, #{PJT_ID}
+		      
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		) 
+	</insert>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_STEST_SCR_MAP
+		WHERE 1 = 1
+		AND STEST_ID	= #{REF_ID}
+		AND SCR_ID		= #{SCR_ID}
+	</delete>
+
+	<insert id="insert03" parameterType="java.util.Map">
+		INSERT INTO PJ_STEST_BTJB_MAP
+		(  
+			  STEST_ID
+			, BTJB_ID
+			, PJT_ID
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+		)
+		VALUES
+		(
+        	  #{REF_ID}
+			, #{BTJB_ID}
+			, #{PJT_ID}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<delete id="remove02" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_STEST_BTJB_MAP
+		WHERE 1 = 1
+		AND STEST_ID	= #{REF_ID}
+		AND BTJB_ID		= #{BTJB_ID}
+	</delete>
+
+	<insert id="insert04" parameterType="java.util.Map">		
+		INSERT INTO PJ_STEST_INF_MAP
+		(  
+			  STEST_ID
+			, INF_ID
+			, PJT_ID
+
+			, REG_STIME
+			, REG_USER_ID
+			, REG_USER_NM
+			, REG_USER_DEPT
+		)
+		VALUES
+		(
+        	  #{REF_ID}
+			, #{INF_ID}
+			, #{PJT_ID}
+
+			, TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, #{LMID}
+			, (SELECT USER_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+			, (SELECT DEPT_NM FROM FOMM_USER_MT WHERE USER_ID = #{LMID})
+		)
+	</insert>
+
+	<delete id="remove03" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_STEST_INF_MAP
+		WHERE 1 = 1
+		AND STEST_ID	= #{REF_ID}
+		AND INF_ID		= #{INF_ID}
+	</delete>
+
+</mapper>

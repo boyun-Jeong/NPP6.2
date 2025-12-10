@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0300WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT	  A.DT
+					, A.FULL_DT
+					, A.WEEK_CD
+					, A.IS_TODAY
+					, '' AS JOB_CNT
+					, '' AS DATE_COMP
+					, '' AS RSTRCT_YN	-- 이행통제일YN
+					, B.HOLI_YN
+					, B.HOLY_TYPE
+					, B.HOLI_NAME
+		FROM (
+					SELECT	  LEVEL		AS DT
+								, TO_CHAR(TO_DATE(#{MONTH} || LPAD(LEVEL, 2, '0'), 'YYYYMMDD'), 'YYYYMMDD')   AS FULL_DT
+								, TO_CHAR(TO_DATE(#{MONTH} || LPAD(LEVEL, 2, '0'), 'YYYYMMDD'), 'd')          AS WEEK_CD
+								, CASE
+									WHEN TO_CHAR(TO_DATE(#{MONTH} || LPAD(LEVEL, 2, '0'), 'YYYYMMDD'), 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD')
+									THEN 'Y'
+									ELSE 'N'
+								  END IS_TODAY
+					FROM 	DUAL 
+					CONNECT BY LEVEL <![CDATA[<=]]> TO_CHAR(LAST_DAY(TO_DATE(#{MONTH} || '01', 'YYYYMMDD')), 'DD')
+				) A
+				, (
+					SELECT	*
+					FROM	FOMM_HOLIDAY
+					WHERE	SUBSTR(YYYYMMDD, 1, 6) = #{MONTH}
+				) B
+		WHERE	1=1
+		AND		A.FULL_DT = B.YYYYMMDD(+)
+		
+		ORDER BY A.DT
+	</select>
+	
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+			WORK_SDT,
+			COUNT(*)							AS WORK_ALL_CNT,
+			SUM(DECODE(WORK_END_YN, 'Y', 1, 0))	AS WORK_END_Y_CNT,
+			SUM(DECODE(WORK_END_YN, 'N', 1, 0))	AS WORK_END_N_CNT
+
+		FROM
+			(
+			SELECT *
+			FROM
+				FOMM_WORK_CALENDAR
+			WHERE 1 = 1
+			AND DISPLAY_YN = 'Y'
+			AND WORK_SDT BETWEEN #{MONTH} || '01' AND TO_CHAR(LAST_DAY(TO_DATE(#{MONTH} || '01', 'YYYYMMDD')), 'YYYYMMDD')
+
+			<if test="WORK_USER_ID != null and WORK_USER_ID != ''">
+        	AND WORK_USER_ID = #{WORK_USER_ID}
+        	</if>
+        	)
+		GROUP BY
+			WORK_SDT
+	</select>
+
+</mapper>

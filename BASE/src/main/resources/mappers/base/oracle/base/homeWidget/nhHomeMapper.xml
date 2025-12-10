@@ -1,0 +1,797 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.homeWidget.dao.nhHomeDAO">
+	
+	<!-- 요청 목록 조회 -->
+    <select id="selectReqList" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* nhHomeMapper >> selectReqList */
+		SELECT	A.*
+		FROM	SR_BASE_INFO A
+		WHERE	1 = 1
+		AND NVL(A.DEL_YN, 'N')	= 'N'
+		AND	A.REQ_DATE IS NOT NULL
+		AND A.WF_PROC_CD != 'WF_PROC_9999'		-- 종료 아닌거
+		AND NOT(LENGTH(A.REQ_ID) = 14 AND INSTR(A.REQ_ID, 'B') = 1 AND TITLE = 'JOB PASS 배치 에러 작업')
+		AND NOT(A.WF_PROC_CD = 'WF_PROC_1000' AND A.REQ_STAT_CD IN ('RQST00', 'RQST91'))		-- 임시저장 아닌거
+		AND 	A.REQ_USER_ID = #{USER_ID}
+		AND	SUBSTR(A.REQ_DATE, 1, 8) <![CDATA[>=]]> TO_CHAR(SYSDATE - 30, 'YYYYMMDD')		-- 최근 한달치
+
+		ORDER BY
+			A.REQ_DATE DESC, A.REQ_ID DESC
+    </select>
+
+	<!-- 금년 요청 현황 -->
+    <select id="selectReqCntYear" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* nhHomeMapper >> selectReqCntYear */
+    	SELECT	  COUNT(*)		AS REQ_CNT
+					, NVL(SUM(CASE WHEN A.WF_PROC_CD = 'WF_PROC_2010' AND A.REQ_STAT_CD = 'RQST01' THEN 1 ELSE 0 END), 0) 	AS PROC_WAIT_CNT
+					, NVL(SUM(CASE WHEN A.REQ_STAT_CD IN ('RQST01' ,'RQST11', 'RQST21') THEN 1 ELSE 0 END), 0) 	AS PROC_CNT
+					, NVL(SUM(CASE WHEN A.WF_PROC_CD = 'WF_PROC_9999' THEN 1 ELSE 0 END), 0)		AS FIN_CNT
+			FROM	  SR_BASE_INFO A
+					, WF_REQ_TMPLAT_HT B
+			WHERE	1=1
+			AND 		A.REQ_TMPLAT_ID	= B.REQ_TMPLAT_ID
+			AND 		A.REQ_TMPLAT_VER	= B.REQ_TMPLAT_VER
+			AND		NVL(DEL_YN, 'N') 	!= 'Y'
+			AND		NOT(LENGTH(A.REQ_ID) = 14 AND INSTR(A.REQ_ID, 'B') = 1 AND TITLE = 'JOB PASS 배치 에러 작업')
+			AND		REQ_USER_ID 		= #{USER_ID}
+			AND		SUBSTR(REQ_DATE, 1, 4) = #{YYYY}
+    </select>
+    
+    
+    <!-- 당월 미적기 처리건수 -->
+    <select id="selectReqCntDelayed" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* nhHomeMapper >> selectReqCntDelayed */
+    	SELECT	  COUNT(*) AS ALL_CNT
+<!-- 					, LISTAGG(A.REQ_ID, ',') WITHIN GROUP (ORDER BY A.REQ_ID) AS ALL_REQ_ID -->
+					, NVL(SUM(CASE WHEN WORK_DEPT_ID = (SELECT B.DEPT_CD FROM FOMM_USER_MT B WHERE B.USER_ID = #{USER_ID}) THEN 1 ELSE 0 END), 0) AS DEPT_CNT
+<!-- 					, LISTAGG(CASE WHEN WORK_DEPT_ID = (SELECT B.DEPT_CD FROM FOMM_USER_MT B WHERE B.USER_ID = #{USER_ID}) THEN A.REQ_ID END, ',') WITHIN GROUP (ORDER BY A.REQ_ID) AS DEPT_REQ_ID -->
+					, NVL(SUM(CASE WHEN WORK_USER_ID = #{USER_ID} THEN 1 ELSE 0 END), 0) AS IND_CNT
+<!-- 					, LISTAGG(CASE WHEN WORK_USER_ID = #{USER_ID} THEN A.REQ_ID END, ',') WITHIN GROUP (ORDER BY A.REQ_ID) AS IND_REQ_ID -->
+		FROM
+			WF_SRM A,
+			SR_BASE_INFO B
+				
+		WHERE 1 = 1
+		AND A.REQ_ID	= B.REQ_ID
+		AND NOT(LENGTH(B.REQ_ID) = 14 AND INSTR(B.REQ_ID, 'B') = 1 AND B.TITLE = 'JOB PASS 배치 에러 작업')
+		AND NOT(B.WF_PROC_CD = 'WF_PROC_1000' AND B.REQ_STAT_CD IN ('RQST00', 'RQST91'))
+		AND NVL(B.DEL_YN, 'N')  = 'N'
+		AND (
+			     (
+			     B.PROC_COMP_DATE IS NOT NULL AND SUBSTR(B.PROC_COMP_DATE, 1, 8) >
+			      NVL(A.AGREE_COMP_DT, B.REQ_WISH_DT)
+			      ) OR
+			     (
+			     B.PROC_COMP_DATE IS NULL AND TO_CHAR(SYSDATE, 'YYYYMMDD') >
+			     NVL(A.AGREE_COMP_DT, B.REQ_WISH_DT)
+			      )
+			    )
+		AND	NVL(A.AGREE_COMP_DT, B.REQ_WISH_DT) BETWEEN #{FROM_DATE} AND #{TO_DATE}
+    </select>
+
+	<select id="selectReqMinYear" parameterType="java.util.Map" resultType="int">
+		SELECT NVL(MIN(SUBSTR(REQ_DATE, 1, 4)), TO_CHAR(SYSDATE, 'YYYY')) AS MIN_YEAR
+		FROM SR_BASE_INFO
+		WHERE 1 = 1
+		AND NVL(DEL_YN, 'N') = 'N'
+		AND NOT(LENGTH(REQ_ID) = 14 AND INSTR(REQ_ID, 'B') = 1 AND TITLE = 'JOB PASS 배치 에러 작업')
+		AND REQ_USER_ID = #{USER_ID}
+		AND NOT(WF_PROC_CD = 'WF_PROC_1000' AND REQ_STAT_CD IN ('RQST00', 'RQST91'))
+	</select>
+
+    <!-- 현업 - 내 요청 건 -->
+    <select id="selectMyReqCnt" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* nhHomeMapper >> selectMyReqCnt */
+    	SELECT
+    			(
+				SELECT	COUNT(*)
+				FROM SR_BASE_INFO
+				WHERE	1=1
+				AND NVL(DEL_YN, 'N') = 'N'
+				AND NOT(LENGTH(REQ_ID) = 14 AND INSTR(REQ_ID, 'B') = 1 AND TITLE = 'JOB PASS 배치 에러 작업')
+				AND REQ_USER_ID = #{USER_ID}
+				AND REQ_STAT_CD = 'RQST11'		-- 결재중
+				AND SUBSTR(REQ_DATE, 1, 4) = #{YEAR}
+				) AS APPR_CNT,
+				(
+				SELECT	COUNT(*)
+				FROM SR_BASE_INFO
+				WHERE	1=1
+				AND	NVL(DEL_YN, 'N') = 'N'
+				AND NOT(LENGTH(REQ_ID) = 14 AND INSTR(REQ_ID, 'B') = 1 AND TITLE = 'JOB PASS 배치 에러 작업')
+				AND	REQ_USER_ID = #{USER_ID}
+				AND	WF_PROC_CD = 'WF_PROC_2010'		-- 접수1차
+				AND	REQ_STAT_CD = 'RQST01'		-- 등록
+				AND SUBSTR(REQ_DATE, 1, 4) = #{YEAR}
+				) AS PROC_WAIT_CNT,
+				(
+				SELECT	COUNT(*)
+				FROM
+					SR_BASE_INFO A,
+					WF_REQ_TMPLAT_HT B
+				WHERE	1=1
+				AND A.REQ_TMPLAT_ID   = B.REQ_TMPLAT_ID
+				AND A.REQ_TMPLAT_VER  = B.REQ_TMPLAT_VER
+				AND NVL(A.DEL_YN, 'N') = 'N'
+				AND NOT(LENGTH(A.REQ_ID) = 14 AND INSTR(A.REQ_ID, 'B') = 1 AND A.TITLE = 'JOB PASS 배치 에러 작업')
+				AND A.REQ_STAT_CD IN ('RQST01' ,'RQST11', 'RQST21')
+				AND A.REQ_USER_ID = #{USER_ID}
+				AND SUBSTR(A.REQ_DATE, 1, 4) = #{YEAR}
+				) AS PROC_CNT,
+				(
+				SELECT	COUNT(*)
+				FROM
+						(
+						SELECT
+							A.*,
+							CASE LENGTH(DUE_DT)
+								WHEN 8	THEN DUE_DT || '235959'
+								WHEN 12	THEN DUE_DT || '00'
+								ELSE NULL
+							END AS DUE_DT_NM
+						FROM 
+								(
+								SELECT
+									'PROC' AS GBN,
+									A.*,
+									CASE
+										WHEN SRM.AGREE_COMP_DT 	IS NOT NULL THEN 'SRM.AGREE_COMP_DT'
+										WHEN PBM.AGREE_COMP_EDT	IS NOT NULL THEN 'PBM.AGREE_COMP_EDT'
+										WHEN CHM.AGREE_COMP_EDT IS NOT NULL THEN 'CHM.AGREE_COMP_EDT'
+										ELSE 'SR_BASE.REQ_WISH_DT'
+									END	AS DUE_GBN,
+									CASE
+										WHEN SRM.AGREE_COMP_DT 	IS NOT NULL THEN SRM.AGREE_COMP_DT || SRM.AGREE_COMP_TIME
+										WHEN PBM.AGREE_COMP_EDT	IS NOT NULL THEN PBM.AGREE_COMP_EDT || PBM.AGREE_COMP_ETIME
+										WHEN CHM.AGREE_COMP_EDT IS NOT NULL THEN CHM.AGREE_COMP_EDT || CHM.AGREE_COMP_ETIME
+										ELSE A.REQ_WISH_DT || A.REQ_WISH_TIME
+									END	AS DUE_DT,
+									CASE
+										WHEN SRM.AGREE_COMP_DT 	IS NOT NULL THEN SRM.AGREE_COMP_DT
+										WHEN PBM.AGREE_COMP_EDT	IS NOT NULL THEN PBM.AGREE_COMP_EDT
+										WHEN CHM.AGREE_COMP_EDT IS NOT NULL THEN CHM.AGREE_COMP_EDT
+									END AS AGREE_COMP_DT,
+									CASE
+										WHEN A.DEL_YN = 'N'
+										THEN 'O'
+										ELSE
+											CASE
+												WHEN A.WF_PROC_CD = 'WF_PROC_1000' AND A.REQ_STAT_CD IN ('RQST00', 'RQST91')
+												THEN 'X'
+												ELSE
+													CASE
+														WHEN A.WF_PROC_CD <![CDATA[<>]]> 'WF_PROC_9999'
+														THEN 'O'
+														ELSE 'X'
+													END
+											END
+									END AS DUE_TARG_YN
+								FROM
+									  SR_BASE_INFO A
+									, WF_REQ_TMPLAT_HT B
+									, WF_CHM	CHM
+									, WF_PBM	PBM
+									, WF_SRM	SRM
+								WHERE	1 = 1
+								AND 	A.REQ_TMPLAT_ID   = B.REQ_TMPLAT_ID
+								AND 	A.REQ_TMPLAT_VER  = B.REQ_TMPLAT_VER
+								AND A.REQ_ID		= CHM.REQ_ID(+)
+								AND A.REQ_ID		= PBM.REQ_ID(+)
+								AND A.REQ_ID		= SRM.REQ_ID(+)
+								AND NVL(A.DEL_YN, 'N') = 'N'
+								AND NOT(LENGTH(A.REQ_ID) = 14 AND INSTR(A.REQ_ID, 'B') = 1 AND A.TITLE = 'JOB PASS 배치 에러 작업')
+								AND A.REQ_USER_ID = #{USER_ID}
+								AND SUBSTR(A.REQ_DATE, 1, 4) = #{YEAR}
+								) A
+						) A
+				WHERE	1=1
+				AND DUE_TARG_YN = 'O'
+				AND PROC_COMP_DATE IS NULL
+				AND TO_CHAR(SYSDATE, 'YYYYMMDD') BETWEEN NVL(AGREE_COMP_DT, REQ_WISH_DT) - 1 AND NVL(AGREE_COMP_DT, REQ_WISH_DT)
+				AND WF_PROC_CD <![CDATA[<>]]> 'WF_PROC_9999'
+				)	AS CNT_DUE,
+				(
+				SELECT COUNT(*) 
+				FROM SR_BASE_INFO A
+				WHERE 	1 = 1
+				AND NVL(A.DEL_YN, 'N') = 'N'
+				AND NOT(LENGTH(A.REQ_ID) = 14 AND INSTR(A.REQ_ID, 'B') = 1 AND A.TITLE = 'JOB PASS 배치 에러 작업')
+				AND	A.WF_PROC_CD = 'WF_PROC_9020'	-- 만족도조사
+				AND 	A.REQ_USER_ID = #{USER_ID}
+				AND SUBSTR(A.REQ_DATE, 1, 4) = #{YEAR}
+				)	AS STF_CNT,
+				(
+				SELECT	COUNT(*)
+				FROM SR_BASE_INFO A
+				WHERE	1=1
+				AND NVL(A.DEL_YN, 'N') = 'N'
+				AND A.REQ_USER_ID = #{USER_ID}
+				AND A.WF_PROC_CD = 'WF_PROC_9999'		-- 완료
+				AND NOT(LENGTH(A.REQ_ID) = 14 AND INSTR(A.REQ_ID, 'B') = 1 AND TITLE = 'JOB PASS 배치 에러 작업')
+				AND SUBSTR(A.REQ_DATE, 1, 4) = #{YEAR}
+				)	AS FIN_CNT
+		FROM DUAL
+    </select>
+
+    <!-- 현업 - 연간 처리현황 -->
+    <select id="selectReqFinYearly" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* nhHomeMapper >> selectReqFinYearly */
+    	SELECT	( 
+	    				SELECT	COUNT(CASE WHEN NOT(WF_PROC_CD = 'WF_PROC_1000' AND REQ_STAT_CD IN ('RQST00', 'RQST91')) THEN 1 END) TOT
+			          	FROM 	WF_SRM A
+									, SR_BASE_INFO B
+			          	WHERE 	1=1
+						AND	A.REQ_ID = B.REQ_ID
+						AND	NVL(B.DEL_YN, 'N') = 'N'
+						AND NOT(LENGTH(B.REQ_ID) = 14 AND INSTR(B.REQ_ID, 'B') = 1 AND B.TITLE = 'JOB PASS 배치 에러 작업')
+						AND	SUBSTR(B.REQ_DATE, 1, 8) BETWEEN #{FROMDATE} AND #{TODATE}
+						AND B.PROC_COMP_DATE IS NOT NULL
+			          	AND 	B.REQ_USER_ID = #{USER_ID}
+		          	) as tot
+		        	, (		
+		        		SELECT 	COUNT(*) FINISH
+				        FROM 	WF_SRM A
+				        		  , SR_BASE_INFO B
+				        WHERE 	1=1
+				        AND	A.REQ_ID = B.REQ_ID
+				        AND	NVL(B.DEL_YN, 'N') = 'N'
+				        AND NOT(LENGTH(B.REQ_ID) = 14 AND INSTR(B.REQ_ID, 'B') = 1 AND B.TITLE = 'JOB PASS 배치 에러 작업')
+						AND 	B.REQ_USER_ID = #{USER_ID}
+						AND	SUBSTR(B.REQ_DATE, 1, 8) BETWEEN #{FROMDATE} AND #{TODATE}
+				        AND	SUBSTR(B.PROC_COMP_DATE, 1, 8) <![CDATA[<=]]>  NVL(A.AGREE_COMP_DT, A.REQ_WISH_SDT)
+				        AND B.PROC_COMP_DATE IS NOT NULL
+		         	)	 as finish
+		from dual
+    </select>
+    
+    <!-- 현업 - 만족도평균 -->
+    <select id="selectSatisAvg" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* nhHomeMapper >> selectSatisAvg */
+    	SELECT
+			NVL(a.COUNT_ALL, 0) AS COUNT_ALL,
+			NVL(b.SUM_ITEM, 0) AS SUM_ITEM,
+			NVL(b.COUNT_ITEM,0) AS COUNT_ITEM,
+			NVL(b.AVG_ITEM, 0) AS AVG_ITEM,
+			NVL(c.COUNT_NOT, 0) AS COUNT_NOT
+		FROM
+			(
+			SELECT COUNT(*) AS COUNT_ALL
+			FROM
+					(
+					SELECT DISTINCT AA.REQ_ID
+					FROM
+						WF_SRM AA,
+						FOMM_SATI_EXM BB,
+						SR_BASE_INFO A
+					WHERE 1 = 1
+					AND AA.REQ_ID = BB.REQ_ID
+					AND AA.REQ_ID	= A.REQ_ID
+					AND NOT(LENGTH(A.REQ_ID) = 14 AND INSTR(A.REQ_ID, 'B') = 1 AND A.TITLE = 'JOB PASS 배치 에러 작업')
+					--AND AA.ING_PHASE = 'APPR0Z00'
+					AND A.WF_PROC_CD = 'WF_PROC_9999'
+					AND A.REQ_DATE BETWEEN #{FROMDATE} AND #{TODATE}
+					AND	NVL(A.DEL_YN, 'N') = 'N'
+					AND A.REQ_USER_ID = #{USER_ID}
+					UNION ALL
+					SELECT DISTINCT AA.REQ_ID
+					FROM
+						WF_CHM AA,
+						FOMM_SATI_EXM BB,
+						SR_BASE_INFO A
+					WHERE 1 = 1
+					AND AA.REQ_ID = BB.REQ_ID
+					AND AA.REQ_ID = A.REQ_ID
+					--AND AA.ING_PHASE = 'CHM0008'
+					AND A.WF_PROC_CD = 'WF_PROC_9999'
+					AND A.REQ_DATE BETWEEN #{FROMDATE} AND #{TODATE}
+					AND	NVL(A.DEL_YN, 'N') = 'N'
+					AND A.REQ_USER_ID = #{USER_ID}
+					)
+			) a,
+			(
+			SELECT
+				SUM(ITEM.QST_POINT)	AS SUM_ITEM,
+				COUNT(*) AS COUNT_ITEM,
+				ROUND(AVG(ITEM.QST_POINT),1) AS AVG_ITEM
+			FROM
+				FOMM_SATI_EXM ITEM
+			WHERE 1 = 1
+			AND ITEM.REQ_ID IN 
+										   (
+											SELECT B.REQ_ID
+											FROM
+												WF_SRM A,
+												SR_BASE_INFO B
+											WHERE 1 = 1
+											--AND A.ING_PHASE = 'APPR0Z00'
+											AND B.WF_PROC_CD = 'WF_PROC_9999'
+											AND NOT(LENGTH(B.REQ_ID) = 14 AND INSTR(B.REQ_ID, 'B') = 1 AND B.TITLE = 'JOB PASS 배치 에러 작업')
+											AND B.REQ_DATE BETWEEN #{FROMDATE} AND #{TODATE}
+											AND	NVL(B.DEL_YN, 'N') = 'N'
+											AND B.REQ_USER_ID = #{USER_ID}
+											UNION ALL
+											SELECT B.REQ_ID
+											FROM
+												WF_CHM A,
+												SR_BASE_INFO B
+											WHERE 1 = 1
+											--AND A.ING_PHASE = 'CHM0008'
+											AND B.WF_PROC_CD = 'WF_PROC_9999'
+											AND B.REQ_DATE BETWEEN #{FROMDATE} AND #{TODATE}
+											AND NVL(B.DEL_YN, 'N') = 'N'
+											AND B.REQ_USER_ID = #{USER_ID}
+											)
+			AND ITEM.QST_POINT IS NOT NULL 
+			) b,
+			(
+			SELECT COUNT(*) COUNT_NOT
+			FROM
+				(
+				SELECT  A.REQ_ID
+				FROM
+					WF_SRM A,
+					SR_BASE_INFO B
+				WHERE 1 = 1
+				AND A.REQ_ID	= B.REQ_ID
+				AND NOT(LENGTH(B.REQ_ID) = 14 AND INSTR(B.REQ_ID, 'B') = 1 AND B.TITLE = 'JOB PASS 배치 에러 작업')
+				--AND A.ING_PHASE = 'APPR0N00'
+				AND B.WF_PROC_CD = 'WF_PROC_9020'
+				AND B.REQ_DATE BETWEEN #{FROMDATE} AND #{TODATE}
+				AND	NVL(B.DEL_YN, 'N') = 'N'
+				AND B.REQ_USER_ID = #{USER_ID}								
+				UNION ALL								
+				SELECT A.REQ_ID
+				FROM
+						WF_CHM A,
+						SR_BASE_INFO B										
+				WHERE   1 = 1
+				AND A.REQ_ID = B.REQ_ID
+				AND B.WF_PROC_CD = 'WF_PROC_9020'
+				--AND A.ING_PHASE = 'CHM00071'
+				AND B.REQ_DATE BETWEEN #{FROMDATE} AND #{TODATE}
+				AND NVL(B.DEL_YN, 'N') = 'N'
+				AND B.REQ_USER_ID = #{USER_ID}
+				)
+			) c
+    </select>
+
+    <!-- 현업, IT부문 - 나의 할일 -->
+    <select id="selectMyWork" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* nhHomeMapper >> selectMyWork */
+    	SELECT	(
+					SELECT	count(*)	  AS APPR_CNT
+					FROM
+						  SR_BASE_INFO A
+						, WF_REQ_TMPLAT_HT B
+						, (
+						  SELECT *
+						  FROM
+						  			(
+									SELECT	  C.*
+												, DENSE_RANK() OVER(PARTITION BY REQ_ID, WF_PROC_CD, APPR_LVL_SEQ, APPR_GRP_SEQ ORDER BY APPR_SEQ) AS RNK
+									FROM		WF_APPROVAL_MT C
+									WHERE 	1 = 1
+									AND 		APPR_STAT_CD = 'APST_01'
+									AND 		APPR_LVL_SEQ = (
+													SELECT 	MIN(APPR_LVL_SEQ)
+													FROM 	WF_APPROVAL_MT
+													WHERE 	1 = 1
+													AND 	REQ_ID         = C.REQ_ID
+													AND 	WF_PROC_CD     = C.WF_PROC_CD
+													AND 	APPR_STAT_CD   = C.APPR_STAT_CD
+												)
+								)
+								WHERE RNK = 1
+							  ) C
+							, SR_WF_PROC D
+					
+					WHERE 1 = 1
+					AND A.REQ_TMPLAT_ID		= B.REQ_TMPLAT_ID
+					AND A.REQ_TMPLAT_VER	= B.REQ_TMPLAT_VER
+					AND NOT(LENGTH(A.REQ_ID) = 14 AND INSTR(A.REQ_ID, 'B') = 1 AND A.TITLE = 'JOB PASS 배치 에러 작업')
+					AND A.REQ_ID					= C.REQ_ID
+					AND A.WF_PROC_CD			= C.WF_PROC_CD
+					AND A.REQ_ID					= D.REQ_ID
+					AND A.WF_PROC_CD			= D.WF_PROC_CD
+					AND NVL(A.DEL_YN, 'N')		= 'N'
+					AND A.REQ_STAT_CD		= 'RQST11'	-- 결재중
+					AND C.USER_ID				= #{USER_ID}
+				)	AS APPR_CNT
+				, (
+					SELECT	COUNT(*) AS PROC_CNT
+					FROM 	  SR_BASE_INFO A
+							, WF_REQ_TMPLAT_HT B
+					WHERE	1 = 1
+					AND 	A.REQ_TMPLAT_ID   = B.REQ_TMPLAT_ID
+					AND 	A.REQ_TMPLAT_VER  = B.REQ_TMPLAT_VER
+					AND	NVL(A.DEL_YN, 'Y') != 'Y'
+					AND NOT(LENGTH(A.REQ_ID) = 14 AND INSTR(A.REQ_ID, 'B') = 1 AND A.TITLE = 'JOB PASS 배치 에러 작업')
+					AND 	EXISTS (
+								SELECT 	1
+								FROM	SR_CGER_DT D
+								WHERE 	1 = 1
+								AND 	(D.WF_FUNC_CD = 'WF_FUNC_04' AND A.REQ_STAT_CD IN ('RQST00', 'RQST01', 'RQST91'))	-- 담당자;	임시저장, 등록, 반려
+								AND 	D.REQ_ID		= A.REQ_ID 
+								AND 	D.WF_PROC_CD	= A.WF_PROC_CD 
+								AND 	D.USER_ID       = #{USER_ID}
+							)
+				)	AS PROC_CNT
+				, (
+					SELECT	COUNT(*) AS CNT_DUE
+					FROM
+					(
+						SELECT	  A.*
+								, CASE LENGTH(DUE_DT)
+									WHEN 8	THEN DUE_DT || '235959'
+									WHEN 12	THEN DUE_DT || '00'
+									ELSE NULL
+								  END AS DUE_DT_NM
+						FROM 
+						(
+							SELECT	  'PROC' AS GBN
+									, A.*
+									, (CASE WHEN SRM.AGREE_COMP_DT 	IS NOT NULL THEN 'SRM.AGREE_COMP_DT'
+											WHEN PBM.AGREE_COMP_EDT	IS NOT NULL THEN 'PBM.AGREE_COMP_EDT'
+											WHEN CHM.AGREE_COMP_EDT IS NOT NULL THEN 'CHM.AGREE_COMP_EDT'
+											ELSE 'SR_BASE.REQ_WISH_DT'
+									  END)	AS DUE_GBN
+									, (CASE WHEN SRM.AGREE_COMP_DT 	IS NOT NULL THEN SRM.AGREE_COMP_DT || SRM.AGREE_COMP_TIME
+											WHEN PBM.AGREE_COMP_EDT	IS NOT NULL THEN PBM.AGREE_COMP_EDT || PBM.AGREE_COMP_ETIME
+											WHEN CHM.AGREE_COMP_EDT IS NOT NULL THEN CHM.AGREE_COMP_EDT || CHM.AGREE_COMP_ETIME
+											ELSE A.REQ_WISH_DT || A.REQ_WISH_TIME
+									  END)	AS DUE_DT
+
+									, CASE WHEN SRM.AGREE_COMP_DT 	IS NOT NULL THEN SRM.AGREE_COMP_DT
+											WHEN PBM.AGREE_COMP_EDT	IS NOT NULL THEN PBM.AGREE_COMP_EDT
+											WHEN CHM.AGREE_COMP_EDT IS NOT NULL THEN CHM.AGREE_COMP_EDT
+									  END AS AGREE_COMP_DT
+									, CASE
+										WHEN A.DEL_YN = 'N'
+										THEN 'O'
+										ELSE 
+											CASE 
+												WHEN A.WF_PROC_CD = 'WF_PROC_1000' AND A.REQ_STAT_CD IN ('RQST00', 'RQST91')
+												THEN 'X'
+												ELSE
+													CASE
+														WHEN A.WF_PROC_CD <![CDATA[<>]]> 'WF_PROC_9999'
+														THEN 'O'
+														ELSE 'X'
+													END
+											END
+									  END AS DUE_TARG_YN									
+							FROM 	  SR_BASE_INFO A
+									, WF_REQ_TMPLAT_HT B
+									, WF_CHM	CHM
+									, WF_PBM	PBM
+									, WF_SRM	SRM
+							WHERE	1 = 1
+							AND 	A.REQ_TMPLAT_ID   = B.REQ_TMPLAT_ID
+							AND 	A.REQ_TMPLAT_VER  = B.REQ_TMPLAT_VER
+							AND	A.REQ_ID		= CHM.REQ_ID(+)
+							AND	A.REQ_ID		= PBM.REQ_ID(+)
+							AND	A.REQ_ID		= SRM.REQ_ID(+)
+							AND	NVL(A.DEL_YN, 'Y') != 'Y'
+							AND NOT(LENGTH(A.REQ_ID) = 14 AND INSTR(A.REQ_ID, 'B') = 1 AND A.TITLE = 'JOB PASS 배치 에러 작업')
+							AND 	EXISTS (
+										SELECT 	1
+										FROM	SR_CGER_DT D
+										WHERE 	1 = 1
+										AND 	(D.WF_FUNC_CD = 'WF_FUNC_04' AND A.REQ_STAT_CD IN ('RQST00', 'RQST01', 'RQST91'))	-- 담당자;	임시저장, 등록, 반려
+										AND 	D.REQ_ID		= A.REQ_ID 
+										AND 	D.WF_PROC_CD	= A.WF_PROC_CD 
+										AND 	D.USER_ID       = #{USER_ID}
+									)
+						) A
+					) A
+					WHERE	1=1
+					AND DUE_TARG_YN = 'O'
+					AND PROC_COMP_DATE IS NULL
+					AND TO_CHAR(SYSDATE, 'YYYYMMDD') BETWEEN NVL(AGREE_COMP_DT, REQ_WISH_DT) - 1 AND NVL(AGREE_COMP_DT, REQ_WISH_DT)
+				)	AS DUE_CNT
+				, (
+					SELECT	NVL(SUM(CASE WHEN WF_PROC_CD = 'WF_PROC_9020' THEN 1 ELSE 0 END), 0) SATISFACTION
+					FROM
+						SR_BASE_INFO
+					WHERE 	1 = 1
+					AND NOT(LENGTH(REQ_ID) = 14 AND INSTR(REQ_ID, 'B') = 1 AND TITLE = 'JOB PASS 배치 에러 작업')
+					AND REQ_USER_ID = #{USER_ID}
+				)	AS STF_CNT
+		FROM DUAL
+    </select>
+    
+    <!-- 나의 할일 배치 조회용 서비스별 담당자 조회 -->
+    <select id="selectWfSvcStaffMng" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* nhHomeMapper >> selectWfSvcStaffMng */
+    	select distinct *
+		from (
+			select 
+			    SVC_CLSS_CD,
+			    BSE_LVL1_CD,
+			    BSE_LVL2_CD,
+			    STAFF_ID,
+			    STAFF_NM,
+			    b.DEPT_CD,
+			    b.DEPT_NM,
+			    b.POS_NM,
+			    BSE_LVL1_NM,
+			    BSE_LVL2_NM,
+			    LVL1_STAFF_YN,
+			    LVL2_STAFF_YN,
+			    LVL3_STAFF_YN,
+			    LVL4_STAFF_YN,
+			    LVL5_STAFF_YN,
+			    LVL6_STAFF_YN,
+			    LVL7_STAFF_YN,
+			    LVL8_STAFF_YN,
+			    LVL9_STAFF_YN
+			from WF_SVC_STAFF_MNG a,
+			      FOMM_USER_MT b
+			where a.staff_id = b.user_id
+			and   svc_clss_cd = #{SVC_CLASS_CD}
+			union all
+			select 
+			    SVC_CLSS_CD,
+			    BSE_LVL1_CD,
+			    BSE_LVL2_CD,
+			    b.user_id,
+			    b.USER_NM,
+			    b.DEPT_ID,
+			    b.DEPT_NM,
+			    b.POS_NM,
+			    BSE_LVL1_NM,
+			    BSE_LVL2_NM,
+			    LVL1_STAFF_YN,
+			    LVL2_STAFF_YN,
+			    LVL3_STAFF_YN,
+			    LVL4_STAFF_YN,
+			    LVL5_STAFF_YN,
+			    LVL6_STAFF_YN,
+			    LVL7_STAFF_YN,
+			    LVL8_STAFF_YN,
+			    LVL9_STAFF_YN
+			from WF_SVC_STAFF_MNG a,
+			      FOMM_USER_MT b
+			where a.staff_id = b.DEPT_CD
+			and   svc_clss_cd = #{SVC_CLASS_CD}
+		)
+		order by STAFF_NM
+   	</select>
+
+   	<!-- 나의 할일 배치 건수 조회 -->
+    <select id="selectWfBach" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* nhHomeMapper >> selectWfBach */
+    	SELECT	count(*) as CNT_BACH
+		FROM		wf_bach A
+		WHERE	1 = 1
+		AND (		A.work_user_id = '1'
+			    OR A.pl_user_id = '1'
+			    OR A.appr_user_id = '1'
+			    OR ( 	
+			    		A.work_user_id IS NULL
+						and exists (
+								select   B.arr_job_incharge
+								from (
+										 select   req_id
+												, regexp_substr(a.job_incharge, '[^,]+', 1, level) as arr_job_incharge
+										 from (
+												select 	req_id, job_incharge 
+												from 	wf_bach
+												where 	work_user_id is null
+												and 	job_incharge is not null
+												AND	ING_PHASE = #{ING_PHASE}
+									) a
+									connect by level <![CDATA[<=]]> length(regexp_replace(a.job_incharge, '[^,]+', '')) + 1
+								) B
+								where	B.req_id = A.req_id
+								and		B.arr_job_incharge = A.job_incharge
+								and		B.arr_job_incharge = #{USER_ID}
+						)
+					)
+		)
+		AND	A.ING_PHASE = #{ING_PHASE}
+    </select>
+
+    <!-- 작업캘린더 건수 조회 -->
+    <select id="selectMonthCalReqCnt" parameterType="java.util.Map" resultType="java.util.Map">
+    	/* nhHomeMapper >> selectMonthCalReqCnt */
+    	SELECT	  A.REQ_ID
+					, A.REQ_TMPLAT_ID
+					, A.REQ_TMPLAT_VER
+					, A.SVC_CD
+					, A.SVC_DTL_CD
+					, A.WF_PROC_CD
+					, A.REQ_STAT_CD
+					, A.TITLE
+					, A.WORK_USER_GBN
+					, A.WORK_USER_ID
+					, (SELECT C.USER_NM FROM FOMM_USER_MT C WHERE C.USER_ID = A.WORK_USER_ID)	AS WORK_USER_NM
+					, A.WORK_DEPT_ID
+					, (SELECT C.DEPT_NM FROM FOMM_DEPT_MT C WHERE C.DEPT_CD = A.WORK_DEPT_ID)	AS WORK_DEPT_NM
+					, SUBSTR(A.REQ_DATE, 1, 8) AS REQ_DATE
+					, TO_CHAR(TO_DATE(SUBSTR(A.REQ_DATE, 1, 8), 'YYYYMMDD'), 'YYYY/MM/DD') AS REQ_DATE_NM
+					, A.DUE_GBN
+					, SUBSTR(A.DUE_DT, 1, 8) AS DUE_DATE
+					, TO_CHAR(TO_DATE(SUBSTR(A.DUE_DT, 1, 8), 'YYYYMMDD'), 'YYYY/MM/DD') AS DUE_DATE_NM
+					, 'N' AS CNT_CHK_YN
+			FROM
+			(
+				SELECT	  A.*
+						, CASE
+							WHEN SRM.WORK_USER_ID IS NOT NULL THEN 'SR'
+							ELSE NULL
+						  END	AS WORK_USER_GBN
+						, CASE
+							WHEN SRM.WORK_USER_ID IS NOT NULL THEN SRM.WORK_USER_ID
+							ELSE NULL
+						  END	AS WORK_USER_ID
+						, CASE
+							WHEN SRM.WORK_USER_ID IS NOT NULL THEN (SELECT C.DEPT_CD FROM FOMM_USER_MT C WHERE C.USER_ID = SRM.WORK_USER_ID)
+							ELSE NULL
+						  END	AS WORK_DEPT_ID
+						, (CASE WHEN A.WF_PROC_CD = 'WF_PROC_9999' THEN 'FIN'
+								WHEN SRM.AGREE_COMP_DT 	IS NOT NULL THEN 'SR'
+								ELSE 'BASE'
+						  END)	AS DUE_GBN
+						, (CASE
+							WHEN A.PROC_COMP_DATE IS NOT NULL
+							THEN A.PROC_COMP_DATE
+							WHEN SRM.AGREE_COMP_DT IS NOT NULL THEN SRM.AGREE_COMP_DT
+							ELSE A.REQ_WISH_DT
+						  END)	AS DUE_DT
+						
+				FROM
+					  SR_BASE_INFO A
+					, WF_SRM SRM
+				WHERE	1=1
+				AND	A.REQ_ID = SRM.REQ_ID(+)
+				AND	NVL(A.DEL_YN, 'N') = 'N'
+				
+				/* 처리완료건 제외 */
+				AND A.WF_PROC_CD NOT IN ('WF_PROC_9020', 'WF_PROC_9999')
+				
+				/* [등록](임시저장, 반려 건 제외) */
+				AND NOT(A.WF_PROC_CD = 'WF_PROC_1000' AND A.REQ_STAT_CD IN ('RQST00', 'RQST91'))
+				
+				/* 대상 요청서
+				WFT250010[시스템작업계획서(보안)]
+				WFT250020[시스템작업요청서(보안)]
+				WFT250013[시스템작업계획서(서버)]
+				WFT250018[Disk 및 파일시스템 신청서]
+				WFT250012[시스템작업계획서(NW)]
+				*/
+				AND A.REQ_TMPLAT_ID IN ('WFT250010', 'WFT250020', 'WFT250013' ,'WFT250018', 'WFT250012')
+			) A
+
+			WHERE	1=1
+			AND 	A.WORK_USER_ID IS NOT NULL
+<!-- 			AND	A.DUE_DT IS NOT NULL -->
+<!-- 			AND -->
+<!-- 					( -->
+<!-- 					 SUBSTR(REQ_DATE, 1, 6) 	= #{YYYYMM} OR -->
+<!-- 					 SUBSTR(REQ_DATE, 1, 6) 	= #{YYYYMM2} OR -->
+<!-- 					 SUBSTR(DUE_DT, 1, 6) 		= #{YYYYMM} OR -->
+<!-- 					 SUBSTR(DUE_DT, 1, 6)		= #{YYYYMM2} -->
+<!-- 					) -->
+
+			<if test= "SEARCH_DATE != null and SEARCH_DATE != ''">
+			AND	#{SEARCH_DATE}  <![CDATA[=]]> SUBSTR(REQ_DATE, 1, 8)
+<!-- 			AND	#{SEARCH_DATE}  <![CDATA[<=]]> SUBSTR(DUE_DT, 1, 8) -->
+			</if>
+
+			<choose>
+
+				<when test='"서버".equals(SEARCH_GBN)'>
+			AND A.REQ_TMPLAT_ID IN ('WFT250013', 'WFT250018')
+				</when>
+				<when test='"보안".equals(SEARCH_GBN)'>
+			AND A.REQ_TMPLAT_ID IN ('WFT250010', 'WFT250020')
+				</when>
+				<when test='"네트워크".equals(SEARCH_GBN)'>
+			AND A.REQ_TMPLAT_ID = 'WFT250012'			
+				</when>
+
+			</choose>
+			ORDER BY DUE_DT
+    	
+<!--     	SELECT	  A.REQ_ID -->
+<!-- 					, A.REQ_TMPLAT_ID -->
+<!-- 					, A.REQ_TMPLAT_VER -->
+<!-- 					, A.SVC_CD -->
+<!-- 					, A.SVC_DTL_CD -->
+<!-- 					, A.WF_PROC_CD -->
+<!-- 					, A.REQ_STAT_CD -->
+<!-- 					, A.TITLE -->
+<!-- 					, A.WORK_USER_GBN -->
+<!-- 					, A.WORK_USER_ID -->
+<!-- 					, (SELECT C.USER_NM FROM FOMM_USER_MT C WHERE C.USER_ID = A.WORK_USER_ID)	AS WORK_USER_NM -->
+<!-- 					, A.WORK_DEPT_ID -->
+<!-- 					, (SELECT C.DEPT_NM FROM FOMM_DEPT_MT C WHERE C.DEPT_CD = A.WORK_DEPT_ID)	AS WORK_DEPT_NM -->
+<!-- 					, SUBSTR(A.REQ_DATE, 1, 8) AS REQ_DATE -->
+<!-- 					, TO_CHAR(TO_DATE(SUBSTR(A.REQ_DATE, 1, 8), 'YYYYMMDD'), 'YYYY/MM/DD') AS REQ_DATE_NM -->
+<!-- 					, A.DUE_GBN -->
+<!-- 					, SUBSTR(A.DUE_DT, 1, 8) AS DUE_DATE -->
+<!-- 					, TO_CHAR(TO_DATE(SUBSTR(A.DUE_DT, 1, 8), 'YYYYMMDD'), 'YYYY/MM/DD') AS DUE_DATE_NM -->
+<!-- 					, 'N' AS CNT_CHK_YN -->
+<!-- 			FROM -->
+<!-- 			( -->
+<!-- 				SELECT	  A.* -->
+<!-- 						, CASE -->
+<!-- 							WHEN SRM.WORK_USER_ID IS NOT NULL THEN 'SR' -->
+<!-- 							WHEN PBM.WORK_USER_ID IS NOT NULL THEN 'PB' -->
+<!-- 							WHEN CHM.WORK_USER_ID IS NOT NULL THEN 'CH' -->
+<!-- 							ELSE NULL -->
+<!-- 						  END	AS WORK_USER_GBN -->
+<!-- 						, CASE -->
+<!-- 							WHEN SRM.WORK_USER_ID IS NOT NULL THEN SRM.WORK_USER_ID -->
+<!-- 							WHEN PBM.WORK_USER_ID IS NOT NULL THEN PBM.WORK_USER_ID -->
+<!-- 							WHEN CHM.WORK_USER_ID IS NOT NULL THEN CHM.WORK_USER_ID -->
+<!-- 							ELSE NULL -->
+<!-- 						  END	AS WORK_USER_ID -->
+<!-- 						, CASE -->
+<!-- 							WHEN SRM.WORK_USER_ID IS NOT NULL THEN (SELECT C.DEPT_CD FROM FOMM_USER_MT C WHERE C.USER_ID = SRM.WORK_USER_ID) -->
+<!-- 							WHEN PBM.WORK_USER_ID IS NOT NULL THEN (SELECT C.DEPT_CD FROM FOMM_USER_MT C WHERE C.USER_ID = PBM.WORK_USER_ID) -->
+<!-- 							WHEN CHM.WORK_USER_ID IS NOT NULL THEN (SELECT C.DEPT_CD FROM FOMM_USER_MT C WHERE C.USER_ID = CHM.WORK_USER_ID) -->
+<!-- 							ELSE NULL -->
+<!-- 						  END	AS WORK_DEPT_ID -->
+<!-- 						, (CASE WHEN A.WF_PROC_CD = 'WF_PROC_9999' THEN 'FIN' -->
+<!-- 								WHEN SRM.AGREE_COMP_DT 	IS NOT NULL THEN 'SR' -->
+<!-- 								WHEN PBM.AGREE_COMP_EDT	IS NOT NULL THEN 'PB' -->
+<!-- 								WHEN CHM.AGREE_COMP_EDT IS NOT NULL THEN 'CH' -->
+<!-- 								ELSE 'BASE' -->
+<!-- 						  END)	AS DUE_GBN -->
+<!-- 						, (CASE WHEN A.WF_PROC_CD = 'WF_PROC_9999' THEN A.PROC_COMP_DATE -->
+<!-- 								WHEN SRM.AGREE_COMP_DT 	IS NOT NULL THEN SRM.AGREE_COMP_DT || SRM.AGREE_COMP_TIME -->
+<!-- 								WHEN PBM.AGREE_COMP_EDT	IS NOT NULL THEN PBM.AGREE_COMP_EDT || PBM.AGREE_COMP_ETIME -->
+<!-- 								WHEN CHM.AGREE_COMP_EDT IS NOT NULL THEN CHM.AGREE_COMP_EDT || CHM.AGREE_COMP_ETIME -->
+<!-- 								ELSE A.REQ_WISH_DT || A.REQ_WISH_TIME -->
+<!-- 						  END)	AS DUE_DT -->
+<!-- 				FROM	  SR_BASE_INFO A -->
+<!-- 						, WF_SRM SRM -->
+<!-- 						, WF_PBM PBM -->
+<!-- 						, WF_CHM CHM -->
+<!-- 				WHERE	1=1 -->
+<!-- 				AND	A.REQ_ID = SRM.REQ_ID(+) -->
+<!-- 				AND	A.REQ_ID = PBM.REQ_ID(+) -->
+<!-- 				AND	A.REQ_ID = CHM.REQ_ID(+) -->
+<!-- 				AND	NVL(A.DEL_YN, 'N') != 'Y' -->
+<!-- 				AND NOT(LENGTH(A.REQ_ID) = 14 AND INSTR(A.REQ_ID, 'B') = 1 AND A.TITLE = 'JOB PASS 배치 에러 작업') -->
+<!-- 			) A -->
+
+<!-- 			WHERE	1=1 -->
+<!-- 			AND		A.WORK_USER_ID IS NOT NULL -->
+<!-- 			AND		A.DUE_DT IS NOT NULL -->
+			
+<!-- 			AND -->
+<!-- 					( -->
+<!-- 					 SUBSTR(REQ_DATE, 1, 6) 	= #{YYYYMM} OR -->
+<!-- 					 SUBSTR(REQ_DATE, 1, 6) 	= #{YYYYMM2} OR -->
+<!-- 					 SUBSTR(DUE_DT, 1, 6) 		= #{YYYYMM} OR -->
+<!-- 					 SUBSTR(DUE_DT, 1, 6)		= #{YYYYMM2} -->
+<!-- 					) -->
+
+<!-- 			<if test= "SEARCH_DATE != null and SEARCH_DATE != ''"> -->
+<!-- 			AND	#{SEARCH_DATE}  <![CDATA[>=]]> SUBSTR(REQ_DATE, 1, 8) -->
+<!-- 			AND	#{SEARCH_DATE}  <![CDATA[<=]]> SUBSTR(DUE_DT, 1, 8)  -->
+<!-- 			</if> -->
+
+<!-- 			<choose> -->
+<!-- 				<when test='SEARCH_GBN != null and SEARCH_GBN.equals("USER")'> -->
+<!-- 					/*  개인 조회 */ -->
+<!-- 					AND	A.WORK_USER_ID = #{USER_ID} -->
+<!-- 				</when> -->
+<!-- 				<when test='SEARCH_GBN != null and SEARCH_GBN.equals("TEAM")'> -->
+<!-- 					/* 팀 조회 */ -->
+<!-- 					AND	A.WORK_DEPT_ID = (SELECT C.DEPT_CD FROM FOMM_USER_MT C WHERE C.USER_ID = #{USER_ID}) -->
+<!-- 				</when> -->
+<!-- 				<otherwise> -->
+<!-- 				/* 전체 조회 */ -->
+<!-- 				</otherwise> -->
+<!-- 			</choose> -->
+<!-- 			ORDER BY DUE_DT -->
+    </select>
+    
+</mapper>

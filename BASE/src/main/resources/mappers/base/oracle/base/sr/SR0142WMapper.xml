@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.sr.dao.SR0142WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT 
+		      '0' AS CHK
+			, '' AS ROWFLAG
+			, A.PROC_NUMBER --프로세스번호
+		    , (SELECT REPLACE(WF_PROC_NM, '\n', ' ')
+                 FROM WF_REQ_TMPLAT_PROC_HT
+                WHERE REQ_TMPLAT_ID = B.REQ_TMPLAT_ID 
+                  AND REQ_TMPLAT_VER = B.REQ_TMPLAT_VER 
+                  AND WF_PROC_CD = B.WF_PROC_CD)    AS WF_PROC_NM   
+            , (SELECT CMM_CD_NM 
+                 FROM FOMM_CMM_CD_MT
+                WHERE CODE_DIV = 'WORKFLOW_CD' 
+                  AND UP_CMM_CD = 'SVC_CD' 
+                  AND CMM_CD = C.SVC_CD 
+                  AND LANG_CD = 'KR')
+              || CASE WHEN C.SVC_DTL_CD IS NOT NULL
+                       THEN ' > '|| (SELECT CMM_CD_NM 
+                                       FROM FOMM_CMM_CD_MT 
+                                      WHERE CODE_DIV = 'WORKFLOW_CD' 
+                                        AND UP_CMM_CD = C.SVC_CD 
+                                        AND CMM_CD = C.SVC_DTL_CD 
+                                        AND LANG_CD = 'KR')
+                 END   AS SVC_CD_NM  
+            , C.REQ_TMPLAT_NM
+		    , B.TITLE --제목    
+		    , A.APPR_GBN_CD --결재자구분코드
+		    , A.ORG_USER_NM --원처리자
+		    , A.SRM_USER_NM --처리자
+		    , A.SRM_USER_ID
+		    , A.WF_HIST_SEQ--히스토리키값
+		    , A.APPR_STAT_CD --승인상태
+		    , A.WF_PROC_CD --워크플로우단계코드
+		    , A.REG_STIME -- 등록일시
+		    , A.MOBL_CONFIRM_STIME
+		    , CASE WHEN( A.MOBL_CONFIRM_STIME IS NULL OR A.MOBL_CONFIRM_STIME='') THEN DECODE(A.SRM_USER_ID,#{LMID},'본인확인','미확인')  
+		    	   ELSE '확인완료' END AS DIV_NM
+
+		    , B.REQ_STAT_CD --요청서진행상태코드
+            , C.SVC_CD --서비스유형코드
+            , C.REQ_TMPLAT_ID
+            , C.REQ_TMPLAT_VER
+            , A.APPR_NM	AS WF_PROC_NM
+            , CASE WHEN A.SRM_USER_ID = #{LMID} AND A.ORG_USER_ID IS NULL THEN 'M'                        
+                   WHEN A.SRM_USER_ID <![CDATA[<>]]> #{LMID} AND A.ORG_USER_ID = #{LMID} THEN 'D' 
+                END AS PRC_DIV
+		FROM
+			  WF_PROC_HIST A
+			, SR_BASE_INFO B
+			, WF_REQ_TMPLAT_HT C
+			<!-- , WF_REQ_TMPLAT_PROC_HT D -->
+		WHERE 1=1
+		AND B.REQ_ID			= A.PROC_NUMBER
+        AND B.REQ_TMPLAT_ID 	= C.REQ_TMPLAT_ID
+        AND B.REQ_TMPLAT_VER	= C.REQ_TMPLAT_VER
+        --AND C.REQ_TMPLAT_ID     = D.REQ_TMPLAT_ID
+        --AND C.REQ_TMPLAT_VER	= D.REQ_TMPLAT_VER
+        --AND A.WF_PROC_CD		= D.WF_PROC_CD
+		AND NVL(B.DEL_YN, 'N')    = 'N'
+		--AND B.REQ_STAT_CD         = 'RQST11'	-- 결재중
+		  AND A.APPR_LVL_SEQ IS NOT NULL 
+          AND A.APPR_STAT_CD IN ('APST_00','APST_99')
+          AND A.APPR_GBN_CD = 'A02'
+		
+		<if test="PROC_NUMBER != '' and PROC_NUMBER != null">
+		AND UPPER(PROC_NUMBER) LIKE '%'||UPPER(#{PROC_NUMBER})||'%'
+		</if>
+		
+		<if test="TITLE != '' and TITLE != null">
+		AND UPPER(TITLE) LIKE '%'||UPPER(#{TITLE})||'%'
+		</if>
+		
+		<if test="SVC_CD != '' and SVC_CD != null">
+		AND C.SVC_CD = #{SVC_CD}
+		</if>
+		
+		<if test="START_DATE != '' and START_DATE != null and END_DATE != '' and END_DATE != null">
+        AND SUBSTR(A.REG_STIME,1,8) BETWEEN #{START_DATE} AND #{END_DATE}
+        </if>
+        
+        <if test='"Y".equals(MYREQ_YN)'>
+        AND (A.MOBL_CONFIRM_STIME IS NULL OR A.MOBL_CONFIRM_STIME='') AND A.ORG_USER_ID = #{LMID}
+        </if>
+        AND  (A.SRM_USER_ID = #{LMID} OR A.ORG_USER_ID = #{LMID} )
+        
+        ORDER BY A.REG_STIME DESC
+	</select>
+
+	<insert id="insert01" parameterType="java.util.Map">
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	</delete>
+
+</mapper>

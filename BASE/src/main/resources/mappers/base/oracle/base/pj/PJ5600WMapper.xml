@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.pj.dao.PJ5600WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">	
+		SELECT
+			  '0'	AS CHK
+			, ''	AS ROWFLAG
+			, A.STDFT_ID
+			, A.STEST_ID
+			, E.STEST_TYPE_CD
+			, E.STEST_VERSION
+			, E.STEST_NO
+			, E.STEST_NAME
+			, E.CASE_DESC
+			, E.STEP_SEQ
+			, E.STEP_NO
+			, E.STEP_NAME
+			, A.PJT_ID
+			, A.BIZ_ID
+			, D.BIZ_NAME
+			, A.STDFT_NO
+			, A.STDFT_NAME
+			, A.STDFT_TYPE_CD
+			, A.STDFT_DESC
+			, A.STDFT_RCV_CD
+			, A.STDFT_RCV_DESC
+			, A.STDFT_ACT_CD
+			, A.STDFT_CLASS_CD
+			, A.STDFT_SEVERITY_CD
+			, A.STDFT_CONF_CD
+			, A.DFT_USER_ID
+			, A.DFT_USER_NM
+			, A.DFT_USER_DEPT
+			, A.DFT_REG_DATE
+			, A.ACT_USER_ID
+			, A.ACT_USER_NM
+			, A.ACT_USER_DEPT
+			, A.ACT_PDATE
+			, A.ACT_ADATE
+			, A.ACT_DESC
+			, A.CONF_USER_ID
+			, A.CONF_USER_NM
+			, A.CONF_USER_DEPT
+			, A.CONF_DATE
+			, A.REG_STIME
+			, A.REG_USER_ID
+			, A.REG_USER_NM
+			, A.REG_USER_DEPT
+			, A.SYSMODTIME
+			, A.LMOD_USER_ID
+			, A.LMOD_USER_NM
+			, A.LMOD_USER_DEPT
+			, A.REMARK
+			, B.PJT_NAME AS PJT_NAME
+			, C.PJT_ID   AS P_PJT_ID 
+			, C.PJT_NAME AS P_PJT_NAME
+
+		FROM
+			  PJ_ST_DEFECT A   
+			, PJ_PROJECT B
+			, PJ_PROJECT C
+			, PJ_BIZ D
+			, PJ_SCNR_TEST E
+
+		WHERE 1 = 1
+		AND A.PJT_ID	= B.PJT_ID
+		AND B.PARENT_ID	= C.PJT_ID
+		AND A.PJT_ID	= D.PJT_ID
+		AND A.BIZ_ID	= D.BIZ_ID
+		AND A.PJT_ID	= E.PJT_ID
+		AND A.STEST_ID	= E.STEST_ID
+		AND A.PJT_ID	= #{SUB_PJT_ID}
+		
+		<if test="BIZ_ID != '' and BIZ_ID != null">
+		AND A.BIZ_ID	= #{BIZ_ID}
+		</if>
+		
+		<if test="STDFT_NO != '' and STDFT_NO != null">
+		AND UPPER(A.STDFT_NO) LIKE '%' || UPPER(#{STDFT_NO}) || '%'
+		</if>
+
+		<if test="STDFT_NM != '' and STDFT_NM != null">
+		AND UPPER(A.STDFT_NAME) LIKE '%' || UPPER(#{STDFT_NM}) || '%'
+		</if>
+
+		<if test="STDFT_TYPE_CD != '' and STDFT_TYPE_CD != null">
+		AND A.STDFT_TYPE_CD	= #{STDFT_TYPE_CD}
+		</if>
+
+		<if test="DFT_USER_NM != '' and DFT_USER_NM != null">
+		AND UPPER(A.DFT_USER_NM) LIKE '%' || UPPER(#{DFT_USER_NM}) || '%'
+		</if>
+
+		<if test="ACT_USER_NM != '' and ACT_USER_NM != null">
+		AND UPPER(A.ACT_USER_NM) LIKE '%' || UPPER(#{ACT_USER_NM}) || '%'
+		</if>
+
+		<if test="CONF_USER_NM != '' and CONF_USER_NM != null">
+		AND UPPER(A.CONF_USER_NM) LIKE '%' || UPPER(#{CONF_USER_NM}) || '%'
+		</if>
+
+		<if test="STEST_NO != '' and STEST_NO != null">
+		AND UPPER(E.STEST_NO) LIKE '%' || UPPER(#{STEST_NO}) || '%'
+		</if>
+
+		<if test="STEST_NM != '' and STEST_NM != null">
+		AND UPPER(E.STEST_NAME) LIKE '%' || UPPER(#{STEST_NM}) || '%'
+		</if>
+		
+		<if test="STEST_TYPE_CD != '' and STEST_TYPE_CD != null">
+		AND E.STEST_TYPE_CD	= #{STEST_TYPE_CD}
+		</if>
+
+		<if test="STEST_VERSION != '' and STEST_VERSION != null">
+		AND E.STEST_VERSION	= #{STEST_VERSION}
+		</if>
+		
+		<if test="STDFT_RCV_CD != '' and STDFT_RCV_CD != null">
+		AND A.STDFT_RCV_CD	= #{STDFT_RCV_CD}
+		</if>
+		
+		<if test="STDFT_ACT_CD != '' and STDFT_ACT_CD != null">
+		AND A.STDFT_ACT_CD	= #{STDFT_ACT_CD}
+		</if>
+		
+		<if test="STDFT_CONF_CD != '' and STDFT_CONF_CD != null">
+		AND A.STDFT_CONF_CD	= #{STDFT_CONF_CD}
+		</if>
+		
+		<if test="STEP_NO != '' and STEP_NO != null">
+		AND UPPER(A.STEP_NO) LIKE '%' || UPPER(#{STEP_NO}) || '%'
+		</if>
+
+		<if test="STEP_NM != '' and STEP_NM != null">
+		AND UPPER(A.STEP_NAME) LIKE '%' || UPPER(#{STEP_NM}) || '%'
+		</if>
+
+		<if test="RESULT_CD != '' and RESULT_CD != null">
+		AND A.RESULT_CD	= #{RESULT_CD}
+		</if>
+
+		<choose>
+			<when test='"DRDATE".equals(DATE_GBN)'>
+				<if test="(SDATE != '' and SDATE != null) or (EDATE != '' and EDATE != null)">
+		AND A.DFT_REG_DATE BETWEEN #{SDATE} AND #{EDATE}
+				</if>
+			</when>
+			<when test='"APDATE".equals(DATE_GBN)'>
+				<if test="(SDATE != '' and SDATE != null) or (EDATE != '' and EDATE != null)">
+		AND A.ACT_PDATE BETWEEN #{SDATE} AND #{EDATE}
+				</if>
+			</when>
+			<when test='"AADATE".equals(DATE_GBN)'>
+				<if test="(SDATE != '' and SDATE != null) or (EDATE != '' and EDATE != null)">
+		AND A.ACT_ADATE BETWEEN #{SDATE} AND #{EDATE}
+				</if>
+			</when>
+			<when test='"CFDATE".equals(DATE_GBN)'>
+				<if test="(SDATE != '' and SDATE != null) or (EDATE != '' and EDATE != null)">
+		AND A.CONF_DATE BETWEEN #{SDATE} AND #{EDATE}
+				</if>
+			</when>
+		</choose>
+
+		ORDER BY
+			A.STDFT_NO, A.STDFT_ID
+	</select>
+
+	<delete id="remove01" parameterType="java.util.Map">
+		DELETE
+		FROM PJ_ST_DEFECT
+  		WHERE 1 = 1
+  		AND STDFT_ID = #{STDFT_ID}
+	</delete>
+
+</mapper>

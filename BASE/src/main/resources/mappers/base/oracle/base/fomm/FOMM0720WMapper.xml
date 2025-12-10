@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.base.fomm.dao.FOMM0720WDAO">
+
+	<select id="select01" parameterType="java.util.Map" resultType="java.util.Map">
+	<!--
+	   SELECT CMM_CD, CMM_CD_NM,UP_CMM_CD,LEVEL AS LVL, SYS_CONNECT_BY_PATH(CMM_CD_NM, '|') FULLPATH 
+	   FROM FOMM_CMM_CD_MT C
+	   WHERE LEVEL != 3 AND NVL(USE_YN, 'Y')  = 'Y'
+	   CONNECT BY PRIOR C.CD_NO = C.UP_CD_NO
+	   START WITH C.UP_CMM_CD  = 'BIZC0000'
+	   ORDER SIBLINGS BY SORT_ORDR
+	-->
+	SELECT 'ROOT' CMM_CD, '공통' CMM_CD_NM , 'HEAVEN' UP_CMM_CD, 1 lvl, '|공통' fullpath FROM dual
+    UNION ALL
+    SELECT '00000000' CMM_CD, '공통' CMM_CD_NM , 'ROOT' UP_CMM_CD, 2 lvl, '|공통' fullpath FROM dual
+    UNION ALL 
+    SELECT * FROM 
+    (
+    SELECT CMM_CD, CMM_CD_NM,UP_CMM_CD,LEVEL AS LVL, SYS_CONNECT_BY_PATH(CMM_CD_NM, '|') FULLPATH 
+           FROM FOMM_CMM_CD_MT C
+           WHERE LEVEL != 3 AND NVL(USE_YN, 'Y')  = 'Y'
+           CONNECT BY PRIOR C.CD_NO = C.UP_CD_NO
+           START WITH C.UP_CMM_CD  = 'BIZC0000'
+    ORDER SIBLINGS BY SORT_ORDR
+    )
+	
+	</select>
+	
+	<select id="select02" parameterType="java.util.Map" resultType="java.util.Map">
+	
+	   SELECT
+            0 AS CHK
+            , '' AS ROWFLAG
+            , TEST_SEQ
+            , UPMU_ID1
+            , UPMU_ID2
+            , UPMU_ID3
+            , USE_YN
+            , GUBUN
+            , TEST_CASE
+            , TEST_CONT
+            , REG_USER_ID
+            , REG_USER_NM
+            , REG_STIME
+        FROM WF_USR_CONT
+        WHERE 1=1
+            AND UPMU_ID2 = #{CMM_CD}
+            AND GUBUN = #{GUBUN}
+            ORDER BY REG_STIME DESC
+
+
+    </select>
+    
+    <select id="select03" parameterType="java.util.Map" resultType="java.util.Map">
+    <!--
+			SELECT CMM_CD, CMM_CD_NM, UP_CMM_CD, LEVEL AS LVL, SYS_CONNECT_BY_PATH(CMM_CD_NM, '|') FULLPATH 
+			FROM FOMM_CMM_CD_MT C
+			WHERE USE_YN = 'Y'
+			CONNECT BY PRIOR C.CD_NO = C.UP_CD_NO
+			START WITH CMM_CD = 'REQC0A00'
+			ORDER SIBLINGS BY SORT_ORDR
+    -->
+	    SELECT CMM_CD, CMM_CD_NM, UP_CMM_CD, LEVEL AS LVL, SYS_CONNECT_BY_PATH(CMM_CD_NM, '|') FULLPATH 
+	    FROM FOMM_CMM_CD_MT C
+	    WHERE USE_YN = 'Y' AND CMM_CD IN('REQC0EC0','REQC0ED0','REQC0A00')
+	    CONNECT BY PRIOR C.CD_NO = C.UP_CD_NO
+	    START WITH CMM_CD = 'REQC0A00'
+	    ORDER SIBLINGS BY SORT_ORDR
+    </select>
+    
+
+	<insert id="insert01" parameterType="java.util.Map">
+	       
+	       INSERT INTO WF_USR_CONT
+                (
+                TEST_SEQ
+                , UPMU_ID1
+                , UPMU_ID2
+                , GUBUN
+                , TEST_CASE
+                , TEST_CONT
+                , REG_USER_ID
+                , REG_USER_NM
+                , REG_STIME
+                , USE_YN
+                )
+            VALUES
+                (
+                (SELECT NVL(MAX(TEST_SEQ)+1,1) AS TEST_SEQ FROM WF_USR_CONT)
+                , #{UPMU_ID1}
+                , #{UPMU_ID2}
+                , #{GUBUN}
+                , #{TEST_CASE}
+                , #{TEST_CONT}
+                , #{LMID}
+                , #{USERNM}
+                , TO_CHAR(SYSDATE,'YYYYMMDDHH24MIss')
+                , 'Y'
+            )
+	
+	</insert>
+
+	<update id="modify01" parameterType="java.util.Map">
+	        UPDATE WF_USR_CONT SET
+           
+              USE_YN                        = #{USE_YN}
+            , GUBUN                         = #{GUBUN}
+            , TEST_CASE                  = #{TEST_CASE}
+            , TEST_CONT                 = #{TEST_CONT}
+
+        WHERE 1 = 1
+            AND TEST_SEQ   = #{TEST_SEQ}
+	
+	</update>
+
+	<delete id="remove01" parameterType="java.util.Map">
+	
+	   DELETE
+        FROM WF_USR_CONT
+        WHERE 1 = 1
+        AND TEST_SEQ   = #{TEST_SEQ}
+	
+	</delete>
+
+</mapper>

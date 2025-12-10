@@ -1,0 +1,43 @@
+package com.base.pj.service;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 
+ * <pre>
+ * @title
+ * - 단계별 일정 Service Intreface
+ * @package com.base.pj.service
+ * <pre>
+ *
+ * @author  정보윤
+ * @since   2023. 09. 26.
+ * @version 1.0
+ * @see
+ *
+ * =================== 변경 내역 ==================
+ * 날짜			변경자				내용
+ * ------------------------------------------------
+ * 2023. 09. 26.	정보윤		최초작성
+ */
+public interface PJ2100WService {
+
+	/**
+	 * 단계별 일정 - 프로젝트 목록 조회
+	 */
+	public List<Map<String, Object>> select01(Map<String, Object> dsCond);
+
+	/**
+	 * 단계별 일정 목록 조회
+	 * @param dsCond
+	 * @return
+	 */
+	public List<Map<String, Object>> select02(Map<String, Object> dsCond);
+
+	/**
+	 * 단계별 일정 저장
+	 * @param dsData
+	 */
+	public void save01(List<Map<String, Object>> dsData);
+}
