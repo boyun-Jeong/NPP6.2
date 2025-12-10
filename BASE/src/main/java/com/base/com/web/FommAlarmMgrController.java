@@ -57,6 +57,7 @@ public class FommAlarmMgrController {
 		
 		NexacroResult result = new NexacroResult();
 		result.addDataSet("dsData", dsData);
+		log.debug("tttt");
 
 		return result;
 	}
